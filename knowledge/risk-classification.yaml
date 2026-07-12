@@ -1,0 +1,9 @@
+fast:
+  examples: [copy fix, isolated visual bug, internal refactor without contract change]
+  required: [exact owner, targeted test, typecheck, build, documentation delta]
+standard:
+  examples: [feature, bucket/order behavior, Firebase adapter, native integration, dependency update]
+  required: [impact analysis, contracts, tests, operations, rollback]
+critical:
+  examples: [authentication, Firestore rules, personal data deletion, destructive migration, secrets]
+  required: [threat model, privacy analysis, failure modes, rollback, full validation, specialist review]

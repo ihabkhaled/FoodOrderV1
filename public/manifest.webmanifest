@@ -1,0 +1,1 @@
+{"name":"FoodOrder","short_name":"FoodOrder","description":"Reusable food buckets and order tracking.","start_url":"/","display":"standalone","background_color":"#fffaf2","theme_color":"#f97316","icons":[{"src":"/icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]}

@@ -1,0 +1,40 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function owns(userId) { return signedIn() && request.auth.uid == userId; }
+    function validProfile(userId) {
+      return request.resource.data.id == userId
+        && request.resource.data.email == request.auth.token.email
+        && request.resource.data.fullName is string
+        && request.resource.data.locale in ['en', 'ar']
+        && request.resource.data.theme in ['system', 'light', 'dark'];
+    }
+    match /users/{userId} {
+      allow read: if owns(userId);
+      allow create, update: if owns(userId) && validProfile(userId);
+      allow delete: if false;
+      match /buckets/{bucketId} {
+        allow read, delete: if owns(userId);
+        allow create, update: if owns(userId)
+          && request.resource.data.userId == userId
+          && request.resource.data.id == bucketId
+          && request.resource.data.title is string
+          && request.resource.data.items is list
+          && request.resource.data.items.size() > 0
+          && request.resource.data.items.size() <= 50;
+      }
+      match /orders/{orderId} {
+        allow read, delete: if owns(userId);
+        allow create, update: if owns(userId)
+          && request.resource.data.userId == userId
+          && request.resource.data.id == orderId
+          && request.resource.data.status in ['draft', 'placed', 'completed', 'cancelled']
+          && request.resource.data.lines is list
+          && request.resource.data.lines.size() > 0
+          && request.resource.data.total is number
+          && request.resource.data.total >= 0;
+      }
+    }
+  }
+}

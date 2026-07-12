@@ -1,0 +1,17 @@
+precedence:
+  - security-and-privacy-policy
+  - active-architecture-decisions
+  - permanent-rules
+  - contracts
+  - module-and-product-documentation
+  - skills-and-runbooks
+  - generated-ai-artifacts
+  - historical-memory
+canonicalOwners:
+  product-promise: product
+  domain-invariant: domain
+  current-architecture: architecture
+  data-and-config-contract: contracts
+  permanent-obligation: rules
+  procedure: skills-or-runbooks
+  generated-routing: .ai

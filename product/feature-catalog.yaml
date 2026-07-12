@@ -1,0 +1,10 @@
+features:
+  - {id: authentication, status: implemented, owner: src/services}
+  - {id: bucket-crud, status: implemented, owner: src/pages/BucketEditorPage.tsx}
+  - {id: order-creation, status: implemented, owner: src/pages/CreateOrderPage.tsx}
+  - {id: order-history-status-repeat, status: implemented, owner: src/pages/OrderDetailsPage.tsx}
+  - {id: localization-en-ar, status: implemented, owner: src/i18n}
+  - {id: theme-currency-profile, status: implemented, owner: src/pages/SettingsPage.tsx}
+  - {id: cloud-and-local-storage, status: implemented, owner: src/services}
+  - {id: payments, status: not-planned}
+  - {id: delivery-dispatch, status: not-planned}

@@ -1,0 +1,3 @@
+requiredOnPullRequest: [knowledge:build, knowledge:validate, format:check, lint, typecheck, test:coverage, build]
+requiredForRelease: [all-pull-request-gates, test:e2e, cap:sync, manual-smoke, rollback-review]
+blocking: [broken canonical links, duplicate ids, type errors, failing tests, build failure, ownership isolation regression]

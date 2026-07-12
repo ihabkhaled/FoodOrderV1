@@ -1,0 +1,21 @@
+import { ArrowLeft, Check, Copy, X } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Loading } from '@/components/Loading';
+import { StatusBadge } from '@/components/StatusBadge';
+import { formatDateTime } from '@/lib/date';
+import { formatMoney } from '@/lib/money';
+import { canTransitionOrder } from '@/lib/order';
+import { dataService } from '@/services';
+import { useApp } from '@/state/AppContext';
+import type { Order, OrderStatus } from '@/types/domain';
+
+export function OrderDetailsPage() {
+  const { orderId } = useParams(); const navigate = useNavigate(); const { user, locale, t, showToast } = useApp();
+  const [order, setOrder] = useState<Order | null>(null); const [loading, setLoading] = useState(true); const [error, setError] = useState('');
+  useEffect(() => { if (!user || !orderId) return; void dataService.getOrder(user.id, orderId).then((value) => { if (!value) throw new Error('Order was not found.'); setOrder(value); }).catch((reason: unknown) => setError(reason instanceof Error ? reason.message : 'Unable to load order.')).finally(() => setLoading(false)); }, [orderId, user]);
+  const transition = async (status: OrderStatus) => { if (!user || !order) return; try { const saved = await dataService.updateOrderStatus(user.id, order.id, status); setOrder(saved); showToast('Order updated.', 'success'); } catch (reason) { showToast(reason instanceof Error ? reason.message : 'Unable to update order.', 'error'); } };
+  const repeat = async () => { if (!user || !order) return; try { const created = await dataService.createOrder(user.id, { bucketId: order.bucketId, bucketTitle: order.bucketTitle, currency: order.currency, lines: order.lines.map(({ id, bucketItemId, name, quantity, unitPrice }) => ({ id, bucketItemId, name, quantity, unitPrice })), notes: order.notes, status: 'draft' }); showToast('Draft created from order.', 'success'); navigate(`/orders/${created.id}`); } catch (reason) { showToast(reason instanceof Error ? reason.message : 'Unable to repeat order.', 'error'); } };
+  if (loading) return <Loading />; if (!order) return <div className="page"><p className="form-error">{error || 'Order was not found.'}</p></div>;
+  return <div className="page narrow stack-lg"><Link className="back-link" to="/orders"><ArrowLeft />{t('back')}</Link><header className="page-heading"><div><p className="eyebrow">{t('orderDetails')}</p><h1>{order.bucketTitle}</h1><p>{formatDateTime(order.createdAt, locale)}</p></div><StatusBadge status={order.status} /></header><section className="section-card"><div className="order-detail-lines">{order.lines.map((line) => <div className="detail-line" key={line.id}><div><strong>{line.quantity} × {line.name}</strong><span>{formatMoney(line.unitPrice, order.currency, locale)} each</span></div><strong>{formatMoney(line.lineTotal, order.currency, locale)}</strong></div>)}</div><div className="totals"><div><span>{t('subtotal')}</span><strong>{formatMoney(order.subtotal, order.currency, locale)}</strong></div><div className="grand-total"><span>{t('total')}</span><strong>{formatMoney(order.total, order.currency, locale)}</strong></div></div></section>{order.notes ? <section className="section-card"><h2>{t('notes')}</h2><p>{order.notes}</p></section> : null}<section className="section-card metadata-grid"><div><span>{t('created')}</span><strong>{formatDateTime(order.createdAt, locale)}</strong></div><div><span>{t('updated')}</span><strong>{formatDateTime(order.updatedAt, locale)}</strong></div></section><div className="sticky-actions wrap"><button className="button secondary" onClick={() => void repeat()}><Copy />{t('repeatOrder')}</button>{canTransitionOrder(order.status, 'placed') ? <button className="button" onClick={() => void transition('placed')}>{t('placeOrder')}</button> : null}{canTransitionOrder(order.status, 'completed') ? <button className="button success" onClick={() => void transition('completed')}><Check />{t('completeOrder')}</button> : null}{canTransitionOrder(order.status, 'cancelled') ? <button className="button danger" onClick={() => void transition('cancelled')}><X />{t('cancelOrder')}</button> : null}</div></div>;
+}

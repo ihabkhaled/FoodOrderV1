@@ -1,0 +1,7 @@
+authority: knowledge/authority-map.yaml
+profile: knowledge/project-profile.yaml
+routing: knowledge/routing-map.yaml
+risk: knowledge/risk-classification.yaml
+budgets: knowledge/context-budget-policy.yaml
+generator: scripts/knowledge/cli.mjs
+compiledRoot: .ai

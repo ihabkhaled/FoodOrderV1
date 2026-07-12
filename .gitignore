@@ -1,0 +1,16 @@
+node_modules/
+dist/
+coverage/
+playwright-report/
+test-results/
+.env
+.env.*
+!.env.example
+.DS_Store
+*.log
+android/.gradle/
+android/app/build/
+ios/App/Pods/
+ios/App/App/public/
+.ai/local/*
+!.ai/local/.gitkeep

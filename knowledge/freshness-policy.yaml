@@ -1,0 +1,7 @@
+triggers:
+  route-change: [product, context, e2e-tests]
+  domain-change: [domain, contracts, unit-tests]
+  firestore-change: [contracts, security, privacy, integration-tests]
+  capacitor-change: [architecture, operations, mobile-runbook]
+  dependency-change: [security, compatibility, release-notes]
+statuses: [draft, proposed, active, deprecated, superseded, historical, generated, archived]

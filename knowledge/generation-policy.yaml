@@ -1,0 +1,8 @@
+generatedRoot: .ai
+generator: scripts/knowledge/cli.mjs
+rules:
+  - generated artifacts declare their generator
+  - generated markdown starts with the generated header
+  - stable sorting and content hashes are mandatory
+  - secrets and production data are forbidden
+  - .ai/local is machine-local and ignored except .gitkeep

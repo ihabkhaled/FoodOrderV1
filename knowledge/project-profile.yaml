@@ -1,0 +1,17 @@
+projectName: FoodOrderV1
+repositoryType: single-application
+applicationTypes: [responsive-web, progressive-web-app, capacitor-mobile]
+languages: [TypeScript, TSX, CSS, JavaScript, Markdown, YAML]
+frameworks: [React, React Router, Capacitor, Firebase]
+runtimes: [Node.js 22+, browser, Android WebView, iOS WKWebView]
+packageManager: npm
+buildTool: Vite
+testFrameworks: [Vitest, Testing Library, Playwright]
+architectureStyle: modular frontend with pure domain core and persistence adapters
+sourceRoots: [src]
+testRoots: [tests]
+deploymentModel: [static hosting, Capacitor native bundle]
+persistence: [Cloud Firestore, localStorage fallback, Capacitor Preferences]
+externalIntegrations: [Firebase Authentication, Cloud Firestore, Capacitor plugins]
+qualityGates: [knowledge validation, format, lint, typecheck, unit/integration tests, build, E2E where applicable]
+unknowns: [production Firebase project, retention approval, store signing ownership]

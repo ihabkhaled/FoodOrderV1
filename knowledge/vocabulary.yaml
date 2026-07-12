@@ -1,0 +1,7 @@
+terms:
+  bucket: reusable user-owned menu/list of food items
+  bucket-item: selectable food item snapshot source
+  order: user-owned selection created from a bucket
+  order-line: immutable name, quantity, and price snapshot in an order
+  local-device-mode: functional non-cloud fallback for development/evaluation
+  firebase-mode: cloud identity and Firestore persistence

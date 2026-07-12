@@ -1,0 +1,6 @@
+contracts:
+  - {id: auth-service, source: src/services/contracts.ts, consumers: [src/state/AppContext.tsx]}
+  - {id: data-service, source: src/services/contracts.ts, consumers: [src/pages, src/state]}
+  - {id: domain-types, source: src/types/domain.ts, consumers: [src/lib, src/services, src/pages]}
+  - {id: firestore-documents, source: contracts/data/schemas.md, enforcement: firestore.rules}
+  - {id: environment, source: contracts/configuration/environment.md, example: .env.example}

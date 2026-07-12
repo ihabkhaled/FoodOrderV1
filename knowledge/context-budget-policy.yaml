@@ -1,0 +1,7 @@
+bootstrapTokens: {min: 800, max: 1500}
+hotMemoryTokens: {min: 100, max: 1200}
+summaryTokens: {min: 100, max: 500}
+routinePackTokens: {min: 2000, max: 8000}
+criticalInitialPackTokens: {min: 6000, max: 15000}
+maxRoutineArtifacts: 15
+resolverP95Ms: 1000

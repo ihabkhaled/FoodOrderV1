@@ -1,0 +1,12 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule: { interval: weekly }
+    groups:
+      capacitor: { patterns: ['@capacitor/*'] }
+      firebase: { patterns: ['firebase', 'firebase-admin'] }
+      testing: { patterns: ['vitest', '@vitest/*', '@playwright/*', '@testing-library/*'] }
+  - package-ecosystem: github-actions
+    directory: /
+    schedule: { interval: monthly }

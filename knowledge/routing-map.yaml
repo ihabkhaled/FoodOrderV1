@@ -1,0 +1,7 @@
+taskTypes:
+  frontend-feature: [src/pages, src/components, src/state, product, testing]
+  mobile-feature: [capacitor.config.ts, src/services/platform.ts, architecture/mobile-architecture.md, runbooks/mobile-build.md]
+  database-change: [src/services, contracts/data, firestore.rules, testing/integration-testing.md]
+  security-change: [security, privacy, firestore.rules, rules/security-privacy.md]
+  dependency-change: [package.json, rules/dependency-governance.md, runbooks/dependency-upgrade.md]
+  routine-fix: [exact-source, direct-tests, quality/definition-of-done.md]
