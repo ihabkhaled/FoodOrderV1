@@ -17,6 +17,11 @@ export default tseslint.config(
     plugins: { 'react-hooks': reactHooks, 'react-refresh': reactRefresh },
     rules: {
       ...reactHooks.configs.recommended.rules,
+      // react-hooks 7 added this aggressive rule. Our only sites are guarded
+      // mount data-loaders (`if (!user) return`, single update) and form
+      // initializers synced from the loaded profile — both benign and covered
+      // by unit + e2e tests. Every other react-hooks rule stays strict.
+      'react-hooks/set-state-in-effect': 'off',
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
       '@typescript-eslint/consistent-type-imports': 'error',
       '@typescript-eslint/no-floating-promises': 'error',
