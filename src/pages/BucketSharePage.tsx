@@ -1,70 +1,79 @@
-import {
-  ArrowLeft,
-  Check,
-  Copy,
-  Lock,
-  LockOpen,
-  ReceiptText,
-  Share2,
-  ShieldOff,
-  UserMinus,
-  Users,
-} from 'lucide-react';
+import { ArrowLeft, Lock, LockOpen, Share2 } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import { ActivityTimeline } from '@/components/ActivityTimeline';
+import { BucketInvitePanel } from '@/components/BucketInvitePanel';
+import { BucketMemberPermissionsPanel } from '@/components/BucketMemberPermissionsPanel';
+import { BucketPricingPanel } from '@/components/BucketPricingPanel';
 import { ConfirmDialog } from '@/components/ConfirmDialog';
 import { ErrorState } from '@/components/ErrorState';
 import { Loading } from '@/components/Loading';
 import { translateGroupOrder } from '@/i18n/groupOrderMessages';
-import type { MessageKey } from '@/i18n/messages';
-import { DEFAULT_PRICING_POLICY } from '@/lib/bucket';
-import { formatDateTime } from '@/lib/date';
-import { ASSIGNABLE_ROLES } from '@/lib/sharing';
 import { sharingService } from '@/services';
 import type { SharedBucketView } from '@/services/contracts';
 import { copyToClipboard, shareText } from '@/services/platform';
 import { useApp } from '@/state/AppContext';
 import type {
+  Bucket,
   BucketActivityEvent,
   BucketInvite,
   BucketMember,
   BucketPricingPolicy,
   BucketRole,
-  InviteStatus,
 } from '@/types/domain';
 
-const ROLE_LABEL: Record<BucketRole, MessageKey> = {
-  owner: 'roleOwner',
-  editor: 'roleEditor',
-  contributor: 'roleContributor',
-  viewer: 'roleViewer',
-};
-const INVITE_STATUS_LABEL: Record<InviteStatus, MessageKey> = {
-  pending: 'pending',
-  accepted: 'accepted',
-  revoked: 'revoked',
-  expired: 'expired',
-};
-
-interface PricingForm {
-  vatPercent: string;
-  servicePercent: string;
-  deliveryAmount: string;
-  vatAllocation: BucketPricingPolicy['vatAllocation'];
-  serviceAllocation: BucketPricingPolicy['serviceAllocation'];
-  deliveryAllocation: BucketPricingPolicy['deliveryAllocation'];
+interface BucketStateControlsProps {
+  bucket: Bucket;
+  freezeLabel: string;
+  reopenLabel: string;
+  onFreeze: () => void;
+  onReopen: () => void;
 }
 
-const pricingToForm = (policy: BucketPricingPolicy): PricingForm => ({
-  vatPercent: String(policy.vatBasisPoints / 100),
-  servicePercent: String(policy.serviceBasisPoints / 100),
-  deliveryAmount: String(policy.deliveryMinor / 100),
-  vatAllocation: policy.vatAllocation,
-  serviceAllocation: policy.serviceAllocation,
-  deliveryAllocation: policy.deliveryAllocation,
-});
+function BucketStateControls({
+  bucket,
+  freezeLabel,
+  reopenLabel,
+  onFreeze,
+  onReopen,
+}: BucketStateControlsProps) {
+  const state = bucket.orderState ?? 'open';
+
+  if (state === 'open') {
+    return (
+      <button className="button secondary" onClick={onFreeze}>
+        <Lock />
+        {freezeLabel}
+      </button>
+    );
+  }
+
+  if (state === 'frozen') {
+    return (
+      <button className="button secondary" onClick={onReopen}>
+        <LockOpen />
+        {reopenLabel}
+      </button>
+    );
+  }
+
+  return null;
+}
+
+function BucketStateBanner({ bucket, locale }: { bucket: Bucket; locale: 'en' | 'ar' }) {
+  const state = bucket.orderState ?? 'open';
+  if (state === 'open') return null;
+
+  const key = state === 'ordered' ? 'orderedBucket' : 'frozenBucket';
+
+  return (
+    <div className="status-banner warning" role="status">
+      <Lock aria-hidden="true" />
+      <span>{translateGroupOrder(locale, key)}</span>
+    </div>
+  );
+}
 
 export function BucketSharePage() {
   const { bucketId } = useParams();
@@ -85,9 +94,6 @@ export function BucketSharePage() {
   const [confirmingFreeze, setConfirmingFreeze] = useState(false);
   const [enabling, setEnabling] = useState(false);
   const [savingPricing, setSavingPricing] = useState(false);
-  const [pricing, setPricing] = useState<PricingForm>(
-    pricingToForm(DEFAULT_PRICING_POLICY),
-  );
 
   const load = useCallback(async () => {
     if (!user || !bucketId) return;
@@ -97,9 +103,6 @@ export function BucketSharePage() {
       if (!nextView) throw new Error(t('notAllowed'));
       if (nextView.myRole !== 'owner') throw new Error(t('onlyOwnerCanManage'));
       setView(nextView);
-      setPricing(
-        pricingToForm(nextView.bucket.pricingPolicy ?? DEFAULT_PRICING_POLICY),
-      );
       if (nextView.bucket.visibility === 'shared') {
         const [nextInvites, nextActivity] = await Promise.all([
           sharingService.listInvites(user, bucketId),
@@ -119,11 +122,23 @@ export function BucketSharePage() {
     void load();
   }, [load]);
 
-  const updateViewBucket = (bucket: SharedBucketView['bucket']) => {
+  const updateBucket = (bucket: Bucket) => {
     setView((current) => (current ? { ...current, bucket } : current));
   };
 
-  const enable = async (): Promise<void> => {
+  const runBucketAction = async (
+    action: () => Promise<Bucket>,
+    successMessage: string,
+  ) => {
+    try {
+      updateBucket(await action());
+      showToast(successMessage, 'success');
+    } catch (error_) {
+      showToast(error_ instanceof Error ? error_.message : t('tryAgain'), 'error');
+    }
+  };
+
+  const enable = async () => {
     if (!user || !bucketId) return;
     try {
       setEnabling(true);
@@ -137,64 +152,34 @@ export function BucketSharePage() {
     }
   };
 
-  const savePricing = async (): Promise<void> => {
+  const savePricing = async (policy: BucketPricingPolicy) => {
     if (!user || !bucketId) return;
-    const vatPercent = Number(pricing.vatPercent);
-    const servicePercent = Number(pricing.servicePercent);
-    const deliveryAmount = Number(pricing.deliveryAmount);
-    if (
-      !Number.isFinite(vatPercent) ||
-      !Number.isFinite(servicePercent) ||
-      !Number.isFinite(deliveryAmount)
-    ) {
-      showToast(t('tryAgain'), 'error');
-      return;
-    }
-
-    try {
-      setSavingPricing(true);
-      const saved = await sharingService.updatePricingPolicy(user, bucketId, {
-        vatBasisPoints: Math.round(vatPercent * 100),
-        serviceBasisPoints: Math.round(servicePercent * 100),
-        deliveryMinor: Math.round(deliveryAmount * 100),
-        vatAllocation: pricing.vatAllocation,
-        serviceAllocation: pricing.serviceAllocation,
-        deliveryAllocation: pricing.deliveryAllocation,
-      });
-      updateViewBucket(saved);
-      showToast(gt('pricingSaved'), 'success');
-    } catch (error_) {
-      showToast(error_ instanceof Error ? error_.message : t('tryAgain'), 'error');
-    } finally {
-      setSavingPricing(false);
-    }
+    setSavingPricing(true);
+    await runBucketAction(
+      () => sharingService.updatePricingPolicy(user, bucketId, policy),
+      gt('pricingSaved'),
+    );
+    setSavingPricing(false);
   };
 
-  const freeze = async (): Promise<void> => {
+  const freeze = async () => {
     if (!user || !bucketId) return;
-    try {
-      const saved = await sharingService.freezeBucket(user, bucketId);
-      updateViewBucket(saved);
-      showToast(gt('bucketFrozen'), 'success');
-    } catch (error_) {
-      showToast(error_ instanceof Error ? error_.message : t('tryAgain'), 'error');
-    } finally {
-      setConfirmingFreeze(false);
-    }
+    await runBucketAction(
+      () => sharingService.freezeBucket(user, bucketId),
+      gt('bucketFrozen'),
+    );
+    setConfirmingFreeze(false);
   };
 
-  const reopen = async (): Promise<void> => {
+  const reopen = async () => {
     if (!user || !bucketId) return;
-    try {
-      const saved = await sharingService.unfreezeBucket(user, bucketId);
-      updateViewBucket(saved);
-      showToast(gt('bucketReopened'), 'success');
-    } catch (error_) {
-      showToast(error_ instanceof Error ? error_.message : t('tryAgain'), 'error');
-    }
+    await runBucketAction(
+      () => sharingService.unfreezeBucket(user, bucketId),
+      gt('bucketReopened'),
+    );
   };
 
-  const createInvite = async (): Promise<void> => {
+  const createInvite = async () => {
     if (!user || !bucketId) return;
     try {
       setCreating(true);
@@ -210,7 +195,7 @@ export function BucketSharePage() {
     }
   };
 
-  const shareOrCopy = async (): Promise<void> => {
+  const shareOrCopy = async () => {
     if (!joinCode) return;
     const shared = await shareText(t('joinBucket'), joinCode);
     if (!shared) {
@@ -220,7 +205,7 @@ export function BucketSharePage() {
     setCopiedCode(true);
   };
 
-  const revokeInvite = async (inviteId: string): Promise<void> => {
+  const revokeInvite = async (inviteId: string) => {
     if (!user || !bucketId) return;
     try {
       await sharingService.revokeInvite(user, bucketId, inviteId);
@@ -235,27 +220,27 @@ export function BucketSharePage() {
     }
   };
 
+  const replaceMember = (saved: BucketMember) => {
+    setView((current) =>
+      current
+        ? {
+            ...current,
+            members: current.members.map((member) =>
+              member.userId === saved.userId ? saved : member,
+            ),
+          }
+        : current,
+    );
+  };
+
   const changeRole = async (
     member: BucketMember,
     role: Exclude<BucketRole, 'owner'>,
-  ): Promise<void> => {
+  ) => {
     if (!user || !bucketId) return;
     try {
-      const saved = await sharingService.changeMemberRole(
-        user,
-        bucketId,
-        member.userId,
-        role,
-      );
-      setView((current) =>
-        current
-          ? {
-              ...current,
-              members: current.members.map((item) =>
-                item.userId === member.userId ? saved : item,
-              ),
-            }
-          : current,
+      replaceMember(
+        await sharingService.changeMemberRole(user, bucketId, member.userId, role),
       );
       showToast(t('roleChanged'), 'success');
     } catch (error_) {
@@ -268,29 +253,21 @@ export function BucketSharePage() {
     patch: Partial<
       Pick<BucketMember, 'canCreateCustomItems' | 'canSetCustomItemPrice'>
     >,
-  ): Promise<void> => {
+  ) => {
     if (!user || !bucketId) return;
     try {
-      const saved = await sharingService.setMemberCustomItemPermissions(
-        user,
-        bucketId,
-        member.userId,
-        {
-          canCreateCustomItems:
-            patch.canCreateCustomItems ?? member.canCreateCustomItems ?? false,
-          canSetCustomItemPrice:
-            patch.canSetCustomItemPrice ?? member.canSetCustomItemPrice ?? false,
-        },
-      );
-      setView((current) =>
-        current
-          ? {
-              ...current,
-              members: current.members.map((item) =>
-                item.userId === member.userId ? saved : item,
-              ),
-            }
-          : current,
+      replaceMember(
+        await sharingService.setMemberCustomItemPermissions(
+          user,
+          bucketId,
+          member.userId,
+          {
+            canCreateCustomItems:
+              patch.canCreateCustomItems ?? member.canCreateCustomItems ?? false,
+            canSetCustomItemPrice:
+              patch.canSetCustomItemPrice ?? member.canSetCustomItemPrice ?? false,
+          },
+        ),
       );
       showToast(gt('permissionsSaved'), 'success');
     } catch (error_) {
@@ -298,7 +275,7 @@ export function BucketSharePage() {
     }
   };
 
-  const removeMember = async (): Promise<void> => {
+  const removeMember = async () => {
     if (!user || !bucketId || !removing) return;
     try {
       await sharingService.revokeMember(user, bucketId, removing.userId);
@@ -307,7 +284,7 @@ export function BucketSharePage() {
           ? {
               ...current,
               members: current.members.filter(
-                (item) => item.userId !== removing.userId,
+                (member) => member.userId !== removing.userId,
               ),
             }
           : current,
@@ -321,7 +298,7 @@ export function BucketSharePage() {
   };
 
   if (loading) return <Loading />;
-  if (error || !view) {
+  if (!view || error) {
     return (
       <ErrorState
         message={error || t('notAllowed')}
@@ -333,8 +310,7 @@ export function BucketSharePage() {
   }
 
   const { bucket, members } = view;
-  const orderState = bucket.orderState ?? 'open';
-  const isOpen = orderState === 'open';
+  const isOpen = (bucket.orderState ?? 'open') === 'open';
 
   return (
     <div className="page narrow stack-lg">
@@ -347,296 +323,65 @@ export function BucketSharePage() {
           <p className="eyebrow">{t('sharing')}</p>
           <h1>{bucket.title}</h1>
         </div>
-        <div className="row-actions">
-          {orderState === 'open' ? (
-            <button
-              className="button secondary"
-              onClick={() => {
-                setConfirmingFreeze(true);
-              }}
-            >
-              <Lock />
-              {gt('freezeBucket')}
-            </button>
-          ) : null}
-          {orderState === 'frozen' ? (
-            <button
-              className="button secondary"
-              onClick={() => {
-                void reopen();
-              }}
-            >
-              <LockOpen />
-              {gt('unfreezeBucket')}
-            </button>
-          ) : null}
-        </div>
+        <BucketStateControls
+          bucket={bucket}
+          freezeLabel={gt('freezeBucket')}
+          reopenLabel={gt('unfreezeBucket')}
+          onFreeze={() => {
+            setConfirmingFreeze(true);
+          }}
+          onReopen={() => {
+            void reopen();
+          }}
+        />
       </header>
 
-      {orderState !== 'open' ? (
-        <div className="status-banner warning" role="status">
-          <Lock aria-hidden="true" />
-          <span>
-            {orderState === 'ordered' ? gt('orderedBucket') : gt('frozenBucket')}
-          </span>
-        </div>
-      ) : null}
-
-      <section className="section-card stack-md">
-        <div className="section-heading">
-          <div>
-            <p className="eyebrow">{gt('pricing')}</p>
-            <h2>
-              <ReceiptText size={18} aria-hidden="true" /> {gt('pricing')}
-            </h2>
-          </div>
-        </div>
-        <div className="pricing-grid">
-          <label>
-            {gt('vatPercent')}
-            <input
-              type="number"
-              min="0"
-              max="100"
-              step="0.01"
-              value={pricing.vatPercent}
-              disabled={!isOpen}
-              onChange={(event) => {
-                setPricing((current) => ({
-                  ...current,
-                  vatPercent: event.target.value,
-                }));
-              }}
-            />
-          </label>
-          <label>
-            {gt('servicePercent')}
-            <input
-              type="number"
-              min="0"
-              max="100"
-              step="0.01"
-              value={pricing.servicePercent}
-              disabled={!isOpen}
-              onChange={(event) => {
-                setPricing((current) => ({
-                  ...current,
-                  servicePercent: event.target.value,
-                }));
-              }}
-            />
-          </label>
-          <label>
-            {gt('deliveryAmount')}
-            <input
-              type="number"
-              min="0"
-              step="0.01"
-              value={pricing.deliveryAmount}
-              disabled={!isOpen}
-              onChange={(event) => {
-                setPricing((current) => ({
-                  ...current,
-                  deliveryAmount: event.target.value,
-                }));
-              }}
-            />
-          </label>
-        </div>
-        <div className="pricing-grid">
-          {(['vatAllocation', 'serviceAllocation', 'deliveryAllocation'] as const).map(
-            (field) => (
-              <label key={field}>
-                {gt('allocation')}
-                <select
-                  value={pricing[field]}
-                  disabled={!isOpen}
-                  onChange={(event) => {
-                    setPricing((current) => ({
-                      ...current,
-                      [field]: event.target.value as BucketPricingPolicy[typeof field],
-                    }));
-                  }}
-                >
-                  <option value="proportional">{gt('splitProportional')}</option>
-                  <option value="equal">{gt('splitEqual')}</option>
-                </select>
-              </label>
-            ),
-          )}
-        </div>
-        <button
-          className="button"
-          disabled={!isOpen || savingPricing}
-          onClick={() => {
-            void savePricing();
-          }}
-        >
-          {savingPricing ? t('loading') : gt('savePricing')}
-        </button>
-      </section>
+      <BucketStateBanner bucket={bucket} locale={locale} />
+      <BucketPricingPanel
+        locale={locale}
+        policy={bucket.pricingPolicy}
+        disabled={!isOpen}
+        saving={savingPricing}
+        translate={t}
+        onSave={(policy) => {
+          void savePricing(policy);
+        }}
+      />
 
       {bucket.visibility === 'shared' ? (
         <>
-          <section className="section-card stack">
-            <div className="section-heading">
-              <div>
-                <p className="eyebrow">{t('invites')}</p>
-                <h2>{t('createInvite')}</h2>
-              </div>
-            </div>
-            <div className="invite-create">
-              <label>
-                {t('role')}
-                <select
-                  value={inviteRole}
-                  onChange={(event) => {
-                    setInviteRole(
-                      event.target.value as Exclude<BucketRole, 'owner'>,
-                    );
-                  }}
-                >
-                  {ASSIGNABLE_ROLES.map((role) => (
-                    <option key={role} value={role}>
-                      {t(ROLE_LABEL[role])}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <button
-                className="button"
-                disabled={creating}
-                onClick={() => {
-                  void createInvite();
-                }}
-              >
-                <Share2 />
-                {creating ? t('loading') : t('createInvite')}
-              </button>
-            </div>
-            {joinCode ? (
-              <div className="join-code-box" role="status">
-                <p className="muted">{t('codeShownOnce')}</p>
-                <code className="join-code">{joinCode}</code>
-                <button
-                  className="button secondary"
-                  onClick={() => {
-                    void shareOrCopy();
-                  }}
-                >
-                  {copiedCode ? <Check /> : <Copy />}
-                  {t('copy')}
-                </button>
-              </div>
-            ) : null}
-            {invites.length > 0 ? (
-              <ul className="list plain">
-                {invites.map((invite) => (
-                  <li className="list-row" key={invite.id}>
-                    <div>
-                      <strong>{t(ROLE_LABEL[invite.role])}</strong>
-                      <span className="muted">
-                        {t(INVITE_STATUS_LABEL[invite.status])} · {t('expiresIn')}{' '}
-                        {formatDateTime(invite.expiresAt, locale)}
-                      </span>
-                    </div>
-                    {invite.status === 'pending' ? (
-                      <button
-                        className="icon-button danger-ghost"
-                        aria-label={t('revoke')}
-                        onClick={() => {
-                          void revokeInvite(invite.id);
-                        }}
-                      >
-                        <ShieldOff />
-                      </button>
-                    ) : null}
-                  </li>
-                ))}
-              </ul>
-            ) : null}
-          </section>
-
-          <section className="section-card stack">
-            <div className="section-heading">
-              <div>
-                <p className="eyebrow">{t('members')}</p>
-                <h2>
-                  <Users size={18} aria-hidden="true" /> {members.length}
-                </h2>
-              </div>
-            </div>
-            <ul className="list plain">
-              {members.map((member) => (
-                <li className="member-permission-row" key={member.userId}>
-                  <div className="member-identity">
-                    <strong>
-                      {member.displayName}
-                      {member.userId === user?.id ? ` (${t('you')})` : ''}
-                    </strong>
-                    <span className="muted">{member.email}</span>
-                  </div>
-                  {member.role === 'owner' ? (
-                    <span className="mode-pill">{t('roleOwner')}</span>
-                  ) : (
-                    <div className="member-controls">
-                      <select
-                        aria-label={`${t('role')} — ${member.displayName}`}
-                        value={member.role}
-                        onChange={(event) => {
-                          void changeRole(
-                            member,
-                            event.target.value as Exclude<BucketRole, 'owner'>,
-                          );
-                        }}
-                      >
-                        {ASSIGNABLE_ROLES.map((role) => (
-                          <option key={role} value={role}>
-                            {t(ROLE_LABEL[role])}
-                          </option>
-                        ))}
-                      </select>
-                      <label className="checkbox-row">
-                        <input
-                          type="checkbox"
-                          checked={member.canCreateCustomItems ?? false}
-                          onChange={(event) => {
-                            void changeCustomPermissions(member, {
-                              canCreateCustomItems: event.target.checked,
-                            });
-                          }}
-                        />
-                        {gt('allowCustomItems')}
-                      </label>
-                      <label className="checkbox-row">
-                        <input
-                          type="checkbox"
-                          checked={member.canSetCustomItemPrice ?? false}
-                          disabled={!member.canCreateCustomItems}
-                          onChange={(event) => {
-                            void changeCustomPermissions(member, {
-                              canSetCustomItemPrice: event.target.checked,
-                            });
-                          }}
-                        />
-                        {gt('allowCustomPrice')}
-                      </label>
-                      <button
-                        className="icon-button danger-ghost"
-                        aria-label={`${t('removeMember')} — ${member.displayName}`}
-                        onClick={() => {
-                          setRemoving(member);
-                        }}
-                      >
-                        <UserMinus />
-                      </button>
-                    </div>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </section>
-
+          <BucketInvitePanel
+            locale={locale}
+            invites={invites}
+            inviteRole={inviteRole}
+            creating={creating}
+            joinCode={joinCode}
+            copiedCode={copiedCode}
+            translate={t}
+            onRoleChange={setInviteRole}
+            onCreate={() => {
+              void createInvite();
+            }}
+            onShare={() => {
+              void shareOrCopy();
+            }}
+            onRevoke={(inviteId) => {
+              void revokeInvite(inviteId);
+            }}
+          />
+          <BucketMemberPermissionsPanel
+            members={members}
+            currentUserId={user.id}
+            locale={locale}
+            translate={t}
+            onRoleChange={(member, role) => {
+              void changeRole(member, role);
+            }}
+            onPermissionChange={(member, patch) => {
+              void changeCustomPermissions(member, patch);
+            }}
+            onRemove={setRemoving}
+          />
           <section className="section-card">
             <div className="section-heading">
               <div>
