@@ -13,7 +13,7 @@ const records = [
   { id: 'c', updatedAt: '2026-01-02T00:00:00.000Z' },
   { id: 'b', updatedAt: '2026-01-02T00:00:00.000Z' },
   { id: 'd', updatedAt: '2026-01-01T00:00:00.000Z' },
-];
+] as const;
 
 const updatedAt = (item: (typeof records)[number]): string => item.updatedAt;
 
@@ -26,7 +26,11 @@ describe('cursor pagination', () => {
   });
 
   it('round-trips an opaque sort cursor', () => {
-    const value = { sortValue: records[0].updatedAt, id: records[0].id };
+    const firstRecord = records[0];
+    const value = {
+      sortValue: firstRecord.updatedAt,
+      id: firstRecord.id,
+    };
     expect(decodeSortCursor(encodeSortCursor(value))).toEqual(value);
   });
 
@@ -42,10 +46,11 @@ describe('cursor pagination', () => {
     expect(first.items.map(({ id }) => id)).toEqual(['a', 'c']);
     expect(first.hasMore).toBe(true);
     expect(first.nextCursor).not.toBeNull();
+    if (!first.nextCursor) throw new Error('Expected the first page cursor.');
 
     const second = paginateDescending(
       records,
-      { limit: 2, cursor: first.nextCursor ?? undefined },
+      { limit: 2, cursor: first.nextCursor },
       updatedAt,
     );
     expect(second.items.map(({ id }) => id)).toEqual(['b', 'd']);
