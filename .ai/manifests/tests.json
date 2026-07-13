@@ -2,43 +2,43 @@
   "tests": [
     {
       "path": "tests/domain/bucket.test.ts",
-      "bytes": 2628,
-      "hash": "94a6104f81a6916ad8c19d24cb599d8d04edb1a3c32ca420c278ed0fa55eae7b"
+      "bytes": 2629,
+      "hash": "86577b92ffd7af648b1a5fd14024e394a01fa5f9f2e2e5e610b6a5ca02fcd60d"
     },
     {
       "path": "tests/domain/order.test.ts",
-      "bytes": 948,
-      "hash": "d9a1b037611046e76b08e5ee191b2593309508dcaca260426faa2b16a7c06e21"
+      "bytes": 949,
+      "hash": "eb23bba81b864c755602c07c4a3545ebe0501b1b14a3ecb2e61fb926928cf6f4"
     },
     {
       "path": "tests/domain/sharing.test.ts",
-      "bytes": 9959,
-      "hash": "da8097ec882592ebd1930e49f5de4804faa8027ca99a9783d88b8fc81313d635"
+      "bytes": 9960,
+      "hash": "7c84d816a9644955e7ce40e8c7f03da713ebb4bb7556c557546309922b1c666e"
     },
     {
       "path": "tests/e2e/smoke.spec.ts",
-      "bytes": 884,
-      "hash": "a8be2b62cb731828536b5f1162e5c9c9b84d9e579235b77ae88583850215e6c8"
+      "bytes": 885,
+      "hash": "a3f6f02607840114a29020d96f57233ac773ef2cc119d7faea6e7827ba706ef3"
     },
     {
       "path": "tests/e2e/ui.spec.ts",
-      "bytes": 2935,
-      "hash": "d6184c52e6abaacd8eb1e3db0a3409e5c517405fe255de5c28d1702d865bfc19"
+      "bytes": 4751,
+      "hash": "1ce6f54684adb2464b6c75c767bcffbf70321ec5cdeedab6bcebb7efa0184c84"
     },
     {
       "path": "tests/services/localServices.test.ts",
-      "bytes": 1868,
-      "hash": "29da0a1fba83623583a6b15c1aefa09a8043192015e030ce3f031c53c10ffb54"
+      "bytes": 1900,
+      "hash": "fd725ec732f71f225e0607c34c4dcf9a415884d6bc0bc9219a4dbb2cae598e63"
     },
     {
       "path": "tests/services/sharingLocal.test.ts",
-      "bytes": 11112,
-      "hash": "af24bb39c28a341658d4ad5b942f6e141dd7367e99cd4bf413165dbaa4710b42"
+      "bytes": 11113,
+      "hash": "2ecbd6be22ff683164a13e571691dd64418d423e0fa9e154aa7cfd44e6ae5d26"
     },
     {
       "path": "tests/setup.ts",
-      "bytes": 350,
-      "hash": "b0c8d0ad2ad717a07842b46bedcb1c88831a58a373867ff52d3bdf9dc5d706f5"
+      "bytes": 322,
+      "hash": "e1d0572ef83bd914c50125e3298f86a711b917fc255a2ac178fccf4eeb9cf16c"
     }
   ]
 }

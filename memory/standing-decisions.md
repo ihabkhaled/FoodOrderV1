@@ -34,4 +34,13 @@ SemVer with a single place-of-record (`package.json`). **Bump level is chosen by
 
 ## App shell (2026-07-13)
 
-Responsive shell: persistent left sidebar at >=960px, slim top bar + bottom nav below. Toasts are bottom-anchored and must never overlap page content. One canonical owner per reusable component; layout is verified by the Playwright UI gate (`tests/e2e/ui.spec.ts`).
+Responsive shell: persistent left sidebar at >=960px, slim top bar + bottom nav below. Toasts are bottom-anchored and must never overlap page content. One canonical owner per reusable component; layout is verified by the Playwright UI gate (`tests/e2e/ui.spec.ts`). The sidebar (and mobile top bar) carry instant, guest-capable language and theme switches and a persisted collapse toggle.
+
+## Toolchain & quality (2026-07-13, cycle 2)
+
+- Language target ES2024 (`tsconfig` + ESLint `ecmaVersion`); shipped bundle stays `es2022` (Vite `build.target`) for the iOS 14 / Android 10 WebViews.
+- Dual TypeScript: **7.0.2 primary** (`typescript7` alias, typecheck+build) and **5.9.3** (real latest 5.x) for the lint toolchain, because typescript-eslint 8.x needs TS <6.1 and ESLint 9 (ESLint 10 unsupported). Documented in `audit/dependency-verification.md`.
+- Dependencies kept latest-compatible: Vite 8, Vitest 4, Firebase 12.16, react-router 7.18, lucide 1.x, @capacitor 8.4. Clean install, **no `--legacy-peer-deps`**.
+- ESLint = reference-repo 12-plugin parity (import-sort, unused-imports, jsx-a11y, promise, regexp, sonarjs, unicorn@60, security, prettier-config, vitest, testing-library, playwright), applied to every file; documented relaxations only.
+- Git hooks: husky pre-commit (lint-staged), commit-msg (commitlint/Conventional Commits), pre-push (typecheck+tests). CI stays the source of truth.
+- Quality tools: knip (dead code), madge (circular — none), trivy + npm audit. See `docs/operations/reference-parity-roadmap.md` for what's done vs. deferred (99%/file coverage, module architecture, v4 pack).
