@@ -144,6 +144,11 @@ const nonNegativeMoney = (value: unknown, label: string): number => {
   return Math.round(value * 100) / 100;
 };
 
+const callableData = (value: unknown): Record<string, unknown> =>
+  typeof value === 'object' && value !== null
+    ? (value as Record<string, unknown>)
+    : {};
+
 const actorName = (token: Record<string, unknown>): string => {
   const name = token.name;
   if (typeof name === 'string' && name.trim()) return name.trim();
@@ -288,8 +293,9 @@ const buildOrder = (
 
 export const finalizeGroupOrder = onCall({ region: REGION }, async (request) => {
   const ownerId = requireAuth(request.auth);
-  const bucketId = requiredString(request.data?.bucketId, 'Bucket ID', 160);
-  const notes = optionalString(request.data?.notes, 500);
+  const data = callableData(request.data);
+  const bucketId = requiredString(data.bucketId, 'Bucket ID', 160);
+  const notes = optionalString(data.notes, 500);
   const bucketReference = firestore.collection('buckets').doc(bucketId);
   const orderId = firestore.collection('users').doc(ownerId).collection('orders').doc().id;
 
@@ -363,11 +369,12 @@ export const finalizeGroupOrder = onCall({ region: REGION }, async (request) => 
 
 export const addCustomBucketItem = onCall({ region: REGION }, async (request) => {
   const userId = requireAuth(request.auth);
-  const bucketId = requiredString(request.data?.bucketId, 'Bucket ID', 160);
-  const name = requiredString(request.data?.name, 'Item name', 120);
-  const description = optionalString(request.data?.description, 500);
-  const category = optionalString(request.data?.category, 80);
-  const requestedPrice = nonNegativeMoney(request.data?.unitPrice ?? 0, 'Item price');
+  const data = callableData(request.data);
+  const bucketId = requiredString(data.bucketId, 'Bucket ID', 160);
+  const name = requiredString(data.name, 'Item name', 120);
+  const description = optionalString(data.description, 500);
+  const category = optionalString(data.category, 80);
+  const requestedPrice = nonNegativeMoney(data.unitPrice ?? 0, 'Item price');
   const displayName = actorName(request.auth?.token ?? {});
   const bucketReference = firestore.collection('buckets').doc(bucketId);
 
@@ -429,9 +436,10 @@ export const addCustomBucketItem = onCall({ region: REGION }, async (request) =>
 
 export const approveCustomBucketItem = onCall({ region: REGION }, async (request) => {
   const ownerId = requireAuth(request.auth);
-  const bucketId = requiredString(request.data?.bucketId, 'Bucket ID', 160);
-  const itemId = requiredString(request.data?.itemId, 'Item ID', 160);
-  const unitPrice = nonNegativeMoney(request.data?.unitPrice, 'Item price');
+  const data = callableData(request.data);
+  const bucketId = requiredString(data.bucketId, 'Bucket ID', 160);
+  const itemId = requiredString(data.itemId, 'Item ID', 160);
+  const unitPrice = nonNegativeMoney(data.unitPrice, 'Item price');
   const bucketReference = firestore.collection('buckets').doc(bucketId);
 
   return firestore.runTransaction(async (transaction) => {

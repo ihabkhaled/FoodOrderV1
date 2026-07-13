@@ -418,7 +418,7 @@ const firebaseCode = (error: unknown): string | null => {
 
     const rawMessage = (error as FirebaseErrorLike).message;
     if (typeof rawMessage === 'string') {
-      const match = rawMessage.match(/\(((?:auth|firestore|functions|storage)\/[^)]+)\)/u);
+      const match = /\(((?:auth|firestore|functions|storage)\/[^)]+)\)/u.exec(rawMessage);
       if (match?.[1]) return match[1];
       if (rawMessage.includes('Missing or insufficient permissions')) {
         return 'firestore/permission-denied';
@@ -478,4 +478,4 @@ export const withFirebaseErrorTranslation = <Service extends object>(service: Se
         }
       };
     },
-  }) as Service;
+  });
