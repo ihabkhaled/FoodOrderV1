@@ -12,71 +12,90 @@ import {
   RefreshProvider,
   useRefreshController,
 } from '@/state/RefreshContext';
+import type { Locale } from '@/types/domain';
 
 const MAX_PULL = 108;
 const REFRESH_THRESHOLD = 68;
 
-function RefreshViewportContent({ children }: { children: ReactNode }) {
-  const { locale } = useApp();
-  const { available, refreshing, refresh } = useRefreshController();
+const isPageAtTop = (): boolean =>
+  (document.scrollingElement?.scrollTop ?? window.scrollY) <= 0;
+
+const refreshLabel = (
+  locale: Locale,
+  refreshing: boolean,
+  armed: boolean,
+): string => {
+  if (refreshing) return locale === 'ar' ? 'جارٍ التحديث…' : 'Refreshing…';
+  if (armed) return locale === 'ar' ? 'اترك للتحديث' : 'Release to refresh';
+  return locale === 'ar' ? 'اسحب لأسفل للتحديث' : 'Pull down to refresh';
+};
+
+const usePullGesture = (
+  available: boolean,
+  refreshing: boolean,
+  refresh: () => Promise<void>,
+) => {
   const startY = useRef<number | null>(null);
   const [distance, setDistance] = useState(0);
 
-  const label = refreshing
-    ? locale === 'ar'
-      ? 'جارٍ التحديث…'
-      : 'Refreshing…'
-    : distance >= REFRESH_THRESHOLD
-      ? locale === 'ar'
-        ? 'اترك للتحديث'
-        : 'Release to refresh'
-      : locale === 'ar'
-        ? 'اسحب لأسفل للتحديث'
-        : 'Pull down to refresh';
+  const reset = useCallback((): void => {
+    startY.current = null;
+    setDistance(0);
+  }, []);
 
-  const atTop = (): boolean =>
-    (document.scrollingElement?.scrollTop ?? window.scrollY) <= 0;
-
-  const handleTouchStart = useCallback(
+  const onTouchStart = useCallback(
     (event: TouchEvent<HTMLDivElement>): void => {
-      if (!available || refreshing || !atTop()) return;
-      startY.current = event.touches[0]?.clientY ?? null;
+      if (available && !refreshing && isPageAtTop()) {
+        startY.current = event.touches[0]?.clientY ?? null;
+      }
     },
     [available, refreshing],
   );
 
-  const handleTouchMove = useCallback(
+  const onTouchMove = useCallback(
     (event: TouchEvent<HTMLDivElement>): void => {
       const origin = startY.current;
       const current = event.touches[0]?.clientY;
       if (origin === null || current === undefined) return;
-      const delta = Math.max(0, current - origin);
-      if (delta === 0) return;
-      if (!atTop()) {
-        startY.current = null;
-        setDistance(0);
+      if (!isPageAtTop()) {
+        reset();
         return;
       }
+      const delta = Math.max(0, current - origin);
+      if (delta <= 0) return;
       event.preventDefault();
       setDistance(Math.min(MAX_PULL, delta * 0.55));
     },
-    [],
+    [reset],
   );
 
-  const completeGesture = useCallback((): void => {
-    const shouldRefresh = distance >= REFRESH_THRESHOLD;
-    startY.current = null;
-    setDistance(0);
-    if (shouldRefresh) void refresh();
-  }, [distance, refresh]);
+  const onTouchEnd = useCallback((): void => {
+    const armed = distance >= REFRESH_THRESHOLD;
+    reset();
+    if (armed) void refresh();
+  }, [distance, refresh, reset]);
+
+  return { distance, onTouchStart, onTouchMove, onTouchEnd };
+};
+
+function RefreshViewportContent({ children }: { children: ReactNode }) {
+  const { locale } = useApp();
+  const { available, refreshing, refresh } = useRefreshController();
+  const { distance, onTouchStart, onTouchMove, onTouchEnd } = usePullGesture(
+    available,
+    refreshing,
+    refresh,
+  );
+  const armed = distance >= REFRESH_THRESHOLD;
+  const buttonLabel = locale === 'ar' ? 'تحديث الصفحة' : 'Refresh page';
 
   return (
     <div
       className="refresh-viewport"
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={completeGesture}
-      onTouchCancel={completeGesture}
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
+      onTouchCancel={onTouchEnd}
     >
       <div
         className={`pull-refresh-indicator${distance > 0 || refreshing ? ' visible' : ''}`}
@@ -85,7 +104,7 @@ function RefreshViewportContent({ children }: { children: ReactNode }) {
         aria-live="polite"
       >
         <RefreshCw className={refreshing ? 'spinning' : ''} />
-        <span>{label}</span>
+        <span>{refreshLabel(locale, refreshing, armed)}</span>
       </div>
       {available ? (
         <button
@@ -93,8 +112,8 @@ function RefreshViewportContent({ children }: { children: ReactNode }) {
           className="icon-button page-refresh-button"
           onClick={() => void refresh()}
           disabled={refreshing}
-          aria-label={locale === 'ar' ? 'تحديث الصفحة' : 'Refresh page'}
-          title={locale === 'ar' ? 'تحديث الصفحة' : 'Refresh page'}
+          aria-label={buttonLabel}
+          title={buttonLabel}
         >
           <RefreshCw className={refreshing ? 'spinning' : ''} />
         </button>
