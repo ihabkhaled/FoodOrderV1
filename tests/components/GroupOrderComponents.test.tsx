@@ -5,10 +5,15 @@ import { describe, expect, it, vi } from 'vitest';
 import { BucketPricingPanel } from '@/components/BucketPricingPanel';
 import { CustomItemPanel } from '@/components/CustomItemPanel';
 import { GroupReceiptSection } from '@/components/GroupReceiptSection';
+import type { MessageKey } from '@/i18n/messages';
 import { calculateGroupOrderReceipt } from '@/lib/groupOrder';
-import type { BucketItem, BucketPricingPolicy } from '@/types/domain';
+import type {
+  BucketItem,
+  BucketPricingPolicy,
+  GroupOrderReceiptSnapshot,
+} from '@/types/domain';
 
-const translate = (key: string): string => key;
+const translate = (key: MessageKey): string => key;
 
 const policy: BucketPricingPolicy = {
   vatBasisPoints: 1000,
@@ -19,7 +24,7 @@ const policy: BucketPricingPolicy = {
   deliveryAllocation: 'equal',
 };
 
-const receipt = calculateGroupOrderReceipt({
+const calculatedReceipt = calculateGroupOrderReceipt({
   currency: 'EGP',
   participants: [
     {
@@ -54,6 +59,12 @@ const receipt = calculateGroupOrderReceipt({
   policy,
 });
 
+const receipt: GroupOrderReceiptSnapshot = {
+  ...calculatedReceipt,
+  pricingPolicy: policy,
+  bucketRevision: 3,
+};
+
 const pendingItem: BucketItem = {
   id: 'custom-item',
   name: 'Custom soup',
@@ -64,7 +75,7 @@ const pendingItem: BucketItem = {
   sortOrder: 10,
   createdByUserId: 'member',
   createdByName: 'Member',
-  sourceType: 'custom',
+  source: 'custom',
   approvalStatus: 'pending',
 };
 
@@ -83,7 +94,9 @@ describe('BucketPricingPanel', () => {
       />,
     );
 
-    const [vat, service, delivery] = screen.getAllByRole('spinbutton');
+    const vat = screen.getByLabelText('VAT percentage');
+    const service = screen.getByLabelText('Service percentage');
+    const delivery = screen.getByLabelText('Delivery amount');
     await user.clear(vat);
     await user.type(vat, '14.5');
     await user.clear(service);
@@ -113,7 +126,7 @@ describe('BucketPricingPanel', () => {
       />,
     );
 
-    const [vat] = screen.getAllByRole('spinbutton');
+    const vat = screen.getByLabelText('VAT percentage');
     await user.clear(vat);
     await user.type(vat, '-1');
     expect(screen.getByRole('button', { name: 'Save charges' })).toBeDisabled();
