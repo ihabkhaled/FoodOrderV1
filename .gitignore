@@ -19,3 +19,6 @@ ios/App/App/public/
 ios/App/output/
 .ai/local/*
 !.ai/local/.gitkeep
+
+# UI review screenshots (local only)
+ui-shots/
