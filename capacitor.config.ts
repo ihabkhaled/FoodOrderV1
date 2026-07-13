@@ -4,7 +4,6 @@ const config: CapacitorConfig = {
   appId: 'com.ihabkhaled.foodorderv1',
   appName: 'FoodOrder',
   webDir: 'dist',
-  bundledWebRuntime: false,
   server: { androidScheme: 'https' },
   plugins: {
     Keyboard: { resize: 'body', resizeOnFullScreen: true },
