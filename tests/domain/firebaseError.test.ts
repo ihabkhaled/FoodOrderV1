@@ -7,12 +7,12 @@ import {
   withFirebaseErrorTranslation,
 } from '@/lib/firebaseError';
 
+const codedError = (code: string): Error & { code: string } =>
+  Object.assign(new Error(`Firebase: Error (${code}).`), { code });
+
 describe('Firebase error localization', () => {
   it('translates invalid credentials without exposing Firebase text', () => {
-    const error = {
-      code: 'auth/invalid-credential',
-      message: 'Firebase: Error (auth/invalid-credential).',
-    };
+    const error = codedError('auth/invalid-credential');
 
     expect(firebaseErrorMessage(error, 'en')).toBe(
       'The email or password is incorrect.',
@@ -24,10 +24,10 @@ describe('Firebase error localization', () => {
 
   it('translates an email already in use', () => {
     expect(
-      firebaseErrorMessage({ code: 'auth/email-already-in-use' }, 'en'),
+      firebaseErrorMessage(codedError('auth/email-already-in-use'), 'en'),
     ).toContain('already exists');
     expect(
-      firebaseErrorMessage({ code: 'auth/email-already-in-use' }, 'ar'),
+      firebaseErrorMessage(codedError('auth/email-already-in-use'), 'ar'),
     ).toContain('يوجد حساب');
   });
 
@@ -43,9 +43,9 @@ describe('Firebase error localization', () => {
   });
 
   it('uses a localized family fallback for a future Firebase code', () => {
-    expect(
-      firebaseErrorMessage({ code: 'auth/future-sdk-error' }, 'ar'),
-    ).toBe('تعذّر إكمال تسجيل الدخول. حاول مرة أخرى.');
+    expect(firebaseErrorMessage(codedError('auth/future-sdk-error'), 'ar')).toBe(
+      'تعذّر إكمال تسجيل الدخول. حاول مرة أخرى.',
+    );
   });
 
   it('preserves a non-Firebase application error', () => {
@@ -57,8 +57,8 @@ describe('Firebase error localization', () => {
   it('wraps asynchronous Firebase service errors using the active locale', async () => {
     setFirebaseErrorLocale('ar');
     const service = withFirebaseErrorTranslation({
-      async fail(): Promise<void> {
-        throw { code: 'functions/permission-denied' };
+      fail(): Promise<void> {
+        return Promise.reject(codedError('functions/permission-denied'));
       },
     });
 
