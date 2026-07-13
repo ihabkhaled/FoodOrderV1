@@ -52,15 +52,23 @@ jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v6
         with:
           node-version: 26
           cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            functions/package-lock.json
       - run: npm ci
-      - name: Run ESLint
+      - run: npm --prefix functions ci
+      - name: Run ESLint autofix
+        run: npm run lint:fix
+      - name: Require committed autofixes
+        run: git diff --exit-code
+      - name: Run clean ESLint gate
         shell: bash
         run: |
           set -o pipefail
@@ -97,6 +105,28 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run typecheck:tsc
+
+  functions:
+    name: Firebase Functions
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: functions/package-lock.json
+      - run: npm --prefix functions ci
+      - run: npm --prefix functions run typecheck
+      - run: npm --prefix functions run build
+      - run: npm --prefix functions run test
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: firebase-functions-build
+          path: functions/lib/
+          if-no-files-found: error
 
   circular-dependencies:
     name: Circular Dependencies
@@ -170,7 +200,8 @@ jobs:
           node-version: 26
           cache: npm
       - run: npm ci
-      - run: npm run build
+      - name: Build production application
+        run: npm run build
 
   e2e:
     name: End-to-End
@@ -204,6 +235,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run security:audit
+      - run: npm --prefix functions audit --audit-level=high
 
   trivy:
     name: Trivy
@@ -251,6 +283,7 @@ jobs:
       - lint
       - typecheck-primary
       - typecheck-compatibility
+      - functions
       - circular-dependencies
       - dead-code
       - coverage
@@ -261,7 +294,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Require every mandatory gate to succeed
+      - name: Require every repository gate to succeed
         env:
           NEEDS_JSON: ${{ toJson(needs) }}
         run: |
@@ -273,7 +306,7 @@ jobs:
             for (const [name, value] of failures) console.error(`- ${name}: ${value.result}`);
             process.exit(1);
           }
-          console.log('All mandatory gates are green.');
+          console.log('All mandatory repository gates are green. External Vercel deployment status is advisory for APK generation.');
           NODE
 
   generate-apk:
@@ -296,10 +329,8 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: FoodOrderV1-debug-apk
-
       - name: Verify APK checksum
         run: sha256sum --check FoodOrderV1-*-debug.apk.sha256
-
       - name: Create or update GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
