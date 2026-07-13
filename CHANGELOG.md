@@ -5,6 +5,10 @@ The version bump level is decided by prompt density — see [rules/versioning.md
 
 <!-- releases -->
 
+## [1.2.0] - 2026-07-13
+
+- Sidebar language/dark-mode/collapse controls, latest toolchain (Vite 8, Vitest 4, ES2024), and full ESLint + git-hook + CI quality parity
+
 ## [1.1.1] - 2026-07-13
 
 - Stop shipping sourcemaps in the production/native bundle (smaller APK, no source on device)
