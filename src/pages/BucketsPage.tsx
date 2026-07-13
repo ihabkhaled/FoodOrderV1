@@ -1,35 +1,43 @@
-import { KeyRound, Plus, Search, ShoppingBasket } from 'lucide-react';
-import { useCallback, useMemo, useState } from 'react';
+import { KeyRound, Plus, ShoppingBasket } from 'lucide-react';
+import { useCallback, useMemo } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 
+import { BucketCollectionSection } from '@/components/BucketCollectionSection';
 import {
-  OwnedBucketCard,
-  SharedBucketCard,
-} from '@/components/BucketCards';
+  BucketFilters,
+  type BucketScope,
+} from '@/components/BucketFilters';
 import { ConfirmDialog } from '@/components/ConfirmDialog';
 import { EmptyState } from '@/components/EmptyState';
 import { ErrorState } from '@/components/ErrorState';
 import { Loading } from '@/components/Loading';
-import { VirtualListFooter } from '@/components/VirtualListFooter';
+import { useBucketMutations } from '@/hooks/useBucketMutations';
 import { useCursorPage } from '@/hooks/useCursorPage';
-import { AppVirtuosoGrid } from '@/packages/virtuoso';
-import { dataService, paginationService } from '@/services';
+import type { PageResult } from '@/lib/pagination';
+import { paginationService } from '@/services';
 import { useApp } from '@/state/AppContext';
 import { usePageRefresh } from '@/state/RefreshContext';
 import type { Bucket } from '@/types/domain';
 
-const emptyBucketPage = async () => ({
-  items: [] as Bucket[],
-  nextCursor: null,
-  hasMore: false,
-});
+const emptyBucketPage = (): Promise<PageResult<Bucket>> =>
+  Promise.resolve({ items: [], nextCursor: null, hasMore: false });
+
+const readScope = (value: string | null): BucketScope =>
+  value === 'owned' || value === 'shared' ? value : 'all';
+
+const filterBuckets = (buckets: readonly Bucket[], query: string): Bucket[] => {
+  const normalized = query.trim().toLowerCase();
+  if (!normalized) return [...buckets];
+  return buckets.filter((bucket) =>
+    `${bucket.title} ${bucket.description}`.toLowerCase().includes(normalized),
+  );
+};
 
 export function BucketsPage() {
   const { user, locale, t, showToast, errorMessage } = useApp();
   const [searchParameters, setSearchParameters] = useSearchParams();
-  const [deleting, setDeleting] = useState<Bucket | null>(null);
   const query = searchParameters.get('q') ?? '';
-  const scope = searchParameters.get('scope') ?? 'all';
+  const scope = readScope(searchParameters.get('scope'));
 
   const loadOwned = useCallback(
     (request: Parameters<typeof paginationService.listOwnedBuckets>[1]) =>
@@ -47,99 +55,55 @@ export function BucketsPage() {
   );
   const owned = useCursorPage(loadOwned, `owned:${user?.id ?? 'guest'}`);
   const shared = useCursorPage(loadShared, `shared:${user?.id ?? 'guest'}`);
-
-  const refresh = useCallback(async (): Promise<void> => {
-    await Promise.all([owned.refresh(), shared.refresh()]);
-  }, [owned.refresh, shared.refresh]);
+  const refreshOwned = owned.refresh;
+  const refreshShared = shared.refresh;
+  const refresh = useCallback(
+    async (): Promise<void> => {
+      await Promise.all([refreshOwned(), refreshShared()]);
+    },
+    [refreshOwned, refreshShared],
+  );
   usePageRefresh(refresh);
 
-  const normalizedQuery = query.trim().toLowerCase();
+  const { deleting, setDeleting, remove, duplicate } = useBucketMutations({
+    user,
+    t,
+    showToast,
+    errorMessage,
+    refresh: refreshOwned,
+  });
   const filteredOwned = useMemo(
-    () =>
-      owned.items.filter((bucket) =>
-        `${bucket.title} ${bucket.description}`
-          .toLowerCase()
-          .includes(normalizedQuery),
-      ),
-    [normalizedQuery, owned.items],
+    () => filterBuckets(owned.items, query),
+    [owned.items, query],
   );
   const filteredShared = useMemo(
-    () =>
-      shared.items.filter((bucket) =>
-        `${bucket.title} ${bucket.description}`
-          .toLowerCase()
-          .includes(normalizedQuery),
-      ),
-    [normalizedQuery, shared.items],
+    () => filterBuckets(shared.items, query),
+    [query, shared.items],
   );
 
-  const setQuery = (value: string): void => {
+  const updateSearch = (key: 'q' | 'scope', value: string): void => {
     const next = new URLSearchParams(searchParameters);
-    if (value) next.set('q', value);
-    else next.delete('q');
+    const defaultValue = key === 'scope' ? 'all' : '';
+    if (!value || value === defaultValue) next.delete(key);
+    else next.set(key, value);
     setSearchParameters(next, { replace: true });
   };
 
-  const setScope = (value: string): void => {
-    const next = new URLSearchParams(searchParameters);
-    if (value === 'all') next.delete('scope');
-    else next.set('scope', value);
-    setSearchParameters(next, { replace: true });
-  };
-
-  const remove = async (): Promise<void> => {
-    if (!user || !deleting) return;
-    try {
-      await dataService.deleteBucket(user, deleting.id);
-      await owned.refresh();
-      showToast(t('bucketDeleted'), 'success');
-    } catch (error_) {
-      showToast(errorMessage(error_), 'error');
-    } finally {
-      setDeleting(null);
-    }
-  };
-
-  const duplicate = async (bucket: Bucket): Promise<void> => {
-    if (!user) return;
-    try {
-      await dataService.createBucket(user, {
-        title: `${bucket.title} (${t('copySuffix')})`.slice(0, 60),
-        description: bucket.description,
-        currency: bucket.currency,
-        items: bucket.items.map(
-          ({ name, description, category, unitPrice, active, sortOrder }) => ({
-            id: '',
-            name,
-            description,
-            category,
-            unitPrice,
-            active,
-            sortOrder,
-          }),
-        ),
-      });
-      await owned.refresh();
-      showToast(t('bucketSaved'), 'success');
-    } catch (error_) {
-      showToast(errorMessage(error_), 'error');
-    }
-  };
-
-  const initialLoading = owned.loading && shared.loading;
   const initialError =
     owned.items.length === 0 && shared.items.length === 0
       ? owned.error ?? shared.error
       : null;
   if (initialError) {
-    return <ErrorState message={errorMessage(initialError)} onRetry={() => void refresh()} />;
+    return (
+      <ErrorState
+        message={errorMessage(initialError)}
+        onRetry={() => void refresh()}
+      />
+    );
   }
-  if (initialLoading) return <Loading />;
+  if (owned.loading && shared.loading) return <Loading />;
 
-  const showOwned = scope !== 'shared';
-  const showShared = scope !== 'owned';
   const totalLoaded = owned.items.length + shared.items.length;
-
   return (
     <div className="page stack-lg">
       <div className="page-heading">
@@ -161,123 +125,49 @@ export function BucketsPage() {
 
       {totalLoaded > 0 ? (
         <>
-          <label className="search-field">
-            <Search />
-            <input
-              value={query}
-              onChange={(event) => {
-                setQuery(event.target.value);
-              }}
-              placeholder={t('searchBuckets')}
-              aria-label={t('searchBuckets')}
+          <BucketFilters
+            query={query}
+            scope={scope}
+            locale={locale}
+            t={t}
+            onQueryChange={(value) => {
+              updateSearch('q', value);
+            }}
+            onScopeChange={(value) => {
+              updateSearch('scope', value);
+            }}
+          />
+          {scope !== 'shared' ? (
+            <BucketCollectionSection
+              kind="owned"
+              items={filteredOwned}
+              locale={locale}
+              query={query}
+              loadingMore={owned.loadingMore}
+              hasMore={owned.hasMore}
+              error={owned.error ? errorMessage(owned.error) : ''}
+              t={t}
+              onLoadMore={() => void owned.loadMore()}
+              onRetry={() => void owned.loadMore()}
+              onDuplicate={(bucket) => void duplicate(bucket)}
+              onDelete={setDeleting}
             />
-          </label>
-          <div className="filter-tabs" role="group" aria-label={t('buckets')}>
-            {['all', 'owned', 'shared'].map((value) => (
-              <button
-                type="button"
-                key={value}
-                className={scope === value ? 'active' : ''}
-                onClick={() => {
-                  setScope(value);
-                }}
-              >
-                {value === 'all'
-                  ? locale === 'ar'
-                    ? 'الكل'
-                    : 'All'
-                  : value === 'owned'
-                    ? t('myBuckets')
-                    : t('sharedWithMe')}
-              </button>
-            ))}
-          </div>
-
-          {showOwned ? (
-            <section className="stack" aria-labelledby="owned-buckets-heading">
-              <div className="section-heading">
-                <h2 id="owned-buckets-heading">{t('myBuckets')}</h2>
-              </div>
-              {filteredOwned.length > 0 ? (
-                <AppVirtuosoGrid
-                  className="virtual-grid-list"
-                  data={filteredOwned}
-                  computeItemKey={(_, bucket) => bucket.id}
-                  listClassName="virtual-grid"
-                  itemClassName="virtual-list-item"
-                  endReached={() => void owned.loadMore()}
-                  increaseViewportBy={320}
-                  itemContent={(_, bucket) => (
-                    <OwnedBucketCard
-                      bucket={bucket}
-                      locale={locale}
-                      t={t}
-                      onDuplicate={(value) => void duplicate(value)}
-                      onDelete={setDeleting}
-                    />
-                  )}
-                  components={{
-                    Footer: () => (
-                      <VirtualListFooter
-                        loading={owned.loadingMore}
-                        hasMore={owned.hasMore}
-                        error={owned.error ? errorMessage(owned.error) : ''}
-                        locale={locale}
-                        onRetry={() => void owned.loadMore()}
-                      />
-                    ),
-                  }}
-                />
-              ) : (
-                <p className="muted">
-                  {query
-                    ? locale === 'ar'
-                      ? 'لا توجد نتائج مطابقة في القوائم المحمّلة.'
-                      : 'No matching results in the loaded buckets.'
-                    : t('emptyBuckets')}
-                </p>
-              )}
-            </section>
           ) : null}
-
-          {showShared ? (
-            <section className="stack" aria-labelledby="shared-buckets-heading">
-              <div className="section-heading">
-                <div>
-                  <p className="eyebrow">{t('sharedWithMe')}</p>
-                  <h2 id="shared-buckets-heading">{t('sharedWithMe')}</h2>
-                </div>
-              </div>
-              {filteredShared.length > 0 ? (
-                <AppVirtuosoGrid
-                  className="virtual-grid-list"
-                  data={filteredShared}
-                  computeItemKey={(_, bucket) => bucket.id}
-                  listClassName="virtual-grid"
-                  itemClassName="virtual-list-item"
-                  endReached={() => void shared.loadMore()}
-                  increaseViewportBy={320}
-                  itemContent={(_, bucket) => (
-                    <SharedBucketCard bucket={bucket} locale={locale} t={t} />
-                  )}
-                  components={{
-                    Footer: () => (
-                      <VirtualListFooter
-                        loading={shared.loadingMore}
-                        hasMore={shared.hasMore}
-                        error={shared.error ? errorMessage(shared.error) : ''}
-                        locale={locale}
-                        onRetry={() => void shared.loadMore()}
-                      />
-                    ),
-                  }}
-                />
-              ) : (
-                <p className="muted">
-                  {t('emptyShared')} {t('emptySharedHint')}
-                </p>
-              )}
-            </section>
+          {scope !== 'owned' ? (
+            <BucketCollectionSection
+              kind="shared"
+              items={filteredShared}
+              locale={locale}
+              query={query}
+              loadingMore={shared.loadingMore}
+              hasMore={shared.hasMore}
+              error={shared.error ? errorMessage(shared.error) : ''}
+              t={t}
+              onLoadMore={() => void shared.loadMore()}
+              onRetry={() => void shared.loadMore()}
+              onDuplicate={() => {}}
+              onDelete={() => {}}
+            />
           ) : null}
         </>
       ) : (
