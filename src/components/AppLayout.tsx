@@ -23,7 +23,7 @@ export function AppLayout() {
       </div>
     </header>
     <main className="main-content" key={location.pathname}><Outlet /></main>
-    <nav className="bottom-nav" aria-label="Primary navigation">
+    <nav className="bottom-nav" aria-label={t('primaryNavigation')}>
       {items.map(({ to, icon: Icon, key }) => <NavLink key={to} to={to} end={to === '/'} className={({ isActive }) => isActive ? 'active' : ''}><Icon /><span>{t(key)}</span></NavLink>)}
     </nav>
     {toast ? <div className={`toast toast-${toast.kind}`} role="status">{toast.message}</div> : null}

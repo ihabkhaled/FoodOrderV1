@@ -1,4 +1,4 @@
-import { CheckCircle2, ClipboardList, Plus, ShoppingBasket, Utensils } from 'lucide-react';
+import { CheckCircle2, ClipboardList, Plus, ShoppingBasket, Users, Utensils } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { formatDateTime } from '@/lib/date';
@@ -16,7 +16,7 @@ export function DashboardPage() {
   const [error, setError] = useState('');
   const load = useCallback(async () => {
     if (!user) return;
-    try { setError(''); setSummary(await dataService.getDashboard(user.id)); }
+    try { setError(''); setSummary(await dataService.getDashboard(user)); }
     catch (reason) { setError(reason instanceof Error ? reason.message : 'Unable to load dashboard.'); }
   }, [user]);
   useEffect(() => { void load(); }, [load]);
@@ -24,6 +24,7 @@ export function DashboardPage() {
   if (!summary) return <Loading />;
   const cards = [
     { label: t('bucketCount'), value: summary.bucketCount, icon: ShoppingBasket },
+    { label: t('sharedBucketCount'), value: summary.sharedBucketCount, icon: Users },
     { label: t('itemCount'), value: summary.activeItemCount, icon: Utensils },
     { label: t('orderCount'), value: summary.orderCount, icon: ClipboardList },
     { label: t('placedCount'), value: summary.placedOrderCount, icon: CheckCircle2 },
