@@ -67,11 +67,14 @@ export interface Bucket {
   currency: CurrencyCode;
   visibility: BucketVisibility;
   status: 'active';
-  orderState: BucketOrderState;
-  customItemMode: CustomItemMode;
-  pricingPolicy: BucketPricingPolicy;
-  frozenAt: string | null;
-  frozenBy: string | null;
+  /** Optional only for schema-v1/v2 compatibility; normalized v3 buckets always persist it. */
+  orderState?: BucketOrderState;
+  /** Optional only for schema-v1/v2 compatibility; normalized v3 buckets always persist it. */
+  customItemMode?: CustomItemMode;
+  /** Optional only for schema-v1/v2 compatibility; normalized v3 buckets always persist it. */
+  pricingPolicy?: BucketPricingPolicy;
+  frozenAt?: string | null;
+  frozenBy?: string | null;
   schemaVersion: number;
   revision: number;
   items: BucketItem[];
@@ -252,8 +255,8 @@ export interface Order {
   sourceBucketRevision: number | null;
   /** Per-member quantity snapshot for group orders; null for personal orders. */
   participants: SharedOrderParticipant[] | null;
-  /** Immutable financial and attribution snapshot for group orders. */
-  groupReceipt: GroupOrderReceiptSnapshot | null;
+  /** Optional only for historical orders created before schema v3. */
+  groupReceipt?: GroupOrderReceiptSnapshot | null;
   createdAt: string;
   updatedAt: string;
   placedAt: string | null;
