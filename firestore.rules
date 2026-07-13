@@ -1,29 +1,28 @@
 rules_version = '2';
+
+// Authorization for FoodOrderV1 schema v2 (see architecture/sharing-design.md §4).
+// Rules are the trust boundary: the client role matrix in src/lib/sharing.ts is UX,
+// this file is enforcement. Invite acceptance is validated server-side through the
+// atomic invite-status transition (single-use) plus getAfter() cross-checks.
 service cloud.firestore {
   match /databases/{database}/documents {
     function signedIn() { return request.auth != null; }
     function owns(userId) { return signedIn() && request.auth.uid == userId; }
-    function validProfile(userId) {
-      return request.resource.data.id == userId
-        && request.resource.data.email == request.auth.token.email
-        && request.resource.data.fullName is string
-        && request.resource.data.locale in ['en', 'ar']
-        && request.resource.data.theme in ['system', 'light', 'dark'];
-    }
+
+    // ── Personal tree ───────────────────────────────────────────────────────
     match /users/{userId} {
-      allow read: if owns(userId);
-      allow create, update: if owns(userId) && validProfile(userId);
-      allow delete: if false;
-      match /buckets/{bucketId} {
-        allow read, delete: if owns(userId);
-        allow create, update: if owns(userId)
-          && request.resource.data.userId == userId
-          && request.resource.data.id == bucketId
-          && request.resource.data.title is string
-          && request.resource.data.items is list
-          && request.resource.data.items.size() > 0
-          && request.resource.data.items.size() <= 50;
+      function validProfile() {
+        return request.resource.data.id == userId
+          && request.resource.data.email == request.auth.token.email
+          && request.resource.data.fullName is string
+          && request.resource.data.locale in ['en', 'ar']
+          && request.resource.data.theme in ['system', 'light', 'dark'];
       }
+      allow read: if owns(userId);
+      allow create, update: if owns(userId) && validProfile();
+      // Account deletion (FEAT-060) removes the profile last, client-cascaded.
+      allow delete: if owns(userId);
+
       match /orders/{orderId} {
         allow read, delete: if owns(userId);
         allow create, update: if owns(userId)
@@ -34,6 +33,194 @@ service cloud.firestore {
           && request.resource.data.lines.size() > 0
           && request.resource.data.total is number
           && request.resource.data.total >= 0;
+      }
+
+      // Client-maintained mirror of shared-bucket memberships (read fan-in aid).
+      // Grants no authority: bucket access is decided by buckets/{id}/members.
+      match /bucketMemberships/{bucketId} {
+        allow read, write: if owns(userId);
+      }
+
+      // Legacy schema-v1 location: readable/deletable for lazy migration only.
+      match /buckets/{bucketId} {
+        allow read, delete: if owns(userId);
+        allow create, update: if false;
+      }
+    }
+
+    // ── Shared buckets ──────────────────────────────────────────────────────
+    match /buckets/{bucketId} {
+      function bucket() {
+        return get(/databases/$(database)/documents/buckets/$(bucketId)).data;
+      }
+      function isBucketOwner() { return signedIn() && bucket().ownerId == request.auth.uid; }
+      function memberPath(uid) {
+        return /databases/$(database)/documents/buckets/$(bucketId)/members/$(uid);
+      }
+      function member() { return get(memberPath(request.auth.uid)).data; }
+      function isActiveMember() {
+        return signedIn()
+          && exists(memberPath(request.auth.uid))
+          && member().status == 'active';
+      }
+      function activeRole() { return member().role; }
+      function canView() { return isBucketOwner() || isActiveMember(); }
+      function canContribute() {
+        return isActiveMember() && activeRole() in ['owner', 'editor', 'contributor'];
+      }
+      function canEditStructure() {
+        return isActiveMember() && activeRole() in ['owner', 'editor'];
+      }
+      function validBucketShape() {
+        return request.resource.data.id == bucketId
+          && request.resource.data.title is string
+          && request.resource.data.title.size() > 0
+          && request.resource.data.title.size() <= 60
+          && request.resource.data.visibility in ['private', 'shared']
+          && request.resource.data.status == 'active'
+          && request.resource.data.schemaVersion == 2
+          && request.resource.data.revision is int
+          && request.resource.data.revision >= 1
+          && request.resource.data.items is list
+          && request.resource.data.items.size() > 0
+          && request.resource.data.items.size() <= 50
+          && request.resource.data.aggregate is map;
+      }
+
+      allow get: if canView();
+      // Listing is only the owner's `where ownerId ==` query; members use mirrors.
+      allow list: if signedIn() && resource.data.ownerId == request.auth.uid;
+      allow create: if signedIn()
+        && request.resource.data.ownerId == request.auth.uid
+        && validBucketShape();
+      allow update: if validBucketShape()
+        && request.resource.data.ownerId == resource.data.ownerId
+        && request.resource.data.createdAt == resource.data.createdAt
+        && request.resource.data.revision == resource.data.revision + 1
+        && (
+          // Structural edits: owner or editor.
+          isBucketOwner() || canEditStructure()
+          // Contribution transactions touch only the materialized aggregate.
+          || (canContribute()
+            && request.resource.data.diff(resource.data).affectedKeys()
+              .hasOnly(['aggregate', 'revision', 'updatedAt']))
+        );
+      allow delete: if isBucketOwner();
+
+      match /members/{memberId} {
+        function inviteAfter() {
+          return getAfter(/databases/$(database)/documents/buckets/$(bucketId)/invites/$(request.resource.data.inviteId)).data;
+        }
+        function inviteBefore() {
+          return get(/databases/$(database)/documents/buckets/$(bucketId)/invites/$(request.resource.data.inviteId)).data;
+        }
+        function validSelfJoin() {
+          // Accept transaction: member doc + invite flip commit atomically.
+          return owns(memberId)
+            && request.resource.data.userId == memberId
+            && request.resource.data.status == 'active'
+            && request.resource.data.inviteId is string
+            && inviteBefore().status == 'pending'
+            && inviteBefore().expiresAtMillis > request.time.toMillis()
+            && inviteAfter().status == 'accepted'
+            && inviteAfter().acceptedBy == request.auth.uid
+            && request.resource.data.role == inviteAfter().role
+            && request.resource.data.role in ['editor', 'contributor', 'viewer'];
+        }
+        function ownerBootstrap() {
+          // Owner's own member doc, written when creating/sharing the bucket.
+          return owns(memberId)
+            && request.resource.data.userId == memberId
+            && request.resource.data.role == 'owner'
+            && getAfter(/databases/$(database)/documents/buckets/$(bucketId)).data.ownerId == memberId;
+        }
+        allow read: if canView();
+        allow create: if ownerBootstrap() || validSelfJoin();
+        allow update: if
+          // Owner manages roles/revocations of non-owner members.
+          (isBucketOwner()
+            && resource.data.role != 'owner'
+            && request.resource.data.userId == resource.data.userId
+            && request.resource.data.role in ['editor', 'contributor', 'viewer']
+            && request.resource.data.status in ['active', 'revoked'])
+          // A member may leave (never the owner).
+          || (owns(memberId)
+            && resource.data.role != 'owner'
+            && request.resource.data.diff(resource.data).affectedKeys()
+              .hasOnly(['status', 'updatedAt'])
+            && request.resource.data.status == 'left')
+          // A previously revoked/left member re-joins through a fresh invite.
+          || (resource.data.status in ['revoked', 'left'] && validSelfJoin());
+        allow delete: if isBucketOwner();
+      }
+
+      match /invites/{inviteId} {
+        // The doc id IS the SHA-256 of the join token: holding the raw token is
+        // the read capability. Raw tokens are never stored anywhere.
+        allow get: if signedIn();
+        allow list: if isBucketOwner();
+        allow create: if isBucketOwner()
+          && request.resource.data.id == inviteId
+          && request.resource.data.bucketId == bucketId
+          && request.resource.data.status == 'pending'
+          && request.resource.data.createdBy == request.auth.uid
+          && request.resource.data.role in ['editor', 'contributor', 'viewer']
+          && request.resource.data.expiresAtMillis is number;
+        allow update: if
+          // Owner revokes a pending invite.
+          (isBucketOwner()
+            && resource.data.status == 'pending'
+            && request.resource.data.status == 'revoked')
+          // Acceptor flips pending → accepted inside the join transaction.
+          || (signedIn()
+            && resource.data.status == 'pending'
+            && resource.data.expiresAtMillis > request.time.toMillis()
+            && request.resource.data.status == 'accepted'
+            && request.resource.data.acceptedBy == request.auth.uid
+            && request.resource.data.diff(resource.data).affectedKeys()
+              .hasOnly(['status', 'acceptedBy', 'acceptedAt']));
+        allow delete: if isBucketOwner();
+      }
+
+      match /contributions/{contributorId} {
+        allow read: if canView();
+        // Each member writes ONLY their own contribution document.
+        allow create, update: if owns(contributorId)
+          && canContribute()
+          && request.resource.data.userId == contributorId
+          && request.resource.data.bucketId == bucketId
+          && request.resource.data.quantities is map
+          && request.resource.data.revision is int
+          && request.resource.data.revision >= 1;
+        allow delete: if isBucketOwner();
+      }
+
+      match /mutations/{mutationId} {
+        // Idempotency ledger: append-only, read inside contribution transactions.
+        allow get: if canView();
+        allow list: if isBucketOwner();
+        allow create: if canContribute()
+          && request.resource.data.id == mutationId
+          && request.resource.data.userId == request.auth.uid
+          && request.resource.data.bucketId == bucketId;
+        allow update: if false;
+        allow delete: if isBucketOwner();
+      }
+
+      match /activity/{eventId} {
+        function isActiveMemberAfter() {
+          // The join transaction creates the member doc and its activity event
+          // atomically, so membership must be checked against the post-state.
+          return existsAfter(memberPath(request.auth.uid))
+            && getAfter(memberPath(request.auth.uid)).data.status == 'active';
+        }
+        // Append-only audit/activity timeline.
+        allow read: if canView();
+        allow create: if (canView() || isActiveMemberAfter())
+          && request.resource.data.actorId == request.auth.uid
+          && request.resource.data.bucketId == bucketId;
+        allow update: if false;
+        allow delete: if isBucketOwner();
       }
     }
   }
