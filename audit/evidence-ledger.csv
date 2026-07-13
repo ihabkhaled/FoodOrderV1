@@ -4,3 +4,9 @@ EV-000-02,00,Repo metadata + SHAs,audit/phase-00-workspace.md,gh api repos/...,r
 EV-000-03,00,Backup refs created,git tag backup/pre-phased-v2; branch backup-pre-phased-v2,git tag/branch,points at 52a984e
 EV-000-04,00,Local main fast-forward to remote,git merge --ff-only origin/main,git,8489019 -> 52a984e clean
 EV-000-05,00,Toolchain inventory,audit/toolchain-inventory.md,version probes,JDK21+SDK36 provisioned; Xcode absent
+EV-016-01,16,Final gate matrix all green,reports/phases/PHASE_16_report.md,npm run validate components,PASS
+EV-016-02,16,32 unit/integration tests + 2 e2e,vitest + playwright output,npm run test / test:e2e,32/32 + 2/2 passed
+EV-016-03,16,Coverage evidence,coverage report,npm run test:coverage,90.52% statements
+EV-016-04,16,Local Gradle APK build,android/app/build/outputs/apk/debug,gradlew assembleDebug,BUILD SUCCESSFUL 6.78MB
+EV-016-05,16,Trivy scan clean,scratchpad trivy-report.json,trivy fs,0 findings
+EV-016-06,16,Traceability final,traceability/requirements.csv,finalize script,118 VERIFIED / 12 PARTIAL / 5 DECIDED
