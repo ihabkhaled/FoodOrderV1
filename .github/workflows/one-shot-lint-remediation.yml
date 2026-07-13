@@ -1,0 +1,110 @@
+name: One-shot Lint Remediation
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - .github/workflows/one-shot-lint-remediation.yml
+
+permissions:
+  contents: write
+
+jobs:
+  remediate:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 26
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            functions/package-lock.json
+
+      - run: npm ci
+      - run: npm --prefix functions ci
+
+      - name: Apply guarded lint remediation
+        run: |
+          node <<'NODE'
+          const { readFileSync, writeFileSync } = require('node:fs');
+
+          const functionsPath = 'functions/src/index.ts';
+          let functionsSource = readFileSync(functionsPath, 'utf8');
+
+          if (!functionsSource.includes('const callableData =')) {
+            const insertionPoint = 'const actorName = (token: Record<string, unknown>): string => {';
+            if (!functionsSource.includes(insertionPoint)) {
+              throw new Error('Could not locate callable-data helper insertion point.');
+            }
+            const helper = `const callableData = (value: unknown): Record<string, unknown> =>\n  typeof value === 'object' && value !== null\n    ? (value as Record<string, unknown>)\n    : {};\n\n`;
+            functionsSource = functionsSource.replace(insertionPoint, `${helper}${insertionPoint}`);
+          }
+
+          const handlers = [
+            ['finalizeGroupOrder', 'ownerId'],
+            ['addCustomBucketItem', 'userId'],
+            ['approveCustomBucketItem', 'ownerId'],
+          ];
+
+          for (const [handler, identity] of handlers) {
+            const start = functionsSource.indexOf(`export const ${handler} = onCall`);
+            if (start < 0) throw new Error(`Could not locate ${handler}.`);
+            const nextExport = functionsSource.indexOf('\nexport const ', start + 1);
+            const end = nextExport < 0 ? functionsSource.length : nextExport;
+            let section = functionsSource.slice(start, end);
+            const identityLine = `  const ${identity} = requireAuth(request.auth);\n`;
+            if (!section.includes('  const data = callableData(request.data);')) {
+              if (!section.includes(identityLine)) {
+                throw new Error(`Could not locate identity line for ${handler}.`);
+              }
+              section = section.replace(
+                identityLine,
+                `${identityLine}  const data = callableData(request.data);\n`,
+              );
+            }
+            section = section.replaceAll('request.data?.', 'data.');
+            functionsSource = `${functionsSource.slice(0, start)}${section}${functionsSource.slice(end)}`;
+          }
+          writeFileSync(functionsPath, functionsSource);
+
+          const errorPath = 'src/lib/firebaseError.ts';
+          let errorSource = readFileSync(errorPath, 'utf8');
+          errorSource = errorSource.replace(
+            "const match = rawMessage.match(/\\(((?:auth|firestore|functions|storage)\\/[^)]+)\\)/u);",
+            "const match = /\\(((?:auth|firestore|functions|storage)\\/[^)]+)\\)/u.exec(rawMessage);",
+          );
+          errorSource = errorSource.replace('  }) as Service;\n', '  });\n');
+          writeFileSync(errorPath, errorSource);
+          NODE
+
+      - name: Apply standard ESLint autofixes
+        run: npm run lint:fix
+
+      - name: Validate complete remediation
+        run: |
+          npm run lint
+          npm run typecheck
+          npm run typecheck:tsc
+          npm run build
+          npm --prefix functions run typecheck
+          npm --prefix functions run build
+          npm --prefix functions run test
+
+      - name: Remove temporary workflow and commit
+        run: |
+          rm .github/workflows/one-shot-lint-remediation.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add functions/src/index.ts src/lib/firebaseError.ts tests/domain/firebaseError.test.ts \
+            .github/workflows/one-shot-lint-remediation.yml
+          git diff --cached --check
+          git commit -m "fix(ci): resolve strict lint findings"
+          git push origin HEAD:${{ github.event.pull_request.head.ref }}
