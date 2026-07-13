@@ -4,7 +4,7 @@ import { roundMoney } from '@/lib/money';
 import type { Order, OrderDraft, OrderLine, OrderStatus } from '@/types/domain';
 
 const transitions: Record<OrderStatus, OrderStatus[]> = {
-  draft: ['placed', 'cancelled'],
+  draft: ['placed', 'completed', 'cancelled'],
   placed: ['completed', 'cancelled'],
   completed: [],
   cancelled: [],
@@ -53,7 +53,7 @@ export const createOrder = (userId: string, draft: OrderDraft): Order => {
     createdAt,
     updatedAt: createdAt,
     placedAt: status === 'placed' ? createdAt : null,
-    completedAt: null,
+    completedAt: status === 'completed' ? createdAt : null,
     cancelledAt: status === 'cancelled' ? createdAt : null,
   };
 };
