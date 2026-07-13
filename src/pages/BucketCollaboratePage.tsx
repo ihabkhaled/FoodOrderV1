@@ -1,97 +1,28 @@
-import {
-  ArrowLeft,
-  Lock,
-  LogOut,
-  RefreshCcw,
-  Settings2,
-  ShoppingCart,
-  Users,
-} from 'lucide-react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-import { ActivityTimeline } from '@/components/ActivityTimeline';
 import {
-  CollaborativeItemList,
-  type CollaborativePendingChange,
-} from '@/components/CollaborativeItemList';
-import { ConfirmDialog } from '@/components/ConfirmDialog';
-import { CustomItemPanel } from '@/components/CustomItemPanel';
+  BucketCollaborateContent,
+} from '@/components/BucketCollaborateContent';
+import type { CollaborativePendingChange } from '@/components/CollaborativeItemList';
 import { ErrorState } from '@/components/ErrorState';
 import { Loading } from '@/components/Loading';
 import { translateGroupOrder } from '@/i18n/groupOrderMessages';
-import type { MessageKey } from '@/i18n/messages';
-import { DEFAULT_PRICING_POLICY } from '@/lib/bucket';
-import { calculateBasisPointCharge } from '@/lib/groupOrder';
 import { createId } from '@/lib/id';
-import { formatMoney } from '@/lib/money';
 import {
   detectAggregateDrift,
   MAX_CONTRIBUTION_QUANTITY,
   omitKey,
-  roleAllows,
 } from '@/lib/sharing';
 import { sharingService } from '@/services';
 import type { SharedBucketView } from '@/services/contracts';
 import { useApp } from '@/state/AppContext';
 import type {
-  Bucket,
   BucketActivityEvent,
-  BucketItem,
-  BucketRole,
+  BucketContribution,
 } from '@/types/domain';
 
-const ROLE_LABEL: Record<BucketRole, MessageKey> = {
-  owner: 'roleOwner',
-  editor: 'roleEditor',
-  contributor: 'roleContributor',
-  viewer: 'roleViewer',
-};
-
 const DEBOUNCE_MS = 500;
-
-const calculateEstimatedTotal = (bucket: Bucket): number => {
-  const subtotalMinor = Math.round(
-    bucket.items
-      .filter((item) => item.active)
-      .reduce(
-        (total, item) =>
-          total + (bucket.aggregate[item.id] ?? 0) * item.unitPrice,
-        0,
-      ) * 100,
-  );
-  const policy = bucket.pricingPolicy ?? DEFAULT_PRICING_POLICY;
-
-  return (
-    subtotalMinor +
-    calculateBasisPointCharge(subtotalMinor, policy.vatBasisPoints) +
-    calculateBasisPointCharge(subtotalMinor, policy.serviceBasisPoints) +
-    policy.deliveryMinor
-  ) / 100;
-};
-
-function BucketLifecycleNotice({
-  bucket,
-  locale,
-}: {
-  bucket: Bucket;
-  locale: 'en' | 'ar';
-}) {
-  const state = bucket.orderState ?? 'open';
-  if (state === 'open') return null;
-
-  return (
-    <div className="status-banner warning" role="status">
-      <Lock aria-hidden="true" />
-      <span>
-        {translateGroupOrder(
-          locale,
-          state === 'ordered' ? 'orderedBucket' : 'frozenBucket',
-        )}
-      </span>
-    </div>
-  );
-}
 
 export function BucketCollaboratePage() {
   const { bucketId } = useParams();
@@ -143,18 +74,18 @@ export function BucketCollaboratePage() {
     };
   }, []);
 
-  const myContribution = useMemo(
+  const myContribution = useMemo<BucketContribution | null>(
     () =>
       view?.contributions.find(
         (contribution) => contribution.userId === user?.id,
       ) ?? null,
     [view, user],
   );
-  const drift = useMemo(
+  const drifted = useMemo(
     () =>
       view
-        ? detectAggregateDrift(view.bucket.aggregate, view.contributions)
-        : { drifted: false, expected: {} },
+        ? detectAggregateDrift(view.bucket.aggregate, view.contributions).drifted
+        : false,
     [view],
   );
 
@@ -332,173 +263,44 @@ export function BucketCollaboratePage() {
     );
   }
 
-  const { bucket, members, contributions, myRole } = view;
-  const state = bucket.orderState ?? 'open';
-  const isOpen = state === 'open';
-  const canContribute = isOpen && roleAllows(myRole, 'contribute');
-  const canOrder =
-    (state === 'open' || state === 'frozen') &&
-    roleAllows(myRole, 'placeGroupOrder');
-  const isOwner = myRole === 'owner';
-  const currentMember = members.find((member) => member.userId === user.id);
-  const canCreateCustomItems =
-    isOpen &&
-    (isOwner ||
-      (currentMember?.canCreateCustomItems === true &&
-        bucket.customItemMode !== 'disabled'));
-  const canSetCustomItemPrice =
-    isOwner || currentMember?.canSetCustomItemPrice === true;
-  const activeItems = bucket.items.filter((item) => item.active);
-  const pendingItems: BucketItem[] = bucket.items.filter(
-    (item) => item.source === 'custom' && item.approvalStatus === 'pending',
-  );
-  const hasAnyQuantity = activeItems.some(
-    (item) => (bucket.aggregate[item.id] ?? 0) > 0,
-  );
-
   return (
-    <div className="page narrow stack-lg">
-      <Link className="back-link" to="/buckets">
-        <ArrowLeft />
-        {t('back')}
-      </Link>
-      <header className="page-heading">
-        <div>
-          <p className="eyebrow">{t('groupOrder')}</p>
-          <h1>{bucket.title}</h1>
-          <p className="muted">
-            <Users size={14} aria-hidden="true" /> {members.length} · {t('role')}:{' '}
-            {t(ROLE_LABEL[myRole])}
-          </p>
-        </div>
-        <div className="total-block">
-          <span>{t('estimated')}</span>
-          <strong>
-            {formatMoney(calculateEstimatedTotal(bucket), bucket.currency, locale)}
-          </strong>
-        </div>
-      </header>
-
-      <BucketLifecycleNotice bucket={bucket} locale={locale} />
-      {drift.drifted ? (
-        <section className="notice-card warning" role="alert">
-          <p>{t('totalsDriftDetected')}</p>
-          {isOwner ? (
-            <button
-              className="button secondary"
-              disabled={repairing}
-              onClick={() => {
-                void repair();
-              }}
-            >
-              <RefreshCcw />
-              {repairing ? t('loading') : t('repairTotals')}
-            </button>
-          ) : null}
-        </section>
-      ) : null}
-
-      <CollaborativeItemList
-        items={activeItems}
-        aggregate={bucket.aggregate}
-        contributions={contributions}
-        currentUserId={user.id}
-        currentQuantities={myContribution?.quantities ?? {}}
-        pending={pending}
-        currency={bucket.currency}
-        locale={locale}
-        canContribute={canContribute}
-        translate={t}
-        onAdjust={adjust}
-        onRetry={retry}
-      />
-
-      <CustomItemPanel
-        locale={locale}
-        canCreate={canCreateCustomItems}
-        canSetPrice={canSetCustomItemPrice}
-        canApprove={isOwner}
-        disabled={!isOpen}
-        pendingItems={pendingItems}
-        onAdd={(input) => {
-          void addCustomItem(input);
-        }}
-        onApprove={(itemId, unitPrice) => {
-          void approveCustomItem(itemId, unitPrice);
-        }}
-      />
-
-      {canOrder ? (
-        <section className="section-card stack">
-          <label>
-            {t('notes')}
-            <textarea
-              rows={2}
-              maxLength={500}
-              value={notes}
-              onChange={(event) => {
-                setNotes(event.target.value);
-              }}
-              placeholder={t('orderNotesPlaceholder')}
-            />
-          </label>
-          <button
-            className="button"
-            disabled={ordering || !hasAnyQuantity}
-            onClick={() => {
-              void placeGroupOrder();
-            }}
-          >
-            <ShoppingCart />
-            {ordering ? t('loading') : t('placeGroupOrder')}
-          </button>
-        </section>
-      ) : null}
-
-      <section className="section-card">
-        <div className="section-heading">
-          <div>
-            <p className="eyebrow">{t('activity')}</p>
-            <h2>
-              {t('members')}: {members.length}
-            </h2>
-          </div>
-          <div className="row-actions">
-            {isOwner ? (
-              <Link className="button secondary" to={`/buckets/${bucket.id}/share`}>
-                <Settings2 />
-                {t('sharing')}
-              </Link>
-            ) : (
-              <button
-                className="button danger"
-                onClick={() => {
-                  setLeaving(true);
-                }}
-              >
-                <LogOut />
-                {t('leaveBucket')}
-              </button>
-            )}
-          </div>
-        </div>
-        <ActivityTimeline events={activity} />
-      </section>
-
-      <ConfirmDialog
-        open={leaving}
-        title={t('leaveBucket')}
-        message={t('confirmLeaveBucket')}
-        confirmLabel={t('leaveBucket')}
-        cancelLabel={t('cancel')}
-        danger
-        onConfirm={() => {
-          void leave();
-        }}
-        onCancel={() => {
-          setLeaving(false);
-        }}
-      />
-    </div>
+    <BucketCollaborateContent
+      view={view}
+      user={user}
+      locale={locale}
+      translate={t}
+      activity={activity}
+      pending={pending}
+      myContribution={myContribution}
+      drifted={drifted}
+      notes={notes}
+      ordering={ordering}
+      repairing={repairing}
+      leaving={leaving}
+      onAdjust={adjust}
+      onRetry={retry}
+      onRepair={() => {
+        void repair();
+      }}
+      onNotesChange={setNotes}
+      onPlaceOrder={() => {
+        void placeGroupOrder();
+      }}
+      onAddCustomItem={(input) => {
+        void addCustomItem(input);
+      }}
+      onApproveCustomItem={(itemId, unitPrice) => {
+        void approveCustomItem(itemId, unitPrice);
+      }}
+      onRequestLeave={() => {
+        setLeaving(true);
+      }}
+      onConfirmLeave={() => {
+        void leave();
+      }}
+      onCancelLeave={() => {
+        setLeaving(false);
+      }}
+    />
   );
 }
