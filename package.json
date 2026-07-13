@@ -87,7 +87,7 @@
     "firebase-admin": "^13.5.0",
     "globals": "^16.4.0",
     "husky": "^9.1.7",
-    "jsdom": "^27.0.0",
+    "jsdom": "^29.1.1",
     "knip": "^6.26.0",
     "lint-staged": "^17.0.8",
     "madge": "^8.0.0",
