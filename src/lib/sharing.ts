@@ -222,8 +222,6 @@ export const buildGroupOrderLines = (
       unitPrice: item.unitPrice,
     }));
 
-export const describeRole = (role: BucketRole): BucketRole => role;
-
 export const assertAssignableRole = (role: BucketRole): Exclude<BucketRole, 'owner'> => {
   if (role === 'owner') throw new Error('Ownership cannot be assigned through invites or role changes.');
   return role;
