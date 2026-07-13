@@ -9,6 +9,7 @@ import { Loading } from '@/components/Loading';
 import { OrderRow } from '@/components/OrderRow';
 import { VirtualListFooter } from '@/components/VirtualListFooter';
 import { useCursorPage } from '@/hooks/useCursorPage';
+import type { PageResult } from '@/lib/pagination';
 import { AppVirtuoso } from '@/packages/virtuoso';
 import { dataService, paginationService } from '@/services';
 import { useApp } from '@/state/AppContext';
@@ -23,11 +24,8 @@ const statuses: (OrderStatus | 'all')[] = [
   'cancelled',
 ];
 
-const emptyOrderPage = async () => ({
-  items: [] as Order[],
-  nextCursor: null,
-  hasMore: false,
-});
+const emptyOrderPage = (): Promise<PageResult<Order>> =>
+  Promise.resolve({ items: [], nextCursor: null, hasMore: false });
 
 export function OrdersPage() {
   const { user, locale, t, showToast, errorMessage } = useApp();
@@ -62,7 +60,11 @@ export function OrdersPage() {
     [normalizedQuery, orders.items, status],
   );
 
-  const updateParameter = (key: string, value: string, emptyValue: string): void => {
+  const updateParameter = (
+    key: string,
+    value: string,
+    emptyValue: string,
+  ): void => {
     const next = new URLSearchParams(searchParameters);
     if (!value || value === emptyValue) next.delete(key);
     else next.set(key, value);
