@@ -15,7 +15,21 @@ export default defineConfig({
   // Author to ES2024 (tsconfig lib), ship es2022 syntax so the bundle runs on
   // the oldest supported WebViews (iOS 14 / Android 10). Newer runtime APIs
   // beyond that baseline must be feature-detected, not assumed.
-  build: { target: 'es2022', sourcemap: false, chunkSizeWarningLimit: 700, rollupOptions: { output: { manualChunks: { firebase: ['firebase/app', 'firebase/auth', 'firebase/firestore'], router: ['react-router-dom'] } } } },
+  build: {
+    target: 'es2022',
+    sourcemap: false,
+    chunkSizeWarningLimit: 700,
+    rollupOptions: {
+      output: {
+        // Vite 8 / Rollup 4 prefer the function form of manualChunks.
+        manualChunks(id) {
+          if (id.includes('/firebase/') || id.includes('/@firebase/')) return 'firebase';
+          if (id.includes('/react-router')) return 'router';
+          return undefined;
+        },
+      },
+    },
+  },
   // Host pinned to IPv4: Node ≥ 20 resolves localhost to ::1 first, which
   // breaks tooling (Playwright webServer) that polls 127.0.0.1.
   server: { host: '127.0.0.1', port: 5173, strictPort: true },
