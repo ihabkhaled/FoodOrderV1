@@ -1,5 +1,8 @@
 import '@testing-library/jest-dom/vitest';
 
+import { cleanup } from '@testing-library/react';
+import { afterEach } from 'vitest';
+
 class MemoryStorage implements Storage {
   readonly #values = new Map<string, string>();
 
@@ -62,3 +65,8 @@ HTMLDialogElement.prototype.showModal = function showModal(): void {
 HTMLDialogElement.prototype.close = function close(): void {
   this.open = false;
 };
+
+afterEach(() => {
+  cleanup();
+  localStorage.clear();
+});
