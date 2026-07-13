@@ -1,5 +1,5 @@
 import { ArrowLeft, KeyRound, UserPlus } from 'lucide-react';
-import { type SyntheticEvent,useState } from 'react';
+import { type SyntheticEvent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import type { MessageKey } from '@/i18n/messages';
@@ -16,7 +16,7 @@ const ROLE_LABEL: Record<BucketRole, MessageKey> = {
 
 export function JoinBucketPage() {
   const navigate = useNavigate();
-  const { user, t, showToast } = useApp();
+  const { user, t, showToast, errorMessage } = useApp();
   const [code, setCode] = useState('');
   const [preview, setPreview] = useState<BucketInvite | null>(null);
   const [busy, setBusy] = useState(false);
@@ -28,10 +28,10 @@ export function JoinBucketPage() {
     try {
       setBusy(true);
       setError('');
-      setPreview(await sharingService.previewJoinCode(code));
+      setPreview(await sharingService.previewJoinCode(code.trim()));
     } catch (error_) {
       setPreview(null);
-      setError(error_ instanceof Error ? error_.message : t('joinCodeInvalid'));
+      setError(errorMessage(error_, 'joinCodeInvalid'));
     } finally {
       setBusy(false);
     }
@@ -42,11 +42,11 @@ export function JoinBucketPage() {
     try {
       setBusy(true);
       setError('');
-      const bucket = await sharingService.acceptJoinCode(user, code);
+      const bucket = await sharingService.acceptJoinCode(user, code.trim());
       showToast(t('joined'), 'success');
       await navigate(`/buckets/${bucket.id}/collaborate`);
     } catch (error_) {
-      setError(error_ instanceof Error ? error_.message : t('tryAgain'));
+      setError(errorMessage(error_));
     } finally {
       setBusy(false);
     }
@@ -54,7 +54,10 @@ export function JoinBucketPage() {
 
   return (
     <div className="page narrow stack-lg">
-      <Link className="back-link" to="/buckets"><ArrowLeft />{t('back')}</Link>
+      <Link className="back-link" to="/buckets">
+        <ArrowLeft />
+        {t('back')}
+      </Link>
       <header className="page-heading">
         <div>
           <p className="eyebrow">{t('sharedWithMe')}</p>
@@ -66,7 +69,10 @@ export function JoinBucketPage() {
           {t('joinCode')}
           <input
             value={code}
-            onChange={(event) => { setCode(event.target.value); setPreview(null); }}
+            onChange={(event) => {
+              setCode(event.target.value);
+              setPreview(null);
+            }}
             placeholder={t('joinCodePlaceholder')}
             autoComplete="off"
             spellCheck={false}
@@ -74,18 +80,28 @@ export function JoinBucketPage() {
           />
         </label>
         <button className="button secondary" disabled={busy || !code.trim()}>
-          <KeyRound />{busy && !preview ? t('loading') : t('joinWithCode')}
+          <KeyRound />
+          {busy && !preview ? t('loading') : t('joinWithCode')}
         </button>
       </form>
-      {error ? <p className="form-error" role="alert">{error}</p> : null}
+      {error ? (
+        <p className="form-error" role="alert">
+          {error}
+        </p>
+      ) : null}
       {preview ? (
         <section className="section-card stack invite-preview">
           <p className="eyebrow">{t('invitePreviewTitle')}</p>
           <h2>{preview.bucketTitle}</h2>
-          <p className="muted">{t('joinPreviewOwner')}: {preview.ownerName}</p>
-          <p className="muted">{t('joinPreviewRole')}: {t(ROLE_LABEL[preview.role])}</p>
+          <p className="muted">
+            {t('joinPreviewOwner')}: {preview.ownerName}
+          </p>
+          <p className="muted">
+            {t('joinPreviewRole')}: {t(ROLE_LABEL[preview.role])}
+          </p>
           <button className="button" disabled={busy} onClick={() => void join()}>
-            <UserPlus />{busy ? t('loading') : t('joinNow')}
+            <UserPlus />
+            {busy ? t('loading') : t('joinNow')}
           </button>
         </section>
       ) : null}
