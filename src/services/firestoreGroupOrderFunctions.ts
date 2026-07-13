@@ -1,7 +1,7 @@
 import { getFunctions, httpsCallable } from 'firebase/functions';
 
-import { FirestoreGroupOrderService } from '@/services/groupOrderServices';
 import { getFirebaseRuntime } from '@/services/firebaseServices';
+import { FirestoreGroupOrderService } from '@/services/groupOrderServices';
 import type {
   BucketItem,
   Order,
