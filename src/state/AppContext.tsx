@@ -29,6 +29,8 @@ interface AppContextValue {
   saveProfile: (changes: Partial<Pick<UserProfile, 'fullName' | 'locale' | 'theme' | 'defaultCurrency'>>) => Promise<void>;
   /** Runtime language switch that also works before signing in. */
   setDeviceLocale: (locale: Locale) => Promise<void>;
+  /** Runtime theme switch that also works before signing in. */
+  setDeviceTheme: (theme: Theme) => Promise<void>;
   showToast: (message: string, kind?: ToastState['kind']) => void;
 }
 
@@ -123,6 +125,14 @@ export function AppProvider({ children }: { children: ReactNode }) {
       setDevice((current) => ({ ...current, locale: nextLocale }));
       if (profile) {
         const saved = await dataService.saveProfile({ ...profile, locale: nextLocale });
+        setProfile(saved);
+      }
+    },
+    setDeviceTheme: async (nextTheme) => {
+      await saveDeviceConfig({ theme: nextTheme });
+      setDevice((current) => ({ ...current, theme: nextTheme }));
+      if (profile) {
+        const saved = await dataService.saveProfile({ ...profile, theme: nextTheme });
         setProfile(saved);
       }
     },

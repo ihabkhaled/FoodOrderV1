@@ -55,3 +55,15 @@ export const saveDeviceConfig = async (changes: Partial<DeviceConfig>): Promise<
   if (changes.theme) writes.push(setPreference(KEYS.theme, changes.theme));
   await Promise.all(writes);
 };
+
+/** Sidebar collapsed state is a device-only UI preference (never roams to the profile). */
+const SIDEBAR_KEY = 'ui:sidebar-collapsed';
+export const loadSidebarCollapsed = async (): Promise<boolean> =>
+  (await getPreference(SIDEBAR_KEY)) === 'true';
+export const saveSidebarCollapsed = async (collapsed: boolean): Promise<void> => {
+  await setPreference(SIDEBAR_KEY, collapsed ? 'true' : 'false');
+};
+
+/** The next theme in a system → light → dark → system cycle. */
+export const nextTheme = (current: Theme): Theme =>
+  current === 'system' ? 'light' : current === 'light' ? 'dark' : 'system';

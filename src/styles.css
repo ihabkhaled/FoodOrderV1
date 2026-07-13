@@ -266,21 +266,36 @@ textarea { resize: vertical; }
 }
 
 @media (min-width: 960px) {
-  .app-shell { display: grid; grid-template-columns: 248px 1fr; align-items: start; }
+  .app-shell { display: grid; grid-template-columns: 248px 1fr; align-items: start; transition: grid-template-columns 0.18s ease; }
+  .app-shell.collapsed { grid-template-columns: 76px 1fr; }
   .topbar, .bottom-nav { display: none; }
   .sidebar {
     position: sticky; top: 0; align-self: start;
-    display: flex; flex-direction: column; gap: 8px; height: 100vh; padding: 22px 16px;
-    border-inline-end: 1px solid var(--line); background: var(--surface);
+    display: flex; flex-direction: column; gap: 8px; height: 100vh; padding: 18px 14px;
+    border-inline-end: 1px solid var(--line); background: var(--surface); overflow: hidden;
   }
-  .sidebar .brand { padding: 4px 8px 14px; font-size: 1.05rem; }
+  .sidebar-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 4px 6px 12px; }
+  .sidebar .brand { font-size: 1.05rem; }
+  .collapse-toggle { width: 34px; height: 34px; flex: none; }
   .sidebar-nav { display: grid; gap: 4px; }
-  .nav-link { display: flex; align-items: center; gap: 12px; padding: 11px 12px; border-radius: 12px; color: var(--muted); font-weight: 600; }
+  .nav-link { display: flex; align-items: center; gap: 12px; padding: 11px 12px; border-radius: 12px; color: var(--muted); font-weight: 600; white-space: nowrap; }
   .nav-link:hover { background: var(--surface-2); color: var(--text); }
   .nav-link.active { color: var(--primary-ink); background: var(--primary); }
   .sidebar-footer { margin-top: auto; display: grid; gap: 8px; padding-top: 12px; border-top: 1px solid var(--line); }
+  .sidebar-controls { display: flex; gap: 8px; }
   .sidebar-user { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
   .sidebar-user .user-name { font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  /* Collapsed: icon-only rail. Labels hide; controls, nav, and brand center. */
+  .app-shell.collapsed .sidebar .label-collapsible { display: none; }
+  .app-shell.collapsed .sidebar-head { flex-direction: column; gap: 10px; padding: 4px 0 12px; }
+  .app-shell.collapsed .brand { justify-content: center; }
+  .app-shell.collapsed .nav-link { justify-content: center; padding: 11px 0; }
+  .app-shell.collapsed .sidebar-controls { flex-direction: column; align-items: center; }
+  .app-shell.collapsed .connection,
+  .app-shell.collapsed .mode-pill { justify-content: center; padding: 6px; }
+  .app-shell.collapsed .sidebar-user { justify-content: center; }
+
   .app-shell > .main-content { padding-bottom: 40px; }
   .sticky-actions { bottom: 16px; }
   .toast { left: auto; right: 28px; transform: none; bottom: 28px; animation: toast-in-desktop 0.2s ease; }
@@ -297,6 +312,10 @@ textarea { resize: vertical; }
   .auth-hero { display: none; }
   .page-heading .row-actions { width: 100%; }
   .page-heading .row-actions .button { flex: 1; }
+  /* Compact top bar: locale + theme + connection icon + logout. */
+  .topbar-meta { gap: 6px; }
+  .topbar .connection { padding: 6px; }
+  .topbar .connection .label-collapsible { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
