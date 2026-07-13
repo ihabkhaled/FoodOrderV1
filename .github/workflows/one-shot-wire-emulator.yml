@@ -1,0 +1,56 @@
+name: One-shot Wire Firebase Emulator
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - .github/workflows/one-shot-wire-emulator.yml
+
+permissions:
+  contents: write
+
+jobs:
+  wire:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+      - name: Add emulator job and aggregator dependency
+        run: |
+          node <<'NODE'
+          const { readFileSync, writeFileSync } = require('node:fs');
+          const path = '.github/workflows/ci.yml';
+          let source = readFileSync(path, 'utf8');
+          const marker = '  circular-dependencies:\n';
+          const job = `  firestore-rules:\n    name: Firebase Emulator and Security Rules\n    uses: ./.github/workflows/_firebase-emulator.yml\n    permissions:\n      contents: read\n\n`;
+          if (!source.includes('  firestore-rules:\n')) {
+            if (!source.includes(marker)) throw new Error('CI insertion marker not found.');
+            source = source.replace(marker, `${job}${marker}`);
+          }
+          const needsMarker = '      - functions\n      - circular-dependencies\n';
+          if (!source.includes('      - firestore-rules\n')) {
+            if (!source.includes(needsMarker)) throw new Error('Aggregator marker not found.');
+            source = source.replace(
+              needsMarker,
+              '      - functions\n      - firestore-rules\n      - circular-dependencies\n',
+            );
+          }
+          writeFileSync(path, source);
+          NODE
+      - name: Verify wiring
+        run: |
+          grep -q '^  firestore-rules:' .github/workflows/ci.yml
+          grep -q '^      - firestore-rules$' .github/workflows/ci.yml
+      - name: Remove temporary workflow and commit
+        run: |
+          rm .github/workflows/one-shot-wire-emulator.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/workflows/ci.yml .github/workflows/one-shot-wire-emulator.yml
+          git diff --cached --check
+          git commit -m "ci(firebase): require emulator Rules gate before APK"
+          git push origin HEAD:${{ github.event.pull_request.head.ref }}
