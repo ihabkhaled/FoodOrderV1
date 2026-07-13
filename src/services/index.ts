@@ -8,6 +8,10 @@ import {
   LocalAuthService,
   LocalDataService,
 } from '@/services/localServices';
+import {
+  FirestorePaginationService,
+  LocalPaginationService,
+} from '@/services/paginationServices';
 
 export const authService = env.firebaseEnabled
   ? withFirebaseErrorTranslation(new FirebaseEmailAuthService())
@@ -18,4 +22,7 @@ export const dataService = env.firebaseEnabled
 export const sharingService = env.firebaseEnabled
   ? withFirebaseErrorTranslation(new FirestoreCallableGroupOrderService())
   : new LocalGroupOrderService();
+export const paginationService = env.firebaseEnabled
+  ? withFirebaseErrorTranslation(new FirestorePaginationService())
+  : new LocalPaginationService(dataService, sharingService);
 export const storageMode = env.firebaseEnabled ? 'firebase' : 'local-device';
