@@ -1,4 +1,5 @@
 import { env } from '@/config/env';
+import { withFirebaseErrorTranslation } from '@/lib/firebaseError';
 import {
   FirebaseAuthService,
   FirestoreDataService,
@@ -11,12 +12,12 @@ import {
 } from '@/services/localServices';
 
 export const authService = env.firebaseEnabled
-  ? new FirebaseAuthService()
+  ? withFirebaseErrorTranslation(new FirebaseAuthService())
   : new LocalAuthService();
 export const dataService = env.firebaseEnabled
-  ? new FirestoreDataService()
+  ? withFirebaseErrorTranslation(new FirestoreDataService())
   : new LocalDataService();
 export const sharingService = env.firebaseEnabled
-  ? new FirestoreCallableGroupOrderService()
+  ? withFirebaseErrorTranslation(new FirestoreCallableGroupOrderService())
   : new LocalGroupOrderService();
 export const storageMode = env.firebaseEnabled ? 'firebase' : 'local-device';
