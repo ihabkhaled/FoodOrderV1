@@ -102,7 +102,7 @@ export const createBucket = (
 };
 
 export const updateBucket = (bucket: Bucket, draft: BucketDraft): Bucket => {
-  if (bucket.orderState !== 'open') {
+  if ((bucket.orderState ?? 'open') !== 'open') {
     throw new Error('Unfreeze this bucket before changing its menu or pricing.');
   }
   if (!draft.title.trim()) throw new Error('Bucket title is required.');
@@ -117,8 +117,14 @@ export const updateBucket = (bucket: Bucket, draft: BucketDraft): Bucket => {
     title: draft.title.trim(),
     description: draft.description.trim(),
     currency: draft.currency,
-    pricingPolicy: validatePricingPolicy(draft.pricingPolicy ?? bucket.pricingPolicy),
-    customItemMode: draft.customItemMode ?? bucket.customItemMode,
+    orderState: bucket.orderState ?? 'open',
+    pricingPolicy: validatePricingPolicy(
+      draft.pricingPolicy ?? bucket.pricingPolicy ?? DEFAULT_PRICING_POLICY,
+    ),
+    customItemMode: draft.customItemMode ?? bucket.customItemMode ?? 'proposal',
+    frozenAt: bucket.frozenAt ?? null,
+    frozenBy: bucket.frozenBy ?? null,
+    schemaVersion: BUCKET_SCHEMA_VERSION,
     items,
     aggregate,
     revision: bucket.revision + 1,
