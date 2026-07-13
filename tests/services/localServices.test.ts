@@ -1,3 +1,31 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { LocalAuthService, LocalDataService } from '@/services/localServices';
-describe('local integration',()=>{beforeEach(()=>localStorage.clear());it('supports the order lifecycle',async()=>{const auth=new LocalAuthService(),data=new LocalDataService();const user=await auth.register('Ihab Khaled','ihab@example.com','Password1');const bucket=await data.createBucket(user.id,{title:'Lunch',description:'',currency:'EGP',items:[{id:'',name:'Koshary',description:'',category:'Meals',unitPrice:45,active:true}]});const order=await data.createOrder(user.id,{bucketId:bucket.id,bucketTitle:bucket.title,currency:bucket.currency,notes:'',lines:[{id:'l',bucketItemId:bucket.items[0]!.id,name:'Koshary',quantity:2,unitPrice:45}]});expect((await data.updateOrderStatus(user.id,order.id,'completed')).status).toBe('completed');expect((await data.getDashboard(user.id)).orderCount).toBe(1);});});
+import type { ProfileDefaults } from '@/types/domain';
+
+const defaults: ProfileDefaults = { locale: 'en', theme: 'system', defaultCurrency: 'EGP' };
+
+describe('local integration', () => {
+  beforeEach(() => { localStorage.clear(); });
+  it('supports the order lifecycle', async () => {
+    const auth = new LocalAuthService();
+    const data = new LocalDataService();
+    const user = await auth.register('Ihab Khaled', 'ihab@example.com', 'Password1', defaults);
+    const bucket = await data.createBucket(user, { title: 'Lunch', description: '', currency: 'EGP', items: [{ id: '', name: 'Koshary', description: '', category: 'Meals', unitPrice: 45, active: true }] });
+    const [firstItem] = bucket.items;
+    if (!firstItem) throw new Error('expected an item');
+    const order = await data.createOrder(user.id, { bucketId: bucket.id, bucketTitle: bucket.title, currency: bucket.currency, notes: '', lines: [{ id: 'l', bucketItemId: firstItem.id, name: 'Koshary', quantity: 2, unitPrice: 45 }] });
+    expect((await data.updateOrderStatus(user.id, order.id, 'completed')).status).toBe('completed');
+    const dashboard = await data.getDashboard(user);
+    expect(dashboard.orderCount).toBe(1);
+    expect(dashboard.sharedBucketCount).toBe(0);
+  });
+  it('seeds new profiles from device defaults', async () => {
+    const auth = new LocalAuthService();
+    const data = new LocalDataService();
+    const user = await auth.register('Sara', 'sara@example.com', 'Password1', { locale: 'ar', theme: 'dark', defaultCurrency: 'SAR' });
+    const profile = await data.getProfile(user, defaults);
+    expect(profile.locale).toBe('ar');
+    expect(profile.theme).toBe('dark');
+    expect(profile.defaultCurrency).toBe('SAR');
+  });
+});
