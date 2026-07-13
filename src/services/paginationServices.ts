@@ -1,24 +1,24 @@
 import {
   collection,
   doc,
+  type Firestore,
   getDoc,
   getDocs,
   limit as firestoreLimit,
   orderBy,
   query,
+  type QueryConstraint,
   startAfter,
   where,
-  type Firestore,
-  type QueryConstraint,
 } from 'firebase/firestore';
 
 import {
   decodeSortCursor,
   encodeSortCursor,
   normalizePageLimit,
-  paginateDescending,
   type PageRequest,
   type PageResult,
+  paginateDescending,
 } from '@/lib/pagination';
 import type { DataService, SharingService } from '@/services/contracts';
 import { getFirebaseRuntime } from '@/services/firebaseServices';
