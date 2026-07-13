@@ -371,7 +371,7 @@ export function BucketSharePage() {
           />
           <BucketMemberPermissionsPanel
             members={members}
-            currentUserId={user.id}
+            currentUserId={user?.id ?? bucket.ownerId}
             locale={locale}
             translate={t}
             onRoleChange={(member, role) => {

@@ -94,8 +94,10 @@ service cloud.firestore {
         return request.resource.data.schemaVersion == 3
           && request.resource.data.orderState in ['open', 'frozen', 'ordering', 'ordered']
           && request.resource.data.customItemMode in ['disabled', 'proposal', 'direct']
-          && request.resource.data.frozenAt is string || request.resource.data.frozenAt == null
-          && request.resource.data.frozenBy is string || request.resource.data.frozenBy == null
+          && (request.resource.data.frozenAt is string
+            || request.resource.data.frozenAt == null)
+          && (request.resource.data.frozenBy is string
+            || request.resource.data.frozenBy == null)
           && validPricingPolicy();
       }
       function validBucketShape() {

@@ -20,7 +20,7 @@ interface PricingForm {
 
 interface BucketPricingPanelProps {
   locale: Locale;
-  policy?: BucketPricingPolicy;
+  policy: BucketPricingPolicy | undefined;
   disabled: boolean;
   saving: boolean;
   translate: (key: MessageKey) => string;

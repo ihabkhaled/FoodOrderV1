@@ -135,8 +135,6 @@ export function BucketCollaborateContent({
   onConfirmLeave,
   onCancelLeave,
 }: BucketCollaborateContentProps) {
-  const groupTranslate = (key: Parameters<typeof translateGroupOrder>[1]) =>
-    translateGroupOrder(locale, key);
   const { bucket, members, contributions, myRole } = view;
   const state = bucket.orderState ?? 'open';
   const isOpen = state === 'open';
