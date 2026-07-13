@@ -35,25 +35,43 @@ jobs:
         run: npm install --no-audit --no-fund
 
       - name: Build web application
-        run: npm run build
+        id: web-build
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -o pipefail
+          npm run build 2>&1 | tee web-build.log
+
+      - name: Upload web build diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: FoodOrderV1-web-build-log
+          path: web-build.log
+          if-no-files-found: error
+          retention-days: 7
 
       - name: Generate and sync Android project
+        if: steps.web-build.outcome == 'success'
         run: |
           npx cap add android
           npx cap sync android
 
       - name: Build debug APK
+        if: steps.web-build.outcome == 'success'
         working-directory: android
         run: |
           chmod +x gradlew
           ./gradlew assembleDebug --no-daemon --stacktrace
 
       - name: Prepare APK
+        if: steps.web-build.outcome == 'success'
         run: |
           cp android/app/build/outputs/apk/debug/app-debug.apk FoodOrderV1-debug.apk
           sha256sum FoodOrderV1-debug.apk | tee FoodOrderV1-debug.apk.sha256
 
       - name: Upload APK artifact
+        if: steps.web-build.outcome == 'success'
         uses: actions/upload-artifact@v4
         with:
           name: FoodOrderV1-debug-apk
@@ -62,3 +80,7 @@ jobs:
             FoodOrderV1-debug.apk.sha256
           if-no-files-found: error
           retention-days: 7
+
+      - name: Fail when web build failed
+        if: steps.web-build.outcome == 'failure'
+        run: exit 1
