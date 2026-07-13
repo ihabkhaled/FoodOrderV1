@@ -1,0 +1,202 @@
+.stack-md {
+  display: grid;
+  gap: 16px;
+}
+
+.status-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 13px 15px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.status-banner.warning {
+  border-color: color-mix(in srgb, var(--primary) 40%, var(--line));
+  background: var(--soft);
+}
+
+.segmented-control {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface-2);
+}
+
+.segmented-control button {
+  min-height: 40px;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 10px;
+  color: var(--muted);
+  background: transparent;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.segmented-control button.active {
+  color: var(--text);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.receipt-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.receipt-summary-grid > div {
+  display: grid;
+  gap: 4px;
+  min-height: 74px;
+  padding: 13px;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  background: var(--surface-2);
+}
+
+.receipt-summary-grid span,
+.receipt-fees span,
+.receipt-item-card .muted {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.receipt-summary-grid strong {
+  font-size: 1.12rem;
+}
+
+.receipt-summary-grid .grand-total {
+  color: var(--primary-dark);
+  border-color: color-mix(in srgb, var(--primary) 35%, var(--line));
+  background: var(--soft);
+}
+
+.receipt-person-list,
+.receipt-item-list {
+  display: grid;
+  gap: 12px;
+}
+
+.receipt-person-card,
+.receipt-item-card {
+  padding: 15px;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  background: var(--surface-2);
+}
+
+.receipt-person-card .section-heading,
+.receipt-item-card .section-heading {
+  margin-bottom: 8px;
+}
+
+.receipt-fees {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  padding-top: 10px;
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 5px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--text);
+  background: var(--surface);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.member-permission-row {
+  display: grid;
+  grid-template-columns: minmax(150px, 1fr) minmax(280px, 2fr);
+  gap: 16px;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.member-permission-row:last-child {
+  border-bottom: 0;
+}
+
+.member-identity {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.member-controls {
+  display: grid;
+  grid-template-columns: minmax(120px, 0.8fr) 1fr 1fr auto;
+  gap: 10px;
+  align-items: center;
+}
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: var(--surface-2);
+  font-size: 0.78rem;
+}
+
+.checkbox-row input {
+  width: 18px;
+  min-height: 18px;
+  margin: 0;
+}
+
+@media (max-width: 820px) {
+  .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .member-permission-row {
+    grid-template-columns: 1fr;
+  }
+
+  .member-controls {
+    grid-template-columns: 1fr;
+  }
+
+  .member-controls .icon-button {
+    justify-self: end;
+  }
+}
+
+@media (max-width: 520px) {
+  .segmented-control {
+    grid-template-columns: 1fr;
+  }
+
+  .receipt-summary-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
