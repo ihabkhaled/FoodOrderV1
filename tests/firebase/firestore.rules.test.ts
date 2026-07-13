@@ -143,9 +143,10 @@ describe('bucket invite acceptance rules', () => {
     );
     expect(ownMembership.exists()).toBe(false);
 
-    await expect(
-      assertFails(getDoc(doc(database, 'buckets', BUCKET_ID, 'members', OTHER_ID))),
-    ).resolves.toBeUndefined();
+    const denied = await assertFails(
+      getDoc(doc(database, 'buckets', BUCKET_ID, 'members', OTHER_ID)),
+    );
+    expect(denied).toMatchObject({ code: 'permission-denied' });
   });
 
   it('accepts a pending invite atomically and grants bucket access', async () => {
@@ -249,19 +250,18 @@ describe('bucket invite acceptance rules', () => {
       .authenticatedContext(INVITEE_ID, { email: 'invitee@example.com' })
       .firestore();
 
-    await expect(
-      assertFails(
-        setDoc(
-          doc(database, 'buckets', BUCKET_ID, 'invites', INVITE_ID),
-          {
-            status: 'accepted',
-            acceptedBy: INVITEE_ID,
-            acceptedAt: NOW,
-          },
-          { merge: true },
-        ),
+    const denied = await assertFails(
+      setDoc(
+        doc(database, 'buckets', BUCKET_ID, 'invites', INVITE_ID),
+        {
+          status: 'accepted',
+          acceptedBy: INVITEE_ID,
+          acceptedAt: NOW,
+        },
+        { merge: true },
       ),
-    ).resolves.toBeUndefined();
+    );
+    expect(denied).toMatchObject({ code: 'permission-denied' });
   });
 });
 
@@ -287,20 +287,19 @@ describe('frozen bucket permissions', () => {
       .authenticatedContext(INVITEE_ID, { email: 'invitee@example.com' })
       .firestore();
 
-    await expect(
-      assertFails(
-        setDoc(
-          doc(database, 'buckets', BUCKET_ID, 'contributions', INVITEE_ID),
-          {
-            userId: INVITEE_ID,
-            displayName: 'Invitee',
-            bucketId: BUCKET_ID,
-            quantities: { item_1: 1 },
-            revision: 1,
-            updatedAt: NOW,
-          },
-        ),
+    const denied = await assertFails(
+      setDoc(
+        doc(database, 'buckets', BUCKET_ID, 'contributions', INVITEE_ID),
+        {
+          userId: INVITEE_ID,
+          displayName: 'Invitee',
+          bucketId: BUCKET_ID,
+          quantities: { item_1: 1 },
+          revision: 1,
+          updatedAt: NOW,
+        },
       ),
-    ).resolves.toBeUndefined();
+    );
+    expect(denied).toMatchObject({ code: 'permission-denied' });
   });
 });
