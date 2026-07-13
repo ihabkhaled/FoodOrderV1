@@ -1,10 +1,26 @@
 features:
   - {id: authentication, status: implemented, owner: src/services}
   - {id: bucket-crud, status: implemented, owner: src/pages/BucketEditorPage.tsx}
+  - {id: bucket-duplication, status: implemented, owner: src/pages/BucketsPage.tsx}
   - {id: order-creation, status: implemented, owner: src/pages/CreateOrderPage.tsx}
   - {id: order-history-status-repeat, status: implemented, owner: src/pages/OrderDetailsPage.tsx}
   - {id: localization-en-ar, status: implemented, owner: src/i18n}
+  - {id: runtime-locale-currency-theme, status: implemented, owner: src/state/deviceConfig.ts}
   - {id: theme-currency-profile, status: implemented, owner: src/pages/SettingsPage.tsx}
   - {id: cloud-and-local-storage, status: implemented, owner: src/services}
+  - {id: bucket-sharing-invites-roles, status: implemented, owner: src/pages/BucketSharePage.tsx}
+  - {id: join-by-code, status: implemented, owner: src/pages/JoinBucketPage.tsx}
+  - {id: collaborative-contributions, status: implemented, owner: src/pages/BucketCollaboratePage.tsx}
+  - {id: contribution-idempotency-repair, status: implemented, owner: src/lib/sharing.ts}
+  - {id: activity-timeline, status: implemented, owner: src/components/ActivityTimeline.tsx}
+  - {id: group-orders, status: implemented, owner: src/services}
+  - {id: data-export, status: implemented, owner: src/pages/SettingsPage.tsx}
+  - {id: account-deletion, status: implemented, owner: src/pages/SettingsPage.tsx}
+  - {id: android-platform, status: implemented, owner: android/}
+  - {id: ios-platform, status: implemented, owner: ios/, note: compile/sign requires macOS}
+  - {id: favorites-recents, status: backlog}
+  - {id: ordering-presets, status: backlog}
+  - {id: push-notifications, status: backlog}
+  - {id: ownership-transfer, status: backlog}
   - {id: payments, status: not-planned}
   - {id: delivery-dispatch, status: not-planned}

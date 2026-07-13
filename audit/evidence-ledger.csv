@@ -1,0 +1,6 @@
+evidence_id,phase,description,location,command_or_source,result
+EV-000-01,00,GitHub identity + scopes,gh auth status,gh auth status,ihabkhaled authenticated; repo+workflow scopes
+EV-000-02,00,Repo metadata + SHAs,audit/phase-00-workspace.md,gh api repos/...,recorded
+EV-000-03,00,Backup refs created,git tag backup/pre-phased-v2; branch backup-pre-phased-v2,git tag/branch,points at 52a984e
+EV-000-04,00,Local main fast-forward to remote,git merge --ff-only origin/main,git,8489019 -> 52a984e clean
+EV-000-05,00,Toolchain inventory,audit/toolchain-inventory.md,version probes,JDK21+SDK36 provisioned; Xcode absent

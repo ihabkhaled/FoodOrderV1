@@ -1,0 +1,11 @@
+risk_id,phase,category,description,likelihood,impact,mitigation,status
+RISK-001,00,environment,iOS cannot be compiled or signed on Windows host,certain,medium,Generate + sync ios project; document macOS/Xcode steps; CI note,ACCEPTED
+RISK-002,00,environment,Firebase CLI/emulator not installed locally,high,medium,Rules reviewed statically + unit-tested engine; emulator suite listed as follow-up gap,OPEN
+RISK-003,04,data,Legacy per-user bucket docs must migrate to top-level buckets collection,medium,high,Lazy idempotent client migration on listBuckets + batch write + legacy rules kept read/delete-only,MITIGATED
+RISK-004,09,concurrency,Contribution lost-update under concurrent writers,medium,high,Firestore transactions serialize on bucket doc; per-user contribution docs; idempotency records; repair path,MITIGATED
+RISK-005,09,security,Invite join-code leakage grants bucket access,medium,medium,Tokens random 144-bit; only SHA-256 hash stored; 72h expiry; single-use accept transaction; revocable,MITIGATED
+RISK-006,13,release,Debug-signed APK only (no managed keystore),certain,low,Debug APK is the contracted deliverable; release-signing workflow documented without committing secrets,ACCEPTED
+RISK-007,06,dependency,TypeScript 7.0.2 not published on npm,high,low,Verify via npm registry; stay on verified 6.x stable and document deviation,OPEN
+RISK-008,07,security,Client-side invite acceptance without Cloud Functions,medium,medium,Rules validate invite doc reference role/status/expiry via getAfter checks; documented no-functions adaptation (Blaze plan unavailable),MITIGATED
+RISK-009,12,testing,Two-simultaneous-writer proof limited to deterministic engine tests locally,medium,medium,Pure mutation engine unit-tested for interleavings + adapter integration tests; Firestore transaction semantics cover live contention,ACCEPTED
+RISK-010,15,ci,Dependabot PRs (8 open) may drift dependencies during execution,medium,low,Ignore during execution; grouped updates reviewed after release,ACCEPTED

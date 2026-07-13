@@ -1,0 +1,232 @@
+{
+  "edges": [
+    {
+      "source": "src/App.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/components/ActivityTimeline.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/components/AppLayout.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/components/AuthLayout.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/components/ConfirmDialog.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/components/EmptyState.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/components/ErrorState.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/components/Loading.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/components/StatusBadge.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/config/env.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/i18n/messages.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/lib/bucket.ts",
+      "tests": [
+        "tests/domain/bucket.test.ts"
+      ],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/lib/date.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/lib/id.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/lib/money.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/lib/order.ts",
+      "tests": [
+        "tests/domain/order.test.ts"
+      ],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/lib/sharing.ts",
+      "tests": [
+        "tests/domain/sharing.test.ts",
+        "tests/services/sharingLocal.test.ts"
+      ],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/lib/validation.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/main.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/pages/BucketCollaboratePage.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/pages/BucketEditorPage.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/pages/BucketSharePage.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/pages/BucketsPage.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/pages/CreateOrderPage.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/pages/DashboardPage.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/pages/ForgotPasswordPage.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/pages/JoinBucketPage.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/pages/LoginPage.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/pages/NotFoundPage.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/pages/OrderDetailsPage.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/pages/OrdersPage.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/pages/RegisterPage.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/pages/SettingsPage.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/services/contracts.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/services/firebaseServices.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/services/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/services/localServices.ts",
+      "tests": [
+        "tests/services/localServices.test.ts"
+      ],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/services/platform.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/state/AppContext.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/state/deviceConfig.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/styles.css",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/types/domain.ts",
+      "tests": [
+        "tests/domain/bucket.test.ts",
+        "tests/domain/order.test.ts",
+        "tests/domain/sharing.test.ts"
+      ],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/vite-env.d.ts",
+      "tests": [],
+      "relationship": "inferred"
+    }
+  ]
+}

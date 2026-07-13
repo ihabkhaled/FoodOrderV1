@@ -1,0 +1,124 @@
+{
+  "taskTypes": [
+    {
+      "id": "security-change",
+      "risk": "critical",
+      "keys": [
+        "auth",
+        "permission",
+        "security",
+        "firestore rule",
+        "secret",
+        "privacy",
+        "delete account"
+      ],
+      "paths": [
+        "security",
+        "privacy",
+        "firestore.rules",
+        "src/services"
+      ],
+      "tests": [
+        "tests/services"
+      ]
+    },
+    {
+      "id": "database-change",
+      "risk": "standard",
+      "keys": [
+        "firebase",
+        "firestore",
+        "database",
+        "migration",
+        "persistence"
+      ],
+      "paths": [
+        "src/services",
+        "contracts/data",
+        "firestore.rules"
+      ],
+      "tests": [
+        "tests/services"
+      ]
+    },
+    {
+      "id": "mobile-feature",
+      "risk": "standard",
+      "keys": [
+        "capacitor",
+        "android",
+        "ios",
+        "native",
+        "haptic",
+        "status bar"
+      ],
+      "paths": [
+        "src/services/platform.ts",
+        "capacitor.config.ts",
+        "architecture/mobile-architecture.md"
+      ],
+      "tests": [
+        "tests/e2e"
+      ]
+    },
+    {
+      "id": "domain-change",
+      "risk": "standard",
+      "keys": [
+        "bucket",
+        "order",
+        "price",
+        "quantity",
+        "status",
+        "total"
+      ],
+      "paths": [
+        "src/lib",
+        "src/types/domain.ts",
+        "domain"
+      ],
+      "tests": [
+        "tests/domain"
+      ]
+    },
+    {
+      "id": "frontend-feature",
+      "risk": "standard",
+      "keys": [
+        "screen",
+        "page",
+        "ui",
+        "form",
+        "accessibility",
+        "rtl",
+        "language",
+        "theme"
+      ],
+      "paths": [
+        "src/pages",
+        "src/components",
+        "src/state",
+        "src/i18n"
+      ],
+      "tests": [
+        "tests/e2e"
+      ]
+    },
+    {
+      "id": "dependency-change",
+      "risk": "standard",
+      "keys": [
+        "dependency",
+        "package",
+        "upgrade",
+        "vite",
+        "react"
+      ],
+      "paths": [
+        "package.json",
+        "rules/dependency-governance.md"
+      ],
+      "tests": []
+    }
+  ]
+}

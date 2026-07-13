@@ -12,7 +12,7 @@ audience:
 summary: Bootstrap Source for FoodOrderV1.
 scope:
   - repository
-lastVerified: 2026-07-12
+lastVerified: 2026-07-13
 verificationMethod: source and test inspection
 contextTier: 0
 generated: false
@@ -20,13 +20,13 @@ generated: false
 
 # FoodOrderV1 AI bootstrap
 
-**Purpose.** FoodOrderV1 is a mobile-first React/TypeScript application wrapped by Capacitor. Users create reusable food buckets, select item quantities, save drafts or place orders, track status, repeat orders, and manage profile preferences.
+**Purpose.** FoodOrderV1 is a mobile-first React/TypeScript application wrapped by Capacitor. Users create reusable food buckets, select item quantities, save drafts or place orders, track status, repeat orders, manage runtime preferences (language/currency/theme, changeable anytime), and collaborate: share buckets by role-scoped join codes, contribute per-member quantities with concurrency-safe aggregation, follow an activity timeline, and place group orders that snapshot every participant.
 
-**Universal invariants.** A bucket belongs to one user, has a non-empty title, 1–50 named items, non-negative prices, and stable item IDs. An order belongs to one user, references its source bucket, contains at least one positive-quantity line, stores immutable line snapshots, and calculates totals with two-decimal rounding. Allowed status transitions are draft→placed/cancelled and placed→completed/cancelled; completed and cancelled are terminal.
+**Universal invariants.** A bucket (schema v2) has one owner, a non-empty title, 1–50 named items, non-negative prices, stable item IDs, a monotonic revision, and a repairable materialized aggregate derived from per-member contribution documents. An order belongs to one user, references its source bucket (and revision for group orders), contains at least one positive-quantity line, stores immutable line/participant snapshots, and calculates totals with two-decimal rounding. Allowed status transitions are draft→placed/cancelled and placed→completed/cancelled; completed and cancelled are terminal. Contribution mutations carry unique mutation ids; replays return the recorded result and never double-apply. Invite tokens store only SHA-256 hashes, expire in 72h, and are single-use.
 
-**Security and privacy.** Never trust client ownership fields without Firestore rules. Every cloud document is scoped below `users/{uid}` and rules require `request.auth.uid == uid`. Never commit Firebase credentials, service-account keys, user exports, passwords, or production order data. Local-device mode is evaluation/development only and data remains on that device.
+**Security and privacy.** Never trust client ownership fields without Firestore rules. Personal documents live below `users/{uid}` (owner-only); shared buckets live at `buckets/{bucketId}` with member-based rules mirroring the role matrix in `src/lib/sharing.ts` (owner/editor/contributor/viewer). Never commit Firebase credentials, service-account keys, user exports, passwords, or production order data. Local-device mode is evaluation/development only and data remains on that device.
 
-**Architecture.** Keep business behavior pure in `src/lib`, contracts in `src/types` and `src/services/contracts.ts`, persistence/auth behind adapters in `src/services`, session/preferences in `src/state`, and routes in `src/pages`. UI must not call Firebase directly. Native functionality goes through `src/services/platform.ts`.
+**Architecture.** Keep business behavior pure in `src/lib` (bucket, order, sharing engine), contracts in `src/types` and `src/services/contracts.ts`, persistence/auth behind adapters in `src/services` (Firestore transactions own contribution writes), session/runtime preferences in `src/state` (`deviceConfig.ts` owns device-level locale/currency/theme), and routes in `src/pages`. UI must not call Firebase directly. Native/browser platform APIs go through `src/services/platform.ts`. The `android/` and `ios/` projects are committed; refresh them with `npx cap sync` after web builds.
 
 **Authority.** Security/privacy policy and active ADRs outrank rules; rules outrank contracts; contracts outrank module guides; source and tests verify current implementation. `.ai/` is generated and never canonical.
 

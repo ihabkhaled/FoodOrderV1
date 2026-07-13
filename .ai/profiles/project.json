@@ -1,0 +1,15 @@
+{
+  "name": "FoodOrderV1",
+  "stack": [
+    "React",
+    "TypeScript",
+    "Vite",
+    "Capacitor",
+    "Firebase"
+  ],
+  "architecture": "pure domain plus adapters and route presentation",
+  "generatedFrom": [
+    "knowledge/project-profile.yaml",
+    "package.json"
+  ]
+}

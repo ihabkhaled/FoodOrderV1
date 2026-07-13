@@ -1,0 +1,40 @@
+{
+  "modules": [
+    {
+      "id": "domain",
+      "paths": [
+        "src/lib",
+        "src/types"
+      ],
+      "tests": [
+        "tests/domain"
+      ]
+    },
+    {
+      "id": "presentation",
+      "paths": [
+        "src/pages",
+        "src/components"
+      ],
+      "tests": [
+        "tests/e2e"
+      ]
+    },
+    {
+      "id": "persistence",
+      "paths": [
+        "src/services"
+      ],
+      "tests": [
+        "tests/services"
+      ]
+    },
+    {
+      "id": "platform",
+      "paths": [
+        "src/services/platform.ts",
+        "capacitor.config.ts"
+      ]
+    }
+  ]
+}
