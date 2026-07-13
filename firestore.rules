@@ -198,7 +198,11 @@ service cloud.firestore {
               || request.resource.data.get('canCreateCustomItems', false));
         }
 
-        allow read: if canView();
+        // A signed-in invitee may read only their own membership document so a
+        // transaction can determine whether they previously joined or were revoked.
+        // Listing members remains restricted to existing bucket viewers.
+        allow get: if canView() || owns(memberId);
+        allow list: if canView();
         allow create: if ownerSelfDoc() || validSelfJoin();
         allow update: if
           ownerSelfDoc()
