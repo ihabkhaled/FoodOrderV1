@@ -1,18 +1,24 @@
 name: CI
+
 on:
   pull_request:
   push:
     branches: [main]
+    tags: ['v*']
+  workflow_dispatch:
+
 permissions:
   contents: read
+
 concurrency:
-  group: ci-${{ github.ref }}
+  group: ci-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
+
 jobs:
-  # Fast, independent quality gates.
-  quality:
+  knowledge:
+    name: Knowledge
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v6
@@ -22,24 +28,126 @@ jobs:
       - run: npm ci
       - run: npm run knowledge:build
       - run: npm run knowledge:validate
-      - run: npm run format:check
-      - run: npm run lint
-      - run: npm run typecheck
-      - run: npm run typecheck:tsc
-      - run: npm run quality:circular
-      - run: npm run test:coverage
-      - run: npm run build
       - run: npm run knowledge:benchmark
       - uses: actions/upload-artifact@v7
         if: always()
         with:
-          name: validation-reports
-          path: |
-            coverage/
-            .ai/reports/
+          name: knowledge-reports
+          path: .ai/reports/
+          if-no-files-found: error
 
-  # End-to-end (unit + integration run in the quality job's coverage step).
+  format:
+    name: Format
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 26
+          cache: npm
+      - run: npm ci
+      - run: npm run format:check
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 26
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+
+  typecheck-primary:
+    name: Typecheck Primary
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 26
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+
+  typecheck-compatibility:
+    name: Typecheck Compatibility
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 26
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck:tsc
+
+  circular-dependencies:
+    name: Circular Dependencies
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 26
+          cache: npm
+      - run: npm ci
+      - run: npm run quality:circular
+
+  dead-code:
+    name: Dead Code
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 26
+          cache: npm
+      - run: npm ci
+      - run: npm run quality:dead-code
+
+  coverage:
+    name: Unit and Integration Coverage
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 26
+          cache: npm
+      - run: npm ci
+      - run: npm run test:coverage
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: coverage-report
+          path: coverage/
+          if-no-files-found: error
+
+  build:
+    name: Production Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 26
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+
   e2e:
+    name: End-to-End
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -56,9 +164,10 @@ jobs:
         with:
           name: playwright-report
           path: playwright-report/
+          if-no-files-found: warn
 
-  # Security scans (advisory: report findings without blocking the build).
-  security:
+  npm-audit:
+    name: npm Audit
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -68,12 +177,108 @@ jobs:
           node-version: 26
           cache: npm
       - run: npm ci
-      - name: npm audit (high+)
-        run: npm run security:audit || true
-      - name: Trivy filesystem scan
-        uses: aquasecurity/trivy-action@0.28.0
+      - run: npm run security:audit
+
+  trivy:
+    name: Trivy
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - name: Trivy filesystem report
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           scan-type: fs
+          scan-ref: .
           scanners: vuln,secret,misconfig
-          skip-dirs: node_modules,dist,coverage,android,ios,ui-shots
+          format: sarif
+          output: trivy-results.sarif
+          severity: CRITICAL,HIGH
+          ignore-unfixed: true
           exit-code: '0'
+          skip-dirs: node_modules,dist,coverage,android,ios,ui-shots
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: trivy-results
+          path: trivy-results.sarif
+          if-no-files-found: error
+      - name: Enforce Trivy high and critical findings
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          scan-type: fs
+          scan-ref: .
+          scanners: vuln,secret,misconfig
+          format: table
+          severity: CRITICAL,HIGH
+          ignore-unfixed: true
+          exit-code: '1'
+          skip-setup-trivy: true
+          skip-dirs: node_modules,dist,coverage,android,ios,ui-shots
+
+  all-gates-green:
+    name: All Gates Green
+    if: always()
+    needs:
+      - knowledge
+      - format
+      - lint
+      - typecheck-primary
+      - typecheck-compatibility
+      - circular-dependencies
+      - dead-code
+      - coverage
+      - build
+      - e2e
+      - npm-audit
+      - trivy
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Require every mandatory gate to succeed
+        env:
+          NEEDS_JSON: ${{ toJson(needs) }}
+        run: |
+          node <<'NODE'
+          const needs = JSON.parse(process.env.NEEDS_JSON ?? '{}');
+          const failures = Object.entries(needs).filter(([, value]) => value.result !== 'success');
+          if (failures.length > 0) {
+            console.error('Required gates are not green:');
+            for (const [name, value] of failures) console.error(`- ${name}: ${value.result}`);
+            process.exit(1);
+          }
+          console.log('All mandatory gates are green.');
+          NODE
+
+  generate-apk:
+    name: Generate APK
+    needs: all-gates-green
+    uses: ./.github/workflows/android-apk.yml
+    permissions:
+      contents: read
+
+  release-apk:
+    name: Release APK
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: generate-apk
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    permissions:
+      contents: write
+    steps:
+      - name: Download generated APK
+        uses: actions/download-artifact@v4
+        with:
+          name: FoodOrderV1-debug-apk
+
+      - name: Verify APK checksum
+        run: sha256sum --check FoodOrderV1-*-debug.apk.sha256
+
+      - name: Create or update GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view "${GITHUB_REF_NAME}" --repo "${GITHUB_REPOSITORY}" >/dev/null 2>&1 || \
+            gh release create "${GITHUB_REF_NAME}" --repo "${GITHUB_REPOSITORY}" --generate-notes
+          gh release upload "${GITHUB_REF_NAME}" FoodOrderV1-*-debug.apk FoodOrderV1-*-debug.apk.sha256 \
+            --repo "${GITHUB_REPOSITORY}" --clobber
