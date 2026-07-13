@@ -1,13 +1,14 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import { LocalPaginationService } from '@/services/paginationServices';
 import type { DataService, SharingService } from '@/services/contracts';
+import { LocalPaginationService } from '@/services/paginationServices';
 import type { Bucket, Order, SessionUser } from '@/types/domain';
 
 const user: SessionUser = {
   id: 'user-1',
   email: 'user@example.com',
   displayName: 'User',
+  isDemo: false,
 };
 
 const bucket = (id: string, updatedAt: string): Bucket => ({
@@ -52,42 +53,55 @@ const bucket = (id: string, updatedAt: string): Bucket => ({
 const order = (id: string, createdAt: string): Order => ({
   id,
   userId: user.id,
-  bucketId: null,
+  bucketId: '',
   bucketTitle: id,
   currency: 'EGP',
   status: 'draft',
   notes: '',
   lines: [
     {
+      id: `${id}-line`,
       bucketItemId: `${id}-item`,
       name: 'Meal',
       unitPrice: 10,
       quantity: 1,
-      subtotal: 10,
+      lineTotal: 10,
     },
   ],
+  subtotal: 10,
   total: 10,
+  sourceBucketRevision: null,
+  participants: null,
   createdAt,
   updatedAt: createdAt,
+  placedAt: null,
+  completedAt: null,
+  cancelledAt: null,
 });
 
 const data = {
-  listBuckets: vi.fn(async () => [
-    bucket('old', '2026-01-01T00:00:00.000Z'),
-    bucket('new', '2026-01-03T00:00:00.000Z'),
-    bucket('middle', '2026-01-02T00:00:00.000Z'),
-  ]),
-  listOrders: vi.fn(async () => [
-    order('old-order', '2026-01-01T00:00:00.000Z'),
-    order('new-order', '2026-01-03T00:00:00.000Z'),
-  ]),
+  listBuckets: vi.fn(() =>
+    Promise.resolve([
+      bucket('old', '2026-01-01T00:00:00.000Z'),
+      bucket('new', '2026-01-03T00:00:00.000Z'),
+      bucket('middle', '2026-01-02T00:00:00.000Z'),
+    ]),
+  ),
+  listOrders: vi.fn(() =>
+    Promise.resolve([
+      order('old-order', '2026-01-01T00:00:00.000Z'),
+      order('new-order', '2026-01-03T00:00:00.000Z'),
+    ]),
+  ),
 } as unknown as DataService;
 
 const sharing = {
-  listSharedWithMe: vi.fn(async () => [
-    bucket('shared-old', '2026-01-01T00:00:00.000Z'),
-    bucket('shared-new', '2026-01-03T00:00:00.000Z'),
-  ]),
+  listSharedWithMe: vi.fn(() =>
+    Promise.resolve([
+      bucket('shared-old', '2026-01-01T00:00:00.000Z'),
+      bucket('shared-new', '2026-01-03T00:00:00.000Z'),
+    ]),
+  ),
 } as unknown as SharingService;
 
 describe('LocalPaginationService', () => {
@@ -97,10 +111,11 @@ describe('LocalPaginationService', () => {
     const first = await service.listOwnedBuckets(user, { limit: 2 });
     expect(first.items.map(({ id }) => id)).toEqual(['new', 'middle']);
     expect(first.hasMore).toBe(true);
+    if (!first.nextCursor) throw new Error('Expected the first page cursor.');
 
     const second = await service.listOwnedBuckets(user, {
       limit: 2,
-      cursor: first.nextCursor ?? undefined,
+      cursor: first.nextCursor,
     });
     expect(second.items.map(({ id }) => id)).toEqual(['old']);
     expect(second.hasMore).toBe(false);
