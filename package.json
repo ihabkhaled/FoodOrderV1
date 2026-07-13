@@ -23,7 +23,7 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:e2e": "playwright test",
-    "test:rules": "firebase emulators:exec --project food-order-v1-rules-test --only firestore \"vitest run tests/firebase/firestore.rules.test.ts\"",
+    "test:rules": "firebase emulators:exec --project food-order-v1-rules-test --only firestore \"vitest run --config vitest.rules.config.ts\"",
     "functions:typecheck": "npm --prefix functions run typecheck",
     "functions:build": "npm --prefix functions run build",
     "functions:test": "npm --prefix functions run test",
