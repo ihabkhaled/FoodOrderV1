@@ -42,6 +42,8 @@ export const createOrder = (userId: string, draft: OrderDraft): Order => {
     notes: draft.notes.trim(),
     subtotal,
     total: subtotal,
+    sourceBucketRevision: draft.sourceBucketRevision ?? null,
+    participants: draft.participants ?? null,
     createdAt,
     updatedAt: createdAt,
     placedAt: status === 'placed' ? createdAt : null,

@@ -1,4 +1,3 @@
-export const createId = (prefix = 'id'): string => {
-  const random = globalThis.crypto?.randomUUID?.() ?? Math.random().toString(36).slice(2);
-  return `${prefix}_${random}`;
-};
+// WebCrypto randomUUID is guaranteed on the supported platform baseline
+// (Chromium ≥ 92 WebView / evergreen browsers / Node ≥ 19 test runtime).
+export const createId = (prefix = 'id'): string => `${prefix}_${crypto.randomUUID()}`;

@@ -25,3 +25,28 @@ export const setPreference = async (key: string, value: string): Promise<void> =
 
 export const getPreference = async (key: string): Promise<string | null> =>
   (await Preferences.get({ key })).value;
+
+export const copyToClipboard = async (text: string): Promise<void> => {
+  await navigator.clipboard.writeText(text);
+};
+
+/** Client-side file download used by the privacy data export. */
+export const downloadTextFile = (fileName: string, content: string, mimeType = 'application/json'): void => {
+  const url = URL.createObjectURL(new Blob([content], { type: mimeType }));
+  const anchor = document.createElement('a');
+  anchor.href = url;
+  anchor.download = fileName;
+  anchor.click();
+  URL.revokeObjectURL(url);
+};
+
+/** Native share sheet when available; resolves false so callers can fall back to copy. */
+export const shareText = async (title: string, text: string): Promise<boolean> => {
+  if (typeof navigator.share !== 'function') return false;
+  try {
+    await navigator.share({ title, text });
+    return true;
+  } catch {
+    return false;
+  }
+};

@@ -1,9 +1,14 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
-import { env } from '@/config/env';
 import { translate, type MessageKey } from '@/i18n/messages';
-import { getNetworkStatus, impact, setPreference } from '@/services/platform';
+import { getNetworkStatus, impact } from '@/services/platform';
 import { authService, dataService, storageMode } from '@/services';
-import type { CurrencyCode, Locale, SessionUser, Theme, UserProfile } from '@/types/domain';
+import {
+  DEFAULT_DEVICE_CONFIG,
+  loadDeviceConfig,
+  saveDeviceConfig,
+  type DeviceConfig,
+} from '@/state/deviceConfig';
+import type { CurrencyCode, Locale, ProfileDefaults, SessionUser, Theme, UserProfile } from '@/types/domain';
 
 interface ToastState { message: string; kind: 'success' | 'error' | 'info' }
 interface AppContextValue {
@@ -14,6 +19,7 @@ interface AppContextValue {
   storageMode: string;
   locale: Locale;
   theme: Theme;
+  currency: CurrencyCode;
   toast: ToastState | null;
   t: (key: MessageKey) => string;
   login: (email: string, password: string) => Promise<void>;
@@ -21,6 +27,8 @@ interface AppContextValue {
   resetPassword: (email: string) => Promise<void>;
   logout: () => Promise<void>;
   saveProfile: (changes: Partial<Pick<UserProfile, 'fullName' | 'locale' | 'theme' | 'defaultCurrency'>>) => Promise<void>;
+  /** Runtime language switch that also works before signing in. */
+  setDeviceLocale: (locale: Locale) => Promise<void>;
   showToast: (message: string, kind?: ToastState['kind']) => void;
 }
 
@@ -37,8 +45,18 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [authLoading, setAuthLoading] = useState(true);
   const [online, setOnline] = useState(true);
   const [toast, setToast] = useState<ToastState | null>(null);
-  const locale = profile?.locale ?? env.defaultLocale;
-  const theme = profile?.theme ?? 'system';
+  const [device, setDevice] = useState<DeviceConfig>(DEFAULT_DEVICE_CONFIG);
+  const locale = profile?.locale ?? device.locale;
+  const theme = profile?.theme ?? device.theme;
+  const currency = profile?.defaultCurrency ?? device.currency;
+  const defaults: ProfileDefaults = useMemo(
+    () => ({ locale: device.locale, theme: device.theme, defaultCurrency: device.currency }),
+    [device],
+  );
+
+  useEffect(() => {
+    void loadDeviceConfig().then(setDevice).catch(() => { setDevice(DEFAULT_DEVICE_CONFIG); });
+  }, []);
 
   useEffect(() => authService.subscribe((nextUser) => {
     setUser(nextUser);
@@ -46,12 +64,14 @@ export function AppProvider({ children }: { children: ReactNode }) {
     if (!nextUser) setProfile(null);
   }), []);
 
+  const [profileLoadedFor, setProfileLoadedFor] = useState<string | null>(null);
   useEffect(() => {
-    if (!user) return;
-    void dataService.getProfile(user).then(setProfile).catch((error: unknown) => {
+    if (!user || profileLoadedFor === user.id) return;
+    setProfileLoadedFor(user.id);
+    void dataService.getProfile(user, defaults).then(setProfile).catch((error: unknown) => {
       setToast({ message: error instanceof Error ? error.message : 'Unable to load profile.', kind: 'error' });
     });
-  }, [user]);
+  }, [user, defaults, profileLoadedFor]);
 
   useEffect(() => {
     applyTheme(theme);
@@ -60,7 +80,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   }, [locale, theme]);
 
   useEffect(() => {
-    const refresh = (): void => { void getNetworkStatus().then(setOnline).catch(() => setOnline(navigator.onLine)); };
+    const refresh = (): void => { void getNetworkStatus().then(setOnline).catch(() => { setOnline(navigator.onLine); }); };
     refresh();
     window.addEventListener('online', refresh);
     window.addEventListener('offline', refresh);
@@ -69,8 +89,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (!toast) return;
-    const timer = window.setTimeout(() => setToast(null), 3600);
-    return () => window.clearTimeout(timer);
+    const timer = window.setTimeout(() => { setToast(null); }, 3600);
+    return () => { window.clearTimeout(timer); };
   }, [toast]);
 
   const showToast = useCallback((message: string, kind: ToastState['kind'] = 'info') => {
@@ -78,23 +98,36 @@ export function AppProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const value = useMemo<AppContextValue>(() => ({
-    user, profile, authLoading, online, storageMode, locale, theme, toast,
+    user, profile, authLoading, online, storageMode, locale, theme, currency, toast,
     t: (key) => translate(locale, key),
     login: async (email, password) => { await authService.login(email, password); await impact(); showToast(translate(locale, 'signedIn'), 'success'); },
-    register: async (fullName, email, password) => { await authService.register(fullName, email, password); await impact(); showToast(translate(locale, 'accountCreated'), 'success'); },
+    register: async (fullName, email, password) => { await authService.register(fullName, email, password, defaults); await impact(); showToast(translate(locale, 'accountCreated'), 'success'); },
     resetPassword: async (email) => { await authService.resetPassword(email); showToast(translate(locale, 'resetSent'), 'success'); },
     logout: async () => { await authService.logout(); },
     saveProfile: async (changes) => {
       if (!profile) throw new Error('Profile is not loaded.');
       const saved = await dataService.saveProfile({ ...profile, ...changes });
       setProfile(saved);
-      if (changes.locale) await setPreference('locale', changes.locale);
-      if (changes.theme) await setPreference('theme', changes.theme);
-      if (changes.defaultCurrency) await setPreference('currency', changes.defaultCurrency as CurrencyCode);
-      showToast(translate(saved.locale, 'save'), 'success');
+      const deviceChanges: Partial<DeviceConfig> = {};
+      if (changes.locale) deviceChanges.locale = changes.locale;
+      if (changes.theme) deviceChanges.theme = changes.theme;
+      if (changes.defaultCurrency) deviceChanges.currency = changes.defaultCurrency;
+      if (Object.keys(deviceChanges).length) {
+        await saveDeviceConfig(deviceChanges);
+        setDevice((current) => ({ ...current, ...deviceChanges }));
+      }
+      showToast(translate(saved.locale, 'settingsSaved'), 'success');
+    },
+    setDeviceLocale: async (nextLocale) => {
+      await saveDeviceConfig({ locale: nextLocale });
+      setDevice((current) => ({ ...current, locale: nextLocale }));
+      if (profile) {
+        const saved = await dataService.saveProfile({ ...profile, locale: nextLocale });
+        setProfile(saved);
+      }
     },
     showToast,
-  }), [user, profile, authLoading, online, locale, theme, toast, showToast]);
+  }), [user, profile, authLoading, online, locale, theme, currency, toast, defaults, showToast]);
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }

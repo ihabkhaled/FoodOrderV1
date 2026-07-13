@@ -1,9 +1,9 @@
 export const isEmail = (value: string): boolean => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
 
-export const validatePassword = (value: string): string | null => {
-  if (value.length < 8) return 'Password must be at least 8 characters.';
-  if (!/[A-Z]/.test(value)) return 'Password must include an uppercase letter.';
-  if (!/[a-z]/.test(value)) return 'Password must include a lowercase letter.';
-  if (!/\d/.test(value)) return 'Password must include a number.';
+/** Returns a message key so callers localize the failure (NR-012). */
+export const validatePassword = (value: string): 'passwordTooShort' | null => {
+  if (value.length < 8) return 'passwordTooShort';
+  if (!/[a-zA-Z]/.test(value)) return 'passwordTooShort';
+  if (!/\d/.test(value)) return 'passwordTooShort';
   return null;
 };
