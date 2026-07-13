@@ -1,1 +1,30 @@
-{ "indexes": [], "fieldOverrides": [] }
+{
+  "indexes": [
+    {
+      "collectionGroup": "buckets",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "ownerId", "order": "ASCENDING" },
+        { "fieldPath": "updatedAt", "order": "DESCENDING" },
+        { "fieldPath": "id", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "orders",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "createdAt", "order": "DESCENDING" },
+        { "fieldPath": "id", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "bucketMemberships",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "joinedAt", "order": "DESCENDING" },
+        { "fieldPath": "bucketId", "order": "DESCENDING" }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}
