@@ -1,0 +1,95 @@
+name: Failure Diagnostics
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: diagnostics-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  typecheck:
+    name: Typecheck Diagnostics
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 26
+          cache: npm
+      - run: npm ci
+      - name: Capture primary and compatibility compiler output
+        shell: bash
+        run: |
+          set +e
+          npm run typecheck > typecheck-primary.log 2>&1
+          PRIMARY_EXIT=$?
+          npm run typecheck:tsc > typecheck-compatibility.log 2>&1
+          COMPATIBILITY_EXIT=$?
+          printf 'primary=%s\ncompatibility=%s\n' "$PRIMARY_EXIT" "$COMPATIBILITY_EXIT" > typecheck-exits.txt
+          if [ "$PRIMARY_EXIT" -ne 0 ] || [ "$COMPATIBILITY_EXIT" -ne 0 ]; then
+            exit 1
+          fi
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: typecheck-diagnostics
+          path: |
+            typecheck-primary.log
+            typecheck-compatibility.log
+            typecheck-exits.txt
+          if-no-files-found: error
+
+  build:
+    name: Build Diagnostics
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 26
+          cache: npm
+      - run: npm ci
+      - name: Capture production build output
+        shell: bash
+        run: |
+          set -o pipefail
+          npm run build 2>&1 | tee build.log
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: build-diagnostics
+          path: build.log
+          if-no-files-found: error
+
+  e2e:
+    name: E2E Diagnostics
+    runs-on: ubuntu-latest
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 26
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Capture end-to-end output
+        shell: bash
+        run: |
+          set -o pipefail
+          npm run test:e2e 2>&1 | tee e2e.log
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: e2e-diagnostics
+          path: |
+            e2e.log
+            playwright-report/
+            test-results/
+          if-no-files-found: warn
