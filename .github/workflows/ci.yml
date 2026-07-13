@@ -60,7 +60,17 @@ jobs:
           node-version: 26
           cache: npm
       - run: npm ci
-      - run: npm run lint
+      - name: Run ESLint
+        shell: bash
+        run: |
+          set -o pipefail
+          npm run lint 2>&1 | tee eslint.log
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: eslint-report
+          path: eslint.log
+          if-no-files-found: error
 
   typecheck-primary:
     name: Typecheck Primary
