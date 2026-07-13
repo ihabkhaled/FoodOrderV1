@@ -1,4 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest';
+
 import { LocalAuthService, LocalDataService } from '@/services/localServices';
 import type { ProfileDefaults } from '@/types/domain';
 
@@ -14,7 +15,8 @@ describe('local integration', () => {
     const [firstItem] = bucket.items;
     if (!firstItem) throw new Error('expected an item');
     const order = await data.createOrder(user.id, { bucketId: bucket.id, bucketTitle: bucket.title, currency: bucket.currency, notes: '', lines: [{ id: 'l', bucketItemId: firstItem.id, name: 'Koshary', quantity: 2, unitPrice: 45 }] });
-    expect((await data.updateOrderStatus(user.id, order.id, 'completed')).status).toBe('completed');
+    const completed = await data.updateOrderStatus(user.id, order.id, 'completed');
+    expect(completed.status).toBe('completed');
     const dashboard = await data.getDashboard(user);
     expect(dashboard.orderCount).toBe(1);
     expect(dashboard.sharedBucketCount).toBe(0);

@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+
 import { createBucket, MAX_BUCKET_ITEMS, normalizeBucketItems, updateBucket, upgradeLegacyBucket } from '@/lib/bucket';
 
 const owner = { id: 'u', displayName: 'User' };

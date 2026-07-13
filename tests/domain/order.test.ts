@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+
 import { calculateLineTotal, calculateOrderTotal, canTransitionOrder, createOrder, transitionOrder } from '@/lib/order';
 const draft={bucketId:'b1',bucketTitle:'Breakfast',currency:'EGP' as const,notes:'',lines:[{id:'l1',bucketItemId:'i1',name:'Foul',quantity:2,unitPrice:12.5}]};
 describe('order domain',()=>{

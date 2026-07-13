@@ -1,6 +1,7 @@
 import { CopyPlus, KeyRound, Plus, Search, Share2, ShoppingBasket, Trash2, Users } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
+
 import { ConfirmDialog } from '@/components/ConfirmDialog';
 import { EmptyState } from '@/components/EmptyState';
 import { ErrorState } from '@/components/ErrorState';
@@ -27,8 +28,8 @@ export function BucketsPage() {
       ]);
       setBuckets(owned);
       setShared(sharedWithMe);
-    } catch (reason) {
-      setError(reason instanceof Error ? reason.message : t('tryAgain'));
+    } catch (error_) {
+      setError(error_ instanceof Error ? error_.message : t('tryAgain'));
     }
   }, [user, t]);
   useEffect(() => { void load(); }, [load]);
@@ -46,8 +47,8 @@ export function BucketsPage() {
       await dataService.deleteBucket(user, deleting.id);
       setBuckets((current) => current?.filter((bucket) => bucket.id !== deleting.id) ?? []);
       showToast(t('bucketDeleted'), 'success');
-    } catch (reason) {
-      showToast(reason instanceof Error ? reason.message : t('tryAgain'), 'error');
+    } catch (error_) {
+      showToast(error_ instanceof Error ? error_.message : t('tryAgain'), 'error');
     } finally {
       setDeleting(null);
     }
@@ -66,8 +67,8 @@ export function BucketsPage() {
       });
       setBuckets((current) => [copy, ...(current ?? [])]);
       showToast(t('bucketSaved'), 'success');
-    } catch (reason) {
-      showToast(reason instanceof Error ? reason.message : t('tryAgain'), 'error');
+    } catch (error_) {
+      showToast(error_ instanceof Error ? error_.message : t('tryAgain'), 'error');
     }
   };
   if (error) return <ErrorState message={error} onRetry={() => void load()} />;
@@ -80,10 +81,10 @@ export function BucketsPage() {
         <Link className="button" to="/buckets/new"><Plus />{t('createBucket')}</Link>
       </div>
     </div>
-    {buckets.length || shared.length ? (
+    {buckets.length > 0 || shared.length > 0 ? (
       <>
         <label className="search-field"><Search /><input value={query} onChange={(event) => { setQuery(event.target.value); }} placeholder={t('searchBuckets')} aria-label={t('searchBuckets')} /></label>
-        {filtered.length ? (
+        {filtered.length > 0 ? (
           <section className="card-grid">
             {filtered.map((bucket) => (
               <article className="bucket-card" key={bucket.id}>
@@ -113,7 +114,7 @@ export function BucketsPage() {
         ) : null}
         <section className="stack">
           <div className="section-heading"><div><p className="eyebrow">{t('sharedWithMe')}</p><h2>{t('sharedWithMe')}</h2></div></div>
-          {filteredShared.length ? (
+          {filteredShared.length > 0 ? (
             <section className="card-grid">
               {filteredShared.map((bucket) => (
                 <article className="bucket-card" key={bucket.id}>

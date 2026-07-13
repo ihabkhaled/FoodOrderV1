@@ -6,25 +6,30 @@ import { StatusBar, Style } from '@capacitor/status-bar';
 
 export const initializePlatform = async (): Promise<void> => {
   if (Capacitor.isNativePlatform()) {
-    await StatusBar.setStyle({ style: Style.Dark }).catch(() => undefined);
+    await StatusBar.setStyle({ style: Style.Dark }).catch(() => {});
   }
   if ('serviceWorker' in navigator && import.meta.env.PROD) {
-    await navigator.serviceWorker.register('/sw.js').catch(() => undefined);
+    await navigator.serviceWorker.register('/sw.js').catch(() => {});
   }
 };
 
 export const impact = async (): Promise<void> => {
-  if (Capacitor.isNativePlatform()) await Haptics.impact({ style: ImpactStyle.Light }).catch(() => undefined);
+  if (Capacitor.isNativePlatform()) await Haptics.impact({ style: ImpactStyle.Light }).catch(() => {});
 };
 
-export const getNetworkStatus = async (): Promise<boolean> => (await Network.getStatus()).connected;
+export const getNetworkStatus = async (): Promise<boolean> => {
+  const status = await Network.getStatus();
+  return status.connected;
+};
 
 export const setPreference = async (key: string, value: string): Promise<void> => {
   await Preferences.set({ key, value });
 };
 
-export const getPreference = async (key: string): Promise<string | null> =>
-  (await Preferences.get({ key })).value;
+export const getPreference = async (key: string): Promise<string | null> => {
+  const result = await Preferences.get({ key });
+  return result.value;
+};
 
 export const copyToClipboard = async (text: string): Promise<void> => {
   await navigator.clipboard.writeText(text);

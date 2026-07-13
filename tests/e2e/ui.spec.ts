@@ -1,4 +1,4 @@
-import { expect, test, type Page } from '@playwright/test';
+import { expect, type Page,test } from '@playwright/test';
 
 // UI/layout gate: proves the responsive shell places components correctly and
 // nothing overflows horizontally. Runs against the deterministic local-device
@@ -55,11 +55,10 @@ test.describe('responsive shell', () => {
     await expect(toast).toBeVisible();
     const heading = page.locator('h1').first();
     const [toastBox, headingBox] = await Promise.all([toast.boundingBox(), heading.boundingBox()]);
-    expect(toastBox && headingBox).toBeTruthy();
-    if (toastBox && headingBox) {
-      // Toast sits below the heading (bottom-anchored), never on top of it.
-      expect(toastBox.y).toBeGreaterThan(headingBox.y + headingBox.height);
-    }
+    expect(toastBox).not.toBeNull();
+    expect(headingBox).not.toBeNull();
+    // Toast sits below the heading (bottom-anchored), never on top of it.
+    expect(toastBox!.y).toBeGreaterThan(headingBox!.y + headingBox!.height);
   });
 });
 

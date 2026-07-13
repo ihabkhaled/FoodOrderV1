@@ -1,11 +1,12 @@
 import { Download, Save, Trash2 } from 'lucide-react';
-import { useEffect, useState, type SyntheticEvent } from 'react';
+import { type SyntheticEvent,useEffect, useState } from 'react';
+
 import { ConfirmDialog } from '@/components/ConfirmDialog';
 import { env } from '@/config/env';
-import { SUPPORTED_CURRENCIES } from '@/state/deviceConfig';
-import { downloadTextFile } from '@/services/platform';
 import { authService, dataService } from '@/services';
+import { downloadTextFile } from '@/services/platform';
 import { useApp } from '@/state/AppContext';
+import { SUPPORTED_CURRENCIES } from '@/state/deviceConfig';
 import type { CurrencyCode, Locale, ProfileDefaults, Theme } from '@/types/domain';
 
 export function SettingsPage() {
@@ -13,7 +14,7 @@ export function SettingsPage() {
   const [fullName, setFullName] = useState(profile?.fullName ?? ''); const [locale, setLocale] = useState<Locale>(profile?.locale ?? 'en'); const [theme, setTheme] = useState<Theme>(profile?.theme ?? 'system'); const [currency, setCurrency] = useState<CurrencyCode>(profile?.defaultCurrency ?? 'EGP'); const [busy, setBusy] = useState(false); const [error, setError] = useState('');
   const [exporting, setExporting] = useState(false); const [confirmingDelete, setConfirmingDelete] = useState(false); const [deleting, setDeleting] = useState(false);
   useEffect(() => { if (profile) { setFullName(profile.fullName); setLocale(profile.locale); setTheme(profile.theme); setCurrency(profile.defaultCurrency); } }, [profile]);
-  const submit = async (event: SyntheticEvent) => { event.preventDefault(); if (!fullName.trim()) { setError(t('fullNameRequired')); return; } try { setBusy(true); setError(''); await saveProfile({ fullName: fullName.trim(), locale, theme, defaultCurrency: currency }); } catch (reason) { setError(reason instanceof Error ? reason.message : t('tryAgain')); } finally { setBusy(false); } };
+  const submit = async (event: SyntheticEvent) => { event.preventDefault(); if (!fullName.trim()) { setError(t('fullNameRequired')); return; } try { setBusy(true); setError(''); await saveProfile({ fullName: fullName.trim(), locale, theme, defaultCurrency: currency }); } catch (error_) { setError(error_ instanceof Error ? error_.message : t('tryAgain')); } finally { setBusy(false); } };
   const exportData = async () => {
     if (!user) return;
     try {
@@ -22,8 +23,8 @@ export function SettingsPage() {
       const data = await dataService.exportUserData(user, defaults);
       downloadTextFile(`foodorder-export-${data.exportedAt.slice(0, 10)}.json`, JSON.stringify(data, null, 2));
       showToast(t('exportReady'), 'success');
-    } catch (reason) {
-      showToast(reason instanceof Error ? reason.message : t('tryAgain'), 'error');
+    } catch (error_) {
+      showToast(error_ instanceof Error ? error_.message : t('tryAgain'), 'error');
     } finally {
       setExporting(false);
     }
@@ -35,8 +36,8 @@ export function SettingsPage() {
       await dataService.deleteAllUserData(user);
       await authService.deleteAccount(user);
       showToast(t('accountDeleted'), 'success');
-    } catch (reason) {
-      const message = reason instanceof Error ? reason.message : '';
+    } catch (error_) {
+      const message = error_ instanceof Error ? error_.message : '';
       showToast(message.includes('requires-recent-login') ? t('requiresRecentLogin') : message || t('tryAgain'), 'error');
     } finally {
       setDeleting(false);

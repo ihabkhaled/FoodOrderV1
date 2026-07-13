@@ -1,4 +1,6 @@
 import { describe, expect, it } from 'vitest';
+
+import { createBucket } from '@/lib/bucket';
 import {
   applyContributionMutation,
   assertAssignableRole,
@@ -18,7 +20,6 @@ import {
   roleAllows,
   toOrderParticipants,
 } from '@/lib/sharing';
-import { createBucket } from '@/lib/bucket';
 import type {
   BucketContribution,
   BucketInvite,

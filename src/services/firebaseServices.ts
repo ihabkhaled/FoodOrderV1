@@ -1,5 +1,6 @@
-import { initializeApp, type FirebaseApp } from 'firebase/app';
+import { type FirebaseApp,initializeApp } from 'firebase/app';
 import {
+  type Auth,
   createUserWithEmailAndPassword,
   deleteUser,
   getAuth,
@@ -8,12 +9,13 @@ import {
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
-  type Auth,
 } from 'firebase/auth';
 import {
   collection,
   deleteDoc,
   doc,
+  type DocumentReference,
+  type Firestore,
   getDoc,
   getDocs,
   initializeFirestore,
@@ -26,9 +28,8 @@ import {
   setDoc,
   where,
   writeBatch,
-  type DocumentReference,
-  type Firestore,
 } from 'firebase/firestore';
+
 import { env } from '@/config/env';
 import { createBucket, updateBucket, upgradeLegacyBucket } from '@/lib/bucket';
 import { nowIso } from '@/lib/date';
@@ -328,7 +329,7 @@ export class FirestoreDataService implements DataService {
     const batch = writeBatch(this.firestore);
     for (const name of subcollections) {
       const docs = await getDocs(collection(this.firestore, 'buckets', bucketId, name));
-      docs.forEach((item) => batch.delete(item.ref));
+      for (const item of docs.docs) batch.delete(item.ref);
     }
     batch.delete(bucketRef(this.firestore, bucketId));
     batch.delete(membershipRef(this.firestore, user.id, bucketId));
@@ -410,7 +411,7 @@ export class FirestoreDataService implements DataService {
       getDocs(collection(this.firestore, 'users', user.id, 'bucketMemberships')),
     ]);
     const batch = writeBatch(this.firestore);
-    ordersSnap.docs.forEach((item) => { batch.delete(item.ref); });
+    for (const item of ordersSnap.docs) { batch.delete(item.ref); }
     for (const membership of membershipsSnap.docs) {
       const data = membership.data() as BucketMembershipRef;
       if (data.role !== 'owner') {
@@ -446,7 +447,7 @@ export class FirestoreSharingService implements SharingService {
         if (snapshot.exists()) buckets.push(snapshot.data() as Bucket);
         else await deleteDoc(membership.ref); // bucket deleted → clean stale mirror
       } catch {
-        await deleteDoc(membership.ref).catch(() => undefined); // access revoked → clean mirror
+        await deleteDoc(membership.ref).catch(() => {}); // access revoked → clean mirror
       }
     }
     return buckets.sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
@@ -700,7 +701,7 @@ export class FirestoreSharingService implements SharingService {
       if (!bucketSnap.exists()) throw new Error('Bucket was not found.');
       const bucket = bucketSnap.data() as Bucket;
       const item = bucket.items.find((candidate) => candidate.id === itemId);
-      if (!item || !item.active) throw new Error('This item is not available.');
+      if (!item?.active) throw new Error('This item is not available.');
       if (bucket.ownerId !== user.id) {
         const memberSnap = await tx.get(memberRef(this.firestore, bucketId, user.id));
         const member = memberSnap.exists() ? (memberSnap.data() as BucketMember) : null;

@@ -1,7 +1,8 @@
-import { useState, type SyntheticEvent } from 'react';
+import { type SyntheticEvent,useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useApp } from '@/state/AppContext';
+
 import { isEmail } from '@/lib/validation';
+import { useApp } from '@/state/AppContext';
 
 export function LoginPage() {
   const { t, login } = useApp();
@@ -13,7 +14,7 @@ export function LoginPage() {
     if (!isEmail(email)) { setError(t('enterValidEmail')); return; }
     if (!password) { setError(t('passwordRequired')); return; }
     try { setBusy(true); await login(email, password); await navigate('/'); }
-    catch (reason) { setError(reason instanceof Error ? reason.message : t('tryAgain')); }
+    catch (error_) { setError(error_ instanceof Error ? error_.message : t('tryAgain')); }
     finally { setBusy(false); }
   };
   return <form onSubmit={(event) => void submit(event)} className="stack"><div><h1>{t('login')}</h1><p className="muted">{t('loginIntro')}</p></div>

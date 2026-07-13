@@ -1,8 +1,8 @@
 import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
+
 import { AppLayout } from '@/components/AppLayout';
 import { AuthLayout } from '@/components/AuthLayout';
 import { Loading } from '@/components/Loading';
-import { useApp } from '@/state/AppContext';
 import { BucketCollaboratePage } from '@/pages/BucketCollaboratePage';
 import { BucketEditorPage } from '@/pages/BucketEditorPage';
 import { BucketSharePage } from '@/pages/BucketSharePage';
@@ -17,6 +17,7 @@ import { OrderDetailsPage } from '@/pages/OrderDetailsPage';
 import { OrdersPage } from '@/pages/OrdersPage';
 import { RegisterPage } from '@/pages/RegisterPage';
 import { SettingsPage } from '@/pages/SettingsPage';
+import { useApp } from '@/state/AppContext';
 
 function ProtectedRoute() { const { user, authLoading } = useApp(); if (authLoading) return <Loading />; return user ? <Outlet /> : <Navigate to="/auth/login" replace />; }
 function GuestRoute() { const { user, authLoading } = useApp(); if (authLoading) return <Loading />; return user ? <Navigate to="/" replace /> : <Outlet />; }

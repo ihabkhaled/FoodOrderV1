@@ -1,18 +1,19 @@
 import { ArrowLeft, LogOut, Minus, Plus, RefreshCcw, Settings2, ShoppingCart, Users } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+
 import { ActivityTimeline } from '@/components/ActivityTimeline';
 import { ConfirmDialog } from '@/components/ConfirmDialog';
 import { ErrorState } from '@/components/ErrorState';
 import { Loading } from '@/components/Loading';
+import type { MessageKey } from '@/i18n/messages';
 import { createId } from '@/lib/id';
 import { formatMoney } from '@/lib/money';
 import { detectAggregateDrift, MAX_CONTRIBUTION_QUANTITY, omitKey, roleAllows } from '@/lib/sharing';
 import { sharingService } from '@/services';
-import { useApp } from '@/state/AppContext';
-import type { MessageKey } from '@/i18n/messages';
-import type { BucketActivityEvent, BucketRole } from '@/types/domain';
 import type { SharedBucketView } from '@/services/contracts';
+import { useApp } from '@/state/AppContext';
+import type { BucketActivityEvent, BucketRole } from '@/types/domain';
 
 const ROLE_LABEL: Record<BucketRole, MessageKey> = {
   owner: 'roleOwner',
@@ -55,8 +56,8 @@ export function BucketCollaboratePage() {
       if (!nextView) throw new Error(t('notAllowed'));
       setView(nextView);
       setActivity(nextActivity);
-    } catch (reason) {
-      setError(reason instanceof Error ? reason.message : t('tryAgain'));
+    } catch (error_) {
+      setError(error_ instanceof Error ? error_.message : t('tryAgain'));
     } finally {
       setLoading(false);
     }
@@ -65,7 +66,7 @@ export function BucketCollaboratePage() {
   useEffect(() => { void load(); }, [load]);
   useEffect(() => {
     const active = timers.current;
-    return () => { Object.values(active).forEach((timer) => { window.clearTimeout(timer); }); };
+    return () => { for (const timer of Object.values(active)) { window.clearTimeout(timer); } };
   }, []);
 
   const myContribution = useMemo(
@@ -149,8 +150,8 @@ export function BucketCollaboratePage() {
       const order = await sharingService.placeGroupOrder(user, bucketId, notes);
       showToast(t('orderPlaced'), 'success');
       await navigate(`/orders/${order.id}`);
-    } catch (reason) {
-      showToast(reason instanceof Error ? reason.message : t('tryAgain'), 'error');
+    } catch (error_) {
+      showToast(error_ instanceof Error ? error_.message : t('tryAgain'), 'error');
     } finally {
       setOrdering(false);
     }
@@ -162,8 +163,8 @@ export function BucketCollaboratePage() {
       await sharingService.leaveBucket(user, bucketId);
       showToast(t('leftBucket'), 'success');
       await navigate('/buckets');
-    } catch (reason) {
-      showToast(reason instanceof Error ? reason.message : t('tryAgain'), 'error');
+    } catch (error_) {
+      showToast(error_ instanceof Error ? error_.message : t('tryAgain'), 'error');
     } finally {
       setLeaving(false);
     }
@@ -176,8 +177,8 @@ export function BucketCollaboratePage() {
       await sharingService.repairAggregate(user, bucketId);
       showToast(t('totalsRepaired'), 'success');
       await load();
-    } catch (reason) {
-      showToast(reason instanceof Error ? reason.message : t('tryAgain'), 'error');
+    } catch (error_) {
+      showToast(error_ instanceof Error ? error_.message : t('tryAgain'), 'error');
     } finally {
       setRepairing(false);
     }
@@ -239,7 +240,7 @@ export function BucketCollaboratePage() {
               <div>
                 <h3>{item.name}</h3>
                 <span>{formatMoney(item.unitPrice, bucket.currency, locale)} · {t('everyoneTotal')}: {aggregate}</span>
-                {others.length ? <span className="participants-line">{others.join(' · ')}</span> : null}
+                {others.length > 0 ? <span className="participants-line">{others.join(' · ')}</span> : null}
                 {change?.state === 'sending' || change?.state === 'debouncing' ? (
                   <span className="pending-hint">{t('pendingSync')}</span>
                 ) : null}

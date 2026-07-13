@@ -1,4 +1,5 @@
 import { LoaderCircle } from 'lucide-react';
+
 import { useApp } from '@/state/AppContext';
 
 export function Loading({ label }: { label?: string }) {

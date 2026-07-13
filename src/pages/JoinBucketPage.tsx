@@ -1,9 +1,10 @@
 import { ArrowLeft, KeyRound, UserPlus } from 'lucide-react';
-import { useState, type SyntheticEvent } from 'react';
+import { type SyntheticEvent,useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useApp } from '@/state/AppContext';
-import { sharingService } from '@/services';
+
 import type { MessageKey } from '@/i18n/messages';
+import { sharingService } from '@/services';
+import { useApp } from '@/state/AppContext';
 import type { BucketInvite, BucketRole } from '@/types/domain';
 
 const ROLE_LABEL: Record<BucketRole, MessageKey> = {
@@ -28,9 +29,9 @@ export function JoinBucketPage() {
       setBusy(true);
       setError('');
       setPreview(await sharingService.previewJoinCode(code));
-    } catch (reason) {
+    } catch (error_) {
       setPreview(null);
-      setError(reason instanceof Error ? reason.message : t('joinCodeInvalid'));
+      setError(error_ instanceof Error ? error_.message : t('joinCodeInvalid'));
     } finally {
       setBusy(false);
     }
@@ -44,8 +45,8 @@ export function JoinBucketPage() {
       const bucket = await sharingService.acceptJoinCode(user, code);
       showToast(t('joined'), 'success');
       await navigate(`/buckets/${bucket.id}/collaborate`);
-    } catch (reason) {
-      setError(reason instanceof Error ? reason.message : t('tryAgain'));
+    } catch (error_) {
+      setError(error_ instanceof Error ? error_.message : t('tryAgain'));
     } finally {
       setBusy(false);
     }

@@ -1,12 +1,13 @@
 import { ArrowLeft, GripVertical, Plus, Save, Trash2 } from 'lucide-react';
-import { useEffect, useMemo, useState, type SyntheticEvent } from 'react';
+import { type SyntheticEvent,useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+
 import { Loading } from '@/components/Loading';
 import { MAX_BUCKET_ITEMS } from '@/lib/bucket';
 import { createId } from '@/lib/id';
-import { SUPPORTED_CURRENCIES } from '@/state/deviceConfig';
 import { dataService } from '@/services';
 import { useApp } from '@/state/AppContext';
+import { SUPPORTED_CURRENCIES } from '@/state/deviceConfig';
 import type { BucketDraft, BucketItem, BucketVisibility, CurrencyCode } from '@/types/domain';
 
 const emptyItem = (sortOrder: number): BucketItem => ({ id: createId('item'), name: '', description: '', category: '', unitPrice: 0, active: true, sortOrder });
@@ -20,12 +21,12 @@ export function BucketEditorPage() {
   const [items, setItems] = useState<BucketItem[]>([emptyItem(0)]); const [loading, setLoading] = useState(isEditing);
   const [busy, setBusy] = useState(false); const [error, setError] = useState('');
   useEffect(() => { if (!isEditing) setCurrency(defaultCurrency); }, [defaultCurrency, isEditing]);
-  useEffect(() => { if (!user || !bucketId) return; void dataService.getBucket(user, bucketId).then((bucket) => { if (!bucket) throw new Error('Bucket was not found.'); setTitle(bucket.title); setDescription(bucket.description); setCurrency(bucket.currency); setVisibility(bucket.visibility); setItems(bucket.items); }).catch((reason: unknown) => { setError(reason instanceof Error ? reason.message : 'Unable to load bucket.'); }).finally(() => { setLoading(false); }); }, [bucketId, user]);
+  useEffect(() => { if (!user || !bucketId) return; void dataService.getBucket(user, bucketId).then((bucket) => { if (!bucket) throw new Error('Bucket was not found.'); setTitle(bucket.title); setDescription(bucket.description); setCurrency(bucket.currency); setVisibility(bucket.visibility); setItems(bucket.items); }).catch((error_: unknown) => { setError(error_ instanceof Error ? error_.message : 'Unable to load bucket.'); }).finally(() => { setLoading(false); }); }, [bucketId, user]);
   const valid = useMemo(() => title.trim().length > 0 && items.length > 0 && items.every((item) => item.name.trim() && item.unitPrice >= 0), [title, items]);
   const updateItem = <K extends keyof BucketItem>(id: string, key: K, value: BucketItem[K]): void => { setItems((current) => current.map((item) => item.id === id ? { ...item, [key]: value } : item)); };
   const addItem = (): void => { if (items.length >= MAX_BUCKET_ITEMS) { showToast(t('maxItemsReached'), 'error'); return; } setItems((current) => [...current, emptyItem(current.length)]); };
   const removeItem = (id: string): void => { setItems((current) => current.length === 1 ? current : current.filter((item) => item.id !== id).map((item, index) => ({ ...item, sortOrder: index }))); };
-  const submit = async (event: SyntheticEvent) => { event.preventDefault(); if (!user || !valid) { setError(t('completeEveryItem')); return; } const draft: BucketDraft = { title, description, currency, items }; try { setBusy(true); setError(''); if (bucketId) await dataService.updateBucket(user, bucketId, draft); else await dataService.createBucket(user, draft); showToast(t('bucketSaved'), 'success'); await navigate('/buckets'); } catch (reason) { setError(reason instanceof Error ? reason.message : t('tryAgain')); } finally { setBusy(false); } };
+  const submit = async (event: SyntheticEvent) => { event.preventDefault(); if (!user || !valid) { setError(t('completeEveryItem')); return; } const draft: BucketDraft = { title, description, currency, items }; try { setBusy(true); setError(''); await (bucketId ? dataService.updateBucket(user, bucketId, draft) : dataService.createBucket(user, draft)); showToast(t('bucketSaved'), 'success'); await navigate('/buckets'); } catch (error_) { setError(error_ instanceof Error ? error_.message : t('tryAgain')); } finally { setBusy(false); } };
   if (loading) return <Loading />;
   return <div className="page narrow"><div className="page-heading"><div><Link className="back-link" to="/buckets"><ArrowLeft />{t('back')}</Link><h1>{isEditing ? t('editBucket') : t('createBucket')}</h1>{visibility === 'shared' ? <p className="muted">{t('sharedBucketEditHint')}</p> : null}</div></div>
     <form className="stack-lg" onSubmit={(event) => void submit(event)}><section className="section-card form-grid"><label>{t('bucketTitle')}<input value={title} onChange={(event) => { setTitle(event.target.value); }} maxLength={60} required /></label><label>{t('description')}<textarea value={description} onChange={(event) => { setDescription(event.target.value); }} maxLength={240} rows={3} /></label><label>{t('currency')}<select value={currency} onChange={(event) => { setCurrency(event.target.value as CurrencyCode); }}>{SUPPORTED_CURRENCIES.map((code) => <option key={code}>{code}</option>)}</select></label></section>

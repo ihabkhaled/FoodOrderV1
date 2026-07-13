@@ -1,5 +1,6 @@
 import { Languages } from 'lucide-react';
 import { Outlet } from 'react-router-dom';
+
 import { useApp } from '@/state/AppContext';
 
 export function AuthLayout() {
@@ -15,6 +16,6 @@ export function AuthLayout() {
       <Languages />{nextLocale === 'ar' ? 'العربية' : 'English'}
     </button>
     <section className="auth-hero"><div className="brand-mark large">FO</div><h1>{t('appName')}</h1><p>{t('quickStart')}</p></section>
-    <section className="auth-card"><Outlet />{storageMode !== 'firebase' ? <p className="notice">{t('localModeNotice')}</p> : null}</section>
+    <section className="auth-card"><Outlet />{storageMode === 'firebase' ? null : <p className="notice">{t('localModeNotice')}</p>}</section>
   </main>;
 }

@@ -1,52 +1,132 @@
 import js from '@eslint/js';
-import globals from 'globals';
+import vitest from '@vitest/eslint-plugin';
+import prettier from 'eslint-config-prettier';
+import jsxA11y from 'eslint-plugin-jsx-a11y';
+import playwright from 'eslint-plugin-playwright';
+import promise from 'eslint-plugin-promise';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
+import * as regexp from 'eslint-plugin-regexp';
+import security from 'eslint-plugin-security';
+import simpleImportSort from 'eslint-plugin-simple-import-sort';
+import sonarjs from 'eslint-plugin-sonarjs';
+import testingLibrary from 'eslint-plugin-testing-library';
+import unicorn from 'eslint-plugin-unicorn';
+import unusedImports from 'eslint-plugin-unused-imports';
+import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
-  { ignores: ['dist', 'coverage', 'android', 'ios', '.ai/local'] },
+  { ignores: ['dist', 'coverage', 'android', 'ios', '.ai/local', 'playwright-report', 'test-results', 'ui-shots'] },
   {
-    extends: [js.configs.recommended, ...tseslint.configs.strictTypeChecked],
     files: ['**/*.{ts,tsx}'],
+    extends: [
+      js.configs.recommended,
+      ...tseslint.configs.strictTypeChecked,
+      jsxA11y.flatConfigs.recommended,
+      promise.configs['flat/recommended'],
+      regexp.configs['flat/recommended'],
+      sonarjs.configs.recommended,
+      security.configs.recommended,
+      unicorn.configs.recommended,
+    ],
     languageOptions: {
       ecmaVersion: 2024,
       globals: globals.browser,
       parserOptions: { project: ['./tsconfig.app.json', './tsconfig.node.json'] },
     },
-    plugins: { 'react-hooks': reactHooks, 'react-refresh': reactRefresh },
+    plugins: {
+      'react-hooks': reactHooks,
+      'react-refresh': reactRefresh,
+      'simple-import-sort': simpleImportSort,
+      'unused-imports': unusedImports,
+    },
     rules: {
       ...reactHooks.configs.recommended.rules,
-      // react-hooks 7 added this aggressive rule. Our only sites are guarded
-      // mount data-loaders (`if (!user) return`, single update) and form
-      // initializers synced from the loaded profile — both benign and covered
-      // by unit + e2e tests. Every other react-hooks rule stays strict.
+      // react-hooks 7's set-state-in-effect fires on guarded mount loaders and
+      // profile-synced form initializers; both are benign and test-covered.
       'react-hooks/set-state-in-effect': 'off',
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+
+      // Deterministic import/export ordering (autofixable).
+      'simple-import-sort/imports': 'error',
+      'simple-import-sort/exports': 'error',
+      'unused-imports/no-unused-imports': 'error',
+
+      // TypeScript ergonomics kept from the prior config.
       '@typescript-eslint/consistent-type-imports': 'error',
       '@typescript-eslint/no-floating-promises': 'error',
-      // Numbers interpolate safely and are pervasive in UI copy (counts, prices).
       '@typescript-eslint/restrict-template-expressions': ['error', { allowNumber: true }],
-      // Leading underscore marks intentionally unused (contract params, omit-destructuring).
       '@typescript-eslint/no-unused-vars': [
         'error',
         { argsIgnorePattern: '^_', varsIgnorePattern: '^_', ignoreRestSiblings: true },
       ],
+
+      // Unicorn: keep the valuable checks, disable rules that fight the
+      // established conventions of this codebase (documented, deliberate).
+      'unicorn/filename-case': 'off', // components/pages are PascalCase by convention
+      'unicorn/prevent-abbreviations': 'off', // props/params/env/ref/db/fn are intentional
+      'unicorn/no-null': 'off', // null is used deliberately (Firestore, domain nullables)
+      'unicorn/no-nested-ternary': 'off', // concise conditional rendering in TSX
+      'unicorn/no-array-reduce': 'off', // reduce is used for pure aggregations
+      'unicorn/prefer-global-this': 'off',
+      'unicorn/prefer-top-level-await': 'off',
+      'unicorn/switch-case-braces': 'off',
+      'unicorn/no-useless-undefined': ['error', { checkArguments: false }],
+      'unicorn/prefer-query-selector': 'off',
+
+      // SonarJS: allow the readable nested conditionals and single-line guard
+      // clauses this codebase uses deliberately.
+      'sonarjs/no-nested-conditional': 'off',
+      'sonarjs/todo-tag': 'off',
+      'sonarjs/no-unenclosed-multiline-block': 'off',
+      'sonarjs/prefer-read-only-props': 'off', // props are inline, never mutated
+      'sonarjs/no-floating-point-equality': 'off', // money is rounded to 2dp before compare
+      'sonarjs/no-unused-vars': 'off', // @typescript-eslint/no-unused-vars owns this (allows _)
+
+      // Security plugin: object-injection and build-time fs reads are noisy and
+      // safe here (typed record access; config files reading package.json).
+      'security/detect-object-injection': 'off',
+      'security/detect-non-literal-fs-filename': 'off',
+
+      // Intentional no-op fallbacks (e.g. `.catch(() => {})`) are allowed.
+      '@typescript-eslint/no-empty-function': ['error', { allow: ['arrowFunctions'] }],
+      // `.then(cb)` as the last handler need not return.
+      'promise/always-return': ['error', { ignoreLastCallback: true }],
     },
   },
   {
-    // Context/module files intentionally export a provider component plus its hook.
+    // Provider modules export a component plus its hook by design.
     files: ['src/state/**/*.tsx'],
     rules: { 'react-refresh/only-export-components': 'off' },
   },
   {
-    // The local-device adapter implements Promise-returning service contracts with
-    // synchronous storage; async-without-await is the deliberate pattern there.
+    // The local-device adapter implements async contracts over sync storage.
     files: ['src/services/localServices.ts'],
     rules: { '@typescript-eslint/require-await': 'off' },
   },
   {
-    files: ['scripts/**/*.mjs'],
+    // Unit/integration tests (Vitest + Testing Library). E2E specs use `.spec`
+    // and are handled below, so Testing Library never sees Playwright's `page`.
+    files: ['tests/**/*.test.{ts,tsx}'],
+    extends: [vitest.configs.recommended, testingLibrary.configs['flat/react']],
+    rules: {
+      'sonarjs/no-duplicate-string': 'off',
+      '@typescript-eslint/no-non-null-assertion': 'off',
+    },
+  },
+  {
+    // E2E specs: Playwright conventions.
+    files: ['tests/e2e/**/*.spec.ts'],
+    extends: [playwright.configs['flat/recommended']],
+    rules: {
+      'sonarjs/no-duplicate-string': 'off',
+      '@typescript-eslint/no-non-null-assertion': 'off',
+    },
+  },
+  {
+    files: ['scripts/**/*.mjs', 'tools/**/*.mjs'],
     languageOptions: { globals: globals.node, ecmaVersion: 2024 },
   },
+  prettier,
 );

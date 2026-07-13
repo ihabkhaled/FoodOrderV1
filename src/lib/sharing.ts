@@ -211,7 +211,7 @@ export const toOrderParticipants = (
 /** Group order lines snapshot the aggregate against current item pricing. */
 export const buildGroupOrderLines = (
   bucket: Bucket,
-): Array<{ id: string; bucketItemId: string; name: string; quantity: number; unitPrice: number }> =>
+): { id: string; bucketItemId: string; name: string; quantity: number; unitPrice: number }[] =>
   bucket.items
     .filter((item) => item.active && (bucket.aggregate[item.id] ?? 0) > 0)
     .map((item) => ({

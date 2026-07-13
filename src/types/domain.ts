@@ -116,12 +116,12 @@ export interface Order {
   completedAt: string | null;
   cancelledAt: string | null;
 }
-export interface BucketDraft { title: string; description: string; currency: CurrencyCode; items: Array<Omit<BucketItem, 'sortOrder'> & { sortOrder?: number }>; }
+export interface BucketDraft { title: string; description: string; currency: CurrencyCode; items: (Omit<BucketItem, 'sortOrder'> & { sortOrder?: number })[]; }
 export interface OrderDraft {
   bucketId: string;
   bucketTitle: string;
   currency: CurrencyCode;
-  lines: Array<Omit<OrderLine, 'lineTotal'>>;
+  lines: Omit<OrderLine, 'lineTotal'>[];
   notes: string;
   status?: OrderStatus;
   sourceBucketRevision?: number | null;

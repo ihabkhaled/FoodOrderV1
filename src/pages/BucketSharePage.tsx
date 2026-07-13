@@ -1,18 +1,19 @@
 import { ArrowLeft, Check, Copy, Share2, ShieldOff, UserMinus, Users } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+
 import { ActivityTimeline } from '@/components/ActivityTimeline';
 import { ConfirmDialog } from '@/components/ConfirmDialog';
 import { ErrorState } from '@/components/ErrorState';
 import { Loading } from '@/components/Loading';
+import type { MessageKey } from '@/i18n/messages';
 import { formatDateTime } from '@/lib/date';
 import { ASSIGNABLE_ROLES } from '@/lib/sharing';
-import { copyToClipboard, shareText } from '@/services/platform';
 import { sharingService } from '@/services';
-import { useApp } from '@/state/AppContext';
-import type { MessageKey } from '@/i18n/messages';
-import type { BucketActivityEvent, BucketInvite, BucketMember, BucketRole, InviteStatus } from '@/types/domain';
 import type { SharedBucketView } from '@/services/contracts';
+import { copyToClipboard, shareText } from '@/services/platform';
+import { useApp } from '@/state/AppContext';
+import type { BucketActivityEvent, BucketInvite, BucketMember, BucketRole, InviteStatus } from '@/types/domain';
 
 const ROLE_LABEL: Record<BucketRole, MessageKey> = {
   owner: 'roleOwner',
@@ -58,8 +59,8 @@ export function BucketSharePage() {
         setInvites(nextInvites);
         setActivity(nextActivity);
       }
-    } catch (reason) {
-      setError(reason instanceof Error ? reason.message : t('tryAgain'));
+    } catch (error_) {
+      setError(error_ instanceof Error ? error_.message : t('tryAgain'));
     } finally {
       setLoading(false);
     }
@@ -74,8 +75,8 @@ export function BucketSharePage() {
       await sharingService.enableSharing(user, bucketId);
       showToast(t('sharingEnabled'), 'success');
       await load();
-    } catch (reason) {
-      showToast(reason instanceof Error ? reason.message : t('tryAgain'), 'error');
+    } catch (error_) {
+      showToast(error_ instanceof Error ? error_.message : t('tryAgain'), 'error');
     } finally {
       setEnabling(false);
     }
@@ -90,8 +91,8 @@ export function BucketSharePage() {
       setJoinCode(result.joinCode);
       setInvites((current) => [result.invite, ...current]);
       showToast(t('inviteCreated'), 'success');
-    } catch (reason) {
-      showToast(reason instanceof Error ? reason.message : t('tryAgain'), 'error');
+    } catch (error_) {
+      showToast(error_ instanceof Error ? error_.message : t('tryAgain'), 'error');
     } finally {
       setCreating(false);
     }
@@ -117,8 +118,8 @@ export function BucketSharePage() {
         ),
       );
       showToast(t('inviteRevoked'), 'success');
-    } catch (reason) {
-      showToast(reason instanceof Error ? reason.message : t('tryAgain'), 'error');
+    } catch (error_) {
+      showToast(error_ instanceof Error ? error_.message : t('tryAgain'), 'error');
     }
   };
 
@@ -135,8 +136,8 @@ export function BucketSharePage() {
           : current,
       );
       showToast(t('roleChanged'), 'success');
-    } catch (reason) {
-      showToast(reason instanceof Error ? reason.message : t('tryAgain'), 'error');
+    } catch (error_) {
+      showToast(error_ instanceof Error ? error_.message : t('tryAgain'), 'error');
     }
   };
 
@@ -150,8 +151,8 @@ export function BucketSharePage() {
           : current,
       );
       showToast(t('memberRemoved'), 'success');
-    } catch (reason) {
-      showToast(reason instanceof Error ? reason.message : t('tryAgain'), 'error');
+    } catch (error_) {
+      showToast(error_ instanceof Error ? error_.message : t('tryAgain'), 'error');
     } finally {
       setRemoving(null);
     }
@@ -172,14 +173,7 @@ export function BucketSharePage() {
         </div>
       </header>
 
-      {bucket.visibility !== 'shared' ? (
-        <section className="section-card stack">
-          <p>{t('sharingDisabledHint')}</p>
-          <button className="button" disabled={enabling} onClick={() => void enable()}>
-            <Share2 />{enabling ? t('loading') : t('enableSharing')}
-          </button>
-        </section>
-      ) : (
+      {bucket.visibility === 'shared' ? (
         <>
           <section className="section-card stack">
             <div className="section-heading">
@@ -210,7 +204,7 @@ export function BucketSharePage() {
                 </button>
               </div>
             ) : null}
-            {invites.length ? (
+            {invites.length > 0 ? (
               <ul className="list plain">
                 {invites.map((invite) => (
                   <li className="list-row" key={invite.id}>
@@ -273,6 +267,13 @@ export function BucketSharePage() {
             <ActivityTimeline events={activity} />
           </section>
         </>
+      ) : (
+        <section className="section-card stack">
+          <p>{t('sharingDisabledHint')}</p>
+          <button className="button" disabled={enabling} onClick={() => void enable()}>
+            <Share2 />{enabling ? t('loading') : t('enableSharing')}
+          </button>
+        </section>
       )}
 
       <ConfirmDialog

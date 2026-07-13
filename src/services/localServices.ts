@@ -95,7 +95,7 @@ const readDatabase = (): LocalDatabase => {
     users: raw.users ?? {},
     buckets: raw.buckets ?? {},
     orders: raw.orders ?? {},
-    sharing: { ...emptySharing(), ...(raw.sharing ?? {}) },
+    sharing: { ...emptySharing(), ...raw.sharing },
   };
   for (const [ownerId, buckets] of Object.entries(parsed.buckets)) {
     const owner = parsed.users[ownerId];
@@ -132,7 +132,7 @@ const findBucketEntry = (
 ): { ownerId: string; index: number; bucket: Bucket } | null => {
   for (const [ownerId, buckets] of Object.entries(database.buckets)) {
     const index = buckets.findIndex((bucket) => bucket.id === bucketId);
-    const bucket = index >= 0 ? buckets[index] : undefined;
+    const bucket = index === -1 ? undefined : buckets[index];
     if (bucket) return { ownerId, index, bucket };
   }
   return null;
@@ -374,7 +374,7 @@ export class LocalDataService implements DataService {
     const orders = database.orders[userId] ?? [];
     const index = orders.findIndex((order) => order.id === orderId);
     const existing = orders[index];
-    if (index < 0 || !existing) throw new Error('Order was not found.');
+    if (index === -1 || !existing) throw new Error('Order was not found.');
     const saved = transitionOrder(existing, status);
     orders[index] = saved;
     database.orders[userId] = orders;
@@ -691,7 +691,7 @@ export class LocalSharingService implements SharingService {
     const member = memberOf(database, bucketId, user.id);
     if (!isOwner && !memberCan(member, 'contribute')) throw new Error('You do not have permission for this action.');
     const item = entry.bucket.items.find((candidate) => candidate.id === itemId);
-    if (!item || !item.active) throw new Error('This item is not available.');
+    if (!item?.active) throw new Error('This item is not available.');
     const contributions = database.sharing.contributions[bucketId] ?? [];
     const mutations = database.sharing.mutations[bucketId] ?? [];
     const result = applyContributionMutation(

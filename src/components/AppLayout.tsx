@@ -1,9 +1,10 @@
 import { ChevronLeft, ChevronRight, Home, Languages, ListOrdered, LogOut, Monitor, Moon, Settings, ShoppingBasket, Sun, Wifi, WifiOff } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
+
+import type { MessageKey } from '@/i18n/messages';
 import { useApp } from '@/state/AppContext';
 import { loadSidebarCollapsed, nextTheme, saveSidebarCollapsed } from '@/state/deviceConfig';
-import type { MessageKey } from '@/i18n/messages';
 import type { Theme } from '@/types/domain';
 
 const NAV_ITEMS: { to: string; icon: typeof Home; key: MessageKey }[] = [

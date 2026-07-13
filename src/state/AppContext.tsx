@@ -1,12 +1,13 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
-import { translate, type MessageKey } from '@/i18n/messages';
-import { getNetworkStatus, impact } from '@/services/platform';
+import { createContext, type ReactNode,useCallback, useContext, useEffect, useMemo, useState } from 'react';
+
+import { type MessageKey,translate } from '@/i18n/messages';
 import { authService, dataService, storageMode } from '@/services';
+import { getNetworkStatus, impact } from '@/services/platform';
 import {
   DEFAULT_DEVICE_CONFIG,
+  type DeviceConfig,
   loadDeviceConfig,
   saveDeviceConfig,
-  type DeviceConfig,
 } from '@/state/deviceConfig';
 import type { CurrencyCode, Locale, ProfileDefaults, SessionUser, Theme, UserProfile } from '@/types/domain';
 
@@ -114,7 +115,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       if (changes.locale) deviceChanges.locale = changes.locale;
       if (changes.theme) deviceChanges.theme = changes.theme;
       if (changes.defaultCurrency) deviceChanges.currency = changes.defaultCurrency;
-      if (Object.keys(deviceChanges).length) {
+      if (Object.keys(deviceChanges).length > 0) {
         await saveDeviceConfig(deviceChanges);
         setDevice((current) => ({ ...current, ...deviceChanges }));
       }

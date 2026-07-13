@@ -1,7 +1,8 @@
 import { History } from 'lucide-react';
+
+import type { MessageKey } from '@/i18n/messages';
 import { formatDateTime } from '@/lib/date';
 import { useApp } from '@/state/AppContext';
-import type { MessageKey } from '@/i18n/messages';
 import type { BucketActivityEvent, BucketActivityType } from '@/types/domain';
 
 const LABELS: Record<BucketActivityType, MessageKey> = {
@@ -28,7 +29,7 @@ const detail = (event: BucketActivityEvent): string => {
 
 export function ActivityTimeline({ events }: { events: BucketActivityEvent[] }) {
   const { t, locale } = useApp();
-  if (!events.length) return <p className="muted">{t('noActivity')}</p>;
+  if (events.length === 0) return <p className="muted">{t('noActivity')}</p>;
   return (
     <ol className="activity-list">
       {events.map((event) => (

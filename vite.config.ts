@@ -1,14 +1,15 @@
 import { readFileSync } from 'node:fs';
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
 import { fileURLToPath, URL } from 'node:url';
+
+import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite';
 const { version } = JSON.parse(
-  readFileSync(fileURLToPath(new URL('./package.json', import.meta.url)), 'utf8'),
+  readFileSync(fileURLToPath(new URL('package.json', import.meta.url)), 'utf8'),
 ) as { version: string };
 export default defineConfig({
   plugins: [react()],
   define: { __APP_VERSION__: JSON.stringify(version) },
-  resolve: { alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) } },
+  resolve: { alias: { '@': fileURLToPath(new URL('src', import.meta.url)) } },
   // No sourcemaps in the production bundle: they are copied verbatim into the
   // Android/iOS asset payload, roughly doubling the APK and shipping readable
   // source to the device. Debug locally with `npm run dev` (dev sourcemaps on).
@@ -25,7 +26,6 @@ export default defineConfig({
         manualChunks(id) {
           if (id.includes('/firebase/') || id.includes('/@firebase/')) return 'firebase';
           if (id.includes('/react-router')) return 'router';
-          return undefined;
         },
       },
     },
