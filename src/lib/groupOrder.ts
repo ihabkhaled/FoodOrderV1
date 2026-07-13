@@ -82,7 +82,7 @@ const toSafeNumber = (value: bigint, label: string): number => {
   const result = Number(value);
 
   if (!Number.isSafeInteger(result)) {
-    throw new Error(`${label} exceeds the supported money range.`);
+    throw new TypeError(`${label} exceeds the supported money range.`);
   }
 
   return result;
@@ -220,9 +220,9 @@ const buildItemAttribution = (receipts: ParticipantReceipt[]): ItemAttribution[]
   return [...items.values()]
     .map((item) => ({
       ...item,
-      orderedBy: item.orderedBy.sort((left, right) => left.userId.localeCompare(right.userId)),
+      orderedBy: item.orderedBy.toSorted((left, right) => left.userId.localeCompare(right.userId)),
     }))
-    .sort((left, right) => left.itemId.localeCompare(right.itemId));
+    .toSorted((left, right) => left.itemId.localeCompare(right.itemId));
 };
 
 export const calculateGroupOrderReceipt = (input: {
