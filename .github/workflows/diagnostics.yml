@@ -11,6 +11,45 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  lint:
+    name: Lint Diagnostics
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 26
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            functions/package-lock.json
+      - run: npm ci
+      - run: npm --prefix functions ci
+      - name: Capture ESLint autofix and clean-check output
+        shell: bash
+        run: |
+          set +e
+          npm run lint:fix > eslint-fix.log 2>&1
+          FIX_EXIT=$?
+          git diff > eslint-fix.diff
+          npm run lint > eslint-check.log 2>&1
+          CHECK_EXIT=$?
+          printf 'fix=%s\ncheck=%s\n' "$FIX_EXIT" "$CHECK_EXIT" > eslint-exits.txt
+          if [ "$FIX_EXIT" -ne 0 ] || [ "$CHECK_EXIT" -ne 0 ]; then
+            exit 1
+          fi
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: lint-diagnostics
+          path: |
+            eslint-fix.log
+            eslint-check.log
+            eslint-fix.diff
+            eslint-exits.txt
+          if-no-files-found: error
+
   typecheck:
     name: Typecheck Diagnostics
     runs-on: ubuntu-latest
