@@ -62,3 +62,42 @@ test.describe('responsive shell', () => {
     }
   });
 });
+
+test.describe('instant sidebar controls', () => {
+  test('theme toggle changes the document theme immediately', async ({ page }) => {
+    await page.emulateMedia({ colorScheme: 'light' });
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await register(page);
+    const root = page.locator('html');
+    // Cycle system -> light -> dark; explicit dark forces data-theme regardless of OS.
+    const themeButton = page.locator('.sidebar').getByRole('button', { name: /Theme:/ });
+    await themeButton.click();
+    await themeButton.click();
+    await expect(root).toHaveAttribute('data-theme', 'dark');
+    // ...and once more back to system (light under this emulation).
+    await themeButton.click();
+    await expect(root).toHaveAttribute('data-theme', 'light');
+  });
+
+  test('language toggle flips locale and direction immediately', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await register(page);
+    const html = page.locator('html');
+    await expect(html).toHaveAttribute('dir', 'ltr');
+    await page.locator('.sidebar').getByRole('button', { name: /العربية/ }).click();
+    await expect(html).toHaveAttribute('dir', 'rtl');
+    await expect(html).toHaveAttribute('lang', 'ar');
+  });
+
+  test('collapsing the sidebar narrows the shell and persists', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await register(page);
+    const shell = page.locator('.app-shell');
+    await expect(shell).not.toHaveClass(/collapsed/);
+    await page.getByRole('button', { name: 'Collapse sidebar' }).click();
+    await expect(shell).toHaveClass(/collapsed/);
+    // Persisted: after reload the sidebar is still collapsed.
+    await page.reload();
+    await expect(page.locator('.app-shell')).toHaveClass(/collapsed/);
+  });
+});
