@@ -52,7 +52,9 @@ describe('bucket ordering lifecycle', () => {
       revision: 2,
       updatedAt: at,
     });
-    expect(() => assertBucketMutable(frozen)).toThrow(/frozen/);
+    expect(() => {
+      assertBucketMutable(frozen);
+    }).toThrow(/frozen/);
     expect(freezeBucket(frozen, 'owner', at)).toBe(frozen);
   });
 
@@ -109,7 +111,11 @@ describe('bucket ordering lifecycle', () => {
     expect(() => beginOrdering(bucket, '')).toThrow(/actor/);
     expect(() => completeOrdering(bucket)).toThrow(/being ordered/);
     expect(() => failOrdering(bucket)).toThrow(/being ordered/);
-    expect(() => freezeBucket({ ...bucket, orderState: 'ordered' }, 'owner')).toThrow(/cannot be frozen/);
-    expect(() => beginOrdering({ ...bucket, orderState: 'ordered' }, 'owner')).toThrow(/cannot be ordered/);
+    expect(() => freezeBucket({ ...bucket, orderState: 'ordered' }, 'owner')).toThrow(
+      /cannot be frozen/,
+    );
+    expect(() => beginOrdering({ ...bucket, orderState: 'ordered' }, 'owner')).toThrow(
+      /cannot be ordered/,
+    );
   });
 });
