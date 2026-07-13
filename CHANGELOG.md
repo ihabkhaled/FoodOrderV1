@@ -5,6 +5,10 @@ The version bump level is decided by prompt density — see [rules/versioning.md
 
 <!-- releases -->
 
+## [1.1.0] - 2026-07-13
+
+- Responsive UI overhaul, prompt-density versioning, and raised platform floors (Node 26, Android 10, iOS 14)
+
 ## [1.0.0] - 2026-07-13
 
 - First full release of the Capacitor rebuild: private buckets & orders, collaborative bucket
