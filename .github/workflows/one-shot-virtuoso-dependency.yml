@@ -29,6 +29,7 @@ jobs:
       - name: Apply and verify lint fixes
         run: |
           npm run lint:fix
+          git diff --exit-code -- src tests functions
           npm run lint
       - name: Run both TypeScript gates
         run: |
