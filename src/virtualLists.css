@@ -84,6 +84,52 @@
   margin-top: 8px;
 }
 
+.filter-tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface);
+  scrollbar-width: thin;
+}
+
+.filter-tabs button {
+  min-height: 40px;
+  padding: 8px 14px;
+  border: 0;
+  border-radius: 10px;
+  color: var(--muted);
+  background: transparent;
+  font-weight: 750;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.filter-tabs button.active {
+  color: var(--primary-ink);
+  background: var(--primary);
+}
+
+.stat-card-link {
+  color: var(--text);
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.stat-card-link:hover {
+  transform: translateY(-2px);
+  border-color: var(--line-strong);
+  box-shadow: var(--shadow-md);
+}
+
+.stat-card-link:active {
+  transform: translateY(0);
+}
+
 @media (min-width: 900px) {
   .refresh-viewport {
     min-height: 100vh;
@@ -96,7 +142,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .pull-refresh-indicator {
+  .pull-refresh-indicator,
+  .stat-card-link {
     transition: none;
   }
 
