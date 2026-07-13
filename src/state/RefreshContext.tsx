@@ -55,13 +55,13 @@ export function RefreshProvider({ children }: { children: ReactNode }) {
 }
 
 export const usePageRefresh = (handler: () => Promise<void>): void => {
-  const context = useContext(RefreshContext);
+  const register = useContext(RefreshContext)?.register;
   useEffect(() => {
-    context?.register(handler);
+    register?.(handler);
     return () => {
-      context?.register(null);
+      register?.(null);
     };
-  }, [context, handler]);
+  }, [handler, register]);
 };
 
 export const useRefreshController = (): RefreshContextValue => {
