@@ -49,6 +49,7 @@ export default tseslint.config(
         project: [
           './tsconfig.app.json',
           './tsconfig.node.json',
+          './tsconfig.test.json',
           './functions/tsconfig.json',
         ],
       },
@@ -137,6 +138,7 @@ export default tseslint.config(
     // and are handled below, so Testing Library never sees Playwright's `page`.
     files: ['tests/**/*.test.{ts,tsx}'],
     extends: [vitest.configs.recommended, testingLibrary.configs['flat/react']],
+    languageOptions: { globals: { ...globals.browser, ...globals.node } },
     rules: {
       'sonarjs/no-duplicate-string': 'off',
       '@typescript-eslint/no-non-null-assertion': 'off',
