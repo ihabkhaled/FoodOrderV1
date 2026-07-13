@@ -127,18 +127,22 @@ service cloud.firestore {
             && request.resource.data.role == inviteAfter().role
             && request.resource.data.role in ['editor', 'contributor', 'viewer'];
         }
-        function ownerBootstrap() {
-          // Owner's own member doc, written when creating/sharing the bucket.
+        function ownerSelfDoc() {
+          // Owner's own member doc, written (idempotently) when creating the
+          // bucket and again when enabling sharing. Must stay owner/active/self.
           return owns(memberId)
             && request.resource.data.userId == memberId
             && request.resource.data.role == 'owner'
+            && request.resource.data.status == 'active'
             && getAfter(/databases/$(database)/documents/buckets/$(bucketId)).data.ownerId == memberId;
         }
         allow read: if canView();
-        allow create: if ownerBootstrap() || validSelfJoin();
+        allow create: if ownerSelfDoc() || validSelfJoin();
         allow update: if
+          // Owner idempotently re-writes their own owner doc (enable sharing).
+          ownerSelfDoc()
           // Owner manages roles/revocations of non-owner members.
-          (isBucketOwner()
+          || (isBucketOwner()
             && resource.data.role != 'owner'
             && request.resource.data.userId == resource.data.userId
             && request.resource.data.role in ['editor', 'contributor', 'viewer']
