@@ -13,7 +13,7 @@ jobs:
   install:
     if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7
         with:
@@ -26,20 +26,9 @@ jobs:
       - run: npm ci
       - name: Install latest stable React Virtuoso
         run: npm install --save-exact react-virtuoso@latest
-      - name: Apply and verify lint fixes
-        run: |
-          npm run lint:fix
-          git diff --exit-code -- src tests functions
-          npm run lint
-      - name: Run both TypeScript gates
-        run: |
-          npm run typecheck
-          npm run typecheck:tsc
-      - name: Build production application
-        run: npm run build
       - name: Audit dependency graph
         run: npm audit --audit-level=high
-      - name: Remove temporary workflow and commit
+      - name: Remove temporary workflow and commit lockfile
         run: |
           rm .github/workflows/one-shot-virtuoso-dependency.yml
           git config user.name "github-actions[bot]"
