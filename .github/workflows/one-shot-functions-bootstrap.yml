@@ -1,8 +1,8 @@
 name: One-shot Functions Bootstrap
 
 on:
-  push:
-    branches: [agent/foodorder-v1.3-complete]
+  pull_request:
+    branches: [main]
     paths:
       - .github/workflows/one-shot-functions-bootstrap.yml
 
@@ -11,12 +11,13 @@ permissions:
 
 jobs:
   bootstrap:
+    if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7
         with:
-          ref: agent/foodorder-v1.3-complete
+          ref: ${{ github.event.pull_request.head.ref }}
           fetch-depth: 0
 
       - uses: actions/setup-node@v6
@@ -86,4 +87,4 @@ jobs:
             firestore.rules firebase.json functions/package-lock.json \
             .github/workflows/one-shot-functions-bootstrap.yml
           git commit -m "chore(functions): bootstrap deterministic trusted runtime"
-          git push origin HEAD:agent/foodorder-v1.3-complete
+          git push origin HEAD:${{ github.event.pull_request.head.ref }}
