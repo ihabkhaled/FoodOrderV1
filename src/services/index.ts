@@ -1,9 +1,7 @@
 import { env } from '@/config/env';
 import { withFirebaseErrorTranslation } from '@/lib/firebaseError';
-import {
-  FirebaseAuthService,
-  FirestoreDataService,
-} from '@/services/firebaseServices';
+import { FirebaseEmailAuthService } from '@/services/firebaseAuthEmailService';
+import { FirestoreDataService } from '@/services/firebaseServices';
 import { FirestoreCallableGroupOrderService } from '@/services/firestoreGroupOrderFunctions';
 import { LocalGroupOrderService } from '@/services/groupOrderServices';
 import {
@@ -12,7 +10,7 @@ import {
 } from '@/services/localServices';
 
 export const authService = env.firebaseEnabled
-  ? withFirebaseErrorTranslation(new FirebaseAuthService())
+  ? withFirebaseErrorTranslation(new FirebaseEmailAuthService())
   : new LocalAuthService();
 export const dataService = env.firebaseEnabled
   ? withFirebaseErrorTranslation(new FirestoreDataService())
