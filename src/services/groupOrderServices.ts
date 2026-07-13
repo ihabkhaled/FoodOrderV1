@@ -7,7 +7,11 @@ import {
   setDoc,
 } from 'firebase/firestore';
 
-import { DEFAULT_PRICING_POLICY, validatePricingPolicy } from '@/lib/bucket';
+import {
+  BUCKET_SCHEMA_VERSION,
+  DEFAULT_PRICING_POLICY,
+  validatePricingPolicy,
+} from '@/lib/bucket';
 import {
   assertBucketMutable,
   beginOrdering,
@@ -31,7 +35,6 @@ import {
 import { LocalSharingService } from '@/services/localServices';
 import type {
   Bucket,
-  BucketActivityEvent,
   BucketContribution,
   BucketItem,
   BucketMember,
@@ -49,7 +52,6 @@ const PERMISSION_ERROR = 'You do not have permission for this action.';
 interface LocalSharingTables {
   members: Record<string, BucketMember[]>;
   contributions: Record<string, BucketContribution[]>;
-  activity: Record<string, BucketActivityEvent[]>;
   [key: string]: unknown;
 }
 
@@ -73,6 +75,18 @@ export interface MemberCustomItemPermissions {
   canSetCustomItemPrice: boolean;
 }
 
+const normalizeBucket = (bucket: Bucket): Bucket => ({
+  ...bucket,
+  orderState: bucket.orderState ?? 'open',
+  customItemMode: bucket.customItemMode ?? 'proposal',
+  pricingPolicy: validatePricingPolicy(
+    bucket.pricingPolicy ?? DEFAULT_PRICING_POLICY,
+  ),
+  frozenAt: bucket.frozenAt ?? null,
+  frozenBy: bucket.frozenBy ?? null,
+  schemaVersion: Math.max(bucket.schemaVersion, BUCKET_SCHEMA_VERSION),
+});
+
 const readLocalDatabase = (): LocalGroupOrderDatabase => {
   const raw = localStorage.getItem(LOCAL_DATABASE_KEY);
   if (!raw) throw new Error('The local database is not initialized.');
@@ -90,10 +104,10 @@ const findLocalBucket = (
 ): { ownerId: string; bucket: Bucket; index: number } => {
   for (const [ownerId, buckets] of Object.entries(database.buckets)) {
     const index = buckets.findIndex((bucket) => bucket.id === bucketId);
-    if (index >= 0) {
+    if (index !== -1) {
       const bucket = buckets[index];
       if (!bucket) break;
-      return { ownerId, bucket, index };
+      return { ownerId, bucket: normalizeBucket(bucket), index };
     }
   }
 
@@ -127,16 +141,20 @@ const assertOwner = (bucket: Bucket, user: SessionUser): void => {
 const priceToMinor = (price: number): number => {
   const value = Math.round(price * 100);
   if (!Number.isSafeInteger(value) || value < 0) {
-    throw new Error('Item prices must be safe non-negative amounts.');
+    throw new TypeError('Item prices must be safe non-negative amounts.');
   }
   return value;
 };
 
 const buildReceipt = (
-  bucket: Bucket,
+  rawBucket: Bucket,
   contributions: BucketContribution[],
   bucketRevision: number,
 ): GroupOrderReceiptSnapshot => {
+  const bucket = normalizeBucket(rawBucket);
+  const pricingPolicy = validatePricingPolicy(
+    bucket.pricingPolicy ?? DEFAULT_PRICING_POLICY,
+  );
   const participants = contributions
     .map((contribution) => ({
       userId: contribution.userId,
@@ -162,21 +180,22 @@ const buildReceipt = (
   const receipt = calculateGroupOrderReceipt({
     currency: bucket.currency,
     participants,
-    policy: bucket.pricingPolicy ?? DEFAULT_PRICING_POLICY,
+    policy: pricingPolicy,
   });
 
   return {
     ...receipt,
-    pricingPolicy: { ...bucket.pricingPolicy },
+    pricingPolicy,
     bucketRevision,
   };
 };
 
 const participantOrder = (order: Order, userId: string): Order => {
-  const receipt = order.groupReceipt?.participantReceipts.find(
+  const groupReceipt = order.groupReceipt;
+  const receipt = groupReceipt?.participantReceipts.find(
     (candidate) => candidate.userId === userId,
   );
-  if (!receipt || !order.groupReceipt) {
+  if (!receipt || !groupReceipt) {
     throw new Error('The participant receipt was not found.');
   }
 
@@ -194,14 +213,19 @@ const participantOrder = (order: Order, userId: string): Order => {
     subtotal: receipt.itemSubtotalMinor / 100,
     total: receipt.totalMinor / 100,
     participants:
-      order.participants?.filter((participant) => participant.userId === userId) ?? null,
+      order.participants?.filter((participant) => participant.userId === userId) ??
+      null,
     groupReceipt: {
-      ...order.groupReceipt,
+      ...groupReceipt,
       participantReceipts: [receipt],
-      items: order.groupReceipt.items.map((item) => ({
-        ...item,
-        orderedBy: item.orderedBy.filter((participant) => participant.userId === userId),
-      })),
+      items: groupReceipt.items
+        .map((item) => ({
+          ...item,
+          orderedBy: item.orderedBy.filter(
+            (participant) => participant.userId === userId,
+          ),
+        }))
+        .filter((item) => item.orderedBy.length > 0),
     },
   };
 };
@@ -226,9 +250,11 @@ const normalizeCustomItem = (
 ): BucketItem => {
   const name = input.name.trim();
   if (!name) throw new Error('Custom items require a name.');
-  if (name.length > 120) throw new Error('Custom item names are limited to 120 characters.');
+  if (name.length > 120) {
+    throw new Error('Custom item names are limited to 120 characters.');
+  }
   if (!Number.isFinite(input.unitPrice) || input.unitPrice < 0) {
-    throw new Error('Custom item prices must be valid non-negative numbers.');
+    throw new TypeError('Custom item prices must be valid non-negative numbers.');
   }
 
   return {
@@ -247,15 +273,20 @@ const normalizeCustomItem = (
 };
 
 const canCreateCustomItem = (
-  bucket: Bucket,
+  rawBucket: Bucket,
   user: SessionUser,
   member: BucketMember | null,
 ): { approved: boolean; canSetPrice: boolean } => {
-  if (bucket.ownerId === user.id) return { approved: true, canSetPrice: true };
+  const bucket = normalizeBucket(rawBucket);
+  if (bucket.ownerId === user.id) {
+    return { approved: true, canSetPrice: true };
+  }
   if (!member || !memberCan(member, 'contribute') || !member.canCreateCustomItems) {
     throw new Error(PERMISSION_ERROR);
   }
-  if (bucket.customItemMode === 'disabled') throw new Error('Custom items are disabled for this bucket.');
+  if (bucket.customItemMode === 'disabled') {
+    throw new Error('Custom items are disabled for this bucket.');
+  }
 
   return {
     approved: bucket.customItemMode === 'direct',
@@ -264,27 +295,27 @@ const canCreateCustomItem = (
 };
 
 export class LocalGroupOrderService extends LocalSharingService {
-  async freezeBucket(user: SessionUser, bucketId: string): Promise<Bucket> {
+  freezeBucket(user: SessionUser, bucketId: string): Promise<Bucket> {
     const database = readLocalDatabase();
     const found = findLocalBucket(database, bucketId);
     assertOwner(found.bucket, user);
     const saved = freezeBucket(found.bucket, user.id);
     saveLocalBucket(database, found.ownerId, found.index, saved);
     writeLocalDatabase(database);
-    return saved;
+    return Promise.resolve(saved);
   }
 
-  async unfreezeBucket(user: SessionUser, bucketId: string): Promise<Bucket> {
+  unfreezeBucket(user: SessionUser, bucketId: string): Promise<Bucket> {
     const database = readLocalDatabase();
     const found = findLocalBucket(database, bucketId);
     assertOwner(found.bucket, user);
     const saved = unfreezeBucket(found.bucket);
     saveLocalBucket(database, found.ownerId, found.index, saved);
     writeLocalDatabase(database);
-    return saved;
+    return Promise.resolve(saved);
   }
 
-  async updatePricingPolicy(
+  updatePricingPolicy(
     user: SessionUser,
     bucketId: string,
     policy: BucketPricingPolicy,
@@ -301,10 +332,10 @@ export class LocalGroupOrderService extends LocalSharingService {
     };
     saveLocalBucket(database, found.ownerId, found.index, saved);
     writeLocalDatabase(database);
-    return saved;
+    return Promise.resolve(saved);
   }
 
-  async setMemberCustomItemPermissions(
+  setMemberCustomItemPermissions(
     user: SessionUser,
     bucketId: string,
     memberId: string,
@@ -313,18 +344,20 @@ export class LocalGroupOrderService extends LocalSharingService {
     const database = readLocalDatabase();
     const found = findLocalBucket(database, bucketId);
     assertOwner(found.bucket, user);
-    const members = database.sharing.members[bucketId] ?? [];
+    const members = [...(database.sharing.members[bucketId] ?? [])];
     const index = members.findIndex((member) => member.userId === memberId);
     const member = members[index];
-    if (!member || member.role === 'owner') throw new Error('Member was not found.');
+    if (!member || member.role === 'owner') {
+      throw new Error('Member was not found.');
+    }
     const saved = { ...member, ...permissions, updatedAt: nowIso() };
     members[index] = saved;
     database.sharing.members[bucketId] = members;
     writeLocalDatabase(database);
-    return saved;
+    return Promise.resolve(saved);
   }
 
-  async addCustomItem(
+  addCustomItem(
     user: SessionUser,
     bucketId: string,
     input: CustomItemInput,
@@ -344,7 +377,7 @@ export class LocalGroupOrderService extends LocalSharingService {
       permission.approved,
       permission.canSetPrice,
     );
-    const saved = {
+    const saved: Bucket = {
       ...found.bucket,
       items: [...found.bucket.items, item],
       revision: found.bucket.revision + 1,
@@ -352,10 +385,10 @@ export class LocalGroupOrderService extends LocalSharingService {
     };
     saveLocalBucket(database, found.ownerId, found.index, saved);
     writeLocalDatabase(database);
-    return item;
+    return Promise.resolve(item);
   }
 
-  async approveCustomItem(
+  approveCustomItem(
     user: SessionUser,
     bucketId: string,
     itemId: string,
@@ -367,7 +400,9 @@ export class LocalGroupOrderService extends LocalSharingService {
     assertBucketMutable(found.bucket);
     const index = found.bucket.items.findIndex((item) => item.id === itemId);
     const item = found.bucket.items[index];
-    if (!item || item.source !== 'custom') throw new Error('Custom item was not found.');
+    if (!item || item.source !== 'custom') {
+      throw new Error('Custom item was not found.');
+    }
     const approved: BucketItem = {
       ...item,
       unitPrice: priceToMinor(unitPrice) / 100,
@@ -383,10 +418,10 @@ export class LocalGroupOrderService extends LocalSharingService {
       updatedAt: nowIso(),
     });
     writeLocalDatabase(database);
-    return approved;
+    return Promise.resolve(approved);
   }
 
-  override async setContribution(
+  override setContribution(
     user: SessionUser,
     bucketId: string,
     itemId: string,
@@ -399,7 +434,7 @@ export class LocalGroupOrderService extends LocalSharingService {
     return super.setContribution(user, bucketId, itemId, operation, value, mutationId);
   }
 
-  override async placeGroupOrder(
+  override placeGroupOrder(
     user: SessionUser,
     bucketId: string,
     notes: string,
@@ -413,7 +448,7 @@ export class LocalGroupOrderService extends LocalSharingService {
       const existing = database.orders[existingMutation.ownerId]?.find(
         (order) => order.id === existingMutation.orderId,
       );
-      if (existing) return existing;
+      if (existing) return Promise.resolve(existing);
     }
 
     const ordering = beginOrdering(found.bucket, user.id);
@@ -430,20 +465,23 @@ export class LocalGroupOrderService extends LocalSharingService {
       participants: toOrderParticipants(contributions),
       groupReceipt: receipt,
     });
-    const completed = completeOrdering(ordering);
-    saveLocalBucket(database, found.ownerId, found.index, completed);
+    saveLocalBucket(database, found.ownerId, found.index, completeOrdering(ordering));
     addOrderToLocalUser(database, user.id, order);
     for (const participant of receipt.participantReceipts) {
       if (participant.userId !== user.id) {
-        addOrderToLocalUser(database, participant.userId, participantOrder(order, participant.userId));
+        addOrderToLocalUser(
+          database,
+          participant.userId,
+          participantOrder(order, participant.userId),
+        );
       }
     }
     database.orderMutations = {
-      ...(database.orderMutations ?? {}),
+      ...database.orderMutations,
       [mutationId]: { orderId: order.id, ownerId: user.id },
     };
     writeLocalDatabase(database);
-    return order;
+    return Promise.resolve(order);
   }
 }
 
@@ -459,7 +497,7 @@ export class FirestoreGroupOrderService extends FirestoreSharingService {
     return runTransaction(getFirebaseRuntime().firestore, async (transaction) => {
       const snapshot = await transaction.get(reference);
       if (!snapshot.exists()) throw new Error('Bucket was not found.');
-      const bucket = snapshot.data() as Bucket;
+      const bucket = normalizeBucket(snapshot.data() as Bucket);
       assertOwner(bucket, user);
       const saved = freezeBucket(bucket, user.id);
       transaction.set(reference, saved);
@@ -472,7 +510,7 @@ export class FirestoreGroupOrderService extends FirestoreSharingService {
     return runTransaction(getFirebaseRuntime().firestore, async (transaction) => {
       const snapshot = await transaction.get(reference);
       if (!snapshot.exists()) throw new Error('Bucket was not found.');
-      const bucket = snapshot.data() as Bucket;
+      const bucket = normalizeBucket(snapshot.data() as Bucket);
       assertOwner(bucket, user);
       const saved = unfreezeBucket(bucket);
       transaction.set(reference, saved);
@@ -489,7 +527,7 @@ export class FirestoreGroupOrderService extends FirestoreSharingService {
     return runTransaction(getFirebaseRuntime().firestore, async (transaction) => {
       const snapshot = await transaction.get(reference);
       if (!snapshot.exists()) throw new Error('Bucket was not found.');
-      const bucket = snapshot.data() as Bucket;
+      const bucket = normalizeBucket(snapshot.data() as Bucket);
       assertOwner(bucket, user);
       assertBucketMutable(bucket);
       const saved: Bucket = {
@@ -511,12 +549,14 @@ export class FirestoreGroupOrderService extends FirestoreSharingService {
   ): Promise<BucketMember> {
     const bucketSnapshot = await getDoc(bucketReference(bucketId));
     if (!bucketSnapshot.exists()) throw new Error('Bucket was not found.');
-    assertOwner(bucketSnapshot.data() as Bucket, user);
+    assertOwner(normalizeBucket(bucketSnapshot.data() as Bucket), user);
     const reference = memberReference(bucketId, memberId);
     const memberSnapshot = await getDoc(reference);
     if (!memberSnapshot.exists()) throw new Error('Member was not found.');
     const member = memberSnapshot.data() as BucketMember;
-    if (member.role === 'owner') throw new Error('Owner permissions cannot be reduced.');
+    if (member.role === 'owner') {
+      throw new Error('Owner permissions cannot be reduced.');
+    }
     const saved = { ...member, ...permissions, updatedAt: nowIso() };
     await setDoc(reference, saved);
     return saved;
@@ -532,7 +572,7 @@ export class FirestoreGroupOrderService extends FirestoreSharingService {
     return runTransaction(firestore, async (transaction) => {
       const snapshot = await transaction.get(reference);
       if (!snapshot.exists()) throw new Error('Bucket was not found.');
-      const bucket = snapshot.data() as Bucket;
+      const bucket = normalizeBucket(snapshot.data() as Bucket);
       assertBucketMutable(bucket);
       const memberSnapshot =
         bucket.ownerId === user.id
@@ -568,12 +608,14 @@ export class FirestoreGroupOrderService extends FirestoreSharingService {
     return runTransaction(getFirebaseRuntime().firestore, async (transaction) => {
       const snapshot = await transaction.get(reference);
       if (!snapshot.exists()) throw new Error('Bucket was not found.');
-      const bucket = snapshot.data() as Bucket;
+      const bucket = normalizeBucket(snapshot.data() as Bucket);
       assertOwner(bucket, user);
       assertBucketMutable(bucket);
       const index = bucket.items.findIndex((item) => item.id === itemId);
       const item = bucket.items[index];
-      if (!item || item.source !== 'custom') throw new Error('Custom item was not found.');
+      if (!item || item.source !== 'custom') {
+        throw new Error('Custom item was not found.');
+      }
       const approved: BucketItem = {
         ...item,
         unitPrice: priceToMinor(unitPrice) / 100,
@@ -601,7 +643,7 @@ export class FirestoreGroupOrderService extends FirestoreSharingService {
   ): Promise<ContributionMutationRecord> {
     const snapshot = await getDoc(bucketReference(bucketId));
     if (!snapshot.exists()) throw new Error('Bucket was not found.');
-    assertBucketMutable(snapshot.data() as Bucket);
+    assertBucketMutable(normalizeBucket(snapshot.data() as Bucket));
     return super.setContribution(user, bucketId, itemId, operation, value, mutationId);
   }
 
@@ -614,16 +656,24 @@ export class FirestoreGroupOrderService extends FirestoreSharingService {
     const contributionSnapshots = await getDocs(
       collection(firestore, 'buckets', bucketId, 'contributions'),
     );
-    const contributionReferences = contributionSnapshots.docs.map((snapshot) => snapshot.ref);
+    const contributionReferences = contributionSnapshots.docs.map(
+      (snapshot) => snapshot.ref,
+    );
 
     return runTransaction(firestore, async (transaction) => {
       const bucketRef = bucketReference(bucketId);
       const bucketSnapshot = await transaction.get(bucketRef);
       if (!bucketSnapshot.exists()) throw new Error('Bucket was not found.');
-      const bucket = bucketSnapshot.data() as Bucket;
+      const bucket = normalizeBucket(bucketSnapshot.data() as Bucket);
       assertOwner(bucket, user);
       const mutationId = `${user.id}_${bucket.revision}`;
-      const mutationRef = doc(firestore, 'buckets', bucketId, 'orderMutations', mutationId);
+      const mutationRef = doc(
+        firestore,
+        'buckets',
+        bucketId,
+        'orderMutations',
+        mutationId,
+      );
       const mutationSnapshot = await transaction.get(mutationRef);
       if (mutationSnapshot.exists()) {
         const mutation = mutationSnapshot.data() as { orderId: string };
@@ -636,7 +686,9 @@ export class FirestoreGroupOrderService extends FirestoreSharingService {
       const contributions: BucketContribution[] = [];
       for (const reference of contributionReferences) {
         const snapshot = await transaction.get(reference);
-        if (snapshot.exists()) contributions.push(snapshot.data() as BucketContribution);
+        if (snapshot.exists()) {
+          contributions.push(snapshot.data() as BucketContribution);
+        }
       }
       const ordering = beginOrdering(bucket, user.id);
       const receipt = buildReceipt(ordering, contributions, ordering.revision);
