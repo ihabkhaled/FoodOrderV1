@@ -1,9 +1,17 @@
 import { nowIso } from '@/lib/date';
-import type { Bucket } from '@/types/domain';
+import type { Bucket, BucketOrderState } from '@/types/domain';
+
+interface LifecyclePatch {
+  orderState: BucketOrderState;
+  frozenAt: string | null;
+  frozenBy: string | null;
+}
+
+const currentState = (bucket: Bucket): BucketOrderState => bucket.orderState ?? 'open';
 
 const withLifecycleUpdate = (
   bucket: Bucket,
-  patch: Pick<Bucket, 'orderState' | 'frozenAt' | 'frozenBy'>,
+  patch: LifecyclePatch,
   occurredAt: string,
 ): Bucket => ({
   ...bucket,
@@ -13,7 +21,7 @@ const withLifecycleUpdate = (
 });
 
 export const assertBucketMutable = (bucket: Bucket): void => {
-  if (bucket.orderState !== 'open') {
+  if (currentState(bucket) !== 'open') {
     throw new Error('This bucket is frozen and cannot be changed.');
   }
 };
@@ -23,9 +31,10 @@ export const freezeBucket = (
   actorId: string,
   occurredAt = nowIso(),
 ): Bucket => {
-  if (bucket.orderState === 'frozen') return bucket;
-  if (bucket.orderState !== 'open') {
-    throw new Error(`A bucket in ${bucket.orderState} state cannot be frozen.`);
+  const state = currentState(bucket);
+  if (state === 'frozen') return bucket;
+  if (state !== 'open') {
+    throw new Error(`A bucket in ${state} state cannot be frozen.`);
   }
   if (!actorId.trim()) throw new Error('A freeze actor is required.');
 
@@ -44,7 +53,7 @@ export const unfreezeBucket = (
   bucket: Bucket,
   occurredAt = nowIso(),
 ): Bucket => {
-  if (bucket.orderState !== 'frozen') {
+  if (currentState(bucket) !== 'frozen') {
     throw new Error('Only a frozen bucket can be reopened.');
   }
 
@@ -64,10 +73,11 @@ export const beginOrdering = (
   actorId: string,
   occurredAt = nowIso(),
 ): Bucket => {
+  const state = currentState(bucket);
   if (!actorId.trim()) throw new Error('An ordering actor is required.');
-  if (bucket.orderState === 'ordering') return bucket;
-  if (!['open', 'frozen'].includes(bucket.orderState)) {
-    throw new Error(`A bucket in ${bucket.orderState} state cannot be ordered.`);
+  if (state === 'ordering') return bucket;
+  if (state !== 'open' && state !== 'frozen') {
+    throw new Error(`A bucket in ${state} state cannot be ordered.`);
   }
 
   return withLifecycleUpdate(
@@ -85,8 +95,9 @@ export const completeOrdering = (
   bucket: Bucket,
   occurredAt = nowIso(),
 ): Bucket => {
-  if (bucket.orderState === 'ordered') return bucket;
-  if (bucket.orderState !== 'ordering') {
+  const state = currentState(bucket);
+  if (state === 'ordered') return bucket;
+  if (state !== 'ordering') {
     throw new Error('Only a bucket being ordered can be completed.');
   }
 
@@ -94,8 +105,8 @@ export const completeOrdering = (
     bucket,
     {
       orderState: 'ordered',
-      frozenAt: bucket.frozenAt,
-      frozenBy: bucket.frozenBy,
+      frozenAt: bucket.frozenAt ?? occurredAt,
+      frozenBy: bucket.frozenBy ?? bucket.ownerId,
     },
     occurredAt,
   );
@@ -105,7 +116,7 @@ export const failOrdering = (
   bucket: Bucket,
   occurredAt = nowIso(),
 ): Bucket => {
-  if (bucket.orderState !== 'ordering') {
+  if (currentState(bucket) !== 'ordering') {
     throw new Error('Only a bucket being ordered can return to frozen state.');
   }
 
@@ -114,7 +125,7 @@ export const failOrdering = (
     {
       orderState: 'frozen',
       frozenAt: bucket.frozenAt ?? occurredAt,
-      frozenBy: bucket.frozenBy,
+      frozenBy: bucket.frozenBy ?? bucket.ownerId,
     },
     occurredAt,
   );
