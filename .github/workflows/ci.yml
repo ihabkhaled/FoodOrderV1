@@ -112,7 +112,17 @@ jobs:
           node-version: 26
           cache: npm
       - run: npm ci
-      - run: npm run quality:dead-code
+      - name: Run Knip
+        shell: bash
+        run: |
+          set -o pipefail
+          npm run quality:dead-code 2>&1 | tee knip.log
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: dead-code-report
+          path: knip.log
+          if-no-files-found: error
 
   coverage:
     name: Unit and Integration Coverage
@@ -125,13 +135,19 @@ jobs:
           node-version: 26
           cache: npm
       - run: npm ci
-      - run: npm run test:coverage
+      - name: Run coverage
+        shell: bash
+        run: |
+          set -o pipefail
+          npm run test:coverage 2>&1 | tee coverage.log
       - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: coverage-report
-          path: coverage/
-          if-no-files-found: error
+          path: |
+            coverage.log
+            coverage/
+          if-no-files-found: warn
 
   build:
     name: Production Build
