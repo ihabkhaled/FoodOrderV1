@@ -46,13 +46,21 @@ export interface DataService {
   getProfile(user: SessionUser, defaults: ProfileDefaults): Promise<UserProfile>;
   saveProfile(profile: UserProfile): Promise<UserProfile>;
   listBuckets(user: SessionUser): Promise<Bucket[]>;
-  listBucketsPage(user: SessionUser, request: PageRequest): Promise<PageResult<Bucket>>;
+  /** Optional legacy-compatible page hook; the dedicated pagination gateway owns new screens. */
+  listBucketsPage?(
+    user: SessionUser,
+    request: PageRequest,
+  ): Promise<PageResult<Bucket>>;
   getBucket(user: SessionUser, bucketId: string): Promise<Bucket | null>;
   createBucket(user: SessionUser, draft: BucketDraft): Promise<Bucket>;
   updateBucket(user: SessionUser, bucketId: string, draft: BucketDraft): Promise<Bucket>;
   deleteBucket(user: SessionUser, bucketId: string): Promise<void>;
   listOrders(userId: string): Promise<Order[]>;
-  listOrdersPage(userId: string, request: PageRequest): Promise<PageResult<Order>>;
+  /** Optional legacy-compatible page hook; the dedicated pagination gateway owns new screens. */
+  listOrdersPage?(
+    userId: string,
+    request: PageRequest,
+  ): Promise<PageResult<Order>>;
   getOrder(userId: string, orderId: string): Promise<Order | null>;
   createOrder(userId: string, draft: OrderDraft): Promise<Order>;
   updateOrderStatus(userId: string, orderId: string, status: OrderStatus): Promise<Order>;
@@ -78,7 +86,8 @@ export interface SharedBucketView {
 export interface SharingService {
   /** Buckets shared with the user by someone else (active membership, not owner). */
   listSharedWithMe(user: SessionUser): Promise<Bucket[]>;
-  listSharedWithMePage(
+  /** Optional legacy-compatible page hook; the dedicated pagination gateway owns new screens. */
+  listSharedWithMePage?(
     user: SessionUser,
     request: PageRequest,
   ): Promise<PageResult<Bucket>>;
