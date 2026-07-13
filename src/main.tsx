@@ -1,5 +1,6 @@
 import '@/styles.css';
 import '@/groupOrder.css';
+import '@/virtualLists.css';
 
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
@@ -12,4 +13,12 @@ import { AppProvider } from '@/state/AppContext';
 void initializePlatform();
 const container = document.getElementById('root');
 if (!container) throw new Error('Root element was not found.');
-createRoot(container).render(<StrictMode><BrowserRouter><AppProvider><App /></AppProvider></BrowserRouter></StrictMode>);
+createRoot(container).render(
+  <StrictMode>
+    <BrowserRouter>
+      <AppProvider>
+        <App />
+      </AppProvider>
+    </BrowserRouter>
+  </StrictMode>,
+);
