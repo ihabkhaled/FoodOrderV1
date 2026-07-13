@@ -151,7 +151,7 @@ describe('local group-order v3 integration', () => {
 
     const storedBucket = await data.getBucket(owner, bucket.id);
     expect(storedBucket?.orderState).toBe('ordered');
-    await expect(
+    expect(() =>
       groupOrders.setContribution(
         member,
         bucket.id,
@@ -160,7 +160,7 @@ describe('local group-order v3 integration', () => {
         3,
         'post-freeze',
       ),
-    ).rejects.toThrow(/frozen/);
+    ).toThrow(/frozen/);
 
     const memberOrder = await data.getOrder(member.id, order.id);
     expect(memberOrder?.userId).toBe(member.id);
@@ -180,18 +180,18 @@ describe('local group-order v3 integration', () => {
     );
     await groupOrders.acceptJoinCode(member, joinCode);
 
-    await expect(
+    expect(() =>
       groupOrders.addCustomItem(member, bucket.id, {
         name: 'Unauthorized item',
         description: '',
         category: '',
         unitPrice: 1,
       }),
-    ).rejects.toThrow(/permission/);
+    ).toThrow(/permission/);
 
     const frozen = await groupOrders.freezeBucket(owner, bucket.id);
     expect(frozen.orderState).toBe('frozen');
-    await expect(
+    expect(() =>
       groupOrders.updatePricingPolicy(owner, bucket.id, {
         vatBasisPoints: 0,
         serviceBasisPoints: 0,
@@ -200,7 +200,7 @@ describe('local group-order v3 integration', () => {
         serviceAllocation: 'equal',
         deliveryAllocation: 'equal',
       }),
-    ).rejects.toThrow(/frozen/);
+    ).toThrow(/frozen/);
 
     const reopened = await groupOrders.unfreezeBucket(owner, bucket.id);
     expect(reopened).toMatchObject({
