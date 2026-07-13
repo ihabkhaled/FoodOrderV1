@@ -21,6 +21,11 @@
       "hash": "a8be2b62cb731828536b5f1162e5c9c9b84d9e579235b77ae88583850215e6c8"
     },
     {
+      "path": "tests/e2e/ui.spec.ts",
+      "bytes": 2935,
+      "hash": "d6184c52e6abaacd8eb1e3db0a3409e5c517405fe255de5c28d1702d865bfc19"
+    },
+    {
       "path": "tests/services/localServices.test.ts",
       "bytes": 1868,
       "hash": "29da0a1fba83623583a6b15c1aefa09a8043192015e030ce3f031c53c10ffb54"

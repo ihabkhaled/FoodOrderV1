@@ -1,7 +1,7 @@
 {
   "src/App.tsx": "28792a4c9885cb03af03cdfbff3206ea9623ceb3aa78159a9a4302f1151cff88",
   "src/components/ActivityTimeline.tsx": "56546409cd8e9d48e28e067ad303391b30c48d2842ac9392e29c0733004da67f",
-  "src/components/AppLayout.tsx": "640cd997a5e9534f30ea67ba39810d879f25c1f3335ecf80013a8acc048226f8",
+  "src/components/AppLayout.tsx": "5749e74b7c21ad103421e308f2f96f4f5f8d028c2eb4db744aa30e934768aa08",
   "src/components/AuthLayout.tsx": "3d389186dbad2a0897c426d45bc4f74c10117d133c1f98d6fdd11eadfbbf3f08",
   "src/components/ConfirmDialog.tsx": "44612a4b31ee6267b7fa28e8b45770737803930bd1c0ed5cbaad877ac5e7b505",
   "src/components/EmptyState.tsx": "37cd10e809a7cf131325d05f1504aa111a0df9ce9488c3758e87a1523f812f86",
@@ -17,7 +17,7 @@
   "src/lib/order.ts": "21c003a20dc7068f372ed7fa9cc3b8e88697d265f0d322c4689a6c160abae4e6",
   "src/lib/sharing.ts": "89635f60111a4af83c74dc264d30a07ac852e0627863545821553df55ebd3217",
   "src/lib/validation.ts": "6d2b9d82c2211a3d50614a16af27b1d9350147f1831c1307fdeeed6ce0b580d0",
-  "src/main.tsx": "3f11237926df7fa3651983dde9ff45debe22032ea6d81c3bd01e593784cc2b37",
+  "src/main.tsx": "6d1f21b24ee29e05a75cd0e838bf13ffe504b735d207607745f44d5ebb77dae7",
   "src/pages/BucketCollaboratePage.tsx": "de4a0315dce0510c6b4a2c7e540ebe3943bcfb1185d151339438b6f26c1e3459",
   "src/pages/BucketEditorPage.tsx": "a373054015d8f6f38880c23b51725a9508961b58a4cc64c83510148e4496349e",
   "src/pages/BucketSharePage.tsx": "88e02eb2c5829f7162af2a1bb279f4b5fdcfed16fac6e145178df4c54f936cfa",
@@ -39,7 +39,7 @@
   "src/services/platform.ts": "dfb57e36230fd9cfb88b74002593417aa3cc5e048b618455bb8fcfdcdac11d9c",
   "src/state/AppContext.tsx": "9b28deb99e0e8282660179972aafed785b44c80713b8d7fde03c83c59ed30d2b",
   "src/state/deviceConfig.ts": "407346f16a7aa57db0a4a46733241e278f64fda3d3406ec92af771dbe160038f",
-  "src/styles.css": "b8cac7fb7e786f347a468cfd45aa191ba0d98cfbce4bdf37d0acc34ae90f2b2f",
+  "src/styles.css": "b6f79a105b037ae2d41eb34a464b508d814671f82dbbb09b2d23dff455f35274",
   "src/types/domain.ts": "79a595ace40e00905f43e905b8d730a90b9fc27b7f5f867e19a61f09436d4371",
   "src/vite-env.d.ts": "0f83db65d25bc3bffbebd21dd6199eec457158dbbcf1abebb3b0fbad533b4097"
 }

@@ -35,8 +35,8 @@
     },
     {
       "path": ".ai/hashes/documents.json",
-      "bytes": 7956,
-      "hash": "b383f8d2fc0c55a354022ca1e80ba5a754c0736a9d16e7870c29450d7bf6ab73"
+      "bytes": 8067,
+      "hash": "e03833adc41b72a592b9f9288579565397991e5382c334365221d2ca39099d49"
     },
     {
       "path": ".ai/hashes/source.json",
@@ -55,8 +55,8 @@
     },
     {
       "path": ".ai/manifests/repository.json",
-      "bytes": 26104,
-      "hash": "358194320973128da5dc0c57a0e2447bc4dcb07c444fe2bc0a74b5b0ef83d4cd"
+      "bytes": 28191,
+      "hash": "9662f165c45817fafe639b6375a11c98835187f4308202c9a1b8b7bdf150524c"
     },
     {
       "path": ".ai/manifests/tests.json",
@@ -76,17 +76,17 @@
     {
       "path": ".ai/reports/token-usage.json",
       "bytes": 75,
-      "hash": "e0fe31206f37ef96fb1217c0d5bf39eef6fcad0ac67b7db807020923b61e5c99"
+      "hash": "5dd555fd95d373ec5fa3375b057a92b8ecac251b55e076324c7a5b4f275f82ef"
     },
     {
       "path": ".ai/reports/validation.json",
       "bytes": 76,
-      "hash": "2a90985d7e37b072f8492725dd433aed53b295300f264904a5722bd28262231e"
+      "hash": "3627961fe902649417500c6fde695ac8c2ff17db71a2cf8366ea43403cf55aa2"
     },
     {
       "path": ".editorconfig",
-      "bytes": 188,
-      "hash": "a6b98ea7cb6d61ed8d430dd0dffa46c87012b5cf859d4ce7207898954951fdcd"
+      "bytes": 200,
+      "hash": "310de8f0cb4cb702fc9f63e0c5988e1bd381d492a32695a01cf55942a9eb7b2e"
     },
     {
       "path": ".env.example",
@@ -101,37 +101,42 @@
     {
       "path": ".github/workflows/android-apk.yml",
       "bytes": 3056,
-      "hash": "2252b6e09d7947af547102f6df035614bfcc5d39b6fcde2613c843c93bcd4f7e"
+      "hash": "0fc0cc6495845be981e8d4a06fe085fa843e4be724a279fa112e3ba4a0f9b144"
     },
     {
       "path": ".github/workflows/ci.yml",
       "bytes": 751,
-      "hash": "b9a65833601f0a8f6d1d60219d368e62885e142e99fa8efb9e83e08785f061d9"
+      "hash": "eba93300f89d45108cc9f04d5d6fa9d4ffd4837475bc81c4949ce3354347db0a"
     },
     {
       "path": ".gitignore",
-      "bytes": 364,
-      "hash": "6341f573b1b795f7327673fb138f4454446991ce8c4f32ffde849e1902bb41e5"
+      "bytes": 412,
+      "hash": "a4da4e6614bc38e649a7187a466084313e0776b0eefdaee7f62414707a89bf87"
     },
     {
       "path": "AGENTS.md",
-      "bytes": 750,
-      "hash": "2009ab89ebb965a0e1e524a4e85e250a09caa7e4bfbdbdb52a9e3e396d47f7bd"
+      "bytes": 761,
+      "hash": "26a842571fd7a3727f8a3fad5cc9d93fa44ccea8465b0a0b5dc8a14f4f302992"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "bytes": 639,
+      "hash": "14f4c8256ad6bfc8ece56f48e149fcd099d6462bbd8ad6094820185965533948"
     },
     {
       "path": "CLAUDE.md",
-      "bytes": 750,
-      "hash": "2009ab89ebb965a0e1e524a4e85e250a09caa7e4bfbdbdb52a9e3e396d47f7bd"
+      "bytes": 761,
+      "hash": "26a842571fd7a3727f8a3fad5cc9d93fa44ccea8465b0a0b5dc8a14f4f302992"
     },
     {
       "path": "CODEX.md",
-      "bytes": 750,
-      "hash": "2009ab89ebb965a0e1e524a4e85e250a09caa7e4bfbdbdb52a9e3e396d47f7bd"
+      "bytes": 761,
+      "hash": "26a842571fd7a3727f8a3fad5cc9d93fa44ccea8465b0a0b5dc8a14f4f302992"
     },
     {
       "path": "GEMINI.md",
-      "bytes": 750,
-      "hash": "2009ab89ebb965a0e1e524a4e85e250a09caa7e4bfbdbdb52a9e3e396d47f7bd"
+      "bytes": 761,
+      "hash": "26a842571fd7a3727f8a3fad5cc9d93fa44ccea8465b0a0b5dc8a14f4f302992"
     },
     {
       "path": "README.md",
@@ -140,38 +145,38 @@
     },
     {
       "path": "agents/README.md",
-      "bytes": 587,
-      "hash": "a4a76d9203365cda1825aeba469104361e51da2cee27d8fe960fda529c601fb1"
+      "bytes": 612,
+      "hash": "e9d0943c759fb22bfdb39f85069d68c56712242b19f75ab5cd8b013c35a1c0cf"
     },
     {
       "path": "agents/architecture-guardian.md",
-      "bytes": 636,
-      "hash": "36cc22db28b0e729559e86360e49f3f0629147576c49915b4e596e60a9505abb"
+      "bytes": 661,
+      "hash": "3af86bd954134ed7f718c02634abf7e67774ca4d5626aee5703daf2a9fc0db28"
     },
     {
       "path": "agents/context-router.md",
-      "bytes": 625,
-      "hash": "df72c827afaafde140cf26d21e7ea81e4aace8b9a41a1e49dd56682dde98d2c4"
+      "bytes": 650,
+      "hash": "433cf972c0ae788ced79302ae5f0d5a75f0a3dcef59104ee2b4d27480e068a02"
     },
     {
       "path": "agents/frontend-reviewer.md",
-      "bytes": 638,
-      "hash": "248750c900a45c6dc1570b76721a00708dda2207f8b1a5df1d104fd4f828be43"
+      "bytes": 663,
+      "hash": "558978b18e04787afe4be4c6f44babcd47d0e0e466d8f701d39e9ee4ce50ccae"
     },
     {
       "path": "agents/release-reviewer.md",
-      "bytes": 619,
-      "hash": "c7c47044bbf33cca788fea8b7e08657e26d638eb5c9c01203e91a364415ac640"
+      "bytes": 644,
+      "hash": "cde42a6c74e054d513585ad047edf72d1d1a9f2f8d87539c19522700def968ee"
     },
     {
       "path": "agents/security-reviewer.md",
-      "bytes": 637,
-      "hash": "a0285ced41a8a5fad5079442427967d42681d81a3a6c22fe15f7639f2d1146b4"
+      "bytes": 662,
+      "hash": "f4018341aa3f81d377bb308c2956b45e2be2b7a44123442ae52435cce5c4fbc1"
     },
     {
       "path": "agents/testing-reviewer.md",
-      "bytes": 556,
-      "hash": "6478305436283a3f8880c66021a020c7cca16521c938733839faebd6566c674d"
+      "bytes": 581,
+      "hash": "3ad3d4da576585b0b856fa932f93723df236280758ab52ebaaed9b24ed83d0cb"
     },
     {
       "path": "architecture/README.md",
@@ -254,6 +259,11 @@
       "hash": "4cee9c46ffe44af686fc1a040356ba4de1cca70b96ae6d3f8fef5a8c6dacca84"
     },
     {
+      "path": "audit/repo-hygiene.md",
+      "bytes": 2060,
+      "hash": "77aa2006dea9ef78654b99dc42ca978bc413ea2b7967ef2d77a3c93f35a92316"
+    },
+    {
       "path": "audit/security-review.md",
       "bytes": 4352,
       "hash": "638dbd025e722d57dc03a2e6d775c5915cf37abc5b107ecf7c0bed6b4b845696"
@@ -265,33 +275,33 @@
     },
     {
       "path": "capacitor.config.ts",
-      "bytes": 376,
-      "hash": "abad16e0fbeaef30b43d7610f0ad5bac21942b3741c568512de357e15a5bdb0d"
+      "bytes": 390,
+      "hash": "2cddd46039264dcee3318be016b4816ce74fb641a1688d4b903a24c94981b488"
     },
     {
       "path": "context/00-start-here.md",
-      "bytes": 719,
-      "hash": "68d809c6b23ffe10bb553b5f57a93f37967dbe8a04d1a5f937ce673e36a46069"
+      "bytes": 744,
+      "hash": "09ad75f6090d64264cad0c3170e4d54349997e8d55d608e94ab646469e97b564"
     },
     {
       "path": "context/common-change-paths.md",
-      "bytes": 814,
-      "hash": "59edddd9f3d160b4845ec38aaec9fc0410417b71f90c05604af3396bdca5c5b9"
+      "bytes": 837,
+      "hash": "f715dfe0458f63ffe838eb4bef3a75e494eddca04cacf0905ce070a247664db8"
     },
     {
       "path": "context/current-known-risks.md",
-      "bytes": 820,
-      "hash": "43b92d80c47865ac74f4f08fb0cfe526cc6f45bad4b5503f3cdaa630826e4db8"
+      "bytes": 1268,
+      "hash": "32107ce81b4b228358e42be8cf60cfecb38d8fd9095b85974d23882774a75f51"
     },
     {
       "path": "context/project-summary.md",
-      "bytes": 884,
-      "hash": "d63f683e3169a83a2b410447331da1f266e1fb1a74648a8754f948720033c83a"
+      "bytes": 1274,
+      "hash": "7818ab34ea59fd701c439475dd2c00bd458fe2c7014b2ecdcd9d5e33d8ce4356"
     },
     {
       "path": "context/task-router.md",
-      "bytes": 929,
-      "hash": "7cf6192ba52b3d73ac20fd10c91eec524af4d0af79c4fa05e1f9951268eb25f1"
+      "bytes": 958,
+      "hash": "be075f27eba54b8f902c4c5bc426f7ac8dd3432419b381e015d023941b725a60"
     },
     {
       "path": "contracts/README.md",
@@ -322,6 +332,16 @@
       "path": "contracts/routes.md",
       "bytes": 1042,
       "hash": "05eb624c4118f2c427cbfca47da767236a78a1ead2a7127bbcfc732341098589"
+    },
+    {
+      "path": "docs/operations/platform-support.md",
+      "bytes": 1654,
+      "hash": "041420ee32e3ca63403996a2e2e8598eed723336725fdf853fee2e3f3ee92fcb"
+    },
+    {
+      "path": "docs/operations/versioning.md",
+      "bytes": 1532,
+      "hash": "b186468d105debd73c62747e11989446ca658d5e99c8e0a28dbc6c4812ad5f5f"
     },
     {
       "path": "domain/README.md",
@@ -360,28 +380,28 @@
     },
     {
       "path": "firebase.json",
-      "bytes": 792,
-      "hash": "3959319563aeae6da8a7c95bd6920e9c541c98369dbe2e0b0d3f411a5b5127e9"
+      "bytes": 809,
+      "hash": "3e171bcdd4cb924d909fe1fdbeb20e4ead7bd810ac0930dc458b65d5cba125db"
     },
     {
       "path": "firestore.indexes.json",
-      "bytes": 40,
-      "hash": "02040af729e3fe3eeeb8a5b6e8c357f65b97078a14f884106377d7af7869dff0"
+      "bytes": 41,
+      "hash": "cafc71ae69e0f365916412e88f3678948ef2e13f8432f966a01a0d70f90316f1"
     },
     {
       "path": "incidents/README.md",
-      "bytes": 714,
-      "hash": "4ee3415b4e92f2e88a6219d3794d81963f21e75268299b153abe787c03672300"
+      "bytes": 737,
+      "hash": "3374518187d2de8df12baa41642b35d393068ae8d461deb6a6e876f5a53afb64"
     },
     {
       "path": "incidents/incident-template.md",
-      "bytes": 669,
-      "hash": "4c698455580e3d3ccb6af8dba3f9b821dda8bde37d3efa76459fec0d97580c4c"
+      "bytes": 692,
+      "hash": "5cb4153c431131deca803c024f7ee098ea360ddcef3d9543544639aed4d09d1c"
     },
     {
       "path": "index.html",
-      "bytes": 592,
-      "hash": "c14f0253e62a26f3516fc15eaa74cd9c321fae2ea21d6d909fc032ed3286771a"
+      "bytes": 608,
+      "hash": "809ce79ead90fd24cdaa69e7ac6353aaabeb7488a62c6e2d0926f37117182342"
     },
     {
       "path": "knowledge/README.md",
@@ -465,23 +485,23 @@
     },
     {
       "path": "memory/README.md",
-      "bytes": 588,
-      "hash": "4f94c5afd02a853ce24b55d83c9e6ca0cf16f4fc9391b545b8d54649d8a22876"
+      "bytes": 611,
+      "hash": "4b12a56f9c6402b43c1dec0a8379b7abcac3d91e0cd3a9f5c5c896ea5bda2ac5"
     },
     {
       "path": "memory/known-pitfalls.md",
-      "bytes": 729,
-      "hash": "1557a795e25475ee343d00fbc9881407599e704f3396ce6f037bc0f2341954a8"
+      "bytes": 752,
+      "hash": "852340b579d85bbb508d9f478c7353b7a9d34e254bfed8454c19b1897bc5c17d"
     },
     {
       "path": "memory/recent-context.md",
-      "bytes": 998,
-      "hash": "b354ec5f3bdc5e122d750018f273572609a832254191cfa5544f88d178a1f2d9"
+      "bytes": 1025,
+      "hash": "0910ae813e949ca4639859668b2cf225867c9111d14e5fa8f1a456eff5f2ab44"
     },
     {
       "path": "memory/standing-decisions.md",
-      "bytes": 687,
-      "hash": "6bf64da009360974cbd935ebfb9a83a1ed95c0d6757577bc95a113bc8cb5803e"
+      "bytes": 2096,
+      "hash": "6e49adffc2d83c24ac2f1d1b882503bbc5c1cfb2d25082cebdfd95af0ed5873b"
     },
     {
       "path": "operations/README.md",
@@ -515,13 +535,13 @@
     },
     {
       "path": "package.json",
-      "bytes": 3696,
-      "hash": "fd8e153bd0674cad68b4455a8a9636b43cc19ac0f9f8669c9d53ba5baae8f6d8"
+      "bytes": 3893,
+      "hash": "95074544d62e367d88b8114305130f85bc10a6b9fb6329fa94095c5d8fca5932"
     },
     {
       "path": "playwright-report/index.html",
-      "bytes": 529862,
-      "hash": "0024fff7954ed24788d4645c7351b451bdd90e84597a3a3a48920af167933ae6"
+      "bytes": 538594,
+      "hash": "ed3d33083ca97d4897428a9bae4feb0e28fd930d1904fdfb7482d7b7dc6c4a3b"
     },
     {
       "path": "playwright.config.ts",
@@ -530,23 +550,23 @@
     },
     {
       "path": "privacy/README.md",
-      "bytes": 670,
-      "hash": "ebaa0c3d4a6bb94b219ef4f447febea035c45655ffb4b4ec70cba450f2ce27f9"
+      "bytes": 693,
+      "hash": "6f7ece30fa27f45ab97b3c543b0d262fab24fb93c039563156330bf47de5f6ad"
     },
     {
       "path": "privacy/data-inventory.md",
-      "bytes": 844,
-      "hash": "a6f65782aeb5777b4c25a48550a5cbd58bb0b0cbee0ec35ab1d6272ccfa03c53"
+      "bytes": 869,
+      "hash": "e7c0a8c6d8fc4a18cdf3e0a3a4dfcd2cb7a31e4b7a61ac63d654de097b3b59f3"
     },
     {
       "path": "privacy/retention.md",
-      "bytes": 764,
-      "hash": "ea1e1f549690fd8a0096ad923c8afdc0f28d819701ab40b46e734893072877d8"
+      "bytes": 787,
+      "hash": "c7e3afe8c7bfb447f11204c37290976e0d6ca6a158da862010baa4280a4f572a"
     },
     {
       "path": "privacy/user-rights.md",
-      "bytes": 740,
-      "hash": "6f0a2d94d3ffab966968489cb569e3fdf6cdff3399d2e458a3b0240781860a8e"
+      "bytes": 763,
+      "hash": "51f7616a12628058553a8fd3244994447aa47729368b89ee2971014571aa6878"
     },
     {
       "path": "product/README.md",
@@ -585,8 +605,8 @@
     },
     {
       "path": "public/sw.js",
-      "bytes": 652,
-      "hash": "d591af26caf94d037cdb9b2af1d3d995f5311f2b7fe29313f318c48692026b0f"
+      "bytes": 653,
+      "hash": "7caeac63f1e27f24a184aaf5a20786a312d3469d29a8871f1d58d8512964c133"
     },
     {
       "path": "reports/phases/PHASE_00_report.md",
@@ -604,19 +624,34 @@
       "hash": "0a0b0b1ecca922aadf38c62f92a9c7fc822721cb321d69e5c9724c6a47ca63f9"
     },
     {
+      "path": "reports/phases/PHASE_16_report.md",
+      "bytes": 3159,
+      "hash": "b869cc07183ed787eaf4271cb6ed987b0acd8cf58df4d168cc27d282602c9b36"
+    },
+    {
+      "path": "rules/versioning.md",
+      "bytes": 2285,
+      "hash": "711fa06d07345aa9bd22b85c6b7209571807521c16db1fa532e9874ac9a4f976"
+    },
+    {
       "path": "scripts/check-format.mjs",
-      "bytes": 1204,
-      "hash": "51ee01401d1861ec93d05f9da5a913eec09ff7c900257fc54be4285694676bee"
+      "bytes": 1209,
+      "hash": "c8107988fd3068b6345cb161b5a54f5349452acaaeb14b92d7dd3d8e6e03ed33"
     },
     {
       "path": "scripts/knowledge/cli.mjs",
-      "bytes": 9727,
-      "hash": "df53ce4efb68970bc6cb66595f9f360bac4374a8e0d734b1f7841766ce0b87cf"
+      "bytes": 9763,
+      "hash": "8f44bfb3941ddaab899b355126634564e642e64cec989f0ad61b94bdd84b8b11"
     },
     {
       "path": "scripts/migrate-legacy-data.mjs",
       "bytes": 3722,
       "hash": "316e957f581b18cb9df2466ba4f894edd38b1ab9fa861ee1c142318fdba80027"
+    },
+    {
+      "path": "skills/versioning/SKILL.md",
+      "bytes": 2558,
+      "hash": "05220b99f7eca3df66d944e07f87b9ae20441ca372f6f6b15b94e1d421ded0b4"
     },
     {
       "path": "src/App.tsx",
@@ -630,8 +665,8 @@
     },
     {
       "path": "src/components/AppLayout.tsx",
-      "bytes": 1796,
-      "hash": "640cd997a5e9534f30ea67ba39810d879f25c1f3335ecf80013a8acc048226f8"
+      "bytes": 2957,
+      "hash": "5749e74b7c21ad103421e308f2f96f4f5f8d028c2eb4db744aa30e934768aa08"
     },
     {
       "path": "src/components/AuthLayout.tsx",
@@ -710,8 +745,8 @@
     },
     {
       "path": "src/main.tsx",
-      "bytes": 554,
-      "hash": "3f11237926df7fa3651983dde9ff45debe22032ea6d81c3bd01e593784cc2b37"
+      "bytes": 566,
+      "hash": "6d1f21b24ee29e05a75cd0e838bf13ffe504b735d207607745f44d5ebb77dae7"
     },
     {
       "path": "src/pages/BucketCollaboratePage.tsx",
@@ -820,8 +855,8 @@
     },
     {
       "path": "src/styles.css",
-      "bytes": 11484,
-      "hash": "b8cac7fb7e786f347a468cfd45aa191ba0d98cfbce4bdf37d0acc34ae90f2b2f"
+      "bytes": 20810,
+      "hash": "b6f79a105b037ae2d41eb34a464b508d814671f82dbbb09b2d23dff455f35274"
     },
     {
       "path": "src/types/domain.ts",
@@ -859,6 +894,11 @@
       "hash": "a8be2b62cb731828536b5f1162e5c9c9b84d9e579235b77ae88583850215e6c8"
     },
     {
+      "path": "tests/e2e/ui.spec.ts",
+      "bytes": 2935,
+      "hash": "d6184c52e6abaacd8eb1e3db0a3409e5c517405fe255de5c28d1702d865bfc19"
+    },
+    {
       "path": "tests/services/localServices.test.ts",
       "bytes": 1868,
       "hash": "29da0a1fba83623583a6b15c1aefa09a8043192015e030ce3f031c53c10ffb54"
@@ -874,14 +914,19 @@
       "hash": "b0c8d0ad2ad717a07842b46bedcb1c88831a58a373867ff52d3bdf9dc5d706f5"
     },
     {
+      "path": "tools/release/bump-version.mjs",
+      "bytes": 4483,
+      "hash": "00f10eb655658e3462f3577c5a9e5038c6193213482c28b3b53b84153793a692"
+    },
+    {
       "path": "tsconfig.app.json",
-      "bytes": 812,
-      "hash": "11890c5dd99e8b4ff4deefed94abc65dd1579ca82e9ed08480597350406ca899"
+      "bytes": 839,
+      "hash": "e3c7405721c1f4e9b338093035533e5d9a468e9a76e69e3f919285204beb4322"
     },
     {
       "path": "tsconfig.json",
-      "bytes": 119,
-      "hash": "770b4140bbb581e2dfd9ea9946ffc9c75a1d86ba7d2db5f77c83e37cbdf9d808"
+      "bytes": 126,
+      "hash": "ad28d132ee48d6e23917cf5827cace785d0fc01a44ca68b0dda51cc8c3fd3f52"
     },
     {
       "path": "tsconfig.node.json",
