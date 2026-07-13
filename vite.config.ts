@@ -12,6 +12,9 @@ export default defineConfig({
   // No sourcemaps in the production bundle: they are copied verbatim into the
   // Android/iOS asset payload, roughly doubling the APK and shipping readable
   // source to the device. Debug locally with `npm run dev` (dev sourcemaps on).
+  // Author to ES2024 (tsconfig lib), ship es2022 syntax so the bundle runs on
+  // the oldest supported WebViews (iOS 14 / Android 10). Newer runtime APIs
+  // beyond that baseline must be feature-detected, not assumed.
   build: { target: 'es2022', sourcemap: false, chunkSizeWarningLimit: 700, rollupOptions: { output: { manualChunks: { firebase: ['firebase/app', 'firebase/auth', 'firebase/firestore'], router: ['react-router-dom'] } } } },
   // Host pinned to IPv4: Node ≥ 20 resolves localhost to ::1 first, which
   // breaks tooling (Playwright webServer) that polls 127.0.0.1.

@@ -10,7 +10,7 @@ export default tseslint.config(
     extends: [js.configs.recommended, ...tseslint.configs.strictTypeChecked],
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
-      ecmaVersion: 2023,
+      ecmaVersion: 2024,
       globals: globals.browser,
       parserOptions: { project: ['./tsconfig.app.json', './tsconfig.node.json'] },
     },
@@ -42,6 +42,6 @@ export default tseslint.config(
   },
   {
     files: ['scripts/**/*.mjs'],
-    languageOptions: { globals: globals.node, ecmaVersion: 2023 },
+    languageOptions: { globals: globals.node, ecmaVersion: 2024 },
   },
 );
