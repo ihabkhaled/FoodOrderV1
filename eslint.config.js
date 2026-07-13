@@ -17,7 +17,19 @@ import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
-  { ignores: ['dist', 'coverage', 'android', 'ios', '.ai/local', 'playwright-report', 'test-results', 'ui-shots'] },
+  {
+    ignores: [
+      'dist',
+      'coverage',
+      'android',
+      'ios',
+      'functions/lib',
+      '.ai/local',
+      'playwright-report',
+      'test-results',
+      'ui-shots',
+    ],
+  },
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
@@ -33,7 +45,13 @@ export default tseslint.config(
     languageOptions: {
       ecmaVersion: 2024,
       globals: globals.browser,
-      parserOptions: { project: ['./tsconfig.app.json', './tsconfig.node.json'] },
+      parserOptions: {
+        project: [
+          './tsconfig.app.json',
+          './tsconfig.node.json',
+          './functions/tsconfig.json',
+        ],
+      },
     },
     plugins: {
       'react-hooks': reactHooks,
@@ -64,11 +82,11 @@ export default tseslint.config(
 
       // Unicorn: keep the valuable checks, disable rules that fight the
       // established conventions of this codebase (documented, deliberate).
-      'unicorn/filename-case': 'off', // components/pages are PascalCase by convention
-      'unicorn/prevent-abbreviations': 'off', // props/params/env/ref/db/fn are intentional
-      'unicorn/no-null': 'off', // null is used deliberately (Firestore, domain nullables)
-      'unicorn/no-nested-ternary': 'off', // concise conditional rendering in TSX
-      'unicorn/no-array-reduce': 'off', // reduce is used for pure aggregations
+      'unicorn/filename-case': 'off',
+      'unicorn/prevent-abbreviations': 'off',
+      'unicorn/no-null': 'off',
+      'unicorn/no-nested-ternary': 'off',
+      'unicorn/no-array-reduce': 'off',
       'unicorn/prefer-global-this': 'off',
       'unicorn/prefer-top-level-await': 'off',
       'unicorn/switch-case-braces': 'off',
@@ -80,9 +98,9 @@ export default tseslint.config(
       'sonarjs/no-nested-conditional': 'off',
       'sonarjs/todo-tag': 'off',
       'sonarjs/no-unenclosed-multiline-block': 'off',
-      'sonarjs/prefer-read-only-props': 'off', // props are inline, never mutated
-      'sonarjs/no-floating-point-equality': 'off', // money is rounded to 2dp before compare
-      'sonarjs/no-unused-vars': 'off', // @typescript-eslint/no-unused-vars owns this (allows _)
+      'sonarjs/prefer-read-only-props': 'off',
+      'sonarjs/no-floating-point-equality': 'off',
+      'sonarjs/no-unused-vars': 'off',
 
       // Security plugin: object-injection and build-time fs reads are noisy and
       // safe here (typed record access; config files reading package.json).
@@ -93,6 +111,15 @@ export default tseslint.config(
       '@typescript-eslint/no-empty-function': ['error', { allow: ['arrowFunctions'] }],
       // `.then(cb)` as the last handler need not return.
       'promise/always-return': ['error', { ignoreLastCallback: true }],
+    },
+  },
+  {
+    files: ['functions/**/*.ts'],
+    languageOptions: { globals: globals.node },
+    rules: {
+      'react-hooks/rules-of-hooks': 'off',
+      'react-hooks/exhaustive-deps': 'off',
+      'react-refresh/only-export-components': 'off',
     },
   },
   {
