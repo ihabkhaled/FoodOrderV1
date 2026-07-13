@@ -53,4 +53,5 @@ jobs:
           git add .github/workflows/ci.yml .github/workflows/one-shot-wire-emulator.yml
           git diff --cached --check
           git commit -m "ci(firebase): require emulator Rules gate before APK"
+          git pull --rebase origin "${{ github.event.pull_request.head.ref }}"
           git push origin HEAD:${{ github.event.pull_request.head.ref }}
