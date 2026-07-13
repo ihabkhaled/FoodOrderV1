@@ -23,5 +23,5 @@
     "noUnusedParameters": true,
     "paths": { "@/*": ["./src/*"] }
   },
-  "include": ["src", "tests"]
+  "include": ["src"]
 }
