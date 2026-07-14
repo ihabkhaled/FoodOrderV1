@@ -1,6 +1,6 @@
 {
   "name": "food-order-v1",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "private": true,
   "type": "module",
   "description": "A mobile-first Capacitor application for reusable food buckets and order tracking.",
@@ -23,6 +23,7 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:e2e": "playwright test",
+    "test:e2e:critical": "playwright test tests/e2e/group-order.spec.ts --project=chromium",
     "test:rules": "firebase emulators:exec --project food-order-v1-rules-test --only firestore \"vitest run --config vitest.rules.config.ts\"",
     "functions:typecheck": "npm --prefix functions run typecheck",
     "functions:build": "npm --prefix functions run build",
@@ -60,7 +61,8 @@
     "security:scan": "trivy fs --scanners vuln,secret,misconfig --skip-dirs node_modules,dist,coverage,android,ios,.git,ui-shots --exit-code 0 .",
     "quality:dead-code": "knip",
     "quality:circular": "madge src --circular --extensions ts,tsx",
-    "quality": "npm run lint && npm run typecheck && npm run quality:circular",
+    "quality:release": "node scripts/check-release-version.mjs",
+    "quality": "npm run lint && npm run typecheck && npm run quality:circular && npm run quality:release",
     "deps:check": "npm outdated || true"
   },
   "dependencies": {

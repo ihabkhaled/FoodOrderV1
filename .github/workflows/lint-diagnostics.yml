@@ -1,0 +1,37 @@
+name: Lint Autofix Diagnostics
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lint-autofix-diagnostics:
+    name: Lint Autofix Diagnostics
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 26
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            functions/package-lock.json
+      - run: npm ci
+      - run: npm --prefix functions ci
+      - run: npm run lint:fix
+      - name: Capture autofix patch
+        shell: bash
+        run: git diff --binary > lint-autofix.patch
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: lint-autofix-patch
+          path: lint-autofix.patch
+          if-no-files-found: error
+      - name: Require no pending lint changes
+        run: git diff --exit-code
