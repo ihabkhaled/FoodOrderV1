@@ -13,11 +13,12 @@ import { ErrorState } from '@/components/ErrorState';
 import { Loading } from '@/components/Loading';
 import { useBucketMutations } from '@/hooks/useBucketMutations';
 import { useCursorPage } from '@/hooks/useCursorPage';
+import type { MessageKey } from '@/i18n/messages';
 import type { PageResult } from '@/lib/pagination';
 import { paginationService } from '@/services';
 import { useApp } from '@/state/AppContext';
 import { usePageRefresh } from '@/state/RefreshContext';
-import type { Bucket } from '@/types/domain';
+import type { Bucket, Locale } from '@/types/domain';
 
 const emptyBucketPage = (): Promise<PageResult<Bucket>> =>
   Promise.resolve({ items: [], nextCursor: null, hasMore: false });
@@ -32,6 +33,121 @@ const filterBuckets = (buckets: readonly Bucket[], query: string): Bucket[] => {
     `${bucket.title} ${bucket.description}`.toLowerCase().includes(normalized),
   );
 };
+
+const firstPageError = (
+  ownedCount: number,
+  sharedCount: number,
+  ownedError: unknown,
+  sharedError: unknown,
+): unknown =>
+  ownedCount === 0 && sharedCount === 0
+    ? ownedError ?? sharedError ?? null
+    : null;
+
+interface BucketResultsProps {
+  readonly totalLoaded: number;
+  readonly query: string;
+  readonly scope: BucketScope;
+  readonly locale: Locale;
+  readonly t: (key: MessageKey) => string;
+  readonly ownedItems: Bucket[];
+  readonly sharedItems: Bucket[];
+  readonly ownedLoadingMore: boolean;
+  readonly sharedLoadingMore: boolean;
+  readonly ownedHasMore: boolean;
+  readonly sharedHasMore: boolean;
+  readonly ownedError: string;
+  readonly sharedError: string;
+  readonly onQueryChange: (value: string) => void;
+  readonly onScopeChange: (value: BucketScope) => void;
+  readonly onOwnedLoadMore: () => void;
+  readonly onSharedLoadMore: () => void;
+  readonly onDuplicate: (bucket: Bucket) => void;
+  readonly onDelete: (bucket: Bucket) => void;
+}
+
+function BucketResults({
+  totalLoaded,
+  query,
+  scope,
+  locale,
+  t,
+  ownedItems,
+  sharedItems,
+  ownedLoadingMore,
+  sharedLoadingMore,
+  ownedHasMore,
+  sharedHasMore,
+  ownedError,
+  sharedError,
+  onQueryChange,
+  onScopeChange,
+  onOwnedLoadMore,
+  onSharedLoadMore,
+  onDuplicate,
+  onDelete,
+}: BucketResultsProps) {
+  if (totalLoaded === 0) {
+    return (
+      <EmptyState
+        icon={<ShoppingBasket />}
+        title={t('emptyBuckets')}
+        description={t('quickStart')}
+        action={
+          <Link className="button" to="/buckets/new">
+            <Plus />
+            {t('createBucket')}
+          </Link>
+        }
+      />
+    );
+  }
+
+  return (
+    <>
+      <BucketFilters
+        query={query}
+        scope={scope}
+        locale={locale}
+        t={t}
+        onQueryChange={onQueryChange}
+        onScopeChange={onScopeChange}
+      />
+      {scope === 'shared' ? null : (
+        <BucketCollectionSection
+          kind="owned"
+          items={ownedItems}
+          locale={locale}
+          query={query}
+          loadingMore={ownedLoadingMore}
+          hasMore={ownedHasMore}
+          error={ownedError}
+          t={t}
+          onLoadMore={onOwnedLoadMore}
+          onRetry={onOwnedLoadMore}
+          onDuplicate={onDuplicate}
+          onDelete={onDelete}
+        />
+      )}
+      {scope === 'owned' ? null : (
+        <BucketCollectionSection
+          kind="shared"
+          items={sharedItems}
+          locale={locale}
+          query={query}
+          loadingMore={sharedLoadingMore}
+          hasMore={sharedHasMore}
+          error={sharedError}
+          t={t}
+          onLoadMore={onSharedLoadMore}
+          onRetry={onSharedLoadMore}
+          onDuplicate={() => {}}
+          onDelete={() => {}}
+        />
+      )}
+    </>
+  );
+}
 
 export function BucketsPage() {
   const { user, locale, t, showToast, errorMessage } = useApp();
@@ -89,10 +205,12 @@ export function BucketsPage() {
     setSearchParameters(next, { replace: true });
   };
 
-  const initialError =
-    owned.items.length === 0 && shared.items.length === 0
-      ? owned.error ?? shared.error
-      : null;
+  const initialError = firstPageError(
+    owned.items.length,
+    shared.items.length,
+    owned.error,
+    shared.error,
+  );
   if (initialError) {
     return (
       <ErrorState
@@ -103,7 +221,6 @@ export function BucketsPage() {
   }
   if (owned.loading && shared.loading) return <Loading />;
 
-  const totalLoaded = owned.items.length + shared.items.length;
   return (
     <div className="page stack-lg">
       <div className="page-heading">
@@ -123,66 +240,31 @@ export function BucketsPage() {
         </div>
       </div>
 
-      {totalLoaded > 0 ? (
-        <>
-          <BucketFilters
-            query={query}
-            scope={scope}
-            locale={locale}
-            t={t}
-            onQueryChange={(value) => {
-              updateSearch('q', value);
-            }}
-            onScopeChange={(value) => {
-              updateSearch('scope', value);
-            }}
-          />
-          {scope !== 'shared' ? (
-            <BucketCollectionSection
-              kind="owned"
-              items={filteredOwned}
-              locale={locale}
-              query={query}
-              loadingMore={owned.loadingMore}
-              hasMore={owned.hasMore}
-              error={owned.error ? errorMessage(owned.error) : ''}
-              t={t}
-              onLoadMore={() => void owned.loadMore()}
-              onRetry={() => void owned.loadMore()}
-              onDuplicate={(bucket) => void duplicate(bucket)}
-              onDelete={setDeleting}
-            />
-          ) : null}
-          {scope !== 'owned' ? (
-            <BucketCollectionSection
-              kind="shared"
-              items={filteredShared}
-              locale={locale}
-              query={query}
-              loadingMore={shared.loadingMore}
-              hasMore={shared.hasMore}
-              error={shared.error ? errorMessage(shared.error) : ''}
-              t={t}
-              onLoadMore={() => void shared.loadMore()}
-              onRetry={() => void shared.loadMore()}
-              onDuplicate={() => {}}
-              onDelete={() => {}}
-            />
-          ) : null}
-        </>
-      ) : (
-        <EmptyState
-          icon={<ShoppingBasket />}
-          title={t('emptyBuckets')}
-          description={t('quickStart')}
-          action={
-            <Link className="button" to="/buckets/new">
-              <Plus />
-              {t('createBucket')}
-            </Link>
-          }
-        />
-      )}
+      <BucketResults
+        totalLoaded={owned.items.length + shared.items.length}
+        query={query}
+        scope={scope}
+        locale={locale}
+        t={t}
+        ownedItems={filteredOwned}
+        sharedItems={filteredShared}
+        ownedLoadingMore={owned.loadingMore}
+        sharedLoadingMore={shared.loadingMore}
+        ownedHasMore={owned.hasMore}
+        sharedHasMore={shared.hasMore}
+        ownedError={owned.error ? errorMessage(owned.error) : ''}
+        sharedError={shared.error ? errorMessage(shared.error) : ''}
+        onQueryChange={(value) => {
+          updateSearch('q', value);
+        }}
+        onScopeChange={(value) => {
+          updateSearch('scope', value);
+        }}
+        onOwnedLoadMore={() => void owned.loadMore()}
+        onSharedLoadMore={() => void shared.loadMore()}
+        onDuplicate={(bucket) => void duplicate(bucket)}
+        onDelete={setDeleting}
+      />
 
       <ConfirmDialog
         open={Boolean(deleting)}
