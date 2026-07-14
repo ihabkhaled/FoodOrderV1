@@ -9,7 +9,7 @@ const ROLE_PRIORITY: Record<ShareRole, number> = {
 export const normalizeEmail = (value: unknown): string => {
   if (typeof value !== 'string') throw new Error('Email must be a string.');
   const normalized = value.trim().toLowerCase();
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/u.test(normalized)) {
+  if (!/^[^\s@]+@[^\s@][^\s.@]*\.[^\s@]+$/u.test(normalized)) {
     throw new Error('Enter a valid email address.');
   }
   return normalized;
@@ -58,7 +58,9 @@ export const mergeAccessSources = (
   const existing = Array.isArray(current)
     ? current.filter((value): value is string => typeof value === 'string')
     : [];
-  return [...new Set([...existing, sourceId])].sort();
+  return [...new Set([...existing, sourceId])].sort((left, right) =>
+    left.localeCompare(right),
+  );
 };
 
 export const friendRequestId = (senderId: string, recipientId: string): string =>
