@@ -179,12 +179,13 @@ const ownerFallbackContribution = (
   bucket: BucketRecord,
   availableIds: Set<string>,
 ): ContributionRecord | null => {
-  const quantities = Object.fromEntries(
-    Object.entries(bucket.aggregate ?? {})
-      .filter(([itemId]) => availableIds.has(itemId))
-      .map(([itemId, value]) => [itemId, quantity(value)])
-      .filter(([, value]) => value > 0),
-  );
+  const quantities: Record<string, number> = {};
+  for (const [itemId, rawQuantity] of Object.entries(bucket.aggregate ?? {})) {
+    if (!availableIds.has(itemId)) continue;
+    const normalized = quantity(rawQuantity);
+    if (normalized > 0) quantities[itemId] = normalized;
+  }
+
   return Object.keys(quantities).length === 0
     ? null
     : {
