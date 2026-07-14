@@ -1,12 +1,7 @@
-name: Android APK
+name: Reusable Android APK
 
 on:
-  pull_request:
-    branches: [main]
-  push:
-    branches: [main]
-    tags: ['v*']
-  workflow_dispatch:
+  workflow_call:
 
 permissions:
   contents: read
@@ -14,7 +9,7 @@ permissions:
 jobs:
   build-apk:
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 40
 
     steps:
       - name: Checkout repository
@@ -40,8 +35,6 @@ jobs:
 
       - name: Build web application
         env:
-          # Firebase web config values are public client identifiers (not secrets);
-          # they come from repository variables so forks build in local-device mode.
           VITE_FIREBASE_API_KEY: ${{ vars.VITE_FIREBASE_API_KEY }}
           VITE_FIREBASE_AUTH_DOMAIN: ${{ vars.VITE_FIREBASE_AUTH_DOMAIN }}
           VITE_FIREBASE_DATABASE_URL: ${{ vars.VITE_FIREBASE_DATABASE_URL }}
@@ -55,18 +48,23 @@ jobs:
       - name: Sync committed Android project
         run: npx cap sync android
 
-      - name: Build debug APK
+      - name: Run Android lint
         working-directory: android
         run: |
           chmod +x gradlew
-          ./gradlew assembleDebug --no-daemon --stacktrace
+          ./gradlew lintDebug --no-daemon --stacktrace
 
-      - name: Prepare APK artifact
+      - name: Build debug APK
+        working-directory: android
+        run: ./gradlew assembleDebug --no-daemon --stacktrace
+
+      - name: Prepare versioned APK artifact
         run: |
-          VERSION="${GITHUB_REF_NAME}"
-          case "$VERSION" in v*) ;; *) VERSION="dev-${GITHUB_SHA::7}" ;; esac
-          cp android/app/build/outputs/apk/debug/app-debug.apk "FoodOrderV1-${VERSION}-debug.apk"
-          sha256sum "FoodOrderV1-${VERSION}-debug.apk" | tee "FoodOrderV1-${VERSION}-debug.apk.sha256"
+          VERSION="$(node -p "require('./package.json').version")"
+          APK_NAME="FoodOrderV1-v${VERSION}-${GITHUB_SHA::7}-debug.apk"
+          cp android/app/build/outputs/apk/debug/app-debug.apk "$APK_NAME"
+          sha256sum "$APK_NAME" | tee "$APK_NAME.sha256"
+          printf 'APK_NAME=%s\n' "$APK_NAME" >> "$GITHUB_ENV"
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v7
@@ -77,23 +75,3 @@ jobs:
             FoodOrderV1-*-debug.apk.sha256
           if-no-files-found: error
           retention-days: 30
-
-  release:
-    if: startsWith(github.ref, 'refs/tags/v')
-    needs: build-apk
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    permissions:
-      contents: write
-    steps:
-      - name: Download APK artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: FoodOrderV1-debug-apk
-
-      - name: Attach APK to the GitHub release
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          gh release upload "${GITHUB_REF_NAME}" FoodOrderV1-*-debug.apk FoodOrderV1-*-debug.apk.sha256 \
-            --repo "${GITHUB_REPOSITORY}" --clobber

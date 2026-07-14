@@ -1,47 +1,99 @@
-import { ArrowLeft, Check, Copy, Share2, ShieldOff, UserMinus, Users } from 'lucide-react';
+import { ArrowLeft, Lock, LockOpen, Share2 } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import { ActivityTimeline } from '@/components/ActivityTimeline';
+import { BucketInvitePanel } from '@/components/BucketInvitePanel';
+import { BucketMemberPermissionsPanel } from '@/components/BucketMemberPermissionsPanel';
+import { BucketPricingPanel } from '@/components/BucketPricingPanel';
 import { ConfirmDialog } from '@/components/ConfirmDialog';
 import { ErrorState } from '@/components/ErrorState';
 import { Loading } from '@/components/Loading';
-import type { MessageKey } from '@/i18n/messages';
-import { formatDateTime } from '@/lib/date';
-import { ASSIGNABLE_ROLES } from '@/lib/sharing';
+import { translateGroupOrder } from '@/i18n/groupOrderMessages';
 import { sharingService } from '@/services';
 import type { SharedBucketView } from '@/services/contracts';
 import { copyToClipboard, shareText } from '@/services/platform';
 import { useApp } from '@/state/AppContext';
-import type { BucketActivityEvent, BucketInvite, BucketMember, BucketRole, InviteStatus } from '@/types/domain';
+import type {
+  Bucket,
+  BucketActivityEvent,
+  BucketInvite,
+  BucketMember,
+  BucketPricingPolicy,
+  BucketRole,
+} from '@/types/domain';
 
-const ROLE_LABEL: Record<BucketRole, MessageKey> = {
-  owner: 'roleOwner',
-  editor: 'roleEditor',
-  contributor: 'roleContributor',
-  viewer: 'roleViewer',
-};
-const INVITE_STATUS_LABEL: Record<InviteStatus, MessageKey> = {
-  pending: 'pending',
-  accepted: 'accepted',
-  revoked: 'revoked',
-  expired: 'expired',
-};
+interface BucketStateControlsProps {
+  bucket: Bucket;
+  freezeLabel: string;
+  reopenLabel: string;
+  onFreeze: () => void;
+  onReopen: () => void;
+}
+
+function BucketStateControls({
+  bucket,
+  freezeLabel,
+  reopenLabel,
+  onFreeze,
+  onReopen,
+}: BucketStateControlsProps) {
+  const state = bucket.orderState ?? 'open';
+
+  if (state === 'open') {
+    return (
+      <button className="button secondary" onClick={onFreeze}>
+        <Lock />
+        {freezeLabel}
+      </button>
+    );
+  }
+
+  if (state === 'frozen') {
+    return (
+      <button className="button secondary" onClick={onReopen}>
+        <LockOpen />
+        {reopenLabel}
+      </button>
+    );
+  }
+
+  return null;
+}
+
+function BucketStateBanner({ bucket, locale }: { bucket: Bucket; locale: 'en' | 'ar' }) {
+  const state = bucket.orderState ?? 'open';
+  if (state === 'open') return null;
+
+  const key = state === 'ordered' ? 'orderedBucket' : 'frozenBucket';
+
+  return (
+    <div className="status-banner warning" role="status">
+      <Lock aria-hidden="true" />
+      <span>{translateGroupOrder(locale, key)}</span>
+    </div>
+  );
+}
 
 export function BucketSharePage() {
   const { bucketId } = useParams();
   const { user, locale, t, showToast } = useApp();
+  const gt = (key: Parameters<typeof translateGroupOrder>[1]) =>
+    translateGroupOrder(locale, key);
   const [view, setView] = useState<SharedBucketView | null>(null);
   const [invites, setInvites] = useState<BucketInvite[]>([]);
   const [activity, setActivity] = useState<BucketActivityEvent[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [inviteRole, setInviteRole] = useState<Exclude<BucketRole, 'owner'>>('contributor');
+  const [inviteRole, setInviteRole] =
+    useState<Exclude<BucketRole, 'owner'>>('contributor');
   const [creating, setCreating] = useState(false);
   const [joinCode, setJoinCode] = useState('');
   const [copiedCode, setCopiedCode] = useState(false);
   const [removing, setRemoving] = useState<BucketMember | null>(null);
+  const [confirmingFreeze, setConfirmingFreeze] = useState(false);
   const [enabling, setEnabling] = useState(false);
+  const [savingPricing, setSavingPricing] = useState(false);
 
   const load = useCallback(async () => {
     if (!user || !bucketId) return;
@@ -66,9 +118,27 @@ export function BucketSharePage() {
     }
   }, [user, bucketId, t]);
 
-  useEffect(() => { void load(); }, [load]);
+  useEffect(() => {
+    void load();
+  }, [load]);
 
-  const enable = async (): Promise<void> => {
+  const updateBucket = (bucket: Bucket) => {
+    setView((current) => (current ? { ...current, bucket } : current));
+  };
+
+  const runBucketAction = async (
+    action: () => Promise<Bucket>,
+    successMessage: string,
+  ) => {
+    try {
+      updateBucket(await action());
+      showToast(successMessage, 'success');
+    } catch (error_) {
+      showToast(error_ instanceof Error ? error_.message : t('tryAgain'), 'error');
+    }
+  };
+
+  const enable = async () => {
     if (!user || !bucketId) return;
     try {
       setEnabling(true);
@@ -82,7 +152,34 @@ export function BucketSharePage() {
     }
   };
 
-  const createInvite = async (): Promise<void> => {
+  const savePricing = async (policy: BucketPricingPolicy) => {
+    if (!user || !bucketId) return;
+    setSavingPricing(true);
+    await runBucketAction(
+      () => sharingService.updatePricingPolicy(user, bucketId, policy),
+      gt('pricingSaved'),
+    );
+    setSavingPricing(false);
+  };
+
+  const freeze = async () => {
+    if (!user || !bucketId) return;
+    await runBucketAction(
+      () => sharingService.freezeBucket(user, bucketId),
+      gt('bucketFrozen'),
+    );
+    setConfirmingFreeze(false);
+  };
+
+  const reopen = async () => {
+    if (!user || !bucketId) return;
+    await runBucketAction(
+      () => sharingService.unfreezeBucket(user, bucketId),
+      gt('bucketReopened'),
+    );
+  };
+
+  const createInvite = async () => {
     if (!user || !bucketId) return;
     try {
       setCreating(true);
@@ -98,7 +195,7 @@ export function BucketSharePage() {
     }
   };
 
-  const shareOrCopy = async (): Promise<void> => {
+  const shareOrCopy = async () => {
     if (!joinCode) return;
     const shared = await shareText(t('joinBucket'), joinCode);
     if (!shared) {
@@ -108,7 +205,7 @@ export function BucketSharePage() {
     setCopiedCode(true);
   };
 
-  const revokeInvite = async (inviteId: string): Promise<void> => {
+  const revokeInvite = async (inviteId: string) => {
     if (!user || !bucketId) return;
     try {
       await sharingService.revokeInvite(user, bucketId, inviteId);
@@ -123,17 +220,27 @@ export function BucketSharePage() {
     }
   };
 
-  const changeRole = async (member: BucketMember, role: Exclude<BucketRole, 'owner'>): Promise<void> => {
+  const replaceMember = (saved: BucketMember) => {
+    setView((current) =>
+      current
+        ? {
+            ...current,
+            members: current.members.map((member) =>
+              member.userId === saved.userId ? saved : member,
+            ),
+          }
+        : current,
+    );
+  };
+
+  const changeRole = async (
+    member: BucketMember,
+    role: Exclude<BucketRole, 'owner'>,
+  ) => {
     if (!user || !bucketId) return;
     try {
-      const saved = await sharingService.changeMemberRole(user, bucketId, member.userId, role);
-      setView((current) =>
-        current
-          ? {
-              ...current,
-              members: current.members.map((item) => (item.userId === member.userId ? saved : item)),
-            }
-          : current,
+      replaceMember(
+        await sharingService.changeMemberRole(user, bucketId, member.userId, role),
       );
       showToast(t('roleChanged'), 'success');
     } catch (error_) {
@@ -141,13 +248,45 @@ export function BucketSharePage() {
     }
   };
 
-  const removeMember = async (): Promise<void> => {
+  const changeCustomPermissions = async (
+    member: BucketMember,
+    patch: Partial<
+      Pick<BucketMember, 'canCreateCustomItems' | 'canSetCustomItemPrice'>
+    >,
+  ) => {
+    if (!user || !bucketId) return;
+    try {
+      replaceMember(
+        await sharingService.setMemberCustomItemPermissions(
+          user,
+          bucketId,
+          member.userId,
+          {
+            canCreateCustomItems:
+              patch.canCreateCustomItems ?? member.canCreateCustomItems ?? false,
+            canSetCustomItemPrice:
+              patch.canSetCustomItemPrice ?? member.canSetCustomItemPrice ?? false,
+          },
+        ),
+      );
+      showToast(gt('permissionsSaved'), 'success');
+    } catch (error_) {
+      showToast(error_ instanceof Error ? error_.message : t('tryAgain'), 'error');
+    }
+  };
+
+  const removeMember = async () => {
     if (!user || !bucketId || !removing) return;
     try {
       await sharingService.revokeMember(user, bucketId, removing.userId);
       setView((current) =>
         current
-          ? { ...current, members: current.members.filter((item) => item.userId !== removing.userId) }
+          ? {
+              ...current,
+              members: current.members.filter(
+                (member) => member.userId !== removing.userId,
+              ),
+            }
           : current,
       );
       showToast(t('memberRemoved'), 'success');
@@ -159,119 +298,112 @@ export function BucketSharePage() {
   };
 
   if (loading) return <Loading />;
-  if (error || !view) return <ErrorState message={error || t('notAllowed')} onRetry={() => void load()} />;
+  if (!view || error) {
+    return (
+      <ErrorState
+        message={error || t('notAllowed')}
+        onRetry={() => {
+          void load();
+        }}
+      />
+    );
+  }
 
   const { bucket, members } = view;
+  const isOpen = (bucket.orderState ?? 'open') === 'open';
 
   return (
     <div className="page narrow stack-lg">
-      <Link className="back-link" to={`/buckets/${bucket.id}/collaborate`}><ArrowLeft />{t('back')}</Link>
+      <Link className="back-link" to={`/buckets/${bucket.id}/collaborate`}>
+        <ArrowLeft />
+        {t('back')}
+      </Link>
       <header className="page-heading">
         <div>
           <p className="eyebrow">{t('sharing')}</p>
           <h1>{bucket.title}</h1>
         </div>
+        <BucketStateControls
+          bucket={bucket}
+          freezeLabel={gt('freezeBucket')}
+          reopenLabel={gt('unfreezeBucket')}
+          onFreeze={() => {
+            setConfirmingFreeze(true);
+          }}
+          onReopen={() => {
+            void reopen();
+          }}
+        />
       </header>
+
+      <BucketStateBanner bucket={bucket} locale={locale} />
+      <BucketPricingPanel
+        locale={locale}
+        policy={bucket.pricingPolicy}
+        disabled={!isOpen}
+        saving={savingPricing}
+        translate={t}
+        onSave={(policy) => {
+          void savePricing(policy);
+        }}
+      />
 
       {bucket.visibility === 'shared' ? (
         <>
-          <section className="section-card stack">
-            <div className="section-heading">
-              <div><p className="eyebrow">{t('invites')}</p><h2>{t('createInvite')}</h2></div>
-            </div>
-            <div className="invite-create">
-              <label>
-                {t('role')}
-                <select
-                  value={inviteRole}
-                  onChange={(event) => { setInviteRole(event.target.value as Exclude<BucketRole, 'owner'>); }}
-                >
-                  {ASSIGNABLE_ROLES.map((role) => (
-                    <option key={role} value={role}>{t(ROLE_LABEL[role])}</option>
-                  ))}
-                </select>
-              </label>
-              <button className="button" disabled={creating} onClick={() => void createInvite()}>
-                <Share2 />{creating ? t('loading') : t('createInvite')}
-              </button>
-            </div>
-            {joinCode ? (
-              <div className="join-code-box" role="status">
-                <p className="muted">{t('codeShownOnce')}</p>
-                <code className="join-code">{joinCode}</code>
-                <button className="button secondary" onClick={() => void shareOrCopy()}>
-                  {copiedCode ? <Check /> : <Copy />}{t('copy')}
-                </button>
-              </div>
-            ) : null}
-            {invites.length > 0 ? (
-              <ul className="list plain">
-                {invites.map((invite) => (
-                  <li className="list-row" key={invite.id}>
-                    <div>
-                      <strong>{t(ROLE_LABEL[invite.role])}</strong>
-                      <span className="muted">
-                        {t(INVITE_STATUS_LABEL[invite.status])} · {t('expiresIn')} {formatDateTime(invite.expiresAt, locale)}
-                      </span>
-                    </div>
-                    {invite.status === 'pending' ? (
-                      <button className="icon-button danger-ghost" aria-label={t('revoke')} onClick={() => void revokeInvite(invite.id)}>
-                        <ShieldOff />
-                      </button>
-                    ) : null}
-                  </li>
-                ))}
-              </ul>
-            ) : null}
-          </section>
-
-          <section className="section-card stack">
-            <div className="section-heading">
-              <div><p className="eyebrow">{t('members')}</p><h2><Users size={18} aria-hidden="true" /> {members.length}</h2></div>
-            </div>
-            <ul className="list plain">
-              {members.map((member) => (
-                <li className="list-row" key={member.userId}>
-                  <div>
-                    <strong>
-                      {member.displayName}
-                      {member.userId === user?.id ? ` (${t('you')})` : ''}
-                    </strong>
-                    <span className="muted">{member.email}</span>
-                  </div>
-                  {member.role === 'owner' ? (
-                    <span className="mode-pill">{t('roleOwner')}</span>
-                  ) : (
-                    <div className="row-actions">
-                      <select
-                        aria-label={`${t('role')} — ${member.displayName}`}
-                        value={member.role}
-                        onChange={(event) => void changeRole(member, event.target.value as Exclude<BucketRole, 'owner'>)}
-                      >
-                        {ASSIGNABLE_ROLES.map((role) => (
-                          <option key={role} value={role}>{t(ROLE_LABEL[role])}</option>
-                        ))}
-                      </select>
-                      <button className="icon-button danger-ghost" aria-label={`${t('removeMember')} — ${member.displayName}`} onClick={() => { setRemoving(member); }}>
-                        <UserMinus />
-                      </button>
-                    </div>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </section>
-
+          <BucketInvitePanel
+            locale={locale}
+            invites={invites}
+            inviteRole={inviteRole}
+            creating={creating}
+            joinCode={joinCode}
+            copiedCode={copiedCode}
+            translate={t}
+            onRoleChange={setInviteRole}
+            onCreate={() => {
+              void createInvite();
+            }}
+            onShare={() => {
+              void shareOrCopy();
+            }}
+            onRevoke={(inviteId) => {
+              void revokeInvite(inviteId);
+            }}
+          />
+          <BucketMemberPermissionsPanel
+            members={members}
+            currentUserId={user?.id ?? bucket.ownerId}
+            locale={locale}
+            translate={t}
+            onRoleChange={(member, role) => {
+              void changeRole(member, role);
+            }}
+            onPermissionChange={(member, patch) => {
+              void changeCustomPermissions(member, patch);
+            }}
+            onRemove={setRemoving}
+          />
           <section className="section-card">
-            <div className="section-heading"><div><p className="eyebrow">{t('activity')}</p><h2>{t('activity')}</h2></div></div>
+            <div className="section-heading">
+              <div>
+                <p className="eyebrow">{t('activity')}</p>
+                <h2>{t('activity')}</h2>
+              </div>
+            </div>
             <ActivityTimeline events={activity} />
           </section>
         </>
       ) : (
         <section className="section-card stack">
           <p>{t('sharingDisabledHint')}</p>
-          <button className="button" disabled={enabling} onClick={() => void enable()}>
-            <Share2 />{enabling ? t('loading') : t('enableSharing')}
+          <button
+            className="button"
+            disabled={enabling}
+            onClick={() => {
+              void enable();
+            }}
+          >
+            <Share2 />
+            {enabling ? t('loading') : t('enableSharing')}
           </button>
         </section>
       )}
@@ -283,8 +415,25 @@ export function BucketSharePage() {
         confirmLabel={t('removeMember')}
         cancelLabel={t('cancel')}
         danger
-        onConfirm={() => void removeMember()}
-        onCancel={() => { setRemoving(null); }}
+        onConfirm={() => {
+          void removeMember();
+        }}
+        onCancel={() => {
+          setRemoving(null);
+        }}
+      />
+      <ConfirmDialog
+        open={confirmingFreeze}
+        title={gt('freezeBucket')}
+        message={gt('confirmFreeze')}
+        confirmLabel={gt('freezeBucket')}
+        cancelLabel={t('cancel')}
+        onConfirm={() => {
+          void freeze();
+        }}
+        onCancel={() => {
+          setConfirmingFreeze(false);
+        }}
       />
     </div>
   );

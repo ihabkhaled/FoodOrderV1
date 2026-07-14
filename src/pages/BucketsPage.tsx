@@ -1,155 +1,287 @@
-import { CopyPlus, KeyRound, Plus, Search, Share2, ShoppingBasket, Trash2, Users } from 'lucide-react';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { KeyRound, Plus, ShoppingBasket } from 'lucide-react';
+import { useCallback, useMemo } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 
+import { BucketCollectionSection } from '@/components/BucketCollectionSection';
+import {
+  BucketFilters,
+  type BucketScope,
+} from '@/components/BucketFilters';
 import { ConfirmDialog } from '@/components/ConfirmDialog';
 import { EmptyState } from '@/components/EmptyState';
 import { ErrorState } from '@/components/ErrorState';
 import { Loading } from '@/components/Loading';
-import { formatDateTime } from '@/lib/date';
-import { dataService, sharingService } from '@/services';
+import { useBucketMutations } from '@/hooks/useBucketMutations';
+import { useCursorPage } from '@/hooks/useCursorPage';
+import type { MessageKey } from '@/i18n/messages';
+import type { PageResult } from '@/lib/pagination';
+import { paginationService } from '@/services';
 import { useApp } from '@/state/AppContext';
-import type { Bucket } from '@/types/domain';
+import { usePageRefresh } from '@/state/RefreshContext';
+import type { Bucket, Locale } from '@/types/domain';
+
+const emptyBucketPage = (): Promise<PageResult<Bucket>> =>
+  Promise.resolve({ items: [], nextCursor: null, hasMore: false });
+
+const readScope = (value: string | null): BucketScope =>
+  value === 'owned' || value === 'shared' ? value : 'all';
+
+const filterBuckets = (buckets: readonly Bucket[], query: string): Bucket[] => {
+  const normalized = query.trim().toLowerCase();
+  if (!normalized) return [...buckets];
+  return buckets.filter((bucket) =>
+    `${bucket.title} ${bucket.description}`.toLowerCase().includes(normalized),
+  );
+};
+
+const firstPageError = (
+  ownedCount: number,
+  sharedCount: number,
+  ownedError: unknown,
+  sharedError: unknown,
+): unknown =>
+  ownedCount === 0 && sharedCount === 0
+    ? ownedError ?? sharedError ?? null
+    : null;
+
+interface BucketResultsProps {
+  readonly totalLoaded: number;
+  readonly query: string;
+  readonly scope: BucketScope;
+  readonly locale: Locale;
+  readonly t: (key: MessageKey) => string;
+  readonly ownedItems: Bucket[];
+  readonly sharedItems: Bucket[];
+  readonly ownedLoadingMore: boolean;
+  readonly sharedLoadingMore: boolean;
+  readonly ownedHasMore: boolean;
+  readonly sharedHasMore: boolean;
+  readonly ownedError: string;
+  readonly sharedError: string;
+  readonly onQueryChange: (value: string) => void;
+  readonly onScopeChange: (value: BucketScope) => void;
+  readonly onOwnedLoadMore: () => void;
+  readonly onSharedLoadMore: () => void;
+  readonly onDuplicate: (bucket: Bucket) => void;
+  readonly onDelete: (bucket: Bucket) => void;
+}
+
+function BucketResults({
+  totalLoaded,
+  query,
+  scope,
+  locale,
+  t,
+  ownedItems,
+  sharedItems,
+  ownedLoadingMore,
+  sharedLoadingMore,
+  ownedHasMore,
+  sharedHasMore,
+  ownedError,
+  sharedError,
+  onQueryChange,
+  onScopeChange,
+  onOwnedLoadMore,
+  onSharedLoadMore,
+  onDuplicate,
+  onDelete,
+}: BucketResultsProps) {
+  if (totalLoaded === 0) {
+    return (
+      <EmptyState
+        icon={<ShoppingBasket />}
+        title={t('emptyBuckets')}
+        description={t('quickStart')}
+        action={
+          <Link className="button" to="/buckets/new">
+            <Plus />
+            {t('createBucket')}
+          </Link>
+        }
+      />
+    );
+  }
+
+  return (
+    <>
+      <BucketFilters
+        query={query}
+        scope={scope}
+        locale={locale}
+        t={t}
+        onQueryChange={onQueryChange}
+        onScopeChange={onScopeChange}
+      />
+      {scope === 'shared' ? null : (
+        <BucketCollectionSection
+          kind="owned"
+          items={ownedItems}
+          locale={locale}
+          query={query}
+          loadingMore={ownedLoadingMore}
+          hasMore={ownedHasMore}
+          error={ownedError}
+          t={t}
+          onLoadMore={onOwnedLoadMore}
+          onRetry={onOwnedLoadMore}
+          onDuplicate={onDuplicate}
+          onDelete={onDelete}
+        />
+      )}
+      {scope === 'owned' ? null : (
+        <BucketCollectionSection
+          kind="shared"
+          items={sharedItems}
+          locale={locale}
+          query={query}
+          loadingMore={sharedLoadingMore}
+          hasMore={sharedHasMore}
+          error={sharedError}
+          t={t}
+          onLoadMore={onSharedLoadMore}
+          onRetry={onSharedLoadMore}
+          onDuplicate={() => {}}
+          onDelete={() => {}}
+        />
+      )}
+    </>
+  );
+}
 
 export function BucketsPage() {
-  const { user, locale, t, showToast } = useApp();
-  const [buckets, setBuckets] = useState<Bucket[] | null>(null);
-  const [shared, setShared] = useState<Bucket[]>([]);
-  const [query, setQuery] = useState('');
-  const [error, setError] = useState('');
-  const [deleting, setDeleting] = useState<Bucket | null>(null);
-  const load = useCallback(async () => {
-    if (!user) return;
-    try {
-      setError('');
-      const [owned, sharedWithMe] = await Promise.all([
-        dataService.listBuckets(user),
-        sharingService.listSharedWithMe(user),
-      ]);
-      setBuckets(owned);
-      setShared(sharedWithMe);
-    } catch (error_) {
-      setError(error_ instanceof Error ? error_.message : t('tryAgain'));
-    }
-  }, [user, t]);
-  useEffect(() => { void load(); }, [load]);
-  const filtered = useMemo(
-    () => (buckets ?? []).filter((bucket) => `${bucket.title} ${bucket.description}`.toLowerCase().includes(query.toLowerCase())),
-    [buckets, query],
+  const { user, locale, t, showToast, errorMessage } = useApp();
+  const [searchParameters, setSearchParameters] = useSearchParams();
+  const query = searchParameters.get('q') ?? '';
+  const scope = readScope(searchParameters.get('scope'));
+
+  const loadOwned = useCallback(
+    (request: Parameters<typeof paginationService.listOwnedBuckets>[1]) =>
+      user
+        ? paginationService.listOwnedBuckets(user, request)
+        : emptyBucketPage(),
+    [user],
+  );
+  const loadShared = useCallback(
+    (request: Parameters<typeof paginationService.listSharedBuckets>[1]) =>
+      user
+        ? paginationService.listSharedBuckets(user, request)
+        : emptyBucketPage(),
+    [user],
+  );
+  const owned = useCursorPage(loadOwned, `owned:${user?.id ?? 'guest'}`);
+  const shared = useCursorPage(loadShared, `shared:${user?.id ?? 'guest'}`);
+  const refreshOwned = owned.refresh;
+  const refreshShared = shared.refresh;
+  const refresh = useCallback(
+    async (): Promise<void> => {
+      await Promise.all([refreshOwned(), refreshShared()]);
+    },
+    [refreshOwned, refreshShared],
+  );
+  usePageRefresh(refresh);
+
+  const { deleting, setDeleting, remove, duplicate } = useBucketMutations({
+    user,
+    t,
+    showToast,
+    errorMessage,
+    refresh: refreshOwned,
+  });
+  const filteredOwned = useMemo(
+    () => filterBuckets(owned.items, query),
+    [owned.items, query],
   );
   const filteredShared = useMemo(
-    () => shared.filter((bucket) => `${bucket.title} ${bucket.description}`.toLowerCase().includes(query.toLowerCase())),
-    [shared, query],
+    () => filterBuckets(shared.items, query),
+    [query, shared.items],
   );
-  const remove = async () => {
-    if (!user || !deleting) return;
-    try {
-      await dataService.deleteBucket(user, deleting.id);
-      setBuckets((current) => current?.filter((bucket) => bucket.id !== deleting.id) ?? []);
-      showToast(t('bucketDeleted'), 'success');
-    } catch (error_) {
-      showToast(error_ instanceof Error ? error_.message : t('tryAgain'), 'error');
-    } finally {
-      setDeleting(null);
-    }
+
+  const updateSearch = (key: 'q' | 'scope', value: string): void => {
+    const next = new URLSearchParams(searchParameters);
+    const defaultValue = key === 'scope' ? 'all' : '';
+    if (!value || value === defaultValue) next.delete(key);
+    else next.set(key, value);
+    setSearchParameters(next, { replace: true });
   };
-  const duplicate = async (bucket: Bucket) => {
-    if (!user) return;
-    try {
-      const copy = await dataService.createBucket(user, {
-        title: `${bucket.title} (${t('copySuffix')})`.slice(0, 60),
-        description: bucket.description,
-        currency: bucket.currency,
-        // Fresh item ids: a duplicate is a new template, not a shared history.
-        items: bucket.items.map(({ name, description, category, unitPrice, active, sortOrder }) => ({
-          id: '', name, description, category, unitPrice, active, sortOrder,
-        })),
-      });
-      setBuckets((current) => [copy, ...(current ?? [])]);
-      showToast(t('bucketSaved'), 'success');
-    } catch (error_) {
-      showToast(error_ instanceof Error ? error_.message : t('tryAgain'), 'error');
-    }
-  };
-  if (error) return <ErrorState message={error} onRetry={() => void load()} />;
-  if (!buckets) return <Loading />;
-  return <div className="page stack-lg">
-    <div className="page-heading">
-      <div><p className="eyebrow">{t('myBuckets')}</p><h1>{t('buckets')}</h1></div>
-      <div className="row-actions">
-        <Link className="button secondary" to="/join"><KeyRound />{t('joinWithCode')}</Link>
-        <Link className="button" to="/buckets/new"><Plus />{t('createBucket')}</Link>
+
+  const initialError = firstPageError(
+    owned.items.length,
+    shared.items.length,
+    owned.error,
+    shared.error,
+  );
+  if (initialError) {
+    return (
+      <ErrorState
+        message={errorMessage(initialError)}
+        onRetry={() => void refresh()}
+      />
+    );
+  }
+  if (owned.loading && shared.loading) return <Loading />;
+
+  return (
+    <div className="page stack-lg">
+      <div className="page-heading">
+        <div>
+          <p className="eyebrow">{t('myBuckets')}</p>
+          <h1>{t('buckets')}</h1>
+        </div>
+        <div className="row-actions">
+          <Link className="button secondary" to="/join">
+            <KeyRound />
+            {t('joinWithCode')}
+          </Link>
+          <Link className="button" to="/buckets/new">
+            <Plus />
+            {t('createBucket')}
+          </Link>
+        </div>
       </div>
+
+      <BucketResults
+        totalLoaded={owned.items.length + shared.items.length}
+        query={query}
+        scope={scope}
+        locale={locale}
+        t={t}
+        ownedItems={filteredOwned}
+        sharedItems={filteredShared}
+        ownedLoadingMore={owned.loadingMore}
+        sharedLoadingMore={shared.loadingMore}
+        ownedHasMore={owned.hasMore}
+        sharedHasMore={shared.hasMore}
+        ownedError={owned.error ? errorMessage(owned.error) : ''}
+        sharedError={shared.error ? errorMessage(shared.error) : ''}
+        onQueryChange={(value) => {
+          updateSearch('q', value);
+        }}
+        onScopeChange={(value) => {
+          updateSearch('scope', value);
+        }}
+        onOwnedLoadMore={() => void owned.loadMore()}
+        onSharedLoadMore={() => void shared.loadMore()}
+        onDuplicate={(bucket) => void duplicate(bucket)}
+        onDelete={setDeleting}
+      />
+
+      <ConfirmDialog
+        open={Boolean(deleting)}
+        title={t('delete')}
+        message={
+          deleting?.visibility === 'shared'
+            ? t('confirmDeleteSharedBucket')
+            : t('confirmDeleteBucket')
+        }
+        confirmLabel={t('delete')}
+        cancelLabel={t('cancel')}
+        danger
+        onConfirm={() => void remove()}
+        onCancel={() => {
+          setDeleting(null);
+        }}
+      />
     </div>
-    {buckets.length > 0 || shared.length > 0 ? (
-      <>
-        <label className="search-field"><Search /><input value={query} onChange={(event) => { setQuery(event.target.value); }} placeholder={t('searchBuckets')} aria-label={t('searchBuckets')} /></label>
-        {filtered.length > 0 ? (
-          <section className="card-grid">
-            {filtered.map((bucket) => (
-              <article className="bucket-card" key={bucket.id}>
-                <div className="bucket-card-top">
-                  <div className="bucket-icon"><ShoppingBasket /></div>
-                  <div className="row-actions">
-                    {bucket.visibility === 'shared' ? <span className="mode-pill"><Users size={13} aria-hidden="true" /> {t('shared')}</span> : null}
-                    <button className="icon-button" aria-label={`${t('duplicate')} — ${bucket.title}`} onClick={() => void duplicate(bucket)}><CopyPlus /></button>
-                    <button className="icon-button danger-ghost" aria-label={`${t('delete')} — ${bucket.title}`} onClick={() => { setDeleting(bucket); }}><Trash2 /></button>
-                  </div>
-                </div>
-                <div><h2>{bucket.title}</h2><p>{bucket.description || `${bucket.items.length} ${t('items')}`}</p></div>
-                <div className="bucket-meta">
-                  <span>{bucket.items.filter((item) => item.active).length} {t('availableCount')}</span>
-                  <span>{formatDateTime(bucket.updatedAt, locale)}</span>
-                </div>
-                <div className="card-actions">
-                  <Link className="button secondary" to={`/buckets/${bucket.id}/edit`}>{t('edit')}</Link>
-                  {bucket.visibility === 'shared'
-                    ? <Link className="button" to={`/buckets/${bucket.id}/collaborate`}><Users />{t('collaborate')}</Link>
-                    : <Link className="button" to={`/buckets/${bucket.id}/order`}>{t('orderNow')}</Link>}
-                  <Link className="icon-button" aria-label={`${t('sharing')} — ${bucket.title}`} to={`/buckets/${bucket.id}/share`}><Share2 /></Link>
-                </div>
-              </article>
-            ))}
-          </section>
-        ) : null}
-        <section className="stack">
-          <div className="section-heading"><div><p className="eyebrow">{t('sharedWithMe')}</p><h2>{t('sharedWithMe')}</h2></div></div>
-          {filteredShared.length > 0 ? (
-            <section className="card-grid">
-              {filteredShared.map((bucket) => (
-                <article className="bucket-card" key={bucket.id}>
-                  <div className="bucket-card-top">
-                    <div className="bucket-icon shared"><Users /></div>
-                    <span className="mode-pill">{bucket.ownerName}</span>
-                  </div>
-                  <div><h2>{bucket.title}</h2><p>{bucket.description || `${bucket.items.length} ${t('items')}`}</p></div>
-                  <div className="bucket-meta">
-                    <span>{bucket.items.filter((item) => item.active).length} {t('availableCount')}</span>
-                    <span>{formatDateTime(bucket.updatedAt, locale)}</span>
-                  </div>
-                  <div className="card-actions">
-                    <Link className="button" to={`/buckets/${bucket.id}/collaborate`}><Users />{t('collaborate')}</Link>
-                  </div>
-                </article>
-              ))}
-            </section>
-          ) : (
-            <p className="muted">{t('emptyShared')} {t('emptySharedHint')}</p>
-          )}
-        </section>
-      </>
-    ) : (
-      <EmptyState icon={<ShoppingBasket />} title={t('emptyBuckets')} description={t('quickStart')} action={<Link className="button" to="/buckets/new"><Plus />{t('createBucket')}</Link>} />
-    )}
-    <ConfirmDialog
-      open={Boolean(deleting)}
-      title={t('delete')}
-      message={deleting?.visibility === 'shared' ? t('confirmDeleteSharedBucket') : t('confirmDeleteBucket')}
-      confirmLabel={t('delete')}
-      cancelLabel={t('cancel')}
-      danger
-      onConfirm={() => void remove()}
-      onCancel={() => { setDeleting(null); }}
-    />
-  </div>;
+  );
 }

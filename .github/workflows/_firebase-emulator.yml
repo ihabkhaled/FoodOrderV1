@@ -1,0 +1,38 @@
+name: Reusable Firebase Emulator Gate
+
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  firebase-emulator:
+    name: Firebase Emulator and Security Rules
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 26
+          cache: npm
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - run: npm ci
+      - name: Run Firestore Rules emulator tests
+        shell: bash
+        run: |
+          set -o pipefail
+          npm run test:rules 2>&1 | tee firebase-rules.log
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: firebase-emulator-reports
+          path: |
+            firebase-rules.log
+            firestore-debug.log
+            firebase-debug.log
+          if-no-files-found: warn
