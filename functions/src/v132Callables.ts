@@ -4,9 +4,9 @@ import { getApps, initializeApp } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
 import { logger } from 'firebase-functions';
 import {
+  type CallableRequest,
   HttpsError,
   onCall,
-  type CallableRequest,
 } from 'firebase-functions/v2/https';
 
 import {
@@ -111,9 +111,7 @@ const requireActor = (request: CallableRequest<unknown>): Actor => {
   }
   return {
     userId: request.auth.uid,
-    displayName: actorName(
-      request.auth.token as unknown as Record<string, unknown>,
-    ),
+    displayName: actorName(request.auth.token),
   };
 };
 
@@ -170,10 +168,7 @@ const normalizeBucket = (
         : bucketId,
     ownerId,
     items: Array.isArray(raw.items) ? raw.items : [],
-    aggregate:
-      typeof raw.aggregate === 'object' && raw.aggregate !== null
-        ? raw.aggregate
-        : {},
+    aggregate: raw.aggregate ?? {},
   };
 };
 
@@ -189,6 +184,58 @@ const actorOrder = (
     return participantOrder(order, actorId) as PlacedOrderRecord;
   }
   return { ...order, userId: actorId };
+};
+
+const requireFinalizerAccess = async (
+  transaction: FirebaseFirestore.Transaction,
+  bucketReference: FirebaseFirestore.DocumentReference,
+  bucket: BucketRecord,
+  actorId: string,
+): Promise<void> => {
+  if (actorId === bucket.ownerId) return;
+  const memberSnapshot = await transaction.get(
+    bucketReference.collection('members').doc(actorId),
+  );
+  const member = memberSnapshot.exists
+    ? (memberSnapshot.data() as MemberRecord)
+    : null;
+  if (!member || !memberCanPlaceGroupOrder(member)) {
+    throw new HttpsError(
+      'permission-denied',
+      'Only the bucket owner or an active editor may place this order.',
+    );
+  }
+};
+
+const findExistingActorOrder = async (
+  transaction: FirebaseFirestore.Transaction,
+  bucket: BucketRecord,
+  actorId: string,
+): Promise<PlacedOrderRecord | null> => {
+  if (bucket.orderState !== 'ordered' || !bucket.lastOrderId) return null;
+  const actorOrderSnapshot = await transaction.get(
+    firestore
+      .collection('users')
+      .doc(actorId)
+      .collection('orders')
+      .doc(bucket.lastOrderId),
+  );
+  if (actorOrderSnapshot.exists) {
+    return actorOrderSnapshot.data() as PlacedOrderRecord;
+  }
+  const ownerOrderSnapshot = await transaction.get(
+    firestore
+      .collection('users')
+      .doc(bucket.ownerId)
+      .collection('orders')
+      .doc(bucket.lastOrderId),
+  );
+  return ownerOrderSnapshot.exists
+    ? actorOrder(
+        ownerOrderSnapshot.data() as PlacedOrderRecord,
+        actorId,
+      )
+    : null;
 };
 
 const finalizeGroupOrderHandler = async (
@@ -212,47 +259,20 @@ const finalizeGroupOrderHandler = async (
         bucketId,
       );
       const ownerId = bucket.ownerId;
-      if (actor.userId !== ownerId) {
-        const memberSnapshot = await transaction.get(
-          bucketReference.collection('members').doc(actor.userId),
-        );
-        const member = memberSnapshot.exists
-          ? (memberSnapshot.data() as MemberRecord)
-          : null;
-        if (!member || !memberCanPlaceGroupOrder(member)) {
-          throw new HttpsError(
-            'permission-denied',
-            'Only the bucket owner or an active editor may place this order.',
-          );
-        }
-      }
+      await requireFinalizerAccess(
+        transaction,
+        bucketReference,
+        bucket,
+        actor.userId,
+      );
+      const existingOrder = await findExistingActorOrder(
+        transaction,
+        bucket,
+        actor.userId,
+      );
+      if (existingOrder) return existingOrder;
 
       const state = bucket.orderState ?? 'open';
-      if (state === 'ordered' && bucket.lastOrderId) {
-        const actorOrderSnapshot = await transaction.get(
-          firestore
-            .collection('users')
-            .doc(actor.userId)
-            .collection('orders')
-            .doc(bucket.lastOrderId),
-        );
-        if (actorOrderSnapshot.exists) {
-          return actorOrderSnapshot.data() as PlacedOrderRecord;
-        }
-        const ownerOrderSnapshot = await transaction.get(
-          firestore
-            .collection('users')
-            .doc(ownerId)
-            .collection('orders')
-            .doc(bucket.lastOrderId),
-        );
-        if (ownerOrderSnapshot.exists) {
-          return actorOrder(
-            ownerOrderSnapshot.data() as PlacedOrderRecord,
-            actor.userId,
-          );
-        }
-      }
       if (state !== 'open' && state !== 'frozen') {
         throw new HttpsError(
           'failed-precondition',
