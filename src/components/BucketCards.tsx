@@ -3,6 +3,7 @@ import {
   Share2,
   ShoppingBasket,
   Trash2,
+  UserRoundPlus,
   Users,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -91,6 +92,13 @@ export function OwnedBucketCard({
           to={`/buckets/${bucket.id}/share`}
         >
           <Share2 />
+        </Link>
+        <Link
+          className="icon-button"
+          aria-label={`${t('members')} — ${bucket.title}`}
+          to={`/buckets/${bucket.id}/social-share`}
+        >
+          <UserRoundPlus />
         </Link>
       </div>
     </article>
