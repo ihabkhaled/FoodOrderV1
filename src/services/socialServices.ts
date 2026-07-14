@@ -1,7 +1,6 @@
 import { getFunctions, httpsCallable } from 'firebase/functions';
 
 import { getFirebaseRuntime } from '@/services/firebaseServices';
-import { LocalSocialService } from '@/services/localSocialService';
 import type {
   BucketAccessGrant,
   FriendGroup,
@@ -18,8 +17,6 @@ const callable = <Request, Response>(name: string) =>
     getFunctions(getFirebaseRuntime().app, REGION),
     name,
   );
-
-export { LocalSocialService };
 
 export class FirestoreCallableSocialService implements SocialService {
   async searchUserByEmail(email: string): Promise<SocialUser | null> {
@@ -109,3 +106,5 @@ export class FirestoreCallableSocialService implements SocialService {
     return result.data;
   }
 }
+
+export { LocalSocialService } from '@/services/localSocialService';
