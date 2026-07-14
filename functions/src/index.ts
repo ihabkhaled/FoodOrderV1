@@ -100,10 +100,12 @@ const nextRevision = (value: unknown): number =>
     ? value + 1
     : 2;
 
-const safeError = (error: unknown): { message: string; stack?: string } =>
-  error instanceof Error
+const safeError = (error: unknown): { message: string; stack?: string } => {
+  if (!(error instanceof Error)) return { message: String(error) };
+  return error.stack
     ? { message: error.message, stack: error.stack }
-    : { message: String(error) };
+    : { message: error.message };
+};
 
 export const finalizeGroupOrder = onCall({ region: REGION }, async (request) => {
   const ownerId = requireAuth(request.auth);
