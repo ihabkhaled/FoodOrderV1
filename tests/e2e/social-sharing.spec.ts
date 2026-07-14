@@ -6,7 +6,9 @@ const NOW = '2026-07-14T12:00:00.000Z';
 
 const switchUser = async (page: Page, userId: string): Promise<void> => {
   await page.evaluate(
-    ({ key, value }) => localStorage.setItem(key, value),
+    ({ key, value }) => {
+      localStorage.setItem(key, value);
+    },
     { key: SESSION_KEY, value: userId },
   );
 };
