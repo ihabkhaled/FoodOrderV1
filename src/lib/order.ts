@@ -1,7 +1,18 @@
+import { DEFAULT_PRICING_POLICY } from '@/lib/bucket';
 import { nowIso } from '@/lib/date';
 import { createId } from '@/lib/id';
 import { roundMoney } from '@/lib/money';
-import type { Order, OrderDraft, OrderLine, OrderStatus } from '@/types/domain';
+import type {
+  Bucket,
+  GroupOrderReceiptSnapshot,
+  Order,
+  OrderDraft,
+  OrderLine,
+  OrderStatus,
+  SessionUser,
+} from '@/types/domain';
+
+import { calculateGroupOrderReceipt } from '../../packages/group-order-engine/src/index';
 
 const transitions: Record<OrderStatus, OrderStatus[]> = {
   draft: ['placed', 'completed', 'cancelled'],
@@ -31,7 +42,50 @@ export const calculateLineTotal = (quantity: number, unitPrice: number): number 
 
 export const calculateOrderTotal = (
   lines: Pick<OrderLine, 'quantity' | 'unitPrice'>[],
-): number => roundMoney(lines.reduce((sum, line) => sum + line.quantity * line.unitPrice, 0));
+): number =>
+  roundMoney(
+    lines.reduce((sum, line) => sum + line.quantity * line.unitPrice, 0),
+  );
+
+export const buildPersonalOrderReceipt = (
+  bucket: Bucket,
+  user: SessionUser,
+  lines: OrderDraft['lines'],
+): GroupOrderReceiptSnapshot => {
+  const policy = { ...(bucket.pricingPolicy ?? DEFAULT_PRICING_POLICY) };
+  const itemsById = new Map(bucket.items.map((item) => [item.id, item]));
+  const receipt = calculateGroupOrderReceipt({
+    currency: bucket.currency,
+    policy,
+    participants: [
+      {
+        userId: user.id,
+        displayName: user.displayName,
+        items: lines
+          .filter((line) => line.quantity > 0)
+          .map((line) => {
+            const bucketItem = itemsById.get(line.bucketItemId);
+            return {
+              itemId: line.bucketItemId,
+              itemName: line.name,
+              quantity: Math.floor(line.quantity),
+              unitPriceMinor: Math.round(roundMoney(line.unitPrice) * 100),
+              createdByUserId:
+                bucketItem?.createdByUserId ?? bucket.ownerId,
+              createdByName:
+                bucketItem?.createdByName ?? bucket.ownerName,
+            };
+          }),
+      },
+    ],
+  });
+
+  return {
+    ...receipt,
+    pricingPolicy: policy,
+    bucketRevision: bucket.revision,
+  };
+};
 
 export const createOrder = (userId: string, draft: OrderDraft): Order => {
   const lines = normalizeOrderLines(draft.lines);
@@ -94,7 +148,8 @@ export const getOrderChargeBreakdown = (
     (participant) => participant.userId === order.userId,
   );
   const isParticipantCopy =
-    participantReceipt !== undefined && Math.abs(globalTotal - order.total) >= 0.005;
+    participantReceipt !== undefined &&
+    Math.abs(globalTotal - order.total) >= 0.005;
 
   if (isParticipantCopy) {
     return {
@@ -111,8 +166,10 @@ export const getOrderChargeBreakdown = (
   };
 };
 
-export const canTransitionOrder = (from: OrderStatus, to: OrderStatus): boolean =>
-  transitions[from].includes(to);
+export const canTransitionOrder = (
+  from: OrderStatus,
+  to: OrderStatus,
+): boolean => transitions[from].includes(to);
 
 export const transitionOrder = (order: Order, status: OrderStatus): Order => {
   if (order.status === status) return order;

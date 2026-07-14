@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react';
 
 import type { MessageKey } from '@/i18n/messages';
+import { buildDuplicateBucketDraft } from '@/lib/bucket';
 import { dataService } from '@/services';
 import type { Bucket, SessionUser } from '@/types/domain';
 
@@ -38,22 +39,10 @@ export const useBucketMutations = ({
     async (bucket: Bucket): Promise<void> => {
       if (!user) return;
       try {
-        await dataService.createBucket(user, {
-          title: `${bucket.title} (${t('copySuffix')})`.slice(0, 60),
-          description: bucket.description,
-          currency: bucket.currency,
-          items: bucket.items.map(
-            ({ name, description, category, unitPrice, active, sortOrder }) => ({
-              id: '',
-              name,
-              description,
-              category,
-              unitPrice,
-              active,
-              sortOrder,
-            }),
-          ),
-        });
+        await dataService.createBucket(
+          user,
+          buildDuplicateBucketDraft(bucket, t('copySuffix')),
+        );
         await refresh();
         showToast(t('bucketSaved'), 'success');
       } catch (error) {

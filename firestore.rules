@@ -16,14 +16,58 @@ service cloud.firestore {
           && request.resource.data.theme in ['system', 'light', 'dark'];
       }
 
+      function validPersonalPricingPolicy(pricing) {
+        return pricing is map
+          && pricing.vatBasisPoints is int
+          && pricing.vatBasisPoints >= 0
+          && pricing.vatBasisPoints <= 10000
+          && pricing.serviceBasisPoints is int
+          && pricing.serviceBasisPoints >= 0
+          && pricing.serviceBasisPoints <= 10000
+          && pricing.deliveryMinor is int
+          && pricing.deliveryMinor >= 0
+          && pricing.vatAllocation in ['equal', 'proportional']
+          && pricing.serviceAllocation in ['equal', 'proportional']
+          && pricing.deliveryAllocation in ['equal', 'proportional'];
+      }
+
+      function validPersonalOrderReceipt() {
+        let receipt = request.resource.data.get('groupReceipt', null);
+        return receipt == null
+          || (request.resource.data.get('participants', null) == null
+            && receipt is map
+            && receipt.currency == request.resource.data.currency
+            && receipt.itemSubtotalMinor is int
+            && receipt.itemSubtotalMinor >= 0
+            && receipt.vatMinor is int
+            && receipt.vatMinor >= 0
+            && receipt.serviceMinor is int
+            && receipt.serviceMinor >= 0
+            && receipt.deliveryMinor is int
+            && receipt.deliveryMinor >= 0
+            && receipt.grandTotalMinor is int
+            && receipt.grandTotalMinor
+              == receipt.itemSubtotalMinor
+                + receipt.vatMinor
+                + receipt.serviceMinor
+                + receipt.deliveryMinor
+            && receipt.bucketRevision is int
+            && receipt.bucketRevision >= 1
+            && validPersonalPricingPolicy(receipt.pricingPolicy)
+            && receipt.participantReceipts is list
+            && receipt.participantReceipts.size() == 1
+            && receipt.participantReceipts[0].userId == userId
+            && receipt.items is list);
+      }
+
       allow read: if owns(userId);
       allow create, update: if owns(userId) && validProfile();
       allow delete: if owns(userId);
 
       match /orders/{orderId} {
         allow read, delete: if owns(userId);
-        // Personal orders may be client-created by their owner. Group receipt snapshots
-        // are written by trusted Admin SDK Functions and therefore bypass client Rules.
+        // Personal orders may snapshot their bucket charges on the client. Multi-person
+        // group receipt snapshots remain trusted Function writes and bypass client Rules.
         allow create, update: if owns(userId)
           && request.resource.data.userId == userId
           && request.resource.data.id == orderId
@@ -32,7 +76,7 @@ service cloud.firestore {
           && request.resource.data.lines.size() > 0
           && request.resource.data.total is number
           && request.resource.data.total >= 0
-          && request.resource.data.get('groupReceipt', null) == null;
+          && validPersonalOrderReceipt();
       }
 
       match /bucketMemberships/{bucketId} {
@@ -140,6 +184,7 @@ service cloud.firestore {
               'title',
               'description',
               'currency',
+              'pricingPolicy',
               'items',
               'aggregate',
               'revision',

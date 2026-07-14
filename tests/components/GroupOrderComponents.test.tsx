@@ -1,19 +1,17 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { useState } from 'react';
 import { describe, expect, it, vi } from 'vitest';
 
 import { BucketPricingPanel } from '@/components/BucketPricingPanel';
 import { CustomItemPanel } from '@/components/CustomItemPanel';
 import { GroupReceiptSection } from '@/components/GroupReceiptSection';
-import type { MessageKey } from '@/i18n/messages';
 import { calculateGroupOrderReceipt } from '@/lib/groupOrder';
 import type {
   BucketItem,
   BucketPricingPolicy,
   GroupOrderReceiptSnapshot,
 } from '@/types/domain';
-
-const translate = (key: MessageKey): string => key;
 
 const policy: BucketPricingPolicy = {
   vatBasisPoints: 1000,
@@ -79,20 +77,29 @@ const pendingItem: BucketItem = {
   approvalStatus: 'pending',
 };
 
+function PricingHarness({
+  onChange,
+}: {
+  onChange: (nextPolicy: BucketPricingPolicy) => void;
+}) {
+  const [value, setValue] = useState(policy);
+  return (
+    <BucketPricingPanel
+      locale="en"
+      policy={value}
+      onChange={(nextPolicy) => {
+        setValue(nextPolicy);
+        onChange(nextPolicy);
+      }}
+    />
+  );
+}
+
 describe('BucketPricingPanel', () => {
   it('converts displayed percentages and delivery amount to exact policy units', async () => {
-    const onSave = vi.fn();
+    const onChange = vi.fn();
     const user = userEvent.setup();
-    render(
-      <BucketPricingPanel
-        locale="en"
-        policy={policy}
-        disabled={false}
-        saving={false}
-        translate={translate}
-        onSave={onSave}
-      />,
-    );
+    render(<PricingHarness onChange={onChange} />);
 
     const vat = screen.getByLabelText('VAT percentage');
     const service = screen.getByLabelText('Service percentage');
@@ -103,9 +110,8 @@ describe('BucketPricingPanel', () => {
     await user.type(service, '7.25');
     await user.clear(delivery);
     await user.type(delivery, '12.34');
-    await user.click(screen.getByRole('button', { name: 'Save charges' }));
 
-    expect(onSave).toHaveBeenCalledWith({
+    expect(onChange).toHaveBeenLastCalledWith({
       ...policy,
       vatBasisPoints: 1450,
       serviceBasisPoints: 725,
@@ -113,23 +119,18 @@ describe('BucketPricingPanel', () => {
     });
   });
 
-  it('prevents invalid negative charges from being saved', async () => {
-    const user = userEvent.setup();
-    render(
-      <BucketPricingPanel
-        locale="en"
-        policy={policy}
-        disabled={false}
-        saving={false}
-        translate={translate}
-        onSave={vi.fn()}
-      />,
-    );
+  it('clamps invalid negative charges to zero', () => {
+    const onChange = vi.fn();
+    render(<PricingHarness onChange={onChange} />);
 
     const vat = screen.getByLabelText('VAT percentage');
-    await user.clear(vat);
-    await user.type(vat, '-1');
-    expect(screen.getByRole('button', { name: 'Save charges' })).toBeDisabled();
+    fireEvent.change(vat, { target: { value: '-1' } });
+
+    expect(onChange).toHaveBeenLastCalledWith({
+      ...policy,
+      vatBasisPoints: 0,
+    });
+    expect(vat).toHaveValue(0);
   });
 });
 
