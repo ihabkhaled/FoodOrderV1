@@ -88,7 +88,9 @@ const pendingInvite = () => ({
   revokedAt: null,
 });
 
-const seedJoinData = async (orderState: 'open' | 'frozen' = 'open'): Promise<void> => {
+const seedJoinData = async (
+  orderState: 'open' | 'frozen' = 'open',
+): Promise<void> => {
   await environment.withSecurityRulesDisabled(async (context) => {
     const database = context.firestore();
     await setDoc(doc(database, 'buckets', BUCKET_ID), bucketDocument(orderState));
@@ -143,10 +145,11 @@ describe('bucket invite acceptance rules', () => {
     );
     expect(ownMembership.exists()).toBe(false);
 
-    const denied = await assertFails(
-      getDoc(doc(database, 'buckets', BUCKET_ID, 'members', OTHER_ID)),
-    );
-    expect(denied).toMatchObject({ code: 'permission-denied' });
+    await expect(
+      assertFails(
+        getDoc(doc(database, 'buckets', BUCKET_ID, 'members', OTHER_ID)),
+      ),
+    ).resolves.toMatchObject({ code: 'permission-denied' });
   });
 
   it('accepts a pending invite atomically and grants bucket access', async () => {
@@ -250,18 +253,19 @@ describe('bucket invite acceptance rules', () => {
       .authenticatedContext(INVITEE_ID, { email: 'invitee@example.com' })
       .firestore();
 
-    const denied = await assertFails(
-      setDoc(
-        doc(database, 'buckets', BUCKET_ID, 'invites', INVITE_ID),
-        {
-          status: 'accepted',
-          acceptedBy: INVITEE_ID,
-          acceptedAt: NOW,
-        },
-        { merge: true },
+    await expect(
+      assertFails(
+        setDoc(
+          doc(database, 'buckets', BUCKET_ID, 'invites', INVITE_ID),
+          {
+            status: 'accepted',
+            acceptedBy: INVITEE_ID,
+            acceptedAt: NOW,
+          },
+          { merge: true },
+        ),
       ),
-    );
-    expect(denied).toMatchObject({ code: 'permission-denied' });
+    ).resolves.toMatchObject({ code: 'permission-denied' });
   });
 });
 
@@ -287,19 +291,20 @@ describe('frozen bucket permissions', () => {
       .authenticatedContext(INVITEE_ID, { email: 'invitee@example.com' })
       .firestore();
 
-    const denied = await assertFails(
-      setDoc(
-        doc(database, 'buckets', BUCKET_ID, 'contributions', INVITEE_ID),
-        {
-          userId: INVITEE_ID,
-          displayName: 'Invitee',
-          bucketId: BUCKET_ID,
-          quantities: { item_1: 1 },
-          revision: 1,
-          updatedAt: NOW,
-        },
+    await expect(
+      assertFails(
+        setDoc(
+          doc(database, 'buckets', BUCKET_ID, 'contributions', INVITEE_ID),
+          {
+            userId: INVITEE_ID,
+            displayName: 'Invitee',
+            bucketId: BUCKET_ID,
+            quantities: { item_1: 1 },
+            revision: 1,
+            updatedAt: NOW,
+          },
+        ),
       ),
-    );
-    expect(denied).toMatchObject({ code: 'permission-denied' });
+    ).resolves.toMatchObject({ code: 'permission-denied' });
   });
 });
