@@ -164,7 +164,7 @@ const updateBucketMember = (
     updatedAt: timestamp,
     accessSources: [
       ...new Set([...(existing?.accessSources ?? []), sourceId]),
-    ].sort(),
+    ].sort((left, right) => left.localeCompare(right)),
   };
   if (index === -1) members.push(saved);
   else members[index] = saved;
