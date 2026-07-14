@@ -121,22 +121,17 @@ export class FirestorePaginationService implements PaginationService {
     user: SessionUser,
     request: PageRequest,
   ): Promise<PageResult<Bucket>> {
-    const size = normalizePageLimit(request.limit);
     const snapshot = await getDocs(
       query(
         collection(this.firestore, 'buckets'),
         where('ownerId', '==', user.id),
-        ...constraintsFor(request, 'updatedAt', 'id'),
       ),
     );
-    const values = snapshot.docs.map((entry) => entry.data() as Bucket);
-    const hasMore = values.length > size;
-    const items = values.slice(0, size);
-    return {
-      items,
-      hasMore,
-      nextCursor: nextCursor(items, hasMore, (bucket) => bucket.updatedAt),
-    };
+    return paginateDescending(
+      snapshot.docs.map((entry) => entry.data() as Bucket),
+      request,
+      (bucket) => bucket.updatedAt,
+    );
   }
 
   async listOrders(
