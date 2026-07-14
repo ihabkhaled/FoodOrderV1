@@ -136,8 +136,12 @@ test.describe('friends, groups, and combined bucket sharing', () => {
       .getByRole('button', { name: 'Share with selected friend' })
       .click();
 
-    await expect(page.getByText('Company A')).toBeVisible();
-    await expect(page.getByText('Alice Friend')).toBeVisible();
+    const groupGrant = page.locator('.list-row').filter({ hasText: 'Company A' });
+    const friendGrant = page
+      .locator('.list-row')
+      .filter({ hasText: 'Alice Friend' });
+    await expect(groupGrant.getByText('Company A')).toBeVisible();
+    await expect(friendGrant.getByText('Alice Friend')).toBeVisible();
 
     await switchUser(page, 'friend-1');
     await page.goto('/buckets');
