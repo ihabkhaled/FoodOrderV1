@@ -60,6 +60,7 @@ export interface BucketAccessGrant {
   subjectId: string;
   subjectName: string;
   role: Exclude<BucketRole, 'owner'>;
+  grantedBy: string;
   createdAt: string;
 }
 
