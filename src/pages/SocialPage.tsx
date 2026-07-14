@@ -22,7 +22,7 @@ const emptyOverview = (): SocialOverview => ({
 });
 
 export function SocialPage() {
-  const { locale, t, showToast } = useApp();
+  const { user, locale, t, showToast } = useApp();
   const s = (key: Parameters<typeof translateSocial>[1]) =>
     translateSocial(locale, key);
   const [overview, setOverview] = useState<SocialOverview>(emptyOverview);
@@ -292,8 +292,7 @@ export function SocialPage() {
               </div>
             </div>
             {group.description ? <p>{group.description}</p> : null}
-            {group.ownerId === group.members.find((member) => member.status === 'active')?.userId &&
-            overview.friends.length > 0 ? (
+            {group.ownerId === user?.id && overview.friends.length > 0 ? (
               <div className="row-actions">
                 <select
                   aria-label={`${s('inviteFriend')} — ${group.name}`}
