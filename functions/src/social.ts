@@ -352,11 +352,12 @@ export const getSocialOverview = onCall(
     const requestRecords = requests.docs.map(
       (document) => document.data() as FriendRequestRecord,
     );
-    const groups = (
-      await Promise.all(
-        memberships.docs.map((document) => groupView(document.id)),
-      )
-    ).filter((group): group is SocialGroupView => group !== null);
+    const groupResults = await Promise.all(
+      memberships.docs.map((document) => groupView(document.id)),
+    );
+    const groups = groupResults.filter(
+      (group): group is SocialGroupView => group !== null,
+    );
     return {
       friends,
       incomingRequests: requestRecords.filter(
