@@ -19,6 +19,7 @@ import { translateGroupOrder } from '@/i18n/groupOrderMessages';
 import type { MessageKey } from '@/i18n/messages';
 import { DEFAULT_PRICING_POLICY } from '@/lib/bucket';
 import { calculateBasisPointCharge } from '@/lib/groupOrder';
+import { effectiveCustomItemPermissions } from '@/lib/memberPermissions';
 import { formatMoney } from '@/lib/money';
 import { roleAllows } from '@/lib/sharing';
 import type { SharedBucketView } from '@/services/contracts';
@@ -144,13 +145,14 @@ export function BucketCollaborateContent({
     roleAllows(myRole, 'placeGroupOrder');
   const isOwner = myRole === 'owner';
   const currentMember = members.find((member) => member.userId === user.id);
+  const customItemPermissions = effectiveCustomItemPermissions(currentMember);
   const canCreateCustomItems =
     isOpen &&
     (isOwner ||
-      (currentMember?.canCreateCustomItems === true &&
+      (customItemPermissions.canCreateCustomItems &&
         bucket.customItemMode !== 'disabled'));
   const canSetCustomItemPrice =
-    isOwner || currentMember?.canSetCustomItemPrice === true;
+    isOwner || customItemPermissions.canSetCustomItemPrice;
   const activeItems = bucket.items.filter((item) => item.active);
   const pendingItems: BucketItem[] = bucket.items.filter(
     (item) => item.source === 'custom' && item.approvalStatus === 'pending',
@@ -177,7 +179,11 @@ export function BucketCollaborateContent({
         <div className="total-block">
           <span>{translate('estimated')}</span>
           <strong>
-            {formatMoney(calculateEstimatedTotal(bucket), bucket.currency, locale)}
+            {formatMoney(
+              calculateEstimatedTotal(bucket),
+              bucket.currency,
+              locale,
+            )}
           </strong>
         </div>
       </header>
@@ -260,7 +266,10 @@ export function BucketCollaborateContent({
           </div>
           <div className="row-actions">
             {isOwner ? (
-              <Link className="button secondary" to={`/buckets/${bucket.id}/share`}>
+              <Link
+                className="button secondary"
+                to={`/buckets/${bucket.id}/share`}
+              >
                 <Settings2 />
                 {translate('sharing')}
               </Link>
