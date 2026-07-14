@@ -34,15 +34,18 @@ export function BucketSocialSharePage() {
   }, [bucketId, t, user]);
 
   const handleSuccess = useCallback(
-    (message: string) => showToast(message, 'success'),
+    (message: string) => {
+      showToast(message, 'success');
+    },
     [showToast],
   );
   const handleError = useCallback(
-    (error_: unknown) =>
+    (error_: unknown) => {
       showToast(
         error_ instanceof Error ? error_.message : t('tryAgain'),
         'error',
-      ),
+      );
+    },
     [showToast, t],
   );
 
