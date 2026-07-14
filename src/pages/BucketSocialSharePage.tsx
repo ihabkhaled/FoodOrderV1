@@ -33,6 +33,19 @@ export function BucketSocialSharePage() {
     }
   }, [bucketId, t, user]);
 
+  const handleSuccess = useCallback(
+    (message: string) => showToast(message, 'success'),
+    [showToast],
+  );
+  const handleError = useCallback(
+    (error_: unknown) =>
+      showToast(
+        error_ instanceof Error ? error_.message : t('tryAgain'),
+        'error',
+      ),
+    [showToast, t],
+  );
+
   useEffect(() => {
     void load();
   }, [load]);
@@ -66,10 +79,8 @@ export function BucketSocialSharePage() {
         bucketId={bucket.id}
         locale={locale}
         disabled={(bucket.orderState ?? 'open') !== 'open'}
-        onSuccess={(message) => showToast(message, 'success')}
-        onError={(error_) =>
-          showToast(error_ instanceof Error ? error_.message : t('tryAgain'), 'error')
-        }
+        onSuccess={handleSuccess}
+        onError={handleError}
       />
     </div>
   );
