@@ -10,9 +10,9 @@ import {
   type MemberPermissionRecord,
 } from './memberPermissions.js';
 import {
-  buildOrderSnapshot,
   type BucketItemRecord,
   type BucketRecord,
+  buildOrderSnapshot,
   type ContributionRecord,
   type OrderRecord,
   OrderValidationError,
