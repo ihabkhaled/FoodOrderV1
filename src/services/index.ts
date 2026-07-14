@@ -12,6 +12,10 @@ import {
   FirestorePaginationService,
   LocalPaginationService,
 } from '@/services/paginationServices';
+import {
+  FirestoreCallableSocialService,
+  LocalSocialService,
+} from '@/services/socialServices';
 
 export const authService = env.firebaseEnabled
   ? withFirebaseErrorTranslation(new FirebaseEmailAuthService())
@@ -25,4 +29,7 @@ export const sharingService = env.firebaseEnabled
 export const paginationService = env.firebaseEnabled
   ? withFirebaseErrorTranslation(new FirestorePaginationService())
   : new LocalPaginationService(dataService, sharingService);
+export const socialService = env.firebaseEnabled
+  ? withFirebaseErrorTranslation(new FirestoreCallableSocialService())
+  : new LocalSocialService();
 export const storageMode = env.firebaseEnabled ? 'firebase' : 'local-device';
