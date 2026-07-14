@@ -16,6 +16,7 @@ const switchUser = async (page: Page, userId: string): Promise<void> => {
 const seedUsersAndBucket = async (page: Page): Promise<void> => {
   await page.addInitScript(
     ({ databaseKey, sessionKey, now }) => {
+      if (localStorage.getItem(databaseKey)) return;
       const owner = {
         id: 'owner-1',
         fullName: 'Company Owner',
@@ -101,7 +102,9 @@ test.describe('friends, groups, and combined bucket sharing', () => {
 
     await switchUser(page, 'friend-1');
     await page.goto('/social');
-    const incoming = page.locator('section').filter({ hasText: 'Incoming requests' });
+    const incoming = page
+      .locator('section')
+      .filter({ hasText: 'Incoming requests' });
     await incoming.getByRole('button', { name: 'Accept' }).click();
     await expect(page.getByText('Company Owner')).toBeVisible();
 
