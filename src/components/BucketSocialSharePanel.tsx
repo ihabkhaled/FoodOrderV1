@@ -78,9 +78,9 @@ export function BucketSocialSharePanel({
         <select
           value={role}
           disabled={disabled || saving}
-          onChange={(event) =>
-            setRole(event.target.value as Exclude<BucketRole, 'owner'>)
-          }
+          onChange={(event) => {
+            setRole(event.target.value as Exclude<BucketRole, 'owner'>);
+          }}
         >
           <option value="editor">Editor</option>
           <option value="contributor">Contributor</option>
@@ -93,7 +93,9 @@ export function BucketSocialSharePanel({
           aria-label={s('selectFriend')}
           value={friendId}
           disabled={disabled || saving}
-          onChange={(event) => setFriendId(event.target.value)}
+          onChange={(event) => {
+            setFriendId(event.target.value);
+          }}
         >
           <option value="">{s('selectFriend')}</option>
           {overview.friends.map((friend) => (
@@ -121,7 +123,9 @@ export function BucketSocialSharePanel({
           aria-label={s('selectGroup')}
           value={groupId}
           disabled={disabled || saving}
-          onChange={(event) => setGroupId(event.target.value)}
+          onChange={(event) => {
+            setGroupId(event.target.value);
+          }}
         >
           <option value="">{s('selectGroup')}</option>
           {overview.groups.map((group) => (
