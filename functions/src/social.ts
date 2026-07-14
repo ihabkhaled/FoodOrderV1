@@ -9,9 +9,9 @@ import {
   normalizeEmail,
   optionalText,
   requiredText,
+  type ShareRole,
   shareRole,
   strongestRole,
-  type ShareRole,
 } from './socialDomain.js';
 
 const REGION = 'europe-west1';
@@ -46,6 +46,10 @@ interface GroupMemberRecord extends SocialUser {
   invitedBy: string;
   invitedAt: string;
   respondedAt: string | null;
+}
+
+interface SocialGroupView extends GroupRecord {
+  members: GroupMemberRecord[];
 }
 
 interface GroupInvitationRecord {
@@ -184,13 +188,15 @@ const activeFriends = async (userId: string): Promise<SocialUser[]> => {
   return snapshot.docs.map((document) => document.data() as SocialUser);
 };
 
-const groupView = async (groupId: string): Promise<unknown | null> => {
+const groupView = async (groupId: string): Promise<SocialGroupView | null> => {
   const groupDocument = await db().collection('friendGroups').doc(groupId).get();
   if (!groupDocument.exists) return null;
   const members = await groupDocument.ref.collection('members').get();
   return {
     ...(groupDocument.data() as GroupRecord),
-    members: members.docs.map((document) => document.data() as GroupMemberRecord),
+    members: members.docs.map(
+      (document) => document.data() as GroupMemberRecord,
+    ),
   };
 };
 
@@ -201,7 +207,9 @@ const materializeBucketMember = async (
 ): Promise<void> => {
   if (recipient.userId === grant.grantedBy) return;
   const bucketReference = db().collection('buckets').doc(bucketId);
-  const memberReference = bucketReference.collection('members').doc(recipient.userId);
+  const memberReference = bucketReference
+    .collection('members')
+    .doc(recipient.userId);
   const mirrorReference = userSubcollection(
     recipient.userId,
     'bucketMemberships',
@@ -254,13 +262,19 @@ const materializeBucketMember = async (
 const ensureBucketOwner = async (
   bucketId: string,
   ownerId: string,
-): Promise<{ reference: FirebaseFirestore.DocumentReference; bucket: BucketRecord }> => {
+): Promise<{
+  reference: FirebaseFirestore.DocumentReference;
+  bucket: BucketRecord;
+}> => {
   const reference = db().collection('buckets').doc(bucketId);
   const snapshot = await reference.get();
   if (!snapshot.exists) throw new HttpsError('not-found', 'Bucket was not found.');
   const bucket = snapshot.data() as BucketRecord;
   if (bucket.ownerId !== ownerId) {
-    throw new HttpsError('permission-denied', 'Only the bucket owner may share it.');
+    throw new HttpsError(
+      'permission-denied',
+      'Only the bucket owner may share it.',
+    );
   }
   return { reference, bucket };
 };
@@ -273,7 +287,10 @@ const createGrant = async (
   subjectName: string,
   role: ShareRole,
 ): Promise<BucketGrantRecord> => {
-  const { reference, bucket } = await ensureBucketOwner(bucketId, actor.userId);
+  const { reference, bucket } = await ensureBucketOwner(
+    bucketId,
+    actor.userId,
+  );
   const grant: BucketGrantRecord = {
     id: `${subjectType}_${subjectId}`,
     bucketId,
@@ -336,8 +353,10 @@ export const getSocialOverview = onCall(
       (document) => document.data() as FriendRequestRecord,
     );
     const groups = (
-      await Promise.all(memberships.docs.map((document) => groupView(document.id)))
-    ).filter((group) => group !== null);
+      await Promise.all(
+        memberships.docs.map((document) => groupView(document.id)),
+      )
+    ).filter((group): group is SocialGroupView => group !== null);
     return {
       friends,
       incomingRequests: requestRecords.filter(
@@ -345,7 +364,8 @@ export const getSocialOverview = onCall(
           item.recipient.userId === actor.userId && item.status === 'pending',
       ),
       outgoingRequests: requestRecords.filter(
-        (item) => item.sender.userId === actor.userId && item.status === 'pending',
+        (item) =>
+          item.sender.userId === actor.userId && item.status === 'pending',
       ),
       groups,
       groupInvitations: invitations.docs
@@ -360,21 +380,36 @@ export const sendFriendRequest = onCall(
   async (request) => {
     const sender = authUser(request.auth);
     await publishActor(sender);
-    const email = invalidArgument(() => normalizeEmail(dataOf(request.data).email));
+    const email = invalidArgument(() =>
+      normalizeEmail(dataOf(request.data).email),
+    );
     const recipient = await findUserByEmail(email);
-    if (!recipient) throw new HttpsError('not-found', 'No user was found for that email.');
-    if (recipient.userId === sender.userId) {
-      throw new HttpsError('failed-precondition', 'You cannot add yourself as a friend.');
+    if (!recipient) {
+      throw new HttpsError('not-found', 'No user was found for that email.');
     }
-    const existingFriend = await userSubcollection(sender.userId, 'friends')
-      .doc(recipient.userId)
-      .get();
+    if (recipient.userId === sender.userId) {
+      throw new HttpsError(
+        'failed-precondition',
+        'You cannot add yourself as a friend.',
+      );
+    }
+    const existingFriendReference = userSubcollection(
+      sender.userId,
+      'friends',
+    ).doc(recipient.userId);
+    const existingFriend = await existingFriendReference.get();
     if (existingFriend.exists) {
       throw new HttpsError('already-exists', 'You are already friends.');
     }
     const id = friendRequestId(sender.userId, recipient.userId);
-    const senderReference = userSubcollection(sender.userId, 'friendRequests').doc(id);
-    const recipientReference = userSubcollection(recipient.userId, 'friendRequests').doc(id);
+    const senderReference = userSubcollection(
+      sender.userId,
+      'friendRequests',
+    ).doc(id);
+    const recipientReference = userSubcollection(
+      recipient.userId,
+      'friendRequests',
+    ).doc(id);
     const existing = await senderReference.get();
     if (existing.exists && existing.data()?.status === 'pending') {
       return existing.data() as FriendRequestRecord;
@@ -408,14 +443,23 @@ export const respondFriendRequest = onCall(
       throw new HttpsError('invalid-argument', 'A valid response is required.');
     }
     const id = friendRequestId(senderId, recipient.userId);
-    const recipientReference = userSubcollection(recipient.userId, 'friendRequests').doc(id);
+    const recipientReference = userSubcollection(
+      recipient.userId,
+      'friendRequests',
+    ).doc(id);
     const requestSnapshot = await recipientReference.get();
     if (!requestSnapshot.exists) {
       throw new HttpsError('not-found', 'Friend request was not found.');
     }
     const record = requestSnapshot.data() as FriendRequestRecord;
-    if (record.status !== 'pending' || record.recipient.userId !== recipient.userId) {
-      throw new HttpsError('failed-precondition', 'Friend request is no longer pending.');
+    if (
+      record.status !== 'pending' ||
+      record.recipient.userId !== recipient.userId
+    ) {
+      throw new HttpsError(
+        'failed-precondition',
+        'Friend request is no longer pending.',
+      );
     }
     const timestamp = new Date().toISOString();
     const update = { status: response, respondedAt: timestamp };
@@ -427,8 +471,14 @@ export const respondFriendRequest = onCall(
       { merge: true },
     );
     if (response === 'accepted') {
-      batch.set(userSubcollection(recipient.userId, 'friends').doc(senderId), record.sender);
-      batch.set(userSubcollection(senderId, 'friends').doc(recipient.userId), recipient);
+      batch.set(
+        userSubcollection(recipient.userId, 'friends').doc(senderId),
+        record.sender,
+      );
+      batch.set(
+        userSubcollection(senderId, 'friends').doc(recipient.userId),
+        recipient,
+      );
     }
     await batch.commit();
     return { success: true };
@@ -440,7 +490,9 @@ export const createFriendGroup = onCall(
   async (request) => {
     const owner = authUser(request.auth);
     const input = dataOf(request.data);
-    const name = invalidArgument(() => requiredText(input.name, 'Group name', 80));
+    const name = invalidArgument(() =>
+      requiredText(input.name, 'Group name', 80),
+    );
     const description = optionalText(input.description, 240);
     const timestamp = new Date().toISOString();
     const group: GroupRecord = {
@@ -462,14 +514,20 @@ export const createFriendGroup = onCall(
     const groupReference = db().collection('friendGroups').doc(group.id);
     const batch = db().batch();
     batch.set(groupReference, group);
-    batch.set(groupReference.collection('members').doc(owner.userId), member);
-    batch.set(userSubcollection(owner.userId, 'groupMemberships').doc(group.id), {
-      groupId: group.id,
-      groupName: group.name,
-      ownerId: owner.userId,
-      status: 'active',
-      updatedAt: timestamp,
-    });
+    batch.set(
+      groupReference.collection('members').doc(owner.userId),
+      member,
+    );
+    batch.set(
+      userSubcollection(owner.userId, 'groupMemberships').doc(group.id),
+      {
+        groupId: group.id,
+        groupName: group.name,
+        ownerId: owner.userId,
+        status: 'active',
+        updatedAt: timestamp,
+      },
+    );
     await batch.commit();
     return { ...group, members: [member] };
   },
@@ -480,17 +538,30 @@ export const inviteFriendToGroup = onCall(
   async (request) => {
     const owner = authUser(request.auth);
     const input = dataOf(request.data);
-    const groupId = invalidArgument(() => requiredText(input.groupId, 'Group ID', 160));
-    const friendId = invalidArgument(() => requiredText(input.friendId, 'Friend ID', 160));
+    const groupId = invalidArgument(() =>
+      requiredText(input.groupId, 'Group ID', 160),
+    );
+    const friendId = invalidArgument(() =>
+      requiredText(input.friendId, 'Friend ID', 160),
+    );
     const [groupSnapshot, friendSnapshot] = await Promise.all([
       db().collection('friendGroups').doc(groupId).get(),
       userSubcollection(owner.userId, 'friends').doc(friendId).get(),
     ]);
-    if (!groupSnapshot.exists || groupSnapshot.data()?.ownerId !== owner.userId) {
-      throw new HttpsError('permission-denied', 'Only the group owner may invite friends.');
+    if (
+      !groupSnapshot.exists ||
+      groupSnapshot.data()?.ownerId !== owner.userId
+    ) {
+      throw new HttpsError(
+        'permission-denied',
+        'Only the group owner may invite friends.',
+      );
     }
     if (!friendSnapshot.exists) {
-      throw new HttpsError('failed-precondition', 'Only accepted friends may be invited.');
+      throw new HttpsError(
+        'failed-precondition',
+        'Only accepted friends may be invited.',
+      );
     }
     const friend = friendSnapshot.data() as SocialUser;
     const group = groupSnapshot.data() as GroupRecord;
@@ -513,7 +584,10 @@ export const inviteFriendToGroup = onCall(
     };
     const batch = db().batch();
     batch.set(groupSnapshot.ref.collection('members').doc(friendId), member);
-    batch.set(userSubcollection(friendId, 'groupInvitations').doc(groupId), invitation);
+    batch.set(
+      userSubcollection(friendId, 'groupInvitations').doc(groupId),
+      invitation,
+    );
     batch.set(groupSnapshot.ref, { updatedAt: timestamp }, { merge: true });
     await batch.commit();
     return { success: true };
@@ -525,7 +599,9 @@ export const respondFriendGroupInvitation = onCall(
   async (request) => {
     const recipient = authUser(request.auth);
     const input = dataOf(request.data);
-    const groupId = invalidArgument(() => requiredText(input.groupId, 'Group ID', 160));
+    const groupId = invalidArgument(() =>
+      requiredText(input.groupId, 'Group ID', 160),
+    );
     const response = input.response;
     if (response !== 'active' && response !== 'declined') {
       throw new HttpsError('invalid-argument', 'A valid response is required.');
@@ -535,13 +611,20 @@ export const respondFriendGroupInvitation = onCall(
       'groupInvitations',
     ).doc(groupId);
     const invitationSnapshot = await invitationReference.get();
-    if (!invitationSnapshot.exists || invitationSnapshot.data()?.status !== 'pending') {
+    if (
+      !invitationSnapshot.exists ||
+      invitationSnapshot.data()?.status !== 'pending'
+    ) {
       throw new HttpsError('not-found', 'Group invitation was not found.');
     }
     const groupReference = db().collection('friendGroups').doc(groupId);
     const timestamp = new Date().toISOString();
     const batch = db().batch();
-    batch.set(invitationReference, { status: response, respondedAt: timestamp }, { merge: true });
+    batch.set(
+      invitationReference,
+      { status: response, respondedAt: timestamp },
+      { merge: true },
+    );
     batch.set(
       groupReference.collection('members').doc(recipient.userId),
       { status: response, respondedAt: timestamp },
@@ -549,13 +632,16 @@ export const respondFriendGroupInvitation = onCall(
     );
     if (response === 'active') {
       const invitation = invitationSnapshot.data() as GroupInvitationRecord;
-      batch.set(userSubcollection(recipient.userId, 'groupMemberships').doc(groupId), {
-        groupId,
-        groupName: invitation.groupName,
-        ownerId: invitation.owner.userId,
-        status: 'active',
-        updatedAt: timestamp,
-      });
+      batch.set(
+        userSubcollection(recipient.userId, 'groupMemberships').doc(groupId),
+        {
+          groupId,
+          groupName: invitation.groupName,
+          ownerId: invitation.owner.userId,
+          status: 'active',
+          updatedAt: timestamp,
+        },
+      );
     }
     await batch.commit();
     if (response === 'active') {
@@ -579,20 +665,44 @@ export const shareBucketWithFriendGroup = onCall(
   async (request) => {
     const actor = authUser(request.auth);
     const input = dataOf(request.data);
-    const bucketId = invalidArgument(() => requiredText(input.bucketId, 'Bucket ID', 160));
-    const groupId = invalidArgument(() => requiredText(input.groupId, 'Group ID', 160));
+    const bucketId = invalidArgument(() =>
+      requiredText(input.bucketId, 'Bucket ID', 160),
+    );
+    const groupId = invalidArgument(() =>
+      requiredText(input.groupId, 'Group ID', 160),
+    );
     const role = invalidArgument(() => shareRole(input.role));
     const groupReference = db().collection('friendGroups').doc(groupId);
     const groupSnapshot = await groupReference.get();
-    if (!groupSnapshot.exists || groupSnapshot.data()?.ownerId !== actor.userId) {
-      throw new HttpsError('permission-denied', 'Only your own friend groups can be shared with.');
+    if (
+      !groupSnapshot.exists ||
+      groupSnapshot.data()?.ownerId !== actor.userId
+    ) {
+      throw new HttpsError(
+        'permission-denied',
+        'Only your own friend groups can be shared with.',
+      );
     }
     const group = groupSnapshot.data() as GroupRecord;
-    const grant = await createGrant(actor, bucketId, 'group', groupId, group.name, role);
-    const members = await groupReference.collection('members').where('status', '==', 'active').get();
+    const grant = await createGrant(
+      actor,
+      bucketId,
+      'group',
+      groupId,
+      group.name,
+      role,
+    );
+    const members = await groupReference
+      .collection('members')
+      .where('status', '==', 'active')
+      .get();
     await Promise.all(
       members.docs.map((document) =>
-        materializeBucketMember(bucketId, document.data() as SocialUser, grant),
+        materializeBucketMember(
+          bucketId,
+          document.data() as SocialUser,
+          grant,
+        ),
       ),
     );
     return grant;
@@ -604,12 +714,22 @@ export const shareBucketWithFriend = onCall(
   async (request) => {
     const actor = authUser(request.auth);
     const input = dataOf(request.data);
-    const bucketId = invalidArgument(() => requiredText(input.bucketId, 'Bucket ID', 160));
-    const userId = invalidArgument(() => requiredText(input.userId, 'User ID', 160));
+    const bucketId = invalidArgument(() =>
+      requiredText(input.bucketId, 'Bucket ID', 160),
+    );
+    const userId = invalidArgument(() =>
+      requiredText(input.userId, 'User ID', 160),
+    );
     const role = invalidArgument(() => shareRole(input.role));
-    const friendSnapshot = await userSubcollection(actor.userId, 'friends').doc(userId).get();
+    const friendReference = userSubcollection(actor.userId, 'friends').doc(
+      userId,
+    );
+    const friendSnapshot = await friendReference.get();
     if (!friendSnapshot.exists) {
-      throw new HttpsError('failed-precondition', 'Only accepted friends can be selected.');
+      throw new HttpsError(
+        'failed-precondition',
+        'Only accepted friends can be selected.',
+      );
     }
     const friend = friendSnapshot.data() as SocialUser;
     const grant = await createGrant(
