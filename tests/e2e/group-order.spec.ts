@@ -173,9 +173,9 @@ test.describe('critical group-order regressions', () => {
     await page.goto('/buckets/bucket-1/collaborate');
 
     await expect(page.getByLabel('Custom item name')).toBeVisible();
-    await expect(page.getByLabel('Custom item price')).toBeEnabled();
+    await expect(page.getByLabel('Price')).toBeEnabled();
     await expect(
-      page.getByRole('button', { name: 'Propose custom item' }),
+      page.getByRole('button', { name: 'Add custom item' }),
     ).toBeVisible();
   });
 
