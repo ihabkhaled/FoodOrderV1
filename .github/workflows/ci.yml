@@ -405,20 +405,32 @@ jobs:
         if: github.event_name != 'pull_request'
         shell: bash
         run: |
-          set -euo pipefail
+          set -uo pipefail
+          deploy_args=(
+            deploy
+            --project "${FIREBASE_PROJECT_ID}"
+            --only functions,firestore:rules
+            --non-interactive
+          )
           if [[ -n "${FIREBASE_DEPLOY_TOKEN:-}" ]]; then
-            npx firebase deploy \
-              --project "${FIREBASE_PROJECT_ID}" \
-              --only functions,firestore:rules \
-              --non-interactive \
-              --token "${FIREBASE_DEPLOY_TOKEN}"
-          else
-            npx firebase deploy \
-              --project "${FIREBASE_PROJECT_ID}" \
-              --only functions,firestore:rules \
-              --non-interactive
+            deploy_args+=(--token "${FIREBASE_DEPLOY_TOKEN}")
           fi
-      - name: Smoke-test deployed v1.3.2 callables
+
+          set +e
+          npx firebase "${deploy_args[@]}" 2>&1 | tee firebase-deploy.log
+          deploy_status=${PIPESTATUS[0]}
+          set -e
+
+          if [[ "${deploy_status}" -ne 0 ]]; then
+            if grep --fixed-strings --quiet \
+              'Functions successfully deployed but could not set up cleanup policy' \
+              firebase-deploy.log; then
+              echo "::warning::Functions and rules deployed successfully, but the service account cannot configure the optional Artifact Registry cleanup policy. Live endpoint smoke tests will still be enforced."
+            else
+              exit "${deploy_status}"
+            fi
+          fi
+      - name: Smoke-test deployed v1.3.3 callables
         if: github.event_name != 'pull_request'
         shell: bash
         run: |
@@ -426,7 +438,9 @@ jobs:
           for callable in \
             finalizeGroupOrderV132 \
             addCustomBucketItemV132 \
-            approveCustomBucketItemV132
+            approveCustomBucketItemV132 \
+            repeatGroupOrderV133 \
+            transitionGroupOrderV133
           do
             endpoint="https://europe-west1-${FIREBASE_PROJECT_ID}.cloudfunctions.net/${callable}"
             response_file="${RUNNER_TEMP}/${callable}.json"

@@ -10,6 +10,12 @@ const transitions: Record<OrderStatus, OrderStatus[]> = {
   cancelled: [],
 };
 
+export interface OrderChargeBreakdown {
+  vat: number;
+  service: number;
+  delivery: number;
+}
+
 export const normalizeOrderLines = (lines: OrderDraft['lines']): OrderLine[] =>
   lines
     .filter((line) => line.quantity > 0)
@@ -55,6 +61,53 @@ export const createOrder = (userId: string, draft: OrderDraft): Order => {
     placedAt: status === 'placed' ? createdAt : null,
     completedAt: status === 'completed' ? createdAt : null,
     cancelledAt: status === 'cancelled' ? createdAt : null,
+  };
+};
+
+export const buildRepeatedOrderDraft = (order: Order): OrderDraft => ({
+  bucketId: order.bucketId,
+  // Repeating an order preserves the exact original name; no "(copy)" suffix is added.
+  bucketTitle: order.bucketTitle,
+  currency: order.currency,
+  lines: order.lines.map(({ id, bucketItemId, name, quantity, unitPrice }) => ({
+    id,
+    bucketItemId,
+    name,
+    quantity,
+    unitPrice,
+  })),
+  notes: order.notes,
+  status: 'draft',
+  sourceBucketRevision: order.sourceBucketRevision,
+  participants: order.participants ? structuredClone(order.participants) : null,
+  groupReceipt: order.groupReceipt ? structuredClone(order.groupReceipt) : null,
+});
+
+export const getOrderChargeBreakdown = (
+  order: Order,
+): OrderChargeBreakdown | null => {
+  const receipt = order.groupReceipt;
+  if (!receipt) return null;
+
+  const globalTotal = roundMoney(receipt.grandTotalMinor / 100);
+  const participantReceipt = receipt.participantReceipts.find(
+    (participant) => participant.userId === order.userId,
+  );
+  const isParticipantCopy =
+    participantReceipt !== undefined && Math.abs(globalTotal - order.total) >= 0.005;
+
+  if (isParticipantCopy) {
+    return {
+      vat: roundMoney(participantReceipt.vatShareMinor / 100),
+      service: roundMoney(participantReceipt.serviceShareMinor / 100),
+      delivery: roundMoney(participantReceipt.deliveryShareMinor / 100),
+    };
+  }
+
+  return {
+    vat: roundMoney(receipt.vatMinor / 100),
+    service: roundMoney(receipt.serviceMinor / 100),
+    delivery: roundMoney(receipt.deliveryMinor / 100),
   };
 };
 

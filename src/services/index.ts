@@ -9,6 +9,10 @@ import {
   LocalDataService,
 } from '@/services/localServices';
 import {
+  FirestoreCallableOrderLifecycleService,
+  LocalOrderLifecycleService,
+} from '@/services/orderLifecycleServices';
+import {
   FirestorePaginationService,
   LocalPaginationService,
 } from '@/services/paginationServices';
@@ -22,6 +26,9 @@ export const dataService = env.firebaseEnabled
 export const sharingService = env.firebaseEnabled
   ? withFirebaseErrorTranslation(new FirestoreCallableGroupOrderService())
   : new LocalGroupOrderService();
+export const orderLifecycleService = env.firebaseEnabled
+  ? withFirebaseErrorTranslation(new FirestoreCallableOrderLifecycleService())
+  : new LocalOrderLifecycleService();
 export const paginationService = env.firebaseEnabled
   ? withFirebaseErrorTranslation(new FirestorePaginationService())
   : new LocalPaginationService(dataService, sharingService);

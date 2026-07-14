@@ -1,16 +1,10 @@
 name: Firebase Artifact Cleanup Policy
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
   contents: read
-
-concurrency:
-  group: firebase-artifact-cleanup-${{ github.ref }}
-  cancel-in-progress: false
 
 jobs:
   configure-cleanup-policy:
@@ -40,12 +34,13 @@ jobs:
           printf '%s' "${FIREBASE_SERVICE_ACCOUNT}" > "${RUNNER_TEMP}/firebase-service-account.json"
           echo "GOOGLE_APPLICATION_CREDENTIALS=${RUNNER_TEMP}/firebase-service-account.json" >> "${GITHUB_ENV}"
       - name: Configure Firebase Functions artifact cleanup
+        continue-on-error: true
         shell: bash
         run: |
-          set -euo pipefail
           npx firebase functions:artifacts:setpolicy \
             --project "${FIREBASE_PROJECT_ID}" \
             --location europe-west1 \
             --days 7 \
             --force \
-            --non-interactive
+            --non-interactive || \
+            echo "::warning::Cleanup policy was not changed. Add Artifact Registry Administrator to the CI service account before running this optional workflow again."

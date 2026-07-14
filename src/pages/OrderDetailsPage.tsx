@@ -7,13 +7,19 @@ import { Loading } from '@/components/Loading';
 import { OrderActionBar } from '@/components/OrderActionBar';
 import { OrderParticipantsSection } from '@/components/OrderParticipantsSection';
 import { StatusBadge } from '@/components/StatusBadge';
+import { translateGroupOrder } from '@/i18n/groupOrderMessages';
 import { formatDateTime } from '@/lib/date';
 import { formatMoney } from '@/lib/money';
-import { dataService } from '@/services';
+import {
+  buildRepeatedOrderDraft,
+  getOrderChargeBreakdown,
+} from '@/lib/order';
+import { dataService, orderLifecycleService } from '@/services';
 import { useApp } from '@/state/AppContext';
 import type { Order, OrderStatus } from '@/types/domain';
 
 function OrderLineSummary({ order, locale }: { order: Order; locale: 'en' | 'ar' }) {
+  const charges = getOrderChargeBreakdown(order);
   return (
     <section className="section-card">
       <div className="order-detail-lines">
@@ -34,6 +40,22 @@ function OrderLineSummary({ order, locale }: { order: Order; locale: 'en' | 'ar'
           <span>Subtotal</span>
           <strong>{formatMoney(order.subtotal, order.currency, locale)}</strong>
         </div>
+        {charges ? (
+          <>
+            <div>
+              <span>{translateGroupOrder(locale, 'vat')}</span>
+              <strong>{formatMoney(charges.vat, order.currency, locale)}</strong>
+            </div>
+            <div>
+              <span>{translateGroupOrder(locale, 'service')}</span>
+              <strong>{formatMoney(charges.service, order.currency, locale)}</strong>
+            </div>
+            <div>
+              <span>{translateGroupOrder(locale, 'delivery')}</span>
+              <strong>{formatMoney(charges.delivery, order.currency, locale)}</strong>
+            </div>
+          </>
+        ) : null}
         <div className="grand-total">
           <span>Total</span>
           <strong>{formatMoney(order.total, order.currency, locale)}</strong>
@@ -70,7 +92,9 @@ export function OrderDetailsPage() {
   const transition = async (status: OrderStatus) => {
     if (!user || !order) return;
     try {
-      const saved = await dataService.updateOrderStatus(user.id, order.id, status);
+      const saved = order.groupReceipt
+        ? await orderLifecycleService.transitionGroupOrder(user, order.id, status)
+        : await dataService.updateOrderStatus(user.id, order.id, status);
       setOrder(saved);
       showToast(t('orderUpdated'), 'success');
     } catch (error_) {
@@ -81,20 +105,9 @@ export function OrderDetailsPage() {
   const repeat = async () => {
     if (!user || !order) return;
     try {
-      const created = await dataService.createOrder(user.id, {
-        bucketId: order.bucketId,
-        bucketTitle: order.bucketTitle,
-        currency: order.currency,
-        lines: order.lines.map(({ id, bucketItemId, name, quantity, unitPrice }) => ({
-          id,
-          bucketItemId,
-          name,
-          quantity,
-          unitPrice,
-        })),
-        notes: order.notes,
-        status: 'draft',
-      });
+      const created = order.groupReceipt
+        ? await orderLifecycleService.repeatGroupOrder(user, order.id)
+        : await dataService.createOrder(user.id, buildRepeatedOrderDraft(order));
       showToast(t('draftFromOrder'), 'success');
       await navigate(`/orders/${created.id}`);
     } catch (error_) {
