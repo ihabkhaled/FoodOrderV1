@@ -6,6 +6,7 @@ import { Loading } from '@/components/Loading';
 import { BucketCollaboratePage } from '@/pages/BucketCollaboratePage';
 import { BucketEditorPage } from '@/pages/BucketEditorPage';
 import { BucketSharePage } from '@/pages/BucketSharePage';
+import { BucketSocialSharePage } from '@/pages/BucketSocialSharePage';
 import { BucketsPage } from '@/pages/BucketsPage';
 import { CreateOrderPage } from '@/pages/CreateOrderPage';
 import { DashboardPage } from '@/pages/DashboardPage';
@@ -17,6 +18,7 @@ import { OrderDetailsPage } from '@/pages/OrderDetailsPage';
 import { OrdersPage } from '@/pages/OrdersPage';
 import { RegisterPage } from '@/pages/RegisterPage';
 import { SettingsPage } from '@/pages/SettingsPage';
+import { SocialPage } from '@/pages/SocialPage';
 import { useApp } from '@/state/AppContext';
 
 function ProtectedRoute() { const { user, authLoading } = useApp(); if (authLoading) return <Loading />; return user ? <Outlet /> : <Navigate to="/auth/login" replace />; }
@@ -41,7 +43,9 @@ export default function App() {
         <Route path="buckets/:bucketId/order" element={<CreateOrderPage />} />
         <Route path="buckets/:bucketId/collaborate" element={<BucketCollaboratePage />} />
         <Route path="buckets/:bucketId/share" element={<BucketSharePage />} />
+        <Route path="buckets/:bucketId/social-share" element={<BucketSocialSharePage />} />
         <Route path="join" element={<JoinBucketPage />} />
+        <Route path="social" element={<SocialPage />} />
         <Route path="orders" element={<OrdersPage />} />
         <Route path="orders/:orderId" element={<OrderDetailsPage />} />
         <Route path="settings" element={<SettingsPage />} />
