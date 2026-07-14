@@ -1,6 +1,8 @@
 import {
   collection,
   doc,
+  documentId,
+  type FieldPath,
   type Firestore,
   getDoc,
   getDocs,
@@ -58,7 +60,7 @@ const nextCursor = <Item extends { id: string }>(
 const constraintsFor = (
   request: PageRequest,
   firstOrderField: string,
-  identityField: string,
+  identityField: string | FieldPath,
 ): QueryConstraint[] => {
   const size = normalizePageLimit(request.limit);
   const cursor = decodeSortCursor(request.cursor);
@@ -145,7 +147,7 @@ export class FirestorePaginationService implements PaginationService {
     const snapshot = await getDocs(
       query(
         collection(this.firestore, 'users', user.id, 'orders'),
-        ...constraintsFor(request, 'createdAt', 'id'),
+        ...constraintsFor(request, 'createdAt', documentId()),
       ),
     );
     const values = snapshot.docs.map((entry) => entry.data() as Order);
