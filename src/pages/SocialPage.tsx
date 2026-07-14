@@ -135,7 +135,9 @@ export function SocialPage() {
             <input
               type="email"
               value={email}
-              onChange={(event) => setEmail(event.target.value)}
+              onChange={(event) => {
+                setEmail(event.target.value);
+              }}
               onKeyDown={(event) => {
                 if (event.key === 'Enter') void search();
               }}
@@ -259,7 +261,9 @@ export function SocialPage() {
             <input
               maxLength={80}
               value={groupName}
-              onChange={(event) => setGroupName(event.target.value)}
+              onChange={(event) => {
+                setGroupName(event.target.value);
+              }}
             />
           </label>
           <label>
@@ -267,7 +271,9 @@ export function SocialPage() {
             <input
               maxLength={240}
               value={groupDescription}
-              onChange={(event) => setGroupDescription(event.target.value)}
+              onChange={(event) => {
+                setGroupDescription(event.target.value);
+              }}
             />
           </label>
         </div>
@@ -297,12 +303,12 @@ export function SocialPage() {
                 <select
                   aria-label={`${s('inviteFriend')} — ${group.name}`}
                   value={selectedFriends[group.id] ?? ''}
-                  onChange={(event) =>
+                  onChange={(event) => {
                     setSelectedFriends((current) => ({
                       ...current,
                       [group.id]: event.target.value,
-                    }))
-                  }
+                    }));
+                  }}
                 >
                   <option value="">{s('selectFriend')}</option>
                   {overview.friends.map((friend) => (
