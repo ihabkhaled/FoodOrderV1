@@ -1,0 +1,33 @@
+name: Firebase Functions Diagnostics
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  functions-typecheck-diagnostics:
+    name: Functions Typecheck Diagnostics
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: functions/package-lock.json
+      - run: npm --prefix functions ci
+      - name: Capture strict TypeScript diagnostics
+        shell: bash
+        run: |
+          set -o pipefail
+          npm --prefix functions run typecheck 2>&1 | tee functions-typecheck.log
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: functions-typecheck-diagnostics
+          path: functions-typecheck.log
+          if-no-files-found: error
