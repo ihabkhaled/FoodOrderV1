@@ -32,7 +32,7 @@ export class FirestoreCallableGroupOrderService extends FirestoreGroupOrderServi
     const result = await callable<
       CustomItemInput & { bucketId: string },
       BucketItem
-    >('addCustomBucketItem')({ bucketId, ...input });
+    >('addCustomBucketItemV132')({ bucketId, ...input });
 
     return result.data;
   }
@@ -46,7 +46,7 @@ export class FirestoreCallableGroupOrderService extends FirestoreGroupOrderServi
     const result = await callable<
       { bucketId: string; itemId: string; unitPrice: number },
       BucketItem
-    >('approveCustomBucketItem')({ bucketId, itemId, unitPrice });
+    >('approveCustomBucketItemV132')({ bucketId, itemId, unitPrice });
 
     return result.data;
   }
@@ -59,7 +59,7 @@ export class FirestoreCallableGroupOrderService extends FirestoreGroupOrderServi
     const result = await callable<
       { bucketId: string; notes: string },
       Order
-    >('finalizeGroupOrder')({ bucketId, notes });
+    >('finalizeGroupOrderV132')({ bucketId, notes });
 
     return result.data;
   }

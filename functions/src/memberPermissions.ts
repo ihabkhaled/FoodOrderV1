@@ -4,6 +4,10 @@ export interface MemberPermissionRecord {
   canSetCustomItemPrice?: boolean;
 }
 
+export interface MemberOrderPermissionRecord extends MemberPermissionRecord {
+  status: 'active' | 'revoked' | 'left';
+}
+
 export const effectiveMemberCustomItemPermissions = (
   member: MemberPermissionRecord,
 ): { canCreateCustomItems: boolean; canSetCustomItemPrice: boolean } => {
@@ -14,3 +18,9 @@ export const effectiveMemberCustomItemPermissions = (
 
   return { canCreateCustomItems, canSetCustomItemPrice };
 };
+
+export const memberCanPlaceGroupOrder = (
+  member: MemberOrderPermissionRecord,
+): boolean =>
+  member.status === 'active' &&
+  (member.role === 'owner' || member.role === 'editor');
