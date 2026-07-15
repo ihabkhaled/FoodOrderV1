@@ -331,8 +331,12 @@ test.describe('v1.5.0 social management and notifications', () => {
       .first();
     await expect(notificationButton).toContainText('2');
     await notificationButton.click();
-    await expect(page.getByText('Member left group')).toBeVisible();
-    await expect(page.getByText('Friend removed')).toBeVisible();
+    await expect(
+      page.getByRole('button', { name: /^Member left group/u }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole('button', { name: /^Friend removed/u }),
+    ).toBeVisible();
 
     await page.getByLabel('Delete group Team Alpha').click();
     await expect(
