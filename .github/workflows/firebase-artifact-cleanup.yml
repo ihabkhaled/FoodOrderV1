@@ -1,0 +1,46 @@
+name: Firebase Artifact Cleanup Policy
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  configure-cleanup-policy:
+    name: Configure europe-west1 cleanup policy
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      FIREBASE_PROJECT_ID: foodorder-c997c
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 26
+          cache: npm
+      - run: npm ci
+      - name: Prepare Firebase credentials
+        shell: bash
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: |
+          set -euo pipefail
+          if [[ -z "${FIREBASE_SERVICE_ACCOUNT}" ]]; then
+            echo "::error::The FIREBASE_SERVICE_ACCOUNT repository secret is required."
+            exit 1
+          fi
+          echo "::add-mask::${FIREBASE_SERVICE_ACCOUNT}"
+          printf '%s' "${FIREBASE_SERVICE_ACCOUNT}" > "${RUNNER_TEMP}/firebase-service-account.json"
+          echo "GOOGLE_APPLICATION_CREDENTIALS=${RUNNER_TEMP}/firebase-service-account.json" >> "${GITHUB_ENV}"
+      - name: Configure Firebase Functions artifact cleanup
+        continue-on-error: true
+        shell: bash
+        run: |
+          npx firebase functions:artifacts:setpolicy \
+            --project "${FIREBASE_PROJECT_ID}" \
+            --location europe-west1 \
+            --days 7 \
+            --force \
+            --non-interactive || \
+            echo "::warning::Cleanup policy was not changed. Add Artifact Registry Administrator to the CI service account before running this optional workflow again."

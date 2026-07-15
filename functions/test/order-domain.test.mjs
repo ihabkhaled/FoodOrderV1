@@ -3,6 +3,7 @@ import test from 'node:test';
 
 import {
   effectiveMemberCustomItemPermissions,
+  memberCanPlaceGroupOrder,
 } from '../lib/functions/src/memberPermissions.js';
 import {
   buildOrderSnapshot,
@@ -16,6 +17,39 @@ test('legacy editors receive custom-item permissions by default', () => {
       canSetCustomItemPrice: true,
     },
   );
+});
+
+test('only active owners and editors may finalize a group order', () => {
+  assert.equal(
+    memberCanPlaceGroupOrder({ role: 'owner', status: 'active' }),
+    true,
+  );
+  assert.equal(
+    memberCanPlaceGroupOrder({ role: 'editor', status: 'active' }),
+    true,
+  );
+  assert.equal(
+    memberCanPlaceGroupOrder({ role: 'contributor', status: 'active' }),
+    false,
+  );
+  assert.equal(
+    memberCanPlaceGroupOrder({ role: 'editor', status: 'revoked' }),
+    false,
+  );
+});
+
+test('v1.3.2 callable entrypoint exports legacy and versioned endpoints', async () => {
+  const functions = await import('../lib/functions/src/main.js');
+  for (const name of [
+    'finalizeGroupOrder',
+    'finalizeGroupOrderV132',
+    'addCustomBucketItem',
+    'addCustomBucketItemV132',
+    'approveCustomBucketItem',
+    'approveCustomBucketItemV132',
+  ]) {
+    assert.equal(typeof functions[name], 'function', `${name} must be exported`);
+  }
 });
 
 test('order finalization recovers from missing contribution documents using the aggregate', () => {

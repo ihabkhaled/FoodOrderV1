@@ -346,12 +346,129 @@ jobs:
             for (const [name, value] of failures) console.error(`- ${name}: ${value.result}`);
             process.exit(1);
           }
-          console.log('All mandatory repository gates are green. External Vercel deployment status is advisory for APK generation.');
+          console.log('All mandatory repository gates are green.');
           NODE
+
+  firebase-deploy:
+    name: Firebase Deployment Gate
+    needs: all-gates-green
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      FIREBASE_PROJECT_ID: foodorder-c997c
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 26
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            functions/package-lock.json
+      - run: npm ci
+      - run: npm --prefix functions ci
+      - name: Revalidate release and callable package
+        run: |
+          npm run quality:release
+          npm run functions:validate
+      - name: Prepare Firebase credentials
+        if: github.event_name != 'pull_request'
+        shell: bash
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}
+          FIREBASE_SERVICE_ACCOUNT_BASE64: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_BASE64 }}
+          GOOGLE_APPLICATION_CREDENTIALS_JSON: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_JSON }}
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          FIREBASE_CI_TOKEN: ${{ secrets.FIREBASE_CI_TOKEN }}
+        run: |
+          set -euo pipefail
+          credentials="${FIREBASE_SERVICE_ACCOUNT:-${FIREBASE_SERVICE_ACCOUNT_JSON:-${GOOGLE_APPLICATION_CREDENTIALS_JSON:-${GCP_SA_KEY:-}}}}"
+          token="${FIREBASE_TOKEN:-${FIREBASE_CI_TOKEN:-}}"
+          if [[ -n "${FIREBASE_SERVICE_ACCOUNT_BASE64:-}" ]]; then
+            echo "::add-mask::${FIREBASE_SERVICE_ACCOUNT_BASE64}"
+            printf '%s' "${FIREBASE_SERVICE_ACCOUNT_BASE64}" | base64 --decode > "${RUNNER_TEMP}/firebase-service-account.json"
+            echo "GOOGLE_APPLICATION_CREDENTIALS=${RUNNER_TEMP}/firebase-service-account.json" >> "${GITHUB_ENV}"
+          elif [[ -n "${credentials}" ]]; then
+            echo "::add-mask::${credentials}"
+            printf '%s' "${credentials}" > "${RUNNER_TEMP}/firebase-service-account.json"
+            echo "GOOGLE_APPLICATION_CREDENTIALS=${RUNNER_TEMP}/firebase-service-account.json" >> "${GITHUB_ENV}"
+          elif [[ -n "${token}" ]]; then
+            echo "::add-mask::${token}"
+            echo "FIREBASE_DEPLOY_TOKEN=${token}" >> "${GITHUB_ENV}"
+          else
+            echo "::error::Firebase deployment credentials are required before APK generation and release."
+            exit 1
+          fi
+      - name: Deploy Firebase Functions and Firestore rules
+        if: github.event_name != 'pull_request'
+        shell: bash
+        run: |
+          set -uo pipefail
+          deploy_args=(
+            deploy
+            --project "${FIREBASE_PROJECT_ID}"
+            --only functions,firestore:rules
+            --non-interactive
+          )
+          if [[ -n "${FIREBASE_DEPLOY_TOKEN:-}" ]]; then
+            deploy_args+=(--token "${FIREBASE_DEPLOY_TOKEN}")
+          fi
+
+          set +e
+          npx firebase "${deploy_args[@]}" 2>&1 | tee firebase-deploy.log
+          deploy_status=${PIPESTATUS[0]}
+          set -e
+
+          if [[ "${deploy_status}" -ne 0 ]]; then
+            if grep --fixed-strings --quiet \
+              'Functions successfully deployed but could not set up cleanup policy' \
+              firebase-deploy.log; then
+              echo "::warning::Functions and rules deployed successfully, but the service account cannot configure the optional Artifact Registry cleanup policy. Live endpoint smoke tests will still be enforced."
+            else
+              exit "${deploy_status}"
+            fi
+          fi
+      - name: Smoke-test deployed v1.3.3 callables
+        if: github.event_name != 'pull_request'
+        shell: bash
+        run: |
+          set -euo pipefail
+          for callable in \
+            finalizeGroupOrderV132 \
+            addCustomBucketItemV132 \
+            approveCustomBucketItemV132 \
+            repeatGroupOrderV133 \
+            transitionGroupOrderV133
+          do
+            endpoint="https://europe-west1-${FIREBASE_PROJECT_ID}.cloudfunctions.net/${callable}"
+            response_file="${RUNNER_TEMP}/${callable}.json"
+            status="$(curl --silent --show-error \
+              --output "${response_file}" \
+              --write-out '%{http_code}' \
+              --request POST \
+              --header 'Content-Type: application/json' \
+              --data '{"data":{}}' \
+              "${endpoint}")"
+            if [[ "${status}" == "404" || "${status}" -ge 500 ]]; then
+              cat "${response_file}"
+              echo "::error::${callable} deployment smoke test returned HTTP ${status}."
+              exit 1
+            fi
+            if ! grep --ignore-case --quiet 'UNAUTHENTICATED' "${response_file}"; then
+              cat "${response_file}"
+              echo "::error::${callable} did not return the expected authentication boundary."
+              exit 1
+            fi
+          done
+      - name: Confirm pull-request deployment preflight
+        if: github.event_name == 'pull_request'
+        run: echo "Firebase callable build, tests, and release integrity passed. Production deployment is reserved for main."
 
   generate-apk:
     name: Generate APK
-    needs: all-gates-green
+    needs: firebase-deploy
     uses: ./.github/workflows/android-apk.yml
     permissions:
       contents: read
