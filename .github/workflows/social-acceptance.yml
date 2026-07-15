@@ -1,0 +1,43 @@
+name: Social Sharing Acceptance
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: social-acceptance-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  social-sharing-acceptance:
+    name: Friends Groups and Bucket Sharing
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 26
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            functions/package-lock.json
+      - run: npm ci
+      - run: npm --prefix functions ci
+      - name: Verify release version consistency
+        run: npm run quality:release
+      - name: Compile and test trusted social functions
+        run: npm run functions:validate
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Run full friend-group-bucket acceptance journey
+        run: npm run test:e2e:social
+      - uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: social-sharing-playwright-report
+          path: playwright-report/
+          if-no-files-found: warn

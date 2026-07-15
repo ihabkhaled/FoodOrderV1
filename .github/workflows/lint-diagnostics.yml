@@ -23,15 +23,24 @@ jobs:
             functions/package-lock.json
       - run: npm ci
       - run: npm --prefix functions ci
-      - run: npm run lint:fix
+      - name: Run autofix and capture all diagnostics
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -o pipefail
+          npm run lint:fix 2>&1 | tee lint-autofix.log
       - name: Capture autofix patch
         shell: bash
         run: git diff --binary > lint-autofix.patch
       - uses: actions/upload-artifact@v7
         if: always()
         with:
-          name: lint-autofix-patch
-          path: lint-autofix.patch
+          name: lint-autofix-diagnostics
+          path: |
+            lint-autofix.log
+            lint-autofix.patch
           if-no-files-found: error
-      - name: Require no pending lint changes
-        run: git diff --exit-code
+      - name: Require committed lint-clean state
+        run: |
+          git diff --exit-code
+          npm run lint

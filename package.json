@@ -1,6 +1,6 @@
 {
   "name": "food-order-v1",
-  "version": "1.3.4",
+  "version": "1.4.0",
   "private": true,
   "type": "module",
   "description": "A mobile-first Capacitor application for reusable food buckets and order tracking.",
@@ -23,6 +23,7 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:e2e": "playwright test",
+    "test:e2e:social": "playwright test tests/e2e/social-sharing.spec.ts --project=chromium",
     "test:e2e:critical": "playwright test tests/e2e/group-order.spec.ts tests/e2e/order-lifecycle.spec.ts tests/e2e/bucket-pricing.spec.ts --project=chromium",
     "test:rules": "firebase emulators:exec --project food-order-v1-rules-test --only firestore \"vitest run --config vitest.rules.config.ts\"",
     "functions:typecheck": "npm --prefix functions run typecheck",

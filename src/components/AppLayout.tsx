@@ -10,6 +10,7 @@ import {
   Settings,
   ShoppingBasket,
   Sun,
+  Users,
   Wifi,
   WifiOff,
 } from 'lucide-react';
@@ -29,6 +30,7 @@ import type { Theme } from '@/types/domain';
 const NAV_ITEMS: { to: string; icon: typeof Home; key: MessageKey }[] = [
   { to: '/', icon: Home, key: 'dashboard' },
   { to: '/buckets', icon: ShoppingBasket, key: 'buckets' },
+  { to: '/social', icon: Users, key: 'members' },
   { to: '/orders', icon: ListOrdered, key: 'orders' },
   { to: '/settings', icon: Settings, key: 'settings' },
 ];

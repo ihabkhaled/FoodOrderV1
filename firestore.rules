@@ -1,11 +1,26 @@
 rules_version = '2';
 
-// Authorization for FoodOrderV1 schema v3.
-// Client role checks are UX only; this file and trusted Functions are enforcement.
+// Authorization for FoodOrderV1 schema v4.
+// Client role checks are UX only; Security Rules and trusted Functions are enforcement.
 service cloud.firestore {
   match /databases/{database}/documents {
     function signedIn() { return request.auth != null; }
     function owns(userId) { return signedIn() && request.auth.uid == userId; }
+
+    // Exact-email discovery is performed only by trusted callable Functions.
+    // Clients may publish their own directory entry but can never read the directory.
+    match /publicProfiles/{userId} {
+      function validPublicProfile() {
+        return owns(userId)
+          && request.resource.data.userId == userId
+          && request.resource.data.email == request.auth.token.email
+          && request.resource.data.emailNormalized == request.auth.token.email
+          && request.resource.data.displayName is string;
+      }
+      allow read: if false;
+      allow create, update: if validPublicProfile();
+      allow delete: if owns(userId);
+    }
 
     match /users/{userId} {
       function validProfile() {
@@ -83,9 +98,40 @@ service cloud.firestore {
         allow read, write: if owns(userId);
       }
 
+      // Social mirrors are readable only by their owner. All mutations are performed
+      // by callable Functions so clients cannot forge requests, friendships, or groups.
+      match /friendRequests/{requestId} {
+        allow read: if owns(userId);
+        allow write: if false;
+      }
+      match /friends/{friendId} {
+        allow read: if owns(userId);
+        allow write: if false;
+      }
+      match /groupInvitations/{groupId} {
+        allow read: if owns(userId);
+        allow write: if false;
+      }
+      match /groupMemberships/{groupId} {
+        allow read: if owns(userId);
+        allow write: if false;
+      }
+
       match /buckets/{bucketId} {
         allow read, delete: if owns(userId);
         allow create, update: if false;
+      }
+    }
+
+    // Friend groups and membership changes are callable-only. Overview data is returned
+    // through a trusted function that filters it to the authenticated user.
+    match /friendGroups/{groupId} {
+      allow read, write: if false;
+      match /members/{memberId} {
+        allow read, write: if false;
+      }
+      match /bucketGrants/{bucketId} {
+        allow read, write: if false;
       }
     }
 
@@ -314,6 +360,12 @@ service cloud.firestore {
       match /orderMutations/{mutationId} {
         allow read: if isBucketOwner();
         allow write: if false;
+      }
+
+      // Direct-user and group grants are independent trusted sources. Clients cannot
+      // forge or remove them; owners read the effective grant list through a callable.
+      match /accessGrants/{grantId} {
+        allow read, write: if false;
       }
 
       match /activity/{eventId} {
