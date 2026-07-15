@@ -38,8 +38,8 @@ test('only active owners and editors may finalize a group order', () => {
   );
 });
 
-test('v1.3.2 callable entrypoint exports legacy and versioned endpoints', async () => {
-  const functions = await import('../lib/functions/src/main.js');
+test('deployment entrypoint preserves every released and social callable', async () => {
+  const functions = await import('../lib/functions/src/entry.js');
   for (const name of [
     'finalizeGroupOrder',
     'finalizeGroupOrderV132',
@@ -47,6 +47,18 @@ test('v1.3.2 callable entrypoint exports legacy and versioned endpoints', async 
     'addCustomBucketItemV132',
     'approveCustomBucketItem',
     'approveCustomBucketItemV132',
+    'repeatGroupOrderV133',
+    'transitionGroupOrderV133',
+    'searchSocialUserByEmail',
+    'getSocialOverview',
+    'sendFriendRequest',
+    'respondFriendRequest',
+    'createFriendGroup',
+    'inviteFriendToGroup',
+    'respondFriendGroupInvitation',
+    'shareBucketWithFriendGroup',
+    'shareBucketWithFriend',
+    'listBucketAccessGrants',
   ]) {
     assert.equal(typeof functions[name], 'function', `${name} must be exported`);
   }
