@@ -1,4 +1,5 @@
 export * from './main.js';
+export * from './notifications.js';
 export {
   createFriendGroup,
   getSocialOverview,
@@ -12,11 +13,10 @@ export {
 } from './social.js';
 export {
   deleteFriendGroupV150,
-  inviteFriendToGroupV150,
   inviteFriendToGroupV150 as inviteFriendToGroup,
+  inviteFriendToGroupV150,
   leaveFriendGroupV150,
   removeFriendGroupMemberV150,
   unfriendV150,
   updateFriendGroupV150,
 } from './socialV150.js';
-export * from './notifications.js';

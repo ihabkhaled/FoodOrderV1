@@ -271,14 +271,33 @@ test.describe('v1.5.0 social management and notifications', () => {
       renamed.getByLabel('Invite friend — Team Alpha'),
     ).not.toContainText('Bob Pending');
 
-    const aliceMembership = await page.evaluate((databaseKey) => {
-      const database = JSON.parse(localStorage.getItem(databaseKey) ?? '{}');
-      return database.sharing.members['bucket-social'].find(
-        (member: { userId: string }) => member.userId === 'alice-1',
+    const aliceMembership = await page.evaluate<
+      { status: string; role: string; accessSources: string[] },
+      string
+    >((databaseKey) => {
+      const raw = localStorage.getItem(databaseKey);
+      if (!raw) throw new Error('Local database was not found.');
+      const database = JSON.parse(raw) as {
+        sharing: {
+          members: Record<
+            string,
+            Array<{
+              userId: string;
+              status: string;
+              role: string;
+              accessSources: string[];
+            }>
+          >;
+        };
+      };
+      const membership = database.sharing.members['bucket-social']?.find(
+        (member) => member.userId === 'alice-1',
       );
+      if (!membership) throw new Error('Alice membership was not found.');
+      return membership;
     }, DATABASE_KEY);
     expect(aliceMembership.status).toBe('active');
-    expect(aliceMembership.role).toBe('editor');
+    expect(aliceMembership.role).toBe('viewer');
     expect(aliceMembership.accessSources).toEqual(['user_alice-1']);
 
     await switchUser(page, 'alice-1');

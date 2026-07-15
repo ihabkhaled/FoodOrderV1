@@ -148,6 +148,16 @@ export function SocialPage() {
     }, s('groupUpdated'));
   };
 
+  const removeMember = async (
+    groupId: string,
+    memberId: string,
+  ): Promise<void> => {
+    await run(
+      () => socialService.removeGroupMember(groupId, memberId),
+      s('memberRemoved'),
+    );
+  };
+
   const availableFriends = (group: FriendGroup): SocialUser[] =>
     overview.friends.filter(
       (friend) =>
@@ -550,14 +560,7 @@ export function SocialPage() {
                                 title={s('removeMember')}
                                 aria-label={`${s('removeMember')} ${member.displayName}`}
                                 onClick={() =>
-                                  void run(
-                                    () =>
-                                      socialService.removeGroupMember(
-                                        group.id,
-                                        member.userId,
-                                      ),
-                                    s('memberRemoved'),
-                                  )
+                                  void removeMember(group.id, member.userId)
                                 }
                               >
                                 <UserMinus />

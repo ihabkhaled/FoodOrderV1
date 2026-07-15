@@ -49,7 +49,7 @@ export function NotificationCenter({
   const openNotification = (notification: AppNotification): void => {
     if (!notification.readAt) void onMarkRead([notification.id]);
     setOpen(false);
-    navigate(notification.route);
+    void navigate(notification.route);
   };
 
   return (

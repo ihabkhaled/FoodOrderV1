@@ -2,17 +2,17 @@ import { getFirestore } from 'firebase-admin/firestore';
 import { HttpsError, onCall } from 'firebase-functions/v2/https';
 
 import {
+  queueNotification,
+  writeNotifications,
+} from './notificationCore.js';
+import {
   canInviteGroupMember,
   optionalText,
   removeAccessSource,
   requiredText,
-  strongestRoleFromGrants,
   type ShareRole,
+  strongestRoleFromGrants,
 } from './socialDomain.js';
-import {
-  queueNotification,
-  writeNotifications,
-} from './notificationCore.js';
 
 const REGION = 'europe-west1';
 const GROUP_SOURCE_PREFIX = 'group_';

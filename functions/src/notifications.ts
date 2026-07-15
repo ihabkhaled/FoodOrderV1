@@ -187,7 +187,7 @@ export const notifyBucketUpdatedV150 = onDocumentUpdated(
     ) {
       return;
     }
-    const bucketId = event.params.bucketId as string;
+    const bucketId = event.params.bucketId;
     const bucket = after as unknown as BucketRecord;
     const title = bucket.title ?? 'A shared bucket';
     const recipients = await bucketRecipients(bucketId, bucket.ownerId);
@@ -210,7 +210,7 @@ export const notifyBucketDeletedV150 = onDocumentDeleted(
   async (event) => {
     const bucket = event.data?.data() as BucketRecord | undefined;
     if (!bucket) return;
-    const bucketId = event.params.bucketId as string;
+    const bucketId = event.params.bucketId;
     const recipients = await bucketRecipients(bucketId, bucket.ownerId);
     await writeNotifications(recipients, {
       id: event.id,
@@ -273,9 +273,9 @@ export const notifyOrderPlacedV150 = onDocumentCreated(
   async (event) => {
     const order = event.data?.data() as OrderRecord | undefined;
     if (!order || order.status !== 'placed') return;
-    const orderId = event.params.orderId as string;
+    const orderId = event.params.orderId;
     await writeNotification(
-      event.params.userId as string,
+      event.params.userId,
       orderNotification(
         'order_placed',
         'Order placed',
@@ -293,7 +293,7 @@ export const notifyOrderUpdatedV150 = onDocumentUpdated(
     const before = event.data?.before.data() as OrderRecord | undefined;
     const after = event.data?.after.data() as OrderRecord | undefined;
     if (!before || !after || JSON.stringify(before) === JSON.stringify(after)) return;
-    const orderId = event.params.orderId as string;
+    const orderId = event.params.orderId;
     let kind: NotificationKind = 'order_updated';
     let title = 'Order updated';
     if (before.status !== after.status && after.status === 'completed') {
@@ -304,7 +304,7 @@ export const notifyOrderUpdatedV150 = onDocumentUpdated(
       title = 'Order cancelled';
     }
     await writeNotification(
-      event.params.userId as string,
+      event.params.userId,
       orderNotification(
         kind,
         title,
@@ -320,8 +320,8 @@ export const notifyOrderDeletedV150 = onDocumentDeleted(
   { document: 'users/{userId}/orders/{orderId}', region: REGION },
   async (event) => {
     const order = event.data?.data() as OrderRecord | undefined;
-    const orderId = event.params.orderId as string;
-    await writeNotification(event.params.userId as string, {
+    const orderId = event.params.orderId;
+    await writeNotification(event.params.userId, {
       id: event.id,
       kind: 'order_deleted',
       title: 'Order deleted',
@@ -344,7 +344,7 @@ export const notifyFriendRequestV150 = onDocumentWritten(
     const before = event.data?.before.data() as FriendRequestRecord | undefined;
     const after = event.data?.after.data() as FriendRequestRecord | undefined;
     if (!after) return;
-    const userId = event.params.userId as string;
+    const userId = event.params.userId;
     if (
       after.status === 'pending' &&
       before?.status !== 'pending' &&
@@ -393,7 +393,7 @@ export const notifyGroupInvitationV150 = onDocumentWritten(
     const before = event.data?.before.data() as GroupInvitationRecord | undefined;
     const after = event.data?.after.data() as GroupInvitationRecord | undefined;
     if (!after) return;
-    const userId = event.params.userId as string;
+    const userId = event.params.userId;
     if (after.status === 'pending' && before?.status !== 'pending') {
       await writeNotification(userId, {
         id: event.id,

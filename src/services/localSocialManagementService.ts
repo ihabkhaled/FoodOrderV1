@@ -91,9 +91,21 @@ const detachGroupAccess = (
     const accessSources = (member.accessSources ?? []).filter(
       (source) => source !== grant.id,
     );
+    const rolePriority = { viewer: 1, contributor: 2, editor: 3 } as const;
+    const remainingRole = socialDatabase.grants
+      .filter((candidate) => accessSources.includes(candidate.id))
+      .reduce<BucketAccessGrant['role'] | null>((strongest, candidate) => {
+        if (!strongest) return candidate.role;
+        return rolePriority[candidate.role] > rolePriority[strongest]
+          ? candidate.role
+          : strongest;
+      }, null);
     members[index] = {
       ...member,
-      status: accessSources.length === 0 ? 'revoked' : member.status,
+      role: remainingRole ?? member.role,
+      status: remainingRole ? 'active' : 'revoked',
+      canCreateCustomItems: remainingRole === 'editor',
+      canSetCustomItemPrice: remainingRole === 'editor',
       accessSources,
       updatedAt: new Date().toISOString(),
     } as MemberWithSources;
@@ -149,7 +161,7 @@ export class LocalSocialManagementService
     }
   }
 
-  async unfriend(friendId: string): Promise<void> {
+  unfriend(friendId: string): Promise<void> {
     const actor = currentUser();
     const database = readSocialDatabase();
     const friend = (database.friends[actor.userId] ?? []).find(
@@ -178,6 +190,7 @@ export class LocalSocialManagementService
       entityId: actor.userId,
       ...notificationActor(actor),
     });
+    return Promise.resolve();
   }
 
   override async inviteFriendToGroup(
