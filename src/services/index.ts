@@ -9,6 +9,10 @@ import {
   LocalDataService,
 } from '@/services/localServices';
 import {
+  FirestoreNotificationService,
+  LocalNotificationService,
+} from '@/services/notificationServices';
+import {
   FirestoreCallableOrderLifecycleService,
   LocalOrderLifecycleService,
 } from '@/services/orderLifecycleServices';
@@ -39,4 +43,7 @@ export const paginationService = env.firebaseEnabled
 export const socialService = env.firebaseEnabled
   ? withFirebaseErrorTranslation(new FirestoreCallableSocialService())
   : new LocalSocialService();
+export const notificationService = env.firebaseEnabled
+  ? new FirestoreNotificationService()
+  : new LocalNotificationService();
 export const storageMode = env.firebaseEnabled ? 'firebase' : 'local-device';

@@ -1,4 +1,10 @@
 export type ShareRole = 'editor' | 'contributor' | 'viewer';
+export type GroupMembershipStatus =
+  | 'pending'
+  | 'active'
+  | 'declined'
+  | 'removed'
+  | 'left';
 
 const ROLE_PRIORITY: Record<ShareRole, number> = {
   viewer: 1,
@@ -51,6 +57,17 @@ export const strongestRole = (
     : requested;
 };
 
+export const strongestRoleFromGrants = (roles: unknown[]): ShareRole | null => {
+  const validRoles = roles.filter(
+    (role): role is ShareRole =>
+      role === 'editor' || role === 'contributor' || role === 'viewer',
+  );
+  if (validRoles.length === 0) return null;
+  return validRoles.reduce<ShareRole>((current, role) =>
+    strongestRole(current, role),
+  );
+};
+
 export const mergeAccessSources = (
   current: unknown,
   sourceId: string,
@@ -62,6 +79,21 @@ export const mergeAccessSources = (
     left.localeCompare(right),
   );
 };
+
+export const removeAccessSource = (
+  current: unknown,
+  sourceId: string,
+): string[] => {
+  const existing = Array.isArray(current)
+    ? current.filter((value): value is string => typeof value === 'string')
+    : [];
+  return [...new Set(existing.filter((value) => value !== sourceId))].sort(
+    (left, right) => left.localeCompare(right),
+  );
+};
+
+export const canInviteGroupMember = (status: unknown): boolean =>
+  status !== 'active' && status !== 'pending';
 
 export const friendRequestId = (senderId: string, recipientId: string): string =>
   `${senderId}_${recipientId}`;

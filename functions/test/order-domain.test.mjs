@@ -38,7 +38,7 @@ test('only active owners and editors may finalize a group order', () => {
   );
 });
 
-test('deployment entrypoint preserves every released and social callable', async () => {
+test('deployment entrypoint preserves every released and v1.5.0 endpoint', async () => {
   const functions = await import('../lib/functions/src/entry.js');
   for (const name of [
     'finalizeGroupOrder',
@@ -55,10 +55,26 @@ test('deployment entrypoint preserves every released and social callable', async
     'respondFriendRequest',
     'createFriendGroup',
     'inviteFriendToGroup',
+    'inviteFriendToGroupV150',
     'respondFriendGroupInvitation',
     'shareBucketWithFriendGroup',
     'shareBucketWithFriend',
     'listBucketAccessGrants',
+    'unfriendV150',
+    'updateFriendGroupV150',
+    'deleteFriendGroupV150',
+    'removeFriendGroupMemberV150',
+    'leaveFriendGroupV150',
+    'getNotificationsV150',
+    'markNotificationsReadV150',
+    'notifyBucketUpdatedV150',
+    'notifyBucketDeletedV150',
+    'notifyBucketSharedV150',
+    'notifyOrderPlacedV150',
+    'notifyOrderUpdatedV150',
+    'notifyOrderDeletedV150',
+    'notifyFriendRequestV150',
+    'notifyGroupInvitationV150',
   ]) {
     assert.equal(typeof functions[name], 'function', `${name} must be exported`);
   }
