@@ -62,10 +62,11 @@ export const strongestRoleFromGrants = (roles: unknown[]): ShareRole | null => {
     (role): role is ShareRole =>
       role === 'editor' || role === 'contributor' || role === 'viewer',
   );
-  if (validRoles.length === 0) return null;
-  return validRoles.reduce<ShareRole>((current, role) =>
-    strongestRole(current, role),
-  );
+  const firstRole = validRoles[0];
+  if (!firstRole) return null;
+  return validRoles
+    .slice(1)
+    .reduce((current, role) => strongestRole(current, role), firstRole);
 };
 
 export const mergeAccessSources = (
