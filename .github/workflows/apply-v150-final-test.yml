@@ -1,0 +1,48 @@
+name: Apply v1.5.0 Final Test Fix
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apply-final-test-fix:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+          fetch-depth: 0
+      - name: Scope notification assertions to notification buttons
+        shell: bash
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+
+          path = Path('tests/e2e/social-management.spec.ts')
+          content = path.read_text()
+          old = """    await expect(page.getByText('Member left group')).toBeVisible();
+              await expect(page.getByText('Friend removed')).toBeVisible();"""
+          new = """    await expect(
+                page.getByRole('button', { name: /^Member left group/u }),
+              ).toBeVisible();
+              await expect(
+                page.getByRole('button', { name: /^Friend removed/u }),
+              ).toBeVisible();"""
+          if old not in content:
+              raise SystemExit('Expected notification assertions were not found.')
+          path.write_text(content.replace(old, new, 1))
+          PY
+          git rm .github/workflows/apply-v150-final-test.yml
+      - name: Commit selector correction
+        shell: bash
+        run: |
+          git add -A
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'test: scope social notification assertions'
+          git push origin HEAD:${{ github.head_ref || github.ref_name }}
