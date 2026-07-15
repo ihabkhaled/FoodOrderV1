@@ -18,7 +18,13 @@ import { dataService, orderLifecycleService } from '@/services';
 import { useApp } from '@/state/AppContext';
 import type { Order, OrderStatus } from '@/types/domain';
 
-function OrderLineSummary({ order, locale }: { order: Order; locale: 'en' | 'ar' }) {
+function OrderLineSummary({
+  order,
+  locale,
+}: {
+  order: Order;
+  locale: 'en' | 'ar';
+}) {
   const charges = getOrderChargeBreakdown(order);
   return (
     <section className="section-card">
@@ -92,7 +98,7 @@ export function OrderDetailsPage() {
   const transition = async (status: OrderStatus) => {
     if (!user || !order) return;
     try {
-      const saved = order.groupReceipt
+      const saved = order.participants
         ? await orderLifecycleService.transitionGroupOrder(user, order.id, status)
         : await dataService.updateOrderStatus(user.id, order.id, status);
       setOrder(saved);
@@ -105,7 +111,7 @@ export function OrderDetailsPage() {
   const repeat = async () => {
     if (!user || !order) return;
     try {
-      const created = order.groupReceipt
+      const created = order.participants
         ? await orderLifecycleService.repeatGroupOrder(user, order.id)
         : await dataService.createOrder(user.id, buildRepeatedOrderDraft(order));
       showToast(t('draftFromOrder'), 'success');
@@ -124,7 +130,9 @@ export function OrderDetailsPage() {
     );
   }
 
-  const itemNames = new Map(order.lines.map((line) => [line.bucketItemId, line.name]));
+  const itemNames = new Map(
+    order.lines.map((line) => [line.bucketItemId, line.name]),
+  );
 
   return (
     <div className="page narrow stack-lg">
@@ -144,7 +152,7 @@ export function OrderDetailsPage() {
       </header>
 
       <OrderLineSummary order={order} locale={locale} />
-      {order.groupReceipt ? (
+      {order.participants && order.groupReceipt ? (
         <GroupReceiptSection
           receipt={order.groupReceipt}
           currency={order.currency}

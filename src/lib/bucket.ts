@@ -64,6 +64,30 @@ export const normalizeBucketItems = (items: BucketDraft['items']): BucketItem[] 
   return normalized;
 };
 
+export const buildDuplicateBucketDraft = (
+  bucket: Bucket,
+  copySuffix: string,
+): BucketDraft => ({
+  title: `${bucket.title} (${copySuffix})`.slice(0, 60),
+  description: bucket.description,
+  currency: bucket.currency,
+  pricingPolicy: {
+    ...(bucket.pricingPolicy ?? DEFAULT_PRICING_POLICY),
+  },
+  customItemMode: bucket.customItemMode ?? 'proposal',
+  items: bucket.items.map(
+    ({ name, description, category, unitPrice, active, sortOrder }) => ({
+      id: '',
+      name,
+      description,
+      category,
+      unitPrice,
+      active,
+      sortOrder,
+    }),
+  ),
+});
+
 export const createBucket = (
   owner: { id: string; displayName: string },
   draft: BucketDraft,
@@ -89,7 +113,9 @@ export const createBucket = (
     status: 'active',
     orderState: 'open',
     customItemMode: draft.customItemMode ?? 'proposal',
-    pricingPolicy: validatePricingPolicy(draft.pricingPolicy ?? DEFAULT_PRICING_POLICY),
+    pricingPolicy: validatePricingPolicy(
+      draft.pricingPolicy ?? DEFAULT_PRICING_POLICY,
+    ),
     frozenAt: null,
     frozenBy: null,
     schemaVersion: BUCKET_SCHEMA_VERSION,
@@ -150,7 +176,9 @@ export const upgradeLegacyBucket = (
     status: 'active',
     orderState: legacy.orderState ?? 'open',
     customItemMode: legacy.customItemMode ?? 'proposal',
-    pricingPolicy: validatePricingPolicy(legacy.pricingPolicy ?? DEFAULT_PRICING_POLICY),
+    pricingPolicy: validatePricingPolicy(
+      legacy.pricingPolicy ?? DEFAULT_PRICING_POLICY,
+    ),
     frozenAt: legacy.frozenAt ?? null,
     frozenBy: legacy.frozenBy ?? null,
     schemaVersion: BUCKET_SCHEMA_VERSION,

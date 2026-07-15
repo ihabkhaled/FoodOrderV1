@@ -1,90 +1,40 @@
 import { ReceiptText } from 'lucide-react';
-import { useEffect, useMemo, useState } from 'react';
 
 import { translateGroupOrder } from '@/i18n/groupOrderMessages';
-import type { MessageKey } from '@/i18n/messages';
-import { DEFAULT_PRICING_POLICY } from '@/lib/bucket';
-import type {
-  BucketPricingPolicy,
-  Locale,
-} from '@/types/domain';
-
-interface PricingForm {
-  vatPercent: string;
-  servicePercent: string;
-  deliveryAmount: string;
-  vatAllocation: BucketPricingPolicy['vatAllocation'];
-  serviceAllocation: BucketPricingPolicy['serviceAllocation'];
-  deliveryAllocation: BucketPricingPolicy['deliveryAllocation'];
-}
+import type { BucketPricingPolicy, Locale } from '@/types/domain';
 
 interface BucketPricingPanelProps {
   locale: Locale;
-  policy: BucketPricingPolicy | undefined;
-  disabled: boolean;
-  saving: boolean;
-  translate: (key: MessageKey) => string;
-  onSave: (policy: BucketPricingPolicy) => void;
+  policy: BucketPricingPolicy;
+  disabled?: boolean;
+  onChange: (policy: BucketPricingPolicy) => void;
 }
 
-const toForm = (policy: BucketPricingPolicy): PricingForm => ({
-  vatPercent: String(policy.vatBasisPoints / 100),
-  servicePercent: String(policy.serviceBasisPoints / 100),
-  deliveryAmount: String(policy.deliveryMinor / 100),
-  vatAllocation: policy.vatAllocation,
-  serviceAllocation: policy.serviceAllocation,
-  deliveryAllocation: policy.deliveryAllocation,
-});
+const toBasisPoints = (value: string): number => {
+  const percentage = Number(value);
+  if (!Number.isFinite(percentage)) return 0;
+  return Math.round(Math.min(100, Math.max(0, percentage)) * 100);
+};
 
-const toPolicy = (form: PricingForm): BucketPricingPolicy | null => {
-  const vatPercent = Number(form.vatPercent);
-  const servicePercent = Number(form.servicePercent);
-  const deliveryAmount = Number(form.deliveryAmount);
-
-  if (
-    !Number.isFinite(vatPercent) ||
-    !Number.isFinite(servicePercent) ||
-    !Number.isFinite(deliveryAmount) ||
-    vatPercent < 0 ||
-    servicePercent < 0 ||
-    deliveryAmount < 0
-  ) {
-    return null;
-  }
-
-  return {
-    vatBasisPoints: Math.round(vatPercent * 100),
-    serviceBasisPoints: Math.round(servicePercent * 100),
-    deliveryMinor: Math.round(deliveryAmount * 100),
-    vatAllocation: form.vatAllocation,
-    serviceAllocation: form.serviceAllocation,
-    deliveryAllocation: form.deliveryAllocation,
-  };
+const toMinorUnits = (value: string): number => {
+  const amount = Number(value);
+  if (!Number.isFinite(amount)) return 0;
+  return Math.round(Math.max(0, amount) * 100);
 };
 
 export function BucketPricingPanel({
   locale,
   policy,
-  disabled,
-  saving,
-  translate,
-  onSave,
+  disabled = false,
+  onChange,
 }: BucketPricingPanelProps) {
-  const normalizedPolicy = policy ?? DEFAULT_PRICING_POLICY;
-  const [form, setForm] = useState<PricingForm>(() => toForm(normalizedPolicy));
-  const parsedPolicy = useMemo(() => toPolicy(form), [form]);
   const groupTranslate = (key: Parameters<typeof translateGroupOrder>[1]) =>
     translateGroupOrder(locale, key);
-
-  useEffect(() => {
-    setForm(toForm(normalizedPolicy));
-  }, [normalizedPolicy]);
-
   const updateAllocation = (
     field: 'vatAllocation' | 'serviceAllocation' | 'deliveryAllocation',
     value: BucketPricingPolicy['vatAllocation'],
   ) => {
-    setForm((current) => ({ ...current, [field]: value }));
+    onChange({ ...policy, [field]: value });
   };
 
   return (
@@ -106,13 +56,13 @@ export function BucketPricingPanel({
             min="0"
             max="100"
             step="0.01"
-            value={form.vatPercent}
+            value={policy.vatBasisPoints / 100}
             disabled={disabled}
             onChange={(event) => {
-              setForm((current) => ({
-                ...current,
-                vatPercent: event.target.value,
-              }));
+              onChange({
+                ...policy,
+                vatBasisPoints: toBasisPoints(event.target.value),
+              });
             }}
           />
         </label>
@@ -123,13 +73,13 @@ export function BucketPricingPanel({
             min="0"
             max="100"
             step="0.01"
-            value={form.servicePercent}
+            value={policy.serviceBasisPoints / 100}
             disabled={disabled}
             onChange={(event) => {
-              setForm((current) => ({
-                ...current,
-                servicePercent: event.target.value,
-              }));
+              onChange({
+                ...policy,
+                serviceBasisPoints: toBasisPoints(event.target.value),
+              });
             }}
           />
         </label>
@@ -139,13 +89,13 @@ export function BucketPricingPanel({
             type="number"
             min="0"
             step="0.01"
-            value={form.deliveryAmount}
+            value={policy.deliveryMinor / 100}
             disabled={disabled}
             onChange={(event) => {
-              setForm((current) => ({
-                ...current,
-                deliveryAmount: event.target.value,
-              }));
+              onChange({
+                ...policy,
+                deliveryMinor: toMinorUnits(event.target.value),
+              });
             }}
           />
         </label>
@@ -156,7 +106,7 @@ export function BucketPricingPanel({
             <label key={field}>
               {groupTranslate('allocation')}
               <select
-                value={form[field]}
+                value={policy[field]}
                 disabled={disabled}
                 onChange={(event) => {
                   updateAllocation(
@@ -174,15 +124,6 @@ export function BucketPricingPanel({
           ),
         )}
       </div>
-      <button
-        className="button"
-        disabled={disabled || saving || !parsedPolicy}
-        onClick={() => {
-          if (parsedPolicy) onSave(parsedPolicy);
-        }}
-      >
-        {saving ? translate('loading') : groupTranslate('savePricing')}
-      </button>
     </section>
   );
 }

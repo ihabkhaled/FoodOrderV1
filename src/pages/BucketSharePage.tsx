@@ -5,7 +5,6 @@ import { Link, useParams } from 'react-router-dom';
 import { ActivityTimeline } from '@/components/ActivityTimeline';
 import { BucketInvitePanel } from '@/components/BucketInvitePanel';
 import { BucketMemberPermissionsPanel } from '@/components/BucketMemberPermissionsPanel';
-import { BucketPricingPanel } from '@/components/BucketPricingPanel';
 import { ConfirmDialog } from '@/components/ConfirmDialog';
 import { ErrorState } from '@/components/ErrorState';
 import { Loading } from '@/components/Loading';
@@ -19,7 +18,6 @@ import type {
   BucketActivityEvent,
   BucketInvite,
   BucketMember,
-  BucketPricingPolicy,
   BucketRole,
 } from '@/types/domain';
 
@@ -61,7 +59,13 @@ function BucketStateControls({
   return null;
 }
 
-function BucketStateBanner({ bucket, locale }: { bucket: Bucket; locale: 'en' | 'ar' }) {
+function BucketStateBanner({
+  bucket,
+  locale,
+}: {
+  bucket: Bucket;
+  locale: 'en' | 'ar';
+}) {
   const state = bucket.orderState ?? 'open';
   if (state === 'open') return null;
 
@@ -93,7 +97,6 @@ export function BucketSharePage() {
   const [removing, setRemoving] = useState<BucketMember | null>(null);
   const [confirmingFreeze, setConfirmingFreeze] = useState(false);
   const [enabling, setEnabling] = useState(false);
-  const [savingPricing, setSavingPricing] = useState(false);
 
   const load = useCallback(async () => {
     if (!user || !bucketId) return;
@@ -152,16 +155,6 @@ export function BucketSharePage() {
     }
   };
 
-  const savePricing = async (policy: BucketPricingPolicy) => {
-    if (!user || !bucketId) return;
-    setSavingPricing(true);
-    await runBucketAction(
-      () => sharingService.updatePricingPolicy(user, bucketId, policy),
-      gt('pricingSaved'),
-    );
-    setSavingPricing(false);
-  };
-
   const freeze = async () => {
     if (!user || !bucketId) return;
     await runBucketAction(
@@ -211,7 +204,9 @@ export function BucketSharePage() {
       await sharingService.revokeInvite(user, bucketId, inviteId);
       setInvites((current) =>
         current.map((invite) =>
-          invite.id === inviteId ? { ...invite, status: 'revoked' as const } : invite,
+          invite.id === inviteId
+            ? { ...invite, status: 'revoked' as const }
+            : invite,
         ),
       );
       showToast(t('inviteRevoked'), 'success');
@@ -240,7 +235,12 @@ export function BucketSharePage() {
     if (!user || !bucketId) return;
     try {
       replaceMember(
-        await sharingService.changeMemberRole(user, bucketId, member.userId, role),
+        await sharingService.changeMemberRole(
+          user,
+          bucketId,
+          member.userId,
+          role,
+        ),
       );
       showToast(t('roleChanged'), 'success');
     } catch (error_) {
@@ -265,7 +265,9 @@ export function BucketSharePage() {
             canCreateCustomItems:
               patch.canCreateCustomItems ?? member.canCreateCustomItems ?? false,
             canSetCustomItemPrice:
-              patch.canSetCustomItemPrice ?? member.canSetCustomItemPrice ?? false,
+              patch.canSetCustomItemPrice ??
+              member.canSetCustomItemPrice ??
+              false,
           },
         ),
       );
@@ -310,7 +312,6 @@ export function BucketSharePage() {
   }
 
   const { bucket, members } = view;
-  const isOpen = (bucket.orderState ?? 'open') === 'open';
 
   return (
     <div className="page narrow stack-lg">
@@ -337,16 +338,6 @@ export function BucketSharePage() {
       </header>
 
       <BucketStateBanner bucket={bucket} locale={locale} />
-      <BucketPricingPanel
-        locale={locale}
-        policy={bucket.pricingPolicy}
-        disabled={!isOpen}
-        saving={savingPricing}
-        translate={t}
-        onSave={(policy) => {
-          void savePricing(policy);
-        }}
-      />
 
       {bucket.visibility === 'shared' ? (
         <>
