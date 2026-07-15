@@ -11,7 +11,6 @@ import {
 } from './socialDomain.js';
 import {
   queueNotification,
-  writeNotification,
   writeNotifications,
 } from './notificationCore.js';
 
@@ -85,7 +84,9 @@ const dataOf = (value: unknown): Record<string, unknown> =>
 const authUser = (
   auth: { uid: string; token: Record<string, unknown> } | undefined,
 ): SocialUser => {
-  if (!auth) throw new HttpsError('unauthenticated', 'Authentication is required.');
+  if (!auth) {
+    throw new HttpsError('unauthenticated', 'Authentication is required.');
+  }
   const email =
     typeof auth.token.email === 'string'
       ? auth.token.email.trim().toLowerCase()
@@ -120,7 +121,9 @@ const ownedGroup = async (
 }> => {
   const reference = db().collection('friendGroups').doc(groupId);
   const snapshot = await reference.get();
-  if (!snapshot.exists) throw new HttpsError('not-found', 'Friend group was not found.');
+  if (!snapshot.exists) {
+    throw new HttpsError('not-found', 'Friend group was not found.');
+  }
   const group = snapshot.data() as GroupRecord;
   if (group.ownerId !== ownerId) {
     throw new HttpsError(
@@ -134,7 +137,6 @@ const ownedGroup = async (
 const revokeBucketMembership = async (
   bucketId: string,
   userId: string,
-  member: BucketMemberRecord,
 ): Promise<void> => {
   const timestamp = new Date().toISOString();
   const batch = db().batch();
@@ -171,7 +173,7 @@ const detachGroupAccess = async (
     `${GROUP_SOURCE_PREFIX}${groupId}`,
   );
   if (accessSources.length === 0) {
-    await revokeBucketMembership(bucketId, userId, member);
+    await revokeBucketMembership(bucketId, userId);
     return;
   }
 
@@ -188,7 +190,7 @@ const detachGroupAccess = async (
     .map((snapshot) => snapshot.data() as BucketGrantRecord);
   const role = strongestRoleFromGrants(grants.map((grant) => grant.role));
   if (!role) {
-    await revokeBucketMembership(bucketId, userId, member);
+    await revokeBucketMembership(bucketId, userId);
     return;
   }
 
@@ -244,8 +246,9 @@ export const unfriendV150 = onCall({ region: REGION }, async (request) => {
     friendId,
   );
   const friendSnapshot = await actorFriendReference.get();
-  if (!friendSnapshot.exists) throw new HttpsError('not-found', 'Friend was not found.');
-  const friend = friendSnapshot.data() as SocialUser;
+  if (!friendSnapshot.exists) {
+    throw new HttpsError('not-found', 'Friend was not found.');
+  }
   const batch = db().batch();
   batch.delete(actorFriendReference);
   batch.delete(userSubcollection(friendId, 'friends').doc(actor.userId));
@@ -253,7 +256,9 @@ export const unfriendV150 = onCall({ region: REGION }, async (request) => {
     `${actor.userId}_${friendId}`,
     `${friendId}_${actor.userId}`,
   ]) {
-    batch.delete(userSubcollection(actor.userId, 'friendRequests').doc(requestId));
+    batch.delete(
+      userSubcollection(actor.userId, 'friendRequests').doc(requestId),
+    );
     batch.delete(userSubcollection(friendId, 'friendRequests').doc(requestId));
   }
   queueNotification(batch, friendId, {
@@ -301,10 +306,10 @@ export const inviteFriendToGroupV150 = onCall(
         'This friend is already in or invited to the group.',
       );
     }
-    const friend = friendSnapshot.data() as SocialUser;
+    const invitedFriend = friendSnapshot.data() as SocialUser;
     const timestamp = new Date().toISOString();
     const member: GroupMemberRecord = {
-      ...friend,
+      ...invitedFriend,
       status: 'pending',
       invitedBy: owner.userId,
       invitedAt: timestamp,
@@ -314,7 +319,7 @@ export const inviteFriendToGroupV150 = onCall(
       groupId,
       groupName: group.name,
       owner,
-      recipient: friend,
+      recipient: invitedFriend,
       status: 'pending',
       invitedAt: timestamp,
       respondedAt: null,
@@ -351,7 +356,11 @@ export const updateFriendGroupV150 = onCall(
     ]);
     const timestamp = new Date().toISOString();
     const batch = db().batch();
-    batch.set(reference, { name, description, updatedAt: timestamp }, { merge: true });
+    batch.set(
+      reference,
+      { name, description, updatedAt: timestamp },
+      { merge: true },
+    );
     const activeRecipients: string[] = [];
     for (const document of membersSnapshot.docs) {
       const member = document.data() as GroupMemberRecord;
@@ -361,7 +370,9 @@ export const updateFriendGroupV150 = onCall(
           { groupName: name, updatedAt: timestamp },
           { merge: true },
         );
-        if (member.userId !== owner.userId) activeRecipients.push(member.userId);
+        if (member.userId !== owner.userId) {
+          activeRecipients.push(member.userId);
+        }
       }
       if (member.userId !== owner.userId) {
         batch.set(
@@ -395,7 +406,13 @@ export const updateFriendGroupV150 = onCall(
       actorId: owner.userId,
       actorName: owner.displayName,
     });
-    return { ...group, name, description, updatedAt: timestamp, members: membersSnapshot.docs.map((document) => document.data()) };
+    return {
+      ...group,
+      name,
+      description,
+      updatedAt: timestamp,
+      members: membersSnapshot.docs.map((document) => document.data()),
+    };
   },
 );
 
@@ -412,7 +429,10 @@ export const removeFriendGroupMemberV150 = onCall(
     );
     const { reference, group } = await ownedGroup(groupId, owner.userId);
     if (memberId === owner.userId) {
-      throw new HttpsError('failed-precondition', 'The group owner cannot be removed.');
+      throw new HttpsError(
+        'failed-precondition',
+        'The group owner cannot be removed.',
+      );
     }
     const memberReference = reference.collection('members').doc(memberId);
     const memberSnapshot = await memberReference.get();
@@ -470,7 +490,9 @@ export const leaveFriendGroupV150 = onCall(
       reference.get(),
       reference.collection('members').doc(actor.userId).get(),
     ]);
-    if (!groupSnapshot.exists) throw new HttpsError('not-found', 'Friend group was not found.');
+    if (!groupSnapshot.exists) {
+      throw new HttpsError('not-found', 'Friend group was not found.');
+    }
     const group = groupSnapshot.data() as GroupRecord;
     if (group.ownerId === actor.userId) {
       throw new HttpsError(
@@ -529,7 +551,8 @@ export const deleteFriendGroupV150 = onCall(
     const activeRecipients = membersSnapshot.docs
       .map((document) => document.data() as GroupMemberRecord)
       .filter(
-        (member) => member.userId !== owner.userId && member.status === 'active',
+        (member) =>
+          member.userId !== owner.userId && member.status === 'active',
       );
     await Promise.all(
       activeRecipients.flatMap((member) =>
@@ -548,8 +571,12 @@ export const deleteFriendGroupV150 = onCall(
       const member = document.data() as GroupMemberRecord;
       batch.delete(document.ref);
       if (member.userId !== owner.userId) {
-        batch.delete(userSubcollection(member.userId, 'groupInvitations').doc(groupId));
-        batch.delete(userSubcollection(member.userId, 'groupMemberships').doc(groupId));
+        batch.delete(
+          userSubcollection(member.userId, 'groupInvitations').doc(groupId),
+        );
+        batch.delete(
+          userSubcollection(member.userId, 'groupMemberships').doc(groupId),
+        );
       }
     }
     batch.delete(userSubcollection(owner.userId, 'groupMemberships').doc(groupId));
