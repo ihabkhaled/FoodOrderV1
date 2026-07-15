@@ -253,16 +253,21 @@ test.describe('v1.5.0 social management and notifications', () => {
     await seedSocialManagement(page);
     await page.goto('/social');
 
-    const company = page.getByLabel('Group Company A');
+    const company = page.getByRole('article', {
+      name: 'Group Company A',
+      exact: true,
+    });
     await expect(company.getByText('Every friend is already in or invited')).toBeVisible();
 
     await company.getByLabel('Edit group Company A').click();
     await company.getByLabel('Group name').fill('Team Alpha');
     await company.getByLabel('Description').fill('Updated team group');
     await company.getByRole('button', { name: 'Save changes' }).click();
-    await expect(page.getByLabel('Group Team Alpha')).toBeVisible();
-
-    const renamed = page.getByLabel('Group Team Alpha');
+    const renamed = page.getByRole('article', {
+      name: 'Group Team Alpha',
+      exact: true,
+    });
+    await expect(renamed).toBeVisible();
     await renamed.getByLabel('Remove member Alice Friend').click();
     await expect(
       renamed.getByLabel('Invite friend — Team Alpha'),
@@ -302,14 +307,20 @@ test.describe('v1.5.0 social management and notifications', () => {
 
     await switchUser(page, 'alice-1');
     await page.goto('/social');
-    await expect(page.getByLabel('Group Team Alpha')).toHaveCount(0);
-    await expect(page.getByLabel('Group Community')).toBeVisible();
+    await expect(
+      page.getByRole('article', { name: 'Group Team Alpha', exact: true }),
+    ).toHaveCount(0);
+    await expect(
+      page.getByRole('article', { name: 'Group Community', exact: true }),
+    ).toBeVisible();
     await expect(
       page.getByRole('button', { name: 'Notifications' }).first(),
     ).toContainText('1');
 
     await page.getByLabel('Leave group Community').click();
-    await expect(page.getByLabel('Group Community')).toHaveCount(0);
+    await expect(
+      page.getByRole('article', { name: 'Group Community', exact: true }),
+    ).toHaveCount(0);
     await page.getByLabel('Unfriend Company Owner').click();
     await expect(page.getByText('Company Owner')).toHaveCount(0);
 
@@ -324,6 +335,8 @@ test.describe('v1.5.0 social management and notifications', () => {
     await expect(page.getByText('Friend removed')).toBeVisible();
 
     await page.getByLabel('Delete group Team Alpha').click();
-    await expect(page.getByLabel('Group Team Alpha')).toHaveCount(0);
+    await expect(
+      page.getByRole('article', { name: 'Group Team Alpha', exact: true }),
+    ).toHaveCount(0);
   });
 });
