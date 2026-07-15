@@ -315,7 +315,7 @@ test.describe('v1.5.0 social management and notifications', () => {
     ).toBeVisible();
     await expect(
       page.getByRole('button', { name: 'Notifications' }).first(),
-    ).toContainText('1');
+    ).toContainText('2');
 
     await page.getByLabel('Leave group Community').click();
     await expect(
