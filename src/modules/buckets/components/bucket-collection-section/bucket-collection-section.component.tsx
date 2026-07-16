@@ -66,6 +66,7 @@ export function BucketCollectionSection({
       {items.length > 0 ? (
         <AppVirtuosoGrid
           className="virtual-grid-list"
+          useWindowScroll
           data={items}
           computeItemKey={(_, bucket) => bucket.id}
           listClassName="virtual-grid"

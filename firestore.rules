@@ -112,6 +112,14 @@ service cloud.firestore {
         allow read: if owns(userId);
         allow write: if false;
       }
+      // Targeted bucket invitations and notifications are returned through
+      // trusted callables. Clients cannot enumerate or forge either record.
+      match /bucketInvitations/{bucketId} {
+        allow read, write: if false;
+      }
+      match /notifications/{notificationId} {
+        allow read, write: if false;
+      }
       match /groupMemberships/{groupId} {
         allow read: if owns(userId);
         allow write: if false;
@@ -365,6 +373,10 @@ service cloud.firestore {
       // Direct-user and group grants are independent trusted sources. Clients cannot
       // forge or remove them; owners read the effective grant list through a callable.
       match /accessGrants/{grantId} {
+        allow read, write: if false;
+      }
+
+      match /socialInvitations/{recipientId} {
         allow read, write: if false;
       }
 

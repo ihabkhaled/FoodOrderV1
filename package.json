@@ -65,7 +65,8 @@
     "quality:release": "node scripts/check-release-version.mjs",
     "quality:agent-docs": "node scripts/check-agent-docs.mjs",
     "quality": "npm run lint && npm run typecheck && npm run quality:circular && npm run quality:release && npm run quality:agent-docs",
-    "deps:check": "npm outdated || true"
+    "deps:check": "npm outdated || true",
+    "functions:deploy:batched": "node scripts/deploy-functions-batched.mjs"
   },
   "dependencies": {
     "@capacitor/app": "^8.1.0",

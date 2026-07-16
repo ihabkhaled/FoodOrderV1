@@ -6,6 +6,11 @@
       "hash": "29dcee9ae619fc2d53fd17e61e9420a7825753ec9d9f2346b45c96eaabe1814e"
     },
     {
+      "path": "tests/components/BackLink.test.tsx",
+      "bytes": 1478,
+      "hash": "83b694b8ea0b84fdb540b39e8237d8efaaadfcf8d02a8a1d37ea05bfa54b1f69"
+    },
+    {
       "path": "tests/components/ConfirmDialog.test.tsx",
       "bytes": 1574,
       "hash": "3df095bb499a63a76259df135c9b99ce3989a8109f51f08c7a0c2996a82cffa3"
@@ -14,6 +19,11 @@
       "path": "tests/components/GroupOrderComponents.test.tsx",
       "bytes": 6464,
       "hash": "19790b4834d46bf6d32865952fafd75b62e773147967ece677c9986d320d6bf0"
+    },
+    {
+      "path": "tests/components/NotificationCenter.test.tsx",
+      "bytes": 1862,
+      "hash": "4018eaf75763a26c43ff7bf5400489f5b15ecf6defb0cb896e54c674f1d96046"
     },
     {
       "path": "tests/domain/bucket.test.ts",
@@ -71,9 +81,19 @@
       "hash": "c98fbc06dc4d9d65565b65d37056bc0a5a1876180f0cd7b6094bf1b8b9918269"
     },
     {
+      "path": "tests/e2e/helpers/responsiveScenario.ts",
+      "bytes": 7843,
+      "hash": "ccd7574c4fcb5e8a375e71667adbf42f96d2c2e5e8c6ffe05c4afb375ced75d2"
+    },
+    {
       "path": "tests/e2e/order-lifecycle.spec.ts",
       "bytes": 7646,
       "hash": "0b5f5088d9ff33b821d1eddeebc968288044a62813d3e151a2b6ac4cff8d3d1a"
+    },
+    {
+      "path": "tests/e2e/responsive-navigation.spec.ts",
+      "bytes": 11468,
+      "hash": "38faf0fbe7c6d2570f4dc2dd5d4673579af0acdb537ad802b20960e2e5ff481a"
     },
     {
       "path": "tests/e2e/smoke.spec.ts",
@@ -87,8 +107,8 @@
     },
     {
       "path": "tests/e2e/social-sharing.spec.ts",
-      "bytes": 5030,
-      "hash": "5aad4a4c5deffbd584482e1c77230737bbf66bf763ef9222acdfbb9e87c1528f"
+      "bytes": 11997,
+      "hash": "7e31afb723a72ffdf9ea32967ba65451d3b3b3c6b19321aea416ab6630c9fc2b"
     },
     {
       "path": "tests/e2e/ui.spec.ts",
@@ -117,8 +137,8 @@
     },
     {
       "path": "tests/firebase/social.rules.test.ts",
-      "bytes": 4273,
-      "hash": "ec228acdfe79b83f5defe18886d24acbf99aa37a021bd45139ba9b9ea7d78db2"
+      "bytes": 6525,
+      "hash": "1380b0b2fac7fbff1dee23d79d22a4cd2d76805cb5f0e0b8d574d68be1bfd522"
     },
     {
       "path": "tests/order-repeat.test.ts",
@@ -144,6 +164,11 @@
       "path": "tests/services/sharingLocal.test.ts",
       "bytes": 11110,
       "hash": "962533d727218b1b8ff3ca5f57f423993101e7a0f1569b4856dd741013fdb26e"
+    },
+    {
+      "path": "tests/services/socialInvitations.test.ts",
+      "bytes": 8195,
+      "hash": "7424888d5f233cc513c01fbc5547b0d5a92ff8abb69a36c80888c480db50b08d"
     },
     {
       "path": "tests/setup.ts",

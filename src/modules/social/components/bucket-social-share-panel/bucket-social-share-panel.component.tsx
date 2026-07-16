@@ -19,7 +19,7 @@ interface BucketSocialSharePanelViewProps {
   onFriendIdChange: (value: string) => void;
   onGroupIdChange: (value: string) => void;
   onRoleChange: (value: Exclude<BucketRole, 'owner'>) => void;
-  onShareWithFriend: () => void;
+  onInviteFriend: () => void;
   onShareWithGroup: () => void;
 }
 
@@ -35,7 +35,7 @@ export function BucketSocialSharePanelView({
   onFriendIdChange,
   onGroupIdChange,
   onRoleChange,
-  onShareWithFriend,
+  onInviteFriend,
   onShareWithGroup,
 }: BucketSocialSharePanelViewProps) {
   return (
@@ -81,10 +81,10 @@ export function BucketSocialSharePanelView({
         <button
           className="button secondary"
           disabled={disabled || saving || !friendId}
-          onClick={onShareWithFriend}
+          onClick={onInviteFriend}
         >
           <Share2 />
-          {s('shareWithUser')}
+          {s('inviteToBucket')}
         </button>
       </div>
 

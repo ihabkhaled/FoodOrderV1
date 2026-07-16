@@ -5,6 +5,7 @@ import type { SocialService } from '../contracts/social-service.interfaces';
 import type { Bucket, BucketMember } from '../types/domain.types';
 import type {
   BucketAccessGrant,
+  BucketInvitation,
   FriendGroup,
   FriendRequest,
   GroupInvitation,
@@ -39,6 +40,7 @@ interface LocalSocialDatabase {
   friends: Record<string, SocialUser[]>;
   groups: FriendGroup[];
   invitations: GroupInvitation[];
+  bucketInvitations: BucketInvitation[];
   grants: BucketAccessGrant[];
 }
 
@@ -68,6 +70,7 @@ const emptySocialDatabase = (): LocalSocialDatabase => ({
   friends: {},
   groups: [],
   invitations: [],
+  bucketInvitations: [],
   grants: [],
 });
 
@@ -149,8 +152,9 @@ const updateBucketMember = (
   const existing = members[index] as
     | (BucketMember & { accessSources?: string[] })
     | undefined;
+  const activeExisting = existing?.status === 'active' ? existing : undefined;
   const timestamp = new Date().toISOString();
-  const effectiveRole = strongestRole(existing?.role, role);
+  const effectiveRole = strongestRole(activeExisting?.role, role);
   const saved: BucketMember & { accessSources: string[] } = {
     userId: recipient.userId,
     displayName: recipient.displayName,
@@ -158,14 +162,14 @@ const updateBucketMember = (
     role: effectiveRole,
     status: 'active',
     canCreateCustomItems:
-      existing?.canCreateCustomItems ?? effectiveRole === 'editor',
+      activeExisting?.canCreateCustomItems ?? effectiveRole === 'editor',
     canSetCustomItemPrice:
-      existing?.canSetCustomItemPrice ?? effectiveRole === 'editor',
+      activeExisting?.canSetCustomItemPrice ?? effectiveRole === 'editor',
     invitedBy: bucket.ownerId,
-    joinedAt: existing?.joinedAt ?? timestamp,
+    joinedAt: activeExisting?.joinedAt ?? timestamp,
     updatedAt: timestamp,
     accessSources: [
-      ...new Set([...(existing?.accessSources ?? []), sourceId]),
+      ...new Set([...(activeExisting?.accessSources ?? []), sourceId]),
     ].sort((left, right) => left.localeCompare(right)),
   };
   if (index === -1) members.push(saved);
@@ -233,6 +237,11 @@ export class LocalSocialService implements SocialService {
           ),
       ),
       groupInvitations: database.invitations.filter(
+        (invitation) =>
+          invitation.recipient.userId === actor.userId &&
+          invitation.status === 'pending',
+      ),
+      bucketInvitations: database.bucketInvitations.filter(
         (invitation) =>
           invitation.recipient.userId === actor.userId &&
           invitation.status === 'pending',
@@ -407,6 +416,127 @@ export class LocalSocialService implements SocialService {
       );
       for (const grant of grants) materializeGrant(grant, [recipient]);
     }
+    return Promise.resolve();
+  }
+
+  inviteFriendToBucket(
+    bucketId: string,
+    friendId: string,
+    role: ShareRole,
+  ): Promise<BucketInvitation> {
+    const owner = currentUser();
+    const database = readSocialDatabase();
+    const friend = (database.friends[owner.userId] ?? []).find(
+      (candidate) => candidate.userId === friendId,
+    );
+    if (!friend) throw new Error('Only accepted friends may be invited.');
+    const bucket = (readAppDatabase().buckets[owner.userId] ?? []).find(
+      (candidate) => candidate.id === bucketId,
+    );
+    if (!bucket || bucket.ownerId !== owner.userId) {
+      throw new Error('Only the bucket owner may invite friends.');
+    }
+    if (
+      database.grants.some(
+        (grant) =>
+          grant.bucketId === bucketId &&
+          grant.subjectType === 'user' &&
+          grant.subjectId === friendId,
+      )
+    ) {
+      throw new Error('This bucket is already shared with that friend.');
+    }
+    const existing = database.bucketInvitations.find(
+      (invitation) =>
+        invitation.bucketId === bucketId &&
+        invitation.recipient.userId === friendId,
+    );
+    if (existing?.status === 'pending') return Promise.resolve(existing);
+
+    const timestamp = new Date().toISOString();
+    const invitation: BucketInvitation = {
+      id: `${bucketId}_${friendId}`,
+      bucketId,
+      bucketTitle: bucket.title,
+      owner,
+      recipient: friend,
+      role,
+      status: 'pending',
+      createdAt: timestamp,
+      respondedAt: null,
+    };
+    database.bucketInvitations = [
+      ...database.bucketInvitations.filter(
+        (candidate) =>
+          candidate.bucketId !== bucketId ||
+          candidate.recipient.userId !== friendId,
+      ),
+      invitation,
+    ];
+    writeSocialDatabase(database);
+    return Promise.resolve(invitation);
+  }
+
+  respondBucketInvitation(
+    bucketId: string,
+    response: 'accepted' | 'declined',
+  ): Promise<void> {
+    const recipient = currentUser();
+    const database = readSocialDatabase();
+    const invitation = database.bucketInvitations.find(
+      (candidate) =>
+        candidate.bucketId === bucketId &&
+        candidate.recipient.userId === recipient.userId,
+    );
+    if (!invitation) {
+      const bucketExists = Object.values(readAppDatabase().buckets)
+        .flat()
+        .some((bucket) => bucket.id === bucketId);
+      if (response === 'declined' && !bucketExists) return Promise.resolve();
+      throw new Error('Bucket invitation was not found.');
+    }
+    if (invitation.status === response) return Promise.resolve();
+    if (invitation.status !== 'pending') {
+      throw new Error('Bucket invitation has already been answered.');
+    }
+    const ownerBucket = (
+      readAppDatabase().buckets[invitation.owner.userId] ?? []
+    ).find((bucket) => bucket.id === bucketId);
+    if (!ownerBucket && response === 'declined') {
+      database.bucketInvitations = database.bucketInvitations.filter(
+        (candidate) => candidate.id !== invitation.id,
+      );
+      writeSocialDatabase(database);
+      return Promise.resolve();
+    }
+    if (!ownerBucket || ownerBucket.ownerId !== invitation.owner.userId) {
+      throw new Error('Bucket ownership no longer matches this invitation.');
+    }
+    const timestamp = new Date().toISOString();
+    if (response === 'accepted') {
+      const existingGrant = database.grants.find(
+        (grant) =>
+          grant.bucketId === bucketId &&
+          grant.subjectType === 'user' &&
+          grant.subjectId === recipient.userId,
+      );
+      const grant: BucketAccessGrant = existingGrant ?? {
+        id: `user_${recipient.userId}`,
+        bucketId,
+        subjectType: 'user',
+        subjectId: recipient.userId,
+        subjectName: recipient.displayName,
+        role: invitation.role,
+        grantedBy: invitation.owner.userId,
+        createdAt: timestamp,
+        invitationId: invitation.id,
+      };
+      materializeGrant(grant, [recipient]);
+      if (!existingGrant) database.grants.push(grant);
+    }
+    invitation.status = response;
+    invitation.respondedAt = timestamp;
+    writeSocialDatabase(database);
     return Promise.resolve();
   }
 

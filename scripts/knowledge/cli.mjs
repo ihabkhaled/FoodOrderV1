@@ -6,11 +6,12 @@ import process from 'node:process';
 import { performance } from 'node:perf_hooks';
 
 const root=process.cwd(), ai=path.join(root,'.ai');
-const ignored=new Set(['.git','node_modules','dist','coverage','android','ios','.ai/local']);
+const ignoredNames=new Set(['.git','.worktrees','node_modules','dist','coverage']);
+const ignoredPaths=new Set(['android','ios','.ai/local']);
 const textExt=new Set(['.css','.html','.js','.json','.md','.mjs','.ts','.tsx','.yaml','.yml']);
 const posix=p=>p.split(path.sep).join('/');
 const sha=s=>createHash('sha256').update(s).digest('hex');
-async function walk(dir=root){let out=[];for(const e of await readdir(dir,{withFileTypes:true})){const full=path.join(dir,e.name),rel=posix(path.relative(root,full));if([...ignored].some(x=>rel===x||rel.startsWith(`${x}/`)))continue;if(e.isDirectory())out.push(...await walk(full));else out.push(rel);}return out.sort();}
+async function walk(dir=root){let out=[];for(const e of await readdir(dir,{withFileTypes:true})){const full=path.join(dir,e.name),rel=posix(path.relative(root,full));if(ignoredNames.has(e.name)||[...ignoredPaths].some(x=>rel===x||rel.startsWith(`${x}/`)))continue;if(e.isDirectory())out.push(...await walk(full));else out.push(rel);}return out.sort();}
 async function text(file){return readFile(path.join(root,file),'utf8');}
 async function put(file,value){const full=path.join(root,file);await mkdir(path.dirname(full),{recursive:true});await writeFile(full,typeof value==='string'?value:`${JSON.stringify(value,null,2)}\n`);}
 const words=s=>Math.ceil(s.split(/\s+/).filter(Boolean).length*1.33);

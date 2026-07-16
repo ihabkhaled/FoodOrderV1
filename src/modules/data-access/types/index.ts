@@ -27,6 +27,9 @@ export type {
 export type { AppNotification } from './notifications.types';
 export type {
   BucketAccessGrant,
+  BucketInvitation,
+  BucketInvitationStatus,
+  BucketShareRole,
   FriendGroup,
   FriendGroupMember,
   SocialOverview,

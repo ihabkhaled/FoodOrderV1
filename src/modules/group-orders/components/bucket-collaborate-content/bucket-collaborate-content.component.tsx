@@ -15,7 +15,6 @@ import {
   roleAllows,
 } from '@/modules/data-access';
 import {
-  ArrowLeft,
   LogOut,
   RefreshCcw,
   Settings2,
@@ -25,10 +24,11 @@ import {
 import { Link } from '@/packages/router';
 import { formatMoney } from '@/shared/helpers';
 import type { MessageKey } from '@/shared/i18n';
-import { ConfirmDialog } from '@/shared/ui';
+import { BackLink, ConfirmDialog } from '@/shared/ui';
 
 import {
   BUCKETS_REDIRECT_PATH,
+  buildBucketCollaborateRoute,
   buildBucketShareRoute,
 } from '../../routes/group-orders-route-paths.constants';
 import { ActivityTimeline } from '../activity-timeline/activity-timeline.component';
@@ -146,10 +146,7 @@ export function BucketCollaborateContent({
 
   return (
     <div className="page narrow stack-lg">
-      <Link className="back-link" to={BUCKETS_REDIRECT_PATH}>
-        <ArrowLeft />
-        {translate('back')}
-      </Link>
+      <BackLink fallback={BUCKETS_REDIRECT_PATH} label={translate('back')} />
       <header className="page-heading">
         <div>
           <p className="eyebrow">{translate('groupOrder')}</p>
@@ -252,6 +249,7 @@ export function BucketCollaborateContent({
               <Link
                 className="button secondary"
                 to={buildBucketShareRoute(bucket.id)}
+                state={{ from: buildBucketCollaborateRoute(bucket.id) }}
               >
                 <Settings2 />
                 {translate('sharing')}

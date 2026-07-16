@@ -1,9 +1,13 @@
+import './globalOptions.js';
+
 export * from './main.js';
 export * from './notifications.js';
 export {
   createFriendGroup,
   getSocialOverview,
+  inviteFriendToBucketV151,
   listBucketAccessGrants,
+  respondBucketInvitationV151,
   respondFriendGroupInvitation,
   respondFriendRequest,
   searchSocialUserByEmail,

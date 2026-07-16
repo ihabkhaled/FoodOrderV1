@@ -1,10 +1,10 @@
 import type { CurrencyCode } from '@/modules/data-access';
 import { MAX_BUCKET_ITEMS } from '@/modules/data-access';
 import { BucketPricingPanel } from '@/modules/group-orders';
-import { ArrowLeft, GripVertical, Plus, Save, Trash2 } from '@/packages/icons';
+import { GripVertical, Plus, Save, Trash2 } from '@/packages/icons';
 import { Link } from '@/packages/router';
 import { SUPPORTED_CURRENCIES } from '@/platform/device';
-import { Loading } from '@/shared/ui';
+import { BackLink, Loading } from '@/shared/ui';
 
 import { useBucketEditor } from '../hooks/use-bucket-editor.hook';
 import { BUCKETS_PATH } from '../routes/buckets-route-paths.constants';
@@ -18,10 +18,7 @@ export function BucketEditorContainer() {
     <div className="page narrow">
       <div className="page-heading">
         <div>
-          <Link className="back-link" to={BUCKETS_PATH}>
-            <ArrowLeft />
-            {vm.t('back')}
-          </Link>
+          <BackLink fallback={BUCKETS_PATH} label={vm.t('back')} />
           <h1>{vm.isEditing ? vm.t('editBucket') : vm.t('createBucket')}</h1>
           {vm.visibility === 'shared' ? (
             <p className="muted">{vm.t('sharedBucketEditHint')}</p>

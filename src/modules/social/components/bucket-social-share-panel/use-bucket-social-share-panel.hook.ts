@@ -29,7 +29,7 @@ export interface BucketSocialSharePanelViewModel {
   role: Exclude<BucketRole, 'owner'>;
   setRole: (value: Exclude<BucketRole, 'owner'>) => void;
   saving: boolean;
-  shareWithFriend: () => Promise<void>;
+  inviteFriend: () => Promise<void>;
   shareWithGroup: () => Promise<void>;
 }
 
@@ -76,10 +76,18 @@ export function useBucketSocialSharePanel({
     }
   };
 
-  const shareWithFriend = async (): Promise<void> => {
-    await share(() =>
-      socialService.shareBucketWithUser(bucketId, friendId, role),
-    );
+  const inviteFriend = async (): Promise<void> => {
+    if (!friendId) return;
+    try {
+      setSaving(true);
+      await socialService.inviteFriendToBucket(bucketId, friendId, role);
+      setFriendId('');
+      onSuccess(s('bucketInvitationSent'));
+    } catch (error) {
+      onError(error);
+    } finally {
+      setSaving(false);
+    }
   };
 
   const shareWithGroup = async (): Promise<void> => {
@@ -99,7 +107,7 @@ export function useBucketSocialSharePanel({
     role,
     setRole,
     saving,
-    shareWithFriend,
+    inviteFriend,
     shareWithGroup,
   };
 }

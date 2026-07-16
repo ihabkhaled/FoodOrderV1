@@ -13,6 +13,9 @@ export type NotificationKind =
   | 'group_member_removed'
   | 'group_member_left'
   | 'group_deleted'
+  | 'bucket_invitation'
+  | 'bucket_invitation_accepted'
+  | 'bucket_invitation_declined'
   | 'bucket_shared'
   | 'bucket_updated'
   | 'bucket_deleted'
@@ -55,6 +58,23 @@ export const queueNotification = (
 ): NotificationRecord => {
   const notification = notificationRecord(input);
   batch.set(
+    getFirestore()
+      .collection('users')
+      .doc(userId)
+      .collection('notifications')
+      .doc(notification.id),
+    notification,
+  );
+  return notification;
+};
+
+export const queueTransactionNotification = (
+  transaction: FirebaseFirestore.Transaction,
+  userId: string,
+  input: NotificationInput,
+): NotificationRecord => {
+  const notification = notificationRecord(input);
+  transaction.set(
     getFirestore()
       .collection('users')
       .doc(userId)

@@ -4,7 +4,10 @@ import { Link } from '@/packages/router';
 import { formatDateTime, formatMoney } from '@/shared/helpers';
 import type { MessageKey } from '@/shared/i18n';
 
-import { buildOrderDetailsRoute } from '../../routes/orders-route-paths.constants';
+import {
+  buildOrderDetailsRoute,
+  ORDERS_PATH,
+} from '../../routes/orders-route-paths.constants';
 import { StatusBadge } from '../status-badge/status-badge.component';
 
 interface OrderRowProps {
@@ -17,7 +20,11 @@ interface OrderRowProps {
 export function OrderRow({ order, locale, t, onDelete }: OrderRowProps) {
   return (
     <article className="list-row order-row">
-      <Link to={buildOrderDetailsRoute(order.id)} className="grow">
+      <Link
+        to={buildOrderDetailsRoute(order.id)}
+        state={{ from: ORDERS_PATH }}
+        className="grow"
+      >
         <div>
           <strong>{order.bucketTitle}</strong>
           <span>

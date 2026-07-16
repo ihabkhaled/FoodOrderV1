@@ -29,6 +29,7 @@ export function useNotificationCenter({
 }: NotificationCenterInput): NotificationCenterViewModel {
   const [open, setOpen] = useState(false);
   const root = useRef<HTMLDivElement>(null);
+  const notificationOpenSequence = useRef(0);
   const navigate = useNavigate();
   const s = (key: SocialMessageKey) => translateSocial(locale, key);
   const unread = notifications.filter((notification) => !notification.readAt);
@@ -54,7 +55,10 @@ export function useNotificationCenter({
   const openNotification = (notification: AppNotification): void => {
     if (!notification.readAt) void onMarkRead([notification.id]);
     setOpen(false);
-    void navigate(notification.route);
+    notificationOpenSequence.current += 1;
+    void navigate(notification.route, {
+      state: { notificationOpenSequence: notificationOpenSequence.current },
+    });
   };
 
   return {

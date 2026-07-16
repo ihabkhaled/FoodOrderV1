@@ -5,6 +5,30 @@ export type GroupMembershipStatus =
   | 'declined'
   | 'removed'
   | 'left';
+export type BucketInvitationStatus = 'pending' | 'accepted' | 'declined';
+export type BucketInvitationResponse = 'accepted' | 'declined';
+export type BucketInvitationResponseAction =
+  | 'accept'
+  | 'decline'
+  | 'dismiss'
+  | 'missing-bucket'
+  | 'idempotent'
+  | 'invalid';
+
+export interface ExistingMemberAccess {
+  status?: unknown;
+  role?: unknown;
+  canCreateCustomItems?: unknown;
+  canSetCustomItemPrice?: unknown;
+  accessSources?: unknown;
+}
+
+export interface MaterializedMemberAccess {
+  role: ShareRole;
+  canCreateCustomItems: boolean;
+  canSetCustomItemPrice: boolean;
+  accessSources: string[];
+}
 
 const ROLE_PRIORITY: Record<ShareRole, number> = {
   viewer: 1,
@@ -81,6 +105,27 @@ export const mergeAccessSources = (
   );
 };
 
+export const materializedMemberAccess = (
+  current: ExistingMemberAccess | null,
+  requested: ShareRole,
+  sourceId: string,
+): MaterializedMemberAccess => {
+  const active = current?.status === 'active' ? current : null;
+  const role = strongestRole(active?.role, requested);
+  return {
+    role,
+    canCreateCustomItems:
+      typeof active?.canCreateCustomItems === 'boolean'
+        ? active.canCreateCustomItems
+        : role === 'editor',
+    canSetCustomItemPrice:
+      typeof active?.canSetCustomItemPrice === 'boolean'
+        ? active.canSetCustomItemPrice
+        : role === 'editor',
+    accessSources: mergeAccessSources(active?.accessSources, sourceId),
+  };
+};
+
 export const removeAccessSource = (
   current: unknown,
   sourceId: string,
@@ -98,3 +143,27 @@ export const canInviteGroupMember = (status: unknown): boolean =>
 
 export const friendRequestId = (senderId: string, recipientId: string): string =>
   `${senderId}_${recipientId}`;
+
+export const bucketInvitationId = (
+  bucketId: string,
+  recipientId: string,
+): string => `${bucketId}_${recipientId}`;
+
+export const bucketInvitationTransition = (
+  current: BucketInvitationStatus,
+  response: BucketInvitationResponse,
+): 'apply' | 'idempotent' | 'invalid' => {
+  if (current === response) return 'idempotent';
+  return current === 'pending' ? 'apply' : 'invalid';
+};
+
+export const bucketInvitationResponseAction = (
+  current: BucketInvitationStatus,
+  response: BucketInvitationResponse,
+  bucketExists: boolean,
+): BucketInvitationResponseAction => {
+  const transition = bucketInvitationTransition(current, response);
+  if (transition !== 'apply') return transition;
+  if (response === 'declined') return bucketExists ? 'decline' : 'dismiss';
+  return bucketExists ? 'accept' : 'missing-bucket';
+};

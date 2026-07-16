@@ -4,6 +4,8 @@ import { Link } from '@/packages/router';
 import { formatDateTime, formatMoney } from '@/shared/helpers';
 import type { MessageKey } from '@/shared/i18n';
 
+import { DASHBOARD_NAVIGATION_STATE } from '../../routes/dashboard-route-paths.constants';
+
 interface RecentOrdersSectionProps {
   recentOrders: DashboardSummary['recentOrders'];
   locale: Locale;
@@ -29,6 +31,7 @@ export function RecentOrdersSection({
           {recentOrders.map((order) => (
             <Link
               to={buildOrderDetailsRoute(order.id)}
+              state={DASHBOARD_NAVIGATION_STATE}
               className="list-row"
               key={order.id}
             >

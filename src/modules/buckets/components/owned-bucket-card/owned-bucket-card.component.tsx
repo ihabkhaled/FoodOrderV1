@@ -17,7 +17,10 @@ import { Link } from '@/packages/router';
 import { formatDateTime } from '@/shared/helpers';
 import type { MessageKey } from '@/shared/i18n';
 
-import { buildBucketEditRoute } from '../../routes/buckets-route-paths.constants';
+import {
+  BUCKETS_NAVIGATION_STATE,
+  buildBucketEditRoute,
+} from '../../routes/buckets-route-paths.constants';
 
 interface OwnedBucketCardProps {
   readonly bucket: Bucket;
@@ -80,16 +83,28 @@ export function OwnedBucketCard({
         <span>{formatDateTime(bucket.updatedAt, locale)}</span>
       </div>
       <div className="card-actions">
-        <Link className="button secondary" to={buildBucketEditRoute(bucket.id)}>
+        <Link
+          className="button secondary"
+          to={buildBucketEditRoute(bucket.id)}
+          state={BUCKETS_NAVIGATION_STATE}
+        >
           {t('edit')}
         </Link>
         {bucket.visibility === 'shared' ? (
-          <Link className="button" to={buildBucketCollaborateRoute(bucket.id)}>
+          <Link
+            className="button"
+            to={buildBucketCollaborateRoute(bucket.id)}
+            state={BUCKETS_NAVIGATION_STATE}
+          >
             <Users />
             {t('collaborate')}
           </Link>
         ) : (
-          <Link className="button" to={buildCreateOrderRoute(bucket.id)}>
+          <Link
+            className="button"
+            to={buildCreateOrderRoute(bucket.id)}
+            state={BUCKETS_NAVIGATION_STATE}
+          >
             {t('orderNow')}
           </Link>
         )}
@@ -97,6 +112,7 @@ export function OwnedBucketCard({
           className="icon-button"
           aria-label={`${t('sharing')} — ${bucket.title}`}
           to={buildBucketShareRoute(bucket.id)}
+          state={BUCKETS_NAVIGATION_STATE}
         >
           <Share2 />
         </Link>
@@ -104,6 +120,7 @@ export function OwnedBucketCard({
           className="icon-button"
           aria-label={`${t('members')} — ${bucket.title}`}
           to={buildBucketSocialShareRoute(bucket.id)}
+          state={BUCKETS_NAVIGATION_STATE}
         >
           <UserRoundPlus />
         </Link>

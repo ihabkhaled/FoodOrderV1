@@ -1,7 +1,6 @@
-import { ArrowLeft, Minus, Plus, ShoppingCart } from '@/packages/icons';
-import { Link } from '@/packages/router';
+import { Minus, Plus, ShoppingCart } from '@/packages/icons';
 import { formatMoney } from '@/shared/helpers';
-import { Loading } from '@/shared/ui';
+import { BackLink, Loading } from '@/shared/ui';
 
 import { useCreateOrder } from '../hooks/use-create-order.hook';
 import { BUCKETS_REDIRECT_PATH } from '../routes/orders-route-paths.constants';
@@ -21,10 +20,7 @@ export function CreateOrderContainer() {
 
   return (
     <div className="page narrow">
-      <Link className="back-link" to={BUCKETS_REDIRECT_PATH}>
-        <ArrowLeft />
-        {vm.t('back')}
-      </Link>
+      <BackLink fallback={BUCKETS_REDIRECT_PATH} label={vm.t('back')} />
       <div className="page-heading">
         <div>
           <p className="eyebrow">{vm.t('orderNow')}</p>

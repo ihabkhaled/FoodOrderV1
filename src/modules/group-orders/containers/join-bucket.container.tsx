@@ -1,7 +1,7 @@
 import type { BucketRole } from '@/modules/data-access';
-import { ArrowLeft, KeyRound, UserPlus } from '@/packages/icons';
-import { Link } from '@/packages/router';
+import { KeyRound, UserPlus } from '@/packages/icons';
 import type { MessageKey } from '@/shared/i18n';
+import { BackLink } from '@/shared/ui';
 
 import { useJoinBucket } from '../hooks/use-join-bucket.hook';
 import { BUCKETS_REDIRECT_PATH } from '../routes/group-orders-route-paths.constants';
@@ -18,10 +18,7 @@ export function JoinBucketContainer() {
 
   return (
     <div className="page narrow stack-lg">
-      <Link className="back-link" to={BUCKETS_REDIRECT_PATH}>
-        <ArrowLeft />
-        {vm.t('back')}
-      </Link>
+      <BackLink fallback={BUCKETS_REDIRECT_PATH} label={vm.t('back')} />
       <header className="page-heading">
         <div>
           <p className="eyebrow">{vm.t('sharedWithMe')}</p>

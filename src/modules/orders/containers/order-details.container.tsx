@@ -1,8 +1,6 @@
 import { GroupReceiptSection } from '@/modules/group-orders';
-import { ArrowLeft } from '@/packages/icons';
-import { Link } from '@/packages/router';
 import { formatDateTime } from '@/shared/helpers';
-import { Loading } from '@/shared/ui';
+import { BackLink, Loading } from '@/shared/ui';
 
 import { OrderActionBar } from '../components/order-action-bar/order-action-bar.component';
 import { OrderLineSummary } from '../components/order-line-summary/order-line-summary.component';
@@ -30,10 +28,7 @@ export function OrderDetailsContainer() {
 
   return (
     <div className="page narrow stack-lg">
-      <Link className="back-link" to={ORDERS_PATH}>
-        <ArrowLeft />
-        {vm.t('back')}
-      </Link>
+      <BackLink fallback={ORDERS_PATH} label={vm.t('back')} />
       <header className="page-heading">
         <div>
           <p className="eyebrow">

@@ -1,5 +1,6 @@
 import { ErrorState, Loading } from '@/shared/ui';
 
+import { BucketInvitations } from '../components/bucket-invitations/bucket-invitations.component';
 import { FriendSearch } from '../components/friend-search/friend-search.component';
 import { FriendsList } from '../components/friends-list/friends-list.component';
 import { GroupInvitations } from '../components/group-invitations/group-invitations.component';
@@ -30,7 +31,16 @@ export function SocialContainer() {
         activeGroupCount={vm.activeGroupCount}
         pendingCount={
           vm.overview.incomingRequests.length +
-          vm.overview.groupInvitations.length
+          vm.overview.groupInvitations.length +
+          (vm.overview.bucketInvitations?.length ?? 0)
+        }
+      />
+      <BucketInvitations
+        s={vm.s}
+        t={vm.t}
+        invitations={vm.overview.bucketInvitations ?? []}
+        onRespond={(bucketId, response) =>
+          void vm.respondBucketInvitation(bucketId, response)
         }
       />
       <FriendSearch

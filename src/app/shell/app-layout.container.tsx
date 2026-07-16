@@ -31,7 +31,7 @@ export function AppLayoutContainer() {
     theme,
     setDeviceLocale,
     setDeviceTheme,
-    pathname,
+    contentKey,
     collapsed,
     toggleCollapsed,
     notifications,
@@ -146,7 +146,7 @@ export function AppLayoutContainer() {
       </header>
 
       <main className="main-content">
-        <RefreshableViewport key={pathname} locale={locale}>
+        <RefreshableViewport key={contentKey} locale={locale}>
           <Outlet />
         </RefreshableViewport>
       </main>

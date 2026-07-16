@@ -1,6 +1,8 @@
 import type { BucketRole } from '../types/domain.types';
 import type {
   BucketAccessGrant,
+  BucketInvitation,
+  BucketShareRole,
   FriendGroup,
   FriendRequest,
   SocialOverview,
@@ -20,6 +22,15 @@ export interface SocialService {
   respondGroupInvitation(
     groupId: string,
     response: 'active' | 'declined',
+  ): Promise<void>;
+  inviteFriendToBucket(
+    bucketId: string,
+    friendId: string,
+    role: BucketShareRole,
+  ): Promise<BucketInvitation>;
+  respondBucketInvitation(
+    bucketId: string,
+    response: 'accepted' | 'declined',
   ): Promise<void>;
   shareBucketWithGroup(
     bucketId: string,

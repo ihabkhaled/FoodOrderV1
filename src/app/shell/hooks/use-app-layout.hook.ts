@@ -5,8 +5,13 @@ import { notificationService } from '@/modules/data-access';
 import type { ToastState } from '@/modules/session';
 import { useApp } from '@/modules/session';
 import { useLocation } from '@/packages/router';
+import { scrollViewportToTop } from '@/platform/browser';
 import { loadSidebarCollapsed, saveSidebarCollapsed } from '@/platform/device';
 import type { MessageKey } from '@/shared/i18n';
+
+interface RouteRefreshState {
+  readonly notificationOpenSequence?: unknown;
+}
 
 export interface AppLayoutViewModel {
   t: (key: MessageKey) => string;
@@ -19,7 +24,7 @@ export interface AppLayoutViewModel {
   theme: Theme;
   setDeviceLocale: (locale: Locale) => Promise<void>;
   setDeviceTheme: (theme: Theme) => Promise<void>;
-  pathname: string;
+  contentKey: string;
   collapsed: boolean;
   toggleCollapsed: () => void;
   notifications: AppNotification[];
@@ -44,8 +49,17 @@ export function useAppLayout(): AppLayoutViewModel {
     setDeviceTheme,
   } = useApp();
   const location = useLocation();
+  const routeState = location.state as RouteRefreshState | null;
+  const notificationOpenSequence =
+    typeof routeState?.notificationOpenSequence === 'number'
+      ? routeState.notificationOpenSequence
+      : null;
   const [collapsed, setCollapsed] = useState(false);
   const [notifications, setNotifications] = useState<AppNotification[]>([]);
+
+  useEffect(() => {
+    scrollViewportToTop();
+  }, [location.pathname, notificationOpenSequence]);
 
   useEffect(() => {
     void loadSidebarCollapsed()
@@ -100,7 +114,7 @@ export function useAppLayout(): AppLayoutViewModel {
     theme,
     setDeviceLocale,
     setDeviceTheme,
-    pathname: location.pathname,
+    contentKey: `${location.pathname}:${notificationOpenSequence ?? ''}`,
     collapsed,
     toggleCollapsed,
     notifications,

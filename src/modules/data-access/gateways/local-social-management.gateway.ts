@@ -4,6 +4,8 @@ import type { SocialManagementService } from '../contracts/social-service.interf
 import type { BucketMember } from '../types/domain.types';
 import type {
   BucketAccessGrant,
+  BucketInvitation,
+  BucketShareRole,
   FriendGroup,
   FriendRequest,
   GroupInvitation,
@@ -38,6 +40,7 @@ interface LocalSocialDatabase {
   friends: Record<string, SocialUser[]>;
   groups: FriendGroup[];
   invitations: GroupInvitation[];
+  bucketInvitations: BucketInvitation[];
   grants: BucketAccessGrant[];
 }
 
@@ -56,9 +59,24 @@ const writeAppDatabase = (database: LocalAppDatabase): void => {
 const readSocialDatabase = (): LocalSocialDatabase => {
   const raw = readWebStorage(SOCIAL_DATABASE_KEY);
   if (!raw) {
-    return { requests: [], friends: {}, groups: [], invitations: [], grants: [] };
+    return {
+      requests: [],
+      friends: {},
+      groups: [],
+      invitations: [],
+      bucketInvitations: [],
+      grants: [],
+    };
   }
-  return JSON.parse(raw) as LocalSocialDatabase;
+  const parsed = JSON.parse(raw) as Partial<LocalSocialDatabase>;
+  return {
+    requests: parsed.requests ?? [],
+    friends: parsed.friends ?? {},
+    groups: parsed.groups ?? [],
+    invitations: parsed.invitations ?? [],
+    bucketInvitations: parsed.bucketInvitations ?? [],
+    grants: parsed.grants ?? [],
+  };
 };
 
 const writeSocialDatabase = (database: LocalSocialDatabase): void => {
@@ -245,6 +263,74 @@ export class LocalSocialManagementService
         route: '/social',
         entityType: 'group',
         entityId: groupId,
+        ...notificationActor(actor),
+      });
+    }
+  }
+
+  override async inviteFriendToBucket(
+    bucketId: string,
+    friendId: string,
+    role: BucketShareRole,
+  ): Promise<BucketInvitation> {
+    const actor = currentUser();
+    const existingPending = readSocialDatabase().bucketInvitations.some(
+      (candidate) =>
+        candidate.bucketId === bucketId &&
+        candidate.recipient.userId === friendId &&
+        candidate.status === 'pending',
+    );
+    const invitation = await super.inviteFriendToBucket(
+      bucketId,
+      friendId,
+      role,
+    );
+    if (!existingPending) {
+      pushLocalNotification(friendId, {
+        id: `bucket-invitation-${invitation.id}-${invitation.createdAt}`,
+        kind: 'bucket_invitation',
+        title: 'New bucket invitation',
+        message: `${actor.displayName} invited you to ${invitation.bucketTitle}.`,
+        route: '/social',
+        entityType: 'bucket',
+        entityId: bucketId,
+        ...notificationActor(actor),
+      });
+    }
+    return invitation;
+  }
+
+  override async respondBucketInvitation(
+    bucketId: string,
+    response: 'accepted' | 'declined',
+  ): Promise<void> {
+    const actor = currentUser();
+    const invitation = readSocialDatabase().bucketInvitations.find(
+      (candidate) =>
+        candidate.bucketId === bucketId &&
+        candidate.recipient.userId === actor.userId &&
+        candidate.status === 'pending',
+    );
+    await super.respondBucketInvitation(bucketId, response);
+    const respondedInvitation = readSocialDatabase().bucketInvitations.some(
+      (candidate) =>
+        candidate.id === invitation?.id && candidate.status === response,
+    );
+    if (invitation && respondedInvitation) {
+      pushLocalNotification(invitation.owner.userId, {
+        id: `bucket-invitation-${response}-${invitation.id}-${invitation.createdAt}`,
+        kind:
+          response === 'accepted'
+            ? 'bucket_invitation_accepted'
+            : 'bucket_invitation_declined',
+        title:
+          response === 'accepted'
+            ? 'Bucket invitation accepted'
+            : 'Bucket invitation declined',
+        message: `${actor.displayName} ${response} the invitation to ${invitation.bucketTitle}.`,
+        route: `/buckets/${bucketId}/collaborate`,
+        entityType: 'bucket',
+        entityId: bucketId,
         ...notificationActor(actor),
       });
     }

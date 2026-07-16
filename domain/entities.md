@@ -14,8 +14,10 @@ scope:
   - repository
 relatedCode:
   - src/types/domain.ts
+  - src/types/social.ts
   - src/lib/sharing.ts
-lastVerified: 2026-07-13
+  - functions/src/socialDomain.ts
+lastVerified: 2026-07-16
 verificationMethod: source and test inspection
 contextTier: 2
 generated: false
@@ -37,6 +39,13 @@ expired; `expiresAtMillis` mirrors `expiresAt` for Security Rules), `BucketContr
 `ContributionMutationRecord` (append-only idempotency ledger), `BucketActivityEvent`
 (append-only audit/activity timeline with safe metadata), and `BucketMembershipRef`
 (client-maintained mirror under `users/{uid}/bucketMemberships`).
+
+`BucketInvitation` is the targeted, friend-to-bucket consent record and is distinct from a
+token-based `BucketInvite`. It has a deterministic bucket/recipient identity, an owner and
+intended recipient, a requested non-owner role, and status pending|accepted|declined. A pending
+or declined invitation is not an access grant. Acceptance atomically materializes the direct
+`BucketAccessGrant`, member record, and recipient membership mirror; the grant records the
+invitation identity for notification deduplication.
 
 Identifiers are client-generated UUID-based strings. Timestamps are ISO 8601 UTC strings.
 Money values are numeric two-decimal application values; a future financial integration should

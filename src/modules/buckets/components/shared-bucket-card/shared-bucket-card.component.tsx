@@ -5,6 +5,8 @@ import { Link } from '@/packages/router';
 import { formatDateTime } from '@/shared/helpers';
 import type { MessageKey } from '@/shared/i18n';
 
+import { BUCKETS_NAVIGATION_STATE } from '../../routes/buckets-route-paths.constants';
+
 interface SharedBucketCardProps {
   readonly bucket: Bucket;
   readonly locale: Locale;
@@ -36,7 +38,11 @@ export function SharedBucketCard({
         <span>{formatDateTime(bucket.updatedAt, locale)}</span>
       </div>
       <div className="card-actions">
-        <Link className="button" to={buildBucketCollaborateRoute(bucket.id)}>
+        <Link
+          className="button"
+          to={buildBucketCollaborateRoute(bucket.id)}
+          state={BUCKETS_NAVIGATION_STATE}
+        >
           <Users />
           {t('collaborate')}
         </Link>

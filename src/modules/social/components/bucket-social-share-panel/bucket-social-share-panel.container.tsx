@@ -35,7 +35,7 @@ export function BucketSocialSharePanel({
       onFriendIdChange={vm.setFriendId}
       onGroupIdChange={vm.setGroupId}
       onRoleChange={vm.setRole}
-      onShareWithFriend={() => void vm.shareWithFriend()}
+      onInviteFriend={() => void vm.inviteFriend()}
       onShareWithGroup={() => void vm.shareWithGroup()}
     />
   );

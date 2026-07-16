@@ -2,9 +2,13 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 
 import {
+  bucketInvitationId,
+  bucketInvitationResponseAction,
+  bucketInvitationTransition,
   canInviteGroupMember,
   friendRequestId,
   mergeAccessSources,
+  materializedMemberAccess,
   normalizeEmail,
   removeAccessSource,
   strongestRole,
@@ -48,4 +52,76 @@ test('blocks duplicate group invitations until membership has ended', () => {
 
 test('friend request mirrors use one deterministic identity', () => {
   assert.equal(friendRequestId('sender', 'recipient'), 'sender_recipient');
+});
+
+test('bucket invitations have deterministic identity and one-way responses', () => {
+  assert.equal(
+    bucketInvitationId('bucket', 'recipient'),
+    'bucket_recipient',
+  );
+  assert.equal(
+    bucketInvitationTransition('pending', 'accepted'),
+    'apply',
+  );
+  assert.equal(
+    bucketInvitationTransition('accepted', 'accepted'),
+    'idempotent',
+  );
+  assert.equal(
+    bucketInvitationTransition('declined', 'declined'),
+    'idempotent',
+  );
+  assert.equal(
+    bucketInvitationTransition('accepted', 'declined'),
+    'invalid',
+  );
+  assert.equal(
+    bucketInvitationResponseAction('pending', 'declined', false),
+    'dismiss',
+  );
+  assert.equal(
+    bucketInvitationResponseAction('pending', 'accepted', false),
+    'missing-bucket',
+  );
+});
+
+test('revoked members restart with the invited role and permissions', () => {
+  assert.deepEqual(
+    materializedMemberAccess(
+      {
+        status: 'revoked',
+        role: 'editor',
+        canCreateCustomItems: true,
+        canSetCustomItemPrice: true,
+        accessSources: ['stale_editor_grant'],
+      },
+      'viewer',
+      'user_recipient',
+    ),
+    {
+      role: 'viewer',
+      canCreateCustomItems: false,
+      canSetCustomItemPrice: false,
+      accessSources: ['user_recipient'],
+    },
+  );
+  assert.deepEqual(
+    materializedMemberAccess(
+      {
+        status: 'active',
+        role: 'editor',
+        canCreateCustomItems: true,
+        canSetCustomItemPrice: true,
+        accessSources: ['group_editors'],
+      },
+      'viewer',
+      'user_recipient',
+    ),
+    {
+      role: 'editor',
+      canCreateCustomItems: true,
+      canSetCustomItemPrice: true,
+      accessSources: ['group_editors', 'user_recipient'],
+    },
+  );
 });

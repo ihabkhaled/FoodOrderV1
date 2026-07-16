@@ -121,7 +121,7 @@ export function GroupsSection({
       {groups.length === 0 ? (
         <p className="muted">{s('noGroups')}</p>
       ) : (
-        <div className="social-card-grid">
+        <div className="social-card-grid group-card-grid">
           {groups.map((group) => {
             const isOwner = group.ownerId === userId;
             const selectableFriends = availableFriends(group);

@@ -1,10 +1,8 @@
-import { ArrowLeft } from '@/packages/icons';
-import { Link } from '@/packages/router';
-import { ErrorState, Loading } from '@/shared/ui';
+import { BackLink, ErrorState, Loading } from '@/shared/ui';
 
 import { BucketSocialSharePanel } from '../components/bucket-social-share-panel/bucket-social-share-panel.container';
 import { useBucketSocialShare } from '../hooks/use-bucket-social-share.hook';
-import { SOCIAL_PATH } from '../routes/social-route-paths.constants';
+import { BUCKETS_REDIRECT_PATH } from '../routes/social-route-paths.constants';
 
 export function BucketSocialShareContainer() {
   const vm = useBucketSocialShare();
@@ -22,10 +20,7 @@ export function BucketSocialShareContainer() {
 
   return (
     <div className="page narrow stack-lg">
-      <Link className="back-link" to={SOCIAL_PATH}>
-        <ArrowLeft />
-        {vm.t('back')}
-      </Link>
+      <BackLink fallback={BUCKETS_REDIRECT_PATH} label={vm.t('back')} />
       <header className="page-heading">
         <div>
           <p className="eyebrow">{vm.s('shareWithFriends')}</p>

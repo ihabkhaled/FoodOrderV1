@@ -10,4 +10,7 @@ export type { ThemePreference } from './document-settings.types';
 export { downloadTextFile } from './file-download.adapter';
 export { registerServiceWorker } from './service-worker.adapter';
 export { shareText } from './share.adapter';
-export { getViewportScrollTop } from './viewport-scroll.adapter';
+export {
+  getViewportScrollTop,
+  scrollViewportToTop,
+} from './viewport-scroll.adapter';

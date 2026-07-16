@@ -1,6 +1,5 @@
-import { ArrowLeft, Share2 } from '@/packages/icons';
-import { Link } from '@/packages/router';
-import { ConfirmDialog, ErrorState, Loading } from '@/shared/ui';
+import { Share2 } from '@/packages/icons';
+import { BackLink, ConfirmDialog, ErrorState, Loading } from '@/shared/ui';
 
 import { ActivityTimeline } from '../components/activity-timeline/activity-timeline.component';
 import { BucketInvitePanel } from '../components/bucket-invite-panel/bucket-invite-panel.component';
@@ -8,7 +7,7 @@ import { BucketMemberPermissionsPanel } from '../components/bucket-member-permis
 import { BucketStateBanner } from '../components/bucket-state-banner/bucket-state-banner.component';
 import { BucketStateControls } from '../components/bucket-state-controls/bucket-state-controls.component';
 import { useBucketShare } from '../hooks/use-bucket-share.hook';
-import { buildBucketCollaborateRoute } from '../routes/group-orders-route-paths.constants';
+import { BUCKETS_REDIRECT_PATH } from '../routes/group-orders-route-paths.constants';
 
 export function BucketShareContainer() {
   const vm = useBucketShare();
@@ -28,10 +27,7 @@ export function BucketShareContainer() {
 
   return (
     <div className="page narrow stack-lg">
-      <Link className="back-link" to={buildBucketCollaborateRoute(bucket.id)}>
-        <ArrowLeft />
-        {vm.t('back')}
-      </Link>
+      <BackLink fallback={BUCKETS_REDIRECT_PATH} label={vm.t('back')} />
       <header className="page-heading">
         <div>
           <p className="eyebrow">{vm.t('sharing')}</p>

@@ -18,6 +18,7 @@ const emptyOverview = (): SocialOverview => ({
   outgoingRequests: [],
   groups: [],
   groupInvitations: [],
+  bucketInvitations: [],
 });
 
 export interface SocialViewModel {
@@ -64,6 +65,10 @@ export interface SocialViewModel {
   respondGroupInvitation: (
     groupId: string,
     response: 'active' | 'declined',
+  ) => Promise<void>;
+  respondBucketInvitation: (
+    bucketId: string,
+    response: 'accepted' | 'declined',
   ) => Promise<void>;
 }
 
@@ -217,6 +222,20 @@ export function useSocial(): SocialViewModel {
     );
   };
 
+  const respondBucketInvitation = async (
+    bucketId: string,
+    response: 'accepted' | 'declined',
+  ): Promise<void> => {
+    await run(
+      () => socialService.respondBucketInvitation(bucketId, response),
+      s(
+        response === 'accepted'
+          ? 'bucketInvitationAccepted'
+          : 'bucketInvitationDeclined',
+      ),
+    );
+  };
+
   const availableFriends = (group: FriendGroup): SocialUser[] =>
     overview.friends.filter(
       (friend) =>
@@ -272,5 +291,6 @@ export function useSocial(): SocialViewModel {
     removeMember,
     availableFriends,
     respondGroupInvitation,
+    respondBucketInvitation,
   };
 }

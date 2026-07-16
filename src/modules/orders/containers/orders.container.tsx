@@ -71,6 +71,7 @@ export function OrdersContainer() {
             <section className="section-card">
               <AppVirtuoso
                 className="virtual-list"
+                useWindowScroll
                 data={vm.filtered}
                 computeItemKey={(_, order) => order.id}
                 endReached={() => void vm.loadMore()}

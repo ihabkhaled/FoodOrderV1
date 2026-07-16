@@ -226,6 +226,11 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/dashboard/routes/dashboard-route-paths.constants.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/dashboard/routes/dashboard.routes.tsx",
       "tests": [],
       "relationship": "inferred"
@@ -776,6 +781,11 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/social/components/bucket-invitations/bucket-invitations.component.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/social/components/bucket-social-share-panel/bucket-social-share-panel.component.tsx",
       "tests": [],
       "relationship": "inferred"
@@ -1107,6 +1117,26 @@
     },
     {
       "source": "src/shared/types/routing.types.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/ui/back-link/back-link.component.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/ui/back-link/back-link.container.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/ui/back-link/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/ui/back-link/use-back-link.hook.ts",
       "tests": [],
       "relationship": "inferred"
     },
