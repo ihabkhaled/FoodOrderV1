@@ -38,6 +38,13 @@ then deploys `firestore:rules` followed by the functions in **small sequential b
 (`FUNCTIONS_DEPLOY_BATCH_SIZE`, default 4, with a pause and per-batch retries), so only a few Cloud Run
 revisions roll out at a time and the concurrent healthcheck CPU stays under the quota.
 
+**CI behavior when the quota is the only blocker.** The batched deploy attempts every function, then
+deploys `firestore:rules`. If the *only* remaining failures are the specific `Quota exceeded for total
+allowable CPU` error (a hard, owner-side infrastructure limit), the deploy step exits 0 with a loud
+`::warning::` listing the pending functions — so the pipeline is not permanently red on an external
+quota. **Any other error** (permissions, Eventarc, build, config, rules) still fails the gate hard.
+Once the quota is raised, the next run deploys the remaining functions and the warning disappears.
+
 If the batched deploy still hits the quota (i.e. the steady-state total CPU, not just the deploy spike,
 exceeds it), then also:
 
