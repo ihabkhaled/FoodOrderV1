@@ -1,6 +1,5 @@
-import { Search } from 'lucide-react';
-
 import type { MessageKey } from '@/i18n/messages';
+import { Search } from '@/packages/icons';
 import type { Locale } from '@/types/domain';
 
 export type BucketScope = 'all' | 'owned' | 'shared';

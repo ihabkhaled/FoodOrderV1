@@ -1,8 +1,7 @@
-import { Minus, Plus } from 'lucide-react';
-
 import { translateGroupOrder } from '@/i18n/groupOrderMessages';
 import type { MessageKey } from '@/i18n/messages';
 import { formatMoney } from '@/lib/money';
+import { Minus, Plus } from '@/packages/icons';
 import type {
   BucketContribution,
   BucketItem,

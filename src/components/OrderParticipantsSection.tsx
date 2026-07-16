@@ -1,6 +1,5 @@
-import { Users } from 'lucide-react';
-
 import type { MessageKey } from '@/i18n/messages';
+import { Users } from '@/packages/icons';
 import type { Order } from '@/types/domain';
 
 interface OrderParticipantsSectionProps {

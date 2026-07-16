@@ -21,6 +21,8 @@ import {
   parseJoinCode,
   toOrderParticipants,
 } from '@/lib/sharing';
+import { dispatchAppEvent, subscribeToAppEvent } from '@/platform/browser';
+import { readWebStorage, removeWebStorage, writeWebStorage } from '@/platform/storage';
 import type {
   AuthService,
   DataService,
@@ -87,7 +89,7 @@ const readDatabase = (): LocalDatabase => {
   // Stored JSON may predate the sharing schema, so treat every table as optional.
   let raw: Partial<LocalDatabase>;
   try {
-    raw = JSON.parse(localStorage.getItem(DB_KEY) ?? '') as Partial<LocalDatabase>;
+    raw = JSON.parse(readWebStorage(DB_KEY) ?? '') as Partial<LocalDatabase>;
   } catch {
     return defaultDatabase();
   }
@@ -112,7 +114,7 @@ const readDatabase = (): LocalDatabase => {
 };
 
 const writeDatabase = (database: LocalDatabase): void => {
-  localStorage.setItem(DB_KEY, JSON.stringify(database));
+  writeWebStorage(DB_KEY, JSON.stringify(database));
 };
 
 const toSessionUser = (profile: UserProfile): SessionUser => ({
@@ -123,7 +125,7 @@ const toSessionUser = (profile: UserProfile): SessionUser => ({
 });
 
 const notifyAuth = (): void => {
-  window.dispatchEvent(new Event(AUTH_EVENT));
+  dispatchAppEvent(AUTH_EVENT);
 };
 
 const findBucketEntry = (
@@ -207,13 +209,12 @@ const seedOwnerMember = (database: LocalDatabase, bucket: Bucket): void => {
 export class LocalAuthService implements AuthService {
   subscribe(listener: (user: SessionUser | null) => void): () => void {
     const emit = (): void => {
-      const id = localStorage.getItem(SESSION_KEY);
+      const id = readWebStorage(SESSION_KEY);
       const user = id ? readDatabase().users[id] : undefined;
       listener(user ? toSessionUser(user.profile) : null);
     };
     emit();
-    window.addEventListener(AUTH_EVENT, emit);
-    return () => { window.removeEventListener(AUTH_EVENT, emit); };
+    return subscribeToAppEvent(AUTH_EVENT, emit);
   }
 
   async login(email: string, password: string): Promise<SessionUser> {
@@ -222,7 +223,7 @@ export class LocalAuthService implements AuthService {
       (item) => item.profile.email.toLowerCase() === email.trim().toLowerCase(),
     );
     if (!record || record.password !== password) throw new Error('Invalid email or password.');
-    localStorage.setItem(SESSION_KEY, record.profile.id);
+    writeWebStorage(SESSION_KEY, record.profile.id);
     notifyAuth();
     return toSessionUser(record.profile);
   }
@@ -253,7 +254,7 @@ export class LocalAuthService implements AuthService {
     database.buckets[id] = [];
     database.orders[id] = [];
     writeDatabase(database);
-    localStorage.setItem(SESSION_KEY, id);
+    writeWebStorage(SESSION_KEY, id);
     notifyAuth();
     return toSessionUser(profile);
   }
@@ -267,13 +268,13 @@ export class LocalAuthService implements AuthService {
   }
 
   async logout(): Promise<void> {
-    localStorage.removeItem(SESSION_KEY);
+    removeWebStorage(SESSION_KEY);
     notifyAuth();
   }
 
   async deleteAccount(_user: SessionUser): Promise<void> {
     // Local credentials live in the user record removed by deleteAllUserData.
-    localStorage.removeItem(SESSION_KEY);
+    removeWebStorage(SESSION_KEY);
     notifyAuth();
   }
 }

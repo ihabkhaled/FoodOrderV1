@@ -1,3 +1,12 @@
+import { useCallback, useEffect, useState } from 'react';
+
+import { EmptyState } from '@/components/EmptyState';
+import { ErrorState } from '@/components/ErrorState';
+import { Loading } from '@/components/Loading';
+import {
+  type SocialMessageKey,
+  translateSocial,
+} from '@/i18n/socialMessages';
 import {
   Check,
   Crown,
@@ -10,16 +19,7 @@ import {
   UserPlus,
   Users,
   X,
-} from 'lucide-react';
-import { useCallback, useEffect, useState } from 'react';
-
-import { EmptyState } from '@/components/EmptyState';
-import { ErrorState } from '@/components/ErrorState';
-import { Loading } from '@/components/Loading';
-import {
-  type SocialMessageKey,
-  translateSocial,
-} from '@/i18n/socialMessages';
+} from '@/packages/icons';
 import { socialService } from '@/services';
 import { useApp } from '@/state/AppContext';
 import type {

@@ -1,4 +1,12 @@
 import {
+  decodeSortCursor,
+  encodeSortCursor,
+  normalizePageLimit,
+  type PageRequest,
+  type PageResult,
+  paginateDescending,
+} from '@/lib/pagination';
+import {
   collection,
   doc,
   documentId,
@@ -12,16 +20,7 @@ import {
   type QueryConstraint,
   startAfter,
   where,
-} from 'firebase/firestore';
-
-import {
-  decodeSortCursor,
-  encodeSortCursor,
-  normalizePageLimit,
-  type PageRequest,
-  type PageResult,
-  paginateDescending,
-} from '@/lib/pagination';
+} from '@/packages/firebase';
 import type { DataService, SharingService } from '@/services/contracts';
 import { getFirebaseRuntime } from '@/services/firebaseServices';
 import type {

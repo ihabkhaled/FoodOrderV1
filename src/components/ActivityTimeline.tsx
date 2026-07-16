@@ -1,7 +1,6 @@
-import { History } from 'lucide-react';
-
 import type { MessageKey } from '@/i18n/messages';
 import { formatDateTime } from '@/lib/date';
+import { History } from '@/packages/icons';
 import { useApp } from '@/state/AppContext';
 import type { BucketActivityEvent, BucketActivityType } from '@/types/domain';
 

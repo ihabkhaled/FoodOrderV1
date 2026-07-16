@@ -1,7 +1,7 @@
-import { Share2, Users } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 import { translateSocial } from '@/i18n/socialMessages';
+import { Share2, Users } from '@/packages/icons';
 import { socialService } from '@/services';
 import type { BucketRole, Locale } from '@/types/domain';
 import type {

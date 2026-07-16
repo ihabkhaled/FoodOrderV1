@@ -1,7 +1,7 @@
-import { Check, Plus } from 'lucide-react';
 import { useState } from 'react';
 
 import { translateGroupOrder } from '@/i18n/groupOrderMessages';
+import { Check, Plus } from '@/packages/icons';
 import type {
   BucketItem,
   Locale,

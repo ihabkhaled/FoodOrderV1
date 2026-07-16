@@ -1,6 +1,5 @@
-import { ReceiptText } from 'lucide-react';
-
 import { translateGroupOrder } from '@/i18n/groupOrderMessages';
+import { ReceiptText } from '@/packages/icons';
 import type { BucketPricingPolicy, Locale } from '@/types/domain';
 
 interface BucketPricingPanelProps {

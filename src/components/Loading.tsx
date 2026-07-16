@@ -1,5 +1,4 @@
-import { LoaderCircle } from 'lucide-react';
-
+import { LoaderCircle } from '@/packages/icons';
 import { useApp } from '@/state/AppContext';
 
 export function Loading({ label }: { label?: string }) {

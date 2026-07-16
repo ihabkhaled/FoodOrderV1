@@ -5,10 +5,10 @@ import '@/socialNotifications.css';
 
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
 
 import App from '@/App';
-import { initializePlatform } from '@/services/platform';
+import { BrowserRouter } from '@/packages/router';
+import { initializePlatform } from '@/platform/device';
 import { AppProvider } from '@/state/AppContext';
 
 void initializePlatform();

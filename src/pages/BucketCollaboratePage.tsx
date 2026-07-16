@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
 
 import {
   BucketCollaborateContent,
@@ -14,6 +13,7 @@ import {
   MAX_CONTRIBUTION_QUANTITY,
   omitKey,
 } from '@/lib/sharing';
+import { useNavigate, useParams } from '@/packages/router';
 import { sharingService } from '@/services';
 import type { SharedBucketView } from '@/services/contracts';
 import { useApp } from '@/state/AppContext';

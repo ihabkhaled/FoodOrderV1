@@ -1,8 +1,7 @@
-import { Check, Copy, Share2, ShieldOff } from 'lucide-react';
-
 import type { MessageKey } from '@/i18n/messages';
 import { formatDateTime } from '@/lib/date';
 import { ASSIGNABLE_ROLES } from '@/lib/sharing';
+import { Check, Copy, Share2, ShieldOff } from '@/packages/icons';
 import type {
   BucketInvite,
   BucketRole,

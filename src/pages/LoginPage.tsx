@@ -1,7 +1,7 @@
 import { type SyntheticEvent, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
 
 import { isEmail } from '@/lib/validation';
+import { Link, useNavigate } from '@/packages/router';
 import { useApp } from '@/state/AppContext';
 
 export function LoginPage() {

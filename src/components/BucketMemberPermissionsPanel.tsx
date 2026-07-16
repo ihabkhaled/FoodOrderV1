@@ -1,8 +1,7 @@
-import { UserMinus, Users } from 'lucide-react';
-
 import { translateGroupOrder } from '@/i18n/groupOrderMessages';
 import type { MessageKey } from '@/i18n/messages';
 import { ASSIGNABLE_ROLES } from '@/lib/sharing';
+import { UserMinus, Users } from '@/packages/icons';
 import type {
   BucketMember,
   BucketRole,

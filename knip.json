@@ -7,7 +7,7 @@
     "scripts/**/*.mjs"
   ],
   "project": ["src/**/*.{ts,tsx}"],
-  "ignoreDependencies": ["@capacitor/app", "@capacitor/keyboard"],
+  "ignoreDependencies": ["@capacitor/app", "@capacitor/keyboard", "lint-staged"],
   "ignoreBinaries": ["trivy"],
   "ignoreExportsUsedInFile": true
 }

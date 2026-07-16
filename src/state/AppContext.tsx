@@ -12,15 +12,21 @@ import { type MessageKey, translate } from '@/i18n/messages';
 import {
   setFirebaseErrorLocale,
   userFacingErrorMessage,
-} from '@/lib/firebaseError';
-import { authService, dataService, storageMode } from '@/services';
-import { getNetworkStatus, impact } from '@/services/platform';
+} from '@/packages/firebase';
+import { applyDocumentLocale, applyDocumentTheme } from '@/platform/browser';
 import {
   DEFAULT_DEVICE_CONFIG,
   type DeviceConfig,
+  impact,
   loadDeviceConfig,
   saveDeviceConfig,
-} from '@/state/deviceConfig';
+} from '@/platform/device';
+import {
+  getNetworkStatus,
+  isNavigatorOnline,
+  subscribeToOnlineChange,
+} from '@/platform/network';
+import { authService, dataService, storageMode } from '@/services';
 import type {
   CurrencyCode,
   Locale,
@@ -64,13 +70,6 @@ interface AppContextValue {
 }
 
 const AppContext = createContext<AppContextValue | null>(null);
-
-const applyTheme = (theme: Theme): void => {
-  const isDark =
-    theme === 'dark' ||
-    (theme === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
-  document.documentElement.dataset.theme = isDark ? 'dark' : 'light';
-};
 
 export function AppProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<SessionUser | null>(null);
@@ -130,9 +129,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     setFirebaseErrorLocale(locale);
-    applyTheme(theme);
-    document.documentElement.lang = locale;
-    document.documentElement.dir = locale === 'ar' ? 'rtl' : 'ltr';
+    applyDocumentTheme(theme);
+    applyDocumentLocale(locale, locale === 'ar' ? 'rtl' : 'ltr');
   }, [locale, theme]);
 
   useEffect(() => {
@@ -140,16 +138,11 @@ export function AppProvider({ children }: { children: ReactNode }) {
       void getNetworkStatus()
         .then(setOnline)
         .catch(() => {
-          setOnline(navigator.onLine);
+          setOnline(isNavigatorOnline());
         });
     };
     refresh();
-    window.addEventListener('online', refresh);
-    window.addEventListener('offline', refresh);
-    return () => {
-      window.removeEventListener('online', refresh);
-      window.removeEventListener('offline', refresh);
-    };
+    return subscribeToOnlineChange(refresh);
   }, []);
 
   useEffect(() => {

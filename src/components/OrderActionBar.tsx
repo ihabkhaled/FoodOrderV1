@@ -1,7 +1,6 @@
-import { Check, Copy, X } from 'lucide-react';
-
 import type { MessageKey } from '@/i18n/messages';
 import { canTransitionOrder } from '@/lib/order';
+import { Check, Copy, X } from '@/packages/icons';
 import type { Order, OrderStatus } from '@/types/domain';
 
 interface OrderActionBarProps {

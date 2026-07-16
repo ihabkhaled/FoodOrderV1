@@ -1,3 +1,5 @@
+import type { MessageKey } from '@/i18n/messages';
+import { formatDateTime } from '@/lib/date';
 import {
   CopyPlus,
   Share2,
@@ -5,11 +7,8 @@ import {
   Trash2,
   UserRoundPlus,
   Users,
-} from 'lucide-react';
-import { Link } from 'react-router-dom';
-
-import type { MessageKey } from '@/i18n/messages';
-import { formatDateTime } from '@/lib/date';
+} from '@/packages/icons';
+import { Link } from '@/packages/router';
 import type { Bucket, Locale } from '@/types/domain';
 
 interface BucketCardProps {

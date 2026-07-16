@@ -1,6 +1,4 @@
-import { ArrowLeft } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import { GroupReceiptSection } from '@/components/GroupReceiptSection';
 import { Loading } from '@/components/Loading';
@@ -14,6 +12,8 @@ import {
   buildRepeatedOrderDraft,
   getOrderChargeBreakdown,
 } from '@/lib/order';
+import { ArrowLeft } from '@/packages/icons';
+import { Link, useNavigate, useParams } from '@/packages/router';
 import { dataService, orderLifecycleService } from '@/services';
 import { useApp } from '@/state/AppContext';
 import type { Order, OrderStatus } from '@/types/domain';

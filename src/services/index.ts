@@ -1,5 +1,5 @@
-import { env } from '@/config/env';
-import { withFirebaseErrorTranslation } from '@/lib/firebaseError';
+import { withFirebaseErrorTranslation } from '@/packages/firebase';
+import { env } from '@/platform/environment';
 import { FirebaseEmailAuthService } from '@/services/firebaseAuthEmailService';
 import { FirestoreDataService } from '@/services/firebaseServices';
 import { FirestoreCallableGroupOrderService } from '@/services/firestoreGroupOrderFunctions';

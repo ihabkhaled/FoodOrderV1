@@ -1,5 +1,4 @@
-import { getFunctions, httpsCallable } from 'firebase/functions';
-
+import { getFunctions, httpsCallable } from '@/packages/firebase';
 import { getFirebaseRuntime } from '@/services/firebaseServices';
 import type {
   AppNotification,

@@ -1,6 +1,4 @@
-import { KeyRound, Plus, ShoppingBasket } from 'lucide-react';
 import { useCallback, useMemo } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
 
 import { BucketCollectionSection } from '@/components/BucketCollectionSection';
 import {
@@ -15,6 +13,8 @@ import { useBucketMutations } from '@/hooks/useBucketMutations';
 import { useCursorPage } from '@/hooks/useCursorPage';
 import type { MessageKey } from '@/i18n/messages';
 import type { PageResult } from '@/lib/pagination';
+import { KeyRound, Plus, ShoppingBasket } from '@/packages/icons';
+import { Link, useSearchParams } from '@/packages/router';
 import { paginationService } from '@/services';
 import { useApp } from '@/state/AppContext';
 import { usePageRefresh } from '@/state/RefreshContext';

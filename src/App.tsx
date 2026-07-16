@@ -1,8 +1,7 @@
-import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
-
 import { AppLayout } from '@/components/AppLayout';
 import { AuthLayout } from '@/components/AuthLayout';
 import { Loading } from '@/components/Loading';
+import { Navigate, Outlet, Route, Routes } from '@/packages/router';
 import { BucketCollaboratePage } from '@/pages/BucketCollaboratePage';
 import { BucketEditorPage } from '@/pages/BucketEditorPage';
 import { BucketSharePage } from '@/pages/BucketSharePage';

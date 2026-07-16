@@ -1,13 +1,4 @@
 import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  runTransaction,
-  setDoc,
-} from 'firebase/firestore';
-
-import {
   BUCKET_SCHEMA_VERSION,
   DEFAULT_PRICING_POLICY,
   validatePricingPolicy,
@@ -28,6 +19,14 @@ import {
   memberCan,
   toOrderParticipants,
 } from '@/lib/sharing';
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  runTransaction,
+  setDoc,
+} from '@/packages/firebase';
 import {
   FirestoreSharingService,
   getFirebaseRuntime,

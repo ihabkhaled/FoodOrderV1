@@ -1,36 +1,3 @@
-import { type FirebaseApp,initializeApp } from 'firebase/app';
-import {
-  type Auth,
-  createUserWithEmailAndPassword,
-  deleteUser,
-  getAuth,
-  onAuthStateChanged,
-  sendPasswordResetEmail,
-  signInWithEmailAndPassword,
-  signOut,
-  updateProfile,
-} from 'firebase/auth';
-import {
-  collection,
-  deleteDoc,
-  doc,
-  type DocumentReference,
-  type Firestore,
-  getDoc,
-  getDocs,
-  initializeFirestore,
-  limit,
-  orderBy,
-  persistentLocalCache,
-  persistentMultipleTabManager,
-  query,
-  runTransaction,
-  setDoc,
-  where,
-  writeBatch,
-} from 'firebase/firestore';
-
-import { env } from '@/config/env';
 import { createBucket, updateBucket, upgradeLegacyBucket } from '@/lib/bucket';
 import { nowIso } from '@/lib/date';
 import { createId } from '@/lib/id';
@@ -52,6 +19,37 @@ import {
   parseJoinCode,
   toOrderParticipants,
 } from '@/lib/sharing';
+import {
+  type Auth,
+  collection,
+  createUserWithEmailAndPassword,
+  deleteDoc,
+  deleteUser,
+  doc,
+  type DocumentReference,
+  type FirebaseApp,
+  type Firestore,
+  getAuth,
+  getDoc,
+  getDocs,
+  initializeApp,
+  initializeFirestore,
+  limit,
+  onAuthStateChanged,
+  orderBy,
+  persistentLocalCache,
+  persistentMultipleTabManager,
+  query,
+  runTransaction,
+  sendPasswordResetEmail,
+  setDoc,
+  signInWithEmailAndPassword,
+  signOut,
+  updateProfile,
+  where,
+  writeBatch,
+} from '@/packages/firebase';
+import { env } from '@/platform/environment';
 import type {
   AuthService,
   DataService,

@@ -1,6 +1,4 @@
-import { ArrowLeft, Minus, Plus, ShoppingCart } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import { Loading } from '@/components/Loading';
 import { translateGroupOrder } from '@/i18n/groupOrderMessages';
@@ -10,6 +8,8 @@ import {
   buildPersonalOrderReceipt,
   calculateOrderTotal,
 } from '@/lib/order';
+import { ArrowLeft, Minus, Plus, ShoppingCart } from '@/packages/icons';
+import { Link, useNavigate, useParams } from '@/packages/router';
 import { dataService } from '@/services';
 import { useApp } from '@/state/AppContext';
 import type { Bucket } from '@/types/domain';

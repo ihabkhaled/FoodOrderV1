@@ -1,6 +1,5 @@
-import { sendPasswordResetEmail } from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
-
+import { doc, sendPasswordResetEmail, setDoc } from '@/packages/firebase';
+import { getDocumentLanguage } from '@/platform/browser';
 import {
   FirebaseAuthService,
   getFirebaseRuntime,
@@ -11,7 +10,7 @@ import type {
 } from '@/types/domain';
 
 const activeEmailLanguage = (): 'ar' | 'en' =>
-  document.documentElement.lang.toLowerCase().startsWith('ar') ? 'ar' : 'en';
+  getDocumentLanguage().toLowerCase().startsWith('ar') ? 'ar' : 'en';
 
 export class FirebaseEmailAuthService extends FirebaseAuthService {
   override async register(

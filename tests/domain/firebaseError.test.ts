@@ -5,7 +5,7 @@ import {
   setFirebaseErrorLocale,
   userFacingErrorMessage,
   withFirebaseErrorTranslation,
-} from '@/lib/firebaseError';
+} from '@/packages/firebase';
 
 const codedError = (code: string): Error & { code: string } =>
   Object.assign(new Error(`Firebase: Error (${code}).`), { code });

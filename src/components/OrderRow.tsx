@@ -1,10 +1,9 @@
-import { Trash2 } from 'lucide-react';
-import { Link } from 'react-router-dom';
-
 import { StatusBadge } from '@/components/StatusBadge';
 import type { MessageKey } from '@/i18n/messages';
 import { formatDateTime } from '@/lib/date';
 import { formatMoney } from '@/lib/money';
+import { Trash2 } from '@/packages/icons';
+import { Link } from '@/packages/router';
 import type { Locale, Order } from '@/types/domain';
 
 interface OrderRowProps {

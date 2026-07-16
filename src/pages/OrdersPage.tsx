@@ -1,6 +1,4 @@
-import { ClipboardList, Search } from 'lucide-react';
 import { useCallback, useMemo, useState } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
 
 import { ConfirmDialog } from '@/components/ConfirmDialog';
 import { EmptyState } from '@/components/EmptyState';
@@ -10,6 +8,8 @@ import { OrderRow } from '@/components/OrderRow';
 import { VirtualListFooter } from '@/components/VirtualListFooter';
 import { useCursorPage } from '@/hooks/useCursorPage';
 import type { PageResult } from '@/lib/pagination';
+import { ClipboardList, Search } from '@/packages/icons';
+import { Link, useSearchParams } from '@/packages/router';
 import { AppVirtuoso } from '@/packages/virtuoso';
 import { dataService, paginationService } from '@/services';
 import { useApp } from '@/state/AppContext';

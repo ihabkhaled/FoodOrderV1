@@ -1,6 +1,7 @@
-import { env } from '@/config/env';
-import { getPreference, setPreference } from '@/services/platform';
+import { env } from '@/platform/environment';
 import type { CurrencyCode, Locale, Theme } from '@/types/domain';
+
+import { getPreference, setPreference } from '../storage/preferences.adapter';
 
 /**
  * Device-level runtime configuration. Locale, currency, and theme are not

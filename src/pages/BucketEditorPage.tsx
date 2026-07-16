@@ -1,6 +1,4 @@
-import { ArrowLeft, GripVertical, Plus, Save, Trash2 } from 'lucide-react';
 import { type SyntheticEvent, useEffect, useMemo, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import { BucketPricingPanel } from '@/components/BucketPricingPanel';
 import { Loading } from '@/components/Loading';
@@ -9,9 +7,11 @@ import {
   MAX_BUCKET_ITEMS,
 } from '@/lib/bucket';
 import { createId } from '@/lib/id';
+import { ArrowLeft, GripVertical, Plus, Save, Trash2 } from '@/packages/icons';
+import { Link, useNavigate, useParams } from '@/packages/router';
+import { SUPPORTED_CURRENCIES } from '@/platform/device';
 import { dataService } from '@/services';
 import { useApp } from '@/state/AppContext';
-import { SUPPORTED_CURRENCIES } from '@/state/deviceConfig';
 import type {
   BucketDraft,
   BucketItem,

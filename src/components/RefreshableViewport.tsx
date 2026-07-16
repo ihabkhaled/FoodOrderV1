@@ -1,4 +1,3 @@
-import { RefreshCw } from 'lucide-react';
 import {
   type ReactNode,
   type TouchEvent,
@@ -7,6 +6,8 @@ import {
   useState,
 } from 'react';
 
+import { RefreshCw } from '@/packages/icons';
+import { getViewportScrollTop } from '@/platform/browser';
 import { useApp } from '@/state/AppContext';
 import {
   RefreshProvider,
@@ -17,8 +18,7 @@ import type { Locale } from '@/types/domain';
 const MAX_PULL = 108;
 const REFRESH_THRESHOLD = 68;
 
-const isPageAtTop = (): boolean =>
-  (document.scrollingElement?.scrollTop ?? window.scrollY) <= 0;
+const isPageAtTop = (): boolean => getViewportScrollTop() <= 0;
 
 const refreshLabel = (
   locale: Locale,

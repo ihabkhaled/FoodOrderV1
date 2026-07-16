@@ -16,7 +16,7 @@ const get = (key: string): string => String(import.meta.env[key] ?? '').trim();
  * at build time. When every required value is present the app runs in
  * Firebase cloud mode; otherwise it falls back to the fully functional
  * local-device mode. Locale and currency are intentionally NOT environment
- * values: they are runtime settings owned by src/state/deviceConfig.ts and
+ * values: they are runtime settings owned by src/platform/device and
  * changeable by the user at any time.
  */
 const firebase: FirebaseEnvironment = {
@@ -39,7 +39,7 @@ export const env = {
   appVersion: __APP_VERSION__,
   /**
    * Initial defaults only. Locale and currency are runtime settings the user
-   * changes anytime (src/state/deviceConfig.ts); these seed first launch.
+   * changes anytime (src/platform/device); these seed first launch.
    */
   initialLocale: get('VITE_DEFAULT_LOCALE') === 'ar' ? ('ar' as const) : ('en' as const),
   initialCurrency: get('VITE_DEFAULT_CURRENCY') || 'EGP',
@@ -48,3 +48,6 @@ export const env = {
     !forceLocalMode &&
     Boolean(firebase.apiKey && firebase.authDomain && firebase.projectId && firebase.appId),
 } as const;
+
+/** Production-build flag consumed by service worker registration. */
+export const isProdBuild: boolean = import.meta.env.PROD;

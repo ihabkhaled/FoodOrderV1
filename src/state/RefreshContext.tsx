@@ -9,7 +9,7 @@ import {
   useState,
 } from 'react';
 
-import { impact } from '@/services/platform';
+import { impact } from '@/platform/device';
 
 interface RefreshContextValue {
   register: (handler: (() => Promise<void>) | null) => void;

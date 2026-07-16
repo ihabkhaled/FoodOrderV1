@@ -1,12 +1,12 @@
-import { Download, Save, Trash2 } from 'lucide-react';
 import { type SyntheticEvent,useEffect, useState } from 'react';
 
 import { ConfirmDialog } from '@/components/ConfirmDialog';
-import { env } from '@/config/env';
+import { Download, Save, Trash2 } from '@/packages/icons';
+import { downloadTextFile } from '@/platform/browser';
+import { SUPPORTED_CURRENCIES } from '@/platform/device';
+import { env } from '@/platform/environment';
 import { authService, dataService } from '@/services';
-import { downloadTextFile } from '@/services/platform';
 import { useApp } from '@/state/AppContext';
-import { SUPPORTED_CURRENCIES } from '@/state/deviceConfig';
 import type { CurrencyCode, Locale, ProfileDefaults, Theme } from '@/types/domain';
 
 export function SettingsPage() {

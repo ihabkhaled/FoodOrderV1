@@ -1,6 +1,5 @@
-import { Languages } from 'lucide-react';
-import { Outlet } from 'react-router-dom';
-
+import { Languages } from '@/packages/icons';
+import { Outlet } from '@/packages/router';
 import { useApp } from '@/state/AppContext';
 
 export function AuthLayout() {

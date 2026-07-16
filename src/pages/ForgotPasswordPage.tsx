@@ -1,7 +1,7 @@
 import { type SyntheticEvent, useState } from 'react';
-import { Link } from 'react-router-dom';
 
 import { isEmail } from '@/lib/validation';
+import { Link } from '@/packages/router';
 import { useApp } from '@/state/AppContext';
 
 const resetConfirmation = (locale: 'en' | 'ar'): string =>

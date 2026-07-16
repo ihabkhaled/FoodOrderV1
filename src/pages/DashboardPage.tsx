@@ -1,3 +1,10 @@
+import { useCallback, useEffect, useState } from 'react';
+
+import { ErrorState } from '@/components/ErrorState';
+import { Loading } from '@/components/Loading';
+import { StatusBadge } from '@/components/StatusBadge';
+import { formatDateTime } from '@/lib/date';
+import { formatMoney } from '@/lib/money';
 import {
   CheckCircle2,
   ClipboardList,
@@ -5,15 +12,8 @@ import {
   ShoppingBasket,
   Users,
   Utensils,
-} from 'lucide-react';
-import { useCallback, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-
-import { ErrorState } from '@/components/ErrorState';
-import { Loading } from '@/components/Loading';
-import { StatusBadge } from '@/components/StatusBadge';
-import { formatDateTime } from '@/lib/date';
-import { formatMoney } from '@/lib/money';
+} from '@/packages/icons';
+import { Link } from '@/packages/router';
 import { dataService } from '@/services';
 import { useApp } from '@/state/AppContext';
 import { usePageRefresh } from '@/state/RefreshContext';

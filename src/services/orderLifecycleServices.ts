@@ -1,6 +1,5 @@
-import { getFunctions, httpsCallable } from 'firebase/functions';
-
 import { buildRepeatedOrderDraft, createOrder, transitionOrder } from '@/lib/order';
+import { getFunctions, httpsCallable } from '@/packages/firebase';
 import { getFirebaseRuntime } from '@/services/firebaseServices';
 import type { Bucket, BucketMember, Order, OrderStatus, SessionUser } from '@/types/domain';
 

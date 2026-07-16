@@ -1,8 +1,9 @@
-import { Bell, CheckCheck } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import { translateSocial } from '@/i18n/socialMessages';
+import { Bell, CheckCheck } from '@/packages/icons';
+import { useNavigate } from '@/packages/router';
+import { subscribeToPointerDown } from '@/platform/browser';
 import type { Locale } from '@/types/domain';
 import type { AppNotification } from '@/types/notifications';
 
@@ -34,17 +35,15 @@ export function NotificationCenter({
     translateSocial(locale, key);
   const unread = notifications.filter((notification) => !notification.readAt);
 
-  useEffect(() => {
-    const closeOutside = (event: PointerEvent): void => {
-      if (root.current && !root.current.contains(event.target as Node)) {
-        setOpen(false);
-      }
-    };
-    document.addEventListener('pointerdown', closeOutside);
-    return () => {
-      document.removeEventListener('pointerdown', closeOutside);
-    };
-  }, []);
+  useEffect(
+    () =>
+      subscribeToPointerDown((target) => {
+        if (root.current && !root.current.contains(target as Node)) {
+          setOpen(false);
+        }
+      }),
+    [],
+  );
 
   const openNotification = (notification: AppNotification): void => {
     if (!notification.readAt) void onMarkRead([notification.id]);

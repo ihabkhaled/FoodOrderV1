@@ -1,13 +1,3 @@
-import {
-  ArrowLeft,
-  LogOut,
-  RefreshCcw,
-  Settings2,
-  ShoppingCart,
-  Users,
-} from 'lucide-react';
-import { Link } from 'react-router-dom';
-
 import { ActivityTimeline } from '@/components/ActivityTimeline';
 import {
   CollaborativeItemList,
@@ -22,6 +12,15 @@ import { calculateBasisPointCharge } from '@/lib/groupOrder';
 import { effectiveCustomItemPermissions } from '@/lib/memberPermissions';
 import { formatMoney } from '@/lib/money';
 import { roleAllows } from '@/lib/sharing';
+import {
+  ArrowLeft,
+  LogOut,
+  RefreshCcw,
+  Settings2,
+  ShoppingCart,
+  Users,
+} from '@/packages/icons';
+import { Link } from '@/packages/router';
 import type { SharedBucketView } from '@/services/contracts';
 import type {
   Bucket,

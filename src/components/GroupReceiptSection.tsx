@@ -1,8 +1,8 @@
-import { ReceiptText } from 'lucide-react';
 import { useState } from 'react';
 
 import { translateGroupOrder } from '@/i18n/groupOrderMessages';
 import { formatMoney } from '@/lib/money';
+import { ReceiptText } from '@/packages/icons';
 import type {
   CurrencyCode,
   GroupOrderReceiptSnapshot,

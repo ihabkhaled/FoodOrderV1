@@ -1,8 +1,8 @@
-import { ArrowLeft, KeyRound, UserPlus } from 'lucide-react';
 import { type SyntheticEvent, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
 
 import type { MessageKey } from '@/i18n/messages';
+import { ArrowLeft, KeyRound, UserPlus } from '@/packages/icons';
+import { Link, useNavigate } from '@/packages/router';
 import { sharingService } from '@/services';
 import { useApp } from '@/state/AppContext';
 import type { BucketInvite, BucketRole } from '@/types/domain';

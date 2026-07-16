@@ -1,3 +1,8 @@
+import { useEffect, useState } from 'react';
+
+import { NotificationCenter } from '@/components/NotificationCenter';
+import { RefreshableViewport } from '@/components/RefreshableViewport';
+import type { MessageKey } from '@/i18n/messages';
 import {
   ChevronLeft,
   ChevronRight,
@@ -13,20 +18,15 @@ import {
   Users,
   Wifi,
   WifiOff,
-} from 'lucide-react';
-import { useEffect, useState } from 'react';
-import { NavLink, Outlet, useLocation } from 'react-router-dom';
-
-import { NotificationCenter } from '@/components/NotificationCenter';
-import { RefreshableViewport } from '@/components/RefreshableViewport';
-import type { MessageKey } from '@/i18n/messages';
-import { notificationService } from '@/services';
-import { useApp } from '@/state/AppContext';
+} from '@/packages/icons';
+import { NavLink, Outlet, useLocation } from '@/packages/router';
 import {
   loadSidebarCollapsed,
   nextTheme,
   saveSidebarCollapsed,
-} from '@/state/deviceConfig';
+} from '@/platform/device';
+import { notificationService } from '@/services';
+import { useApp } from '@/state/AppContext';
 import type { Theme } from '@/types/domain';
 import type { AppNotification } from '@/types/notifications';
 
