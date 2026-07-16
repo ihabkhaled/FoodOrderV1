@@ -6,7 +6,7 @@ import '@/socialNotifications.css';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
-import App from '@/App';
+import { AppRoutes } from '@/app';
 import { AppProvider } from '@/modules/session';
 import { BrowserRouter } from '@/packages/router';
 import { initializePlatform } from '@/platform/device';
@@ -18,7 +18,7 @@ createRoot(container).render(
   <StrictMode>
     <BrowserRouter>
       <AppProvider>
-        <App />
+        <AppRoutes />
       </AppProvider>
     </BrowserRouter>
   </StrictMode>,
