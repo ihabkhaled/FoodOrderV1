@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 
+import { BUCKETS_PATH } from '@/modules/buckets';
 import type { AppNotification,Theme } from '@/modules/data-access';
 import { notificationService } from '@/modules/data-access';
 import { NotificationCenter } from '@/modules/notifications';
+import { ORDERS_PATH } from '@/modules/orders';
 import { useApp } from '@/modules/session';
 import { SETTINGS_PATH } from '@/modules/settings';
 import { SOCIAL_PATH } from '@/modules/social';
@@ -33,9 +35,9 @@ import { RefreshableViewport } from '@/shared/ui';
 
 const NAV_ITEMS: { to: string; icon: typeof Home; key: MessageKey }[] = [
   { to: '/', icon: Home, key: 'dashboard' },
-  { to: '/buckets', icon: ShoppingBasket, key: 'buckets' },
+  { to: BUCKETS_PATH, icon: ShoppingBasket, key: 'buckets' },
   { to: SOCIAL_PATH, icon: Users, key: 'members' },
-  { to: '/orders', icon: ListOrdered, key: 'orders' },
+  { to: ORDERS_PATH, icon: ListOrdered, key: 'orders' },
   { to: SETTINGS_PATH, icon: Settings, key: 'settings' },
 ];
 

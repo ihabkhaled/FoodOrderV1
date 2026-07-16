@@ -17,6 +17,7 @@ export type {
   InviteStatus,
   Locale,
   Order,
+  OrderLine,
   OrderStatus,
   ProfileDefaults,
   SessionUser,

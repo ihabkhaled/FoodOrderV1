@@ -1,20 +1,15 @@
 import { AppLayout } from '@/components/AppLayout';
 import { AuthLayout } from '@/components/AuthLayout';
 import { AUTH_PATH, authRoutes, LOGIN_PATH } from '@/modules/auth';
+import { bucketsRoutes } from '@/modules/buckets';
+import { dashboardRoutes } from '@/modules/dashboard';
+import { groupOrdersRoutes } from '@/modules/group-orders';
+import { ordersRoutes } from '@/modules/orders';
 import { useApp } from '@/modules/session';
 import { settingsRoutes } from '@/modules/settings';
 import { socialRoutes } from '@/modules/social';
 import { Navigate, Outlet, Route, Routes } from '@/packages/router';
-import { BucketCollaboratePage } from '@/pages/BucketCollaboratePage';
-import { BucketEditorPage } from '@/pages/BucketEditorPage';
-import { BucketSharePage } from '@/pages/BucketSharePage';
-import { BucketsPage } from '@/pages/BucketsPage';
-import { CreateOrderPage } from '@/pages/CreateOrderPage';
-import { DashboardPage } from '@/pages/DashboardPage';
-import { JoinBucketPage } from '@/pages/JoinBucketPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
-import { OrderDetailsPage } from '@/pages/OrderDetailsPage';
-import { OrdersPage } from '@/pages/OrdersPage';
 import type { AppRouteDescriptor } from '@/shared/types';
 import { Loading } from '@/shared/ui';
 
@@ -37,17 +32,11 @@ export default function App() {
     </Route>
     <Route element={<ProtectedRoute />}>
       <Route element={<AppLayout />}>
-        <Route index element={<DashboardPage />} />
-        <Route path="buckets" element={<BucketsPage />} />
-        <Route path="buckets/new" element={<BucketEditorPage />} />
-        <Route path="buckets/:bucketId/edit" element={<BucketEditorPage />} />
-        <Route path="buckets/:bucketId/order" element={<CreateOrderPage />} />
-        <Route path="buckets/:bucketId/collaborate" element={<BucketCollaboratePage />} />
-        <Route path="buckets/:bucketId/share" element={<BucketSharePage />} />
+        {dashboardRoutes.map((route) => renderRoute(route))}
+        {bucketsRoutes.map((route) => renderRoute(route))}
+        {ordersRoutes.map((route) => renderRoute(route))}
+        {groupOrdersRoutes.map((route) => renderRoute(route))}
         {socialRoutes.map((route) => renderRoute(route))}
-        <Route path="join" element={<JoinBucketPage />} />
-        <Route path="orders" element={<OrdersPage />} />
-        <Route path="orders/:orderId" element={<OrderDetailsPage />} />
         {settingsRoutes.map((route) => renderRoute(route))}
       </Route>
     </Route>
