@@ -8,13 +8,13 @@ import { OrderRow } from '@/components/OrderRow';
 import { VirtualListFooter } from '@/components/VirtualListFooter';
 import { useCursorPage } from '@/hooks/useCursorPage';
 import type { PageResult } from '@/lib/pagination';
+import type { Order, OrderStatus } from '@/modules/data-access';
+import { dataService, paginationService } from '@/modules/data-access';
 import { ClipboardList, Search } from '@/packages/icons';
 import { Link, useSearchParams } from '@/packages/router';
 import { AppVirtuoso } from '@/packages/virtuoso';
-import { dataService, paginationService } from '@/services';
 import { useApp } from '@/state/AppContext';
 import { usePageRefresh } from '@/state/RefreshContext';
-import type { Order, OrderStatus } from '@/types/domain';
 
 const statuses: (OrderStatus | 'all')[] = [
   'all',

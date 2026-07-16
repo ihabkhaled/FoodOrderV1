@@ -1,5 +1,6 @@
 import type { MessageKey } from '@/i18n/messages';
 import { formatDateTime } from '@/lib/date';
+import type { Bucket, Locale } from '@/modules/data-access';
 import {
   CopyPlus,
   Share2,
@@ -9,7 +10,6 @@ import {
   Users,
 } from '@/packages/icons';
 import { Link } from '@/packages/router';
-import type { Bucket, Locale } from '@/types/domain';
 
 interface BucketCardProps {
   readonly bucket: Bucket;

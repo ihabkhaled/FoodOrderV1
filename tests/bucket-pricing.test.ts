@@ -1,17 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
-import {
-  buildDuplicateBucketDraft,
-  createBucket,
-  updateBucket,
-} from '@/lib/bucket';
-import { buildPersonalOrderReceipt, createOrder } from '@/lib/order';
-import type {
-  Bucket,
-  BucketDraft,
-  BucketPricingPolicy,
-  SessionUser,
-} from '@/types/domain';
+import type { Bucket, BucketDraft, BucketPricingPolicy, SessionUser } from '@/modules/data-access';
+import { buildDuplicateBucketDraft, buildPersonalOrderReceipt, createBucket, createOrder,updateBucket } from '@/modules/data-access';
 
 const user: SessionUser = {
   id: 'owner-1',

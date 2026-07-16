@@ -1,13 +1,13 @@
 import { type SyntheticEvent,useEffect, useState } from 'react';
 
 import { ConfirmDialog } from '@/components/ConfirmDialog';
+import type { CurrencyCode, Locale, ProfileDefaults, Theme } from '@/modules/data-access';
+import { authService, dataService } from '@/modules/data-access';
 import { Download, Save, Trash2 } from '@/packages/icons';
 import { downloadTextFile } from '@/platform/browser';
 import { SUPPORTED_CURRENCIES } from '@/platform/device';
 import { env } from '@/platform/environment';
-import { authService, dataService } from '@/services';
 import { useApp } from '@/state/AppContext';
-import type { CurrencyCode, Locale, ProfileDefaults, Theme } from '@/types/domain';
 
 export function SettingsPage() {
   const { user, profile, storageMode, online, t, saveProfile, showToast } = useApp();

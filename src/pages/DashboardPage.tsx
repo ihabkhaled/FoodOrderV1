@@ -5,6 +5,8 @@ import { Loading } from '@/components/Loading';
 import { StatusBadge } from '@/components/StatusBadge';
 import { formatDateTime } from '@/lib/date';
 import { formatMoney } from '@/lib/money';
+import type { DashboardSummary } from '@/modules/data-access';
+import { dataService } from '@/modules/data-access';
 import {
   CheckCircle2,
   ClipboardList,
@@ -14,10 +16,8 @@ import {
   Utensils,
 } from '@/packages/icons';
 import { Link } from '@/packages/router';
-import { dataService } from '@/services';
 import { useApp } from '@/state/AppContext';
 import { usePageRefresh } from '@/state/RefreshContext';
-import type { DashboardSummary } from '@/types/domain';
 
 export function DashboardPage() {
   const { user, profile, locale, t, errorMessage } = useApp();

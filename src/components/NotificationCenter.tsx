@@ -1,11 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 
 import { translateSocial } from '@/i18n/socialMessages';
+import type { AppNotification,Locale } from '@/modules/data-access';
 import { Bell, CheckCheck } from '@/packages/icons';
 import { useNavigate } from '@/packages/router';
 import { subscribeToPointerDown } from '@/platform/browser';
-import type { Locale } from '@/types/domain';
-import type { AppNotification } from '@/types/notifications';
 
 interface NotificationCenterProps {
   notifications: AppNotification[];

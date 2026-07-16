@@ -6,6 +6,7 @@ import {
   useState,
 } from 'react';
 
+import type { Locale } from '@/modules/data-access';
 import { RefreshCw } from '@/packages/icons';
 import { getViewportScrollTop } from '@/platform/browser';
 import { useApp } from '@/state/AppContext';
@@ -13,7 +14,6 @@ import {
   RefreshProvider,
   useRefreshController,
 } from '@/state/RefreshContext';
-import type { Locale } from '@/types/domain';
 
 const MAX_PULL = 108;
 const REFRESH_THRESHOLD = 68;

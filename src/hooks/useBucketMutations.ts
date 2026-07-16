@@ -1,9 +1,8 @@
 import { useCallback, useState } from 'react';
 
 import type { MessageKey } from '@/i18n/messages';
-import { buildDuplicateBucketDraft } from '@/lib/bucket';
-import { dataService } from '@/services';
-import type { Bucket, SessionUser } from '@/types/domain';
+import type { Bucket, SessionUser } from '@/modules/data-access';
+import { buildDuplicateBucketDraft, dataService } from '@/modules/data-access';
 
 interface BucketMutationOptions {
   readonly user: SessionUser | null;

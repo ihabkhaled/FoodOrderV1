@@ -1,12 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import {
-  createBucket,
-  MAX_BUCKET_ITEMS,
-  normalizeBucketItems,
-  updateBucket,
-  upgradeLegacyBucket,
-} from '@/lib/bucket';
+import { createBucket, MAX_BUCKET_ITEMS, normalizeBucketItems, updateBucket, upgradeLegacyBucket } from '@/modules/data-access';
 
 const owner = { id: 'u', displayName: 'User' };
 

@@ -19,7 +19,14 @@ export default defineConfig({
     exclude: ['tests/firebase/**'],
     coverage: {
       reporter: ['text', 'html', 'lcov', 'json', 'json-summary'],
-      include: ['src/lib/**', 'src/services/localServices.ts'],
+      include: [
+        'src/lib/**',
+        'src/modules/data-access/helpers/**',
+        'src/modules/data-access/gateways/local-auth.gateway.ts',
+        'src/modules/data-access/gateways/local-data.gateway.ts',
+        'src/modules/data-access/gateways/local-database.helper.ts',
+        'src/modules/data-access/gateways/local-sharing.gateway.ts',
+      ],
     },
   },
 });

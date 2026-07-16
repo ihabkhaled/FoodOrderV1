@@ -1,13 +1,9 @@
 import { useEffect, useState } from 'react';
 
 import { translateSocial } from '@/i18n/socialMessages';
+import type { BucketAccessGrant, BucketRole, Locale, SocialOverview } from '@/modules/data-access';
+import { socialService } from '@/modules/data-access';
 import { Share2, Users } from '@/packages/icons';
-import { socialService } from '@/services';
-import type { BucketRole, Locale } from '@/types/domain';
-import type {
-  BucketAccessGrant,
-  SocialOverview,
-} from '@/types/social';
 
 interface BucketSocialSharePanelProps {
   bucketId: string;

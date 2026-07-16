@@ -8,15 +8,11 @@ import { StatusBadge } from '@/components/StatusBadge';
 import { translateGroupOrder } from '@/i18n/groupOrderMessages';
 import { formatDateTime } from '@/lib/date';
 import { formatMoney } from '@/lib/money';
-import {
-  buildRepeatedOrderDraft,
-  getOrderChargeBreakdown,
-} from '@/lib/order';
+import type { Order, OrderStatus } from '@/modules/data-access';
+import { buildRepeatedOrderDraft, dataService, getOrderChargeBreakdown, orderLifecycleService } from '@/modules/data-access';
 import { ArrowLeft } from '@/packages/icons';
 import { Link, useNavigate, useParams } from '@/packages/router';
-import { dataService, orderLifecycleService } from '@/services';
 import { useApp } from '@/state/AppContext';
-import type { Order, OrderStatus } from '@/types/domain';
 
 function OrderLineSummary({
   order,

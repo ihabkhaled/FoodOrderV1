@@ -161,8 +161,12 @@ export default tseslint.config(
     rules: { 'react-refresh/only-export-components': 'off' },
   },
   {
-    // The local-device adapter implements async contracts over sync storage.
-    files: ['src/services/localServices.ts'],
+    // The local-device gateways implement async contracts over sync storage.
+    files: [
+      'src/modules/data-access/gateways/local-auth.gateway.ts',
+      'src/modules/data-access/gateways/local-data.gateway.ts',
+      'src/modules/data-access/gateways/local-sharing.gateway.ts',
+    ],
     rules: { '@typescript-eslint/require-await': 'off' },
   },
   {

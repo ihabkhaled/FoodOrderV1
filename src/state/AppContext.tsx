@@ -9,6 +9,8 @@ import {
 } from 'react';
 
 import { type MessageKey, translate } from '@/i18n/messages';
+import type { CurrencyCode, Locale, ProfileDefaults, SessionUser, Theme, UserProfile } from '@/modules/data-access';
+import { authService, dataService, storageMode } from '@/modules/data-access';
 import {
   setFirebaseErrorLocale,
   userFacingErrorMessage,
@@ -26,15 +28,6 @@ import {
   isNavigatorOnline,
   subscribeToOnlineChange,
 } from '@/platform/network';
-import { authService, dataService, storageMode } from '@/services';
-import type {
-  CurrencyCode,
-  Locale,
-  ProfileDefaults,
-  SessionUser,
-  Theme,
-  UserProfile,
-} from '@/types/domain';
 
 interface ToastState {
   message: string;

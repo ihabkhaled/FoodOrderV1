@@ -4,8 +4,8 @@ import {
 } from '@/components/BucketCards';
 import { VirtualListFooter } from '@/components/VirtualListFooter';
 import type { MessageKey } from '@/i18n/messages';
+import type { Bucket, Locale } from '@/modules/data-access';
 import { AppVirtuosoGrid } from '@/packages/virtuoso';
-import type { Bucket, Locale } from '@/types/domain';
 
 interface BucketCollectionSectionProps {
   readonly kind: 'owned' | 'shared';

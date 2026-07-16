@@ -1,14 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
-import {
-  assertBucketMutable,
-  beginOrdering,
-  completeOrdering,
-  failOrdering,
-  freezeBucket,
-  unfreezeBucket,
-} from '@/lib/bucketLifecycle';
-import type { Bucket } from '@/types/domain';
+import type { Bucket } from '@/modules/data-access';
+import { assertBucketMutable, beginOrdering, completeOrdering, failOrdering, freezeBucket, unfreezeBucket } from '@/modules/data-access';
 
 const openBucket = (): Bucket => ({
   id: 'bucket-1',

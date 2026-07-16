@@ -8,19 +8,10 @@ import { ErrorState } from '@/components/ErrorState';
 import { Loading } from '@/components/Loading';
 import { translateGroupOrder } from '@/i18n/groupOrderMessages';
 import { createId } from '@/lib/id';
-import {
-  detectAggregateDrift,
-  MAX_CONTRIBUTION_QUANTITY,
-  omitKey,
-} from '@/lib/sharing';
+import type { BucketActivityEvent, BucketContribution,SharedBucketView } from '@/modules/data-access';
+import { detectAggregateDrift, MAX_CONTRIBUTION_QUANTITY, omitKey, sharingService } from '@/modules/data-access';
 import { useNavigate, useParams } from '@/packages/router';
-import { sharingService } from '@/services';
-import type { SharedBucketView } from '@/services/contracts';
 import { useApp } from '@/state/AppContext';
-import type {
-  BucketActivityEvent,
-  BucketContribution,
-} from '@/types/domain';
 
 const DEBOUNCE_MS = 500;
 

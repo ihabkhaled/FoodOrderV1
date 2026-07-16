@@ -4,11 +4,11 @@ import { BucketSocialSharePanel } from '@/components/BucketSocialSharePanel';
 import { ErrorState } from '@/components/ErrorState';
 import { Loading } from '@/components/Loading';
 import { translateSocial } from '@/i18n/socialMessages';
+import type { Bucket } from '@/modules/data-access';
+import { dataService } from '@/modules/data-access';
 import { ArrowLeft } from '@/packages/icons';
 import { Link, useParams } from '@/packages/router';
-import { dataService } from '@/services';
 import { useApp } from '@/state/AppContext';
-import type { Bucket } from '@/types/domain';
 
 export function BucketSocialSharePage() {
   const { bucketId } = useParams();

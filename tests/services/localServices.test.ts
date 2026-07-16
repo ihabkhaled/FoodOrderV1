@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 
-import { LocalAuthService, LocalDataService } from '@/services/localServices';
-import type { ProfileDefaults } from '@/types/domain';
+import type { ProfileDefaults } from '@/modules/data-access';
+import { LocalAuthService, LocalDataService } from '@/modules/data-access';
 
 const defaults: ProfileDefaults = { locale: 'en', theme: 'system', defaultCurrency: 'EGP' };
 

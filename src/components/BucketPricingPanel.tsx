@@ -1,6 +1,6 @@
 import { translateGroupOrder } from '@/i18n/groupOrderMessages';
+import type { BucketPricingPolicy, Locale } from '@/modules/data-access';
 import { ReceiptText } from '@/packages/icons';
-import type { BucketPricingPolicy, Locale } from '@/types/domain';
 
 interface BucketPricingPanelProps {
   locale: Locale;

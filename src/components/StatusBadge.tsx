@@ -1,5 +1,5 @@
+import type { OrderStatus } from '@/modules/data-access';
 import { useApp } from '@/state/AppContext';
-import type { OrderStatus } from '@/types/domain';
 
 export function StatusBadge({ status }: { status: OrderStatus }) {
   const { t } = useApp();

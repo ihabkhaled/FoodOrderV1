@@ -2,17 +2,12 @@ import { useEffect, useMemo, useState } from 'react';
 
 import { Loading } from '@/components/Loading';
 import { translateGroupOrder } from '@/i18n/groupOrderMessages';
-import { MAX_ORDER_QUANTITY } from '@/lib/bucket';
 import { formatMoney } from '@/lib/money';
-import {
-  buildPersonalOrderReceipt,
-  calculateOrderTotal,
-} from '@/lib/order';
+import type { Bucket } from '@/modules/data-access';
+import { buildPersonalOrderReceipt, calculateOrderTotal, dataService,MAX_ORDER_QUANTITY } from '@/modules/data-access';
 import { ArrowLeft, Minus, Plus, ShoppingCart } from '@/packages/icons';
 import { Link, useNavigate, useParams } from '@/packages/router';
-import { dataService } from '@/services';
 import { useApp } from '@/state/AppContext';
-import type { Bucket } from '@/types/domain';
 
 export function CreateOrderPage() {
   const { bucketId } = useParams();

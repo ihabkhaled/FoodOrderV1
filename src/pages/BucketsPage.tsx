@@ -13,12 +13,12 @@ import { useBucketMutations } from '@/hooks/useBucketMutations';
 import { useCursorPage } from '@/hooks/useCursorPage';
 import type { MessageKey } from '@/i18n/messages';
 import type { PageResult } from '@/lib/pagination';
+import type { Bucket, Locale } from '@/modules/data-access';
+import { paginationService } from '@/modules/data-access';
 import { KeyRound, Plus, ShoppingBasket } from '@/packages/icons';
 import { Link, useSearchParams } from '@/packages/router';
-import { paginationService } from '@/services';
 import { useApp } from '@/state/AppContext';
 import { usePageRefresh } from '@/state/RefreshContext';
-import type { Bucket, Locale } from '@/types/domain';
 
 const emptyBucketPage = (): Promise<PageResult<Bucket>> =>
   Promise.resolve({ items: [], nextCursor: null, hasMore: false });

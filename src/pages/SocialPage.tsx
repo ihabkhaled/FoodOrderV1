@@ -7,6 +7,8 @@ import {
   type SocialMessageKey,
   translateSocial,
 } from '@/i18n/socialMessages';
+import type { FriendGroup, FriendGroupMember, SocialOverview, SocialUser } from '@/modules/data-access';
+import { socialService } from '@/modules/data-access';
 import {
   Check,
   Crown,
@@ -20,14 +22,7 @@ import {
   Users,
   X,
 } from '@/packages/icons';
-import { socialService } from '@/services';
 import { useApp } from '@/state/AppContext';
-import type {
-  FriendGroup,
-  FriendGroupMember,
-  SocialOverview,
-  SocialUser,
-} from '@/types/social';
 
 const emptyOverview = (): SocialOverview => ({
   friends: [],

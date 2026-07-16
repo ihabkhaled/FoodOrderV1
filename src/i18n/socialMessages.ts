@@ -1,4 +1,4 @@
-import type { Locale } from '@/types/domain';
+import type { Locale } from '@/modules/data-access';
 
 const socialMessages = {
   en: {

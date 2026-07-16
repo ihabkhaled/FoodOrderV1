@@ -7,11 +7,9 @@ import { ConfirmDialog } from '@/components/ConfirmDialog';
 import { CustomItemPanel } from '@/components/CustomItemPanel';
 import { translateGroupOrder } from '@/i18n/groupOrderMessages';
 import type { MessageKey } from '@/i18n/messages';
-import { DEFAULT_PRICING_POLICY } from '@/lib/bucket';
-import { calculateBasisPointCharge } from '@/lib/groupOrder';
-import { effectiveCustomItemPermissions } from '@/lib/memberPermissions';
 import { formatMoney } from '@/lib/money';
-import { roleAllows } from '@/lib/sharing';
+import type { Bucket, BucketActivityEvent, BucketContribution, BucketItem, BucketRole, Locale, SessionUser,SharedBucketView } from '@/modules/data-access';
+import { calculateBasisPointCharge, DEFAULT_PRICING_POLICY, effectiveCustomItemPermissions, roleAllows } from '@/modules/data-access';
 import {
   ArrowLeft,
   LogOut,
@@ -21,16 +19,6 @@ import {
   Users,
 } from '@/packages/icons';
 import { Link } from '@/packages/router';
-import type { SharedBucketView } from '@/services/contracts';
-import type {
-  Bucket,
-  BucketActivityEvent,
-  BucketContribution,
-  BucketItem,
-  BucketRole,
-  Locale,
-  SessionUser,
-} from '@/types/domain';
 
 const ROLE_LABEL: Record<BucketRole, MessageKey> = {
   owner: 'roleOwner',

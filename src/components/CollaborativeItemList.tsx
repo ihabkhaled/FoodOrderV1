@@ -1,13 +1,8 @@
 import { translateGroupOrder } from '@/i18n/groupOrderMessages';
 import type { MessageKey } from '@/i18n/messages';
 import { formatMoney } from '@/lib/money';
+import type { BucketContribution, BucketItem, CurrencyCode, Locale } from '@/modules/data-access';
 import { Minus, Plus } from '@/packages/icons';
-import type {
-  BucketContribution,
-  BucketItem,
-  CurrencyCode,
-  Locale,
-} from '@/types/domain';
 
 export interface CollaborativePendingChange {
   target: number;

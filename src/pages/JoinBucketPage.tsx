@@ -1,11 +1,11 @@
 import { type SyntheticEvent, useState } from 'react';
 
 import type { MessageKey } from '@/i18n/messages';
+import type { BucketInvite, BucketRole } from '@/modules/data-access';
+import { sharingService } from '@/modules/data-access';
 import { ArrowLeft, KeyRound, UserPlus } from '@/packages/icons';
 import { Link, useNavigate } from '@/packages/router';
-import { sharingService } from '@/services';
 import { useApp } from '@/state/AppContext';
-import type { BucketInvite, BucketRole } from '@/types/domain';
 
 const ROLE_LABEL: Record<BucketRole, MessageKey> = {
   owner: 'roleOwner',

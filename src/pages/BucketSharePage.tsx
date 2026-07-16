@@ -7,19 +7,12 @@ import { ConfirmDialog } from '@/components/ConfirmDialog';
 import { ErrorState } from '@/components/ErrorState';
 import { Loading } from '@/components/Loading';
 import { translateGroupOrder } from '@/i18n/groupOrderMessages';
+import type { Bucket, BucketActivityEvent, BucketInvite, BucketMember, BucketRole,SharedBucketView } from '@/modules/data-access';
+import { sharingService } from '@/modules/data-access';
 import { ArrowLeft, Lock, LockOpen, Share2 } from '@/packages/icons';
 import { Link, useParams } from '@/packages/router';
 import { copyToClipboard, shareText } from '@/platform/browser';
-import { sharingService } from '@/services';
-import type { SharedBucketView } from '@/services/contracts';
 import { useApp } from '@/state/AppContext';
-import type {
-  Bucket,
-  BucketActivityEvent,
-  BucketInvite,
-  BucketMember,
-  BucketRole,
-} from '@/types/domain';
 
 interface BucketStateControlsProps {
   bucket: Bucket;

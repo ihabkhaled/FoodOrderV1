@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { NotificationCenter } from '@/components/NotificationCenter';
 import { RefreshableViewport } from '@/components/RefreshableViewport';
 import type { MessageKey } from '@/i18n/messages';
+import type { AppNotification,Theme } from '@/modules/data-access';
+import { notificationService } from '@/modules/data-access';
 import {
   ChevronLeft,
   ChevronRight,
@@ -25,10 +27,7 @@ import {
   nextTheme,
   saveSidebarCollapsed,
 } from '@/platform/device';
-import { notificationService } from '@/services';
 import { useApp } from '@/state/AppContext';
-import type { Theme } from '@/types/domain';
-import type { AppNotification } from '@/types/notifications';
 
 const NAV_ITEMS: { to: string; icon: typeof Home; key: MessageKey }[] = [
   { to: '/', icon: Home, key: 'dashboard' },

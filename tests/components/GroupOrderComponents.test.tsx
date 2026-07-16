@@ -6,12 +6,8 @@ import { describe, expect, it, vi } from 'vitest';
 import { BucketPricingPanel } from '@/components/BucketPricingPanel';
 import { CustomItemPanel } from '@/components/CustomItemPanel';
 import { GroupReceiptSection } from '@/components/GroupReceiptSection';
-import { calculateGroupOrderReceipt } from '@/lib/groupOrder';
-import type {
-  BucketItem,
-  BucketPricingPolicy,
-  GroupOrderReceiptSnapshot,
-} from '@/types/domain';
+import type { BucketItem, BucketPricingPolicy, GroupOrderReceiptSnapshot } from '@/modules/data-access';
+import { calculateGroupOrderReceipt } from '@/modules/data-access';
 
 const policy: BucketPricingPolicy = {
   vatBasisPoints: 1000,

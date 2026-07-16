@@ -1,11 +1,8 @@
 import { useState } from 'react';
 
 import { translateGroupOrder } from '@/i18n/groupOrderMessages';
+import type { BucketItem, Locale } from '@/modules/data-access';
 import { Check, Plus } from '@/packages/icons';
-import type {
-  BucketItem,
-  Locale,
-} from '@/types/domain';
 
 interface CustomItemDraft {
   name: string;

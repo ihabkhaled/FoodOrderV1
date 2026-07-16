@@ -2,23 +2,13 @@ import { type SyntheticEvent, useEffect, useMemo, useState } from 'react';
 
 import { BucketPricingPanel } from '@/components/BucketPricingPanel';
 import { Loading } from '@/components/Loading';
-import {
-  DEFAULT_PRICING_POLICY,
-  MAX_BUCKET_ITEMS,
-} from '@/lib/bucket';
 import { createId } from '@/lib/id';
+import type { BucketDraft, BucketItem, BucketPricingPolicy, BucketVisibility, CurrencyCode } from '@/modules/data-access';
+import { dataService,DEFAULT_PRICING_POLICY, MAX_BUCKET_ITEMS } from '@/modules/data-access';
 import { ArrowLeft, GripVertical, Plus, Save, Trash2 } from '@/packages/icons';
 import { Link, useNavigate, useParams } from '@/packages/router';
 import { SUPPORTED_CURRENCIES } from '@/platform/device';
-import { dataService } from '@/services';
 import { useApp } from '@/state/AppContext';
-import type {
-  BucketDraft,
-  BucketItem,
-  BucketPricingPolicy,
-  BucketVisibility,
-  CurrencyCode,
-} from '@/types/domain';
 
 const emptyItem = (sortOrder: number): BucketItem => ({
   id: createId('item'),

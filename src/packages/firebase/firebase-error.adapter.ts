@@ -1,4 +1,8 @@
-import type { Locale } from '@/types/domain';
+/**
+ * Structural copy of the domain `Locale` union: the packages layer sits below
+ * modules and must not import `@/modules/data-access`.
+ */
+type Locale = 'en' | 'ar';
 
 interface LocalizedMessage {
   en: string;
