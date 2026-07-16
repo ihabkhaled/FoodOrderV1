@@ -27,6 +27,27 @@ export default defineConfig({
         'src/modules/data-access/gateways/local-database.helper.ts',
         'src/modules/data-access/gateways/local-sharing.gateway.ts',
       ],
+      // Ratchet floors: pure generic helpers hold 100%; domain helpers and
+      // the instrumented local gateways hold their verified levels. Raise
+      // these as coverage grows — never lower them to make a run pass.
+      thresholds: {
+        statements: 85,
+        branches: 72,
+        functions: 89,
+        lines: 91,
+        'src/shared/helpers/**': {
+          statements: 100,
+          branches: 100,
+          functions: 100,
+          lines: 100,
+        },
+        'src/modules/data-access/helpers/**': {
+          statements: 95,
+          branches: 82,
+          functions: 100,
+          lines: 96,
+        },
+      },
     },
   },
 });

@@ -1,19 +1,79 @@
 {
   "tests": [
     {
+      "path": "tests/bucket-pricing.test.ts",
+      "bytes": 3507,
+      "hash": "29dcee9ae619fc2d53fd17e61e9420a7825753ec9d9f2346b45c96eaabe1814e"
+    },
+    {
+      "path": "tests/components/ConfirmDialog.test.tsx",
+      "bytes": 1574,
+      "hash": "3df095bb499a63a76259df135c9b99ce3989a8109f51f08c7a0c2996a82cffa3"
+    },
+    {
+      "path": "tests/components/GroupOrderComponents.test.tsx",
+      "bytes": 6464,
+      "hash": "19790b4834d46bf6d32865952fafd75b62e773147967ece677c9986d320d6bf0"
+    },
+    {
       "path": "tests/domain/bucket.test.ts",
-      "bytes": 2629,
-      "hash": "86577b92ffd7af648b1a5fd14024e394a01fa5f9f2e2e5e610b6a5ca02fcd60d"
+      "bytes": 4068,
+      "hash": "55412d6f078e6f746bbe1ccf446bea6cddd59307f00ccd995e5e59f27f0b63f5"
+    },
+    {
+      "path": "tests/domain/bucketLifecycle.test.ts",
+      "bytes": 3579,
+      "hash": "57cd0ff450d7a1f17494cdc10470ab498cf46e1a97ff8f52c2b3de15abe7c8bc"
+    },
+    {
+      "path": "tests/domain/firebaseError.test.ts",
+      "bytes": 2389,
+      "hash": "ab909a94ef6348e27bb1a180045c4c3ec7c65e3cf073d71234058887e3e49f48"
+    },
+    {
+      "path": "tests/domain/groupOrder.test.ts",
+      "bytes": 6182,
+      "hash": "e7cb1bf5d7d335035c086ac2dc594f32900766da12baa63342b4532af05872a6"
+    },
+    {
+      "path": "tests/domain/memberPermissions.test.ts",
+      "bytes": 1014,
+      "hash": "3b63a8112c1d7bed52e4ef3ffd8eece72b8032294b7e8ccc5d58afbe68a133a1"
     },
     {
       "path": "tests/domain/order.test.ts",
-      "bytes": 949,
-      "hash": "eb23bba81b864c755602c07c4a3545ebe0501b1b14a3ecb2e61fb926928cf6f4"
+      "bytes": 959,
+      "hash": "52f3c60074f7ecb6458c23673e9c0d5bbafc66020e45d3417e478876d2f4da16"
+    },
+    {
+      "path": "tests/domain/pagination.test.ts",
+      "bytes": 2313,
+      "hash": "a8b8979586461fb5c4acafee9b820bcd20a85ee5be63d6ec0fad6cafa5e3442c"
+    },
+    {
+      "path": "tests/domain/sharedHelpers.test.ts",
+      "bytes": 2428,
+      "hash": "b28de8a4178afae693f8e1b65edd65a569857d904ab01b63b994c00d023e1053"
     },
     {
       "path": "tests/domain/sharing.test.ts",
-      "bytes": 9960,
-      "hash": "7c84d816a9644955e7ce40e8c7f03da713ebb4bb7556c557546309922b1c666e"
+      "bytes": 9900,
+      "hash": "93d0b1cfb5f302d70a285df41e458d8942fef0b75e5bd2b1e3ffcafd249ad0af"
+    },
+    {
+      "path": "tests/e2e/bucket-pricing.spec.ts",
+      "bytes": 5358,
+      "hash": "05a0e658739a9229634879525e7faae0606bfdf07f7b80edacdbe23de1d8db89"
+    },
+    {
+      "path": "tests/e2e/group-order.spec.ts",
+      "bytes": 5440,
+      "hash": "c98fbc06dc4d9d65565b65d37056bc0a5a1876180f0cd7b6094bf1b8b9918269"
+    },
+    {
+      "path": "tests/e2e/order-lifecycle.spec.ts",
+      "bytes": 7646,
+      "hash": "0b5f5088d9ff33b821d1eddeebc968288044a62813d3e151a2b6ac4cff8d3d1a"
     },
     {
       "path": "tests/e2e/smoke.spec.ts",
@@ -21,24 +81,74 @@
       "hash": "a3f6f02607840114a29020d96f57233ac773ef2cc119d7faea6e7827ba706ef3"
     },
     {
+      "path": "tests/e2e/social-management.spec.ts",
+      "bytes": 10797,
+      "hash": "243a15330d4d23ba90720da9ff298db44d1a0cf86d78c251ab81f34bc870e61f"
+    },
+    {
+      "path": "tests/e2e/social-sharing.spec.ts",
+      "bytes": 5030,
+      "hash": "5aad4a4c5deffbd584482e1c77230737bbf66bf763ef9222acdfbb9e87c1528f"
+    },
+    {
       "path": "tests/e2e/ui.spec.ts",
-      "bytes": 4751,
-      "hash": "1ce6f54684adb2464b6c75c767bcffbf70321ec5cdeedab6bcebb7efa0184c84"
+      "bytes": 4867,
+      "hash": "c211a10bd5976dfab7bb8d3e06b7d90d31f2ea2742c18a05dcbafc545604b7a2"
+    },
+    {
+      "path": "tests/eslint/architecture-plugin.test.ts",
+      "bytes": 10918,
+      "hash": "520f7cc5fa6452a86986b5a2ac6f8bc979073ee9939b7c6da1778c282177dfe1"
+    },
+    {
+      "path": "tests/firebase/firestore.rules.test.ts",
+      "bytes": 8004,
+      "hash": "246b9f3dea1e900abb830d17aedb8b975978d29db3c2e55260eaf6195dc3d92b"
+    },
+    {
+      "path": "tests/firebase/notifications.rules.test.ts",
+      "bytes": 2086,
+      "hash": "043a2a2c9e011e7c6bdb16693300dd0cacf8600fa32ce8eb1a92398e832540c9"
+    },
+    {
+      "path": "tests/firebase/personal-pricing.rules.test.ts",
+      "bytes": 4596,
+      "hash": "11d8e3a88c9d6bcd939bac92abe1f0c1926394ea2871b70f353bf9c4c2bde771"
+    },
+    {
+      "path": "tests/firebase/social.rules.test.ts",
+      "bytes": 4273,
+      "hash": "ec228acdfe79b83f5defe18886d24acbf99aa37a021bd45139ba9b9ea7d78db2"
+    },
+    {
+      "path": "tests/order-repeat.test.ts",
+      "bytes": 3151,
+      "hash": "df69c82b797ef63239d540be6134c495defbbea7429ce386c8c9b0a4041c4c27"
+    },
+    {
+      "path": "tests/services/groupOrderServices.test.ts",
+      "bytes": 5814,
+      "hash": "970238f074078c4f716b25c5e20be4b1cde66343e7c438cbb41ce39edc943e3a"
     },
     {
       "path": "tests/services/localServices.test.ts",
-      "bytes": 1900,
-      "hash": "fd725ec732f71f225e0607c34c4dcf9a415884d6bc0bc9219a4dbb2cae598e63"
+      "bytes": 1904,
+      "hash": "43580654f6a0cf93f7ee5838b0c28e8b990953d60ff190520dbf80ddacb77d23"
+    },
+    {
+      "path": "tests/services/paginationServices.test.ts",
+      "bytes": 3423,
+      "hash": "649968c2108116d3921ed0a370a2c8fbc16acc0163bd0bffed4eda6dd0530768"
     },
     {
       "path": "tests/services/sharingLocal.test.ts",
-      "bytes": 11113,
-      "hash": "2ecbd6be22ff683164a13e571691dd64418d423e0fa9e154aa7cfd44e6ae5d26"
+      "bytes": 11110,
+      "hash": "962533d727218b1b8ff3ca5f57f423993101e7a0f1569b4856dd741013fdb26e"
     },
     {
       "path": "tests/setup.ts",
-      "bytes": 322,
-      "hash": "e1d0572ef83bd914c50125e3298f86a711b917fc255a2ac178fccf4eeb9cf16c"
+      "bytes": 1491,
+      "hash": "18c74fe95cfe476421e85f7f0ec79ad76c4093ffd16cf600093f38eaad7644ca"
     }
   ]
 }

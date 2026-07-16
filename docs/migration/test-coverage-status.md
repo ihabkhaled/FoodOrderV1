@@ -2,9 +2,11 @@
 
 ## Current suites
 
-- Unit/integration (Vitest, jsdom): 16 files / 79 tests + the architecture
-  ESLint rule suite (54 cases). Coverage instrumentation currently includes
-  the pure domain layer (`src/lib/**`) and the local data adapter.
+- Unit/integration (Vitest, jsdom): 18 files / 88 tests + the architecture
+  ESLint rule suite (54 cases) = 142 total. Coverage instruments the pure
+  helper layers (`src/shared/helpers/**` at 100% enforced,
+  `src/modules/data-access/helpers/**`) and the local persistence gateways,
+  with ratchet thresholds in vitest.config.ts that may only move up.
 - Firestore security rules: 4 suites under `tests/firebase/` (run against the
   emulator in CI).
 - End-to-end (Playwright, chromium + mobile-chrome, local-mode adapter):
