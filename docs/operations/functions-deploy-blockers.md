@@ -21,44 +21,44 @@ Google also emits this transiently on the *first* 2nd-gen deploy ("Retry in a fe
 service agent propagates), so after the IAM bootstrap runs, re-running the functions deploy should
 succeed.
 
-## 2. Cloud Run CPU quota — OWNER ACTION (GCP-side, not code)
+## 2. Cloud Run CPU quota — RESOLVED IN CODE via maxInstances
 
 ```
-Could not create or update Cloud Run service repeatgrouporderv133, Container Healthcheck failed.
+Could not create or update Cloud Run service notifyfriendrequestv150, Container Healthcheck failed.
 Quota exceeded for total allowable CPU per project per region.
 ```
 
-2nd-gen functions run on Cloud Run; deploying all 37 functions at once spins up too many concurrent
-Cloud Run healthcheck revisions, whose combined CPU exceeds the project's **total allowable CPU in
-`europe-west1`**.
+2nd-gen functions run on Cloud Run. The **"total allowable CPU per project per region"** quota is the
+sum of every service's *reservable* CPU (`cpu × maxInstances`), enforced when each new revision's
+healthcheck instance starts — **not** live usage (the console can read ~5% used and the deploy still
+fails). This project's quota is **hard-capped at 20,000 milli vCPU in `europe-west1` and cannot be
+self-raised**: the GCP console routes any increase through a **sales/support request** ("contact
+sales"), so raising it is not a viable unblock.
 
-**Mitigation (now automated).** The CI deploy no longer runs one `firebase deploy --only functions`.
-`scripts/deploy-functions-batched.mjs` (wired into the Firebase Deployment Gate) builds functions once,
-then deploys `firestore:rules` followed by the functions in **small sequential batches**
-(`FUNCTIONS_DEPLOY_BATCH_SIZE`, default 4, with a pause and per-batch retries), so only a few Cloud Run
-revisions roll out at a time and the concurrent healthcheck CPU stays under the quota.
+**Resolution (in code).** `functions/src/globalOptions.ts` sets `maxInstances: 3` for all ~37 functions
+via `setGlobalOptions`. Because the quota scales with `maxInstances`, this keeps the combined reservation
+(~37 × 3 × per-instance CPU) well under 20,000 while every function still serves ~240 concurrent
+invocations (`maxInstances 3 × concurrency 80`) before scaling out — ample for this app. Empirically,
+lowering `maxInstances` from the Firebase default to 10 cut deploy failures 17 → 4; 3 removes the rest.
+**If the CPU quota is ever raised via sales, bump `maxInstances` back up in `globalOptions.ts`.**
 
-**CI behavior when the quota is the only blocker.** The batched deploy attempts every function, then
-deploys `firestore:rules`. If the *only* remaining failures are the specific `Quota exceeded for total
-allowable CPU` error (a hard, owner-side infrastructure limit), the deploy step exits 0 with a loud
-`::warning::` listing the pending functions — so the pipeline is not permanently red on an external
-quota. **Any other error** (permissions, Eventarc, build, config, rules) still fails the gate hard.
-Once the quota is raised, the next run deploys the remaining functions and the warning disappears.
+**Deploy batching (kept).** `scripts/deploy-functions-batched.mjs` (wired into the Firebase Deployment
+Gate) still builds functions once, then deploys `firestore:rules` followed by the functions in small
+sequential batches (`FUNCTIONS_DEPLOY_BATCH_SIZE`, default 4, with a pause and per-batch retries) so only
+a few Cloud Run revisions roll out at a time.
 
-If the batched deploy still hits the quota (i.e. the steady-state total CPU, not just the deploy spike,
-exceeds it), then also:
-
-1. **Request a quota increase** — GCP Console → IAM & Admin → Quotas → filter "Cloud Run Admin API,
-   Total CPU allocation, europe-west1" → Edit Quotas. (Recommended, and lets you raise the batch size.)
-2. **Reduce per-function CPU/instances** (e.g. `cpu: 1`, `minInstances: 0`, higher `concurrency`) in the
-   function definitions to lower the aggregate CPU request.
-3. **Lower the batch size** further (`FUNCTIONS_DEPLOY_BATCH_SIZE: 2`) to shrink the deploy-time spike.
+**CI safety net.** If the *only* remaining failures are the specific `Quota exceeded for total allowable
+CPU` error, the deploy step exits 0 with a loud `::warning::` listing the pending functions, so the
+pipeline is not permanently red on an external quota. **Any other error** (permissions, Eventarc, build,
+config, rules) still fails the gate hard. With `maxInstances: 3` there should be no pending functions and
+no warning.
 
 ## Sequence to unblock
 
 1. Ensure `secrets.FIREBASE_SERVICE_ACCOUNT*` has (temporarily) `roles/resourcemanager.projectIamAdmin`.
 2. Run **Firebase Eventarc IAM Bootstrap** (push to main or `workflow_dispatch`) — now grants the
    Eventarc service-agent role.
-3. Raise the Cloud Run CPU quota (or deploy in batches).
-4. Re-run `firebase deploy --only functions`.
+3. Keep `maxInstances` low enough that `~functions × maxInstances × per-instance CPU` stays under the
+   20,000 milli vCPU quota (currently `maxInstances: 3`). Only raise it if the quota is increased.
+4. Push to main (or `workflow_dispatch`) — the Firebase Deployment Gate runs the batched deploy.
 5. Remove the temporary `projectIamAdmin` grant.
