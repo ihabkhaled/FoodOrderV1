@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import type { PageRequest, PageResult } from '@/lib/pagination';
+import type { PageRequest, PageResult } from '@/shared/helpers';
 
 interface Identified {
   readonly id: string;

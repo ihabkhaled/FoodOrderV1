@@ -1,14 +1,14 @@
 import { type SyntheticEvent, useEffect, useMemo, useState } from 'react';
 
 import { BucketPricingPanel } from '@/components/BucketPricingPanel';
-import { Loading } from '@/components/Loading';
-import { createId } from '@/lib/id';
 import type { BucketDraft, BucketItem, BucketPricingPolicy, BucketVisibility, CurrencyCode } from '@/modules/data-access';
 import { dataService,DEFAULT_PRICING_POLICY, MAX_BUCKET_ITEMS } from '@/modules/data-access';
+import { useApp } from '@/modules/session';
 import { ArrowLeft, GripVertical, Plus, Save, Trash2 } from '@/packages/icons';
 import { Link, useNavigate, useParams } from '@/packages/router';
 import { SUPPORTED_CURRENCIES } from '@/platform/device';
-import { useApp } from '@/state/AppContext';
+import { createId } from '@/shared/helpers';
+import { Loading } from '@/shared/ui';
 
 const emptyItem = (sortOrder: number): BucketItem => ({
   id: createId('item'),
@@ -140,7 +140,7 @@ export function BucketEditorPage() {
     }
   };
 
-  if (loading) return <Loading />;
+  if (loading) return <Loading label={t('loading')} />;
 
   return (
     <div className="page narrow">

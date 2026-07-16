@@ -3,16 +3,14 @@ import { useCallback, useEffect, useState } from 'react';
 import { ActivityTimeline } from '@/components/ActivityTimeline';
 import { BucketInvitePanel } from '@/components/BucketInvitePanel';
 import { BucketMemberPermissionsPanel } from '@/components/BucketMemberPermissionsPanel';
-import { ConfirmDialog } from '@/components/ConfirmDialog';
-import { ErrorState } from '@/components/ErrorState';
-import { Loading } from '@/components/Loading';
 import { translateGroupOrder } from '@/i18n/groupOrderMessages';
 import type { Bucket, BucketActivityEvent, BucketInvite, BucketMember, BucketRole,SharedBucketView } from '@/modules/data-access';
 import { sharingService } from '@/modules/data-access';
+import { useApp } from '@/modules/session';
 import { ArrowLeft, Lock, LockOpen, Share2 } from '@/packages/icons';
 import { Link, useParams } from '@/packages/router';
 import { copyToClipboard, shareText } from '@/platform/browser';
-import { useApp } from '@/state/AppContext';
+import { ConfirmDialog, ErrorState, Loading } from '@/shared/ui';
 
 interface BucketStateControlsProps {
   bucket: Bucket;
@@ -292,10 +290,10 @@ export function BucketSharePage() {
     }
   };
 
-  if (loading) return <Loading />;
+  if (loading) return <Loading label={t('loading')} />;
   if (!view || error) {
     return (
-      <ErrorState
+      <ErrorState retryLabel={t('tryAgain')}
         message={error || t('notAllowed')}
         onRetry={() => {
           void load();

@@ -1,6 +1,6 @@
 import { AppLayout } from '@/components/AppLayout';
 import { AuthLayout } from '@/components/AuthLayout';
-import { Loading } from '@/components/Loading';
+import { useApp } from '@/modules/session';
 import { Navigate, Outlet, Route, Routes } from '@/packages/router';
 import { BucketCollaboratePage } from '@/pages/BucketCollaboratePage';
 import { BucketEditorPage } from '@/pages/BucketEditorPage';
@@ -18,10 +18,10 @@ import { OrdersPage } from '@/pages/OrdersPage';
 import { RegisterPage } from '@/pages/RegisterPage';
 import { SettingsPage } from '@/pages/SettingsPage';
 import { SocialPage } from '@/pages/SocialPage';
-import { useApp } from '@/state/AppContext';
+import { Loading } from '@/shared/ui';
 
-function ProtectedRoute() { const { user, authLoading } = useApp(); if (authLoading) return <Loading />; return user ? <Outlet /> : <Navigate to="/auth/login" replace />; }
-function GuestRoute() { const { user, authLoading } = useApp(); if (authLoading) return <Loading />; return user ? <Navigate to="/" replace /> : <Outlet />; }
+function ProtectedRoute() { const { user, authLoading, t } = useApp(); if (authLoading) return <Loading label={t('loading')} />; return user ? <Outlet /> : <Navigate to="/auth/login" replace />; }
+function GuestRoute() { const { user, authLoading, t } = useApp(); if (authLoading) return <Loading label={t('loading')} />; return user ? <Navigate to="/" replace /> : <Outlet />; }
 
 export default function App() {
   return <Routes>

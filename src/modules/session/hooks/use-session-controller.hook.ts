@@ -1,15 +1,6 @@
-import {
-  createContext,
-  type ReactNode,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { type MessageKey, translate } from '@/i18n/messages';
-import type { CurrencyCode, Locale, ProfileDefaults, SessionUser, Theme, UserProfile } from '@/modules/data-access';
+import type { ProfileDefaults, SessionUser, UserProfile } from '@/modules/data-access';
 import { authService, dataService, storageMode } from '@/modules/data-access';
 import {
   setFirebaseErrorLocale,
@@ -28,43 +19,16 @@ import {
   isNavigatorOnline,
   subscribeToOnlineChange,
 } from '@/platform/network';
+import { translate } from '@/shared/i18n';
 
-interface ToastState {
-  message: string;
-  kind: 'success' | 'error' | 'info';
-}
+import type { AppContextValue, ToastState } from '../types/session.types';
 
-interface AppContextValue {
-  user: SessionUser | null;
-  profile: UserProfile | null;
-  authLoading: boolean;
-  online: boolean;
-  storageMode: string;
-  locale: Locale;
-  theme: Theme;
-  currency: CurrencyCode;
-  toast: ToastState | null;
-  t: (key: MessageKey) => string;
-  errorMessage: (error: unknown, fallbackKey?: MessageKey) => string;
-  login: (email: string, password: string) => Promise<void>;
-  register: (fullName: string, email: string, password: string) => Promise<void>;
-  resetPassword: (email: string) => Promise<void>;
-  logout: () => Promise<void>;
-  saveProfile: (
-    changes: Partial<
-      Pick<UserProfile, 'fullName' | 'locale' | 'theme' | 'defaultCurrency'>
-    >,
-  ) => Promise<void>;
-  /** Runtime language switch that also works before signing in. */
-  setDeviceLocale: (locale: Locale) => Promise<void>;
-  /** Runtime theme switch that also works before signing in. */
-  setDeviceTheme: (theme: Theme) => Promise<void>;
-  showToast: (message: string, kind?: ToastState['kind']) => void;
-}
-
-const AppContext = createContext<AppContextValue | null>(null);
-
-export function AppProvider({ children }: { children: ReactNode }) {
+/**
+ * The full session state machine behind {@link AppProvider}: device config,
+ * auth subscription, profile loading, document locale/theme application,
+ * online tracking, and the toast timer.
+ */
+export const useSessionController = (): AppContextValue => {
   const [user, setUser] = useState<SessionUser | null>(null);
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [authLoading, setAuthLoading] = useState(true);
@@ -155,7 +119,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     [],
   );
 
-  const value = useMemo<AppContextValue>(
+  return useMemo<AppContextValue>(
     () => ({
       user,
       profile,
@@ -239,12 +203,4 @@ export function AppProvider({ children }: { children: ReactNode }) {
       showToast,
     ],
   );
-
-  return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
-}
-
-export const useApp = (): AppContextValue => {
-  const context = useContext(AppContext);
-  if (!context) throw new Error('useApp must be used inside AppProvider.');
-  return context;
 };

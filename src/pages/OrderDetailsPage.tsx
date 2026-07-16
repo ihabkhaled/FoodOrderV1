@@ -1,18 +1,17 @@
 import { useEffect, useState } from 'react';
 
 import { GroupReceiptSection } from '@/components/GroupReceiptSection';
-import { Loading } from '@/components/Loading';
 import { OrderActionBar } from '@/components/OrderActionBar';
 import { OrderParticipantsSection } from '@/components/OrderParticipantsSection';
 import { StatusBadge } from '@/components/StatusBadge';
 import { translateGroupOrder } from '@/i18n/groupOrderMessages';
-import { formatDateTime } from '@/lib/date';
-import { formatMoney } from '@/lib/money';
 import type { Order, OrderStatus } from '@/modules/data-access';
 import { buildRepeatedOrderDraft, dataService, getOrderChargeBreakdown, orderLifecycleService } from '@/modules/data-access';
+import { useApp } from '@/modules/session';
 import { ArrowLeft } from '@/packages/icons';
 import { Link, useNavigate, useParams } from '@/packages/router';
-import { useApp } from '@/state/AppContext';
+import { formatDateTime, formatMoney } from '@/shared/helpers';
+import { Loading } from '@/shared/ui';
 
 function OrderLineSummary({
   order,
@@ -117,7 +116,7 @@ export function OrderDetailsPage() {
     }
   };
 
-  if (loading) return <Loading />;
+  if (loading) return <Loading label={t('loading')} />;
   if (!order) {
     return (
       <div className="page">

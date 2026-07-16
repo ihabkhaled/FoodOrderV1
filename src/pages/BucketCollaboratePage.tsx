@@ -4,14 +4,13 @@ import {
   BucketCollaborateContent,
 } from '@/components/BucketCollaborateContent';
 import type { CollaborativePendingChange } from '@/components/CollaborativeItemList';
-import { ErrorState } from '@/components/ErrorState';
-import { Loading } from '@/components/Loading';
 import { translateGroupOrder } from '@/i18n/groupOrderMessages';
-import { createId } from '@/lib/id';
 import type { BucketActivityEvent, BucketContribution,SharedBucketView } from '@/modules/data-access';
 import { detectAggregateDrift, MAX_CONTRIBUTION_QUANTITY, omitKey, sharingService } from '@/modules/data-access';
+import { useApp } from '@/modules/session';
 import { useNavigate, useParams } from '@/packages/router';
-import { useApp } from '@/state/AppContext';
+import { createId } from '@/shared/helpers';
+import { ErrorState, Loading } from '@/shared/ui';
 
 const DEBOUNCE_MS = 500;
 
@@ -242,10 +241,10 @@ export function BucketCollaboratePage() {
     }
   };
 
-  if (loading) return <Loading />;
+  if (loading) return <Loading label={t('loading')} />;
   if (!view || !user || error) {
     return (
-      <ErrorState
+      <ErrorState retryLabel={t('tryAgain')}
         message={error || t('notAllowed')}
         onRetry={() => {
           void load();

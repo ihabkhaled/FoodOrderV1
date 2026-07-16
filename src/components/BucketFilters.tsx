@@ -1,6 +1,6 @@
-import type { MessageKey } from '@/i18n/messages';
 import type { Locale } from '@/modules/data-access';
 import { Search } from '@/packages/icons';
+import type { MessageKey } from '@/shared/i18n';
 
 export type BucketScope = 'all' | 'owned' | 'shared';
 

@@ -2,10 +2,10 @@ import {
   OwnedBucketCard,
   SharedBucketCard,
 } from '@/components/BucketCards';
-import { VirtualListFooter } from '@/components/VirtualListFooter';
-import type { MessageKey } from '@/i18n/messages';
 import type { Bucket, Locale } from '@/modules/data-access';
 import { AppVirtuosoGrid } from '@/packages/virtuoso';
+import type { MessageKey } from '@/shared/i18n';
+import { VirtualListFooter } from '@/shared/ui';
 
 interface BucketCollectionSectionProps {
   readonly kind: 'owned' | 'shared';

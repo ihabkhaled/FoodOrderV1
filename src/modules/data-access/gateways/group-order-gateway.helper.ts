@@ -1,4 +1,4 @@
-import { createId } from '@/lib/id';
+import { createId } from '@/shared/helpers';
 
 import type { CustomItemInput } from '../contracts/group-order-service.interfaces';
 import {

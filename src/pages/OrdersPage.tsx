@@ -1,20 +1,14 @@
 import { useCallback, useMemo, useState } from 'react';
 
-import { ConfirmDialog } from '@/components/ConfirmDialog';
-import { EmptyState } from '@/components/EmptyState';
-import { ErrorState } from '@/components/ErrorState';
-import { Loading } from '@/components/Loading';
 import { OrderRow } from '@/components/OrderRow';
-import { VirtualListFooter } from '@/components/VirtualListFooter';
-import { useCursorPage } from '@/hooks/useCursorPage';
-import type { PageResult } from '@/lib/pagination';
 import type { Order, OrderStatus } from '@/modules/data-access';
-import { dataService, paginationService } from '@/modules/data-access';
+import { dataService, paginationService, useCursorPage } from '@/modules/data-access';
+import { useApp } from '@/modules/session';
 import { ClipboardList, Search } from '@/packages/icons';
 import { Link, useSearchParams } from '@/packages/router';
 import { AppVirtuoso } from '@/packages/virtuoso';
-import { useApp } from '@/state/AppContext';
-import { usePageRefresh } from '@/state/RefreshContext';
+import type { PageResult } from '@/shared/helpers';
+import { ConfirmDialog, EmptyState, ErrorState, Loading, usePageRefresh, VirtualListFooter } from '@/shared/ui';
 
 const statuses: (OrderStatus | 'all')[] = [
   'all',
@@ -84,10 +78,10 @@ export function OrdersPage() {
     }
   };
 
-  if (orders.loading) return <Loading />;
+  if (orders.loading) return <Loading label={t('loading')} />;
   if (orders.error && orders.items.length === 0) {
     return (
-      <ErrorState
+      <ErrorState retryLabel={t('tryAgain')}
         message={errorMessage(orders.error)}
         onRetry={() => void orders.refresh()}
       />

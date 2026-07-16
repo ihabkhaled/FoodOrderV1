@@ -7,9 +7,9 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
 import App from '@/App';
+import { AppProvider } from '@/modules/session';
 import { BrowserRouter } from '@/packages/router';
 import { initializePlatform } from '@/platform/device';
-import { AppProvider } from '@/state/AppContext';
 
 void initializePlatform();
 const container = document.getElementById('root');

@@ -1,8 +1,8 @@
 import { translateGroupOrder } from '@/i18n/groupOrderMessages';
-import type { MessageKey } from '@/i18n/messages';
 import type { BucketMember, BucketRole, Locale } from '@/modules/data-access';
 import { ASSIGNABLE_ROLES } from '@/modules/data-access';
 import { UserMinus, Users } from '@/packages/icons';
+import type { MessageKey } from '@/shared/i18n';
 
 const ROLE_LABEL: Record<BucketRole, MessageKey> = {
   owner: 'roleOwner',

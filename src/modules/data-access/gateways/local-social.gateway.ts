@@ -1,5 +1,5 @@
-import { createId } from '@/lib/id';
 import { readWebStorage, writeWebStorage } from '@/platform/storage';
+import { createId } from '@/shared/helpers';
 
 import type { SocialService } from '../contracts/social-service.interfaces';
 import type { Bucket, BucketMember } from '../types/domain.types';

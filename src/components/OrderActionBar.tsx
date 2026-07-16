@@ -1,7 +1,7 @@
-import type { MessageKey } from '@/i18n/messages';
 import type { Order, OrderStatus } from '@/modules/data-access';
 import { canTransitionOrder } from '@/modules/data-access';
 import { Check, Copy, X } from '@/packages/icons';
+import type { MessageKey } from '@/shared/i18n';
 
 interface OrderActionBarProps {
   order: Order;

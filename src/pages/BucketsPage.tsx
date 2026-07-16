@@ -5,20 +5,15 @@ import {
   BucketFilters,
   type BucketScope,
 } from '@/components/BucketFilters';
-import { ConfirmDialog } from '@/components/ConfirmDialog';
-import { EmptyState } from '@/components/EmptyState';
-import { ErrorState } from '@/components/ErrorState';
-import { Loading } from '@/components/Loading';
 import { useBucketMutations } from '@/hooks/useBucketMutations';
-import { useCursorPage } from '@/hooks/useCursorPage';
-import type { MessageKey } from '@/i18n/messages';
-import type { PageResult } from '@/lib/pagination';
 import type { Bucket, Locale } from '@/modules/data-access';
-import { paginationService } from '@/modules/data-access';
+import { paginationService, useCursorPage } from '@/modules/data-access';
+import { useApp } from '@/modules/session';
 import { KeyRound, Plus, ShoppingBasket } from '@/packages/icons';
 import { Link, useSearchParams } from '@/packages/router';
-import { useApp } from '@/state/AppContext';
-import { usePageRefresh } from '@/state/RefreshContext';
+import type { PageResult } from '@/shared/helpers';
+import type { MessageKey } from '@/shared/i18n';
+import { ConfirmDialog, EmptyState, ErrorState, Loading, usePageRefresh } from '@/shared/ui';
 
 const emptyBucketPage = (): Promise<PageResult<Bucket>> =>
   Promise.resolve({ items: [], nextCursor: null, hasMore: false });
@@ -213,13 +208,13 @@ export function BucketsPage() {
   );
   if (initialError) {
     return (
-      <ErrorState
+      <ErrorState retryLabel={t('tryAgain')}
         message={errorMessage(initialError)}
         onRetry={() => void refresh()}
       />
     );
   }
-  if (owned.loading && shared.loading) return <Loading />;
+  if (owned.loading && shared.loading) return <Loading label={t('loading')} />;
 
   return (
     <div className="page stack-lg">

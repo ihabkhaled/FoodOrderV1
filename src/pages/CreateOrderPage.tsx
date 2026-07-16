@@ -1,13 +1,13 @@
 import { useEffect, useMemo, useState } from 'react';
 
-import { Loading } from '@/components/Loading';
 import { translateGroupOrder } from '@/i18n/groupOrderMessages';
-import { formatMoney } from '@/lib/money';
 import type { Bucket } from '@/modules/data-access';
 import { buildPersonalOrderReceipt, calculateOrderTotal, dataService,MAX_ORDER_QUANTITY } from '@/modules/data-access';
+import { useApp } from '@/modules/session';
 import { ArrowLeft, Minus, Plus, ShoppingCart } from '@/packages/icons';
 import { Link, useNavigate, useParams } from '@/packages/router';
-import { useApp } from '@/state/AppContext';
+import { formatMoney } from '@/shared/helpers';
+import { Loading } from '@/shared/ui';
 
 export function CreateOrderPage() {
   const { bucketId } = useParams();
@@ -101,7 +101,7 @@ export function CreateOrderPage() {
     }
   };
 
-  if (loading) return <Loading />;
+  if (loading) return <Loading label={t('loading')} />;
   if (!bucket) {
     return (
       <div className="page">

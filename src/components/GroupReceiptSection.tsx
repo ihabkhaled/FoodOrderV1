@@ -1,9 +1,9 @@
 import { useState } from 'react';
 
 import { translateGroupOrder } from '@/i18n/groupOrderMessages';
-import { formatMoney } from '@/lib/money';
 import type { CurrencyCode, GroupOrderReceiptSnapshot, Locale } from '@/modules/data-access';
 import { ReceiptText } from '@/packages/icons';
+import { formatMoney } from '@/shared/helpers';
 
 type ReceiptView = 'summary' | 'person' | 'item';
 

@@ -1,4 +1,4 @@
-import type { PageRequest, PageResult } from '@/lib/pagination';
+import type { PageRequest, PageResult } from '@/shared/helpers';
 
 import type { Bucket, Order, SessionUser } from '../types/domain.types';
 

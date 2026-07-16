@@ -1,6 +1,6 @@
-import type { MessageKey } from '@/i18n/messages';
 import type { Order } from '@/modules/data-access';
 import { Users } from '@/packages/icons';
+import type { MessageKey } from '@/shared/i18n';
 
 interface OrderParticipantsSectionProps {
   participants: NonNullable<Order['participants']>;

@@ -1,12 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { ErrorState } from '@/components/ErrorState';
-import { Loading } from '@/components/Loading';
 import { StatusBadge } from '@/components/StatusBadge';
-import { formatDateTime } from '@/lib/date';
-import { formatMoney } from '@/lib/money';
 import type { DashboardSummary } from '@/modules/data-access';
 import { dataService } from '@/modules/data-access';
+import { useApp } from '@/modules/session';
 import {
   CheckCircle2,
   ClipboardList,
@@ -16,8 +13,8 @@ import {
   Utensils,
 } from '@/packages/icons';
 import { Link } from '@/packages/router';
-import { useApp } from '@/state/AppContext';
-import { usePageRefresh } from '@/state/RefreshContext';
+import { formatDateTime, formatMoney } from '@/shared/helpers';
+import { ErrorState, Loading, usePageRefresh } from '@/shared/ui';
 
 export function DashboardPage() {
   const { user, profile, locale, t, errorMessage } = useApp();
@@ -40,9 +37,9 @@ export function DashboardPage() {
   usePageRefresh(load);
 
   if (error) {
-    return <ErrorState message={errorMessage(error)} onRetry={() => void load()} />;
+    return <ErrorState retryLabel={t('tryAgain')} message={errorMessage(error)} onRetry={() => void load()} />;
   }
-  if (!summary) return <Loading />;
+  if (!summary) return <Loading label={t('loading')} />;
 
   const cards = [
     {

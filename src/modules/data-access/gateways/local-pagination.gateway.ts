@@ -2,7 +2,7 @@ import {
   type PageRequest,
   type PageResult,
   paginateDescending,
-} from '@/lib/pagination';
+} from '@/shared/helpers';
 
 import type { DataService } from '../contracts/data-service.interfaces';
 import type { PaginationService } from '../contracts/pagination-service.interfaces';

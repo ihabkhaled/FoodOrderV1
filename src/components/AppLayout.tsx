@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 
 import { NotificationCenter } from '@/components/NotificationCenter';
-import { RefreshableViewport } from '@/components/RefreshableViewport';
-import type { MessageKey } from '@/i18n/messages';
 import type { AppNotification,Theme } from '@/modules/data-access';
 import { notificationService } from '@/modules/data-access';
+import { useApp } from '@/modules/session';
 import {
   ChevronLeft,
   ChevronRight,
@@ -27,7 +26,8 @@ import {
   nextTheme,
   saveSidebarCollapsed,
 } from '@/platform/device';
-import { useApp } from '@/state/AppContext';
+import type { MessageKey } from '@/shared/i18n';
+import { RefreshableViewport } from '@/shared/ui';
 
 const NAV_ITEMS: { to: string; icon: typeof Home; key: MessageKey }[] = [
   { to: '/', icon: Home, key: 'dashboard' },
@@ -236,7 +236,7 @@ export function AppLayout() {
       </header>
 
       <main className="main-content">
-        <RefreshableViewport key={location.pathname}>
+        <RefreshableViewport key={location.pathname} locale={locale}>
           <Outlet />
         </RefreshableViewport>
       </main>

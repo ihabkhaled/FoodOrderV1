@@ -1,12 +1,4 @@
 import {
-  decodeSortCursor,
-  encodeSortCursor,
-  normalizePageLimit,
-  type PageRequest,
-  type PageResult,
-  paginateDescending,
-} from '@/lib/pagination';
-import {
   collection,
   doc,
   documentId,
@@ -21,6 +13,14 @@ import {
   startAfter,
   where,
 } from '@/packages/firebase';
+import {
+  decodeSortCursor,
+  encodeSortCursor,
+  normalizePageLimit,
+  type PageRequest,
+  type PageResult,
+  paginateDescending,
+} from '@/shared/helpers';
 
 import type { PaginationService } from '../contracts/pagination-service.interfaces';
 import type {

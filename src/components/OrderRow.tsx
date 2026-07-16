@@ -1,10 +1,9 @@
 import { StatusBadge } from '@/components/StatusBadge';
-import type { MessageKey } from '@/i18n/messages';
-import { formatDateTime } from '@/lib/date';
-import { formatMoney } from '@/lib/money';
 import type { Locale, Order } from '@/modules/data-access';
 import { Trash2 } from '@/packages/icons';
 import { Link } from '@/packages/router';
+import { formatDateTime, formatMoney } from '@/shared/helpers';
+import type { MessageKey } from '@/shared/i18n';
 
 interface OrderRowProps {
   readonly order: Order;

@@ -1,5 +1,5 @@
-import { nowIso } from '@/lib/date';
 import { readWebStorage, writeWebStorage } from '@/platform/storage';
+import { nowIso } from '@/shared/helpers';
 
 import type {
   CustomItemInput,

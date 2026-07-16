@@ -1,14 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { EmptyState } from '@/components/EmptyState';
-import { ErrorState } from '@/components/ErrorState';
-import { Loading } from '@/components/Loading';
 import {
   type SocialMessageKey,
   translateSocial,
 } from '@/i18n/socialMessages';
 import type { FriendGroup, FriendGroupMember, SocialOverview, SocialUser } from '@/modules/data-access';
 import { socialService } from '@/modules/data-access';
+import { useApp } from '@/modules/session';
 import {
   Check,
   Crown,
@@ -22,7 +20,7 @@ import {
   Users,
   X,
 } from '@/packages/icons';
-import { useApp } from '@/state/AppContext';
+import { EmptyState, ErrorState, Loading } from '@/shared/ui';
 
 const emptyOverview = (): SocialOverview => ({
   friends: [],
@@ -163,10 +161,10 @@ export function SocialPage() {
         ),
     );
 
-  if (loading) return <Loading />;
+  if (loading) return <Loading label={t('loading')} />;
   if (error) {
     return (
-      <ErrorState
+      <ErrorState retryLabel={t('tryAgain')}
         message={error}
         onRetry={() => {
           setLoading(true);

@@ -23,6 +23,7 @@ export { LocalGroupOrderService } from './gateways/local-group-order.gateway';
 export { LocalPaginationService } from './gateways/local-pagination.gateway';
 export { LocalSharingService } from './gateways/local-sharing.gateway';
 export * from './helpers';
+export { useCursorPage } from './hooks/use-cursor-page.hook';
 export * from './types';
 
 export const authService = env.firebaseEnabled

@@ -1,4 +1,3 @@
-import { nowIso } from '@/lib/date';
 import {
   createUserWithEmailAndPassword,
   deleteUser,
@@ -10,6 +9,7 @@ import {
   signOut,
   updateProfile,
 } from '@/packages/firebase';
+import { nowIso } from '@/shared/helpers';
 
 import type { AuthService } from '../contracts/auth-service.interfaces';
 import type { ProfileDefaults, SessionUser, UserProfile } from '../types/domain.types';

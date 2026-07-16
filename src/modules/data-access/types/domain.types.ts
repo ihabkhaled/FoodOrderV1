@@ -1,6 +1,6 @@
-export type Locale = 'en' | 'ar';
-export type Theme = 'system' | 'light' | 'dark';
-export type CurrencyCode = 'EGP' | 'USD' | 'EUR' | 'GBP' | 'SAR' | 'AED';
+import type { CurrencyCode, Locale, Theme } from '@/shared/types';
+
+
 export type OrderStatus = 'draft' | 'placed' | 'completed' | 'cancelled';
 export type BucketVisibility = 'private' | 'shared';
 export type BucketRole = 'owner' | 'editor' | 'contributor' | 'viewer';
@@ -294,3 +294,5 @@ export interface DashboardSummary {
   completedOrderCount: number;
   recentOrders: Order[];
 }
+
+export {type CurrencyCode, type Locale, type Theme} from '@/shared/types';

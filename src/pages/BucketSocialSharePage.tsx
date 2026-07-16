@@ -1,14 +1,13 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { BucketSocialSharePanel } from '@/components/BucketSocialSharePanel';
-import { ErrorState } from '@/components/ErrorState';
-import { Loading } from '@/components/Loading';
 import { translateSocial } from '@/i18n/socialMessages';
 import type { Bucket } from '@/modules/data-access';
 import { dataService } from '@/modules/data-access';
+import { useApp } from '@/modules/session';
 import { ArrowLeft } from '@/packages/icons';
 import { Link, useParams } from '@/packages/router';
-import { useApp } from '@/state/AppContext';
+import { ErrorState, Loading } from '@/shared/ui';
 
 export function BucketSocialSharePage() {
   const { bucketId } = useParams();
@@ -53,10 +52,10 @@ export function BucketSocialSharePage() {
     void load();
   }, [load]);
 
-  if (loading) return <Loading />;
+  if (loading) return <Loading label={t('loading')} />;
   if (!bucket || error) {
     return (
-      <ErrorState
+      <ErrorState retryLabel={t('tryAgain')}
         message={error || t('notAllowed')}
         onRetry={() => {
           setLoading(true);

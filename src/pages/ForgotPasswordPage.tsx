@@ -1,8 +1,8 @@
 import { type SyntheticEvent, useState } from 'react';
 
-import { isEmail } from '@/lib/validation';
+import { useApp } from '@/modules/session';
 import { Link } from '@/packages/router';
-import { useApp } from '@/state/AppContext';
+import { isEmail } from '@/shared/helpers';
 
 const resetConfirmation = (locale: 'en' | 'ar'): string =>
   locale === 'ar'

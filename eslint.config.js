@@ -126,11 +126,6 @@ export default tseslint.config(
     },
   },
   {
-    // Provider modules export a component plus its hook by design.
-    files: ['src/state/**/*.tsx'],
-    rules: { 'react-refresh/only-export-components': 'off' },
-  },
-  {
     // v1.6.0 module-first architecture: mechanically enforced on the new
     // layout. Rules are documented in docs/eslint/ and tested in tests/eslint/.
     files: [

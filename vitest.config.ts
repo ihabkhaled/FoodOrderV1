@@ -20,7 +20,7 @@ export default defineConfig({
     coverage: {
       reporter: ['text', 'html', 'lcov', 'json', 'json-summary'],
       include: [
-        'src/lib/**',
+        'src/shared/helpers/**',
         'src/modules/data-access/helpers/**',
         'src/modules/data-access/gateways/local-auth.gateway.ts',
         'src/modules/data-access/gateways/local-data.gateway.ts',

@@ -1,15 +1,7 @@
 import { env } from '@/platform/environment';
+import type { CurrencyCode, Locale, Theme } from '@/shared/types';
 
 import { getPreference, setPreference } from '../storage/preferences.adapter';
-
-/**
- * Structural copies of the domain unions: the platform layer sits below
- * modules and must not import `@/modules/data-access`. The SUPPORTED_*
- * arrays below keep these aliases honest at runtime.
- */
-type Locale = 'en' | 'ar';
-type CurrencyCode = 'EGP' | 'USD' | 'EUR' | 'GBP' | 'SAR' | 'AED';
-type Theme = 'system' | 'light' | 'dark';
 
 /**
  * Device-level runtime configuration. Locale, currency, and theme are not

@@ -1,7 +1,6 @@
-import { nowIso } from '@/lib/date';
-import { createId } from '@/lib/id';
 import { subscribeToAppEvent } from '@/platform/browser';
 import { readWebStorage, removeWebStorage, writeWebStorage } from '@/platform/storage';
+import { createId, nowIso } from '@/shared/helpers';
 
 import type { AuthService } from '../contracts/auth-service.interfaces';
 import type { ProfileDefaults, SessionUser, UserProfile } from '../types/domain.types';

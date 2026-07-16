@@ -3,11 +3,8 @@ import {
   CollaborativeItemList,
   type CollaborativePendingChange,
 } from '@/components/CollaborativeItemList';
-import { ConfirmDialog } from '@/components/ConfirmDialog';
 import { CustomItemPanel } from '@/components/CustomItemPanel';
 import { translateGroupOrder } from '@/i18n/groupOrderMessages';
-import type { MessageKey } from '@/i18n/messages';
-import { formatMoney } from '@/lib/money';
 import type { Bucket, BucketActivityEvent, BucketContribution, BucketItem, BucketRole, Locale, SessionUser,SharedBucketView } from '@/modules/data-access';
 import { calculateBasisPointCharge, DEFAULT_PRICING_POLICY, effectiveCustomItemPermissions, roleAllows } from '@/modules/data-access';
 import {
@@ -19,6 +16,9 @@ import {
   Users,
 } from '@/packages/icons';
 import { Link } from '@/packages/router';
+import { formatMoney } from '@/shared/helpers';
+import type { MessageKey } from '@/shared/i18n';
+import { ConfirmDialog } from '@/shared/ui';
 
 const ROLE_LABEL: Record<BucketRole, MessageKey> = {
   owner: 'roleOwner',

@@ -1,8 +1,8 @@
-import type { MessageKey } from '@/i18n/messages';
-import { formatDateTime } from '@/lib/date';
 import type { BucketActivityEvent, BucketActivityType } from '@/modules/data-access';
+import { useApp } from '@/modules/session';
 import { History } from '@/packages/icons';
-import { useApp } from '@/state/AppContext';
+import { formatDateTime } from '@/shared/helpers';
+import type { MessageKey } from '@/shared/i18n';
 
 const LABELS: Record<BucketActivityType, MessageKey> = {
   bucket_shared: 'activityBucketShared',

@@ -1,5 +1,3 @@
-import type { Locale } from '@/modules/data-access';
-
 export const messages = {
   en: {
     appName: 'FoodOrder', dashboard: 'Home', buckets: 'Buckets', orders: 'Orders', settings: 'Settings',
@@ -76,6 +74,8 @@ export const messages = {
     accountDeleted: 'Your account was deleted.',
     requiresRecentLogin: 'Please log in again, then retry deleting your account.',
     appVersion: 'App version', primaryNavigation: 'Primary navigation',
+    notFoundTitle: 'Page not found', notFoundBody: 'The requested page does not exist.',
+    returnHome: 'Return home',
   },
   ar: {
     appName: 'فود أوردر', dashboard: 'الرئيسية', buckets: 'القوائم', orders: 'الطلبات', settings: 'الإعدادات',
@@ -152,8 +152,9 @@ export const messages = {
     accountDeleted: 'تم حذف حسابك.',
     requiresRecentLogin: 'سجّل الدخول مرة أخرى ثم أعد محاولة حذف الحساب.',
     appVersion: 'إصدار التطبيق', primaryNavigation: 'التنقل الرئيسي',
+    notFoundTitle: 'الصفحة غير موجودة', notFoundBody: 'الصفحة المطلوبة غير موجودة.',
+    returnHome: 'العودة إلى الرئيسية',
   },
 } as const;
 
 export type MessageKey = keyof typeof messages.en;
-export const translate = (locale: Locale, key: MessageKey): string => messages[locale][key];

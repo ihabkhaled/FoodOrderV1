@@ -1,8 +1,8 @@
-import type { MessageKey } from '@/i18n/messages';
-import { formatDateTime } from '@/lib/date';
 import type { BucketInvite, BucketRole, InviteStatus, Locale } from '@/modules/data-access';
 import { ASSIGNABLE_ROLES } from '@/modules/data-access';
 import { Check, Copy, Share2, ShieldOff } from '@/packages/icons';
+import { formatDateTime } from '@/shared/helpers';
+import type { MessageKey } from '@/shared/i18n';
 
 const ROLE_LABEL: Record<BucketRole, MessageKey> = {
   owner: 'roleOwner',

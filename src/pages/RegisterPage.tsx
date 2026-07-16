@@ -1,8 +1,8 @@
 import { type SyntheticEvent, useState } from 'react';
 
-import { isEmail, validatePassword } from '@/lib/validation';
+import { useApp } from '@/modules/session';
 import { Link, useNavigate } from '@/packages/router';
-import { useApp } from '@/state/AppContext';
+import { isEmail, validatePassword } from '@/shared/helpers';
 
 export function RegisterPage() {
   const { t, register, errorMessage } = useApp();
