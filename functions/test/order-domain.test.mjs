@@ -70,11 +70,14 @@ test('deployment entrypoint preserves every released and v1.5.0 endpoint', async
     'notifyBucketUpdatedV150',
     'notifyBucketDeletedV150',
     'notifyBucketSharedV150',
+    'notifyBucketInviteAcceptedV151',
     'notifyOrderPlacedV150',
     'notifyOrderUpdatedV150',
     'notifyOrderDeletedV150',
     'notifyFriendRequestV150',
     'notifyGroupInvitationV150',
+    'inviteFriendToBucketV151',
+    'respondBucketInvitationV151',
   ]) {
     assert.equal(typeof functions[name], 'function', `${name} must be exported`);
   }

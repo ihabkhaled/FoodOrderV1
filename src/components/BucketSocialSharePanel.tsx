@@ -62,6 +62,20 @@ export function BucketSocialSharePanel({
     }
   };
 
+  const inviteFriend = async (): Promise<void> => {
+    if (!friendId) return;
+    try {
+      setSaving(true);
+      await socialService.inviteFriendToBucket(bucketId, friendId, role);
+      setFriendId('');
+      onSuccess(s('bucketInvitationSent'));
+    } catch (error) {
+      onError(error);
+    } finally {
+      setSaving(false);
+    }
+  };
+
   if (!overview) return null;
 
   return (
@@ -107,14 +121,10 @@ export function BucketSocialSharePanel({
         <button
           className="button secondary"
           disabled={disabled || saving || !friendId}
-          onClick={() =>
-            void share(() =>
-              socialService.shareBucketWithUser(bucketId, friendId, role),
-            )
-          }
+          onClick={() => void inviteFriend()}
         >
           <Share2 />
-          {s('shareWithUser')}
+          {s('inviteToBucket')}
         </button>
       </div>
 

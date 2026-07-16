@@ -151,4 +151,88 @@ describe('social graph security rules', () => {
       ),
     ).resolves.toMatchObject({ code: 'permission-denied' });
   });
+
+  it('keeps targeted bucket invitation mirrors callable-only', async () => {
+    const bucketId = 'bucket-invitation';
+    const invitation = {
+      id: 'bucket-invitation_other-user',
+      bucketId,
+      bucketTitle: 'Private lunch',
+      owner: {
+        userId: USER_ID,
+        displayName: 'Owner',
+        email: 'user@example.com',
+      },
+      recipient: {
+        userId: OTHER_ID,
+        displayName: 'Recipient',
+        email: 'other@example.com',
+      },
+      role: 'contributor',
+      status: 'pending',
+      createdAt: '2026-07-16T12:00:00.000Z',
+      respondedAt: null,
+    };
+    await environment.withSecurityRulesDisabled(async (context) => {
+      const database = context.firestore();
+      await setDoc(
+        doc(
+          database,
+          'buckets',
+          bucketId,
+          'socialInvitations',
+          OTHER_ID,
+        ),
+        invitation,
+      );
+      await setDoc(
+        doc(
+          database,
+          'users',
+          OTHER_ID,
+          'bucketInvitations',
+          bucketId,
+        ),
+        invitation,
+      );
+    });
+
+    const recipientDatabase = environment
+      .authenticatedContext(OTHER_ID, { email: 'other@example.com' })
+      .firestore();
+    const mirrorReference = doc(
+      recipientDatabase,
+      'users',
+      OTHER_ID,
+      'bucketInvitations',
+      bucketId,
+    );
+    await expect(assertFails(getDoc(mirrorReference))).resolves.toMatchObject({
+      code: 'permission-denied',
+    });
+    await expect(
+      assertFails(
+        setDoc(mirrorReference, { status: 'accepted' }, { merge: true }),
+      ),
+    ).resolves.toMatchObject({ code: 'permission-denied' });
+
+    const ownerDatabase = environment
+      .authenticatedContext(USER_ID, { email: 'user@example.com' })
+      .firestore();
+    const canonicalReference = doc(
+      ownerDatabase,
+      'buckets',
+      bucketId,
+      'socialInvitations',
+      OTHER_ID,
+    );
+    await expect(
+      assertFails(getDoc(canonicalReference)),
+    ).resolves.toMatchObject({ code: 'permission-denied' });
+    await expect(
+      assertFails(
+        setDoc(canonicalReference, { status: 'accepted' }, { merge: true }),
+      ),
+    ).resolves.toMatchObject({ code: 'permission-denied' });
+  });
 });

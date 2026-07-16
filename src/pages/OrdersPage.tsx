@@ -137,6 +137,7 @@ export function OrdersPage() {
             <section className="section-card">
               <AppVirtuoso
                 className="virtual-list"
+                useWindowScroll
                 data={filtered}
                 computeItemKey={(_, order) => order.id}
                 endReached={() => void orders.loadMore()}

@@ -1,7 +1,8 @@
-import { ArrowLeft, Minus, Plus, ShoppingCart } from 'lucide-react';
+import { Minus, Plus, ShoppingCart } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
+import { BackLink } from '@/components/BackLink';
 import { Loading } from '@/components/Loading';
 import { translateGroupOrder } from '@/i18n/groupOrderMessages';
 import { MAX_ORDER_QUANTITY } from '@/lib/bucket';
@@ -117,10 +118,7 @@ export function CreateOrderPage() {
 
   return (
     <div className="page narrow">
-      <Link className="back-link" to="/buckets">
-        <ArrowLeft />
-        {t('back')}
-      </Link>
+      <BackLink fallback="/buckets" label={t('back')} />
       <div className="page-heading">
         <div>
           <p className="eyebrow">{t('orderNow')}</p>

@@ -3,6 +3,8 @@ import { getFunctions, httpsCallable } from 'firebase/functions';
 import { getFirebaseRuntime } from '@/services/firebaseServices';
 import type {
   BucketAccessGrant,
+  BucketInvitation,
+  BucketShareRole,
   FriendGroup,
   FriendRequest,
   SocialManagementService,
@@ -80,6 +82,28 @@ export class FirestoreCallableSocialService
       { groupId: string; response: string },
       { success: true }
     >('respondFriendGroupInvitation')({ groupId, response });
+  }
+
+  async inviteFriendToBucket(
+    bucketId: string,
+    friendId: string,
+    role: BucketShareRole,
+  ): Promise<BucketInvitation> {
+    const result = await callable<
+      { bucketId: string; friendId: string; role: string },
+      BucketInvitation
+    >('inviteFriendToBucketV151')({ bucketId, friendId, role });
+    return result.data;
+  }
+
+  async respondBucketInvitation(
+    bucketId: string,
+    response: 'accepted' | 'declined',
+  ): Promise<void> {
+    await callable<
+      { bucketId: string; response: string },
+      { success: true }
+    >('respondBucketInvitationV151')({ bucketId, response });
   }
 
   async updateGroup(

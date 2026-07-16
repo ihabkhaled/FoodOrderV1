@@ -1,6 +1,7 @@
 import { expect, type Page, test } from '@playwright/test';
 
 const DATABASE_KEY = 'foodorder:v1:database';
+const SOCIAL_KEY = 'foodorder:v1:social';
 const SESSION_KEY = 'foodorder:v1:session';
 const NOW = '2026-07-14T12:00:00.000Z';
 
@@ -89,7 +90,7 @@ const seedUsersAndBucket = async (page: Page): Promise<void> => {
 };
 
 test.describe('friends, groups, and combined bucket sharing', () => {
-  test('accepted group members automatically receive a bucket alongside a direct grant', async ({
+  test('targeted bucket invitations require acceptance before direct access activates', async ({
     page,
   }) => {
     await seedUsersAndBucket(page);
@@ -127,21 +128,222 @@ test.describe('friends, groups, and combined bucket sharing', () => {
 
     await switchUser(page, 'owner-1');
     await page.goto('/buckets/bucket-social/social-share');
+    await page.getByLabel('Select friend').selectOption({ label: 'Alice Friend' });
+    await page
+      .getByRole('button', { name: 'Invite friend to bucket' })
+      .click();
+    await expect(
+      page.getByText(
+        'Bucket invitation sent. Access activates after acceptance.',
+        { exact: true },
+      ),
+    ).toBeVisible();
+    await expect(
+      page.locator('.list-row').filter({ hasText: 'Alice Friend' }),
+    ).toHaveCount(0);
+
+    const pendingInvitation = await page.evaluate<
+      {
+        status: string;
+        role: string;
+        directGrantCount: number;
+        totalGrantCount: number;
+      },
+      string
+    >((socialKey) => {
+      const raw = localStorage.getItem(socialKey);
+      if (!raw) throw new Error('Local social database was not found.');
+      const database = JSON.parse(raw) as {
+        bucketInvitations: Array<{
+          bucketId: string;
+          recipient: { userId: string };
+          role: string;
+          status: string;
+        }>;
+        grants: Array<{
+          bucketId: string;
+          subjectType: string;
+          subjectId: string;
+        }>;
+      };
+      const invitation = database.bucketInvitations.find(
+        (candidate) =>
+          candidate.bucketId === 'bucket-social' &&
+          candidate.recipient.userId === 'friend-1',
+      );
+      if (!invitation) throw new Error('Pending bucket invitation was not found.');
+      return {
+        status: invitation.status,
+        role: invitation.role,
+        directGrantCount: database.grants.filter(
+          (grant) =>
+            grant.bucketId === 'bucket-social' &&
+            grant.subjectType === 'user' &&
+            grant.subjectId === 'friend-1',
+        ).length,
+        totalGrantCount: database.grants.length,
+      };
+    }, SOCIAL_KEY);
+    expect(pendingInvitation).toEqual({
+      status: 'pending',
+      role: 'contributor',
+      directGrantCount: 0,
+      totalGrantCount: 0,
+    });
+
+    await switchUser(page, 'friend-1');
+    await page.goto('/buckets');
+    await expect(
+      page.getByRole('heading', { name: 'Company Lunch' }),
+    ).toHaveCount(0);
+    await page.goto('/social');
+    const bucketInvitations = page.locator('#bucket-invitations');
+    const bucketInvitation = bucketInvitations
+      .locator('.list-row')
+      .filter({ hasText: 'Company Lunch' });
+    await expect(bucketInvitation).toContainText('Invited by Company Owner');
+    await expect(bucketInvitation).toContainText('Contributor');
+    await expect(
+      bucketInvitation.getByRole('button', { name: 'Accept', exact: true }),
+    ).toBeVisible();
+    await expect(
+      bucketInvitation.getByRole('button', { name: 'Decline', exact: true }),
+    ).toBeVisible();
+
+    await page
+      .getByRole('button', { name: 'Notifications' })
+      .first()
+      .click();
+    const invitationNotification = page
+      .locator('.notification-panel')
+      .getByRole('button', { name: /^New bucket invitation/u });
+    await expect(invitationNotification).toHaveCount(1);
+    await expect(invitationNotification).toContainText(
+      'Company Owner invited you to Company Lunch.',
+    );
+    await invitationNotification.click();
+    await expect(page).toHaveURL(/\/social$/u);
+
+    await bucketInvitation
+      .getByRole('button', { name: 'Accept', exact: true })
+      .click();
+    await expect(
+      page.getByText('Bucket invitation accepted.', { exact: true }),
+    ).toBeVisible();
+    await expect(bucketInvitation).toHaveCount(0);
+    await page.goto('/buckets');
+    await expect(
+      page.getByRole('heading', { name: 'Company Lunch' }),
+    ).toBeVisible();
+
+    await switchUser(page, 'owner-1');
+    await page.goto('/social');
+    await page
+      .getByRole('button', { name: 'Notifications' })
+      .first()
+      .click();
+    const acceptedNotification = page
+      .locator('.notification-panel')
+      .getByRole('button', { name: /^Bucket invitation accepted/u });
+    await expect(acceptedNotification).toHaveCount(1);
+    await expect(acceptedNotification).toContainText(
+      'Alice Friend accepted the invitation to Company Lunch.',
+    );
+    await acceptedNotification.click();
+    await expect(page).toHaveURL(/\/buckets\/bucket-social\/collaborate$/u);
+
+    await page.goto('/buckets/bucket-social/social-share');
     await page.getByLabel('Select group').selectOption({ label: 'Company A' });
     await page
       .getByRole('button', { name: 'Share with selected group' })
       .click();
-    await page.getByLabel('Select friend').selectOption({ label: 'Alice Friend' });
-    await page
-      .getByRole('button', { name: 'Share with selected friend' })
-      .click();
-
     const groupGrant = page.locator('.list-row').filter({ hasText: 'Company A' });
     const friendGrant = page
       .locator('.list-row')
       .filter({ hasText: 'Alice Friend' });
     await expect(groupGrant.getByText('Company A')).toBeVisible();
     await expect(friendGrant.getByText('Alice Friend')).toBeVisible();
+
+    const acceptedAccess = await page.evaluate<
+      {
+        invitationStatus: string;
+        directGrantRole: string;
+        directGrantInvitationId: string | null;
+        membershipStatus: string;
+        membershipRole: string;
+        accessSources: string[];
+      },
+      { databaseKey: string; socialKey: string }
+    >(({ databaseKey, socialKey }) => {
+      const socialRaw = localStorage.getItem(socialKey);
+      const databaseRaw = localStorage.getItem(databaseKey);
+      if (!socialRaw || !databaseRaw) {
+        throw new Error('Local sharing databases were not found.');
+      }
+      const socialDatabase = JSON.parse(socialRaw) as {
+        bucketInvitations: Array<{
+          bucketId: string;
+          recipient: { userId: string };
+          status: string;
+        }>;
+        grants: Array<{
+          bucketId: string;
+          subjectType: string;
+          subjectId: string;
+          role: string;
+          invitationId?: string;
+        }>;
+      };
+      const appDatabase = JSON.parse(databaseRaw) as {
+        sharing: {
+          members: Record<
+            string,
+            Array<{
+              userId: string;
+              status: string;
+              role: string;
+              accessSources: string[];
+            }>
+          >;
+        };
+      };
+      const invitation = socialDatabase.bucketInvitations.find(
+        (candidate) =>
+          candidate.bucketId === 'bucket-social' &&
+          candidate.recipient.userId === 'friend-1',
+      );
+      const directGrant = socialDatabase.grants.find(
+        (grant) =>
+          grant.bucketId === 'bucket-social' &&
+          grant.subjectType === 'user' &&
+          grant.subjectId === 'friend-1',
+      );
+      const membership = appDatabase.sharing.members['bucket-social']?.find(
+        (member) => member.userId === 'friend-1',
+      );
+      if (!invitation || !directGrant || !membership) {
+        throw new Error('Accepted direct access was not materialized.');
+      }
+      return {
+        invitationStatus: invitation.status,
+        directGrantRole: directGrant.role,
+        directGrantInvitationId: directGrant.invitationId ?? null,
+        membershipStatus: membership.status,
+        membershipRole: membership.role,
+        accessSources: membership.accessSources,
+      };
+    }, { databaseKey: DATABASE_KEY, socialKey: SOCIAL_KEY });
+    expect(acceptedAccess).toMatchObject({
+      invitationStatus: 'accepted',
+      directGrantRole: 'contributor',
+      directGrantInvitationId: 'bucket-social_friend-1',
+      membershipStatus: 'active',
+      membershipRole: 'contributor',
+    });
+    expect(acceptedAccess.accessSources).toContain('user_friend-1');
+    expect(
+      acceptedAccess.accessSources.some((source) => source.startsWith('group_')),
+    ).toBe(true);
 
     await switchUser(page, 'friend-1');
     await page.goto('/buckets');

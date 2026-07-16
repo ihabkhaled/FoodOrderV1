@@ -1,7 +1,8 @@
-import { ArrowLeft, GripVertical, Plus, Save, Trash2 } from 'lucide-react';
+import { GripVertical, Plus, Save, Trash2 } from 'lucide-react';
 import { type SyntheticEvent, useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
+import { BackLink } from '@/components/BackLink';
 import { BucketPricingPanel } from '@/components/BucketPricingPanel';
 import { Loading } from '@/components/Loading';
 import {
@@ -156,10 +157,7 @@ export function BucketEditorPage() {
     <div className="page narrow">
       <div className="page-heading">
         <div>
-          <Link className="back-link" to="/buckets">
-            <ArrowLeft />
-            {t('back')}
-          </Link>
+          <BackLink fallback="/buckets" label={t('back')} />
           <h1>{isEditing ? t('editBucket') : t('createBucket')}</h1>
           {visibility === 'shared' ? (
             <p className="muted">{t('sharedBucketEditHint')}</p>

@@ -29,6 +29,7 @@ export function NotificationCenter({
 }: NotificationCenterProps) {
   const [open, setOpen] = useState(false);
   const root = useRef<HTMLDivElement>(null);
+  const notificationOpenSequence = useRef(0);
   const navigate = useNavigate();
   const s = (key: Parameters<typeof translateSocial>[1]) =>
     translateSocial(locale, key);
@@ -49,7 +50,10 @@ export function NotificationCenter({
   const openNotification = (notification: AppNotification): void => {
     if (!notification.readAt) void onMarkRead([notification.id]);
     setOpen(false);
-    void navigate(notification.route);
+    notificationOpenSequence.current += 1;
+    void navigate(notification.route, {
+      state: { notificationOpenSequence: notificationOpenSequence.current },
+    });
   };
 
   return (

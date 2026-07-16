@@ -2,6 +2,7 @@ import { getFirestore } from 'firebase-admin/firestore';
 import { onDocumentCreated, onDocumentDeleted, onDocumentUpdated, onDocumentWritten, } from 'firebase-functions/v2/firestore';
 import { HttpsError, onCall } from 'firebase-functions/v2/https';
 import { writeNotification, writeNotifications, } from './notificationCore.js';
+import { isAccessOnlyBucketUpdate, isJoinCodeInviteAcceptance, } from './notificationDomain.js';
 const REGION = 'europe-west1';
 const MAX_NOTIFICATIONS = 50;
 const SYSTEM_ACTOR = { actorId: 'system', actorName: 'FoodOrder' };
@@ -88,6 +89,8 @@ export const notifyBucketUpdatedV150 = onDocumentUpdated({ document: 'buckets/{b
     ])) {
         return;
     }
+    if (isAccessOnlyBucketUpdate(before, after))
+        return;
     const bucketId = event.params.bucketId;
     const bucket = after;
     const title = bucket.title ?? 'A shared bucket';
@@ -129,6 +132,10 @@ export const notifyBucketSharedV150 = onDocumentCreated({
     const grant = event.data?.data();
     if (!grant)
         return;
+    // The recipient already received the actionable invitation. Acceptance
+    // materializes this grant and notifies the owner transactionally.
+    if (grant.invitationId)
+        return;
     const bucketSnapshot = await getFirestore()
         .collection('buckets')
         .doc(grant.bucketId)
@@ -159,6 +166,37 @@ export const notifyBucketSharedV150 = onDocumentCreated({
         entityId: grant.bucketId,
         actorId: grant.grantedBy,
         actorName: 'Bucket owner',
+        createdAt: event.time,
+    });
+});
+export const notifyBucketInviteAcceptedV151 = onDocumentUpdated({ document: 'buckets/{bucketId}/invites/{inviteId}', region: REGION }, async (event) => {
+    const before = event.data?.before.data();
+    const after = event.data?.after.data();
+    if (!before || !after || !isJoinCodeInviteAcceptance(before, after)) {
+        return;
+    }
+    const acceptedBy = after.acceptedBy;
+    if (!acceptedBy)
+        return;
+    const profileSnapshot = await getFirestore()
+        .collection('users')
+        .doc(acceptedBy)
+        .get();
+    const profile = dataOf(profileSnapshot.data());
+    const actorName = (typeof profile.fullName === 'string' && profile.fullName) ||
+        (typeof profile.displayName === 'string' && profile.displayName) ||
+        'A member';
+    const bucketId = event.params.bucketId;
+    await writeNotification(after.createdBy, {
+        id: event.id,
+        kind: 'bucket_invitation_accepted',
+        title: 'Bucket invitation accepted',
+        message: `${actorName} joined ${after.bucketTitle || 'your bucket'}.`,
+        route: `/buckets/${bucketId}/collaborate`,
+        entityType: 'bucket',
+        entityId: bucketId,
+        actorId: acceptedBy,
+        actorName,
         createdAt: event.time,
     });
 });

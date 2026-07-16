@@ -49,6 +49,10 @@ const THEME_LABEL: Record<Theme, MessageKey> = {
   dark: 'themeDark',
 };
 
+interface RouteRefreshState {
+  readonly notificationOpenSequence?: unknown;
+}
+
 export function AppLayout() {
   const {
     t,
@@ -63,8 +67,17 @@ export function AppLayout() {
     setDeviceTheme,
   } = useApp();
   const location = useLocation();
+  const routeState = location.state as RouteRefreshState | null;
+  const notificationOpenSequence =
+    typeof routeState?.notificationOpenSequence === 'number'
+      ? routeState.notificationOpenSequence
+      : null;
   const [collapsed, setCollapsed] = useState(false);
   const [notifications, setNotifications] = useState<AppNotification[]>([]);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }, [location.pathname, notificationOpenSequence]);
 
   useEffect(() => {
     void loadSidebarCollapsed()
@@ -237,7 +250,9 @@ export function AppLayout() {
       </header>
 
       <main className="main-content">
-        <RefreshableViewport key={location.pathname}>
+        <RefreshableViewport
+          key={`${location.pathname}:${notificationOpenSequence ?? ''}`}
+        >
           <Outlet />
         </RefreshableViewport>
       </main>

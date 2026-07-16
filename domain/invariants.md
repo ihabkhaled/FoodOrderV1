@@ -16,12 +16,16 @@ relatedCode:
   - src/lib/bucket.ts
   - src/lib/order.ts
   - src/lib/sharing.ts
+  - functions/src/socialDomain.ts
+  - functions/src/social.ts
 relatedTests:
   - tests/domain/bucket.test.ts
   - tests/domain/order.test.ts
   - tests/domain/sharing.test.ts
   - tests/services/sharingLocal.test.ts
-lastVerified: 2026-07-13
+  - tests/services/socialInvitations.test.ts
+  - functions/test/social-domain.test.mjs
+lastVerified: 2026-07-16
 verificationMethod: source and test inspection
 contextTier: 2
 generated: false
@@ -56,5 +60,21 @@ generated: false
   subcollections.
 - Revoked/left members immediately lose access (Security Rules) while their past contributions
   remain in totals (product rule).
+
+## Social and targeted sharing invariants
+
+- Only a bucket owner may invite one of their accepted friends to that bucket.
+- A targeted invitation grants no bucket access while pending or after decline. Only the
+  authenticated intended recipient may accept or decline it.
+- Acceptance atomically changes the invitation to accepted and materializes its direct grant,
+  active member, and recipient membership mirror. Retrying the same response is idempotent;
+  changing an accepted invitation to declined, or vice versa, is rejected.
+- Reactivating a revoked or left member uses the new invitation role and role-derived permission
+  defaults. Stale stronger roles or custom-item capabilities are never restored.
+- The recipient receives one actionable invitation notification. The owner receives one
+  deterministic accepted or declined notification; access-only writes do not also emit a generic
+  bucket-updated notification.
+- If the bucket is deleted before response, acceptance fails closed, while the intended recipient
+  can still dismiss/decline the orphaned invitation mirror.
 
 Unit tests must map directly to each calculation, lifecycle, and concurrency invariant.

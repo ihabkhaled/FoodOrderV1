@@ -50,24 +50,23 @@
   }
 }
 
-.virtual-list {
-  height: min(68vh, 760px);
-  min-height: 320px;
-}
-
+.virtual-list,
 .virtual-grid-list {
-  height: min(70vh, 780px);
-  min-height: 360px;
+  height: auto;
+  min-height: 0;
+  overflow: visible;
 }
 
 .virtual-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
   gap: 14px;
+  min-width: 0;
   padding-block: 2px 18px;
 }
 
 .virtual-list-item {
+  min-width: 0;
   padding-block: 7px;
 }
 

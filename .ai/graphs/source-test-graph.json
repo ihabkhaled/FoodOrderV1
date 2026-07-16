@@ -21,7 +21,62 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/components/BackLink.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/components/BucketCards.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/components/BucketCollaborateContent.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/components/BucketCollectionSection.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/components/BucketFilters.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/components/BucketInvitePanel.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/components/BucketMemberPermissionsPanel.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/components/BucketPricingPanel.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/components/BucketSocialSharePanel.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/components/CollaborativeItemList.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/components/ConfirmDialog.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/components/CustomItemPanel.tsx",
       "tests": [],
       "relationship": "inferred"
     },
@@ -36,7 +91,37 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/components/GroupReceiptSection.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/components/Loading.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/components/NotificationCenter.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/components/OrderActionBar.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/components/OrderParticipantsSection.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/components/OrderRow.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/components/RefreshableViewport.tsx",
       "tests": [],
       "relationship": "inferred"
     },
@@ -46,7 +131,32 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/components/VirtualListFooter.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/config/env.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/groupOrder.css",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/hooks/useBucketMutations.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/hooks/useCursorPage.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/i18n/groupOrderMessages.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -56,9 +166,24 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/i18n/socialMessages.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/lib/bucket.ts",
       "tests": [
-        "tests/domain/bucket.test.ts"
+        "tests/bucket-pricing.test.ts",
+        "tests/domain/bucket.test.ts",
+        "tests/domain/bucketLifecycle.test.ts",
+        "tests/e2e/bucket-pricing.spec.ts"
+      ],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/lib/bucketLifecycle.ts",
+      "tests": [
+        "tests/domain/bucketLifecycle.test.ts"
       ],
       "relationship": "inferred"
     },
@@ -68,8 +193,30 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/lib/firebaseError.ts",
+      "tests": [
+        "tests/domain/firebaseError.test.ts"
+      ],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/lib/groupOrder.ts",
+      "tests": [
+        "tests/domain/groupOrder.test.ts",
+        "tests/services/groupOrderServices.test.ts"
+      ],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/lib/id.ts",
       "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/lib/memberPermissions.ts",
+      "tests": [
+        "tests/domain/memberPermissions.test.ts"
+      ],
       "relationship": "inferred"
     },
     {
@@ -80,7 +227,18 @@
     {
       "source": "src/lib/order.ts",
       "tests": [
-        "tests/domain/order.test.ts"
+        "tests/domain/order.test.ts",
+        "tests/e2e/group-order.spec.ts",
+        "tests/e2e/order-lifecycle.spec.ts",
+        "tests/order-repeat.test.ts"
+      ],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/lib/pagination.ts",
+      "tests": [
+        "tests/domain/pagination.test.ts",
+        "tests/services/paginationServices.test.ts"
       ],
       "relationship": "inferred"
     },
@@ -88,6 +246,7 @@
       "source": "src/lib/sharing.ts",
       "tests": [
         "tests/domain/sharing.test.ts",
+        "tests/e2e/social-sharing.spec.ts",
         "tests/services/sharingLocal.test.ts"
       ],
       "relationship": "inferred"
@@ -103,6 +262,11 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/packages/virtuoso/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/pages/BucketCollaboratePage.tsx",
       "tests": [],
       "relationship": "inferred"
@@ -114,6 +278,11 @@
     },
     {
       "source": "src/pages/BucketSharePage.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/pages/BucketSocialSharePage.tsx",
       "tests": [],
       "relationship": "inferred"
     },
@@ -173,13 +342,35 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/pages/SocialPage.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/services/contracts.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/services/firebaseAuthEmailService.ts",
       "tests": [],
       "relationship": "inferred"
     },
     {
       "source": "src/services/firebaseServices.ts",
       "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/services/firestoreGroupOrderFunctions.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/services/groupOrderServices.ts",
+      "tests": [
+        "tests/services/groupOrderServices.test.ts"
+      ],
       "relationship": "inferred"
     },
     {
@@ -195,12 +386,54 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/services/localSocialManagementService.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/services/localSocialService.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/services/notificationServices.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/services/orderLifecycleServices.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/services/paginationServices.ts",
+      "tests": [
+        "tests/services/paginationServices.test.ts"
+      ],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/services/platform.ts",
       "tests": [],
       "relationship": "inferred"
     },
     {
+      "source": "src/services/socialServices.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/socialNotifications.css",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/state/AppContext.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/state/RefreshContext.tsx",
       "tests": [],
       "relationship": "inferred"
     },
@@ -218,9 +451,36 @@
       "source": "src/types/domain.ts",
       "tests": [
         "tests/domain/bucket.test.ts",
+        "tests/domain/bucketLifecycle.test.ts",
+        "tests/domain/firebaseError.test.ts",
+        "tests/domain/groupOrder.test.ts",
+        "tests/domain/memberPermissions.test.ts",
         "tests/domain/order.test.ts",
+        "tests/domain/pagination.test.ts",
         "tests/domain/sharing.test.ts"
       ],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/types/notifications.ts",
+      "tests": [
+        "tests/firebase/notifications.rules.test.ts"
+      ],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/types/social.ts",
+      "tests": [
+        "tests/e2e/social-management.spec.ts",
+        "tests/e2e/social-sharing.spec.ts",
+        "tests/firebase/social.rules.test.ts",
+        "tests/services/socialInvitations.test.ts"
+      ],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/virtualLists.css",
+      "tests": [],
       "relationship": "inferred"
     },
     {

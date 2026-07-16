@@ -17,7 +17,11 @@ interface OrderRowProps {
 export function OrderRow({ order, locale, t, onDelete }: OrderRowProps) {
   return (
     <article className="list-row order-row">
-      <Link to={`/orders/${order.id}`} className="grow">
+      <Link
+        to={`/orders/${order.id}`}
+        state={{ from: '/orders' }}
+        className="grow"
+      >
         <div>
           <strong>{order.bucketTitle}</strong>
           <span>

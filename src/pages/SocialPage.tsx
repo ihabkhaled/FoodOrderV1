@@ -23,6 +23,7 @@ import {
 import { socialService } from '@/services';
 import { useApp } from '@/state/AppContext';
 import type {
+  BucketInvitation,
   FriendGroup,
   FriendGroupMember,
   SocialOverview,
@@ -35,7 +36,17 @@ const emptyOverview = (): SocialOverview => ({
   outgoingRequests: [],
   groups: [],
   groupInvitations: [],
+  bucketInvitations: [],
 });
+
+const bucketRoleMessage: Record<
+  BucketInvitation['role'],
+  'roleEditor' | 'roleContributor' | 'roleViewer'
+> = {
+  editor: 'roleEditor',
+  contributor: 'roleContributor',
+  viewer: 'roleViewer',
+};
 
 const statusMessage: Record<FriendGroupMember['status'], SocialMessageKey> = {
   active: 'active',
@@ -209,11 +220,70 @@ export function SocialPage() {
           <div className="social-summary-card">
             <strong>
               {overview.incomingRequests.length +
-                overview.groupInvitations.length}
+                overview.groupInvitations.length +
+                (overview.bucketInvitations?.length ?? 0)}
             </strong>
             <span>{s('pending')}</span>
           </div>
         </div>
+      </section>
+
+      <section className="section-card stack" id="bucket-invitations">
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">{s('bucketInvitations')}</p>
+            <h2>{s('bucketInvitations')}</h2>
+          </div>
+        </div>
+        {(overview.bucketInvitations?.length ?? 0) === 0 ? (
+          <p className="muted">{s('noRequests')}</p>
+        ) : (
+          overview.bucketInvitations?.map((invitation) => (
+            <article className="list-row" key={invitation.id}>
+              <div>
+                <strong>{invitation.bucketTitle}</strong>
+                <span className="muted">
+                  {s('invitedBy')} {invitation.owner.displayName} ·{' '}
+                  {t(bucketRoleMessage[invitation.role])}
+                </span>
+              </div>
+              <div className="row-actions">
+                <button
+                  className="button success"
+                  onClick={() =>
+                    void run(
+                      () =>
+                        socialService.respondBucketInvitation(
+                          invitation.bucketId,
+                          'accepted',
+                        ),
+                      s('bucketInvitationAccepted'),
+                    )
+                  }
+                >
+                  <Check />
+                  {s('accept')}
+                </button>
+                <button
+                  className="button danger"
+                  onClick={() =>
+                    void run(
+                      () =>
+                        socialService.respondBucketInvitation(
+                          invitation.bucketId,
+                          'declined',
+                        ),
+                      s('bucketInvitationDeclined'),
+                    )
+                  }
+                >
+                  <X />
+                  {s('decline')}
+                </button>
+              </div>
+            </article>
+          ))
+        )}
       </section>
 
       <section className="section-card stack">
@@ -411,7 +481,7 @@ export function SocialPage() {
         {overview.groups.length === 0 ? (
           <p className="muted">{s('noGroups')}</p>
         ) : (
-          <div className="social-card-grid">
+          <div className="social-card-grid group-card-grid">
             {overview.groups.map((group) => {
               const isOwner = group.ownerId === user?.id;
               const selectableFriends = availableFriends(group);

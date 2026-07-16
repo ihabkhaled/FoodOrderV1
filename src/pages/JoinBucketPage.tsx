@@ -1,7 +1,8 @@
-import { ArrowLeft, KeyRound, UserPlus } from 'lucide-react';
+import { KeyRound, UserPlus } from 'lucide-react';
 import { type SyntheticEvent, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
+import { BackLink } from '@/components/BackLink';
 import type { MessageKey } from '@/i18n/messages';
 import { sharingService } from '@/services';
 import { useApp } from '@/state/AppContext';
@@ -54,10 +55,7 @@ export function JoinBucketPage() {
 
   return (
     <div className="page narrow stack-lg">
-      <Link className="back-link" to="/buckets">
-        <ArrowLeft />
-        {t('back')}
-      </Link>
+      <BackLink fallback="/buckets" label={t('back')} />
       <header className="page-heading">
         <div>
           <p className="eyebrow">{t('sharedWithMe')}</p>

@@ -1,5 +1,4 @@
 import {
-  ArrowLeft,
   LogOut,
   RefreshCcw,
   Settings2,
@@ -9,6 +8,7 @@ import {
 import { Link } from 'react-router-dom';
 
 import { ActivityTimeline } from '@/components/ActivityTimeline';
+import { BackLink } from '@/components/BackLink';
 import {
   CollaborativeItemList,
   type CollaborativePendingChange,
@@ -163,10 +163,7 @@ export function BucketCollaborateContent({
 
   return (
     <div className="page narrow stack-lg">
-      <Link className="back-link" to="/buckets">
-        <ArrowLeft />
-        {translate('back')}
-      </Link>
+      <BackLink fallback="/buckets" label={translate('back')} />
       <header className="page-heading">
         <div>
           <p className="eyebrow">{translate('groupOrder')}</p>
@@ -269,6 +266,7 @@ export function BucketCollaborateContent({
               <Link
                 className="button secondary"
                 to={`/buckets/${bucket.id}/share`}
+                state={{ from: `/buckets/${bucket.id}/collaborate` }}
               >
                 <Settings2 />
                 {translate('sharing')}

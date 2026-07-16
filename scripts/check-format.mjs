@@ -11,6 +11,7 @@ const excludedPaths = [
   '.git',
   '.husky/_',
   '.ai/local',
+  '.worktrees',
   'node_modules',
   'dist',
   'coverage',

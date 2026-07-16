@@ -87,13 +87,13 @@
 }
 .social-summary {
   display: grid;
-  grid-template-columns: repeat(3, minmax(76px, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 10px;
 }
 .social-summary-card {
   display: grid;
   gap: 3px;
-  min-width: 82px;
+  min-width: 0;
   padding: 12px;
   border: 1px solid var(--line);
   border-radius: 14px;
@@ -109,6 +109,7 @@
   align-items: start;
 }
 .social-card-grid > * { min-width: 0; }
+.group-card-grid { grid-template-columns: minmax(0, 1fr); }
 .friend-card,
 .group-card {
   display: grid;
@@ -118,7 +119,6 @@
   border-radius: 17px;
   background: var(--surface-2);
   min-width: 0;
-  overflow: hidden;
 }
 .friend-card-head,
 .group-card-head,
@@ -141,9 +141,18 @@
   background: var(--soft);
   font-weight: 900;
   text-transform: uppercase;
+  flex: none;
 }
 .group-card-head { justify-content: space-between; align-items: flex-start; }
-.group-card-title { display: flex; gap: 11px; min-width: 0; }
+.group-card-title { display: flex; gap: 11px; min-width: 0; flex: 1; }
+.group-card-title > div { min-width: 0; }
+.friend-card-head strong,
+.friend-card-head span,
+.social-person strong,
+.social-person span,
+.group-card-title strong,
+.group-card-title span,
+.group-card > p { overflow-wrap: anywhere; }
 .group-card-actions { display: flex; gap: 7px; flex-wrap: wrap; justify-content: flex-end; }
 .group-card-actions .icon-button { width: 38px; height: 38px; }
 .group-member-list { display: grid; gap: 8px; }
@@ -183,4 +192,23 @@
   .group-invite-row { grid-template-columns: 1fr; }
   .group-invite-row .button { width: 100%; }
   .group-member-row { align-items: flex-start; }
+}
+
+@media (max-width: 520px) {
+  .social-summary { gap: 6px; }
+  .social-summary-card { padding: 9px 5px; }
+  .social-summary-card span { overflow-wrap: anywhere; }
+  .group-card-head { display: grid; grid-template-columns: minmax(0, 1fr); }
+  .group-card-actions { width: 100%; justify-content: flex-start; }
+  .group-card-actions .button { width: 100%; }
+  .group-member-row { display: grid; grid-template-columns: minmax(0, 1fr); }
+  .group-member-meta { justify-content: flex-start; padding-inline-start: 53px; }
+}
+
+@media (max-width: 360px) {
+  .friend-card,
+  .group-card { padding: 12px; }
+  .social-avatar { width: 38px; height: 38px; border-radius: 12px; }
+  .group-member-row { padding: 9px; }
+  .group-member-meta { padding-inline-start: 49px; }
 }

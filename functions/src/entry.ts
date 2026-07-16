@@ -3,7 +3,9 @@ export * from './notifications.js';
 export {
   createFriendGroup,
   getSocialOverview,
+  inviteFriendToBucketV151,
   listBucketAccessGrants,
+  respondBucketInvitationV151,
   respondFriendGroupInvitation,
   respondFriendRequest,
   searchSocialUserByEmail,

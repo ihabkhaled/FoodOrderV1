@@ -1,7 +1,7 @@
-import { ArrowLeft } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
+import { BackLink } from '@/components/BackLink';
 import { GroupReceiptSection } from '@/components/GroupReceiptSection';
 import { Loading } from '@/components/Loading';
 import { OrderActionBar } from '@/components/OrderActionBar';
@@ -136,10 +136,7 @@ export function OrderDetailsPage() {
 
   return (
     <div className="page narrow stack-lg">
-      <Link className="back-link" to="/orders">
-        <ArrowLeft />
-        {t('back')}
-      </Link>
+      <BackLink fallback="/orders" label={t('back')} />
       <header className="page-heading">
         <div>
           <p className="eyebrow">

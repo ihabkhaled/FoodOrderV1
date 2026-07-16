@@ -123,6 +123,7 @@ export function DashboardPage() {
             {summary.recentOrders.map((order) => (
               <Link
                 to={`/orders/${order.id}`}
+                state={{ from: '/' }}
                 className="list-row"
                 key={order.id}
               >

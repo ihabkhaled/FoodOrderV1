@@ -25,6 +25,7 @@ export default tseslint.config(
       'ios',
       'functions/lib',
       '.ai/local',
+      '.worktrees',
       'playwright-report',
       'test-results',
       'ui-shots',

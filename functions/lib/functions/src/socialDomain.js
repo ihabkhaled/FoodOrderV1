@@ -51,6 +51,20 @@ export const mergeAccessSources = (current, sourceId) => {
         : [];
     return [...new Set([...existing, sourceId])].sort((left, right) => left.localeCompare(right));
 };
+export const materializedMemberAccess = (current, requested, sourceId) => {
+    const active = current?.status === 'active' ? current : null;
+    const role = strongestRole(active?.role, requested);
+    return {
+        role,
+        canCreateCustomItems: typeof active?.canCreateCustomItems === 'boolean'
+            ? active.canCreateCustomItems
+            : role === 'editor',
+        canSetCustomItemPrice: typeof active?.canSetCustomItemPrice === 'boolean'
+            ? active.canSetCustomItemPrice
+            : role === 'editor',
+        accessSources: mergeAccessSources(active?.accessSources, sourceId),
+    };
+};
 export const removeAccessSource = (current, sourceId) => {
     const existing = Array.isArray(current)
         ? current.filter((value) => typeof value === 'string')
@@ -59,3 +73,17 @@ export const removeAccessSource = (current, sourceId) => {
 };
 export const canInviteGroupMember = (status) => status !== 'active' && status !== 'pending';
 export const friendRequestId = (senderId, recipientId) => `${senderId}_${recipientId}`;
+export const bucketInvitationId = (bucketId, recipientId) => `${bucketId}_${recipientId}`;
+export const bucketInvitationTransition = (current, response) => {
+    if (current === response)
+        return 'idempotent';
+    return current === 'pending' ? 'apply' : 'invalid';
+};
+export const bucketInvitationResponseAction = (current, response, bucketExists) => {
+    const transition = bucketInvitationTransition(current, response);
+    if (transition !== 'apply')
+        return transition;
+    if (response === 'declined')
+        return bucketExists ? 'decline' : 'dismiss';
+    return bucketExists ? 'accept' : 'missing-bucket';
+};

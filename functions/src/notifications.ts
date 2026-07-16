@@ -13,6 +13,10 @@ import {
   writeNotification,
   writeNotifications,
 } from './notificationCore.js';
+import {
+  isAccessOnlyBucketUpdate,
+  isJoinCodeInviteAcceptance,
+} from './notificationDomain.js';
 
 const REGION = 'europe-west1';
 const MAX_NOTIFICATIONS = 50;
@@ -64,6 +68,15 @@ interface BucketGrantRecord {
   subjectId: string;
   subjectName: string;
   grantedBy: string;
+  invitationId?: string;
+}
+
+interface JoinCodeBucketInviteRecord {
+  bucketId: string;
+  bucketTitle: string;
+  status: 'pending' | 'accepted' | 'revoked' | 'expired';
+  createdBy: string;
+  acceptedBy: string | null;
 }
 
 const dataOf = (value: unknown): Record<string, unknown> =>
@@ -187,6 +200,7 @@ export const notifyBucketUpdatedV150 = onDocumentUpdated(
     ) {
       return;
     }
+    if (isAccessOnlyBucketUpdate(before, after)) return;
     const bucketId = event.params.bucketId;
     const bucket = after as unknown as BucketRecord;
     const title = bucket.title ?? 'A shared bucket';
@@ -234,6 +248,9 @@ export const notifyBucketSharedV150 = onDocumentCreated(
   async (event) => {
     const grant = event.data?.data() as BucketGrantRecord | undefined;
     if (!grant) return;
+    // The recipient already received the actionable invitation. Acceptance
+    // materializes this grant and notifies the owner transactionally.
+    if (grant.invitationId) return;
     const bucketSnapshot = await getFirestore()
       .collection('buckets')
       .doc(grant.bucketId)
@@ -263,6 +280,45 @@ export const notifyBucketSharedV150 = onDocumentCreated(
       entityId: grant.bucketId,
       actorId: grant.grantedBy,
       actorName: 'Bucket owner',
+      createdAt: event.time,
+    });
+  },
+);
+
+export const notifyBucketInviteAcceptedV151 = onDocumentUpdated(
+  { document: 'buckets/{bucketId}/invites/{inviteId}', region: REGION },
+  async (event) => {
+    const before = event.data?.before.data() as
+      | JoinCodeBucketInviteRecord
+      | undefined;
+    const after = event.data?.after.data() as
+      | JoinCodeBucketInviteRecord
+      | undefined;
+    if (!before || !after || !isJoinCodeInviteAcceptance(before, after)) {
+      return;
+    }
+    const acceptedBy = after.acceptedBy;
+    if (!acceptedBy) return;
+    const profileSnapshot = await getFirestore()
+      .collection('users')
+      .doc(acceptedBy)
+      .get();
+    const profile = dataOf(profileSnapshot.data());
+    const actorName =
+      (typeof profile.fullName === 'string' && profile.fullName) ||
+      (typeof profile.displayName === 'string' && profile.displayName) ||
+      'A member';
+    const bucketId = event.params.bucketId;
+    await writeNotification(after.createdBy, {
+      id: event.id,
+      kind: 'bucket_invitation_accepted',
+      title: 'Bucket invitation accepted',
+      message: `${actorName} joined ${after.bucketTitle || 'your bucket'}.`,
+      route: `/buckets/${bucketId}/collaborate`,
+      entityType: 'bucket',
+      entityId: bucketId,
+      actorId: acceptedBy,
+      actorName,
       createdAt: event.time,
     });
   },

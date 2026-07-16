@@ -20,6 +20,8 @@ interface BucketCardProps {
   readonly onDelete: (bucket: Bucket) => void;
 }
 
+const BUCKETS_NAVIGATION_STATE = { from: '/buckets' } as const;
+
 export function OwnedBucketCard({
   bucket,
   locale,
@@ -73,16 +75,16 @@ export function OwnedBucketCard({
         <span>{formatDateTime(bucket.updatedAt, locale)}</span>
       </div>
       <div className="card-actions">
-        <Link className="button secondary" to={`/buckets/${bucket.id}/edit`}>
+        <Link className="button secondary" to={`/buckets/${bucket.id}/edit`} state={BUCKETS_NAVIGATION_STATE}>
           {t('edit')}
         </Link>
         {bucket.visibility === 'shared' ? (
-          <Link className="button" to={`/buckets/${bucket.id}/collaborate`}>
+          <Link className="button" to={`/buckets/${bucket.id}/collaborate`} state={BUCKETS_NAVIGATION_STATE}>
             <Users />
             {t('collaborate')}
           </Link>
         ) : (
-          <Link className="button" to={`/buckets/${bucket.id}/order`}>
+          <Link className="button" to={`/buckets/${bucket.id}/order`} state={BUCKETS_NAVIGATION_STATE}>
             {t('orderNow')}
           </Link>
         )}
@@ -90,6 +92,7 @@ export function OwnedBucketCard({
           className="icon-button"
           aria-label={`${t('sharing')} — ${bucket.title}`}
           to={`/buckets/${bucket.id}/share`}
+          state={BUCKETS_NAVIGATION_STATE}
         >
           <Share2 />
         </Link>
@@ -97,6 +100,7 @@ export function OwnedBucketCard({
           className="icon-button"
           aria-label={`${t('members')} — ${bucket.title}`}
           to={`/buckets/${bucket.id}/social-share`}
+          state={BUCKETS_NAVIGATION_STATE}
         >
           <UserRoundPlus />
         </Link>
@@ -136,7 +140,7 @@ export function SharedBucketCard({
         <span>{formatDateTime(bucket.updatedAt, locale)}</span>
       </div>
       <div className="card-actions">
-        <Link className="button" to={`/buckets/${bucket.id}/collaborate`}>
+        <Link className="button" to={`/buckets/${bucket.id}/collaborate`} state={BUCKETS_NAVIGATION_STATE}>
           <Users />
           {t('collaborate')}
         </Link>

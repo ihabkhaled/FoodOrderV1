@@ -1,8 +1,9 @@
-import { ArrowLeft, Lock, LockOpen, Share2 } from 'lucide-react';
+import { Lock, LockOpen, Share2 } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { ActivityTimeline } from '@/components/ActivityTimeline';
+import { BackLink } from '@/components/BackLink';
 import { BucketInvitePanel } from '@/components/BucketInvitePanel';
 import { BucketMemberPermissionsPanel } from '@/components/BucketMemberPermissionsPanel';
 import { ConfirmDialog } from '@/components/ConfirmDialog';
@@ -315,10 +316,7 @@ export function BucketSharePage() {
 
   return (
     <div className="page narrow stack-lg">
-      <Link className="back-link" to={`/buckets/${bucket.id}/collaborate`}>
-        <ArrowLeft />
-        {t('back')}
-      </Link>
+      <BackLink fallback="/buckets" label={t('back')} />
       <header className="page-heading">
         <div>
           <p className="eyebrow">{t('sharing')}</p>

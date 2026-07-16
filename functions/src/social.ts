@@ -3,15 +3,19 @@ import { randomUUID } from 'node:crypto';
 import { getFirestore } from 'firebase-admin/firestore';
 import { HttpsError, onCall } from 'firebase-functions/v2/https';
 
+import { queueTransactionNotification } from './notificationCore.js';
 import {
+  bucketInvitationId,
+  type BucketInvitationResponse,
+  bucketInvitationResponseAction,
+  type BucketInvitationStatus,
   friendRequestId,
-  mergeAccessSources,
+  materializedMemberAccess,
   normalizeEmail,
   optionalText,
   requiredText,
   type ShareRole,
   shareRole,
-  strongestRole,
 } from './socialDomain.js';
 
 const REGION = 'europe-west1';
@@ -62,6 +66,18 @@ interface GroupInvitationRecord {
   respondedAt: string | null;
 }
 
+interface BucketInvitationRecord {
+  id: string;
+  bucketId: string;
+  bucketTitle: string;
+  owner: SocialUser;
+  recipient: SocialUser;
+  role: ShareRole;
+  status: BucketInvitationStatus;
+  createdAt: string;
+  respondedAt: string | null;
+}
+
 interface BucketGrantRecord {
   id: string;
   bucketId: string;
@@ -71,6 +87,7 @@ interface BucketGrantRecord {
   role: ShareRole;
   grantedBy: string;
   createdAt: string;
+  invitationId?: string;
 }
 
 interface BucketRecord {
@@ -183,6 +200,48 @@ const findUserByEmail = async (email: string): Promise<SocialUser | null> => {
 const userSubcollection = (userId: string, name: string) =>
   db().collection('users').doc(userId).collection(name);
 
+const bucketInvitationReference = (bucketId: string, recipientId: string) =>
+  db()
+    .collection('buckets')
+    .doc(bucketId)
+    .collection('socialInvitations')
+    .doc(recipientId);
+
+const assertInvitationRecipient = (
+  invitation: BucketInvitationRecord,
+  mirror: BucketInvitationRecord,
+  recipientId: string,
+): void => {
+  if (
+    invitation.recipient.userId !== recipientId ||
+    mirror.recipient.userId !== recipientId ||
+    invitation.id !== mirror.id
+  ) {
+    throw new HttpsError(
+      'permission-denied',
+      'This bucket invitation belongs to another user.',
+    );
+  }
+};
+
+const assertCompatibleDirectGrant = (
+  grant: BucketGrantRecord | null,
+  recipientId: string,
+  ownerId: string,
+): void => {
+  if (
+    grant &&
+    (grant.subjectType !== 'user' ||
+      grant.subjectId !== recipientId ||
+      grant.grantedBy !== ownerId)
+  ) {
+    throw new HttpsError(
+      'failed-precondition',
+      'The existing direct access grant is not compatible with this invitation.',
+    );
+  }
+};
+
 const activeFriends = async (userId: string): Promise<SocialUser[]> => {
   const snapshot = await userSubcollection(userId, 'friends').get();
   return snapshot.docs.map((document) => document.data() as SocialUser);
@@ -227,21 +286,21 @@ const materializeBucketMember = async (
     const current = memberSnapshot.exists
       ? (memberSnapshot.data() as BucketMemberRecord)
       : null;
+    const activeCurrent = current?.status === 'active' ? current : null;
     const timestamp = new Date().toISOString();
+    const access = materializedMemberAccess(current, grant.role, grant.id);
     const member: BucketMemberRecord = {
       userId: recipient.userId,
       displayName: recipient.displayName,
       email: recipient.email,
-      role: strongestRole(current?.role, grant.role),
+      role: access.role,
       status: 'active',
-      canCreateCustomItems:
-        current?.canCreateCustomItems ?? grant.role === 'editor',
-      canSetCustomItemPrice:
-        current?.canSetCustomItemPrice ?? grant.role === 'editor',
+      canCreateCustomItems: access.canCreateCustomItems,
+      canSetCustomItemPrice: access.canSetCustomItemPrice,
       invitedBy: grant.grantedBy,
-      joinedAt: current?.joinedAt ?? timestamp,
+      joinedAt: activeCurrent?.joinedAt ?? timestamp,
       updatedAt: timestamp,
-      accessSources: mergeAccessSources(current?.accessSources, grant.id),
+      accessSources: access.accessSources,
     };
     transaction.set(memberReference, member, { merge: true });
     transaction.set(
@@ -251,7 +310,7 @@ const materializeBucketMember = async (
         role: member.role,
         bucketTitle: bucket.title,
         ownerName: bucket.ownerName,
-        joinedAt: current?.joinedAt ?? timestamp,
+        joinedAt: activeCurrent?.joinedAt ?? timestamp,
         accessSources: member.accessSources,
       },
       { merge: true },
@@ -343,10 +402,17 @@ export const getSocialOverview = onCall(
   async (request) => {
     const actor = authUser(request.auth);
     await publishActor(actor);
-    const [friends, requests, invitations, memberships] = await Promise.all([
+    const [
+      friends,
+      requests,
+      invitations,
+      bucketInvitations,
+      memberships,
+    ] = await Promise.all([
       activeFriends(actor.userId),
       userSubcollection(actor.userId, 'friendRequests').get(),
       userSubcollection(actor.userId, 'groupInvitations').get(),
+      userSubcollection(actor.userId, 'bucketInvitations').get(),
       userSubcollection(actor.userId, 'groupMemberships').get(),
     ]);
     const requestRecords = requests.docs.map(
@@ -371,6 +437,9 @@ export const getSocialOverview = onCall(
       groups,
       groupInvitations: invitations.docs
         .map((document) => document.data() as GroupInvitationRecord)
+        .filter((item) => item.status === 'pending'),
+      bucketInvitations: bucketInvitations.docs
+        .map((document) => document.data() as BucketInvitationRecord)
         .filter((item) => item.status === 'pending'),
     };
   },
@@ -657,6 +726,308 @@ export const respondFriendGroupInvitation = onCall(
         ),
       );
     }
+    return { success: true };
+  },
+);
+
+export const inviteFriendToBucketV151 = onCall(
+  { region: REGION },
+  async (request) => {
+    const owner = authUser(request.auth);
+    const input = dataOf(request.data);
+    const bucketId = invalidArgument(() =>
+      requiredText(input.bucketId, 'Bucket ID', 160),
+    );
+    const friendId = invalidArgument(() =>
+      requiredText(input.friendId, 'Friend ID', 160),
+    );
+    const role = invalidArgument(() => shareRole(input.role));
+    const bucketReference = db().collection('buckets').doc(bucketId);
+    const friendReference = userSubcollection(owner.userId, 'friends').doc(
+      friendId,
+    );
+    const grantReference = bucketReference
+      .collection('accessGrants')
+      .doc(`user_${friendId}`);
+    const invitationReference = bucketInvitationReference(bucketId, friendId);
+    const mirrorReference = userSubcollection(
+      friendId,
+      'bucketInvitations',
+    ).doc(bucketId);
+
+    return db().runTransaction(async (transaction) => {
+      const [
+        bucketSnapshot,
+        friendSnapshot,
+        grantSnapshot,
+        invitationSnapshot,
+      ] = await Promise.all([
+        transaction.get(bucketReference),
+        transaction.get(friendReference),
+        transaction.get(grantReference),
+        transaction.get(invitationReference),
+      ]);
+      if (!bucketSnapshot.exists) {
+        throw new HttpsError('not-found', 'Bucket was not found.');
+      }
+      const bucket = bucketSnapshot.data() as BucketRecord;
+      if (bucket.ownerId !== owner.userId) {
+        throw new HttpsError(
+          'permission-denied',
+          'Only the bucket owner may invite friends.',
+        );
+      }
+      if (!friendSnapshot.exists) {
+        throw new HttpsError(
+          'failed-precondition',
+          'Only accepted friends may be invited.',
+        );
+      }
+      if (grantSnapshot.exists) {
+        throw new HttpsError(
+          'already-exists',
+          'This bucket is already shared with that friend.',
+        );
+      }
+      if (invitationSnapshot.exists) {
+        const existing = invitationSnapshot.data() as BucketInvitationRecord;
+        if (existing.status === 'pending') {
+          transaction.set(mirrorReference, existing);
+          return existing;
+        }
+      }
+
+      const recipient = friendSnapshot.data() as SocialUser;
+      const timestamp = new Date().toISOString();
+      const invitation: BucketInvitationRecord = {
+        id: bucketInvitationId(bucketId, friendId),
+        bucketId,
+        bucketTitle: bucket.title,
+        owner,
+        recipient,
+        role,
+        status: 'pending',
+        createdAt: timestamp,
+        respondedAt: null,
+      };
+      transaction.set(invitationReference, invitation);
+      transaction.set(mirrorReference, invitation);
+      queueTransactionNotification(transaction, friendId, {
+        id: `bucket_invitation_${invitation.id}_${timestamp}`,
+        kind: 'bucket_invitation',
+        title: 'New bucket invitation',
+        message: `${owner.displayName} invited you to ${bucket.title}.`,
+        route: '/social',
+        entityType: 'bucket',
+        entityId: bucketId,
+        actorId: owner.userId,
+        actorName: owner.displayName,
+        createdAt: timestamp,
+      });
+      return invitation;
+    });
+  },
+);
+
+export const respondBucketInvitationV151 = onCall(
+  { region: REGION },
+  async (request) => {
+    const recipient = authUser(request.auth);
+    const input = dataOf(request.data);
+    const bucketId = invalidArgument(() =>
+      requiredText(input.bucketId, 'Bucket ID', 160),
+    );
+    if (input.response !== 'accepted' && input.response !== 'declined') {
+      throw new HttpsError('invalid-argument', 'A valid response is required.');
+    }
+    const response: BucketInvitationResponse = input.response;
+    const bucketReference = db().collection('buckets').doc(bucketId);
+    const invitationReference = bucketInvitationReference(
+      bucketId,
+      recipient.userId,
+    );
+    const mirrorReference = userSubcollection(
+      recipient.userId,
+      'bucketInvitations',
+    ).doc(bucketId);
+    const grantReference = bucketReference
+      .collection('accessGrants')
+      .doc(`user_${recipient.userId}`);
+    const memberReference = bucketReference
+      .collection('members')
+      .doc(recipient.userId);
+    const membershipReference = userSubcollection(
+      recipient.userId,
+      'bucketMemberships',
+    ).doc(bucketId);
+
+    await db().runTransaction(async (transaction) => {
+      const [
+        invitationSnapshot,
+        mirrorSnapshot,
+        bucketSnapshot,
+        grantSnapshot,
+        memberSnapshot,
+      ] = await Promise.all([
+        transaction.get(invitationReference),
+        transaction.get(mirrorReference),
+        transaction.get(bucketReference),
+        transaction.get(grantReference),
+        transaction.get(memberReference),
+      ]);
+      if (
+        response === 'declined' &&
+        !bucketSnapshot.exists &&
+        !invitationSnapshot.exists &&
+        !mirrorSnapshot.exists
+      ) {
+        return;
+      }
+      if (!invitationSnapshot.exists || !mirrorSnapshot.exists) {
+        throw new HttpsError('not-found', 'Bucket invitation was not found.');
+      }
+      const invitation = invitationSnapshot.data() as BucketInvitationRecord;
+      const mirror = mirrorSnapshot.data() as BucketInvitationRecord;
+      assertInvitationRecipient(invitation, mirror, recipient.userId);
+      const action = bucketInvitationResponseAction(
+        invitation.status,
+        response,
+        bucketSnapshot.exists,
+      );
+      if (action === 'idempotent') return;
+      if (action === 'invalid') {
+        throw new HttpsError(
+          'failed-precondition',
+          'Bucket invitation has already been answered.',
+        );
+      }
+      const timestamp = new Date().toISOString();
+      if (action === 'dismiss') {
+        transaction.delete(invitationReference);
+        transaction.delete(mirrorReference);
+        return;
+      }
+      transaction.set(
+        invitationReference,
+        { status: response, respondedAt: timestamp },
+        { merge: true },
+      );
+      transaction.set(
+        mirrorReference,
+        { status: response, respondedAt: timestamp },
+        { merge: true },
+      );
+
+      if (action === 'decline') {
+        queueTransactionNotification(
+          transaction,
+          invitation.owner.userId,
+          {
+            id: `bucket_invitation_declined_${invitation.id}_${invitation.createdAt}`,
+            kind: 'bucket_invitation_declined',
+            title: 'Bucket invitation declined',
+            message: `${recipient.displayName} declined the invitation to ${invitation.bucketTitle}.`,
+            route: `/buckets/${bucketId}/collaborate`,
+            entityType: 'bucket',
+            entityId: bucketId,
+            actorId: recipient.userId,
+            actorName: recipient.displayName,
+            createdAt: timestamp,
+          },
+        );
+        return;
+      }
+      if (action === 'missing-bucket') {
+        throw new HttpsError('not-found', 'Bucket was not found.');
+      }
+      const bucket = bucketSnapshot.data() as BucketRecord;
+      if (bucket.ownerId !== invitation.owner.userId) {
+        throw new HttpsError(
+          'failed-precondition',
+          'Bucket ownership no longer matches this invitation.',
+        );
+      }
+
+      const existingGrant = grantSnapshot.exists
+        ? (grantSnapshot.data() as BucketGrantRecord)
+        : null;
+      assertCompatibleDirectGrant(
+        existingGrant,
+        recipient.userId,
+        invitation.owner.userId,
+      );
+      const grant: BucketGrantRecord = existingGrant ?? {
+        id: `user_${recipient.userId}`,
+        bucketId,
+        subjectType: 'user',
+        subjectId: recipient.userId,
+        subjectName: recipient.displayName,
+        role: invitation.role,
+        grantedBy: invitation.owner.userId,
+        createdAt: timestamp,
+        invitationId: invitation.id,
+      };
+      if (!existingGrant) transaction.set(grantReference, grant);
+
+      const current = memberSnapshot.exists
+        ? (memberSnapshot.data() as BucketMemberRecord)
+        : null;
+      const activeCurrent = current?.status === 'active' ? current : null;
+      const access = materializedMemberAccess(current, grant.role, grant.id);
+      transaction.set(
+        memberReference,
+        {
+          userId: recipient.userId,
+          displayName: recipient.displayName,
+          email: recipient.email,
+          role: access.role,
+          status: 'active',
+          canCreateCustomItems: access.canCreateCustomItems,
+          canSetCustomItemPrice: access.canSetCustomItemPrice,
+          invitedBy: invitation.owner.userId,
+          joinedAt: activeCurrent?.joinedAt ?? timestamp,
+          updatedAt: timestamp,
+          accessSources: access.accessSources,
+        },
+        { merge: true },
+      );
+      transaction.set(
+        membershipReference,
+        {
+          bucketId,
+          role: access.role,
+          bucketTitle: bucket.title,
+          ownerName: bucket.ownerName,
+          joinedAt: activeCurrent?.joinedAt ?? timestamp,
+          accessSources: access.accessSources,
+        },
+        { merge: true },
+      );
+      if (!existingGrant || bucket.visibility !== 'shared') {
+        transaction.set(
+          bucketReference,
+          {
+            visibility: 'shared',
+            revision: Math.max(1, bucket.revision) + 1,
+            updatedAt: timestamp,
+            lastSocialAccessChangeAt: timestamp,
+          },
+          { merge: true },
+        );
+      }
+      queueTransactionNotification(transaction, invitation.owner.userId, {
+        id: `bucket_invitation_accepted_${invitation.id}_${invitation.createdAt}`,
+        kind: 'bucket_invitation_accepted',
+        title: 'Bucket invitation accepted',
+        message: `${recipient.displayName} accepted the invitation to ${invitation.bucketTitle}.`,
+        route: `/buckets/${bucketId}/collaborate`,
+        entityType: 'bucket',
+        entityId: bucketId,
+        actorId: recipient.userId,
+        actorName: recipient.displayName,
+        createdAt: timestamp,
+      });
+    });
     return { success: true };
   },
 );

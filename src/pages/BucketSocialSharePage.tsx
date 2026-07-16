@@ -1,7 +1,7 @@
-import { ArrowLeft } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
+import { BackLink } from '@/components/BackLink';
 import { BucketSocialSharePanel } from '@/components/BucketSocialSharePanel';
 import { ErrorState } from '@/components/ErrorState';
 import { Loading } from '@/components/Loading';
@@ -68,10 +68,7 @@ export function BucketSocialSharePage() {
 
   return (
     <div className="page narrow stack-lg">
-      <Link className="back-link" to="/social">
-        <ArrowLeft />
-        {t('back')}
-      </Link>
+      <BackLink fallback="/buckets" label={t('back')} />
       <header className="page-heading">
         <div>
           <p className="eyebrow">{s('shareWithFriends')}</p>

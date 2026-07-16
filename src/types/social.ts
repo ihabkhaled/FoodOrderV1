@@ -54,15 +54,35 @@ export interface GroupInvitation {
   respondedAt: string | null;
 }
 
+export type BucketInvitationStatus =
+  | 'pending'
+  | 'accepted'
+  | 'declined';
+export type BucketShareRole = Exclude<BucketRole, 'owner'>;
+
+export interface BucketInvitation {
+  id: string;
+  bucketId: string;
+  bucketTitle: string;
+  owner: SocialUser;
+  recipient: SocialUser;
+  role: BucketShareRole;
+  status: BucketInvitationStatus;
+  createdAt: string;
+  respondedAt: string | null;
+}
+
 export interface BucketAccessGrant {
   id: string;
   bucketId: string;
   subjectType: 'user' | 'group';
   subjectId: string;
   subjectName: string;
-  role: Exclude<BucketRole, 'owner'>;
+  role: BucketShareRole;
   grantedBy: string;
   createdAt: string;
+  /** Present when the direct grant was materialized by an accepted invitation. */
+  invitationId?: string;
 }
 
 export interface SocialOverview {
@@ -71,6 +91,8 @@ export interface SocialOverview {
   outgoingRequests: FriendRequest[];
   groups: FriendGroup[];
   groupInvitations: GroupInvitation[];
+  /** Optional during the v1.5.0 -> v1.5.1 client compatibility window. */
+  bucketInvitations?: BucketInvitation[];
 }
 
 export interface SocialService {
@@ -86,6 +108,15 @@ export interface SocialService {
   respondGroupInvitation(
     groupId: string,
     response: 'active' | 'declined',
+  ): Promise<void>;
+  inviteFriendToBucket(
+    bucketId: string,
+    friendId: string,
+    role: BucketShareRole,
+  ): Promise<BucketInvitation>;
+  respondBucketInvitation(
+    bucketId: string,
+    response: 'accepted' | 'declined',
   ): Promise<void>;
   shareBucketWithGroup(
     bucketId: string,

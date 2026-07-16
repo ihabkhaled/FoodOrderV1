@@ -5,6 +5,10 @@ The version bump level is decided by prompt density — see [rules/versioning.md
 
 <!-- releases -->
 
+## [1.5.1] - 2026-07-16
+
+- Fix invitation notifications, responsive layouts, scrolling, and navigation
+
 ## [1.5.0] - 2026-07-16
 
 - Add friend removal, duplicate-safe group invitations, owner group editing and deletion, member removal and leaving, an enhanced friends/groups interface, and trusted navbar notifications for social, bucket, and order activity.

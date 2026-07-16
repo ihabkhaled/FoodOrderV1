@@ -15,6 +15,15 @@ export const queueNotification = (batch, userId, input) => {
         .doc(notification.id), notification);
     return notification;
 };
+export const queueTransactionNotification = (transaction, userId, input) => {
+    const notification = notificationRecord(input);
+    transaction.set(getFirestore()
+        .collection('users')
+        .doc(userId)
+        .collection('notifications')
+        .doc(notification.id), notification);
+    return notification;
+};
 export const writeNotification = async (userId, input) => {
     const batch = getFirestore().batch();
     const notification = queueNotification(batch, userId, input);
