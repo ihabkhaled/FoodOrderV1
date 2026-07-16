@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 
-import { NotificationCenter } from '@/components/NotificationCenter';
 import type { AppNotification,Theme } from '@/modules/data-access';
 import { notificationService } from '@/modules/data-access';
+import { NotificationCenter } from '@/modules/notifications';
 import { useApp } from '@/modules/session';
+import { SETTINGS_PATH } from '@/modules/settings';
+import { SOCIAL_PATH } from '@/modules/social';
 import {
   ChevronLeft,
   ChevronRight,
@@ -32,9 +34,9 @@ import { RefreshableViewport } from '@/shared/ui';
 const NAV_ITEMS: { to: string; icon: typeof Home; key: MessageKey }[] = [
   { to: '/', icon: Home, key: 'dashboard' },
   { to: '/buckets', icon: ShoppingBasket, key: 'buckets' },
-  { to: '/social', icon: Users, key: 'members' },
+  { to: SOCIAL_PATH, icon: Users, key: 'members' },
   { to: '/orders', icon: ListOrdered, key: 'orders' },
-  { to: '/settings', icon: Settings, key: 'settings' },
+  { to: SETTINGS_PATH, icon: Settings, key: 'settings' },
 ];
 
 const THEME_ICON: Record<Theme, typeof Sun> = {

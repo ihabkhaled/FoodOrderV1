@@ -1,4 +1,5 @@
 import type { Bucket, Locale } from '@/modules/data-access';
+import { buildBucketSocialShareRoute } from '@/modules/social';
 import {
   CopyPlus,
   Share2,
@@ -95,7 +96,7 @@ export function OwnedBucketCard({
         <Link
           className="icon-button"
           aria-label={`${t('members')} — ${bucket.title}`}
-          to={`/buckets/${bucket.id}/social-share`}
+          to={buildBucketSocialShareRoute(bucket.id)}
         >
           <UserRoundPlus />
         </Link>

@@ -1,65 +1,43 @@
-import { useEffect, useState } from 'react';
-
-import { translateSocial } from '@/i18n/socialMessages';
-import type { BucketAccessGrant, BucketRole, Locale, SocialOverview } from '@/modules/data-access';
-import { socialService } from '@/modules/data-access';
+import type {
+  BucketAccessGrant,
+  BucketRole,
+  SocialOverview,
+} from '@/modules/data-access';
 import { Share2, Users } from '@/packages/icons';
 
-interface BucketSocialSharePanelProps {
-  bucketId: string;
-  locale: Locale;
+import type { SocialMessageKey } from '../../i18n/social-messages.constants';
+
+interface BucketSocialSharePanelViewProps {
+  s: (key: SocialMessageKey) => string;
+  overview: SocialOverview;
+  grants: BucketAccessGrant[];
   disabled: boolean;
-  onSuccess: (message: string) => void;
-  onError: (error: unknown) => void;
+  saving: boolean;
+  friendId: string;
+  groupId: string;
+  role: Exclude<BucketRole, 'owner'>;
+  onFriendIdChange: (value: string) => void;
+  onGroupIdChange: (value: string) => void;
+  onRoleChange: (value: Exclude<BucketRole, 'owner'>) => void;
+  onShareWithFriend: () => void;
+  onShareWithGroup: () => void;
 }
 
-export function BucketSocialSharePanel({
-  bucketId,
-  locale,
+export function BucketSocialSharePanelView({
+  s,
+  overview,
+  grants,
   disabled,
-  onSuccess,
-  onError,
-}: BucketSocialSharePanelProps) {
-  const s = (key: Parameters<typeof translateSocial>[1]) =>
-    translateSocial(locale, key);
-  const [overview, setOverview] = useState<SocialOverview | null>(null);
-  const [grants, setGrants] = useState<BucketAccessGrant[]>([]);
-  const [friendId, setFriendId] = useState('');
-  const [groupId, setGroupId] = useState('');
-  const [role, setRole] =
-    useState<Exclude<BucketRole, 'owner'>>('contributor');
-  const [saving, setSaving] = useState(false);
-
-  useEffect(() => {
-    void Promise.all([
-      socialService.getOverview(),
-      socialService.listBucketAccessGrants(bucketId),
-    ])
-      .then(([nextOverview, nextGrants]) => {
-        setOverview(nextOverview);
-        setGrants(nextGrants);
-      })
-      .catch(onError);
-  }, [bucketId, onError]);
-
-  const share = async (action: () => Promise<BucketAccessGrant>) => {
-    try {
-      setSaving(true);
-      const saved = await action();
-      setGrants((current) => [
-        ...current.filter((grant) => grant.id !== saved.id),
-        saved,
-      ]);
-      onSuccess(s('sharedSuccessfully'));
-    } catch (error) {
-      onError(error);
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  if (!overview) return null;
-
+  saving,
+  friendId,
+  groupId,
+  role,
+  onFriendIdChange,
+  onGroupIdChange,
+  onRoleChange,
+  onShareWithFriend,
+  onShareWithGroup,
+}: BucketSocialSharePanelViewProps) {
   return (
     <section className="section-card stack">
       <div className="section-heading">
@@ -75,7 +53,7 @@ export function BucketSocialSharePanel({
           value={role}
           disabled={disabled || saving}
           onChange={(event) => {
-            setRole(event.target.value as Exclude<BucketRole, 'owner'>);
+            onRoleChange(event.target.value as Exclude<BucketRole, 'owner'>);
           }}
         >
           <option value="editor">Editor</option>
@@ -90,7 +68,7 @@ export function BucketSocialSharePanel({
           value={friendId}
           disabled={disabled || saving}
           onChange={(event) => {
-            setFriendId(event.target.value);
+            onFriendIdChange(event.target.value);
           }}
         >
           <option value="">{s('selectFriend')}</option>
@@ -103,11 +81,7 @@ export function BucketSocialSharePanel({
         <button
           className="button secondary"
           disabled={disabled || saving || !friendId}
-          onClick={() =>
-            void share(() =>
-              socialService.shareBucketWithUser(bucketId, friendId, role),
-            )
-          }
+          onClick={onShareWithFriend}
         >
           <Share2 />
           {s('shareWithUser')}
@@ -120,7 +94,7 @@ export function BucketSocialSharePanel({
           value={groupId}
           disabled={disabled || saving}
           onChange={(event) => {
-            setGroupId(event.target.value);
+            onGroupIdChange(event.target.value);
           }}
         >
           <option value="">{s('selectGroup')}</option>
@@ -133,11 +107,7 @@ export function BucketSocialSharePanel({
         <button
           className="button secondary"
           disabled={disabled || saving || !groupId}
-          onClick={() =>
-            void share(() =>
-              socialService.shareBucketWithGroup(bucketId, groupId, role),
-            )
-          }
+          onClick={onShareWithGroup}
         >
           <Users />
           {s('shareWithGroup')}

@@ -1,6 +1,4 @@
-import type { Locale } from '@/modules/data-access';
-
-const socialMessages = {
+export const socialMessages = {
   en: {
     social: 'Friends and groups',
     socialIntro:
@@ -128,7 +126,3 @@ const socialMessages = {
 } as const;
 
 export type SocialMessageKey = keyof typeof socialMessages.en;
-export const translateSocial = (
-  locale: Locale,
-  key: SocialMessageKey,
-): string => socialMessages[locale][key];

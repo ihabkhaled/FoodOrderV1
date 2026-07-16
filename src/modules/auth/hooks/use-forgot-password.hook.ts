@@ -1,8 +1,8 @@
 import { type SyntheticEvent, useState } from 'react';
 
 import { useApp } from '@/modules/session';
-import { Link } from '@/packages/router';
 import { isEmail } from '@/shared/helpers';
+import type { MessageKey } from '@/shared/i18n';
 
 const resetConfirmation = (locale: 'en' | 'ar'): string =>
   locale === 'ar'
@@ -14,7 +14,18 @@ const firebaseRequired = (locale: 'en' | 'ar'): string =>
     ? 'إرسال رسائل إعادة تعيين كلمة المرور يحتاج إلى تفعيل Firebase في هذا الإصدار.'
     : 'Password-reset email requires Firebase to be configured for this build.';
 
-export function ForgotPasswordPage() {
+export interface ForgotPasswordViewModel {
+  t: (key: MessageKey) => string;
+  email: string;
+  setEmail: (value: string) => void;
+  error: string;
+  done: boolean;
+  busy: boolean;
+  confirmationMessage: string;
+  submit: (event: SyntheticEvent) => Promise<void>;
+}
+
+export function useForgotPassword(): ForgotPasswordViewModel {
   const { t, resetPassword, errorMessage, locale, storageMode } = useApp();
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
@@ -44,35 +55,14 @@ export function ForgotPasswordPage() {
     }
   };
 
-  return (
-    <form className="stack" onSubmit={(event) => void submit(event)}>
-      <h1>{t('resetPassword')}</h1>
-      <p className="muted">{t('resetIntro')}</p>
-      <label>
-        {t('email')}
-        <input
-          type="email"
-          autoComplete="email"
-          value={email}
-          onChange={(event) => {
-            setEmail(event.target.value);
-          }}
-        />
-      </label>
-      {error ? (
-        <p className="form-error" role="alert">
-          {error}
-        </p>
-      ) : null}
-      {done ? (
-        <p className="success-message" role="status">
-          {resetConfirmation(locale)}
-        </p>
-      ) : null}
-      <button className="button" disabled={busy}>
-        {busy ? t('loading') : t('resetPassword')}
-      </button>
-      <Link to="/auth/login">{t('back')}</Link>
-    </form>
-  );
+  return {
+    t,
+    email,
+    setEmail,
+    error,
+    done,
+    busy,
+    confirmationMessage: resetConfirmation(locale),
+    submit,
+  };
 }

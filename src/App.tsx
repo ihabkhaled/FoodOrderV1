@@ -1,36 +1,38 @@
 import { AppLayout } from '@/components/AppLayout';
 import { AuthLayout } from '@/components/AuthLayout';
+import { AUTH_PATH, authRoutes, LOGIN_PATH } from '@/modules/auth';
 import { useApp } from '@/modules/session';
+import { settingsRoutes } from '@/modules/settings';
+import { socialRoutes } from '@/modules/social';
 import { Navigate, Outlet, Route, Routes } from '@/packages/router';
 import { BucketCollaboratePage } from '@/pages/BucketCollaboratePage';
 import { BucketEditorPage } from '@/pages/BucketEditorPage';
 import { BucketSharePage } from '@/pages/BucketSharePage';
-import { BucketSocialSharePage } from '@/pages/BucketSocialSharePage';
 import { BucketsPage } from '@/pages/BucketsPage';
 import { CreateOrderPage } from '@/pages/CreateOrderPage';
 import { DashboardPage } from '@/pages/DashboardPage';
-import { ForgotPasswordPage } from '@/pages/ForgotPasswordPage';
 import { JoinBucketPage } from '@/pages/JoinBucketPage';
-import { LoginPage } from '@/pages/LoginPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 import { OrderDetailsPage } from '@/pages/OrderDetailsPage';
 import { OrdersPage } from '@/pages/OrdersPage';
-import { RegisterPage } from '@/pages/RegisterPage';
-import { SettingsPage } from '@/pages/SettingsPage';
-import { SocialPage } from '@/pages/SocialPage';
+import type { AppRouteDescriptor } from '@/shared/types';
 import { Loading } from '@/shared/ui';
 
-function ProtectedRoute() { const { user, authLoading, t } = useApp(); if (authLoading) return <Loading label={t('loading')} />; return user ? <Outlet /> : <Navigate to="/auth/login" replace />; }
+function ProtectedRoute() { const { user, authLoading, t } = useApp(); if (authLoading) return <Loading label={t('loading')} />; return user ? <Outlet /> : <Navigate to={LOGIN_PATH} replace />; }
 function GuestRoute() { const { user, authLoading, t } = useApp(); if (authLoading) return <Loading label={t('loading')} />; return user ? <Navigate to="/" replace /> : <Outlet />; }
+
+const renderRoute = (route: AppRouteDescriptor) =>
+  route.index ? (
+    <Route key="index" index element={route.element} />
+  ) : (
+    <Route key={route.path ?? 'index'} path={route.path} element={route.element} />
+  );
 
 export default function App() {
   return <Routes>
     <Route element={<GuestRoute />}>
-      <Route path="/auth" element={<AuthLayout />}>
-        <Route index element={<Navigate to="login" replace />} />
-        <Route path="login" element={<LoginPage />} />
-        <Route path="register" element={<RegisterPage />} />
-        <Route path="forgot" element={<ForgotPasswordPage />} />
+      <Route path={AUTH_PATH} element={<AuthLayout />}>
+        {authRoutes.map((route) => renderRoute(route))}
       </Route>
     </Route>
     <Route element={<ProtectedRoute />}>
@@ -42,12 +44,11 @@ export default function App() {
         <Route path="buckets/:bucketId/order" element={<CreateOrderPage />} />
         <Route path="buckets/:bucketId/collaborate" element={<BucketCollaboratePage />} />
         <Route path="buckets/:bucketId/share" element={<BucketSharePage />} />
-        <Route path="buckets/:bucketId/social-share" element={<BucketSocialSharePage />} />
+        {socialRoutes.map((route) => renderRoute(route))}
         <Route path="join" element={<JoinBucketPage />} />
-        <Route path="social" element={<SocialPage />} />
         <Route path="orders" element={<OrdersPage />} />
         <Route path="orders/:orderId" element={<OrderDetailsPage />} />
-        <Route path="settings" element={<SettingsPage />} />
+        {settingsRoutes.map((route) => renderRoute(route))}
       </Route>
     </Route>
     <Route path="*" element={<NotFoundPage />} />

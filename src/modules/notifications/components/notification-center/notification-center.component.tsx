@@ -1,17 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import type { RefObject } from 'react';
 
-import { translateSocial } from '@/i18n/socialMessages';
-import type { AppNotification,Locale } from '@/modules/data-access';
+import type { AppNotification, Locale } from '@/modules/data-access';
+import type { SocialMessageKey } from '@/modules/social';
 import { Bell, CheckCheck } from '@/packages/icons';
-import { useNavigate } from '@/packages/router';
-import { subscribeToPointerDown } from '@/platform/browser';
-
-interface NotificationCenterProps {
-  notifications: AppNotification[];
-  locale: Locale;
-  placement: 'topbar' | 'sidebar';
-  onMarkRead: (notificationIds: string[]) => Promise<void>;
-}
 
 const formatTimestamp = (locale: Locale, timestamp: string): string =>
   new Intl.DateTimeFormat(locale === 'ar' ? 'ar-EG' : 'en-GB', {
@@ -21,39 +12,35 @@ const formatTimestamp = (locale: Locale, timestamp: string): string =>
     minute: '2-digit',
   }).format(new Date(timestamp));
 
-export function NotificationCenter({
+interface NotificationCenterViewProps {
+  notifications: AppNotification[];
+  locale: Locale;
+  placement: 'topbar' | 'sidebar';
+  open: boolean;
+  rootRef: RefObject<HTMLDivElement | null>;
+  unreadCount: number;
+  s: (key: SocialMessageKey) => string;
+  onToggle: () => void;
+  onMarkAllRead: () => void;
+  onOpenNotification: (notification: AppNotification) => void;
+}
+
+export function NotificationCenterView({
   notifications,
   locale,
   placement,
-  onMarkRead,
-}: NotificationCenterProps) {
-  const [open, setOpen] = useState(false);
-  const root = useRef<HTMLDivElement>(null);
-  const navigate = useNavigate();
-  const s = (key: Parameters<typeof translateSocial>[1]) =>
-    translateSocial(locale, key);
-  const unread = notifications.filter((notification) => !notification.readAt);
-
-  useEffect(
-    () =>
-      subscribeToPointerDown((target) => {
-        if (root.current && !root.current.contains(target as Node)) {
-          setOpen(false);
-        }
-      }),
-    [],
-  );
-
-  const openNotification = (notification: AppNotification): void => {
-    if (!notification.readAt) void onMarkRead([notification.id]);
-    setOpen(false);
-    void navigate(notification.route);
-  };
-
+  open,
+  rootRef,
+  unreadCount,
+  s,
+  onToggle,
+  onMarkAllRead,
+  onOpenNotification,
+}: NotificationCenterViewProps) {
   return (
     <div
       className={`notification-center notification-${placement}`}
-      ref={root}
+      ref={rootRef}
     >
       <button
         className="icon-button notification-trigger"
@@ -61,14 +48,12 @@ export function NotificationCenter({
         title={s('notifications')}
         aria-label={s('notifications')}
         aria-expanded={open}
-        onClick={() => {
-          setOpen((current) => !current);
-        }}
+        onClick={onToggle}
       >
         <Bell />
-        {unread.length > 0 ? (
+        {unreadCount > 0 ? (
           <span className="notification-badge">
-            {unread.length > 99 ? '99+' : unread.length}
+            {unreadCount > 99 ? '99+' : unreadCount}
           </span>
         ) : null}
       </button>
@@ -79,14 +64,14 @@ export function NotificationCenter({
             <div>
               <strong>{s('notifications')}</strong>
               <span className="muted">
-                {unread.length} {s('unreadNotifications')}
+                {unreadCount} {s('unreadNotifications')}
               </span>
             </div>
             <button
               className="button secondary notification-read-all"
               type="button"
-              disabled={unread.length === 0}
-              onClick={() => void onMarkRead(unread.map((item) => item.id))}
+              disabled={unreadCount === 0}
+              onClick={onMarkAllRead}
             >
               <CheckCheck />
               {s('markAllRead')}
@@ -103,7 +88,7 @@ export function NotificationCenter({
                   key={notification.id}
                   type="button"
                   onClick={() => {
-                    openNotification(notification);
+                    onOpenNotification(notification);
                   }}
                 >
                   <span className="notification-dot" aria-hidden="true" />
