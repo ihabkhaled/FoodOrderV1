@@ -21,6 +21,7 @@ Use this whenever a change is ready to ship. It enforces [rules/versioning.md](.
 ## 1. Decide the bump (prompt density)
 
 Read the driving prompt and classify (see the rule for the table):
+
 - localized fix / copy / style / docs → **patch**
 - new feature / flow / UX overhaul (backward-compatible) → **minor**
 - breaking schema / contract / rules / architecture → **major**
@@ -33,6 +34,7 @@ Mixed → take the highest. Unsure → the higher one, and say why in the notes.
 npm run lint && npm run typecheck && npm run test && npm run build
 npm run test:e2e            # UI/flow gate
 ```
+
 Do not proceed on any red gate.
 
 ## 3. Bump (single command)
@@ -42,6 +44,7 @@ npm run release:patch -- "summary of the change"
 # or release:minor / release:major, or an explicit version:
 node tools/release/bump-version.mjs 1.2.3 "summary"
 ```
+
 This updates `package.json`, `android/app/build.gradle` (versionName + versionCode+1),
 `CHANGELOG.md`, and scaffolds `release-notes/vX.Y.Z.md`. Then flesh out the release notes file.
 

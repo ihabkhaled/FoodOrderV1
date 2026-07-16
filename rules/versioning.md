@@ -17,10 +17,10 @@ FoodOrderV1 uses **Semantic Versioning** (`MAJOR.MINOR.PATCH`) with a single pla
 
 ## Prompt-density → bump level
 
-| Density of the driving prompt | Bump | Examples |
-|---|---|---|
-| **Low** — a localized fix, copy tweak, style nudge, single-file correction, doc-only change | **PATCH** (`x.y.Z+1`) | fix a label, adjust a margin, correct a rule typo, dependency patch |
-| **Medium** — a new user-visible feature, flow, screen, or a cross-file behavior change that stays backward-compatible | **MINOR** (`x.Y+1.0`) | add a settings toggle, a new page, a UX overhaul, a new sharing capability |
+| Density of the driving prompt                                                                                                                       | Bump                  | Examples                                                                    |
+| --------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | --------------------------------------------------------------------------- |
+| **Low** — a localized fix, copy tweak, style nudge, single-file correction, doc-only change                                                         | **PATCH** (`x.y.Z+1`) | fix a label, adjust a margin, correct a rule typo, dependency patch         |
+| **Medium** — a new user-visible feature, flow, screen, or a cross-file behavior change that stays backward-compatible                               | **MINOR** (`x.Y+1.0`) | add a settings toggle, a new page, a UX overhaul, a new sharing capability  |
 | **High** — a breaking data/schema/contract/API change, a Firestore-rules break, an architecture migration, or anything requiring migration/rollback | **MAJOR** (`X+1.0.0`) | change the bucket schema version, rename a public contract, drop a platform |
 
 When a prompt mixes densities, **apply the highest** level it triggers. When unsure between two

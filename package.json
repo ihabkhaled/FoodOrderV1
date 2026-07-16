@@ -63,7 +63,8 @@
     "quality:dead-code": "knip",
     "quality:circular": "madge src --circular --extensions ts,tsx",
     "quality:release": "node scripts/check-release-version.mjs",
-    "quality": "npm run lint && npm run typecheck && npm run quality:circular && npm run quality:release",
+    "quality:agent-docs": "node scripts/check-agent-docs.mjs",
+    "quality": "npm run lint && npm run typecheck && npm run quality:circular && npm run quality:release && npm run quality:agent-docs",
     "deps:check": "npm outdated || true"
   },
   "dependencies": {

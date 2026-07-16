@@ -25,6 +25,7 @@ buckets/{bucketId}/activity/{eventId}  append-only {type, actorId, actorName, ta
 ```
 
 Design invariants
+
 - Items live embedded in the bucket doc (bounded ≤50) with **stable ids**; contributions/aggregate key by item id, never array index.
 - Each member writes **only their own** contribution doc (`doc id == auth.uid`) → cross-user overwrite impossible by construction.
 - `aggregate` is a materialized read-model; **source of truth is the contribution set**; repairable at any time.
@@ -34,15 +35,17 @@ Design invariants
 ## 2. Concurrency + idempotency contract (USR-017, FEAT-051/052)
 
 Single pure engine `applyContributionMutation` (src/lib/sharing.ts) used by every adapter:
+
 - ops: `set` (absolute) and `increment` (delta); integer bounds 0..99 enforced pre-write.
 - delta = target − current; new contribution revision; bucket revision +1; mutation record captures {appliedDelta, resultQuantity, resultRevision}.
 - **Replay**: if the mutation id already has a record, the recorded result is returned unchanged (no re-apply).
 
 Firestore execution (`FirestoreSharingService.setContribution`) — one `runTransaction`:
+
 1. read `mutations/{mutationId}` → exists ⇒ return recorded result (idempotent retry);
 2. read bucket (item active check) + membership (contribute permission) + own contribution;
 3. run engine; write contribution, bucket {aggregate, revision}, mutation record, activity event atomically.
-Two concurrent writers serialize on the bucket doc; the loser retries automatically → **both contributions survive** (FEAT-051). UI failure path keeps the target value and retries with the **same mutation id** (FEAT-056) so an offline/duplicated replay cannot double-apply.
+   Two concurrent writers serialize on the bucket doc; the loser retries automatically → **both contributions survive** (FEAT-051). UI failure path keeps the target value and retries with the **same mutation id** (FEAT-056) so an offline/duplicated replay cannot double-apply.
 
 Repair (`repairAggregate`, owner-only): re-reads all contribution docs inside a transaction, recomputes Σ, writes corrected aggregate + revision + `aggregate_repaired` activity. Drift detection runs client-side on every collaborate view load.
 
@@ -58,16 +61,17 @@ Local-device adapter implements the same contract against the localStorage datab
 
 ## 4. Authorization matrix → firestore.rules
 
-| Capability | owner | editor | contributor | viewer |
-|---|---|---|---|---|
-| view bucket/members/contributions/activity | ✅ | ✅ | ✅ | ✅ |
-| contribute quantities | ✅ | ✅ | ✅ | ❌ |
-| edit bucket structure | ✅ | ✅ | ❌ | ❌ |
-| manage members/invites | ✅ | ❌ | ❌ | ❌ |
-| place group order | ✅ | ✅ | ❌ | ❌ |
-| delete bucket | ✅ | ❌ | ❌ | ❌ |
+| Capability                                 | owner | editor | contributor | viewer |
+| ------------------------------------------ | ----- | ------ | ----------- | ------ |
+| view bucket/members/contributions/activity | ✅    | ✅     | ✅          | ✅     |
+| contribute quantities                      | ✅    | ✅     | ✅          | ❌     |
+| edit bucket structure                      | ✅    | ✅     | ❌          | ❌     |
+| manage members/invites                     | ✅    | ❌     | ❌          | ❌     |
+| place group order                          | ✅    | ✅     | ❌          | ❌     |
+| delete bucket                              | ✅    | ❌     | ❌          | ❌     |
 
 Rules enforcement highlights (mirrors src/lib/sharing.ts PERMISSIONS):
+
 - bucket read/list: owner or active member (membership doc lookup); list only via `ownerId == auth.uid` query.
 - bucket update by contributors restricted to `{aggregate, revision, updatedAt}` via `diff().affectedKeys().hasOnly(...)`; structural updates require owner/editor and `revision == resource.revision + 1`.
 - member create: self-join with valid pending invite (`getAfter` invite status accepted, role match, expiry) or owner bootstrap; role changes owner-only; owner member immutable except by owner.
