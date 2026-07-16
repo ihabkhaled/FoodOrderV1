@@ -468,7 +468,11 @@ jobs:
 
   generate-apk:
     name: Generate APK
-    needs: firebase-deploy
+    # The APK is a web/Capacitor build and does not depend on the Firebase
+    # Functions deploy. Gate it on the quality gates only, so a Functions
+    # deploy blocked by a GCP CPU quota (an owner-side action) cannot stop the
+    # APK from being generated and released. See docs/operations/functions-deploy-blockers.md.
+    needs: all-gates-green
     uses: ./.github/workflows/android-apk.yml
     permissions:
       contents: read
