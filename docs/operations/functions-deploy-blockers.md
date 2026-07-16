@@ -28,16 +28,24 @@ Could not create or update Cloud Run service repeatgrouporderv133, Container Hea
 Quota exceeded for total allowable CPU per project per region.
 ```
 
-2nd-gen functions run on Cloud Run; deploying the full notification + social function set at once
-exceeds the project's **total allowable CPU in `europe-west1`**. This is a hard quota, not a code bug.
-Resolve by any of:
+2nd-gen functions run on Cloud Run; deploying all 37 functions at once spins up too many concurrent
+Cloud Run healthcheck revisions, whose combined CPU exceeds the project's **total allowable CPU in
+`europe-west1`**.
+
+**Mitigation (now automated).** The CI deploy no longer runs one `firebase deploy --only functions`.
+`scripts/deploy-functions-batched.mjs` (wired into the Firebase Deployment Gate) builds functions once,
+then deploys `firestore:rules` followed by the functions in **small sequential batches**
+(`FUNCTIONS_DEPLOY_BATCH_SIZE`, default 4, with a pause and per-batch retries), so only a few Cloud Run
+revisions roll out at a time and the concurrent healthcheck CPU stays under the quota.
+
+If the batched deploy still hits the quota (i.e. the steady-state total CPU, not just the deploy spike,
+exceeds it), then also:
 
 1. **Request a quota increase** — GCP Console → IAM & Admin → Quotas → filter "Cloud Run Admin API,
-   Total CPU allocation, europe-west1" → Edit Quotas. (Recommended.)
-2. **Deploy in smaller batches** so concurrent Cloud Run rollouts don't peak the quota:
-   `firebase deploy --only functions:notifyBucketSharedV150` … one/few at a time.
-3. **Reduce per-function CPU/instances** (e.g. `cpu: 1`, `minInstances: 0`, `concurrency` up) in the
+   Total CPU allocation, europe-west1" → Edit Quotas. (Recommended, and lets you raise the batch size.)
+2. **Reduce per-function CPU/instances** (e.g. `cpu: 1`, `minInstances: 0`, higher `concurrency`) in the
    function definitions to lower the aggregate CPU request.
+3. **Lower the batch size** further (`FUNCTIONS_DEPLOY_BATCH_SIZE: 2`) to shrink the deploy-time spike.
 
 ## Sequence to unblock
 
