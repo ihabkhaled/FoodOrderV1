@@ -1,0 +1,140 @@
+name: Firebase Eventarc IAM Bootstrap
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: firebase-eventarc-iam-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  bootstrap-eventarc-iam:
+    name: Bootstrap Eventarc Service-Agent IAM
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      FIREBASE_PROJECT_ID: foodorder-c997c
+      FIREBASE_REGION: europe-west1
+    steps:
+      - name: Prepare Google Cloud credentials
+        shell: bash
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}
+          FIREBASE_SERVICE_ACCOUNT_BASE64: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_BASE64 }}
+          GOOGLE_APPLICATION_CREDENTIALS_JSON: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_JSON }}
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+        run: |
+          set -euo pipefail
+          credentials="${FIREBASE_SERVICE_ACCOUNT:-${FIREBASE_SERVICE_ACCOUNT_JSON:-${GOOGLE_APPLICATION_CREDENTIALS_JSON:-${GCP_SA_KEY:-}}}}"
+          credentials_file="${RUNNER_TEMP}/firebase-service-account.json"
+
+          if [[ -n "${FIREBASE_SERVICE_ACCOUNT_BASE64:-}" ]]; then
+            echo "::add-mask::${FIREBASE_SERVICE_ACCOUNT_BASE64}"
+            printf '%s' "${FIREBASE_SERVICE_ACCOUNT_BASE64}" | base64 --decode > "${credentials_file}"
+          elif [[ -n "${credentials}" ]]; then
+            echo "::add-mask::${credentials}"
+            printf '%s' "${credentials}" > "${credentials_file}"
+          else
+            echo "::error::A Firebase service-account JSON secret is required."
+            exit 1
+          fi
+
+          echo "GOOGLE_APPLICATION_CREDENTIALS=${credentials_file}" >> "${GITHUB_ENV}"
+          echo "FIREBASE_DEPLOYER_EMAIL=$(jq -r '.client_email // empty' "${credentials_file}")" >> "${GITHUB_ENV}"
+
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v3
+        with:
+          project_id: ${{ env.FIREBASE_PROJECT_ID }}
+
+      - name: Authenticate Google Cloud SDK
+        shell: bash
+        run: |
+          set -euo pipefail
+          gcloud auth activate-service-account \
+            --key-file="${GOOGLE_APPLICATION_CREDENTIALS}" \
+            --project="${FIREBASE_PROJECT_ID}" \
+            --quiet
+
+      - name: Skip bootstrap after the first notification trigger exists
+        id: existing
+        shell: bash
+        run: |
+          set -euo pipefail
+          if gcloud functions describe notifyBucketUpdatedV150 \
+            --gen2 \
+            --region="${FIREBASE_REGION}" \
+            --project="${FIREBASE_PROJECT_ID}" \
+            >/dev/null 2>&1; then
+            echo "required=false" >> "${GITHUB_OUTPUT}"
+            echo "The v1.5.0 Eventarc notification triggers already exist; no project-IAM mutation is needed."
+          else
+            echo "required=true" >> "${GITHUB_OUTPUT}"
+            echo "First Eventarc deployment detected; configuring the Google-managed service agents."
+          fi
+
+      - name: Configure first-deployment Eventarc service agents
+        if: steps.existing.outputs.required == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          project_number="$(gcloud projects describe "${FIREBASE_PROJECT_ID}" --format='value(projectNumber)')"
+          pubsub_agent="service-${project_number}@gcp-sa-pubsub.iam.gserviceaccount.com"
+          compute_account="${project_number}-compute@developer.gserviceaccount.com"
+
+          bind_role() {
+            local member="$1"
+            local role="$2"
+            echo "Granting ${role} to ${member}"
+            if ! gcloud projects add-iam-policy-binding "${FIREBASE_PROJECT_ID}" \
+              --member="serviceAccount:${member}" \
+              --role="${role}" \
+              --condition=None \
+              --quiet; then
+              echo "::error::The GitHub deployer ${FIREBASE_DEPLOYER_EMAIL:-unknown} cannot update project IAM."
+              echo "::error::Grant it roles/resourcemanager.projectIamAdmin temporarily, rerun this workflow once, then remove that elevated role after the first successful Eventarc deployment."
+              echo "gcloud projects add-iam-policy-binding ${FIREBASE_PROJECT_ID} --member=serviceAccount:${FIREBASE_DEPLOYER_EMAIL:-DEPLOYER_EMAIL} --role=roles/resourcemanager.projectIamAdmin --condition=None"
+              exit 1
+            fi
+          }
+
+          bind_role "${pubsub_agent}" roles/iam.serviceAccountTokenCreator
+          bind_role "${compute_account}" roles/run.invoker
+          bind_role "${compute_account}" roles/eventarc.eventReceiver
+
+      - name: Verify required service-agent bindings
+        if: steps.existing.outputs.required == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          project_number="$(gcloud projects describe "${FIREBASE_PROJECT_ID}" --format='value(projectNumber)')"
+          policy_file="${RUNNER_TEMP}/project-iam.json"
+          gcloud projects get-iam-policy "${FIREBASE_PROJECT_ID}" --format=json > "${policy_file}"
+
+          node - "${policy_file}" "${project_number}" <<'NODE'
+          const fs = require('node:fs');
+          const [policyPath, projectNumber] = process.argv.slice(2);
+          const policy = JSON.parse(fs.readFileSync(policyPath, 'utf8'));
+          const required = [
+            ['roles/iam.serviceAccountTokenCreator', `serviceAccount:service-${projectNumber}@gcp-sa-pubsub.iam.gserviceaccount.com`],
+            ['roles/run.invoker', `serviceAccount:${projectNumber}-compute@developer.gserviceaccount.com`],
+            ['roles/eventarc.eventReceiver', `serviceAccount:${projectNumber}-compute@developer.gserviceaccount.com`],
+          ];
+          const missing = required.filter(([role, member]) =>
+            !(policy.bindings ?? []).some((binding) =>
+              binding.role === role && (binding.members ?? []).includes(member),
+            ),
+          );
+          if (missing.length > 0) {
+            console.error('Missing Firebase Eventarc service-agent bindings:');
+            for (const [role, member] of missing) console.error(`- ${role}: ${member}`);
+            process.exit(1);
+          }
+          console.log('Firebase Eventarc service-agent IAM bootstrap is complete.');
+          NODE
