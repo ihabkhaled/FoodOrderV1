@@ -5,8 +5,8 @@ import type {
   BucketAccessGrant,
   FriendGroup,
   FriendRequest,
+  SocialManagementService,
   SocialOverview,
-  SocialService,
   SocialUser,
 } from '@/types/social';
 
@@ -18,7 +18,9 @@ const callable = <Request, Response>(name: string) =>
     name,
   );
 
-export class FirestoreCallableSocialService implements SocialService {
+export class FirestoreCallableSocialService
+  implements SocialManagementService
+{
   async searchUserByEmail(email: string): Promise<SocialUser | null> {
     const result = await callable<{ email: string }, SocialUser | null>(
       'searchSocialUserByEmail',
@@ -49,6 +51,12 @@ export class FirestoreCallableSocialService implements SocialService {
     )({ senderId, response });
   }
 
+  async unfriend(friendId: string): Promise<void> {
+    await callable<{ friendId: string }, { success: true }>('unfriendV150')({
+      friendId,
+    });
+  }
+
   async createGroup(name: string, description: string): Promise<FriendGroup> {
     const result = await callable<
       { name: string; description: string },
@@ -61,7 +69,7 @@ export class FirestoreCallableSocialService implements SocialService {
     await callable<
       { groupId: string; friendId: string },
       { success: true }
-    >('inviteFriendToGroup')({ groupId, friendId });
+    >('inviteFriendToGroupV150')({ groupId, friendId });
   }
 
   async respondGroupInvitation(
@@ -72,6 +80,37 @@ export class FirestoreCallableSocialService implements SocialService {
       { groupId: string; response: string },
       { success: true }
     >('respondFriendGroupInvitation')({ groupId, response });
+  }
+
+  async updateGroup(
+    groupId: string,
+    name: string,
+    description: string,
+  ): Promise<FriendGroup> {
+    const result = await callable<
+      { groupId: string; name: string; description: string },
+      FriendGroup
+    >('updateFriendGroupV150')({ groupId, name, description });
+    return result.data;
+  }
+
+  async deleteGroup(groupId: string): Promise<void> {
+    await callable<{ groupId: string }, { success: true }>(
+      'deleteFriendGroupV150',
+    )({ groupId });
+  }
+
+  async removeGroupMember(groupId: string, memberId: string): Promise<void> {
+    await callable<
+      { groupId: string; memberId: string },
+      { success: true }
+    >('removeFriendGroupMemberV150')({ groupId, memberId });
+  }
+
+  async leaveGroup(groupId: string): Promise<void> {
+    await callable<{ groupId: string }, { success: true }>(
+      'leaveFriendGroupV150',
+    )({ groupId });
   }
 
   async shareBucketWithGroup(
@@ -107,4 +146,4 @@ export class FirestoreCallableSocialService implements SocialService {
   }
 }
 
-export { LocalSocialService } from '@/services/localSocialService';
+export { LocalSocialManagementService as LocalSocialService } from '@/services/localSocialManagementService';

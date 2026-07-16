@@ -9,7 +9,8 @@ export type GroupMembershipStatus =
   | 'pending'
   | 'active'
   | 'declined'
-  | 'removed';
+  | 'removed'
+  | 'left';
 
 export interface SocialUser {
   userId: string;
@@ -97,4 +98,16 @@ export interface SocialService {
     role: Exclude<BucketRole, 'owner'>,
   ): Promise<BucketAccessGrant>;
   listBucketAccessGrants(bucketId: string): Promise<BucketAccessGrant[]>;
+}
+
+export interface SocialManagementService extends SocialService {
+  unfriend(friendId: string): Promise<void>;
+  updateGroup(
+    groupId: string,
+    name: string,
+    description: string,
+  ): Promise<FriendGroup>;
+  deleteGroup(groupId: string): Promise<void>;
+  removeGroupMember(groupId: string, memberId: string): Promise<void>;
+  leaveGroup(groupId: string): Promise<void>;
 }

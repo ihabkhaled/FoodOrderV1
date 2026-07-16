@@ -17,8 +17,10 @@ import {
 import { useEffect, useState } from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 
+import { NotificationCenter } from '@/components/NotificationCenter';
 import { RefreshableViewport } from '@/components/RefreshableViewport';
 import type { MessageKey } from '@/i18n/messages';
+import { notificationService } from '@/services';
 import { useApp } from '@/state/AppContext';
 import {
   loadSidebarCollapsed,
@@ -26,6 +28,7 @@ import {
   saveSidebarCollapsed,
 } from '@/state/deviceConfig';
 import type { Theme } from '@/types/domain';
+import type { AppNotification } from '@/types/notifications';
 
 const NAV_ITEMS: { to: string; icon: typeof Home; key: MessageKey }[] = [
   { to: '/', icon: Home, key: 'dashboard' },
@@ -61,6 +64,7 @@ export function AppLayout() {
   } = useApp();
   const location = useLocation();
   const [collapsed, setCollapsed] = useState(false);
+  const [notifications, setNotifications] = useState<AppNotification[]>([]);
 
   useEffect(() => {
     void loadSidebarCollapsed()
@@ -69,12 +73,43 @@ export function AppLayout() {
         setCollapsed(false);
       });
   }, []);
+
+  useEffect(() => {
+    if (!user) {
+      setNotifications([]);
+      return;
+    }
+    return notificationService.subscribe(
+      user.id,
+      setNotifications,
+      () => {
+        setNotifications([]);
+      },
+    );
+  }, [user]);
+
   const toggleCollapsed = (): void => {
     setCollapsed((current) => {
       const next = !current;
       void saveSidebarCollapsed(next);
       return next;
     });
+  };
+
+  const markNotificationsRead = async (
+    notificationIds: string[],
+  ): Promise<void> => {
+    if (!user || notificationIds.length === 0) return;
+    const selected = new Set(notificationIds);
+    const readAt = new Date().toISOString();
+    setNotifications((current) =>
+      current.map((notification) =>
+        selected.has(notification.id) && !notification.readAt
+          ? { ...notification, readAt }
+          : notification,
+      ),
+    );
+    await notificationService.markRead(user.id, notificationIds);
   };
 
   const otherLocale = locale === 'ar' ? 'en' : 'ar';
@@ -158,6 +193,12 @@ export function AppLayout() {
         </nav>
         <div className="sidebar-footer">
           <div className="sidebar-controls">
+            <NotificationCenter
+              notifications={notifications}
+              locale={locale}
+              placement="sidebar"
+              onMarkRead={markNotificationsRead}
+            />
             {localeButton}
             {themeButton}
           </div>
@@ -182,6 +223,12 @@ export function AppLayout() {
           <span>{t('appName')}</span>
         </NavLink>
         <div className="topbar-meta">
+          <NotificationCenter
+            notifications={notifications}
+            locale={locale}
+            placement="topbar"
+            onMarkRead={markNotificationsRead}
+          />
           {localeButton}
           {themeButton}
           {connection}

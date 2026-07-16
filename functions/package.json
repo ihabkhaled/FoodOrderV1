@@ -1,6 +1,6 @@
 {
   "name": "food-order-v1-functions",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "private": true,
   "type": "module",
   "main": "lib/functions/src/entry.js",
