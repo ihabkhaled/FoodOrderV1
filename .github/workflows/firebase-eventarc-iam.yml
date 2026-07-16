@@ -87,6 +87,10 @@ jobs:
           project_number="$(gcloud projects describe "${FIREBASE_PROJECT_ID}" --format='value(projectNumber)')"
           pubsub_agent="service-${project_number}@gcp-sa-pubsub.iam.gserviceaccount.com"
           compute_account="${project_number}-compute@developer.gserviceaccount.com"
+          eventarc_agent="service-${project_number}@gcp-sa-eventarc.iam.gserviceaccount.com"
+
+          # The Eventarc API must be enabled before its service agent exists.
+          gcloud services enable eventarc.googleapis.com --project="${FIREBASE_PROJECT_ID}" --quiet || true
 
           bind_role() {
             local member="$1"
@@ -107,6 +111,11 @@ jobs:
           bind_role "${pubsub_agent}" roles/iam.serviceAccountTokenCreator
           bind_role "${compute_account}" roles/run.invoker
           bind_role "${compute_account}" roles/eventarc.eventReceiver
+          # The Eventarc service agent itself needs its service-agent role — this
+          # is the principal named in the "Permission denied while using the
+          # Eventarc Service Agent" deploy failure. Normally auto-granted on API
+          # enablement, but bind it explicitly to avoid the first-deploy race.
+          bind_role "${eventarc_agent}" roles/eventarc.serviceAgent
 
       - name: Verify required service-agent bindings
         if: steps.existing.outputs.required == 'true'
@@ -125,6 +134,7 @@ jobs:
             ['roles/iam.serviceAccountTokenCreator', `serviceAccount:service-${projectNumber}@gcp-sa-pubsub.iam.gserviceaccount.com`],
             ['roles/run.invoker', `serviceAccount:${projectNumber}-compute@developer.gserviceaccount.com`],
             ['roles/eventarc.eventReceiver', `serviceAccount:${projectNumber}-compute@developer.gserviceaccount.com`],
+            ['roles/eventarc.serviceAgent', `serviceAccount:service-${projectNumber}@gcp-sa-eventarc.iam.gserviceaccount.com`],
           ];
           const missing = required.filter(([role, member]) =>
             !(policy.bindings ?? []).some((binding) =>
