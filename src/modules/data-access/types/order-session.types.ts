@@ -4,7 +4,11 @@ import type {
   ParticipantResponse,
   SessionParticipantRole,
 } from '../enums';
-import type { ContributionOperation, CurrencyCode } from './domain.types';
+import type {
+  BucketPricingPolicy,
+  ContributionOperation,
+  CurrencyCode,
+} from './domain.types';
 
 export interface ParticipantResponseSummary {
   pending: number;
@@ -25,6 +29,19 @@ export interface SessionSettlementSummary {
   settledParticipantCount: number;
 }
 
+export interface SessionMenuItemSnapshot {
+  id: string;
+  name: string;
+  description: string;
+  category: string;
+  unitPriceMinor: number;
+  active: boolean;
+  sortOrder: number;
+  createdByUserId: string | null;
+  createdByName: string | null;
+  source: 'catalog' | 'custom';
+}
+
 export interface OrderSession {
   id: string;
   menuTemplateId: string;
@@ -38,6 +55,9 @@ export interface OrderSession {
   deadlineAt: string | null;
   autoLock: boolean;
   scheduleOccurrenceKey: string | null;
+  menuItems: SessionMenuItemSnapshot[];
+  pricingPolicy: BucketPricingPolicy;
+  aggregate: Record<string, number>;
   responseSummary: ParticipantResponseSummary;
   settlementSummary: SessionSettlementSummary;
   schemaVersion: number;
@@ -66,6 +86,8 @@ export interface OrderSessionDraft {
   deadlineAt?: string | null;
   autoLock?: boolean;
   scheduleOccurrenceKey?: string | null;
+  menuItems: SessionMenuItemSnapshot[];
+  pricingPolicy: BucketPricingPolicy;
   createdAt?: string;
 }
 
