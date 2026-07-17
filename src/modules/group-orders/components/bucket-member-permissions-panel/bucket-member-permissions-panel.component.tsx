@@ -51,7 +51,6 @@ export function BucketMemberPermissionsPanel({
                   ? ` (${translate('you')})`
                   : ''}
               </strong>
-              <span className="muted">{member.email}</span>
             </div>
             {member.role === 'owner' ? (
               <span className="mode-pill">{translate('roleOwner')}</span>
