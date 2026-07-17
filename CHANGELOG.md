@@ -5,6 +5,12 @@ The version bump level is decided by prompt density — see [rules/versioning.md
 
 <!-- releases -->
 
+## [1.7.0] - 2026-07-18
+
+- Begin the high-impact v1.7.0 product release covering order sessions, organizer productivity, secure guest activation, settlement, monetization readiness, analytics, observability, and a complete responsive UX quality pass.
+- Add target-version branch governance and green-build prerelease APK automation so every validated branch or main push produces an immutable versioned artifact without CI writing commits back to the repository.
+- Preserve v1.6.x compatibility through additive schemas, migrations, characterization tests, and release-blocking security and quality evidence.
+
 ## [1.6.0] - 2026-07-16
 
 - Module-first architecture migration: layered src structure (app/modules/shared/platform/packages), architecture ESLint enforcement, package ownership, and governance documentation.
