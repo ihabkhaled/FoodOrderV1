@@ -59,6 +59,14 @@ if (parse(next) && next === current) throw new Error('Next version equals curren
 pkg.version = next;
 writeFileSync(pkgPath, `${JSON.stringify(pkg, null, 2)}\n`);
 
+// functions/package.json — MUST match root (quality:release enforces equality)
+const functionsPkgPath = rel('functions', 'package.json');
+if (existsSync(functionsPkgPath)) {
+  const functionsPkg = JSON.parse(readFileSync(functionsPkgPath, 'utf8'));
+  functionsPkg.version = next;
+  writeFileSync(functionsPkgPath, `${JSON.stringify(functionsPkg, null, 2)}\n`);
+}
+
 // Android gradle — versionName mirrors semver; versionCode is a monotonic integer
 const gradlePath = rel('android', 'app', 'build.gradle');
 let gradle = readFileSync(gradlePath, 'utf8');

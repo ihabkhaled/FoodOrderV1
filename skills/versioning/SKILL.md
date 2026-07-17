@@ -10,13 +10,26 @@ audience: [engineer, ai-agent, release-manager]
 description: >
   Bump the app version (prompt-density decides patch/minor/major), sync every derived version,
   write changelog + release notes, then commit, tag, build the APK, and publish a GitHub release.
-lastVerified: 2026-07-13
+lastVerified: 2026-07-18
 generated: false
 ---
 
 # Skill: versioning — bump & release
 
 Use this whenever a change is ready to ship. It enforces [rules/versioning.md](../../rules/versioning.md).
+
+## 0. Automated streams — know which path you are on
+
+CI automates two version streams (details in
+[docs/operations/versioning.md](../../docs/operations/versioning.md)):
+
+- **Cut a branch off `main`** → bump MINOR **first**, before any work is reviewed:
+  `npm run release:minor -- "what this branch does"` (syncs package.json + functions +
+  gradle), commit it. The PR's `release-integrity` gate fails until `version` is above
+  `main`. Patch/major instead per prompt density.
+- **Push to `main`** → CI auto-builds and releases `X.Y.Z-<run_number>` (APK + GitHub
+  release) with no `package.json` change. You do nothing.
+- **Ship a clean `X.Y.Z`** → the manual tag flow below (steps 1–4).
 
 ## 1. Decide the bump (prompt density)
 

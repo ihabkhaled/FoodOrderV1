@@ -21,19 +21,24 @@
       "hash": "19790b4834d46bf6d32865952fafd75b62e773147967ece677c9986d320d6bf0"
     },
     {
+      "path": "tests/components/Loading.test.tsx",
+      "bytes": 855,
+      "hash": "3d125d0a0e348027dfe7a1c7598ed442fadccfeaa16930d98325f1871f3123c3"
+    },
+    {
       "path": "tests/components/NotificationCenter.test.tsx",
       "bytes": 1862,
       "hash": "4018eaf75763a26c43ff7bf5400489f5b15ecf6defb0cb896e54c674f1d96046"
     },
     {
       "path": "tests/components/PasswordField.test.tsx",
-      "bytes": 1533,
-      "hash": "0a251e342efa5e0853fbaca53468148c8cc47607f6805f7f3d8b9c8299e8a091"
+      "bytes": 1580,
+      "hash": "b3f41c32a2af1e385fa3fc5ebb9a43446808c8cbb322a1b7bd6d00bbf4fb211e"
     },
     {
       "path": "tests/components/ResetPasswordRoute.test.tsx",
-      "bytes": 1864,
-      "hash": "58a4dc78d3532de7fd2929b9262fbe5879a4e0a46cfbbcc8e96e6fb0b7a19ec2"
+      "bytes": 1921,
+      "hash": "6785e182afa3851095833c2d4fab54ff65ee4a58e930727207e69cdd07786a1c"
     },
     {
       "path": "tests/domain/bucket.test.ts",
@@ -106,6 +111,11 @@
       "hash": "38faf0fbe7c6d2570f4dc2dd5d4673579af0acdb537ad802b20960e2e5ff481a"
     },
     {
+      "path": "tests/e2e/responsive-overlays.spec.ts",
+      "bytes": 5552,
+      "hash": "ba7c77d07524bb45ec1a78fe2ac788d4b5ebe1692248a0bc252eeabe6d642bcd"
+    },
+    {
       "path": "tests/e2e/smoke.spec.ts",
       "bytes": 885,
       "hash": "a3f6f02607840114a29020d96f57233ac773ef2cc119d7faea6e7827ba706ef3"
@@ -122,8 +132,13 @@
     },
     {
       "path": "tests/e2e/ui.spec.ts",
-      "bytes": 4867,
-      "hash": "c211a10bd5976dfab7bb8d3e06b7d90d31f2ea2742c18a05dcbafc545604b7a2"
+      "bytes": 9178,
+      "hash": "0ad2afbad0a1aac7125c0dfbb14d7f2c9b743bdee1eb9661c5f54338eaa02d16"
+    },
+    {
+      "path": "tests/e2e/ux-polish.spec.ts",
+      "bytes": 4395,
+      "hash": "99d61ee1f8a2b864f150761b54efac89d8f28e0acb53e80f807d710d99289a8c"
     },
     {
       "path": "tests/eslint/architecture-plugin.test.ts",
@@ -161,9 +176,14 @@
       "hash": "970238f074078c4f716b25c5e20be4b1cde66343e7c438cbb41ce39edc943e3a"
     },
     {
+      "path": "tests/services/localNotificationService.test.ts",
+      "bytes": 4162,
+      "hash": "a30edb98bc5c1c3d55dc90fc1d6b504ffee7727b0802b7e5ea3763f005c1b240"
+    },
+    {
       "path": "tests/services/localServices.test.ts",
-      "bytes": 3274,
-      "hash": "577d6ea290e93730e676cdefe76728c69145bc7e8f7e6ff0f2f4e6e26311cb47"
+      "bytes": 3328,
+      "hash": "f8cae98e3fd0809d98e118be0734949b1389fa6efca6f9b633d19c0e7f5b03d7"
     },
     {
       "path": "tests/services/paginationServices.test.ts",

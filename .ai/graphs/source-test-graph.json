@@ -1276,6 +1276,16 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/shared/ui/shell-alignment.css",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/ui/ux-polish.css",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/shared/ui/virtual-list-footer/index.ts",
       "tests": [],
       "relationship": "inferred"

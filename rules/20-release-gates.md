@@ -42,6 +42,16 @@ The mandatory gate set (all must succeed):
   commit with SHA-256 attached. Bump level by prompt density (see
   [versioning.md](versioning.md)).
 - Governance docs integrity: `node scripts/check-agent-docs.mjs` passes.
+- PR version bump: on a pull request, `quality:release` also requires `package.json`
+  `version` to be strictly greater than `main` (MINOR by default for feature branches).
+  Bump at branch start: `npm run release:minor -- "summary"`.
+
+## Automated release streams
+
+- **Push to `main`** auto-releases a build-numbered version `X.Y.Z-<run_number>` (APK +
+  GitHub release) **without changing `package.json`**; the base `X.Y.Z` bumps only via a
+  deliberate tool bump. Tag `vX.Y.Z` releases the clean version. See
+  [versioning.md](versioning.md) and [../docs/operations/versioning.md](../docs/operations/versioning.md).
 
 ## Forbidden
 

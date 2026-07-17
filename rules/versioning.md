@@ -6,7 +6,7 @@ authority: canonical
 status: active
 owner: release-owner
 audience: [engineer, ai-agent, release-manager]
-lastVerified: 2026-07-13
+lastVerified: 2026-07-18
 ---
 
 # Versioning rule
@@ -28,7 +28,7 @@ levels, pick the higher one and record the rationale in the release notes.
 
 ## Non-negotiables
 
-- Never hand-edit a derived version (android `versionName`/`versionCode`, docs). Run the tool.
+- Never hand-edit a derived version (android `versionName`/`versionCode`, `functions/package.json`, docs). Run the tool — `bump-version.mjs` syncs them all from the `package.json` place-of-record.
 - `android versionCode` is a monotonically increasing integer — never reused, never decreased.
 - Every release has: a bumped `package.json`, a `CHANGELOG.md` entry, a `release-notes/vX.Y.Z.md`,
   an annotated git tag `vX.Y.Z`, a GitHub release, and (for shippable changes) an attached APK + SHA-256.
@@ -40,3 +40,27 @@ levels, pick the higher one and record the rationale in the release notes.
 Use the release skill: **`skills/versioning`**. The mechanical bump is
 `node tools/release/bump-version.mjs <patch|minor|major> "summary"` (wrapped by
 `npm run release:patch|minor|major`). The skill covers the full commit → tag → release flow.
+
+## Automated build & branch versioning (CI)
+
+Two version streams are automated in `.github/workflows/` (see
+[docs/operations/versioning.md](../docs/operations/versioning.md)):
+
+### Main pushes → build number `X.Y.Z-<run>` (automatic release + APK)
+
+Every push to `main` builds and releases automatically **without changing `package.json`**.
+The APK and GitHub release are stamped `X.Y.Z-<github.run_number>` (e.g. `1.6.0-42`):
+`android-apk.yml` resolves the build version, overrides the Android `versionName` for that
+build only, and names the APK `FoodOrderV1-v<build>-<sha7>-debug.apk`; the `release-apk`
+job publishes GitHub release `v<build>`. `package.json` stays at the stable `X.Y.Z` — the
+base version changes only via a deliberate tool bump. Pushing a real tag `vX.Y.Z` releases
+the clean `X.Y.Z`.
+
+### Branches / PRs → bump MINOR before merge (enforced gate)
+
+A pull request MUST raise `package.json` `version` above `main`. **New feature branches
+bump MINOR by default** (`1.6.0 → 1.7.0`); use patch/major per the density table above.
+The `release-integrity` job supplies `BASE_VERSION` (main's version) and
+`npm run quality:release` fails the PR until the branch is bumped. Bump at branch start with
+`npm run release:minor -- "summary"` (also syncs `functions/package.json`), commit, then open
+the PR.

@@ -2,6 +2,10 @@ name: Reusable Android APK
 
 on:
   workflow_call:
+    outputs:
+      build_version:
+        description: 'Resolved build version: X.Y.Z on tags, X.Y.Z-<run_number> on main, X.Y.Z-dev.<run_number> otherwise'
+        value: ${{ jobs.build-apk.outputs.build_version }}
 
 permissions:
   contents: read
@@ -10,6 +14,8 @@ jobs:
   build-apk:
     runs-on: ubuntu-latest
     timeout-minutes: 40
+    outputs:
+      build_version: ${{ steps.version.outputs.build_version }}
 
     steps:
       - name: Checkout repository
@@ -33,6 +39,22 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Resolve build version
+        id: version
+        shell: bash
+        run: |
+          BASE="$(node -p "require('./package.json').version")"
+          if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
+            BUILD_VERSION="${GITHUB_REF_NAME#v}"
+          elif [[ "${GITHUB_REF}" == "refs/heads/main" ]]; then
+            BUILD_VERSION="${BASE}-${GITHUB_RUN_NUMBER}"
+          else
+            BUILD_VERSION="${BASE}-dev.${GITHUB_RUN_NUMBER}"
+          fi
+          echo "build_version=${BUILD_VERSION}" >> "$GITHUB_OUTPUT"
+          echo "BUILD_VERSION=${BUILD_VERSION}" >> "$GITHUB_ENV"
+          echo "Resolved build version: ${BUILD_VERSION}"
+
       - name: Build web application
         env:
           VITE_FIREBASE_API_KEY: ${{ vars.VITE_FIREBASE_API_KEY }}
@@ -48,6 +70,12 @@ jobs:
       - name: Sync committed Android project
         run: npx cap sync android
 
+      - name: Apply build version to Android versionName
+        shell: bash
+        run: |
+          sed -i "s/versionName \"[^\"]*\"/versionName \"${BUILD_VERSION}\"/" android/app/build.gradle
+          grep -n 'versionName' android/app/build.gradle
+
       - name: Run Android lint
         working-directory: android
         run: |
@@ -60,8 +88,7 @@ jobs:
 
       - name: Prepare versioned APK artifact
         run: |
-          VERSION="$(node -p "require('./package.json').version")"
-          APK_NAME="FoodOrderV1-v${VERSION}-${GITHUB_SHA::7}-debug.apk"
+          APK_NAME="FoodOrderV1-v${BUILD_VERSION}-${GITHUB_SHA::7}-debug.apk"
           cp android/app/build/outputs/apk/debug/app-debug.apk "$APK_NAME"
           sha256sum "$APK_NAME" | tee "$APK_NAME.sha256"
           printf 'APK_NAME=%s\n' "$APK_NAME" >> "$GITHUB_ENV"
