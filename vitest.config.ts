@@ -15,6 +15,10 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     setupFiles: ['./tests/setup.ts'],
+    // Pin the suite to local-device mode so tests never depend on a
+    // developer's local `.env` Firebase config (CI has none). Matches how the
+    // app behaves without VITE_FIREBASE_* and keeps assertions deterministic.
+    env: { VITE_FORCE_LOCAL_MODE: 'true' },
     include: ['tests/**/*.test.{ts,tsx}'],
     exclude: ['tests/firebase/**'],
     coverage: {
