@@ -1,16 +1,15 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import type { AppNotification, NotificationDraft } from '@/modules/data-access';
-import { LocalNotificationService } from '@/modules/data-access';
-import { pushLocalNotification } from '@/modules/data-access/gateways/local-notification.gateway';
+import {
+  LocalNotificationService,
+  pushLocalNotification,
+} from '@/modules/data-access';
 
 const STORAGE_KEY = 'foodorder:v1:notifications';
 const USER_ID = 'notification-user';
 
-const createDraft = (
-  index: number,
-  overrides: Partial<NotificationDraft> = {},
-): NotificationDraft => ({
+const createDraft = (index: number): NotificationDraft => ({
   id: `notification-${index}`,
   kind: 'group_updated',
   title: `Update ${index}`,
@@ -21,7 +20,6 @@ const createDraft = (
   actorId: 'actor-1',
   actorName: 'Ihab Khaled',
   createdAt: `2026-07-17T12:${String(index).padStart(2, '0')}:00.000Z`,
-  ...overrides,
 });
 
 const readNotifications = (): AppNotification[] => {
@@ -79,10 +77,11 @@ describe('LocalNotificationService', () => {
 
     pushLocalNotification(USER_ID, createDraft(1));
     pushLocalNotification(USER_ID, createDraft(2));
-    pushLocalNotification(
-      USER_ID,
-      createDraft(3, { id: 'notification-3', createdAt: '2026-07-17T12:03:00.000Z' }),
-    );
+    pushLocalNotification(USER_ID, {
+      ...createDraft(3),
+      id: 'notification-3',
+      createdAt: '2026-07-17T12:03:00.000Z',
+    });
 
     const current = readNotifications();
     localStorage.setItem(
