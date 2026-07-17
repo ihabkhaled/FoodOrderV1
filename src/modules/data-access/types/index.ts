@@ -25,6 +25,23 @@ export type {
   UserProfile,
 } from './domain.types';
 export type {
+  OrderSession,
+  OrderSessionDraft,
+  ParticipantResponseSummary,
+  SessionParticipant,
+  SessionParticipantDraft,
+  SessionSettlementSummary,
+} from './order-session.types';
+export type {
+  ParticipantSettlement,
+  ParticipantSettlementDraft,
+  SettlementParticipantAdjustment,
+  SettlementParticipantInput,
+  SettlementReconciliationInput,
+  SettlementReconciliationSnapshot,
+  SettlementStatusSummary,
+} from './settlement.types';
+export type {
   AppNotification,
   NotificationDraft,
 } from './notifications.types';
