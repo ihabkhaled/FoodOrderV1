@@ -3,6 +3,7 @@ import '@/groupOrder.css';
 import '@/virtualLists.css';
 import '@/socialNotifications.css';
 import '@/shared/ui/ux-polish.css';
+import '@/shared/ui/shell-alignment.css';
 
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
