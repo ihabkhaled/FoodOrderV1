@@ -25,18 +25,21 @@ const expectNoHorizontalOverflow = async (page: Page): Promise<void> => {
   expect(overflow, 'page must not scroll horizontally').toBeLessThanOrEqual(1);
 };
 
+const requireBox = async (locator: Locator, label: string) => {
+  const box = await locator.boundingBox();
+  if (!box) throw new Error(`${label} must be measurable.`);
+  return box;
+};
+
 const expectCenteredWithin = async (
   inner: Locator,
   outer: Locator,
   tolerance = 2,
 ): Promise<void> => {
   const [innerBox, outerBox] = await Promise.all([
-    inner.boundingBox(),
-    outer.boundingBox(),
+    requireBox(inner, 'Centered element'),
+    requireBox(outer, 'Containing element'),
   ]);
-  if (!innerBox || !outerBox) {
-    throw new Error('Both centered and containing elements must be measurable.');
-  }
 
   const horizontalOffset = Math.abs(
     innerBox.x + innerBox.width / 2 - (outerBox.x + outerBox.width / 2),
@@ -55,12 +58,9 @@ const expectHorizontallyCenteredWithin = async (
   tolerance = 2,
 ): Promise<void> => {
   const [innerBox, outerBox] = await Promise.all([
-    inner.boundingBox(),
-    outer.boundingBox(),
+    requireBox(inner, 'Centered element'),
+    requireBox(outer, 'Containing element'),
   ]);
-  if (!innerBox || !outerBox) {
-    throw new Error('Both centered and containing elements must be measurable.');
-  }
 
   const horizontalOffset = Math.abs(
     innerBox.x + innerBox.width / 2 - (outerBox.x + outerBox.width / 2),
@@ -82,13 +82,10 @@ test.describe('signed-out shell controls', () => {
     await expect(buttons).toHaveCount(2);
 
     const [languageBox, themeBox, controlsBox] = await Promise.all([
-      buttons.nth(0).boundingBox(),
-      buttons.nth(1).boundingBox(),
-      controls.boundingBox(),
+      requireBox(buttons.nth(0), 'Language button'),
+      requireBox(buttons.nth(1), 'Theme button'),
+      requireBox(controls, 'Auth controls'),
     ]);
-    if (!languageBox || !themeBox || !controlsBox) {
-      throw new Error('Auth controls must be measurable.');
-    }
 
     expect(languageBox.width).toBe(44);
     expect(languageBox.height).toBe(44);
