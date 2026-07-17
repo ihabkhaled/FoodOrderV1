@@ -47,10 +47,10 @@ const assertSafeStringValue = (value: string, key: string): void => {
   }
 };
 
-const assertSafePropertyValue = (
+function assertSafePropertyValue(
   value: unknown,
   key: string,
-): asserts value is AnalyticsPropertyValue => {
+): asserts value is AnalyticsPropertyValue {
   if (value === null || typeof value === 'boolean') return;
   if (typeof value === 'number') {
     if (!Number.isFinite(value)) {
@@ -63,7 +63,7 @@ const assertSafePropertyValue = (
     return;
   }
   throw new Error(`Analytics property ${key} must be a primitive safe value.`);
-};
+}
 
 export const assertAnalyticsObjectIsSafe = (value: object): void => {
   for (const [key, propertyValue] of Object.entries(value)) {
