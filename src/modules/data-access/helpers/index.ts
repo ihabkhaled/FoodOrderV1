@@ -34,6 +34,26 @@ export {
   transitionOrder,
 } from './order.helper';
 export {
+  assertSessionAcceptsContributions,
+  canTransitionOrderSession,
+  canTransitionParticipantResponse,
+  createOrderSession,
+  createSessionParticipant,
+  isParticipantEligibleForFinalization,
+  isSessionContributionOpen,
+  markParticipantResponse,
+  summarizeParticipantResponses,
+  transitionOrderSession,
+} from './order-session.helper';
+export {
+  applySettlementReconciliation,
+  buildSettlementReconciliation,
+  canTransitionPaymentStatus,
+  createParticipantSettlement,
+  summarizeSettlements,
+  transitionParticipantPaymentStatus,
+} from './settlement.helper';
+export {
   applyContributionMutation,
   assertAssignableRole,
   ASSIGNABLE_ROLES,
