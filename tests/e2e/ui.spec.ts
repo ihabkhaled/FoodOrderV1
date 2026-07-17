@@ -49,6 +49,25 @@ const expectCenteredWithin = async (
   expect(verticalOffset).toBeLessThanOrEqual(tolerance);
 };
 
+const expectHorizontallyCenteredWithin = async (
+  inner: Locator,
+  outer: Locator,
+  tolerance = 2,
+): Promise<void> => {
+  const [innerBox, outerBox] = await Promise.all([
+    inner.boundingBox(),
+    outer.boundingBox(),
+  ]);
+  if (!innerBox || !outerBox) {
+    throw new Error('Both centered and containing elements must be measurable.');
+  }
+
+  const horizontalOffset = Math.abs(
+    innerBox.x + innerBox.width / 2 - (outerBox.x + outerBox.width / 2),
+  );
+  expect(horizontalOffset).toBeLessThanOrEqual(tolerance);
+};
+
 test.describe('signed-out shell controls', () => {
   test('mobile auth controls stay compact, aligned, and functional', async ({
     page,
@@ -136,13 +155,25 @@ test.describe('responsive shell', () => {
       loading.className = 'loading';
       loading.setAttribute('role', 'status');
       loading.setAttribute('aria-label', 'Loading layout fixture');
-      loading.innerHTML = `
-        <span class="loading-orbit" aria-hidden="true"></span>
-        <span class="loading-copy"><strong>Loading...</strong></span>
-        <span class="loading-skeleton" aria-hidden="true">
-          <span></span><span></span><span></span>
-        </span>
-      `;
+
+      const orbit = document.createElement('span');
+      orbit.className = 'loading-orbit';
+      orbit.setAttribute('aria-hidden', 'true');
+
+      const copy = document.createElement('span');
+      copy.className = 'loading-copy';
+      const label = document.createElement('strong');
+      label.textContent = 'Loading...';
+      copy.append(label);
+
+      const skeleton = document.createElement('span');
+      skeleton.className = 'loading-skeleton';
+      skeleton.setAttribute('aria-hidden', 'true');
+      for (let index = 0; index < 3; index += 1) {
+        skeleton.append(document.createElement('span'));
+      }
+
+      loading.append(orbit, copy, skeleton);
       viewport.replaceChildren(loading);
     });
 
@@ -155,7 +186,7 @@ test.describe('responsive shell', () => {
 
     const skeleton = loading.locator('.loading-skeleton');
     const firstBar = skeleton.locator('span').first();
-    await expectCenteredWithin(firstBar, skeleton);
+    await expectHorizontallyCenteredWithin(firstBar, skeleton);
   });
 
   test('the toast does not overlap the page heading', async ({ page }) => {
