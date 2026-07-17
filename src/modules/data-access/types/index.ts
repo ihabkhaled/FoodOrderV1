@@ -27,7 +27,11 @@ export type {
 export type {
   OrderSession,
   OrderSessionDraft,
+  OrderSessionView,
   ParticipantResponseSummary,
+  SessionContribution,
+  SessionContributionMutationInput,
+  SessionContributionMutationRecord,
   SessionParticipant,
   SessionParticipantDraft,
   SessionSettlementSummary,
