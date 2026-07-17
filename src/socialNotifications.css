@@ -1,5 +1,6 @@
 /* v1.5.0 social management and notification center */
 .notification-center { position: relative; flex: none; }
+.sidebar { z-index: 40; }
 .notification-trigger { position: relative; }
 .notification-badge {
   position: absolute;
