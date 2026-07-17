@@ -8,12 +8,22 @@ import type {
 } from '@/modules/data-access';
 import { authService, dataService } from '@/modules/data-access';
 import { useApp } from '@/modules/session';
+import {
+  DEFAULT_ANALYTICS_CONSENT,
+  loadAnalyticsConsent,
+  saveAnalyticsConsent,
+  type AnalyticsConsent,
+} from '@/modules/telemetry';
 import { downloadTextFile } from '@/platform/browser';
 import { env } from '@/platform/environment';
 import type { MessageKey } from '@/shared/i18n';
 
+import type { SettingsMessageKey } from '../i18n/settings-messages.constants';
+import { translateSettings } from '../i18n/translate-settings.helper';
+
 export interface SettingsViewModel {
   t: (key: MessageKey) => string;
+  settingsT: (key: SettingsMessageKey) => string;
   profileEmail: string;
   fullName: string;
   setFullName: (value: string) => void;
@@ -23,6 +33,9 @@ export interface SettingsViewModel {
   setTheme: (value: Theme) => void;
   currency: CurrencyCode;
   setCurrency: (value: CurrencyCode) => void;
+  analyticsConsent: AnalyticsConsent;
+  setAnalyticsConsent: (value: AnalyticsConsent) => void;
+  analyticsConsentLoading: boolean;
   busy: boolean;
   error: string;
   submit: (event: SyntheticEvent) => Promise<void>;
@@ -47,6 +60,10 @@ export function useSettings(): SettingsViewModel {
   const [currency, setCurrency] = useState<CurrencyCode>(
     profile?.defaultCurrency ?? 'EGP',
   );
+  const [analyticsConsent, setAnalyticsConsent] = useState<AnalyticsConsent>(
+    DEFAULT_ANALYTICS_CONSENT,
+  );
+  const [analyticsConsentLoading, setAnalyticsConsentLoading] = useState(true);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [exporting, setExporting] = useState(false);
@@ -62,6 +79,28 @@ export function useSettings(): SettingsViewModel {
     }
   }, [profile]);
 
+  useEffect(() => {
+    let active = true;
+
+    void loadAnalyticsConsent()
+      .then((storedConsent) => {
+        if (active) setAnalyticsConsent(storedConsent);
+      })
+      .catch(() => {
+        if (active) setAnalyticsConsent(DEFAULT_ANALYTICS_CONSENT);
+      })
+      .finally(() => {
+        if (active) setAnalyticsConsentLoading(false);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const settingsT = (key: SettingsMessageKey): string =>
+    translateSettings(locale, key);
+
   const submit = async (event: SyntheticEvent) => {
     event.preventDefault();
     if (!fullName.trim()) {
@@ -71,12 +110,16 @@ export function useSettings(): SettingsViewModel {
     try {
       setBusy(true);
       setError('');
-      await saveProfile({
-        fullName: fullName.trim(),
-        locale,
-        theme,
-        defaultCurrency: currency,
-      });
+      await Promise.all([
+        saveProfile({
+          fullName: fullName.trim(),
+          locale,
+          theme,
+          defaultCurrency: currency,
+        }),
+        saveAnalyticsConsent(analyticsConsent),
+      ]);
+      showToast(settingsT('analyticsConsentSaved'), 'success');
     } catch (error_) {
       setError(error_ instanceof Error ? error_.message : t('tryAgain'));
     } finally {
@@ -100,7 +143,10 @@ export function useSettings(): SettingsViewModel {
       );
       showToast(t('exportReady'), 'success');
     } catch (error_) {
-      showToast(error_ instanceof Error ? error_.message : t('tryAgain'), 'error');
+      showToast(
+        error_ instanceof Error ? error_.message : t('tryAgain'),
+        'error',
+      );
     } finally {
       setExporting(false);
     }
@@ -129,6 +175,7 @@ export function useSettings(): SettingsViewModel {
 
   return {
     t,
+    settingsT,
     profileEmail: profile?.email ?? '',
     fullName,
     setFullName,
@@ -138,10 +185,14 @@ export function useSettings(): SettingsViewModel {
     setTheme,
     currency,
     setCurrency,
+    analyticsConsent,
+    setAnalyticsConsent,
+    analyticsConsentLoading,
     busy,
     error,
     submit,
-    storageModeValue: storageMode === 'firebase' ? t('firebaseMode') : t('localMode'),
+    storageModeValue:
+      storageMode === 'firebase' ? t('firebaseMode') : t('localMode'),
     connectionValue: online ? t('online') : t('offline'),
     appVersionValue: `v${env.appVersion}`,
     exporting,
