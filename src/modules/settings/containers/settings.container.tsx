@@ -3,14 +3,17 @@ import { Download, Save, Trash2 } from '@/packages/icons';
 import { SUPPORTED_CURRENCIES } from '@/platform/device';
 import { ConfirmDialog } from '@/shared/ui';
 
+import { AnalyticsConsentSection } from '../components/analytics-consent-section/analytics-consent-section.component';
 import { ChangePasswordSection } from '../components/change-password-section/change-password-section.component';
 import { SettingsMetadata } from '../components/settings-metadata/settings-metadata.component';
+import { buildAnalyticsConsentOptions } from '../helpers/analytics-consent-options.helper';
 import { useChangePassword } from '../hooks/use-change-password.hook';
 import { useSettings } from '../hooks/use-settings.hook';
 
 export function SettingsContainer() {
   const vm = useSettings();
   const passwordVm = useChangePassword();
+  const analyticsConsentOptions = buildAnalyticsConsentOptions(vm.settingsT);
 
   return (
     <div className="page narrow stack-lg">
@@ -74,6 +77,15 @@ export function SettingsContainer() {
             </select>
           </label>
         </section>
+        <AnalyticsConsentSection
+          heading={vm.settingsT('analyticsPrivacy')}
+          description={vm.settingsT('analyticsPrivacyDescription')}
+          legend={vm.settingsT('analyticsConsent')}
+          value={vm.analyticsConsent}
+          disabled={vm.analyticsConsentLoading || vm.busy}
+          options={analyticsConsentOptions}
+          onChange={vm.setAnalyticsConsent}
+        />
         <SettingsMetadata
           rows={[
             { label: vm.t('storageMode'), value: vm.storageModeValue },
@@ -83,7 +95,10 @@ export function SettingsContainer() {
         />
         {vm.error ? <p className="form-error">{vm.error}</p> : null}
         <div className="sticky-actions">
-          <button className="button" disabled={vm.busy}>
+          <button
+            className="button"
+            disabled={vm.busy || vm.analyticsConsentLoading}
+          >
             <Save />
             {vm.busy ? vm.t('loading') : vm.t('save')}
           </button>
