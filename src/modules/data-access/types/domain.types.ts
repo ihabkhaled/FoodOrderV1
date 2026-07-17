@@ -1,6 +1,5 @@
 import type { CurrencyCode, Locale, Theme } from '@/shared/types';
 
-
 export type OrderStatus = 'draft' | 'placed' | 'completed' | 'cancelled';
 export type BucketVisibility = 'private' | 'shared';
 export type BucketRole = 'owner' | 'editor' | 'contributor' | 'viewer';
@@ -84,10 +83,14 @@ export interface Bucket {
   updatedAt: string;
 }
 
+/**
+ * Privacy-minimal shared membership projection.
+ * Contact information remains in the user's owner-only profile and is never
+ * persisted in a bucket member document that other active members may list.
+ */
 export interface BucketMember {
   userId: string;
   displayName: string;
-  email: string;
   role: BucketRole;
   status: MemberStatus;
   canCreateCustomItems?: boolean;
@@ -295,4 +298,4 @@ export interface DashboardSummary {
   recentOrders: Order[];
 }
 
-export {type CurrencyCode, type Locale, type Theme} from '@/shared/types';
+export { type CurrencyCode, type Locale, type Theme } from '@/shared/types';
