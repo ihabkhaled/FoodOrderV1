@@ -37,7 +37,7 @@ describe('reset-password action route', () => {
       await screen.findByRole('heading', { name: 'This reset link is not valid' }),
     ).toBeVisible();
     expect(screen.getByRole('alert')).toHaveTextContent(
-      'Password reset links require Firebase mode',
+      'This email action link is invalid or has already been used.',
     );
     expect(
       screen.getByRole('link', { name: 'Request a new reset link' }),
