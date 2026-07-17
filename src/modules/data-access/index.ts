@@ -17,6 +17,7 @@ import { LocalPaginationService } from './gateways/local-pagination.gateway';
 import { LocalSocialManagementService } from './gateways/local-social-management.gateway';
 
 export * from './contracts';
+export * from './enums';
 export { LocalAuthService } from './gateways/local-auth.gateway';
 export { LocalDataService } from './gateways/local-data.gateway';
 export { LocalGroupOrderService } from './gateways/local-group-order.gateway';
