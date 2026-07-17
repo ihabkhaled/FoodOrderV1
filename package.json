@@ -1,6 +1,6 @@
 {
   "name": "food-order-v1",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "private": true,
   "type": "module",
   "description": "A mobile-first Capacitor application for reusable food buckets and order tracking.",
@@ -43,6 +43,8 @@
     "cap:run:android": "npm run cap:sync && cap run android",
     "cap:run:ios": "npm run cap:sync && cap run ios",
     "migrate:legacy": "node scripts/migrate-legacy-data.mjs",
+    "release:start": "node tools/release/ensure-branch-version.mjs --apply",
+    "release:branch-check": "node tools/release/ensure-branch-version.mjs --check",
     "release:patch": "node tools/release/bump-version.mjs patch",
     "release:minor": "node tools/release/bump-version.mjs minor",
     "release:major": "node tools/release/bump-version.mjs major",
