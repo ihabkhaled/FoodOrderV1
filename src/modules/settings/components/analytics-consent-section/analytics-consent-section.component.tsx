@@ -3,11 +3,7 @@ import {
   type AnalyticsConsent,
 } from '@/modules/telemetry';
 
-interface AnalyticsConsentOption {
-  value: AnalyticsConsent;
-  label: string;
-  description: string;
-}
+import type { AnalyticsConsentOption } from '../../types/analytics-consent.types';
 
 interface AnalyticsConsentSectionProps {
   heading: string;
