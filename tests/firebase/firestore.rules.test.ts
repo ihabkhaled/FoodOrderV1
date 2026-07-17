@@ -88,6 +88,16 @@ const pendingInvite = () => ({
   revokedAt: null,
 });
 
+const memberDocument = (userId: string, displayName: string) => ({
+  userId,
+  displayName,
+  role: userId === OWNER_ID ? 'owner' : 'contributor',
+  status: 'active',
+  invitedBy: OWNER_ID,
+  joinedAt: NOW,
+  updatedAt: NOW,
+});
+
 const seedJoinData = async (
   orderState: 'open' | 'frozen' = 'open',
 ): Promise<void> => {
@@ -96,16 +106,7 @@ const seedJoinData = async (
     await setDoc(doc(database, 'buckets', BUCKET_ID), bucketDocument(orderState));
     await setDoc(
       doc(database, 'buckets', BUCKET_ID, 'members', OWNER_ID),
-      {
-        userId: OWNER_ID,
-        displayName: 'Owner',
-        email: 'owner@example.com',
-        role: 'owner',
-        status: 'active',
-        invitedBy: OWNER_ID,
-        joinedAt: NOW,
-        updatedAt: NOW,
-      },
+      memberDocument(OWNER_ID, 'Owner'),
     );
     await setDoc(
       doc(database, 'buckets', BUCKET_ID, 'invites', INVITE_ID),
@@ -152,7 +153,7 @@ describe('bucket invite acceptance rules', () => {
     ).resolves.toMatchObject({ code: 'permission-denied' });
   });
 
-  it('accepts a pending invite atomically and grants bucket access', async () => {
+  it('accepts a pending invite atomically without persisting member email', async () => {
     await seedJoinData();
     const database = environment
       .authenticatedContext(INVITEE_ID, { email: 'invitee@example.com' })
@@ -194,14 +195,7 @@ describe('bucket invite acceptance rules', () => {
         await transaction.get(memberReference);
 
         transaction.set(memberReference, {
-          userId: INVITEE_ID,
-          displayName: 'Invitee',
-          email: 'invitee@example.com',
-          role: 'contributor',
-          status: 'active',
-          invitedBy: OWNER_ID,
-          joinedAt: NOW,
-          updatedAt: NOW,
+          ...memberDocument(INVITEE_ID, 'Invitee'),
           inviteId: INVITE_ID,
         });
         transaction.update(inviteReference, {
@@ -230,10 +224,57 @@ describe('bucket invite acceptance rules', () => {
       }),
     );
 
-    const bucket = await assertSucceeds(
-      getDoc(doc(database, 'buckets', BUCKET_ID)),
+    const membership = await assertSucceeds(
+      getDoc(doc(database, 'buckets', BUCKET_ID, 'members', INVITEE_ID)),
     );
-    expect(bucket.exists()).toBe(true);
+    expect(membership.data()).not.toHaveProperty('email');
+    expect(
+      (
+        await assertSucceeds(
+          getDoc(doc(database, 'buckets', BUCKET_ID)),
+        )
+      ).exists(),
+    ).toBe(true);
+  });
+
+  it('rejects an invite acceptance that adds email to shared membership', async () => {
+    await seedJoinData();
+    const database = environment
+      .authenticatedContext(INVITEE_ID, { email: 'invitee@example.com' })
+      .firestore();
+
+    await expect(
+      assertFails(
+        runTransaction(database, async (transaction) => {
+          const inviteReference = doc(
+            database,
+            'buckets',
+            BUCKET_ID,
+            'invites',
+            INVITE_ID,
+          );
+          const memberReference = doc(
+            database,
+            'buckets',
+            BUCKET_ID,
+            'members',
+            INVITEE_ID,
+          );
+          await transaction.get(inviteReference);
+          await transaction.get(memberReference);
+          transaction.set(memberReference, {
+            ...memberDocument(INVITEE_ID, 'Invitee'),
+            email: 'invitee@example.com',
+            inviteId: INVITE_ID,
+          });
+          transaction.update(inviteReference, {
+            status: 'accepted',
+            acceptedBy: INVITEE_ID,
+            acceptedAt: NOW,
+          });
+        }),
+      ),
+    ).resolves.toMatchObject({ code: 'permission-denied' });
   });
 
   it('rejects reusing an accepted invite', async () => {
@@ -275,16 +316,7 @@ describe('frozen bucket permissions', () => {
     await environment.withSecurityRulesDisabled(async (context) => {
       await setDoc(
         doc(context.firestore(), 'buckets', BUCKET_ID, 'members', INVITEE_ID),
-        {
-          userId: INVITEE_ID,
-          displayName: 'Invitee',
-          email: 'invitee@example.com',
-          role: 'contributor',
-          status: 'active',
-          invitedBy: OWNER_ID,
-          joinedAt: NOW,
-          updatedAt: NOW,
-        },
+        memberDocument(INVITEE_ID, 'Invitee'),
       );
     });
     const database = environment
