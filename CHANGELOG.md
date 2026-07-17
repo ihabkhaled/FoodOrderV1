@@ -8,6 +8,9 @@ The version bump level is decided by prompt density — see [rules/versioning.md
 ## [1.6.0] - 2026-07-16
 
 - Module-first architecture migration: layered src structure (app/modules/shared/platform/packages), architecture ESLint enforcement, package ownership, and governance documentation.
+- Upgrade the shared design system with richer cards, buttons, navigation, forms, loaders, spacing, responsive portrait/landscape behavior, and reduced-motion fallbacks.
+- Fix friend-group title/member-count separation and preserve edit/delete controls across mobile, tablet, desktop, RTL-safe, and short-height layouts.
+- Expand Playwright to Chromium desktop/mobile/tablet plus Firefox, WebKit, and mobile Safari, with additional UX, overlay, touch-target, unit, and local-notification integration coverage.
 
 ## [1.5.1] - 2026-07-16
 
