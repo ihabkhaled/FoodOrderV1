@@ -17,6 +17,12 @@ import type {
   SessionUser,
   UserProfile,
 } from '../types/domain.types';
+import type {
+  OrderSession,
+  SessionContribution,
+  SessionContributionMutationRecord,
+  SessionParticipant,
+} from '../types/order-session.types';
 
 interface SharingTables {
   members: Record<string, BucketMember[]>;
@@ -24,6 +30,13 @@ interface SharingTables {
   contributions: Record<string, BucketContribution[]>;
   mutations: Record<string, ContributionMutationRecord[]>;
   activity: Record<string, BucketActivityEvent[]>;
+}
+
+export interface OrderSessionTables {
+  sessions: Record<string, OrderSession>;
+  participants: Record<string, SessionParticipant[]>;
+  contributions: Record<string, SessionContribution[]>;
+  mutations: Record<string, SessionContributionMutationRecord[]>;
 }
 
 interface LegacyBucketMember extends BucketMember {
@@ -35,6 +48,7 @@ export interface LocalDatabase {
   buckets: Record<string, Bucket[]>;
   orders: Record<string, Order[]>;
   sharing: SharingTables;
+  orderSessions: OrderSessionTables;
 }
 
 const DB_KEY = 'foodorder:v1:database';
@@ -50,11 +64,19 @@ const emptySharing = (): SharingTables => ({
   activity: {},
 });
 
+const emptyOrderSessions = (): OrderSessionTables => ({
+  sessions: {},
+  participants: {},
+  contributions: {},
+  mutations: {},
+});
+
 const defaultDatabase = (): LocalDatabase => ({
   users: {},
   buckets: {},
   orders: {},
   sharing: emptySharing(),
+  orderSessions: emptyOrderSessions(),
 });
 
 const sanitizeBucketMember = (member: LegacyBucketMember): BucketMember => ({
@@ -74,7 +96,8 @@ const sanitizeBucketMember = (member: LegacyBucketMember): BucketMember => ({
 });
 
 export const readDatabase = (): LocalDatabase => {
-  // Stored JSON may predate the sharing schema, so treat every table as optional.
+  // Stored JSON may predate sharing and order-session schemas, so treat every
+  // table as optional and normalize legacy records on read.
   let raw: Partial<LocalDatabase>;
   try {
     raw = JSON.parse(readWebStorage(DB_KEY) ?? '') as Partial<LocalDatabase>;
@@ -86,6 +109,7 @@ export const readDatabase = (): LocalDatabase => {
     buckets: raw.buckets ?? {},
     orders: raw.orders ?? {},
     sharing: { ...emptySharing(), ...raw.sharing },
+    orderSessions: { ...emptyOrderSessions(), ...raw.orderSessions },
   };
   for (const [ownerId, buckets] of Object.entries(parsed.buckets)) {
     const owner = parsed.users[ownerId];
