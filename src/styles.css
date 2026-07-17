@@ -151,6 +151,11 @@ textarea { resize: vertical; }
 .form-error { margin: 0; padding: 11px 13px; border: 1px solid color-mix(in srgb, var(--danger) 30%, var(--line)); border-radius: 11px; color: var(--danger); background: var(--danger-soft); }
 .success-message { padding: 11px 13px; border-radius: 11px; color: var(--success); background: var(--success-soft); }
 .notice { padding: 12px 14px; border-radius: 12px; color: var(--muted); background: var(--soft); }
+.password-field { display: grid; gap: 6px; }
+.password-input { display: flex; align-items: center; gap: 8px; }
+.password-input input { flex: 1 1 auto; min-width: 0; }
+.password-toggle { flex: 0 0 auto; width: 44px; height: 44px; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 .search-field { position: relative; display: block; }
 .search-field svg { position: absolute; inset-inline-start: 13px; top: 50%; transform: translateY(-50%); color: var(--muted); }
 .search-field input { padding-inline-start: 42px; }

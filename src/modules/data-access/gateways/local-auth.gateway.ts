@@ -13,6 +13,13 @@ import {
   writeDatabase,
 } from './local-database.helper';
 
+/** Emailed one-time reset codes only exist in Firebase mode. */
+const rejectLocalResetLink = (): never => {
+  throw new Error(
+    'Password reset links require Firebase mode. In local mode, change your password from Settings.',
+  );
+};
+
 export class LocalAuthService implements AuthService {
   subscribe(listener: (user: SessionUser | null) => void): () => void {
     const emit = (): void => {
@@ -64,6 +71,29 @@ export class LocalAuthService implements AuthService {
     writeWebStorage(SESSION_KEY, id);
     notifyAuth();
     return toSessionUser(profile);
+  }
+
+  async changePassword(
+    user: SessionUser,
+    currentPassword: string,
+    newPassword: string,
+  ): Promise<void> {
+    const database = readDatabase();
+    const record = database.users[user.id];
+    if (!record || record.password !== currentPassword) {
+      throw new Error('Invalid email or password.');
+    }
+    record.password = newPassword;
+    record.profile.updatedAt = nowIso();
+    writeDatabase(database);
+  }
+
+  async verifyPasswordResetCode(_code: string): Promise<string> {
+    return rejectLocalResetLink();
+  }
+
+  async confirmPasswordReset(_code: string, _newPassword: string): Promise<void> {
+    rejectLocalResetLink();
   }
 
   async resetPassword(email: string): Promise<void> {

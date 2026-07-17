@@ -96,6 +96,11 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/auth/containers/reset-password.container.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/auth/hooks/use-forgot-password.hook.ts",
       "tests": [],
       "relationship": "inferred"
@@ -107,6 +112,11 @@
     },
     {
       "source": "src/modules/auth/hooks/use-register.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/auth/hooks/use-reset-password.hook.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -746,12 +756,22 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/settings/components/change-password-section/change-password-section.component.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/settings/components/settings-metadata/settings-metadata.component.tsx",
       "tests": [],
       "relationship": "inferred"
     },
     {
       "source": "src/modules/settings/containers/settings.container.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/settings/hooks/use-change-password.hook.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -1192,6 +1212,26 @@
     },
     {
       "source": "src/shared/ui/loading/loading.component.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/ui/password-field/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/ui/password-field/password-field.component.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/ui/password-field/password-field.container.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/ui/password-field/use-password-field.hook.ts",
       "tests": [],
       "relationship": "inferred"
     },

@@ -5,4 +5,5 @@ export {
   LOGIN_PATH,
   POST_AUTH_REDIRECT_PATH,
   REGISTER_PATH,
+  RESET_PASSWORD_PATH,
 } from './routes/auth-route-paths.constants';

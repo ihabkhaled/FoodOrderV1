@@ -13,6 +13,8 @@ export {
   CopyPlus,
   Crown,
   Download,
+  Eye,
+  EyeOff,
   GripVertical,
   History,
   Home,

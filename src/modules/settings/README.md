@@ -8,6 +8,9 @@ and account deletion.
 - Profile form (full name, language, theme, default currency) synced from
   the session profile and saved via `useApp().saveProfile`.
 - Read-only metadata (storage mode, connection, app version).
+- Change password (current + new + confirmation) via
+  `authService.changePassword`; works in Firebase and local-device modes
+  with no email involved.
 - JSON data export (`dataService.exportUserData` + platform file download).
 - Danger zone: confirm-dialog-guarded full account deletion
   (`dataService.deleteAllUserData` + `authService.deleteAccount`).
@@ -19,16 +22,19 @@ and account deletion.
 
 ## Structure
 
-- `containers/settings.container.tsx` — one view-model hook call + form JSX.
-- `hooks/use-settings.hook.ts` — all state, effects, and service calls.
+- `containers/settings.container.tsx` — view-model hook calls + form JSX.
+- `hooks/use-settings.hook.ts` — profile/export/delete state and service calls.
+- `hooks/use-change-password.hook.ts` — dedicated change-password view model.
 - `components/settings-metadata/` — pure metadata grid.
+- `components/change-password-section/` — pure change-password form section.
 - `routes/` — path constant + route descriptor.
 
 ## Dependencies
 
 `@/modules/data-access` (authService, dataService, profile types),
 `@/modules/session` (useApp), `@/platform/{browser,device,environment}`,
-`@/packages/icons`, `@/shared/ui` (ConfirmDialog).
+`@/packages/icons`, `@/shared/ui` (ConfirmDialog, PasswordField),
+`@/shared/helpers` (validatePassword).
 
 ## Testing
 
