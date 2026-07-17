@@ -23,7 +23,10 @@
   z-index: 90;
   inset-inline-end: 0;
   top: calc(100% + 10px);
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
   width: min(390px, calc(100vw - 24px));
+  max-height: calc(100dvh - 24px);
   overflow: hidden;
   border: 1px solid var(--line-strong);
   border-radius: 18px;
@@ -31,24 +34,31 @@
   box-shadow: var(--shadow-lg);
 }
 .notification-sidebar .notification-panel {
-  inset-inline-start: calc(100% + 12px);
+  position: fixed;
+  inset-inline-start: 260px;
   inset-inline-end: auto;
   top: auto;
-  bottom: 0;
+  bottom: 18px;
+  width: min(390px, calc(100vw - 272px));
+}
+.app-shell.collapsed .notification-sidebar .notification-panel {
+  inset-inline-start: 88px;
+  width: min(390px, calc(100vw - 100px));
 }
 .notification-panel-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+  min-width: 0;
   padding: 14px;
   border-bottom: 1px solid var(--line);
   background: var(--surface-2);
 }
-.notification-panel-head > div { display: grid; gap: 2px; }
+.notification-panel-head > div { display: grid; gap: 2px; min-width: 0; }
 .notification-panel-head .muted { font-size: 0.72rem; }
 .notification-read-all { min-height: 36px; padding: 7px 10px; font-size: 0.72rem; }
-.notification-list { display: grid; max-height: min(480px, 65vh); overflow-y: auto; }
+.notification-list { display: grid; min-height: 0; max-height: min(480px, 65vh); overflow-y: auto; }
 .notification-item {
   display: grid;
   grid-template-columns: 8px 1fr;
@@ -74,8 +84,8 @@
 }
 .notification-item.unread .notification-dot { background: var(--primary); }
 .notification-copy { display: grid; gap: 3px; min-width: 0; }
-.notification-copy strong { font-size: 0.84rem; }
-.notification-copy span { color: var(--muted); font-size: 0.78rem; line-height: 1.35; }
+.notification-copy strong { font-size: 0.84rem; overflow-wrap: anywhere; }
+.notification-copy span { color: var(--muted); font-size: 0.78rem; line-height: 1.35; overflow-wrap: anywhere; }
 .notification-copy small { color: var(--muted); font-size: 0.66rem; }
 .notification-empty { padding: 28px 16px; text-align: center; }
 
@@ -129,7 +139,6 @@
   min-width: 0;
 }
 .friend-card-head > div,
-.group-card-head > div,
 .social-person > div { display: grid; gap: 2px; min-width: 0; }
 .social-avatar {
   display: grid;
@@ -186,7 +195,15 @@
 .social-divider { height: 1px; background: var(--line); }
 
 @media (max-width: 719px) {
-  .notification-panel { position: fixed; inset-inline: 12px; top: 66px; width: auto; }
+  .notification-topbar .notification-panel,
+  .notification-sidebar .notification-panel {
+    position: fixed;
+    inset-inline: 12px;
+    top: 66px;
+    bottom: auto;
+    width: auto;
+    max-height: calc(100dvh - 78px);
+  }
   .social-hero { grid-template-columns: 1fr; }
   .social-summary { width: 100%; }
   .group-invite-row { grid-template-columns: 1fr; }
