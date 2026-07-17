@@ -1,9 +1,16 @@
 export {
+  DEFAULT_ANALYTICS_CONSENT,
+  isAnalyticsConsent,
+  loadAnalyticsConsent,
+  saveAnalyticsConsent,
+} from './adapters/telemetry-consent.adapter';
+export {
   ANALYTICS_EVENT,
   ANALYTICS_EVENT_PURPOSE,
   FORBIDDEN_ANALYTICS_PROPERTY_KEYS,
   type AnalyticsEventName,
 } from './constants/analytics-events.constants';
+export { ANALYTICS_CONSENT_PREFERENCE_KEY } from './constants/telemetry-storage.constants';
 export {
   ANALYTICS_CONSENT,
   PERFORMANCE_MEASURE,
