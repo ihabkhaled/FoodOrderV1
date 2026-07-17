@@ -15,10 +15,10 @@ describe('Loading', () => {
     expect(screen.getByText('Loading orders')).toBeVisible();
   });
 
-  it('keeps decorative motion out of the accessibility tree', () => {
+  it('renders the supplied loading label only once as readable copy', () => {
     render(<Loading label="Loading groups" />);
 
-    const status = screen.getByRole('status', { name: 'Loading groups' });
-    expect(status.querySelectorAll('[aria-hidden="true"]')).toHaveLength(3);
+    expect(screen.getByRole('status', { name: 'Loading groups' })).toBeVisible();
+    expect(screen.getAllByText('Loading groups')).toHaveLength(1);
   });
 });
