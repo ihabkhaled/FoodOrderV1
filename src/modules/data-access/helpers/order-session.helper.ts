@@ -13,6 +13,10 @@ import type {
   SessionParticipant,
   SessionParticipantDraft,
 } from '../types/order-session.types';
+import {
+  validateSessionMenuItems,
+  validateSessionPricingPolicy,
+} from './session-menu-snapshot.helper';
 
 const ORDER_SESSION_TRANSITIONS: Readonly<
   Record<OrderSessionStatus, readonly OrderSessionStatus[]>
@@ -119,6 +123,9 @@ export const createOrderSession = (draft: OrderSessionDraft): OrderSession => {
     deadlineAt,
     autoLock: draft.autoLock ?? false,
     scheduleOccurrenceKey: draft.scheduleOccurrenceKey?.trim() || null,
+    menuItems: validateSessionMenuItems(draft.menuItems),
+    pricingPolicy: validateSessionPricingPolicy(draft.pricingPolicy),
+    aggregate: {},
     responseSummary: { ...EMPTY_RESPONSE_SUMMARY },
     settlementSummary: {
       participantCount: 0,
