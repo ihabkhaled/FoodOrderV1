@@ -1,0 +1,160 @@
+name: Branch Continuous Release
+
+on:
+  push:
+    branches-ignore: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: branch-release-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  all-gates:
+    name: Branch All Gates Green
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    outputs:
+      build_version: ${{ steps.version.outputs.build_version }}
+
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 26
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            functions/package-lock.json
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          npm --prefix functions ci
+          npx playwright install --with-deps chromium firefox webkit
+
+      - name: Resolve immutable development version
+        id: version
+        shell: bash
+        run: |
+          BASE="$(node -p "require('./package.json').version")"
+          BUILD_VERSION="${BASE}-dev.${GITHUB_RUN_NUMBER}"
+          echo "build_version=${BUILD_VERSION}" >> "$GITHUB_OUTPUT"
+          echo "Branch artifact version: ${BUILD_VERSION}"
+
+      - name: Validate knowledge and governance
+        run: |
+          npm run knowledge:build
+          npm run knowledge:validate
+          npm run knowledge:benchmark
+          npm run quality:agent-docs
+
+      - name: Validate formatting, lint, and architecture
+        run: |
+          npm run format:check
+          npm run lint:fix
+          git diff --exit-code
+          npm run lint
+
+      - name: Validate types, functions, and release integrity
+        run: |
+          npm run release:branch-check
+          npm run typecheck
+          npm run typecheck:tsc
+          npm run functions:validate
+          npm run quality:release
+
+      - name: Validate Firestore authorization
+        run: npm run test:rules
+
+      - name: Validate unit, integration, and coverage gates
+        run: |
+          npm run test
+          npm run test:coverage
+
+      - name: Validate build and dependency boundaries
+        run: |
+          npm run build
+          npm run quality:circular
+          npm run quality:dead-code
+
+      - name: Validate primary and critical journeys
+        run: |
+          npm run test:e2e
+          npm run test:e2e:critical
+
+      - name: Validate cross-browser journeys
+        run: npm run test:e2e:cross-browser
+
+      - name: Validate dependency security
+        run: |
+          npm run security:audit
+          npm --prefix functions audit --audit-level=high
+
+      - name: Enforce Trivy high and critical findings
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          scan-type: fs
+          scan-ref: .
+          scanners: vuln,secret,misconfig
+          format: table
+          severity: CRITICAL,HIGH
+          ignore-unfixed: true
+          exit-code: '1'
+          skip-dirs: node_modules,dist,coverage,android,ios,ui-shots
+
+  generate-apk:
+    name: Generate Immutable Branch APK
+    needs: all-gates
+    uses: ./.github/workflows/android-apk.yml
+    with:
+      checkout_ref: ${{ github.sha }}
+      build_version: ${{ needs.all-gates.outputs.build_version }}
+    permissions:
+      contents: read
+
+  publish-prerelease:
+    name: Publish Branch Prerelease
+    needs: [all-gates, generate-apk]
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Download generated APK
+        uses: actions/download-artifact@v4
+        with:
+          name: FoodOrderV1-debug-apk
+
+      - name: Verify APK checksum
+        run: sha256sum --check FoodOrderV1-*-debug.apk.sha256
+
+      - name: Publish immutable prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BUILD_VERSION: ${{ needs.all-gates.outputs.build_version }}
+        shell: bash
+        run: |
+          RELEASE_TAG="v${BUILD_VERSION}-${GITHUB_SHA::7}"
+          gh release create "${RELEASE_TAG}" \
+            --repo "${GITHUB_REPOSITORY}" \
+            --target "${GITHUB_SHA}" \
+            --title "FoodOrderV1 ${BUILD_VERSION}" \
+            --notes "Automated prerelease from branch ${GITHUB_REF_NAME}. Every mandatory branch gate passed for commit ${GITHUB_SHA}." \
+            --prerelease \
+            FoodOrderV1-*-debug.apk \
+            FoodOrderV1-*-debug.apk.sha256
