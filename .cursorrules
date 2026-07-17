@@ -2,38 +2,37 @@
 
 # Governance-Version: 1
 
-# Canonical source of truth: AGENTS.md (repo root). Read it first.
-# Playbooks: skills/ — Hard rules: rules/00-non-negotiable-rules.md — Architecture: architecture/README.md
+# Canonical truth: AGENTS.md. Then read .ai/BOOTSTRAP.md, resolve task context, and follow the matching skills/ and rules/ documents.
 
 ## Hard rules
 
-- One-way layers: src/app → src/modules/* → src/shared|src/platform → src/packages → vendor.
-- Feature code lives in exactly one module: auth, buckets, group-orders, orders, social,
-  notifications, dashboard, settings, session, data-access.
-- Cross-module and vendor access only via public surfaces: @/modules/<name>, @/packages/<name>.
-- Vendor packages (firebase, react-router-dom, lucide-react, react-virtuoso, @capacitor/*)
-  import only inside their src/packages/* owner (eslint/package-ownership.config.mjs).
-- Hooks only in *.hook.ts files or hooks/ dirs; *.component.tsx files call zero hooks;
-  containers/providers/shell/router call project hooks only.
-- Browser globals only in src/platform; env reads only in src/platform/environment.
-- Absolute route strings only in routes/ files; use typed route constants.
-- Filenames: kebab-case + responsibility suffix (.component.tsx, .container.tsx,
-  .provider.tsx, .routes.tsx, .hook.ts, .service.ts, .gateway.ts, .helper.ts,
-  .constants.ts, .types.ts, .interfaces.ts, .enums.ts, .adapter.ts, ...).
-- enum is banned; use as-const objects in *.enums.ts.
-- No new state/query libraries: React context (session module) + service singletons only.
-- Every user-visible string gets en + ar catalog entries; RTL stays intact.
-- Never weaken firestore.rules, auth, ownership isolation, a11y, or tests.
-- .ai/ is generated — never hand-edit; run npm run knowledge:build:incremental.
-- When a rule fails, the code is in the wrong layer. Move or redesign the code.
-  Do not disable the rule.
+- One-way architecture: src/app → src/modules/* → src/shared|src/platform → src/packages → vendor.
+- Feature behavior lives in exactly one module and crosses modules only through public surfaces.
+- Vendor packages import only inside their registered src/packages/<name> owner facade.
+- Hooks only in *.hook.ts files or hooks/; *.component.tsx files call zero hooks; containers call project hooks only.
+- Browser globals only in src/platform; environment reads only in src/platform/environment.
+- Absolute route strings only in routes/ ownership files.
+- Kebab-case filenames with truthful responsibility suffixes.
+- TypeScript enum is banned; use typed as-const objects and derived unions.
+- Domain constants, interfaces, types, helpers, validators, state machines, adapters, and contracts must live in truthful files; never hide them inline in screens or giant hooks.
+- No global store or server-state query library.
+- Complete English/Arabic copy, RTL, dark mode, accessibility, privacy, and offline/error states are required.
+- Never weaken Firestore/Storage rules, auth, ownership, tests, coverage, migration safety, or rollback readiness.
+- .ai/ is generated — never hand-edit.
+- When a rule fails, move or redesign the code. Do not disable the rule.
+
+## Version branches
+
+For X.Y.Z, release/X.Y.Z, or X.Y.Z/<feature> branches, follow skills/start-version-branch.md. Source, Functions, Android, changelog, and release notes must match before commit or push. Every green branch push produces a unique checksum-verified prerelease APK; CI never commits recursive version bumps.
 
 ## Validation
 
-- npm run lint:fix && npm run lint          (CI requires zero diff after lint:fix)
-- npm run typecheck && npm run typecheck:tsc (TS 7.0.2 AND 5.9.3 must both pass)
-- npm run test && npm run build
-- npm run test:e2e                          (Playwright, always VITE_FORCE_LOCAL_MODE=true)
-- npm run test:rules                        (when firestore.rules changed)
+- npm run release:branch-check
+- npm run lint:fix && git diff --exit-code && npm run lint
+- npm run typecheck && npm run typecheck:tsc
+- npm run test && npm run test:coverage && npm run build
 - npm run quality:circular && npm run quality:dead-code && npm run quality:release
-- Conventional commits; never bypass husky hooks.
+- npm run test:e2e && npm run test:e2e:critical && npm run test:e2e:cross-browser
+- npm run test:rules and npm run functions:validate when their boundaries change
+- npm run knowledge:build:incremental && npm run knowledge:validate
+- Conventional commits; never bypass Husky or claim unexecuted gates.
