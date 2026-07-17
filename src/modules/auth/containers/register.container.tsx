@@ -1,4 +1,5 @@
 import { Link } from '@/packages/router';
+import { PasswordField } from '@/shared/ui';
 
 import { useRegister } from '../hooks/use-register.hook';
 import { LOGIN_PATH } from '../routes/auth-route-paths.constants';
@@ -34,17 +35,15 @@ export function RegisterContainer() {
           }}
         />
       </label>
-      <label>
-        {vm.t('password')}
-        <input
-          type="password"
-          autoComplete="new-password"
-          value={vm.password}
-          onChange={(event) => {
-            vm.setPassword(event.target.value);
-          }}
-        />
-      </label>
+      <PasswordField
+        id="register-password"
+        label={vm.t('password')}
+        value={vm.password}
+        onChange={vm.setPassword}
+        autoComplete="new-password"
+        showLabel={vm.t('showPassword')}
+        hideLabel={vm.t('hidePassword')}
+      />
       {vm.error ? (
         <p className="form-error" role="alert">
           {vm.error}
