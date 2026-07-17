@@ -139,6 +139,17 @@ jobs:
           node-version: 26
       - run: npm run quality:release
 
+  governance:
+    name: Governance and Agent Docs
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 26
+      - run: npm run quality:agent-docs
+
   firestore-rules:
     name: Firebase Emulator and Security Rules
     uses: ./.github/workflows/_firebase-emulator.yml
@@ -322,6 +333,7 @@ jobs:
       - typecheck-compatibility
       - functions
       - release-integrity
+      - governance
       - firestore-rules
       - circular-dependencies
       - dead-code

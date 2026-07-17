@@ -1,6 +1,6 @@
 {
   "name": "food-order-v1",
-  "version": "1.5.1",
+  "version": "1.6.0",
   "private": true,
   "type": "module",
   "description": "A mobile-first Capacitor application for reusable food buckets and order tracking.",
@@ -22,7 +22,9 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "test:e2e": "playwright test",
+    "test:e2e": "playwright test --project=chromium --project=mobile-chrome --project=tablet-chrome",
+    "test:e2e:cross-browser": "playwright test tests/e2e/smoke.spec.ts tests/e2e/ui.spec.ts tests/e2e/responsive-overlays.spec.ts tests/e2e/ux-polish.spec.ts --project=firefox --project=webkit --project=mobile-safari",
+    "test:e2e:all": "npm run test:e2e && npm run test:e2e:cross-browser",
     "test:e2e:social": "playwright test tests/e2e/social-sharing.spec.ts tests/e2e/social-management.spec.ts --project=chromium",
     "test:e2e:critical": "playwright test tests/e2e/group-order.spec.ts tests/e2e/order-lifecycle.spec.ts tests/e2e/bucket-pricing.spec.ts --project=chromium",
     "test:rules": "firebase emulators:exec --project food-order-v1-rules-test --only firestore \"vitest run --config vitest.rules.config.ts\"",
@@ -63,7 +65,8 @@
     "quality:dead-code": "knip",
     "quality:circular": "madge src --circular --extensions ts,tsx",
     "quality:release": "node scripts/check-release-version.mjs",
-    "quality": "npm run lint && npm run typecheck && npm run quality:circular && npm run quality:release",
+    "quality:agent-docs": "node scripts/check-agent-docs.mjs",
+    "quality": "npm run lint && npm run typecheck && npm run quality:circular && npm run quality:release && npm run quality:agent-docs",
     "deps:check": "npm outdated || true",
     "functions:deploy:batched": "node scripts/deploy-functions-batched.mjs"
   },

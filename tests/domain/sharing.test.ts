@@ -1,31 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
-import { createBucket } from '@/lib/bucket';
-import {
-  applyContributionMutation,
-  assertAssignableRole,
-  buildGroupOrderLines,
-  buildJoinCode,
-  computeAggregate,
-  detectAggregateDrift,
-  generateInviteToken,
-  hashInviteToken,
-  inviteExpiryIso,
-  inviteExpiryMillis,
-  isInviteUsable,
-  MAX_CONTRIBUTION_QUANTITY,
-  memberCan,
-  omitKey,
-  parseJoinCode,
-  roleAllows,
-  toOrderParticipants,
-} from '@/lib/sharing';
-import type {
-  BucketContribution,
-  BucketInvite,
-  BucketMember,
-  ContributionMutationRecord,
-} from '@/types/domain';
+import type { BucketContribution, BucketInvite, BucketMember, ContributionMutationRecord } from '@/modules/data-access';
+import { applyContributionMutation, assertAssignableRole, buildGroupOrderLines, buildJoinCode, computeAggregate, createBucket, detectAggregateDrift, generateInviteToken, hashInviteToken, inviteExpiryIso, inviteExpiryMillis, isInviteUsable, MAX_CONTRIBUTION_QUANTITY, memberCan, omitKey, parseJoinCode, roleAllows, toOrderParticipants } from '@/modules/data-access';
 
 const contribution = (
   userId: string,

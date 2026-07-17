@@ -6,7 +6,7 @@ import {
   MAX_PAGE_SIZE,
   normalizePageLimit,
   paginateDescending,
-} from '@/lib/pagination';
+} from '@/shared/helpers';
 
 const records = [
   { id: 'a', updatedAt: '2026-01-03T00:00:00.000Z' },

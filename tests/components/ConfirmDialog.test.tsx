@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 
-import { ConfirmDialog } from '@/components/ConfirmDialog';
+import { ConfirmDialog } from '@/shared/ui';
 
 describe('ConfirmDialog', () => {
   it('opens with accessible copy and confirms through the primary action', async () => {

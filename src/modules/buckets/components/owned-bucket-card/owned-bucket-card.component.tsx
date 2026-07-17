@@ -1,0 +1,130 @@
+import type { Bucket, Locale } from '@/modules/data-access';
+import {
+  buildBucketCollaborateRoute,
+  buildBucketShareRoute,
+} from '@/modules/group-orders';
+import { buildCreateOrderRoute } from '@/modules/orders';
+import { buildBucketSocialShareRoute } from '@/modules/social';
+import {
+  CopyPlus,
+  Share2,
+  ShoppingBasket,
+  Trash2,
+  UserRoundPlus,
+  Users,
+} from '@/packages/icons';
+import { Link } from '@/packages/router';
+import { formatDateTime } from '@/shared/helpers';
+import type { MessageKey } from '@/shared/i18n';
+
+import {
+  BUCKETS_NAVIGATION_STATE,
+  buildBucketEditRoute,
+} from '../../routes/buckets-route-paths.constants';
+
+interface OwnedBucketCardProps {
+  readonly bucket: Bucket;
+  readonly locale: Locale;
+  readonly t: (key: MessageKey) => string;
+  readonly onDuplicate: (bucket: Bucket) => void;
+  readonly onDelete: (bucket: Bucket) => void;
+}
+
+export function OwnedBucketCard({
+  bucket,
+  locale,
+  t,
+  onDuplicate,
+  onDelete,
+}: OwnedBucketCardProps) {
+  return (
+    <article className="bucket-card">
+      <div className="bucket-card-top">
+        <div className="bucket-icon">
+          <ShoppingBasket />
+        </div>
+        <div className="row-actions">
+          {bucket.visibility === 'shared' ? (
+            <span className="mode-pill">
+              <Users size={13} aria-hidden="true" /> {t('shared')}
+            </span>
+          ) : null}
+          <button
+            type="button"
+            className="icon-button"
+            aria-label={`${t('duplicate')} — ${bucket.title}`}
+            onClick={() => {
+              onDuplicate(bucket);
+            }}
+          >
+            <CopyPlus />
+          </button>
+          <button
+            type="button"
+            className="icon-button danger-ghost"
+            aria-label={`${t('delete')} — ${bucket.title}`}
+            onClick={() => {
+              onDelete(bucket);
+            }}
+          >
+            <Trash2 />
+          </button>
+        </div>
+      </div>
+      <div>
+        <h2>{bucket.title}</h2>
+        <p>{bucket.description || `${bucket.items.length} ${t('items')}`}</p>
+      </div>
+      <div className="bucket-meta">
+        <span>
+          {bucket.items.filter((item) => item.active).length}{' '}
+          {t('availableCount')}
+        </span>
+        <span>{formatDateTime(bucket.updatedAt, locale)}</span>
+      </div>
+      <div className="card-actions">
+        <Link
+          className="button secondary"
+          to={buildBucketEditRoute(bucket.id)}
+          state={BUCKETS_NAVIGATION_STATE}
+        >
+          {t('edit')}
+        </Link>
+        {bucket.visibility === 'shared' ? (
+          <Link
+            className="button"
+            to={buildBucketCollaborateRoute(bucket.id)}
+            state={BUCKETS_NAVIGATION_STATE}
+          >
+            <Users />
+            {t('collaborate')}
+          </Link>
+        ) : (
+          <Link
+            className="button"
+            to={buildCreateOrderRoute(bucket.id)}
+            state={BUCKETS_NAVIGATION_STATE}
+          >
+            {t('orderNow')}
+          </Link>
+        )}
+        <Link
+          className="icon-button"
+          aria-label={`${t('sharing')} — ${bucket.title}`}
+          to={buildBucketShareRoute(bucket.id)}
+          state={BUCKETS_NAVIGATION_STATE}
+        >
+          <Share2 />
+        </Link>
+        <Link
+          className="icon-button"
+          aria-label={`${t('members')} — ${bucket.title}`}
+          to={buildBucketSocialShareRoute(bucket.id)}
+          state={BUCKETS_NAVIGATION_STATE}
+        >
+          <UserRoundPlus />
+        </Link>
+      </div>
+    </article>
+  );
+}

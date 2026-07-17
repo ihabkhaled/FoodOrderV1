@@ -1,0 +1,39 @@
+# FoodOrderV1 — Cursor rules
+
+# Governance-Version: 1
+
+# Canonical source of truth: AGENTS.md (repo root). Read it first.
+# Playbooks: skills/ — Hard rules: rules/00-non-negotiable-rules.md — Architecture: architecture/README.md
+
+## Hard rules
+
+- One-way layers: src/app → src/modules/* → src/shared|src/platform → src/packages → vendor.
+- Feature code lives in exactly one module: auth, buckets, group-orders, orders, social,
+  notifications, dashboard, settings, session, data-access.
+- Cross-module and vendor access only via public surfaces: @/modules/<name>, @/packages/<name>.
+- Vendor packages (firebase, react-router-dom, lucide-react, react-virtuoso, @capacitor/*)
+  import only inside their src/packages/* owner (eslint/package-ownership.config.mjs).
+- Hooks only in *.hook.ts files or hooks/ dirs; *.component.tsx files call zero hooks;
+  containers/providers/shell/router call project hooks only.
+- Browser globals only in src/platform; env reads only in src/platform/environment.
+- Absolute route strings only in routes/ files; use typed route constants.
+- Filenames: kebab-case + responsibility suffix (.component.tsx, .container.tsx,
+  .provider.tsx, .routes.tsx, .hook.ts, .service.ts, .gateway.ts, .helper.ts,
+  .constants.ts, .types.ts, .interfaces.ts, .enums.ts, .adapter.ts, ...).
+- enum is banned; use as-const objects in *.enums.ts.
+- No new state/query libraries: React context (session module) + service singletons only.
+- Every user-visible string gets en + ar catalog entries; RTL stays intact.
+- Never weaken firestore.rules, auth, ownership isolation, a11y, or tests.
+- .ai/ is generated — never hand-edit; run npm run knowledge:build:incremental.
+- When a rule fails, the code is in the wrong layer. Move or redesign the code.
+  Do not disable the rule.
+
+## Validation
+
+- npm run lint:fix && npm run lint          (CI requires zero diff after lint:fix)
+- npm run typecheck && npm run typecheck:tsc (TS 7.0.2 AND 5.9.3 must both pass)
+- npm run test && npm run build
+- npm run test:e2e                          (Playwright, always VITE_FORCE_LOCAL_MODE=true)
+- npm run test:rules                        (when firestore.rules changed)
+- npm run quality:circular && npm run quality:dead-code && npm run quality:release
+- Conventional commits; never bypass husky hooks.

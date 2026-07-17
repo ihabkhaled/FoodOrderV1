@@ -1,0 +1,59 @@
+name: Cross-Browser End-to-End
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cross-browser-e2e-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  cross-browser:
+    name: ${{ matrix.project }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 28
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - project: firefox
+            browser: firefox
+            workers: 2
+          - project: webkit
+            browser: webkit
+            workers: 2
+          - project: mobile-safari
+            browser: webkit
+            workers: 1
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 26
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps ${{ matrix.browser }}
+      - name: Run cross-browser compatibility journeys
+        run: >-
+          npx playwright test
+          tests/e2e/smoke.spec.ts
+          tests/e2e/ui.spec.ts
+          tests/e2e/responsive-overlays.spec.ts
+          tests/e2e/ux-polish.spec.ts
+          --project=${{ matrix.project }}
+          --workers=${{ matrix.workers }}
+      - uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: playwright-${{ matrix.project }}-report
+          path: |
+            playwright-report/
+            test-results/
+          if-no-files-found: warn

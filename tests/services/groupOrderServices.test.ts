@@ -1,11 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 
-import { LocalGroupOrderService } from '@/services/groupOrderServices';
-import {
-  LocalAuthService,
-  LocalDataService,
-} from '@/services/localServices';
-import type { ProfileDefaults, SessionUser } from '@/types/domain';
+import type { ProfileDefaults, SessionUser } from '@/modules/data-access';
+import { LocalAuthService, LocalDataService,LocalGroupOrderService } from '@/modules/data-access';
 
 const defaults: ProfileDefaults = {
   locale: 'en',

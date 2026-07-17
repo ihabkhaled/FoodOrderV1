@@ -16,6 +16,8 @@ import unusedImports from 'eslint-plugin-unused-imports';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
+import architecture from './eslint/architecture-plugin/index.mjs';
+
 export default tseslint.config(
   {
     ignores: [
@@ -125,13 +127,42 @@ export default tseslint.config(
     },
   },
   {
-    // Provider modules export a component plus its hook by design.
-    files: ['src/state/**/*.tsx'],
+    // v1.6.0 module-first architecture: mechanically enforced on the new
+    // layout. Rules are documented in docs/eslint/ and tested in tests/eslint/.
+    files: [
+      'src/app/**/*.{ts,tsx}',
+      'src/modules/**/*.{ts,tsx}',
+      'src/shared/**/*.{ts,tsx}',
+      'src/platform/**/*.{ts,tsx}',
+      'src/packages/**/*.{ts,tsx}',
+    ],
+    plugins: { architecture },
+    rules: {
+      'architecture/enforce-file-suffixes': 'error',
+      'architecture/no-browser-globals-outside-platform': 'error',
+      'architecture/no-cross-module-deep-imports': 'error',
+      'architecture/no-env-outside-environment': 'error',
+      'architecture/no-hooks-outside-hook-files': 'error',
+      'architecture/no-inline-route-strings': 'error',
+      'architecture/no-raw-package-imports': 'error',
+      'architecture/no-restricted-layer-imports': 'error',
+      'architecture/no-typescript-enum': 'error',
+      'unicorn/filename-case': ['error', { case: 'kebabCase' }],
+    },
+  },
+  {
+    // Public surfaces and providers legitimately export non-component values
+    // alongside components (route tables, providers + hooks).
+    files: ['src/**/index.ts', 'src/**/*.provider.tsx', 'src/**/*.routes.tsx'],
     rules: { 'react-refresh/only-export-components': 'off' },
   },
   {
-    // The local-device adapter implements async contracts over sync storage.
-    files: ['src/services/localServices.ts'],
+    // The local-device gateways implement async contracts over sync storage.
+    files: [
+      'src/modules/data-access/gateways/local-auth.gateway.ts',
+      'src/modules/data-access/gateways/local-data.gateway.ts',
+      'src/modules/data-access/gateways/local-sharing.gateway.ts',
+    ],
     rules: { '@typescript-eslint/require-await': 'off' },
   },
   {
@@ -146,6 +177,12 @@ export default tseslint.config(
     },
   },
   {
+    // ESLint RuleTester registers its cases through vitest dynamically, so
+    // SonarJS cannot see any literal `it(...)` calls in these files.
+    files: ['tests/eslint/**/*.test.ts'],
+    rules: { 'sonarjs/no-empty-test-file': 'off' },
+  },
+  {
     // E2E specs: Playwright conventions.
     files: ['tests/e2e/**/*.spec.ts'],
     extends: [playwright.configs['flat/recommended']],
@@ -155,7 +192,7 @@ export default tseslint.config(
     },
   },
   {
-    files: ['scripts/**/*.mjs', 'tools/**/*.mjs'],
+    files: ['scripts/**/*.mjs', 'tools/**/*.mjs', 'eslint/**/*.mjs'],
     languageOptions: { globals: globals.node, ecmaVersion: 2024 },
   },
   prettier,

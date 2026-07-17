@@ -2,14 +2,16 @@ import '@/styles.css';
 import '@/groupOrder.css';
 import '@/virtualLists.css';
 import '@/socialNotifications.css';
+import '@/shared/ui/ux-polish.css';
+import '@/shared/ui/shell-alignment.css';
 
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
 
-import App from '@/App';
-import { initializePlatform } from '@/services/platform';
-import { AppProvider } from '@/state/AppContext';
+import { AppRoutes } from '@/app';
+import { AppProvider } from '@/modules/session';
+import { BrowserRouter } from '@/packages/router';
+import { initializePlatform } from '@/platform/device';
 
 void initializePlatform();
 const container = document.getElementById('root');
@@ -18,7 +20,7 @@ createRoot(container).render(
   <StrictMode>
     <BrowserRouter>
       <AppProvider>
-        <App />
+        <AppRoutes />
       </AppProvider>
     </BrowserRouter>
   </StrictMode>,

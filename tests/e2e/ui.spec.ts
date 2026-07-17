@@ -1,4 +1,4 @@
-import { expect, type Page, test } from '@playwright/test';
+import { expect, type Locator, type Page, test } from '@playwright/test';
 
 // UI/layout gate: proves the responsive shell places components correctly and
 // nothing overflows horizontally. Runs against the deterministic local-device
@@ -12,7 +12,7 @@ const register = async (page: Page): Promise<void> => {
     .fill(`ui-${Date.now()}-${Math.round(performance.now())}@example.com`);
   await page.getByLabel('Password').fill('Password1');
   await page.getByRole('button', { name: 'Create account' }).click();
-  await page.waitForURL(/\/$/);
+  await page.waitForURL(/\/$/u);
 };
 
 const expectNoHorizontalOverflow = async (page: Page): Promise<void> => {
@@ -24,6 +24,88 @@ const expectNoHorizontalOverflow = async (page: Page): Promise<void> => {
   // Allow 1px for sub-pixel rounding.
   expect(overflow, 'page must not scroll horizontally').toBeLessThanOrEqual(1);
 };
+
+const requireBox = async (locator: Locator, label: string) => {
+  const box = await locator.boundingBox();
+  if (!box) throw new Error(`${label} must be measurable.`);
+  return box;
+};
+
+const expectCenteredWithin = async (
+  inner: Locator,
+  outer: Locator,
+  tolerance = 2,
+): Promise<void> => {
+  const [innerBox, outerBox] = await Promise.all([
+    requireBox(inner, 'Centered element'),
+    requireBox(outer, 'Containing element'),
+  ]);
+
+  const horizontalOffset = Math.abs(
+    innerBox.x + innerBox.width / 2 - (outerBox.x + outerBox.width / 2),
+  );
+  const verticalOffset = Math.abs(
+    innerBox.y + innerBox.height / 2 - (outerBox.y + outerBox.height / 2),
+  );
+
+  expect(horizontalOffset).toBeLessThanOrEqual(tolerance);
+  expect(verticalOffset).toBeLessThanOrEqual(tolerance);
+};
+
+const expectHorizontallyCenteredWithin = async (
+  inner: Locator,
+  outer: Locator,
+  tolerance = 2,
+): Promise<void> => {
+  const [innerBox, outerBox] = await Promise.all([
+    requireBox(inner, 'Centered element'),
+    requireBox(outer, 'Containing element'),
+  ]);
+
+  const horizontalOffset = Math.abs(
+    innerBox.x + innerBox.width / 2 - (outerBox.x + outerBox.width / 2),
+  );
+  expect(horizontalOffset).toBeLessThanOrEqual(tolerance);
+};
+
+test.describe('signed-out shell controls', () => {
+  test('mobile auth controls stay compact, aligned, and functional', async ({
+    page,
+  }) => {
+    await page.emulateMedia({ colorScheme: 'light' });
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/auth/login');
+
+    const controls = page.locator('.auth-controls');
+    const buttons = controls.locator('.auth-control-button');
+    await expect(controls).toBeVisible();
+    await expect(buttons).toHaveCount(2);
+
+    const [languageBox, themeBox, controlsBox] = await Promise.all([
+      requireBox(buttons.nth(0), 'Language button'),
+      requireBox(buttons.nth(1), 'Theme button'),
+      requireBox(controls, 'Auth controls'),
+    ]);
+
+    expect(languageBox.width).toBe(44);
+    expect(languageBox.height).toBe(44);
+    expect(themeBox.width).toBe(44);
+    expect(themeBox.height).toBe(44);
+    expect(Math.abs(languageBox.y - themeBox.y)).toBeLessThanOrEqual(1);
+    expect(controlsBox.width).toBeLessThanOrEqual(100);
+
+    const html = page.locator('html');
+    await expect(html).toHaveAttribute('dir', 'ltr');
+    await buttons.nth(0).click();
+    await expect(html).toHaveAttribute('dir', 'rtl');
+    await expect(html).toHaveAttribute('lang', 'ar');
+
+    await buttons.nth(1).click();
+    await buttons.nth(1).click();
+    await expect(html).toHaveAttribute('data-theme', 'dark');
+    await expectNoHorizontalOverflow(page);
+  });
+});
 
 test.describe('responsive shell', () => {
   test('desktop shows the sidebar and no bottom nav', async ({ page }) => {
@@ -59,6 +141,51 @@ test.describe('responsive shell', () => {
     await expect(page.locator('.stat-card')).toHaveCount(6);
   });
 
+  test('loading presentation is centered horizontally and vertically', async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await register(page);
+
+    await page.locator('.refresh-viewport').evaluate((viewport) => {
+      const loading = document.createElement('div');
+      loading.className = 'loading';
+      loading.setAttribute('role', 'status');
+      loading.setAttribute('aria-label', 'Loading layout fixture');
+
+      const orbit = document.createElement('span');
+      orbit.className = 'loading-orbit';
+      orbit.setAttribute('aria-hidden', 'true');
+
+      const copy = document.createElement('span');
+      copy.className = 'loading-copy';
+      const label = document.createElement('strong');
+      label.textContent = 'Loading...';
+      copy.append(label);
+
+      const skeleton = document.createElement('span');
+      skeleton.className = 'loading-skeleton';
+      skeleton.setAttribute('aria-hidden', 'true');
+      for (let index = 0; index < 3; index += 1) {
+        skeleton.append(document.createElement('span'));
+      }
+
+      loading.append(orbit, copy, skeleton);
+      viewport.replaceChildren(loading);
+    });
+
+    const viewport = page.locator('.refresh-viewport');
+    const loading = viewport.getByRole('status', {
+      name: 'Loading layout fixture',
+    });
+    await expect(loading).toBeVisible();
+    await expectCenteredWithin(loading, viewport);
+
+    const skeleton = loading.locator('.loading-skeleton');
+    const firstBar = skeleton.locator('span').first();
+    await expectHorizontallyCenteredWithin(firstBar, skeleton);
+  });
+
   test('the toast does not overlap the page heading', async ({ page }) => {
     await register(page); // triggers the "account ready" toast
     const toast = page.locator('.toast');
@@ -84,7 +211,7 @@ test.describe('instant sidebar controls', () => {
     // Cycle system -> light -> dark; explicit dark forces data-theme regardless of OS.
     const themeButton = page
       .locator('.sidebar')
-      .getByRole('button', { name: /Theme:/ });
+      .getByRole('button', { name: /Theme:/u });
     await themeButton.click();
     await themeButton.click();
     await expect(root).toHaveAttribute('data-theme', 'dark');
@@ -102,7 +229,7 @@ test.describe('instant sidebar controls', () => {
     await expect(html).toHaveAttribute('dir', 'ltr');
     await page
       .locator('.sidebar')
-      .getByRole('button', { name: /العربية/ })
+      .getByRole('button', { name: /العربية/u })
       .click();
     await expect(html).toHaveAttribute('dir', 'rtl');
     await expect(html).toHaveAttribute('lang', 'ar');
@@ -112,11 +239,11 @@ test.describe('instant sidebar controls', () => {
     await page.setViewportSize({ width: 1280, height: 900 });
     await register(page);
     const shell = page.locator('.app-shell');
-    await expect(shell).not.toHaveClass(/collapsed/);
+    await expect(shell).not.toHaveClass(/collapsed/u);
     await page.getByRole('button', { name: 'Collapse sidebar' }).click();
-    await expect(shell).toHaveClass(/collapsed/);
+    await expect(shell).toHaveClass(/collapsed/u);
     // Persisted: after reload the sidebar is still collapsed.
     await page.reload();
-    await expect(page.locator('.app-shell')).toHaveClass(/collapsed/);
+    await expect(page.locator('.app-shell')).toHaveClass(/collapsed/u);
   });
 });

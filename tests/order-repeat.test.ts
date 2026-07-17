@@ -1,10 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
-import {
-  buildRepeatedOrderDraft,
-  getOrderChargeBreakdown,
-} from '@/lib/order';
-import type { Order } from '@/types/domain';
+import type { Order } from '@/modules/data-access';
+import { buildRepeatedOrderDraft, getOrderChargeBreakdown } from '@/modules/data-access';
 
 const order: Order = {
   id: 'order-1',

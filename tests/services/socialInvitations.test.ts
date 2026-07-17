@@ -1,14 +1,17 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 
+import type {
+  AppNotification,
+  ProfileDefaults,
+  SessionUser,
+} from '@/modules/data-access';
 import {
   LocalAuthService,
   LocalDataService,
+  LocalNotificationService,
   LocalSharingService,
-} from '@/services/localServices';
-import { LocalSocialManagementService } from '@/services/localSocialManagementService';
-import { LocalNotificationService } from '@/services/notificationServices';
-import type { ProfileDefaults, SessionUser } from '@/types/domain';
-import type { AppNotification } from '@/types/notifications';
+  LocalSocialManagementService,
+} from '@/modules/data-access';
 
 const SESSION_KEY = 'foodorder:v1:session';
 const NOTIFICATION_KEY = 'foodorder:v1:notifications';

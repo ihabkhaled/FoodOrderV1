@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { MemoryRouter, useLocation } from 'react-router-dom';
 import { describe, expect, it } from 'vitest';
 
-import { BackLink } from '@/components/BackLink';
+import { BackLink } from '@/shared/ui';
 
 function CurrentPath() {
   const location = useLocation();

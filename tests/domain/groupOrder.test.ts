@@ -1,11 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
-import {
-  allocateMinorUnits,
-  calculateBasisPointCharge,
-  calculateGroupOrderReceipt,
-  type GroupOrderParticipantInput,
-} from '@/lib/groupOrder';
+import type { GroupOrderParticipantInput } from '@/modules/data-access';
+import { allocateMinorUnits, calculateBasisPointCharge, calculateGroupOrderReceipt } from '@/modules/data-access';
 
 const participant = (
   userId: string,

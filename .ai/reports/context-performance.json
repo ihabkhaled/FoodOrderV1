@@ -1,36 +1,36 @@
 {
-  "p50Ms": 4.74,
-  "p95Ms": 8.82,
+  "p50Ms": 6.88,
+  "p95Ms": 10.9,
   "results": [
     {
       "task": "fix bucket title validation",
-      "ms": 8.82,
+      "ms": 10.9,
       "artifacts": 15,
-      "tokens": 4988
+      "tokens": 6541
     },
     {
       "task": "add order status filter",
-      "ms": 5.47,
+      "ms": 6.88,
       "artifacts": 15,
-      "tokens": 4988
+      "tokens": 6541
     },
     {
       "task": "change Firestore ownership rules",
-      "ms": 4.74,
-      "artifacts": 9,
-      "tokens": 11674
+      "ms": 6.49,
+      "artifacts": 15,
+      "tokens": 19541
     },
     {
       "task": "add Capacitor haptic feedback",
-      "ms": 3.3,
-      "artifacts": 4,
-      "tokens": 614
+      "ms": 7.04,
+      "artifacts": 10,
+      "tokens": 4915
     },
     {
       "task": "upgrade React dependency",
-      "ms": 2.86,
+      "ms": 5.25,
       "artifacts": 1,
-      "tokens": 385
+      "tokens": 611
     }
   ]
 }

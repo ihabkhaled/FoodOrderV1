@@ -9,7 +9,27 @@ FoodOrderV1 is the completed Capacitor successor to the original React Native pr
 
 ## Runtime configuration
 
-Language (English/Arabic with RTL), currency, and theme are **runtime settings**: defaults are seeded from `VITE_DEFAULT_LOCALE` / `VITE_DEFAULT_CURRENCY` on first launch, and every user can change them at any time from Settings (language also from the auth screen). Choices persist on the device (Capacitor Preferences) and in the signed-in profile. See `src/state/deviceConfig.ts`.
+Language (English/Arabic with RTL), currency, and theme are **runtime settings**: defaults are seeded from `VITE_DEFAULT_LOCALE` / `VITE_DEFAULT_CURRENCY` on first launch, and every user can change them at any time from Settings (language also from the auth screen). Choices persist on the device (Capacitor Preferences) and in the signed-in profile. See `src/platform/device/device-config.adapter.ts`.
+
+## Architecture (v1.6.0, module-first)
+
+Application source is a layered, mechanically enforced structure — see [architecture/README.md](architecture/README.md) for the authoritative reference and [AGENTS.md](AGENTS.md) for the agent entrypoint:
+
+```text
+src/
+├── app/        # composition only: router, guards, shell layouts
+├── modules/    # feature ownership: auth, buckets, group-orders, orders,
+│               # social, notifications, dashboard, settings,
+│               # session (app-wide state), data-access (domain model +
+│               # dual cloud/local persistence gateways)
+├── shared/     # feature-agnostic UI, helpers, i18n core, shared types
+├── platform/   # runtime capabilities: environment, browser, device,
+│               # network, storage
+└── packages/   # third-party ownership facades (firebase, router, icons,
+                # capacitor-*, virtuoso)
+```
+
+Dependency direction is one-way (`app → modules → shared/platform → packages → vendor`) and enforced at `error` severity by the project-owned ESLint plugin ([eslint/architecture-plugin/](eslint/architecture-plugin/), documented in [docs/eslint/README.md](docs/eslint/README.md)): screens are thin containers over view-model hooks, components are hook-free, every vendor package has one owning facade registered in [eslint/package-ownership.config.mjs](eslint/package-ownership.config.mjs), browser globals and environment reads are confined to `src/platform`, and cross-module imports go through module public surfaces only. To add a feature, component, hook, route, or Capacitor plugin, follow the corresponding playbook in [skills/](skills/README.md); the non-negotiable rules live in [rules/00-non-negotiable-rules.md](rules/00-non-negotiable-rules.md).
 
 ## Start
 
@@ -27,11 +47,16 @@ Open `http://localhost:5173`.
 npm run knowledge:build
 npm run knowledge:validate
 npm run typecheck        # TypeScript 7.0.2 (primary compiler)
-npm run typecheck:tsc    # TypeScript 6.0.2 (fallback compiler used by the lint toolchain)
-npm run lint
-npm run test             # unit + integration incl. sharing concurrency/idempotency suites
+npm run typecheck:tsc    # TypeScript 5.9.3 (compatibility compiler used by the lint toolchain)
+npm run lint             # zero warnings, incl. the architecture plugin
+npm run test             # unit + integration + architecture rule tests
+npm run test:coverage
 npm run test:e2e         # Playwright (forced local-device mode)
 npm run build
+npm run quality:circular   # madge
+npm run quality:dead-code  # knip
+npm run quality:release    # version integrity (root = functions)
+npm run quality:agent-docs # governance entrypoint sync
 npm run knowledge:benchmark
 ```
 

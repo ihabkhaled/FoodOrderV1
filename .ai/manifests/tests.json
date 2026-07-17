@@ -2,68 +2,73 @@
   "tests": [
     {
       "path": "tests/bucket-pricing.test.ts",
-      "bytes": 3538,
-      "hash": "89085be3e134dc290336a6c3e884e9f0f722d61cd687ea489d669303a0f301ee"
+      "bytes": 3507,
+      "hash": "29dcee9ae619fc2d53fd17e61e9420a7825753ec9d9f2346b45c96eaabe1814e"
     },
     {
       "path": "tests/components/BackLink.test.tsx",
-      "bytes": 1488,
-      "hash": "4570d5c6b713dbb264c315e85179762fb1832657422d29ba9f319e3e6fee4a56"
+      "bytes": 1478,
+      "hash": "83b694b8ea0b84fdb540b39e8237d8efaaadfcf8d02a8a1d37ea05bfa54b1f69"
     },
     {
       "path": "tests/components/ConfirmDialog.test.tsx",
-      "bytes": 1589,
-      "hash": "b3de9ad0ebf25ced1c9f3a0af5d533be5a7ff72eef6c95118b6dcc32d3f85f33"
+      "bytes": 1574,
+      "hash": "3df095bb499a63a76259df135c9b99ce3989a8109f51f08c7a0c2996a82cffa3"
     },
     {
       "path": "tests/components/GroupOrderComponents.test.tsx",
-      "bytes": 6559,
-      "hash": "446460dbd6362860669294842eb2dbe1c44ca3e4175f3d31bd898100590cbdcf"
+      "bytes": 6464,
+      "hash": "19790b4834d46bf6d32865952fafd75b62e773147967ece677c9986d320d6bf0"
     },
     {
       "path": "tests/components/NotificationCenter.test.tsx",
-      "bytes": 1870,
-      "hash": "0c03d37ebe7ab6bfe13b3873b2063c93e2c33eb3c2031b571552ddfc9fc88144"
+      "bytes": 1862,
+      "hash": "4018eaf75763a26c43ff7bf5400489f5b15ecf6defb0cb896e54c674f1d96046"
     },
     {
       "path": "tests/domain/bucket.test.ts",
-      "bytes": 4070,
-      "hash": "88651bb6a7f8b9dd302e00c49d74df1ed8ebe515b18cd47d5393c1c29d0fba8d"
+      "bytes": 4068,
+      "hash": "55412d6f078e6f746bbe1ccf446bea6cddd59307f00ccd995e5e59f27f0b63f5"
     },
     {
       "path": "tests/domain/bucketLifecycle.test.ts",
-      "bytes": 3585,
-      "hash": "676abbbc6597f14b929f044b95d59b55107410f9c0dd658a4d463223c003dae4"
+      "bytes": 3579,
+      "hash": "57cd0ff450d7a1f17494cdc10470ab498cf46e1a97ff8f52c2b3de15abe7c8bc"
     },
     {
       "path": "tests/domain/firebaseError.test.ts",
       "bytes": 2389,
-      "hash": "c40dc03d2c6334bff78d140f4cf75ee1258d7ce200278a1e7c41741a34ff1dc5"
+      "hash": "ab909a94ef6348e27bb1a180045c4c3ec7c65e3cf073d71234058887e3e49f48"
     },
     {
       "path": "tests/domain/groupOrder.test.ts",
-      "bytes": 6146,
-      "hash": "d7021734df144523e8bead6edebb9926cfcae825aa8b063f55876e5ad9a5b37a"
+      "bytes": 6182,
+      "hash": "e7cb1bf5d7d335035c086ac2dc594f32900766da12baa63342b4532af05872a6"
     },
     {
       "path": "tests/domain/memberPermissions.test.ts",
-      "bytes": 1016,
-      "hash": "49369e920c66a972dbd413cc7a09ecb5a1a7e5a5accf698df64c5c376db21afc"
+      "bytes": 1014,
+      "hash": "3b63a8112c1d7bed52e4ef3ffd8eece72b8032294b7e8ccc5d58afbe68a133a1"
     },
     {
       "path": "tests/domain/order.test.ts",
-      "bytes": 949,
-      "hash": "eb23bba81b864c755602c07c4a3545ebe0501b1b14a3ecb2e61fb926928cf6f4"
+      "bytes": 959,
+      "hash": "52f3c60074f7ecb6458c23673e9c0d5bbafc66020e45d3417e478876d2f4da16"
     },
     {
       "path": "tests/domain/pagination.test.ts",
       "bytes": 2313,
-      "hash": "431ecd8d4b132d327d79f915393a1186a0c1ad2cb0a3a73428a81efbd36215e0"
+      "hash": "a8b8979586461fb5c4acafee9b820bcd20a85ee5be63d6ec0fad6cafa5e3442c"
+    },
+    {
+      "path": "tests/domain/sharedHelpers.test.ts",
+      "bytes": 2428,
+      "hash": "b28de8a4178afae693f8e1b65edd65a569857d904ab01b63b994c00d023e1053"
     },
     {
       "path": "tests/domain/sharing.test.ts",
-      "bytes": 9960,
-      "hash": "7c84d816a9644955e7ce40e8c7f03da713ebb4bb7556c557546309922b1c666e"
+      "bytes": 9900,
+      "hash": "93d0b1cfb5f302d70a285df41e458d8942fef0b75e5bd2b1e3ffcafd249ad0af"
     },
     {
       "path": "tests/e2e/bucket-pricing.spec.ts",
@@ -102,13 +107,18 @@
     },
     {
       "path": "tests/e2e/social-sharing.spec.ts",
-      "bytes": 5030,
-      "hash": "5aad4a4c5deffbd584482e1c77230737bbf66bf763ef9222acdfbb9e87c1528f"
+      "bytes": 11997,
+      "hash": "7e31afb723a72ffdf9ea32967ba65451d3b3b3c6b19321aea416ab6630c9fc2b"
     },
     {
       "path": "tests/e2e/ui.spec.ts",
       "bytes": 4867,
       "hash": "c211a10bd5976dfab7bb8d3e06b7d90d31f2ea2742c18a05dcbafc545604b7a2"
+    },
+    {
+      "path": "tests/eslint/architecture-plugin.test.ts",
+      "bytes": 10918,
+      "hash": "520f7cc5fa6452a86986b5a2ac6f8bc979073ee9939b7c6da1778c282177dfe1"
     },
     {
       "path": "tests/firebase/firestore.rules.test.ts",
@@ -132,33 +142,33 @@
     },
     {
       "path": "tests/order-repeat.test.ts",
-      "bytes": 3139,
-      "hash": "95f3462ba998fba29c1780872509fad1fb4e6e3bd302780abda7cb8145716a55"
+      "bytes": 3151,
+      "hash": "df69c82b797ef63239d540be6134c495defbbea7429ce386c8c9b0a4041c4c27"
     },
     {
       "path": "tests/services/groupOrderServices.test.ts",
-      "bytes": 5864,
-      "hash": "34a9e7758efe84f831840c18d192f76b60d366745fda194a48d695815de01970"
+      "bytes": 5814,
+      "hash": "970238f074078c4f716b25c5e20be4b1cde66343e7c438cbb41ce39edc943e3a"
     },
     {
       "path": "tests/services/localServices.test.ts",
-      "bytes": 1900,
-      "hash": "fd725ec732f71f225e0607c34c4dcf9a415884d6bc0bc9219a4dbb2cae598e63"
+      "bytes": 1904,
+      "hash": "43580654f6a0cf93f7ee5838b0c28e8b990953d60ff190520dbf80ddacb77d23"
     },
     {
       "path": "tests/services/paginationServices.test.ts",
-      "bytes": 3469,
-      "hash": "50b321e81c36dae70f30e7c97e86f1f62d80d77e882ae3dda696c05340f68e63"
+      "bytes": 3423,
+      "hash": "649968c2108116d3921ed0a370a2c8fbc16acc0163bd0bffed4eda6dd0530768"
     },
     {
       "path": "tests/services/sharingLocal.test.ts",
-      "bytes": 11113,
-      "hash": "2ecbd6be22ff683164a13e571691dd64418d423e0fa9e154aa7cfd44e6ae5d26"
+      "bytes": 11110,
+      "hash": "962533d727218b1b8ff3ca5f57f423993101e7a0f1569b4856dd741013fdb26e"
     },
     {
       "path": "tests/services/socialInvitations.test.ts",
-      "bytes": 8333,
-      "hash": "bf77ed5d1b6ae92d3bd07c4d2ed826d7edfac4533c413bbbb356e2969c238149"
+      "bytes": 8195,
+      "hash": "7424888d5f233cc513c01fbc5547b0d5a92ff8abb69a36c80888c480db50b08d"
     },
     {
       "path": "tests/setup.ts",

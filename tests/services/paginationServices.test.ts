@@ -1,8 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import type { DataService, SharingService } from '@/services/contracts';
-import { LocalPaginationService } from '@/services/paginationServices';
-import type { Bucket, Order, SessionUser } from '@/types/domain';
+import type { Bucket, DataService, Order, SessionUser,SharingService } from '@/modules/data-access';
+import { LocalPaginationService } from '@/modules/data-access';
 
 const user: SessionUser = {
   id: 'user-1',

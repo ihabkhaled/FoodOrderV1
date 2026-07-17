@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { effectiveCustomItemPermissions } from '@/lib/memberPermissions';
+import { effectiveCustomItemPermissions } from '@/modules/data-access';
 
 describe('effectiveCustomItemPermissions', () => {
   it('keeps legacy editors able to create and price custom items', () => {
