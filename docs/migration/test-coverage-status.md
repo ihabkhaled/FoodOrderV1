@@ -15,9 +15,12 @@
   critical group-order regressions, bucket pricing, social sharing, social
   management, long-list navigation, fixed overlays, touch targets, loading/UI
   polish, portrait, landscape, tablet, and desktop layout behavior.
-- Primary E2E gate: Chromium desktop, Pixel 7 Chrome, and iPad Mini Chromium.
-- Cross-browser E2E workflow: desktop Firefox, desktop WebKit, and iPhone 15 Pro
-  Safari. `npm run test:e2e:all` executes the complete six-project matrix.
+- Primary E2E gate: the full journey set on Chromium desktop, Pixel 7 Chrome,
+  and iPad Mini Chromium.
+- Cross-browser compatibility workflow: a deterministic smoke/shell/overlay/UX
+  subset on desktop Firefox, desktop WebKit, and iPhone 15 Pro Safari.
+  `npm run test:e2e:all` executes the full primary suite and then this required
+  compatibility matrix.
 
 ## Well covered
 
@@ -43,6 +46,10 @@ RTL-safe logical positioning, and horizontal overflow.
 - Coverage thresholds: pure layers (`shared/helpers`, module `helpers/`)
   target 100%; expanding instrumented scope across every feature component and
   cloud adapter remains deferred (see unresolved-exceptions.md).
+- The longest state-heavy business journeys are fully exercised on the three
+  Chromium projects. Firefox/WebKit/mobile Safari gate a focused compatibility
+  subset so browser-engine regressions in routing, shell UI, overlays, forms,
+  group metadata, touch targets, and responsive layouts are still blocking.
 - iOS native-shell compilation and entitlement validation still require macOS;
   mobile Safari Playwright validates web/PWA rendering, not the committed iOS
   project or App Store signing.
