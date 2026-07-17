@@ -15,8 +15,8 @@ live posture: [../docs/migration/test-coverage-status.md](../docs/migration/test
 | ESLint rules (RuleTester) | All 9 architecture rules (valid/invalid fixtures) | `tests/eslint/architecture-plugin.test.ts` | `npm run test` |
 | Firestore rules (emulator) | firestore, notifications, personal-pricing, social rules | `tests/firebase/*.rules.test.ts` | `npm run test:rules` |
 | Primary E2E (Playwright, local mode) | Chromium desktop, Pixel 7 Chrome, iPad Mini Chromium; all user journeys and responsive UX regressions | `tests/e2e/*.spec.ts` | `npm run test:e2e` |
-| Cross-browser E2E (Playwright, local mode) | Desktop Firefox, desktop WebKit, iPhone 15 Pro Safari | same | `npm run test:e2e:cross-browser` |
-| Complete E2E matrix | All six configured browser/device projects | same | `npm run test:e2e:all` |
+| Cross-browser compatibility E2E | Smoke, shell, overlay, group-metadata, touch-target, portrait/landscape and responsive UX journeys on desktop Firefox, desktop WebKit, and iPhone 15 Pro Safari | selected specs under `tests/e2e/` | `npm run test:e2e:cross-browser` |
+| Required E2E matrix | Full primary Chromium suite followed by the curated compatibility suite on Firefox/WebKit/mobile Safari | same | `npm run test:e2e:all` |
 | Critical e2e subset | group-order, order-lifecycle, bucket-pricing | same | `npm run test:e2e:critical` |
 | Functions | notification/order/social domain logic | `functions/test/*.test.mjs` | `npm run functions:validate` |
 | Deployed-callable smoke | UNAUTHENTICATED boundary of the 5 live callables | CI `firebase-deploy` job | CI only |
@@ -36,6 +36,9 @@ live posture: [../docs/migration/test-coverage-status.md](../docs/migration/test
   (`vitest.config.ts` include list follows the migration).
 - Responsive UI work must cover portrait, landscape, tablet, desktop, long copy, fixed
   overlays, touch targets, and at least one Chromium and one WebKit execution.
+- Long, state-heavy business journeys remain fully gated on the three Chromium projects;
+  browser-engine compatibility is gated by a smaller deterministic suite focused on the
+  shell, essential flows, overlays, layout, and interaction primitives.
 
 ## Non-negotiables
 
