@@ -18,7 +18,11 @@ export function Loading({ label }: LoadingProps) {
       </span>
       <span className="loading-copy">
         <strong>{label}</strong>
-        <span>{label}</span>
+        <span className="loading-pulse" aria-hidden="true">
+          <span />
+          <span />
+          <span />
+        </span>
       </span>
       <span className="loading-skeleton" aria-hidden="true">
         <span />
