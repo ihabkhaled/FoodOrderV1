@@ -4,7 +4,7 @@ import type {
   ParticipantResponse,
   SessionParticipantRole,
 } from '../enums';
-import type { CurrencyCode } from './domain.types';
+import type { ContributionOperation, CurrencyCode } from './domain.types';
 
 export interface ParticipantResponseSummary {
   pending: number;
@@ -94,4 +94,45 @@ export interface SessionParticipantDraft {
   identityKind: ParticipantIdentityKind;
   role: SessionParticipantRole;
   joinedAt?: string;
+}
+
+export interface SessionContribution {
+  sessionId: string;
+  userId: string;
+  displayName: string;
+  quantities: Readonly<Record<string, number>>;
+  revision: number;
+  lastMutationId: string;
+  updatedAt: string;
+}
+
+export interface SessionContributionMutationInput {
+  mutationId: string;
+  sessionId: string;
+  userId: string;
+  displayName: string;
+  itemId: string;
+  operation: ContributionOperation;
+  value: number;
+  occurredAt: string;
+}
+
+export interface SessionContributionMutationRecord {
+  id: string;
+  sessionId: string;
+  userId: string;
+  itemId: string;
+  operation: ContributionOperation;
+  requestedValue: number;
+  appliedDelta: number;
+  resultQuantity: number;
+  resultRevision: number;
+  createdAt: string;
+}
+
+export interface OrderSessionView {
+  session: OrderSession;
+  participants: SessionParticipant[];
+  contributions: SessionContribution[];
+  currentParticipant: SessionParticipant | null;
 }
