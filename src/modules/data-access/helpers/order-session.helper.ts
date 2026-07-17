@@ -14,7 +14,9 @@ import type {
   SessionParticipantDraft,
 } from '../types/order-session.types';
 
-const ORDER_SESSION_TRANSITIONS = {
+const ORDER_SESSION_TRANSITIONS: Readonly<
+  Record<OrderSessionStatus, readonly OrderSessionStatus[]>
+> = {
   draft: [ORDER_SESSION_STATUS.collecting, ORDER_SESSION_STATUS.cancelled],
   collecting: [ORDER_SESSION_STATUS.locked, ORDER_SESSION_STATUS.cancelled],
   locked: [
@@ -28,9 +30,11 @@ const ORDER_SESSION_TRANSITIONS = {
   settling: [ORDER_SESSION_STATUS.settled],
   settled: [],
   cancelled: [],
-} as const satisfies Record<OrderSessionStatus, readonly OrderSessionStatus[]>;
+};
 
-const PARTICIPANT_RESPONSE_TRANSITIONS = {
+const PARTICIPANT_RESPONSE_TRANSITIONS: Readonly<
+  Record<ParticipantResponse, readonly ParticipantResponse[]>
+> = {
   pending: [
     PARTICIPANT_RESPONSE.viewed,
     PARTICIPANT_RESPONSE.ordering,
@@ -60,7 +64,7 @@ const PARTICIPANT_RESPONSE_TRANSITIONS = {
     PARTICIPANT_RESPONSE.removed,
   ],
   removed: [],
-} as const satisfies Record<ParticipantResponse, readonly ParticipantResponse[]>;
+};
 
 const EMPTY_RESPONSE_SUMMARY: ParticipantResponseSummary = {
   pending: 0,
