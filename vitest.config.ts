@@ -25,6 +25,7 @@ export default defineConfig({
         'src/modules/data-access/gateways/local-auth.gateway.ts',
         'src/modules/data-access/gateways/local-data.gateway.ts',
         'src/modules/data-access/gateways/local-database.helper.ts',
+        'src/modules/data-access/gateways/local-notification.gateway.ts',
         'src/modules/data-access/gateways/local-sharing.gateway.ts',
       ],
       // Ratchet floors: pure generic helpers hold 100%; domain helpers and

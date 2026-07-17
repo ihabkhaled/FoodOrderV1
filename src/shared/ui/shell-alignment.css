@@ -1,0 +1,90 @@
+/* Auth controls and full-screen state alignment shared by PWA, mobile, and desktop shells. */
+.auth-shell {
+  min-height: 100dvh;
+}
+
+.auth-controls {
+  position: fixed;
+  z-index: 12;
+  top: max(env(safe-area-inset-top), 16px);
+  inset-inline-end: max(env(safe-area-inset-right), 16px);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.auth-control-button {
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+}
+
+.auth-card {
+  align-self: center;
+}
+
+.refresh-viewport:has(> .loading) {
+  display: grid;
+  place-items: center;
+}
+
+.refresh-viewport > .loading {
+  width: min(430px, calc(100% - 24px));
+  height: fit-content;
+  min-height: clamp(280px, 42vh, 380px);
+  margin: auto;
+}
+
+#root:has(> .loading) {
+  display: grid;
+  min-height: 100dvh;
+  place-items: center;
+  padding: 16px;
+}
+
+#root > .loading {
+  width: min(430px, 100%);
+  height: fit-content;
+  min-height: clamp(280px, 42vh, 380px);
+  margin: auto;
+}
+
+.loading-copy,
+.loading-skeleton {
+  justify-items: center;
+  text-align: center;
+}
+
+.loading-skeleton > span {
+  justify-self: center;
+  width: 100%;
+}
+
+@media (max-width: 719px) {
+  .auth-shell {
+    grid-template-columns: 1fr;
+    place-items: center;
+    padding:
+      calc(max(env(safe-area-inset-top), 16px) + 56px)
+      16px
+      max(env(safe-area-inset-bottom), 24px);
+  }
+
+  .auth-card {
+    width: min(440px, 100%);
+    margin: 0;
+    padding: clamp(24px, 6vw, 36px) 0;
+  }
+
+  .auth-card > form {
+    width: 100%;
+  }
+}
+
+@media (max-height: 520px) and (orientation: landscape) and (max-width: 959px) {
+  .refresh-viewport > .loading,
+  #root > .loading {
+    min-height: min(260px, calc(100dvh - 88px));
+  }
+}

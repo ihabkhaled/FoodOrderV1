@@ -12,7 +12,7 @@ audience:
 summary: Known pitfalls for FoodOrderV1.
 scope:
   - repository
-lastVerified: 2026-07-16
+lastVerified: 2026-07-17
 verificationMethod: source and test inspection
 generated: false
 ---
@@ -51,9 +51,33 @@ correction.
 - **E2E always runs local mode.** `playwright.config.ts` forces `VITE_FORCE_LOCAL_MODE=true`
   — e2e proves nothing about live Firebase. Cloud behavior evidence = rules suites +
   deployed-callable smoke tests. Never claim otherwise.
-- **Two Playwright projects.** chromium desktop AND mobile-chrome (Pixel 7); desktop-only
-  assertions fail the suite. `.spec.ts` = e2e lint rules, `.test.ts` = vitest lint rules —
-  wrong suffix produces confusing lint errors.
+- **Six Playwright projects are split across two gates.** Primary CI covers Chromium desktop,
+  Pixel 7 Chrome, and iPad Mini Chromium. The cross-browser workflow covers desktop Firefox,
+  desktop WebKit, and iPhone 15 Pro Safari. Run `npm run test:e2e:all` for the complete matrix;
+  do not claim cross-browser readiness from Chromium-only runs.
+- **Browser binaries are explicit CI dependencies.** Primary CI installs Chromium; the
+  cross-browser workflow installs Firefox or WebKit per matrix entry. Adding a project
+  without updating its workflow installation fails before tests execute.
+- **Responsive checks must include height constraints.** Portrait-only width tests miss
+  mobile-landscape problems such as fixed overlays exceeding the viewport or bottom
+  navigation covering actions. Include short-height landscape cases for shell/UI changes.
+- **`.spec.ts` and `.test.ts` have different lint rules.** `.spec.ts` is Playwright e2e;
+  `.test.ts`/`.test.tsx` is Vitest. The wrong suffix produces misleading lint diagnostics.
+
+## UI and responsive layout
+
+- **Broad descendant selectors can silently change layout ownership.** A rule such as
+  `.group-card-head > div` can accidentally target both the title copy and action container,
+  stacking controls or gluing metadata to titles. Target the exact semantic class and add a
+  regression test for bounding boxes and action visibility.
+- **Fixed overlays inside sticky sidebars need a deliberate stacking context.** The desktop
+  notification panel must stay above routed content, outside sidebar clipping, constrained to
+  the viewport, and separately handled for collapsed, RTL, mobile, and landscape layouts.
+- **Touch target styling must win over compact variants.** Icon controls and mobile navigation
+  should remain at least 40 CSS pixels in tested layouts; later feature-specific rules must not
+  shrink them below the shared design-system target.
+- **Motion must degrade safely.** Hover lift, shimmer, and button transforms need a
+  `prefers-reduced-motion` override; do not add animation without it.
 
 ## Domain (pre-1.6.0, still binding)
 

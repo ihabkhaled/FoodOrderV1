@@ -25,10 +25,20 @@ npm run format:check
 npm run lint:fix && git diff --exit-code && npm run lint
 npm run typecheck && npm run typecheck:tsc
 npm run test
+npm run test:coverage
 npm run build
 npm run quality:circular && npm run quality:dead-code && npm run quality:release
 node scripts/check-agent-docs.mjs
-npm run test:e2e && npm run test:e2e:critical
+npm run test:e2e
+npm run test:e2e:cross-browser
+npm run test:e2e:critical
+```
+
+For a release candidate or broad UI/platform change, also run the single combined command
+when all browser binaries are installed:
+
+```bash
+npm run test:e2e:all
 ```
 
 Conditionally:
@@ -50,6 +60,7 @@ diff, and self-review with the reviewer personas selected by risk
   assumption fails (knip and madge regularly catch "unrelated" moves).
 - Reporting a gate green that you did not execute in this state of the tree.
 - Fixing a failure and not re-running the earlier gates the fix could invalidate.
+- Claiming cross-browser or mobile Safari readiness from the primary Chromium-only gate.
 
 ## Required tests
 
@@ -58,7 +69,8 @@ All of the above — this skill IS the test run.
 ## Validation
 
 Every command above exits 0. Any red gate returns you to the matching fix skill; then
-re-run from the top of the affected tier.
+re-run from the top of the affected tier. CI must show the repository `All Gates Green`
+check plus the Firefox, WebKit, and mobile Safari cross-browser matrix as successful.
 
 ## Definition of done
 

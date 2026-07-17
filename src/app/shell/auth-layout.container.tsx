@@ -1,22 +1,48 @@
 import { useApp } from '@/modules/session';
 import { Languages } from '@/packages/icons';
 import { Outlet } from '@/packages/router';
+import { nextTheme } from '@/platform/device';
 
-/** Signed-out shell: locale toggle, hero branding, and the auth card. */
+import { THEME_ICON, THEME_LABEL } from './app-layout.constants';
+
+/** Signed-out shell: compact preferences, hero branding, and the auth card. */
 export function AuthLayoutContainer() {
-  const { t, storageMode, locale, setDeviceLocale } = useApp();
+  const {
+    t,
+    storageMode,
+    locale,
+    theme,
+    setDeviceLocale,
+    setDeviceTheme,
+  } = useApp();
   const nextLocale = locale === 'ar' ? 'en' : 'ar';
+  const languageLabel =
+    nextLocale === 'ar' ? t('switchToArabic') : t('switchToEnglish');
+  const ThemeIcon = THEME_ICON[theme];
+
   return (
     <main className="auth-shell">
-      <button
-        type="button"
-        className="button secondary locale-toggle"
-        onClick={() => void setDeviceLocale(nextLocale)}
-        aria-label={t('language')}
-      >
-        <Languages />
-        {nextLocale === 'ar' ? 'العربية' : 'English'}
-      </button>
+      <div className="auth-controls">
+        <button
+          type="button"
+          className="icon-button auth-control-button"
+          onClick={() => void setDeviceLocale(nextLocale)}
+          title={languageLabel}
+          aria-label={languageLabel}
+        >
+          <Languages />
+        </button>
+        <button
+          type="button"
+          className="icon-button auth-control-button"
+          onClick={() => void setDeviceTheme(nextTheme(theme))}
+          title={t(THEME_LABEL[theme])}
+          aria-label={t(THEME_LABEL[theme])}
+        >
+          <ThemeIcon />
+        </button>
+      </div>
+
       <section className="auth-hero">
         <div className="brand-mark large">FO</div>
         <h1>{t('appName')}</h1>

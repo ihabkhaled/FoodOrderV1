@@ -1,10 +1,34 @@
 import { LoaderCircle } from '@/packages/icons';
 
-export function Loading({ label }: { label: string }) {
+interface LoadingProps {
+  label: string;
+}
+
+export function Loading({ label }: LoadingProps) {
   return (
-    <div className="loading" role="status">
-      <LoaderCircle className="spin" aria-hidden="true" />
-      <span>{label}</span>
+    <div
+      className="loading"
+      role="status"
+      aria-label={label}
+      aria-live="polite"
+      aria-busy="true"
+    >
+      <span className="loading-orbit" aria-hidden="true">
+        <LoaderCircle className="spin" />
+      </span>
+      <span className="loading-copy">
+        <strong>{label}</strong>
+        <span className="loading-pulse" aria-hidden="true">
+          <span />
+          <span />
+          <span />
+        </span>
+      </span>
+      <span className="loading-skeleton" aria-hidden="true">
+        <span />
+        <span />
+        <span />
+      </span>
     </div>
   );
 }

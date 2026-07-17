@@ -24,7 +24,10 @@ export type {
   Theme,
   UserProfile,
 } from './domain.types';
-export type { AppNotification } from './notifications.types';
+export type {
+  AppNotification,
+  NotificationDraft,
+} from './notifications.types';
 export type {
   BucketAccessGrant,
   BucketInvitation,

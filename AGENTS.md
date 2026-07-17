@@ -14,8 +14,8 @@ FoodOrderV1 is a mobile-first food-bucket and group-order application:
   (Android built in CI; iOS project committed), Firebase (Auth, Firestore, Functions callables)
   with a fully functional local-device fallback selected at build time
   (`VITE_FORCE_LOCAL_MODE` / empty `VITE_FIREBASE_*`).
-- **Testing**: Vitest + Testing Library (jsdom), Playwright (chromium + mobile-chrome, always
-  local mode), Firestore rules tests against the emulator.
+- **Testing**: Vitest + Testing Library (jsdom), Playwright across Chromium desktop/mobile/
+  tablet plus Firefox, WebKit, and mobile Safari, Firestore rules tests against the emulator.
 - **i18n**: hand-rolled `en`/`ar` catalogs with `translate(locale, key)` lookups and full RTL support.
 - **State**: React context (session) + service singletons. No server-state query library,
   no global store library. Do not add either.
@@ -132,12 +132,15 @@ npm run lint:fix && npm run lint            # CI requires lint:fix to produce ze
 npm run typecheck                           # TypeScript 7.0.2 (primary)
 npm run typecheck:tsc                       # TypeScript 5.9.3 (compatibility) — BOTH must pass
 npm run test                                # Vitest
+npm run test:coverage
 npm run format:check
 npm run build
 npm run quality:circular                    # madge
 npm run quality:dead-code                   # knip
 npm run quality:release                     # root/functions version match
-npm run test:e2e                            # Playwright, always VITE_FORCE_LOCAL_MODE=true
+npm run test:e2e                            # Chromium desktop/mobile/tablet, local mode
+npm run test:e2e:cross-browser              # Firefox, WebKit, mobile Safari
+npm run test:e2e:all                        # complete six-project matrix
 npm run test:e2e:critical                   # group-order, order-lifecycle, bucket-pricing
 npm run test:rules                          # Firestore rules via emulator (rules changes)
 npm run functions:validate                  # when functions/ changed
@@ -146,7 +149,8 @@ node scripts/check-agent-docs.mjs           # governance docs integrity
 ```
 
 CI (`.github/workflows/ci.yml`) additionally runs `npm run security:audit`, Trivy,
-coverage, and the Firebase emulator workflow. Every job must be green (`all-gates-green`).
+coverage, and the Firebase emulator workflow. The cross-browser workflow runs Firefox,
+WebKit, and mobile Safari independently. Every repository check must be green.
 
 ## Definition of done
 
@@ -162,6 +166,8 @@ A change is done only when all of the following hold:
    `docs/migration/` status tables updated when migration state changed.
 6. Any deviation is a written exception (see below), never a silent one.
 7. Commit message is conventional (`commitlint`); hooks were not bypassed.
+8. Primary Chromium device projects and every affected Firefox/WebKit/mobile-Safari project
+   are green for responsive or platform-facing work.
 
 ## Exception policy
 
@@ -195,6 +201,8 @@ and get the exception written down first.
   [docs/migration/native-security-audit.md](docs/migration/native-security-audit.md).
 - After web-affecting changes reach native shells, run `npm run cap:sync`
   (`npx cap sync` refreshes `android/` and `ios/`).
+- Mobile Safari Playwright proves responsive web/PWA behavior only; it does not replace an
+  Xcode build or native iOS smoke test.
 
 ## Package-ownership policy
 
