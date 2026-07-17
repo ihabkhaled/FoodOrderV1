@@ -1,13 +1,18 @@
 import {
+  confirmPasswordReset,
   createUserWithEmailAndPassword,
   deleteUser,
   doc,
+  EmailAuthProvider,
   onAuthStateChanged,
+  reauthenticateWithCredential,
   sendPasswordResetEmail,
   setDoc,
   signInWithEmailAndPassword,
   signOut,
+  updatePassword,
   updateProfile,
+  verifyPasswordResetCode,
 } from '@/packages/firebase';
 import { nowIso } from '@/shared/helpers';
 
@@ -58,6 +63,32 @@ export class FirebaseAuthService implements AuthService {
 
   async resetPassword(email: string): Promise<void> {
     await sendPasswordResetEmail(getFirebaseRuntime().auth, email);
+  }
+
+  async changePassword(
+    user: SessionUser,
+    currentPassword: string,
+    newPassword: string,
+  ): Promise<void> {
+    const current = getFirebaseRuntime().auth.currentUser;
+    if (!current || current.uid !== user.id) {
+      throw new Error('You must be signed in to change this password.');
+    }
+    // Reauthenticate first so a wrong current password fails before any change.
+    const credential = EmailAuthProvider.credential(
+      current.email ?? user.email,
+      currentPassword,
+    );
+    await reauthenticateWithCredential(current, credential);
+    await updatePassword(current, newPassword);
+  }
+
+  async verifyPasswordResetCode(code: string): Promise<string> {
+    return verifyPasswordResetCode(getFirebaseRuntime().auth, code);
+  }
+
+  async confirmPasswordReset(code: string, newPassword: string): Promise<void> {
+    await confirmPasswordReset(getFirebaseRuntime().auth, code, newPassword);
   }
 
   async logout(): Promise<void> {

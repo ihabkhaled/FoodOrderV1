@@ -26,6 +26,16 @@
       "hash": "4018eaf75763a26c43ff7bf5400489f5b15ecf6defb0cb896e54c674f1d96046"
     },
     {
+      "path": "tests/components/PasswordField.test.tsx",
+      "bytes": 1533,
+      "hash": "0a251e342efa5e0853fbaca53468148c8cc47607f6805f7f3d8b9c8299e8a091"
+    },
+    {
+      "path": "tests/components/ResetPasswordRoute.test.tsx",
+      "bytes": 1864,
+      "hash": "58a4dc78d3532de7fd2929b9262fbe5879a4e0a46cfbbcc8e96e6fb0b7a19ec2"
+    },
+    {
       "path": "tests/domain/bucket.test.ts",
       "bytes": 4068,
       "hash": "55412d6f078e6f746bbe1ccf446bea6cddd59307f00ccd995e5e59f27f0b63f5"
@@ -152,8 +162,8 @@
     },
     {
       "path": "tests/services/localServices.test.ts",
-      "bytes": 1904,
-      "hash": "43580654f6a0cf93f7ee5838b0c28e8b990953d60ff190520dbf80ddacb77d23"
+      "bytes": 3274,
+      "hash": "577d6ea290e93730e676cdefe76728c69145bc7e8f7e6ff0f2f4e6e26311cb47"
     },
     {
       "path": "tests/services/paginationServices.test.ts",

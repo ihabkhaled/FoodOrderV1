@@ -21,6 +21,27 @@ describe('local integration', () => {
     expect(dashboard.orderCount).toBe(1);
     expect(dashboard.sharedBucketCount).toBe(0);
   });
+  it('changes the password after verifying the current one', async () => {
+    const auth = new LocalAuthService();
+    const user = await auth.register('Ihab Khaled', 'ihab@example.com', 'Password1', defaults);
+    await auth.changePassword(user, 'Password1', 'Password2');
+    await auth.logout();
+    await expect(auth.login('ihab@example.com', 'Password1')).rejects.toThrow('Invalid email or password.');
+    const again = await auth.login('ihab@example.com', 'Password2');
+    expect(again.id).toBe(user.id);
+  });
+  it('rejects a password change when the current password is wrong', async () => {
+    const auth = new LocalAuthService();
+    const user = await auth.register('Ihab Khaled', 'ihab@example.com', 'Password1', defaults);
+    await expect(auth.changePassword(user, 'WrongPass1', 'Password2')).rejects.toThrow('Invalid email or password.');
+    await auth.logout();
+    await expect(auth.login('ihab@example.com', 'Password1')).resolves.toMatchObject({ id: user.id });
+  });
+  it('reports reset-code operations as unsupported in local mode', async () => {
+    const auth = new LocalAuthService();
+    await expect(auth.verifyPasswordResetCode('code-1')).rejects.toThrow('Password reset links require Firebase mode');
+    await expect(auth.confirmPasswordReset('code-1', 'Password2')).rejects.toThrow('Password reset links require Firebase mode');
+  });
   it('seeds new profiles from device defaults', async () => {
     const auth = new LocalAuthService();
     const data = new LocalDataService();

@@ -3,11 +3,14 @@ import { Download, Save, Trash2 } from '@/packages/icons';
 import { SUPPORTED_CURRENCIES } from '@/platform/device';
 import { ConfirmDialog } from '@/shared/ui';
 
+import { ChangePasswordSection } from '../components/change-password-section/change-password-section.component';
 import { SettingsMetadata } from '../components/settings-metadata/settings-metadata.component';
+import { useChangePassword } from '../hooks/use-change-password.hook';
 import { useSettings } from '../hooks/use-settings.hook';
 
 export function SettingsContainer() {
   const vm = useSettings();
+  const passwordVm = useChangePassword();
 
   return (
     <div className="page narrow stack-lg">
@@ -103,6 +106,26 @@ export function SettingsContainer() {
           {vm.exporting ? vm.t('loading') : vm.t('exportData')}
         </button>
       </section>
+      <ChangePasswordSection
+        heading={passwordVm.t('changePassword')}
+        eyebrow={passwordVm.t('profile')}
+        currentPasswordLabel={passwordVm.t('currentPassword')}
+        newPasswordLabel={passwordVm.t('newPassword')}
+        confirmPasswordLabel={passwordVm.t('confirmNewPassword')}
+        submitLabel={passwordVm.t('changePassword')}
+        busyLabel={passwordVm.t('loading')}
+        showLabel={passwordVm.t('showPassword')}
+        hideLabel={passwordVm.t('hidePassword')}
+        currentPassword={passwordVm.currentPassword}
+        newPassword={passwordVm.newPassword}
+        confirmPassword={passwordVm.confirmPassword}
+        error={passwordVm.error}
+        busy={passwordVm.busy}
+        onCurrentPasswordChange={passwordVm.setCurrentPassword}
+        onNewPasswordChange={passwordVm.setNewPassword}
+        onConfirmPasswordChange={passwordVm.setConfirmPassword}
+        onSubmit={(event) => void passwordVm.submit(event)}
+      />
       <section className="section-card stack danger-zone">
         <div className="section-heading">
           <div>

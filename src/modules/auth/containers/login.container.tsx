@@ -1,4 +1,5 @@
 import { Link } from '@/packages/router';
+import { PasswordField } from '@/shared/ui';
 
 import { useLogin } from '../hooks/use-login.hook';
 import {
@@ -26,17 +27,15 @@ export function LoginContainer() {
           }}
         />
       </label>
-      <label>
-        {vm.t('password')}
-        <input
-          type="password"
-          autoComplete="current-password"
-          value={vm.password}
-          onChange={(event) => {
-            vm.setPassword(event.target.value);
-          }}
-        />
-      </label>
+      <PasswordField
+        id="login-password"
+        label={vm.t('password')}
+        value={vm.password}
+        onChange={vm.setPassword}
+        autoComplete="current-password"
+        showLabel={vm.t('showPassword')}
+        hideLabel={vm.t('hidePassword')}
+      />
       {vm.error ? (
         <p className="form-error" role="alert">
           {vm.error}
