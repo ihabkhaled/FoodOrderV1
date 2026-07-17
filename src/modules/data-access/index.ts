@@ -20,7 +20,10 @@ export * from './contracts';
 export { LocalAuthService } from './gateways/local-auth.gateway';
 export { LocalDataService } from './gateways/local-data.gateway';
 export { LocalGroupOrderService } from './gateways/local-group-order.gateway';
-export { LocalNotificationService } from './gateways/local-notification.gateway';
+export {
+  LocalNotificationService,
+  pushLocalNotification,
+} from './gateways/local-notification.gateway';
 export { LocalPaginationService } from './gateways/local-pagination.gateway';
 export { LocalSharingService } from './gateways/local-sharing.gateway';
 export { LocalSocialManagementService } from './gateways/local-social-management.gateway';
