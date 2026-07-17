@@ -58,8 +58,8 @@ const expectMinimumTouchTargets = async (locator: Locator): Promise<void> => {
         width: rect.width,
         height: rect.height,
         label:
-          element.getAttribute('aria-label') ??
-          element.textContent?.trim() ??
+          element.getAttribute('aria-label') ||
+          element.textContent.trim() ||
           element.tagName,
       };
     }),
@@ -80,7 +80,7 @@ for (const viewport of VIEWPORTS) {
       width: viewport.width,
       height: viewport.height,
     });
-    await register(page, viewport.name.replace(/\s+/gu, '-'));
+    await register(page, viewport.name.replaceAll(/\s+/gu, '-'));
     await page.goto('/social');
 
     await page.getByLabel('Group name').fill(GROUP_NAME);
@@ -118,6 +118,7 @@ for (const viewport of VIEWPORTS) {
 test('core navigation and actions keep accessible touch targets', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await register(page, 'touch-targets');
+  await expect(page.locator('.bottom-nav')).toBeVisible();
 
   for (const route of ['/', '/buckets', '/orders', '/social', '/settings']) {
     await page.goto(route);
