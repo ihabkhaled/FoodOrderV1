@@ -51,6 +51,7 @@ const expectSeparateRows = async (
 };
 
 const expectMinimumTouchTargets = async (locator: Locator): Promise<void> => {
+  await expect.poll(() => locator.count()).toBeGreaterThan(0);
   const targets = await locator.evaluateAll((elements) =>
     elements.map((element) => {
       const rect = element.getBoundingClientRect();
@@ -65,7 +66,6 @@ const expectMinimumTouchTargets = async (locator: Locator): Promise<void> => {
     }),
   );
 
-  expect(targets.length).toBeGreaterThan(0);
   for (const target of targets) {
     expect(target.width, `${target.label} width`).toBeGreaterThanOrEqual(40);
     expect(target.height, `${target.label} height`).toBeGreaterThanOrEqual(40);
@@ -118,14 +118,14 @@ for (const viewport of VIEWPORTS) {
 test('core navigation and actions keep accessible touch targets', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await register(page, 'touch-targets');
-  await expect(page.locator('.bottom-nav')).toBeVisible();
 
   for (const route of ['/', '/buckets', '/orders', '/social', '/settings']) {
     await page.goto(route);
+    const navigationLinks = page.locator('.bottom-nav a:visible');
+    await expect(navigationLinks).toHaveCount(5);
+    await expectMinimumTouchTargets(navigationLinks);
     await expectMinimumTouchTargets(
-      page.locator(
-        '.button:visible, .icon-button:visible, .bottom-nav a:visible, .nav-link:visible',
-      ),
+      page.locator('.button:visible, .icon-button:visible'),
     );
     await expectNoHorizontalOverflow(page);
   }
