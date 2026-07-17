@@ -85,12 +85,15 @@ export interface Bucket {
 
 /**
  * Privacy-minimal shared membership projection.
- * Contact information remains in the user's owner-only profile and is never
- * persisted in a bucket member document that other active members may list.
+ * Contact information remains in the user's owner-only profile. The optional
+ * email field exists only so v1.6 local fixtures can be read during migration;
+ * every cloud writer and every shared read projection must remove it.
  */
 export interface BucketMember {
   userId: string;
   displayName: string;
+  /** @deprecated v1.6 local compatibility input; never expose or persist in cloud membership. */
+  email?: string;
   role: BucketRole;
   status: MemberStatus;
   canCreateCustomItems?: boolean;
