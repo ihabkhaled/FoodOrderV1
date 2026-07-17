@@ -43,6 +43,7 @@
     "cap:run:android": "npm run cap:sync && cap run android",
     "cap:run:ios": "npm run cap:sync && cap run ios",
     "migrate:legacy": "node scripts/migrate-legacy-data.mjs",
+    "migrate:member-privacy": "node scripts/migrate-member-privacy.mjs",
     "release:start": "node tools/release/ensure-branch-version.mjs --apply",
     "release:branch-check": "node tools/release/ensure-branch-version.mjs --check",
     "release:patch": "node tools/release/bump-version.mjs patch",
