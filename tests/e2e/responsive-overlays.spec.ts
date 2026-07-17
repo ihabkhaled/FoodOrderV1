@@ -103,6 +103,23 @@ const expectGroupTitleOnOneRow = async (group: Locator): Promise<void> => {
   expect(verticalOverlap).toBeGreaterThan(0);
 };
 
+const expectPanelOutsideDesktopSidebar = async (
+  page: Page,
+  panel: Locator,
+  viewportWidth: number,
+): Promise<void> => {
+  if (viewportWidth < 960) return;
+
+  const [panelBox, sidebarBox] = await Promise.all([
+    panel.boundingBox(),
+    page.locator('.sidebar').boundingBox(),
+  ]);
+  if (!panelBox || !sidebarBox) {
+    throw new Error('Desktop notification and sidebar bounds must be available.');
+  }
+  expect(panelBox.x).toBeGreaterThanOrEqual(sidebarBox.x + sidebarBox.width + 8);
+};
+
 for (const viewport of VIEWPORTS) {
   test(`notification panel and group controls fit the ${viewport.name} viewport`, async ({
     page,
@@ -130,19 +147,7 @@ for (const viewport of VIEWPORTS) {
     ).toBeVisible();
     await expectInsideViewport(panel);
     await expectTextFits(panel.locator('.notification-copy'));
-
-    if (viewport.width >= 960) {
-      const [panelBox, sidebarBox] = await Promise.all([
-        panel.boundingBox(),
-        page.locator('.sidebar').boundingBox(),
-      ]);
-      if (!panelBox || !sidebarBox) {
-        throw new Error('Desktop notification and sidebar bounds must be available.');
-      }
-      expect(panelBox.x).toBeGreaterThanOrEqual(
-        sidebarBox.x + sidebarBox.width + 8,
-      );
-    }
+    await expectPanelOutsideDesktopSidebar(page, panel, viewport.width);
 
     await notificationTrigger.click();
 
