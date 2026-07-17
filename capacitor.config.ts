@@ -2,7 +2,7 @@ import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'com.ihabkhaled.foodorderv1',
-  appName: 'FoodOrder',
+  appName: 'Gama3 Orderak',
   webDir: 'dist',
   server: { androidScheme: 'https' },
   plugins: {

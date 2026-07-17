@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">FoodOrder</string>
-    <string name="title_activity_main">FoodOrder</string>
+    <string name="app_name">Gama3 Orderak</string>
+    <string name="title_activity_main">Gama3 Orderak</string>
     <string name="package_name">com.ihabkhaled.foodorderv1</string>
     <string name="custom_url_scheme">com.ihabkhaled.foodorderv1</string>
 </resources>

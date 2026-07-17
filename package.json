@@ -33,6 +33,8 @@
     "functions:test": "npm --prefix functions run test",
     "functions:validate": "npm run functions:typecheck && npm run functions:build && npm run functions:test",
     "validate": "npm run knowledge:validate && npm run typecheck && npm run lint && npm run test && npm run build",
+    "icons:prepare": "node scripts/icons/prepare-sources.mjs",
+    "icons": "npm run icons:prepare && capacitor-assets generate --ios --android --iconBackgroundColor \"#020d0b\" --iconBackgroundColorDark \"#020d0b\" --splashBackgroundColor \"#020d0b\" --splashBackgroundColorDark \"#020d0b\"",
     "cap:sync": "npm run build && cap sync",
     "cap:add:android": "cap add android",
     "cap:add:ios": "cap add ios",
@@ -87,6 +89,7 @@
   },
   "devDependencies": {
     "@capacitor/android": "^8.4.1",
+    "@capacitor/assets": "^3.0.5",
     "@capacitor/cli": "^8.4.1",
     "@capacitor/ios": "^8.4.1",
     "@commitlint/cli": "^21.2.1",
