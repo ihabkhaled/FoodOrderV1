@@ -3,6 +3,7 @@ import { Download, Save, Trash2 } from '@/packages/icons';
 import { SUPPORTED_CURRENCIES } from '@/platform/device';
 import { ConfirmDialog } from '@/shared/ui';
 
+import '../settings.css';
 import { AnalyticsConsentSection } from '../components/analytics-consent-section/analytics-consent-section.component';
 import { ChangePasswordSection } from '../components/change-password-section/change-password-section.component';
 import { SettingsMetadata } from '../components/settings-metadata/settings-metadata.component';
