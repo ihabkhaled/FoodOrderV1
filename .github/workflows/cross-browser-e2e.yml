@@ -25,10 +25,13 @@ jobs:
         include:
           - project: firefox
             browser: firefox
+            workers: 2
           - project: webkit
             browser: webkit
+            workers: 2
           - project: mobile-safari
             browser: webkit
+            workers: 1
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v6
@@ -45,6 +48,7 @@ jobs:
           tests/e2e/responsive-overlays.spec.ts
           tests/e2e/ux-polish.spec.ts
           --project=${{ matrix.project }}
+          --workers=${{ matrix.workers }}
       - uses: actions/upload-artifact@v7
         if: failure()
         with:
