@@ -12,7 +12,8 @@ import {
   PARTICIPANT_IDENTITY_KIND,
   PARTICIPANT_RESPONSE,
   SESSION_PARTICIPANT_ROLE,
-} from '../enums/order-session.enums';
+  type SessionParticipantRole,
+} from '../enums';
 import {
   assertSessionAcceptsContributions,
   createOrderSession,
@@ -23,21 +24,24 @@ import {
 } from '../helpers/order-session.helper';
 import {
   applySessionContributionMutation,
+  calculateSessionExpectedGrandTotalMinor,
   computeSessionAggregate,
 } from '../helpers/session-contribution.helper';
+import { createSessionMenuSnapshot } from '../helpers/session-menu-snapshot.helper';
 import type { BucketRole, SessionUser } from '../types/domain.types';
 import type {
   OrderSession,
   OrderSessionView,
   SessionContributionMutationRecord,
   SessionParticipant,
-  SessionParticipantRole,
 } from '../types/order-session.types';
 import {
   findBucketEntry,
   readDatabase,
   writeDatabase,
 } from './local-database.helper';
+
+const MUTATION_HISTORY_LIMIT = 1_000;
 
 const toSessionRole = (role: BucketRole): SessionParticipantRole => {
   if (role === 'owner') return SESSION_PARTICIPANT_ROLE.organizer;
@@ -52,21 +56,29 @@ const assertPositiveRevision = (value: number, label: string): void => {
   }
 };
 
-const sessionParticipant = (
+const findSessionParticipant = (
   participants: readonly SessionParticipant[],
   userId: string,
 ): SessionParticipant | null =>
   participants.find((participant) => participant.userId === userId) ?? null;
 
-const assertSessionManager = (
+const assertSessionOrganizer = (
   session: OrderSession,
-  participant: SessionParticipant | null,
   user: SessionUser,
 ): void => {
-  const canManage =
-    session.organizerId === user.id ||
-    participant?.role === SESSION_PARTICIPANT_ROLE.editor;
-  if (!canManage) throw new Error('You do not have permission for this action.');
+  if (session.organizerId !== user.id) {
+    throw new Error('Only the session organizer may change its lifecycle.');
+  }
+};
+
+const assertExpectedSessionRevision = (
+  session: OrderSession,
+  expectedRevision: number,
+): void => {
+  assertPositiveRevision(expectedRevision, 'Expected session revision');
+  if (session.revision !== expectedRevision) {
+    throw new Error('The order session changed. Refresh and try again.');
+  }
 };
 
 export class LocalOrderSessionService implements OrderSessionService {
@@ -86,7 +98,9 @@ export class LocalOrderSessionService implements OrderSessionService {
             )
           );
         })
-        .toSorted((left, right) => right.updatedAt.localeCompare(left.updatedAt)),
+        .toSorted((left, right) =>
+          right.updatedAt.localeCompare(left.updatedAt),
+        ),
     );
   }
 
@@ -111,6 +125,7 @@ export class LocalOrderSessionService implements OrderSessionService {
     }
 
     const at = nowIso();
+    const snapshot = createSessionMenuSnapshot(bucketEntry.bucket);
     const draft = createOrderSession({
       id: createId('session'),
       menuTemplateId: bucketEntry.bucket.id,
@@ -123,6 +138,8 @@ export class LocalOrderSessionService implements OrderSessionService {
       deadlineAt: input.deadlineAt,
       autoLock: input.autoLock,
       scheduleOccurrenceKey: occurrenceKey,
+      menuItems: snapshot.menuItems,
+      pricingPolicy: snapshot.pricingPolicy,
       createdAt: at,
     });
     const members = database.sharing.members[bucketEntry.bucket.id] ?? [];
@@ -173,8 +190,12 @@ export class LocalOrderSessionService implements OrderSessionService {
     const session = database.orderSessions.sessions[sessionId];
     if (!session) return null;
     const participants = database.orderSessions.participants[sessionId] ?? [];
-    const currentParticipant = sessionParticipant(participants, user.id);
-    if (session.organizerId !== user.id && !currentParticipant) return null;
+    const currentParticipant = findSessionParticipant(participants, user.id);
+    const hasAccess =
+      session.organizerId === user.id ||
+      (currentParticipant !== null &&
+        currentParticipant.response !== PARTICIPANT_RESPONSE.removed);
+    if (!hasAccess) return null;
 
     return structuredClone({
       session,
@@ -188,19 +209,11 @@ export class LocalOrderSessionService implements OrderSessionService {
     user: SessionUser,
     input: TransitionOrderSessionInput,
   ): Promise<OrderSession> {
-    assertPositiveRevision(input.expectedRevision, 'Expected session revision');
     const database = readDatabase();
     const session = database.orderSessions.sessions[input.sessionId];
     if (!session) throw new Error('Order session was not found.');
-    if (session.revision !== input.expectedRevision) {
-      throw new Error('The order session changed. Refresh and try again.');
-    }
-    const participants = database.orderSessions.participants[input.sessionId] ?? [];
-    assertSessionManager(
-      session,
-      sessionParticipant(participants, user.id),
-      user,
-    );
+    assertExpectedSessionRevision(session, input.expectedRevision);
+    assertSessionOrganizer(session, user);
     const saved = transitionOrderSession(
       session,
       input.nextStatus,
@@ -223,23 +236,26 @@ export class LocalOrderSessionService implements OrderSessionService {
     const database = readDatabase();
     const session = database.orderSessions.sessions[input.sessionId];
     if (!session) throw new Error('Order session was not found.');
+    assertExpectedSessionRevision(session, input.expectedSessionRevision);
     const participants = database.orderSessions.participants[input.sessionId] ?? [];
     const index = participants.findIndex(
       (participant) => participant.userId === user.id,
     );
     const participant = index === -1 ? null : participants[index];
-    if (!participant) throw new Error('You are not a participant in this order session.');
+    if (!participant) {
+      throw new Error('You are not a participant in this order session.');
+    }
     if (participant.revision !== input.expectedParticipantRevision) {
       throw new Error('Your participant status changed. Refresh and try again.');
     }
-    if (
-      session.status !== ORDER_SESSION_STATUS.collecting &&
-      input.response !== PARTICIPANT_RESPONSE.removed
-    ) {
-      throw new Error('Participant responses can change only while the session is collecting.');
+    if (session.status !== ORDER_SESSION_STATUS.collecting) {
+      throw new Error(
+        'Participant responses can change only while the session is collecting.',
+      );
     }
 
     const saved = markParticipantResponse(participant, input.response, nowIso());
+    if (saved === participant) return structuredClone(participant);
     participants[index] = saved;
     database.orderSessions.participants[input.sessionId] = participants;
     database.orderSessions.sessions[input.sessionId] = {
@@ -257,8 +273,14 @@ export class LocalOrderSessionService implements OrderSessionService {
     input: UpdateSessionContributionInput,
   ): Promise<SessionContributionMutationRecord> {
     const database = readDatabase();
+    const mutations = database.orderSessions.mutations[input.sessionId] ?? [];
+    const appliedMutation =
+      mutations.find((candidate) => candidate.id === input.mutationId) ?? null;
+    if (appliedMutation) return structuredClone(appliedMutation);
+
     const session = database.orderSessions.sessions[input.sessionId];
     if (!session) throw new Error('Order session was not found.');
+    assertExpectedSessionRevision(session, input.expectedSessionRevision);
     assertSessionAcceptsContributions(session);
     const participants = database.orderSessions.participants[input.sessionId] ?? [];
     const participantIndex = participants.findIndex(
@@ -273,20 +295,17 @@ export class LocalOrderSessionService implements OrderSessionService {
     ) {
       throw new Error('You do not have permission to contribute to this session.');
     }
-    const bucketEntry = findBucketEntry(database, session.menuTemplateId);
-    const item = bucketEntry?.bucket.items.find(
+    const item = session.menuItems.find(
       (candidate) => candidate.id === input.itemId,
     );
     if (!item?.active) throw new Error('This item is not available.');
 
-    const contributions = database.orderSessions.contributions[input.sessionId] ?? [];
-    const mutations = database.orderSessions.mutations[input.sessionId] ?? [];
+    const contributions =
+      database.orderSessions.contributions[input.sessionId] ?? [];
     const currentContribution =
       contributions.find((candidate) => candidate.userId === user.id) ?? null;
-    const appliedMutation =
-      mutations.find((candidate) => candidate.id === input.mutationId) ?? null;
     const result = applySessionContributionMutation(
-      { contribution: currentContribution, appliedMutation },
+      { contribution: currentContribution, appliedMutation: null },
       {
         mutationId: input.mutationId,
         sessionId: input.sessionId,
@@ -298,35 +317,32 @@ export class LocalOrderSessionService implements OrderSessionService {
         occurredAt: nowIso(),
       },
     );
-    if (result.alreadyApplied) return structuredClone(result.record);
-
-    database.orderSessions.contributions[input.sessionId] = [
+    const updatedContributions = [
       ...contributions.filter((candidate) => candidate.userId !== user.id),
       result.contribution,
     ];
+    database.orderSessions.contributions[input.sessionId] = updatedContributions;
     database.orderSessions.mutations[input.sessionId] = [
       result.record,
       ...mutations,
-    ].slice(0, 1_000);
-    if (
-      participant.response === PARTICIPANT_RESPONSE.pending ||
-      participant.response === PARTICIPANT_RESPONSE.viewed ||
-      participant.response === PARTICIPANT_RESPONSE.done ||
-      participant.response === PARTICIPANT_RESPONSE.skipped
-    ) {
+    ].slice(0, MUTATION_HISTORY_LIMIT);
+    if (participant.response !== PARTICIPANT_RESPONSE.ordering) {
       participants[participantIndex] = markParticipantResponse(
         participant,
         PARTICIPANT_RESPONSE.ordering,
         result.record.createdAt,
       );
     }
-    const updatedParticipants = participants;
-    const updatedContributions =
-      database.orderSessions.contributions[input.sessionId] ?? [];
-    database.orderSessions.participants[input.sessionId] = updatedParticipants;
+    const aggregate = computeSessionAggregate(updatedContributions);
+    const expectedGrandTotalMinor = calculateSessionExpectedGrandTotalMinor(
+      session,
+      aggregate,
+    );
+    database.orderSessions.participants[input.sessionId] = participants;
     database.orderSessions.sessions[input.sessionId] = {
       ...session,
-      responseSummary: summarizeParticipantResponses(updatedParticipants),
+      aggregate,
+      responseSummary: summarizeParticipantResponses(participants),
       revision: session.revision + 1,
       updatedAt: result.record.createdAt,
       settlementSummary: {
@@ -334,9 +350,13 @@ export class LocalOrderSessionService implements OrderSessionService {
         participantCount: updatedContributions.filter(
           (contribution) => Object.keys(contribution.quantities).length > 0,
         ).length,
+        expectedGrandTotalMinor,
+        outstandingGrandTotalMinor: Math.max(
+          0,
+          expectedGrandTotalMinor - session.settlementSummary.verifiedGrandTotalMinor,
+        ),
       },
     };
-    computeSessionAggregate(updatedContributions);
     writeDatabase(database);
     return structuredClone(result.record);
   }
