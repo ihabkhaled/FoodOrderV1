@@ -20,3 +20,10 @@ write('package.json', json.dumps(package, indent=2) + '\n')
 lock = json.loads(read('package-lock.json'))
 lock['packages']['']['engines']['node'] = '24.x'
 write('package-lock.json', json.dumps(lock, indent=2) + '\n')
+
+# Vitest mock factories are hoisted; define the recovery spy through vi.hoisted.
+replace(
+    'tests/components/AppErrorBoundary.test.tsx',
+    "const recoverApplication = vi.fn<() => Promise<void>>().mockResolvedValue();\n\nvi.mock('@/platform/browser', () => ({\n  getDocumentLanguage: () => 'en',\n  recoverApplication,\n}));",
+    "const { recoverApplication } = vi.hoisted(() => ({\n  recoverApplication: vi.fn<() => Promise<void>>().mockResolvedValue(),\n}));\n\nvi.mock('@/platform/browser', () => ({\n  getDocumentLanguage: () => 'en',\n  recoverApplication,\n}));",
+)
