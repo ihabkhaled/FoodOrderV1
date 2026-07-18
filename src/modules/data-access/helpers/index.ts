@@ -52,14 +52,20 @@ export {
   type SessionContributionMutationState,
 } from './session-contribution.helper';
 export {
-  buildSessionInviteShareCode,
+  buildSessionShareCode,
+  consumeSessionInvite,
   createGuestCapability,
   createSessionInvite,
-  decodeSessionInviteShareCode,
-  hashGuestSecret,
-  hashSessionInviteToken,
+  DEFAULT_SESSION_INVITE_MAX_USES,
+  GUEST_CAPABILITY_EXPIRY_HOURS,
   isSessionInviteUsable,
-  normalizeGuestDisplayName,
+  linkGuestCapability,
+  parseSessionShareCode,
+  revokeSessionInvite,
+  SESSION_INVITE_EXPIRY_HOURS,
+  SESSION_SHARE_CODE_SEPARATOR,
+  validatePublicSessionInvitePreview,
+  verifyGuestCapability,
 } from './session-invite.helper';
 export {
   createSessionMenuSnapshot,
