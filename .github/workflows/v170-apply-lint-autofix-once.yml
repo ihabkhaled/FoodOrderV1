@@ -1,8 +1,8 @@
 name: v1.7 Final Repair Validation
 
 on:
-  pull_request:
-    branches: [main]
+  push:
+    branches: [1.7.0]
     paths:
       - '.github/workflows/v170-apply-lint-autofix-once.yml'
       - '.github/automation/apply-v170-gate-fixes.part4'
