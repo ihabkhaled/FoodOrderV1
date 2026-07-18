@@ -1,0 +1,50 @@
+name: v1.7 Apply Lint Autofix Once
+
+on:
+  push:
+    branches: ['1.7.0']
+    paths:
+      - '.github/workflows/v170-apply-lint-autofix-once.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v170-apply-lint-autofix-once
+  cancel-in-progress: false
+
+jobs:
+  apply:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: 1.7.0
+          fetch-depth: 2
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 26
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            functions/package-lock.json
+      - run: npm ci
+      - run: npm --prefix functions ci
+      - name: Apply repository-owned autofixes
+        run: npm run lint:fix || true
+      - name: Replace trigger with one bulk commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          CURRENT_HEAD="$(git rev-parse HEAD)"
+          PREVIOUS_HEAD="$(git rev-parse HEAD^)"
+          rm .github/workflows/v170-apply-lint-autofix-once.yml
+          git add -A
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          TREE_SHA="$(git write-tree)"
+          COMMIT_SHA="$(printf '%s\n' 'fix(quality): apply canonical lint autofixes' | git commit-tree "$TREE_SHA" -p "$PREVIOUS_HEAD")"
+          git push origin "$COMMIT_SHA:refs/heads/1.7.0" \
+            --force-with-lease="refs/heads/1.7.0:${CURRENT_HEAD}"
