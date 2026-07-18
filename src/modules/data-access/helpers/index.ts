@@ -46,6 +46,27 @@ export {
   transitionOrderSession,
 } from './order-session.helper';
 export {
+  applySessionContributionMutation,
+  computeSessionAggregate,
+  type SessionContributionMutationResult,
+  type SessionContributionMutationState,
+} from './session-contribution.helper';
+export {
+  buildSessionInviteShareCode,
+  createGuestCapability,
+  createSessionInvite,
+  decodeSessionInviteShareCode,
+  hashGuestSecret,
+  hashSessionInviteToken,
+  isSessionInviteUsable,
+  normalizeGuestDisplayName,
+} from './session-invite.helper';
+export {
+  createSessionMenuSnapshot,
+  validateSessionMenuItems,
+  validateSessionPricingPolicy,
+} from './session-menu-snapshot.helper';
+export {
   applySettlementReconciliation,
   buildSettlementReconciliation,
   canTransitionPaymentStatus,
