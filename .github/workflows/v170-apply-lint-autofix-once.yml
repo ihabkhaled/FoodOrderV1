@@ -7,7 +7,7 @@ on:
       - '.github/workflows/v170-apply-lint-autofix-once.yml'
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: v170-final-repair-validation
@@ -60,37 +60,33 @@ jobs:
           echo "BASE_VERSION=$(node -p "require('${RUNNER_TEMP}/base-package.json').version")" >> "${GITHUB_ENV}"
           echo 'GITHUB_EVENT_NAME=pull_request' >> "${GITHUB_ENV}"
       - name: Run complete non-browser release ladder
-        continue-on-error: true
         shell: bash
         run: |
-          set -o pipefail
-          {
-            npm run knowledge:validate
-            npm run format:check
-            git diff --check
-            npm run lint
-            npm run typecheck
-            npm run typecheck:tsc
-            npm run functions:validate
-            npm run test
-            npm run test:coverage
-            npm run test:rules
-            npm run quality:dead-code
-            npm run quality:circular
-            npm run quality:release
-            npm run quality:agent-docs
-            npm run security:audit
-            npm --prefix functions audit --audit-level=high
-            npm run build
-          } 2>&1 | tee "${RUNNER_TEMP}/release-ladder.log"
+          set -euo pipefail
+          npm run knowledge:validate
+          npm run format:check
+          git diff --check
+          npm run lint
+          npm run typecheck
+          npm run typecheck:tsc
+          npm run functions:validate
+          npm run test
+          npm run test:coverage
+          npm run test:rules
+          npm run quality:dead-code
+          npm run quality:circular
+          npm run quality:release
+          npm run quality:agent-docs
+          npm run security:audit
+          npm --prefix functions audit --audit-level=high
+          npm run build
       - name: Verify forced local-mode build and preview
-        continue-on-error: true
         shell: bash
         env:
           VITE_FORCE_LOCAL_MODE: 'true'
         run: |
-          set -o pipefail
-          npm run build 2>&1 | tee "${RUNNER_TEMP}/local-build.log"
+          set -euo pipefail
+          npm run build
           npm run preview -- --host 127.0.0.1 > "${RUNNER_TEMP}/preview.log" 2>&1 &
           PREVIEW_PID=$!
           trap 'kill ${PREVIEW_PID} 2>/dev/null || true' EXIT
@@ -103,31 +99,26 @@ jobs:
           cat "${RUNNER_TEMP}/preview.log"
           exit 1
       - name: Run critical browser journey
-        continue-on-error: true
         shell: bash
         run: |
-          set -o pipefail
           npx playwright install --with-deps chromium
-          npm run test:e2e:critical 2>&1 | tee "${RUNNER_TEMP}/critical-e2e.log"
-      - name: Create repair transport commit
+          npm run test:e2e:critical
+      - name: Export repaired source tree
         shell: bash
         run: |
           set -euo pipefail
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -A
-          git commit -m 'fix(v1.7): restore runtime and release gates'
-          git push origin HEAD:refs/heads/automation/v170-gate-fixes --force
+          tar \
+            --exclude=.git \
+            --exclude=node_modules \
+            --exclude=functions/node_modules \
+            --exclude=dist \
+            --exclude=coverage \
+            --exclude=playwright-report \
+            --exclude=test-results \
+            -czf "${RUNNER_TEMP}/v170-repaired-source.tar.gz" .
       - uses: actions/upload-artifact@v7
-        if: always()
         with:
-          name: v170-final-repair-diagnostics
-          path: |
-            ${{ runner.temp }}/release-ladder.log
-            ${{ runner.temp }}/local-build.log
-            ${{ runner.temp }}/preview.log
-            ${{ runner.temp }}/critical-e2e.log
-            playwright-report/
-            test-results/
-          if-no-files-found: warn
+          name: v170-repaired-source
+          path: ${{ runner.temp }}/v170-repaired-source.tar.gz
+          if-no-files-found: error
           retention-days: 7
