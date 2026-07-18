@@ -25,21 +25,26 @@ jobs:
         with:
           node-version: 26
           cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            functions/package-lock.json
       - run: npm ci
+      - run: npm --prefix functions ci
       - name: Apply repaired source tree
         shell: bash
         run: |
-          npm run lint:fix || true
+          set -o pipefail
+          npm run lint:fix 2>&1 | tee diagnostic-lint-fix.log || true
           cat \
             .github/automation/apply-v170-gate-fixes.part1 \
             .github/automation/apply-v170-gate-fixes.part2 \
             .github/automation/apply-v170-gate-fixes.part3 \
             > "${RUNNER_TEMP}/apply-v170-gate-fixes.py"
-          python "${RUNNER_TEMP}/apply-v170-gate-fixes.py"
+          python "${RUNNER_TEMP}/apply-v170-gate-fixes.py" 2>&1 | tee diagnostic-apply.log
           rm -rf .github/automation
           rm .github/workflows/v170-apply-lint-autofix-once.yml
-          npm run format
-          npm run lint:fix
+          npm run format 2>&1 | tee diagnostic-format.log
+          npm run lint:fix 2>&1 | tee diagnostic-final-lint.log
       - name: Run critical browser journey with trace
         shell: bash
         run: |
@@ -51,6 +56,7 @@ jobs:
         with:
           name: v170-critical-browser-diagnostics
           path: |
+            diagnostic-*.log
             gate-critical-e2e.log
             playwright-report/
             test-results/
