@@ -32,10 +32,23 @@ export type {
   SessionContribution,
   SessionContributionMutationInput,
   SessionContributionMutationRecord,
+  SessionMenuItemSnapshot,
   SessionParticipant,
   SessionParticipantDraft,
   SessionSettlementSummary,
 } from './order-session.types';
+export type {
+  CreateSessionInviteResult,
+  GuestAccountLinkResult,
+  GuestContributionInput,
+  GuestContributionResult,
+  GuestResponseInput,
+  GuestSessionCapability,
+  GuestSessionView,
+  PublicSessionInvitePreview,
+  SessionInvite,
+  SessionInviteStatus,
+} from './session-invite.types';
 export type {
   ParticipantSettlement,
   ParticipantSettlementDraft,
