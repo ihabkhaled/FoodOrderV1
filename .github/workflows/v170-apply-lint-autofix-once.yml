@@ -1,4 +1,4 @@
-name: v1.7 Validate Grouped Repairs
+name: v1.7 Critical Browser Diagnostics
 
 on:
   pull_request:
@@ -7,175 +7,52 @@ on:
       - '.github/workflows/v170-apply-lint-autofix-once.yml'
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
-  group: v170-validate-grouped-repairs
+  group: v170-critical-browser-diagnostics
   cancel-in-progress: false
 
 jobs:
-  validate-and-export:
+  diagnose:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@v7
         with:
           ref: 1.7.0
-          fetch-depth: 0
       - uses: actions/setup-node@v6
         with:
           node-version: 26
           cache: npm
-          cache-dependency-path: |
-            package-lock.json
-            functions/package-lock.json
-      - uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: 21
       - run: npm ci
-      - run: npm --prefix functions ci
-      - name: Apply canonical autofixes
-        run: npm run lint:fix || true
-      - name: Apply grouped repairs
+      - name: Apply repaired source tree
         shell: bash
         run: |
-          set -o pipefail
+          npm run lint:fix || true
           cat \
             .github/automation/apply-v170-gate-fixes.part1 \
             .github/automation/apply-v170-gate-fixes.part2 \
             .github/automation/apply-v170-gate-fixes.part3 \
             > "${RUNNER_TEMP}/apply-v170-gate-fixes.py"
-          python "${RUNNER_TEMP}/apply-v170-gate-fixes.py" 2>&1 | tee grouped-repair.log
-      - name: Remove transport files
-        run: |
+          python "${RUNNER_TEMP}/apply-v170-gate-fixes.py"
           rm -rf .github/automation
           rm .github/workflows/v170-apply-lint-autofix-once.yml
-      - name: Format and rebuild knowledge
-        shell: bash
-        run: |
-          set -o pipefail
-          npm run format 2>&1 | tee repair-format.log
-          npm run knowledge:build 2>&1 | tee repair-knowledge.log
-      - name: Run clean lint gate
-        shell: bash
-        run: |
-          set -o pipefail
-          npm run lint:fix 2>&1 | tee repair-lint-fix.log
-          npm run lint 2>&1 | tee repair-lint.log
-      - name: Resolve main version for PR integrity
-        shell: bash
-        run: |
-          git fetch --no-tags origin main
-          git show origin/main:package.json > "${RUNNER_TEMP}/base-package.json"
-          echo "BASE_VERSION=$(node -p "require('${RUNNER_TEMP}/base-package.json').version")" >> "${GITHUB_ENV}"
-          echo 'GITHUB_EVENT_NAME=pull_request' >> "${GITHUB_ENV}"
-      - id: knowledge
-        name: Knowledge and format integrity
-        continue-on-error: true
-        shell: bash
-        run: |
-          set -o pipefail
-          npm run knowledge:validate 2>&1 | tee gate-knowledge.log
-          npm run format:check 2>&1 | tee gate-format.log
-          git diff --check 2>&1 | tee gate-diff.log
-      - id: typecheck_primary
-        name: Typecheck Primary
-        continue-on-error: true
-        run: npm run typecheck 2>&1 | tee gate-typecheck-primary.log
-      - id: typecheck_compatibility
-        name: Typecheck Compatibility
-        continue-on-error: true
-        run: npm run typecheck:tsc 2>&1 | tee gate-typecheck-compatibility.log
-      - id: functions
-        name: Firebase Functions
-        continue-on-error: true
-        run: npm run functions:validate 2>&1 | tee gate-functions.log
-      - id: unit
-        name: Unit and integration tests
-        continue-on-error: true
-        run: npm run test 2>&1 | tee gate-unit.log
-      - id: coverage
-        name: Coverage
-        continue-on-error: true
-        run: npm run test:coverage 2>&1 | tee gate-coverage.log
-      - id: rules
-        name: Firestore emulator rules
-        continue-on-error: true
-        run: npm run test:rules 2>&1 | tee gate-rules.log
-      - id: dead_code
-        name: Dead code
-        continue-on-error: true
-        run: npm run quality:dead-code 2>&1 | tee gate-dead-code.log
-      - id: circular
-        name: Circular dependencies
-        continue-on-error: true
-        run: npm run quality:circular 2>&1 | tee gate-circular.log
-      - id: release
-        name: Release integrity
-        continue-on-error: true
-        run: npm run quality:release 2>&1 | tee gate-release.log
-      - id: governance
-        name: Governance and agent docs
-        continue-on-error: true
-        run: npm run quality:agent-docs 2>&1 | tee gate-governance.log
-      - id: build
-        name: Production build
-        continue-on-error: true
-        run: npm run build 2>&1 | tee gate-build.log
-      - name: Require core gates
-        shell: bash
-        env:
-          GATE_OUTCOMES: >-
-            knowledge=${{ steps.knowledge.outcome }}
-            typecheck-primary=${{ steps.typecheck_primary.outcome }}
-            typecheck-compatibility=${{ steps.typecheck_compatibility.outcome }}
-            functions=${{ steps.functions.outcome }}
-            unit=${{ steps.unit.outcome }}
-            coverage=${{ steps.coverage.outcome }}
-            rules=${{ steps.rules.outcome }}
-            dead-code=${{ steps.dead_code.outcome }}
-            circular=${{ steps.circular.outcome }}
-            release=${{ steps.release.outcome }}
-            governance=${{ steps.governance.outcome }}
-            build=${{ steps.build.outcome }}
-        run: |
-          printf '%s\n' "${GATE_OUTCOMES}" | tee gate-outcomes.log
-          if grep --quiet '=failure' gate-outcomes.log; then
-            exit 1
-          fi
-      - name: Run critical browser journey
+          npm run format
+          npm run lint:fix
+      - name: Run critical browser journey with trace
         shell: bash
         run: |
           set -o pipefail
           npx playwright install --with-deps chromium
           npm run test:e2e:critical 2>&1 | tee gate-critical-e2e.log
-      - name: Create grouped transport commit
-        shell: bash
-        run: |
-          set -euo pipefail
-          rm -f grouped-repair.log repair-*.log gate-*.log
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -A
-          git commit -m 'fix(v1.7): restore runtime and release gates'
-          git push origin HEAD:refs/heads/automation/v170-gate-fixes --force
-      - name: Export diagnostics and repaired source
-        if: always()
-        shell: bash
-        run: |
-          zip -qr "${RUNNER_TEMP}/v170-repaired-source.zip" . \
-            -x '.git/*' 'node_modules/*' 'functions/node_modules/*' 'dist/*' 'coverage/*'
       - uses: actions/upload-artifact@v7
         if: always()
         with:
-          name: v170-repair-diagnostics
+          name: v170-critical-browser-diagnostics
           path: |
-            grouped-repair.log
-            repair-*.log
-            gate-*.log
+            gate-critical-e2e.log
             playwright-report/
             test-results/
-            ${{ runner.temp }}/v170-repaired-source.zip
           if-no-files-found: warn
           retention-days: 7
