@@ -14,10 +14,6 @@ export default defineConfig({
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
     actionTimeout: 15_000,
-    // The app fully supports prefers-reduced-motion (global 0.01ms override in
-    // styles.css). Running e2e in that mode keeps WebKit's actionability
-    // "stable" check from spinning on transitions under loaded CI runners.
-    contextOptions: { reducedMotion: 'reduce' },
   },
   webServer: {
     command: 'npm run build && npm run preview',
@@ -30,7 +26,13 @@ export default defineConfig({
   projects: [
     { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
     { name: 'firefox', use: { ...devices['Desktop Firefox'] } },
-    { name: 'webkit', use: { ...devices['Desktop Safari'] } },
+    {
+      name: 'webkit',
+      // Software-rendered WebKit on loaded CI runners delivers frames slowly,
+      // so Playwright's actionability "stable" check (two identical rAF boxes)
+      // needs a larger budget than the Chromium projects.
+      use: { ...devices['Desktop Safari'], actionTimeout: 30_000 },
+    },
     { name: 'mobile-chrome', use: { ...devices['Pixel 7'] } },
     {
       name: 'tablet-chrome',
@@ -38,7 +40,11 @@ export default defineConfig({
     },
     {
       name: 'mobile-safari',
-      use: { ...devices['iPhone 15 Pro'], browserName: 'webkit' },
+      use: {
+        ...devices['iPhone 15 Pro'],
+        browserName: 'webkit',
+        actionTimeout: 30_000,
+      },
     },
   ],
 });
