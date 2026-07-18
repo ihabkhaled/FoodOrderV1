@@ -30,18 +30,18 @@
     },
     {
       "path": ".ai/graphs/source-test-graph.json",
-      "bytes": 37373,
-      "hash": "134fe7b19df375a70c3473fc5068bc051de0e786f6cb08ad4ecbe9a4c3898183"
+      "bytes": 47017,
+      "hash": "c6f13a6c035f56de7f5a8967c659ac74862aace3b11762cc2cf394e7e96bbeae"
     },
     {
       "path": ".ai/hashes/documents.json",
-      "bytes": 19223,
-      "hash": "66dacdcaaaee196f99775c95aeddb5ee4b6811248564b2a02e40bb62ea3c76d5"
+      "bytes": 20064,
+      "hash": "fa5589e2a9fad6053ae68b4593b0d828655093197e1d14859a7792f46441f0a8"
     },
     {
       "path": ".ai/hashes/source.json",
-      "bytes": 33439,
-      "hash": "5b37fe584a8e1d38e2aea67a184fe06b35580dc7bdad7084b51deb8451cedea2"
+      "bytes": 43304,
+      "hash": "c8ed013374c1523ab18f7d8b9377e46b71cc4833c21af055a126d33d47bd7f7b"
     },
     {
       "path": ".ai/indexes/task-types.json",
@@ -55,13 +55,13 @@
     },
     {
       "path": ".ai/manifests/repository.json",
-      "bytes": 105260,
-      "hash": "7d6695d4fd201dd35ccbf56a75ed93805a0b59767ab31b4d34bdf72ca4c33811"
+      "bytes": 123240,
+      "hash": "17099428f17b2ccf0332d6567e40faa55cf2c0c09669186c8081a7fee1acb805"
     },
     {
       "path": ".ai/manifests/tests.json",
-      "bytes": 6407,
-      "hash": "fd9c19543c7a492cca3e5583fe4265dae26161a8ef94418d8b6e9eae4d0582dc"
+      "bytes": 9154,
+      "hash": "907a4ca354ca29df268890501a84c6b7aa626d9fe659bf0841a35ef938622ca6"
     },
     {
       "path": ".ai/profiles/project.json",
@@ -75,13 +75,13 @@
     },
     {
       "path": ".ai/reports/token-usage.json",
-      "bytes": 79,
-      "hash": "fa8bdaebcd47a389d3113341fb791281391ce120e5bb9a80998dc6da4f8b50e0"
+      "bytes": 75,
+      "hash": "a5fb1f202b6a697224a9270745f8e561227eaa857a120e0e0fab038d646d3d27"
     },
     {
       "path": ".ai/reports/validation.json",
-      "bytes": 81,
-      "hash": "e799072ca27117d541a12fb6c7b1fc3e825d1b04aa7ba825ca349873952e47e0"
+      "bytes": 76,
+      "hash": "36cdfe1cb9357c89c68c02412c9d088f62ccbac4bdcee15d5ba29a0dd36b9f55"
     },
     {
       "path": ".editorconfig",
@@ -160,8 +160,8 @@
     },
     {
       "path": ".github/workflows/v170-order-session-gates.yml",
-      "bytes": 3426,
-      "hash": "8985bc524fc06df2138905e83f1ad5b000aedfcbd0b6205fd8e4330ee0828f53"
+      "bytes": 3721,
+      "hash": "b90b3467102fdb53d63a7fe9b904fdb220b2a8e41f79136d6758d99d5b7e6ac4"
     },
     {
       "path": ".gitignore",
@@ -1100,23 +1100,18 @@
     },
     {
       "path": "package-lock.json",
-      "bytes": 716385,
-      "hash": "2e67ff6d76ea39bf96af6118a16ea94217d74a3df2ca46478c901cd339146abc"
+      "bytes": 722635,
+      "hash": "e908f17df970fe495bbf864e4e846f35d5d253d39297f00274f9f8d61f599196"
     },
     {
       "path": "package.json",
       "bytes": 7315,
-      "hash": "cbdd25e93d9de632a408c8d26e5e78333e7e8c00333f7d8ce9bcb7ee5f3ddf49"
+      "hash": "a7f7a6ec5a3cdc7e08bc970e37bf15552de3f19f0b77bcb7a05b7a12f8e69dbb"
     },
     {
       "path": "packages/group-order-engine/src/index.ts",
       "bytes": 10243,
       "hash": "27506d4b19dd35e1403b4f5a08f84357040193e2951a08f31951cfcc199ee3d6"
-    },
-    {
-      "path": "playwright-report/index.html",
-      "bytes": 616122,
-      "hash": "066c38c0f7ef6b9a7e32add7985cf936830b819a05c836c91fab96abe9eaffea"
     },
     {
       "path": "playwright.config.ts",
@@ -1390,8 +1385,8 @@
     },
     {
       "path": "scripts/knowledge/cli.mjs",
-      "bytes": 9807,
-      "hash": "663e0544121be889e46d0d302a83f90eb055b947d5323865633e19f5ab7e4859"
+      "bytes": 9853,
+      "hash": "64699395a6e565393f58a22dc8eaa5c1d20832040d54f410a19e6636b220d840"
     },
     {
       "path": "scripts/migrate-legacy-data.mjs",
@@ -3179,11 +3174,6 @@
       "hash": "0f83db65d25bc3bffbebd21dd6199eec457158dbbcf1abebb3b0fbad533b4097"
     },
     {
-      "path": "test-results/.last-run.json",
-      "bytes": 45,
-      "hash": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903"
-    },
-    {
       "path": "tests/bucket-pricing.test.ts",
       "bytes": 3507,
       "hash": "29dcee9ae619fc2d53fd17e61e9420a7825753ec9d9f2346b45c96eaabe1814e"
@@ -3487,16 +3477,6 @@
       "path": "tsconfig.test.json",
       "bytes": 791,
       "hash": "90e3a7a457c7c73a7672dcd93a02ae9727b9bb3796794eea6f878ffec1aa77dd"
-    },
-    {
-      "path": "ui-shots/build-contact-sheets.mjs",
-      "bytes": 1307,
-      "hash": "2efb1e6ffe601952db6f6370085f70bce203a388bacb53f7e3a175f1edd484e6"
-    },
-    {
-      "path": "ui-shots/inspect-user-videos.mjs",
-      "bytes": 2188,
-      "hash": "94d840dd377f8353051d5acef9b793928e66b7cbea8545cadac88c28515c4478"
     },
     {
       "path": "vercel.json",

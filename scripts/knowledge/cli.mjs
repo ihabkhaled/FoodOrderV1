@@ -6,7 +6,7 @@ import process from 'node:process';
 import { performance } from 'node:perf_hooks';
 
 const root=process.cwd(), ai=path.join(root,'.ai');
-const ignoredNames=new Set(['.git','.worktrees','node_modules','dist','coverage']);
+const ignoredNames=new Set(['.git','.worktrees','node_modules','dist','coverage','test-results','playwright-report','ui-shots']);
 const ignoredPaths=new Set(['android','ios','.ai/local']);
 const textExt=new Set(['.css','.html','.js','.json','.md','.mjs','.ts','.tsx','.yaml','.yml']);
 const posix=p=>p.split(path.sep).join('/');
