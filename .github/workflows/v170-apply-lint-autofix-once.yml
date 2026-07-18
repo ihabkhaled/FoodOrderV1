@@ -1,4 +1,4 @@
-name: v1.7 Critical Browser Diagnostics
+name: v1.7 Final Repair Validation
 
 on:
   pull_request:
@@ -7,20 +7,21 @@ on:
       - '.github/workflows/v170-apply-lint-autofix-once.yml'
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
-  group: v170-critical-browser-diagnostics
+  group: v170-final-repair-validation
   cancel-in-progress: false
 
 jobs:
-  diagnose:
+  validate-and-export:
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 100
     steps:
       - uses: actions/checkout@v7
         with:
           ref: 1.7.0
+          fetch-depth: 0
       - uses: actions/setup-node@v6
         with:
           node-version: 26
@@ -28,60 +29,96 @@ jobs:
           cache-dependency-path: |
             package-lock.json
             functions/package-lock.json
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
       - run: npm ci
       - run: npm --prefix functions ci
-      - name: Apply repaired source tree
+      - name: Apply canonical and grouped repairs
         shell: bash
         run: |
-          set -o pipefail
-          npm run lint:fix 2>&1 | tee diagnostic-lint-fix.log || true
+          set -euo pipefail
+          npm run lint:fix || true
           cat \
             .github/automation/apply-v170-gate-fixes.part1 \
             .github/automation/apply-v170-gate-fixes.part2 \
             .github/automation/apply-v170-gate-fixes.part3 \
+            .github/automation/apply-v170-gate-fixes.part4 \
             > "${RUNNER_TEMP}/apply-v170-gate-fixes.py"
-          python "${RUNNER_TEMP}/apply-v170-gate-fixes.py" 2>&1 | tee diagnostic-apply.log
+          python "${RUNNER_TEMP}/apply-v170-gate-fixes.py"
           rm -rf .github/automation
           rm .github/workflows/v170-apply-lint-autofix-once.yml
-          npm run format 2>&1 | tee diagnostic-format.log
-          npm run knowledge:build 2>&1 | tee diagnostic-knowledge.log
-          npm run lint:fix 2>&1 | tee diagnostic-final-lint.log
-      - name: Build exact local-mode application
+          npm run format
+          npm run knowledge:build
+          npm run lint:fix
+      - name: Resolve main version for PR integrity
+        shell: bash
+        run: |
+          git fetch --no-tags origin main
+          git show origin/main:package.json > "${RUNNER_TEMP}/base-package.json"
+          echo "BASE_VERSION=$(node -p "require('${RUNNER_TEMP}/base-package.json').version")" >> "${GITHUB_ENV}"
+          echo 'GITHUB_EVENT_NAME=pull_request' >> "${GITHUB_ENV}"
+      - name: Run complete non-browser release ladder
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm run knowledge:validate
+          npm run format:check
+          git diff --check
+          npm run lint
+          npm run typecheck
+          npm run typecheck:tsc
+          npm run functions:validate
+          npm run test
+          npm run test:coverage
+          npm run test:rules
+          npm run quality:dead-code
+          npm run quality:circular
+          npm run quality:release
+          npm run quality:agent-docs
+          npm run security:audit
+          npm --prefix functions audit --audit-level=high
+          npm run build
+      - name: Verify forced local-mode build and preview
         shell: bash
         env:
           VITE_FORCE_LOCAL_MODE: 'true'
         run: |
-          set -o pipefail
-          npm run build 2>&1 | tee diagnostic-local-build.log
-      - name: Probe preview server
-        shell: bash
-        run: |
           set -euo pipefail
-          npm run preview -- --host 127.0.0.1 > diagnostic-preview.log 2>&1 &
+          npm run build
+          npm run preview -- --host 127.0.0.1 > "${RUNNER_TEMP}/preview.log" 2>&1 &
           PREVIEW_PID=$!
           trap 'kill ${PREVIEW_PID} 2>/dev/null || true' EXIT
           for attempt in {1..30}; do
-            if curl --fail --silent --show-error http://127.0.0.1:4173/ > diagnostic-preview-response.html; then
-              break
+            if curl --fail --silent http://127.0.0.1:4173/ > /dev/null; then
+              exit 0
             fi
             sleep 1
           done
-          curl --fail --silent --show-error http://127.0.0.1:4173/ > /dev/null
-      - name: Run critical browser journey with trace
+          cat "${RUNNER_TEMP}/preview.log"
+          exit 1
+      - name: Run critical browser journey
         shell: bash
         run: |
-          set -o pipefail
           npx playwright install --with-deps chromium
-          npm run test:e2e:critical 2>&1 | tee gate-critical-e2e.log
+          npm run test:e2e:critical
+      - name: Create validated transport commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'fix(v1.7): restore runtime and release gates'
+          git push origin HEAD:refs/heads/automation/v170-gate-fixes --force
       - uses: actions/upload-artifact@v7
-        if: always()
+        if: failure()
         with:
-          name: v170-critical-browser-diagnostics
+          name: v170-final-repair-failure
           path: |
-            diagnostic-*.log
-            diagnostic-preview-response.html
-            gate-critical-e2e.log
             playwright-report/
             test-results/
+            ${{ runner.temp }}/preview.log
           if-no-files-found: warn
           retention-days: 7
