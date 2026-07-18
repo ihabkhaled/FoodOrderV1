@@ -31,7 +31,9 @@ const readAndroidVersion = async () => {
 };
 
 const rootPackage = await readJson('../package.json');
+const rootLock = await readJson('../package-lock.json');
 const functionsPackage = await readJson('../functions/package.json');
+const functionsLock = await readJson('../functions/package-lock.json');
 const androidVersion = await readAndroidVersion();
 const failures = [];
 
@@ -40,25 +42,36 @@ if (!parseStableVersion(rootPackage.version)) {
     `Root package version must be a stable semantic version: ${rootPackage.version}`,
   );
 }
-if (functionsPackage.version !== rootPackage.version) {
-  failures.push(
-    `Version mismatch: package.json=${rootPackage.version}, functions/package.json=${functionsPackage.version}`,
-  );
-}
-if (androidVersion !== rootPackage.version) {
-  failures.push(
-    `Version mismatch: package.json=${rootPackage.version}, Android versionName=${androidVersion}`,
-  );
+
+for (const [label, version] of [
+  ['functions/package.json', functionsPackage.version],
+  ['package-lock.json', rootLock.version],
+  ['package-lock.json root package', rootLock.packages?.['']?.version],
+  ['functions/package-lock.json', functionsLock.version],
+  ['functions/package-lock.json root package', functionsLock.packages?.['']?.version],
+  ['Android versionName', androidVersion],
+]) {
+  if (version !== rootPackage.version) {
+    failures.push(
+      `Version mismatch: package.json=${rootPackage.version}, ${label}=${String(version)}`,
+    );
+  }
 }
 
-const baseVersion = process.env.BASE_VERSION;
-if (baseVersion) {
+const baseVersion = process.env.BASE_VERSION?.trim();
+if (
+  process.env.GITHUB_EVENT_NAME === 'pull_request' &&
+  baseVersion &&
+  parseStableVersion(baseVersion)
+) {
   const comparison = compareVersions(rootPackage.version, baseVersion);
   if (comparison === null) {
-    failures.push(`Unable to compare PR versions ${rootPackage.version} and ${baseVersion}.`);
+    failures.push(
+      `Unable to compare PR versions ${rootPackage.version} and ${baseVersion}.`,
+    );
   } else if (comparison <= 0) {
     failures.push(
-      `A pull request must increase the source version: base=${baseVersion}, head=${rootPackage.version}`,
+      `Pull requests must increase the stable source version above main: base=${baseVersion}, head=${rootPackage.version}.`,
     );
   }
 }

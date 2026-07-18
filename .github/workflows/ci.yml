@@ -137,7 +137,17 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 26
-      - run: npm run quality:release
+      - name: Resolve base version for pull requests
+        if: github.event_name == 'pull_request'
+        shell: bash
+        run: |
+          git fetch --no-tags --depth=1 origin "${GITHUB_BASE_REF}"
+          git show "origin/${GITHUB_BASE_REF}:package.json" > "${RUNNER_TEMP}/base-package.json"
+          BASE_VERSION="$(node -p "require('${RUNNER_TEMP}/base-package.json').version")"
+          echo "BASE_VERSION=${BASE_VERSION}" >> "${GITHUB_ENV}"
+          echo "Base (${GITHUB_BASE_REF}) version: ${BASE_VERSION}"
+      - name: Verify release version integrity and PR bump
+        run: npm run quality:release
 
   governance:
     name: Governance and Agent Docs
@@ -491,7 +501,7 @@ jobs:
           if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
             release_tag="${GITHUB_REF_NAME}"
           else
-            release_tag="v$(node -p "require('./package.json').version")"
+            release_tag="v${{ needs.generate-apk.outputs.build_version }}"
           fi
           echo "tag=${release_tag}" >> "${GITHUB_OUTPUT}"
       - name: Download generated APK
