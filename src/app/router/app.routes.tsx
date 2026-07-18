@@ -4,6 +4,7 @@ import { dashboardRoutes } from '@/modules/dashboard';
 import { groupOrdersRoutes } from '@/modules/group-orders';
 import { orderSessionsRoutes } from '@/modules/order-sessions';
 import { ordersRoutes } from '@/modules/orders';
+import { sessionInviteRoutes } from '@/modules/session-invites';
 import { settingsRoutes } from '@/modules/settings';
 import { socialRoutes } from '@/modules/social';
 import { Route, Routes } from '@/packages/router';
@@ -26,6 +27,7 @@ const renderRoute = (route: AppRouteDescriptor) =>
 export function AppRoutes() {
   return (
     <Routes>
+      {sessionInviteRoutes.map((route) => renderRoute(route))}
       <Route element={<GuestRouteContainer />}>
         <Route path={AUTH_PATH} element={<AuthLayoutContainer />}>
           {authRoutes.map((route) => renderRoute(route))}

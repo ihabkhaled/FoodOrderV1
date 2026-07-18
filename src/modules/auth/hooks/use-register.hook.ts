@@ -1,11 +1,19 @@
 import { type SyntheticEvent, useState } from 'react';
 
 import { useApp } from '@/modules/session';
-import { useNavigate } from '@/packages/router';
+import { useNavigate, useSearchParams } from '@/packages/router';
 import { isEmail, validatePassword } from '@/shared/helpers';
 import type { MessageKey } from '@/shared/i18n';
 
-import { POST_AUTH_REDIRECT_PATH } from '../routes/auth-route-paths.constants';
+import {
+  buildAuthPathWithReturnTo,
+  resolvePostAuthRedirect,
+  RETURN_TO_QUERY_PARAMETER,
+} from '../helpers/post-auth-redirect.helper';
+import {
+  LOGIN_PATH,
+  POST_AUTH_REDIRECT_PATH,
+} from '../routes/auth-route-paths.constants';
 
 export interface RegisterViewModel {
   t: (key: MessageKey) => string;
@@ -17,12 +25,17 @@ export interface RegisterViewModel {
   setPassword: (value: string) => void;
   error: string;
   busy: boolean;
+  loginPath: string;
   submit: (event: SyntheticEvent) => Promise<void>;
 }
 
 export function useRegister(): RegisterViewModel {
   const { t, register, errorMessage } = useApp();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const returnTo = resolvePostAuthRedirect(
+    searchParams.get(RETURN_TO_QUERY_PARAMETER),
+  );
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -48,7 +61,7 @@ export function useRegister(): RegisterViewModel {
     try {
       setBusy(true);
       await register(fullName.trim(), email.trim().toLowerCase(), password);
-      await navigate(POST_AUTH_REDIRECT_PATH);
+      await navigate(returnTo || POST_AUTH_REDIRECT_PATH);
     } catch (error_) {
       setError(errorMessage(error_));
     } finally {
@@ -66,6 +79,7 @@ export function useRegister(): RegisterViewModel {
     setPassword,
     error,
     busy,
+    loginPath: buildAuthPathWithReturnTo(LOGIN_PATH, returnTo),
     submit,
   };
 }

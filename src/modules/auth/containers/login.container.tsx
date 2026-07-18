@@ -2,10 +2,7 @@ import { Link } from '@/packages/router';
 import { PasswordField } from '@/shared/ui';
 
 import { useLogin } from '../hooks/use-login.hook';
-import {
-  FORGOT_PASSWORD_PATH,
-  REGISTER_PATH,
-} from '../routes/auth-route-paths.constants';
+import { FORGOT_PASSWORD_PATH } from '../routes/auth-route-paths.constants';
 
 export function LoginContainer() {
   const vm = useLogin();
@@ -46,7 +43,8 @@ export function LoginContainer() {
       </button>
       <Link to={FORGOT_PASSWORD_PATH}>{vm.t('forgotPassword')}</Link>
       <p>
-        {vm.t('noAccount')} <Link to={REGISTER_PATH}>{vm.t('register')}</Link>
+        {vm.t('noAccount')}{' '}
+        <Link to={vm.registerPath}>{vm.t('register')}</Link>
       </p>
     </form>
   );
