@@ -28,12 +28,14 @@ export interface TransitionOrderSessionInput {
 
 export interface UpdateSessionParticipantResponseInput {
   sessionId: string;
+  expectedSessionRevision: number;
   expectedParticipantRevision: number;
   response: ParticipantResponse;
 }
 
 export interface UpdateSessionContributionInput {
   sessionId: string;
+  expectedSessionRevision: number;
   itemId: string;
   operation: ContributionOperation;
   value: number;
