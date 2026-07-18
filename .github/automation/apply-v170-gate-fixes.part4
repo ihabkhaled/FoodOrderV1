@@ -1,0 +1,22 @@
+# Prevent unicorn/require-array-join-separator from treating a domain action as Array.join.
+path = 'src/modules/session-invites/hooks/use-session-invite.hook.ts'
+replace(path, '  const join = async (): Promise<void> => {', '  const joinAsGuest = async (): Promise<void> => {')
+replace(path, '    join,\n', '    joinAsGuest,\n')
+replace(
+    'src/modules/session-invites/types/session-invite-ui.types.ts',
+    '  join: () => Promise<void>;',
+    '  joinAsGuest: () => Promise<void>;',
+)
+container_path = 'src/modules/session-invites/session-invite.container.tsx'
+container_text = read(container_path)
+container_text = container_text.replace("void viewModel.join(',');", 'void viewModel.joinAsGuest();')
+container_text = container_text.replace('void viewModel.join();', 'void viewModel.joinAsGuest();')
+write(container_path, container_text)
+
+# Keep Vercel on the supported deterministic Node.js major.
+package = json.loads(read('package.json'))
+package['engines']['node'] = '24.x'
+write('package.json', json.dumps(package, indent=2) + '\n')
+lock = json.loads(read('package-lock.json'))
+lock['packages']['']['engines']['node'] = '24.x'
+write('package-lock.json', json.dumps(lock, indent=2) + '\n')
