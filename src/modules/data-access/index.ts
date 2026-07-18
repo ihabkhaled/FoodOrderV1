@@ -4,6 +4,8 @@ import { env } from '@/platform/environment';
 import { FirebaseEmailAuthService } from './gateways/firebase-auth-email.gateway';
 import { FirestoreCallableGroupOrderService } from './gateways/firestore-callable-group-order.gateway';
 import { FirestoreCallableOrderLifecycleService } from './gateways/firestore-callable-order-lifecycle.gateway';
+import { FirestoreCallableOrderSessionService } from './gateways/firestore-callable-order-session.gateway';
+import { FirestoreCallableSessionInviteService } from './gateways/firestore-callable-session-invite.gateway';
 import { FirestoreCallableSocialService } from './gateways/firestore-callable-social.gateway';
 import { FirestoreDataService } from './gateways/firestore-data.gateway';
 import { FirestoreNotificationService } from './gateways/firestore-notification.gateway';
@@ -13,7 +15,9 @@ import { LocalDataService } from './gateways/local-data.gateway';
 import { LocalGroupOrderService } from './gateways/local-group-order.gateway';
 import { LocalNotificationService } from './gateways/local-notification.gateway';
 import { LocalOrderLifecycleService } from './gateways/local-order-lifecycle.gateway';
+import { LocalOrderSessionService } from './gateways/local-order-session.gateway';
 import { LocalPaginationService } from './gateways/local-pagination.gateway';
+import { LocalSessionInviteService } from './gateways/local-session-invite.gateway';
 import { LocalSocialManagementService } from './gateways/local-social-management.gateway';
 
 export * from './contracts';
@@ -25,7 +29,9 @@ export {
   LocalNotificationService,
   pushLocalNotification,
 } from './gateways/local-notification.gateway';
+export { LocalOrderSessionService } from './gateways/local-order-session.gateway';
 export { LocalPaginationService } from './gateways/local-pagination.gateway';
+export { LocalSessionInviteService } from './gateways/local-session-invite.gateway';
 export { LocalSharingService } from './gateways/local-sharing.gateway';
 export { LocalSocialManagementService } from './gateways/local-social-management.gateway';
 export * from './helpers';
@@ -44,6 +50,12 @@ export const sharingService = env.firebaseEnabled
 export const orderLifecycleService = env.firebaseEnabled
   ? withFirebaseErrorTranslation(new FirestoreCallableOrderLifecycleService())
   : new LocalOrderLifecycleService();
+export const orderSessionService = env.firebaseEnabled
+  ? withFirebaseErrorTranslation(new FirestoreCallableOrderSessionService())
+  : new LocalOrderSessionService();
+export const sessionInviteService = env.firebaseEnabled
+  ? withFirebaseErrorTranslation(new FirestoreCallableSessionInviteService())
+  : new LocalSessionInviteService();
 export const paginationService = env.firebaseEnabled
   ? withFirebaseErrorTranslation(new FirestorePaginationService())
   : new LocalPaginationService(dataService, sharingService);
