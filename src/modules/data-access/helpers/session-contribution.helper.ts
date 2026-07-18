@@ -1,9 +1,12 @@
-import { MAX_ORDER_QUANTITY } from './bucket.helper';
+import type { BucketPricingPolicy } from '../types/domain.types';
 import type {
   SessionContribution,
   SessionContributionMutationInput,
   SessionContributionMutationRecord,
+  SessionMenuItemSnapshot,
 } from '../types/order-session.types';
+import { MAX_ORDER_QUANTITY } from './bucket.helper';
+import { calculateBasisPointCharge } from './group-order.helper';
 
 export interface SessionContributionMutationState {
   contribution: SessionContribution | null;
@@ -16,6 +19,11 @@ export interface SessionContributionMutationResult {
   alreadyApplied: boolean;
 }
 
+export interface SessionPricingSnapshot {
+  menuItems: readonly SessionMenuItemSnapshot[];
+  pricingPolicy: BucketPricingPolicy;
+}
+
 const validateQuantity = (value: number): number => {
   if (!Number.isSafeInteger(value) || value < 0 || value > MAX_ORDER_QUANTITY) {
     throw new Error(
@@ -23,6 +31,21 @@ const validateQuantity = (value: number): number => {
     );
   }
   return value;
+};
+
+const validateAggregateQuantity = (value: number): number => {
+  if (!Number.isSafeInteger(value) || value < 0) {
+    throw new Error('Aggregate quantity must be a non-negative safe integer.');
+  }
+  return value;
+};
+
+const toSafeNumber = (value: bigint, label: string): number => {
+  const result = Number(value);
+  if (!Number.isSafeInteger(result)) {
+    throw new TypeError(`${label} exceeds the supported money range.`);
+  }
+  return result;
 };
 
 const omitQuantity = (
@@ -107,4 +130,44 @@ export const computeSessionAggregate = (
     }
   }
   return aggregate;
+};
+
+export const calculateSessionExpectedGrandTotalMinor = (
+  snapshot: SessionPricingSnapshot,
+  aggregate: Readonly<Record<string, number>>,
+): number => {
+  const menuItems = new Map(
+    snapshot.menuItems.map((item) => [item.id, item] as const),
+  );
+  let itemSubtotalMinor = 0n;
+
+  for (const [itemId, quantityValue] of Object.entries(aggregate)) {
+    const quantity = validateAggregateQuantity(quantityValue);
+    if (quantity === 0) continue;
+    const item = menuItems.get(itemId);
+    if (!item?.active) {
+      throw new Error(`Aggregate references an unavailable menu item: ${itemId}.`);
+    }
+    const lineTotal = BigInt(quantity) * BigInt(item.unitPriceMinor);
+    itemSubtotalMinor += lineTotal;
+    toSafeNumber(lineTotal, 'Line total');
+    toSafeNumber(itemSubtotalMinor, 'Item subtotal');
+  }
+
+  const subtotal = toSafeNumber(itemSubtotalMinor, 'Item subtotal');
+  const vatMinor = calculateBasisPointCharge(
+    subtotal,
+    snapshot.pricingPolicy.vatBasisPoints,
+  );
+  const serviceMinor = calculateBasisPointCharge(
+    subtotal,
+    snapshot.pricingPolicy.serviceBasisPoints,
+  );
+  return toSafeNumber(
+    BigInt(subtotal) +
+      BigInt(vatMinor) +
+      BigInt(serviceMinor) +
+      BigInt(snapshot.pricingPolicy.deliveryMinor),
+    'Session grand total',
+  );
 };
