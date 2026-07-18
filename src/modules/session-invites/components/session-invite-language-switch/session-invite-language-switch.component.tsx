@@ -15,7 +15,9 @@ export function SessionInviteLanguageSwitch({
         type="button"
         className={locale === 'en' ? 'is-active' : ''}
         aria-pressed={locale === 'en'}
-        onClick={() => onChange('en')}
+        onClick={() => {
+          onChange('en');
+        }}
       >
         {translate(locale, 'languageEnglish')}
       </button>
@@ -23,7 +25,9 @@ export function SessionInviteLanguageSwitch({
         type="button"
         className={locale === 'ar' ? 'is-active' : ''}
         aria-pressed={locale === 'ar'}
-        onClick={() => onChange('ar')}
+        onClick={() => {
+          onChange('ar');
+        }}
       >
         {translate(locale, 'languageArabic')}
       </button>

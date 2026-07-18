@@ -1,4 +1,4 @@
-import { type FormEvent, useEffect, useState } from 'react';
+import { type SyntheticEvent, useEffect, useState } from 'react';
 
 import {
   dataService,
@@ -35,7 +35,7 @@ export interface CreateOrderSessionViewModel {
   error: string;
   locale: 'en' | 'ar';
   translate: typeof translateOrderSession;
-  submit: (event: FormEvent<HTMLFormElement>) => Promise<void>;
+  submit: (event: SyntheticEvent<HTMLFormElement>) => Promise<void>;
 }
 
 export function useCreateOrderSession(): CreateOrderSessionViewModel {
@@ -72,7 +72,7 @@ export function useCreateOrderSession(): CreateOrderSessionViewModel {
             : translateOrderSession(locale, 'sessionNotFound'),
         );
       })
-      .catch((error_) => {
+      .catch((error_: unknown) => {
         if (active) {
           setError(
             error_ instanceof Error
@@ -90,7 +90,9 @@ export function useCreateOrderSession(): CreateOrderSessionViewModel {
     };
   }, [locale, menuTemplateId, user]);
 
-  const submit = async (event: FormEvent<HTMLFormElement>) => {
+  const submit = async (
+    event: SyntheticEvent<HTMLFormElement>,
+  ): Promise<void> => {
     event.preventDefault();
     if (!user || !menu) return;
     try {
@@ -104,7 +106,7 @@ export function useCreateOrderSession(): CreateOrderSessionViewModel {
         autoLock,
       });
       showToast(translateOrderSession(locale, 'sessionCreated'), 'success');
-      navigate(buildOrderSessionDetailsRoute(saved.id));
+      await navigate(buildOrderSessionDetailsRoute(saved.id));
     } catch (error_) {
       setError(
         error_ instanceof Error

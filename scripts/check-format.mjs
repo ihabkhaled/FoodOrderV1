@@ -11,8 +11,8 @@ const excludedPaths = [
   '.git',
   '.husky/_',
   '.ai/local',
+  '.vercel',
   '.worktrees',
-  'node_modules',
   'dist',
   'coverage',
   'android',
@@ -21,6 +21,8 @@ const excludedPaths = [
   'test-results',
   'ui-shots',
 ];
+
+const excludedDirectoryNames = new Set(['node_modules']);
 
 const supportedExtensions = new Set([
   '.css',
@@ -46,11 +48,15 @@ const toRelativePath = (absolutePath) =>
 
 const isExcluded = (absolutePath) => {
   const relativePath = toRelativePath(absolutePath);
+  const pathSegments = relativePath.split('/');
 
-  return excludedPaths.some(
-    (excludedPath) =>
-      relativePath === excludedPath ||
-      relativePath.startsWith(`${excludedPath}/`),
+  return (
+    pathSegments.some((segment) => excludedDirectoryNames.has(segment)) ||
+    excludedPaths.some(
+      (excludedPath) =>
+        relativePath === excludedPath ||
+        relativePath.startsWith(`${excludedPath}/`),
+    )
   );
 };
 

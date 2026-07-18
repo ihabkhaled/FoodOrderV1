@@ -40,7 +40,7 @@ export const BILLING_PLAN_CATALOG = {
       [USAGE_METER.workspaceMembers]: 0,
       [USAGE_METER.menuTemplates]: 100,
       [USAGE_METER.attachmentStorageBytes]: megabytes(500),
-      [USAGE_METER.automatedRemindersPerMonth]: 1_000,
+      [USAGE_METER.automatedRemindersPerMonth]: 1000,
       [USAGE_METER.advancedExportsPerMonth]: 100,
       [USAGE_METER.historyRetentionDays]: 730,
     },

@@ -101,11 +101,11 @@ export function SessionMenu({
           );
         })}
       </ul>
-      {!canContribute ? (
+      {canContribute ? null : (
         <p className="inline-notice" role="status">
           {translate(locale, 'contributionsClosed')}
         </p>
-      ) : null}
+      )}
     </section>
   );
 }

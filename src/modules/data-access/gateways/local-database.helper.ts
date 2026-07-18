@@ -124,7 +124,7 @@ export const readDatabase = (): LocalDatabase => {
   }
   for (const [bucketId, members] of Object.entries(parsed.sharing.members)) {
     parsed.sharing.members[bucketId] = members.map((member) =>
-      sanitizeBucketMember(member as LegacyBucketMember),
+      sanitizeBucketMember(member),
     );
   }
   return parsed;
@@ -162,8 +162,9 @@ export const memberOf = (
   bucketId: string,
   userId: string,
 ): BucketMember | null =>
-  (database.sharing.members[bucketId] ?? []).find((member) => member.userId === userId) ??
-  null;
+  (database.sharing.members[bucketId] ?? []).find(
+    (member) => member.userId === userId,
+  ) ?? null;
 
 export const storeBucket = (
   database: LocalDatabase,

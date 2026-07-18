@@ -2,8 +2,8 @@ import { nowIso } from '@/shared/helpers';
 
 import {
   ORDER_SESSION_STATUS,
-  PARTICIPANT_RESPONSE,
   type OrderSessionStatus,
+  PARTICIPANT_RESPONSE,
   type ParticipantResponse,
 } from '../enums';
 import type {
@@ -89,7 +89,7 @@ const assertRequiredText = (value: string, label: string): string => {
 
 const assertIsoTimestamp = (value: string, label: string): string => {
   if (Number.isNaN(Date.parse(value))) {
-    throw new Error(`${label} must be a valid ISO timestamp.`);
+    throw new TypeError(`${label} must be a valid ISO timestamp.`);
   }
   return value;
 };

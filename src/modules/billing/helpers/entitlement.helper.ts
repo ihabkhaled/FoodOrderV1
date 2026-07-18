@@ -4,10 +4,10 @@ import {
 } from '../constants/billing-plans.constants';
 import {
   BILLING_PLAN,
-  ENTITLEMENT_DECISION,
-  SUBSCRIPTION_STATUS,
   type BillingPlan,
   type Entitlement,
+  ENTITLEMENT_DECISION,
+  SUBSCRIPTION_STATUS,
   type SubscriptionStatus,
   type UsageMeter,
 } from '../enums/billing.enums';
@@ -28,7 +28,7 @@ const PAID_ACCESS_STATUSES = new Set<SubscriptionStatus>([
 
 const assertIsoTimestamp = (value: string, label: string): string => {
   if (Number.isNaN(Date.parse(value))) {
-    throw new Error(`${label} must be a valid ISO timestamp.`);
+    throw new TypeError(`${label} must be a valid ISO timestamp.`);
   }
   return value;
 };

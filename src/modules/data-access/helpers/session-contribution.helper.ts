@@ -72,7 +72,7 @@ export const applySessionContributionMutation = (
   }
 
   if (Number.isNaN(Date.parse(input.occurredAt))) {
-    throw new Error('Contribution time must be a valid ISO timestamp.');
+    throw new TypeError('Contribution time must be a valid ISO timestamp.');
   }
   const sessionId = input.sessionId.trim();
   const userId = input.userId.trim();

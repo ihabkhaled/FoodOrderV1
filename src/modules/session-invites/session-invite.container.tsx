@@ -1,6 +1,7 @@
+import './session-invites.css';
+
 import { ErrorState, Loading } from '@/shared/ui';
 
-import './session-invites.css';
 import { GuestSessionOrder } from './components/guest-session-order/guest-session-order.component';
 import { SessionInviteLanguageSwitch } from './components/session-invite-language-switch/session-invite-language-switch.component';
 import { SessionInvitePreview } from './components/session-invite-preview/session-invite-preview.component';
@@ -71,13 +72,15 @@ export function SessionInviteContainer() {
             loginPath={viewModel.loginPath}
             registerPath={viewModel.registerPath}
             translate={viewModel.translate}
-            onQuantityChange={(item, quantity) =>
-              void viewModel.changeQuantity(item, quantity)
-            }
-            onResponseChange={(response) =>
-              void viewModel.updateResponse(response)
-            }
-            onLinkAccount={() => void viewModel.linkAccount()}
+            onQuantityChange={(item, quantity) => {
+              void viewModel.changeQuantity(item, quantity);
+            }}
+            onResponseChange={(response) => {
+              void viewModel.updateResponse(response);
+            }}
+            onLinkAccount={() => {
+              void viewModel.linkAccount();
+            }}
           />
         ) : (
           <SessionInvitePreview
@@ -89,7 +92,9 @@ export function SessionInviteContainer() {
             registerPath={viewModel.registerPath}
             translate={viewModel.translate}
             onGuestNameChange={viewModel.setGuestName}
-            onJoin={() => void viewModel.join()}
+            onJoin={() => {
+              void viewModel.join();
+            }}
           />
         )}
       </div>

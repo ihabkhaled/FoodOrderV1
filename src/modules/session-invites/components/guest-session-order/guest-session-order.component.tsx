@@ -47,11 +47,11 @@ export function GuestSessionOrder({
         </div>
       </header>
 
-      {!contributionOpen ? (
+      {contributionOpen ? null : (
         <p className="session-invite-inline-notice" role="status">
           {translate(locale, 'contributionsClosed')}
         </p>
-      ) : null}
+      )}
 
       <section className="session-invite-menu-card stack">
         <div className="section-heading">
@@ -89,11 +89,7 @@ export function GuestSessionOrder({
                     )}
                   </strong>
                 </div>
-                {!item.active ? (
-                  <span className="session-invite-unavailable">
-                    {translate(locale, 'unavailable')}
-                  </span>
-                ) : (
+                {item.active ? (
                   <div
                     className="guest-quantity-control"
                     aria-label={translate(locale, 'quantityFor', {
@@ -106,7 +102,9 @@ export function GuestSessionOrder({
                       aria-label={translate(locale, 'decreaseQuantity', {
                         name: item.name,
                       })}
-                      onClick={() => onQuantityChange(item, Math.max(0, quantity - 1))}
+                      onClick={() => {
+                        onQuantityChange(item, Math.max(0, quantity - 1));
+                      }}
                     >
                       <Minus aria-hidden="true" />
                     </button>
@@ -117,7 +115,9 @@ export function GuestSessionOrder({
                       aria-label={translate(locale, 'increaseQuantity', {
                         name: item.name,
                       })}
-                      onClick={() => onQuantityChange(item, quantity + 1)}
+                      onClick={() => {
+                        onQuantityChange(item, quantity + 1);
+                      }}
                     >
                       <Plus aria-hidden="true" />
                     </button>
@@ -127,6 +127,10 @@ export function GuestSessionOrder({
                       </span>
                     ) : null}
                   </div>
+                ) : (
+                  <span className="session-invite-unavailable">
+                    {translate(locale, 'unavailable')}
+                  </span>
                 )}
               </article>
             );
@@ -150,7 +154,9 @@ export function GuestSessionOrder({
             type="button"
             className="button"
             disabled={!contributionOpen || responseBusy}
-            onClick={() => onResponseChange('done')}
+            onClick={() => {
+              onResponseChange('done');
+            }}
           >
             {translate(locale, 'markDone')}
           </button>
@@ -158,7 +164,9 @@ export function GuestSessionOrder({
             type="button"
             className="button secondary"
             disabled={!contributionOpen || responseBusy}
-            onClick={() => onResponseChange('skipped')}
+            onClick={() => {
+              onResponseChange('skipped');
+            }}
           >
             {translate(locale, 'skipOrder')}
           </button>
@@ -175,7 +183,9 @@ export function GuestSessionOrder({
             type="button"
             className="button secondary"
             disabled={linking}
-            onClick={onLinkAccount}
+            onClick={() => {
+              onLinkAccount();
+            }}
           >
             {translate(locale, linking ? 'linkingAccount' : 'linkAccount')}
           </button>

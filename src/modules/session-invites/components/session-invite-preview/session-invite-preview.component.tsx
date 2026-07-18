@@ -38,7 +38,10 @@ export function SessionInvitePreview({
         </p>
       </header>
 
-      <section className="session-invite-metadata" aria-label={translate(locale, 'pageTitle')}>
+      <section
+        className="session-invite-metadata"
+        aria-label={translate(locale, 'pageTitle')}
+      >
         <div>
           <span>{translate(locale, 'deadline')}</span>
           {deadline && preview.deadlineAt ? (
@@ -87,7 +90,9 @@ export function SessionInvitePreview({
             value={guestName}
             maxLength={120}
             disabled={!preview.isCollecting || joining}
-            onChange={(event) => onGuestNameChange(event.target.value)}
+            onChange={(event) => {
+              onGuestNameChange(event.target.value);
+            }}
           />
           <button
             type="submit"

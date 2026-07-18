@@ -48,9 +48,11 @@ export function AnalyticsConsentSection({
         {ANALYTICS_CONSENT_ORDER.map((consent) => {
           const option = optionsByValue.get(consent);
           if (!option) return null;
+          const inputId = `analytics-consent-${consent}`;
           return (
-            <label className="choice-card" key={consent}>
+            <label className="choice-card" htmlFor={inputId} key={consent}>
               <input
+                id={inputId}
                 type="radio"
                 name="analytics-consent"
                 value={consent}

@@ -22,7 +22,7 @@ const assertRequiredText = (value: string, label: string): string => {
 const expiryIso = (from: string, hours: number): string => {
   const fromMillis = Date.parse(from);
   if (Number.isNaN(fromMillis)) {
-    throw new Error('Expiry source must be a valid ISO timestamp.');
+    throw new TypeError('Expiry source must be a valid ISO timestamp.');
   }
   return new Date(fromMillis + hours * 3_600_000).toISOString();
 };
@@ -107,7 +107,7 @@ export const revokeSessionInvite = (
 ): SessionInvite => {
   if (invite.status === 'revoked') return invite;
   if (Number.isNaN(Date.parse(at))) {
-    throw new Error('Revocation time must be valid.');
+    throw new TypeError('Revocation time must be valid.');
   }
   return { ...invite, status: 'revoked', revokedAt: at };
 };
@@ -178,7 +178,7 @@ export const linkGuestCapability = (
     throw new Error('This guest capability cannot be linked.');
   }
   if (Number.isNaN(Date.parse(at))) {
-    throw new Error('Link time must be valid.');
+    throw new TypeError('Link time must be valid.');
   }
   return {
     ...stored,

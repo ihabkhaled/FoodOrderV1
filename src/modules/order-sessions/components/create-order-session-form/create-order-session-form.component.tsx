@@ -1,4 +1,4 @@
-import type { FormEvent } from 'react';
+import type { SyntheticEvent } from 'react';
 
 interface CreateOrderSessionFormProps {
   titleLabel: string;
@@ -17,7 +17,7 @@ interface CreateOrderSessionFormProps {
   onDeadlineChange: (value: string) => void;
   onTimezoneChange: (value: string) => void;
   onAutoLockChange: (value: boolean) => void;
-  onSubmit: (event: FormEvent<HTMLFormElement>) => void;
+  onSubmit: (event: SyntheticEvent<HTMLFormElement>) => void;
 }
 
 export function CreateOrderSessionForm({

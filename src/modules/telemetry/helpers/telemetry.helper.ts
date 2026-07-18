@@ -1,15 +1,15 @@
 import { createId, nowIso } from '@/shared/helpers';
 
 import {
+  type AnalyticsEventName,
   ANALYTICS_EVENT_PURPOSE,
   FORBIDDEN_ANALYTICS_PROPERTY_KEYS,
-  type AnalyticsEventName,
 } from '../constants/analytics-events.constants';
 import {
-  ANALYTICS_CONSENT,
-  TELEMETRY_PURPOSE,
   type AnalyticsConsent,
+  ANALYTICS_CONSENT,
   type TelemetryPurpose,
+  TELEMETRY_PURPOSE,
 } from '../enums/telemetry.enums';
 import type {
   AnalyticsEventPropertiesMap,
@@ -21,7 +21,6 @@ import type {
 } from '../types/telemetry.types';
 
 const MAX_PROPERTY_STRING_LENGTH = 128;
-const EMAIL_VALUE_PATTERN = /\b[^\s@]+@[^\s@]+\.[^\s@]+\b/u;
 const URL_VALUE_PATTERN = /\b(?:https?:\/\/|www\.)\S+/iu;
 
 const normalizedForbiddenKeys = new Set(
@@ -33,13 +32,22 @@ const normalizedForbiddenKeys = new Set(
 const normalizePropertyKey = (key: string): string =>
   key.replaceAll(/[^a-z0-9]/giu, '').toLowerCase();
 
+const containsEmailAddress = (value: string): boolean =>
+  value.split(/\s+/u).some((token) => {
+    const atIndex = token.indexOf('@');
+    if (atIndex <= 0) return false;
+    const domain = token.slice(atIndex + 1);
+    const dotIndex = domain.indexOf('.');
+    return dotIndex > 0 && dotIndex < domain.length - 1;
+  });
+
 const assertSafeStringValue = (value: string, key: string): void => {
   if (value.length > MAX_PROPERTY_STRING_LENGTH) {
     throw new Error(
       `Analytics property ${key} exceeds ${MAX_PROPERTY_STRING_LENGTH} characters.`,
     );
   }
-  if (EMAIL_VALUE_PATTERN.test(value)) {
+  if (containsEmailAddress(value)) {
     throw new Error(`Analytics property ${key} contains an email address.`);
   }
   if (URL_VALUE_PATTERN.test(value)) {
@@ -54,7 +62,7 @@ function assertSafePropertyValue(
   if (value === null || typeof value === 'boolean') return;
   if (typeof value === 'number') {
     if (!Number.isFinite(value)) {
-      throw new Error(`Analytics property ${key} must be a finite number.`);
+      throw new TypeError(`Analytics property ${key} must be a finite number.`);
     }
     return;
   }
@@ -102,7 +110,7 @@ export const createTelemetryEvent = <EventName extends AnalyticsEventName>(
 
   const occurredAt = input.occurredAt ?? nowIso();
   if (Number.isNaN(Date.parse(occurredAt))) {
-    throw new Error('Telemetry occurrence time must be a valid ISO timestamp.');
+    throw new TypeError('Telemetry occurrence time must be a valid ISO timestamp.');
   }
   assertAnalyticsObjectIsSafe(input.context);
   assertAnalyticsObjectIsSafe(input.properties);
