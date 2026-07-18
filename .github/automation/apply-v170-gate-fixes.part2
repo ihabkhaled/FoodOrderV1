@@ -1,0 +1,466 @@
+    (sum, participant) => sum + participant.reconciledTotalMinor,
+    0,
+  );
+  if (reconciledGrandTotal !== actualGrandTotalMinor) {
+    throw new Error('Reconciliation did not resolve to the actual grand total.');
+  }
+"""
+replace(path, old, """  const participantAdjustments = buildParticipantAdjustments(input, adjustments);
+  assertReconciledGrandTotal(participantAdjustments, actualGrandTotalMinor);
+""")
+
+# Accessibility: direct associated label text and description.
+path = 'src/modules/settings/components/analytics-consent-section/analytics-consent-section.component.tsx'
+old = """            <label className=\"choice-card\" htmlFor={inputId} key={consent}>
+              <input
+                id={inputId}
+                type=\"radio\"
+                name=\"analytics-consent\"
+                value={consent}
+                checked={value === consent}
+                onChange={() => {
+                  onChange(consent);
+                }}
+              />
+              <span className=\"stack-xs\">
+                <strong>{option.label}</strong>
+                <span className=\"muted\">{option.description}</span>
+              </span>
+            </label>
+"""
+new = """            <div className=\"choice-card\" key={consent}>
+              <input
+                id={inputId}
+                type=\"radio\"
+                name=\"analytics-consent\"
+                value={consent}
+                checked={value === consent}
+                aria-describedby={`${inputId}-description`}
+                onChange={() => {
+                  onChange(consent);
+                }}
+              />
+              <label className=\"stack-xs\" htmlFor={inputId}>
+                <strong>{option.label}</strong>
+                <span id={`${inputId}-description`} className=\"muted\">
+                  {option.description}
+                </span>
+              </label>
+            </div>
+"""
+replace(path, old, new)
+
+# Rules tests: remove unrelated bucket assertion and isolate emulator project.
+path = 'tests/firebase/firestore.rules.test.ts'
+old = """    expect(membership.data()).not.toHaveProperty('email');
+    expect(
+      (
+        await assertSucceeds(
+          getDoc(doc(database, 'buckets', BUCKET_ID)),
+        )
+      ).exists(),
+    ).toBe(true);
+"""
+new = """    expect(membership.exists()).toBe(true);
+    expect(membership.data()).not.toHaveProperty('email');
+"""
+replace(path, old, new)
+replace('tests/firebase/order-session.rules.test.ts', "const PROJECT_ID = 'food-order-v1-rules-test';", "const PROJECT_ID = 'food-order-v1-order-session-rules-test';")
+firebase = json.loads(read('firebase.json'))
+firebase['emulators']['singleProjectMode'] = False
+write('firebase.json', json.dumps(firebase, indent=2) + '\n')
+
+# Resolve no-await-expression-member in local session service tests.
+path = 'tests/services/localOrderSessionService.test.ts'
+text = read(path)
+text = text.replace("expect((await service.listForUser(organizer)).length).toBe(2);", "const organizerSessions = await service.listForUser(organizer);\n    expect(organizerSessions.length).toBe(2);")
+text = text.replace("expect((await service.listForUser(participant)).length).toBe(1);", "const participantSessions = await service.listForUser(participant);\n    expect(participantSessions.length).toBe(1);")
+text = text.replace("expect((await service.listForUser(unrelatedUser)).length).toBe(0);", "const unrelatedSessions = await service.listForUser(unrelatedUser);\n    expect(unrelatedSessions.length).toBe(0);")
+write(path, text)
+
+# Dead-code fixes.
+replace('src/modules/order-sessions/routes/order-sessions-route-paths.constants.ts', "\nexport const buildOrderSessionCreateRoute = (menuTemplateId: string): string =>\n  `/sessions/new/${encodeURIComponent(menuTemplateId)}`;\n", "\n")
+replace('src/modules/order-sessions/index.ts', "  buildOrderSessionCreateRoute,\n", "")
+replace('src/modules/session-invites/routes/session-invite.routes.tsx', "import { SessionInviteContainer } from '../session-invite.container';\n", "import { SessionInviteContainer } from '../session-invite.container';\nimport { SESSION_INVITE_PATH } from './session-invite-route-paths.constants';\n")
+replace('src/modules/session-invites/routes/session-invite.routes.tsx', "    path: 'invite/:shareCode',", "    path: SESSION_INVITE_PATH,")
+replace('src/modules/session-invites/index.ts', "export {\n  buildSessionInviteRoute,\n  SESSION_INVITE_PATH,\n} from './routes/session-invite-route-paths.constants';\n", "export { buildSessionInviteRoute } from './routes/session-invite-route-paths.constants';\n")
+replace('src/modules/session-invites/routes/session-invite-route-paths.constants.ts', "export const SESSION_INVITE_PATH = '/invite/:shareCode';", "export const SESSION_INVITE_PATH = 'invite/:shareCode';")
+path = 'src/modules/telemetry/types/telemetry.types.ts'
+text = read(path)
+start = text.index('export interface ErrorReportContext')
+text = text[:start].rstrip() + '\n'
+write(path, text)
+path = 'src/modules/telemetry/index.ts'
+for line in [
+    '  ErrorReportContext,\n',
+    '  ErrorReporter,\n',
+    '  PerformanceMonitor,\n',
+    '  PerformanceSpan,\n',
+]:
+    replace(path, line, '')
+knip = json.loads(read('knip.json'))
+knip['ignoreDependencies'] = [value for value in knip['ignoreDependencies'] if value != 'lint-staged']
+write('knip.json', json.dumps(knip, indent=2) + '\n')
+
+# Firebase runtime startup fallback: reuse app and fall back to default in-memory Firestore.
+replace('src/packages/firebase/app.adapter.ts', "export { type FirebaseApp, initializeApp } from 'firebase/app';", "export { type FirebaseApp, getApp, getApps, initializeApp } from 'firebase/app';")
+replace('src/packages/firebase/firestore.adapter.ts', "  getDocs,\n  initializeFirestore,", "  getDocs,\n  getFirestore,\n  initializeFirestore,")
+path = 'src/modules/data-access/gateways/firebase-runtime.gateway.ts'
+replace(path, "  getAuth,\n  initializeApp,\n  initializeFirestore,", "  getApp,\n  getApps,\n  getAuth,\n  getFirestore,\n  initializeApp,\n  initializeFirestore,")
+old = """  if (!runtime) {
+    const app = initializeApp(env.firebase);
+    const firestore = initializeFirestore(app, {
+      localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() }),
+    });
+    runtime = { app, auth: getAuth(app), firestore };
+  }
+"""
+new = """  if (!runtime) {
+    const app = getApps().length > 0 ? getApp() : initializeApp(env.firebase);
+    let firestore: Firestore;
+    try {
+      firestore = initializeFirestore(app, {
+        localCache: persistentLocalCache({
+          tabManager: persistentMultipleTabManager(),
+        }),
+      });
+    } catch {
+      firestore = getFirestore(app);
+    }
+    runtime = { app, auth: getAuth(app), firestore };
+  }
+"""
+replace(path, old, new)
+
+# Catch synchronous auth initialization failures so the app renders a recoverable state.
+path = 'src/modules/session/hooks/use-session-controller.hook.ts'
+old = """  useEffect(
+    () =>
+      authService.subscribe((nextUser) => {
+        setUser(nextUser);
+        setAuthLoading(false);
+        if (!nextUser) setProfile(null);
+      }),
+    [],
+  );
+"""
+new = """  useEffect(() => {
+    try {
+      return authService.subscribe((nextUser) => {
+        setUser(nextUser);
+        setAuthLoading(false);
+        if (!nextUser) setProfile(null);
+      });
+    } catch (error: unknown) {
+      setAuthLoading(false);
+      setToast({
+        message: userFacingErrorMessage(
+          error,
+          locale,
+          translate(locale, 'tryAgain'),
+        ),
+        kind: 'error',
+      });
+      return undefined;
+    }
+  }, [locale]);
+"""
+replace(path, old, new)
+
+# Safe service-worker registration and recovery adapter.
+write('src/platform/browser/service-worker.adapter.ts', """import { env, isProdBuild } from '../environment';
+
+export const registerServiceWorker = async (): Promise<void> => {
+  if (!('serviceWorker' in navigator) || !isProdBuild) return;
+
+  const serviceWorkerUrl = `/sw.js?v=${encodeURIComponent(env.appVersion)}`;
+  const registration = await navigator.serviceWorker
+    .register(serviceWorkerUrl, { updateViaCache: 'none' })
+    .catch(() => null);
+  if (!registration) return;
+  await registration.update().catch(() => undefined);
+};
+""")
+write('src/platform/browser/application-recovery.adapter.ts', """const unregisterServiceWorkers = async (): Promise<void> => {
+  if (!('serviceWorker' in navigator)) return;
+  const registrations = await navigator.serviceWorker.getRegistrations();
+  await Promise.all(registrations.map((registration) => registration.unregister()));
+};
+
+const clearApplicationCaches = async (): Promise<void> => {
+  if (!('caches' in window)) return;
+  const cacheNames = await caches.keys();
+  await Promise.all(
+    cacheNames
+      .filter((cacheName) => cacheName.startsWith('foodorder-v1-'))
+      .map((cacheName) => caches.delete(cacheName)),
+  );
+};
+
+export const recoverApplication = async (): Promise<void> => {
+  await Promise.allSettled([
+    unregisterServiceWorkers(),
+    clearApplicationCaches(),
+  ]);
+  window.location.reload();
+};
+""")
+replace('src/platform/browser/index.ts', "export { dispatchAppEvent, subscribeToAppEvent } from './app-events.adapter';\n", "export { recoverApplication } from './application-recovery.adapter';\nexport { dispatchAppEvent, subscribeToAppEvent } from './app-events.adapter';\n")
+write('public/sw.js', """const CACHE_PREFIX = 'foodorder-v1-shell-';
+const VERSION = new URL(self.location.href).searchParams.get('v') || 'unknown';
+const CACHE_NAME = `${CACHE_PREFIX}${VERSION}`;
+const SHELL_RESOURCES = ['/', '/index.html', '/manifest.webmanifest', '/icon.svg'];
+
+const isHtmlAssetMismatch = (request, response) =>
+  request.mode !== 'navigate' &&
+  ['script', 'style', 'worker'].includes(request.destination) &&
+  (response.headers.get('content-type') || '').includes('text/html');
+
+const cacheSuccessfulResponse = async (request, response) => {
+  if (
+    !response.ok ||
+    isHtmlAssetMismatch(request, response) ||
+    new URL(request.url).origin !== self.location.origin
+  )
+    return;
+  const cache = await caches.open(CACHE_NAME);
+  await cache.put(request, response.clone());
+};
+
+const networkFirstNavigation = async (request) => {
+  try {
+    const response = await fetch(request);
+    if (isHtmlAssetMismatch(request, response)) throw new Error('Invalid asset response.');
+    await cacheSuccessfulResponse(request, response);
+    return response;
+  } catch {
+    return (
+      (await caches.match(request)) ||
+      (await caches.match('/index.html')) ||
+      Response.error()
+    );
+  }
+};
+
+const exactResourceFallback = async (request) => {
+  try {
+    const response = await fetch(request);
+    if (isHtmlAssetMismatch(request, response)) throw new Error('Invalid asset response.');
+    await cacheSuccessfulResponse(request, response);
+    return response;
+  } catch {
+    const cached = await caches.match(request);
+    if (cached) return cached;
+    return Response.error();
+  }
+};
+
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) =>
+      Promise.allSettled(SHELL_RESOURCES.map((resource) => cache.add(resource))),
+    ),
+  );
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    caches.keys().then((cacheNames) =>
+      Promise.all(
+        cacheNames
+          .filter(
+            (cacheName) =>
+              cacheName.startsWith(CACHE_PREFIX) && cacheName !== CACHE_NAME,
+          )
+          .map((cacheName) => caches.delete(cacheName)),
+      ),
+    ),
+  );
+  self.clients.claim();
+});
+
+self.addEventListener('fetch', (event) => {
+  if (event.request.method !== 'GET') return;
+  event.respondWith(
+    event.request.mode === 'navigate'
+      ? networkFirstNavigation(event.request)
+      : exactResourceFallback(event.request),
+  );
+});
+""")
+
+# App-level recoverable error boundary with owned types/messages/styles.
+write('src/app/errors/app-error-boundary.types.ts', """import type { ErrorInfo, ReactNode } from 'react';
+
+export interface AppErrorBoundaryProps {
+  children: ReactNode;
+}
+
+export interface AppErrorBoundaryState {
+  hasError: boolean;
+}
+
+export interface AppErrorDetails {
+  error: unknown;
+  errorInfo: ErrorInfo;
+}
+""")
+write('src/app/errors/app-error-boundary.messages.ts', """export const APP_ERROR_MESSAGES = {
+  en: {
+    eyebrow: 'Recovery mode',
+    title: 'The app could not start correctly',
+    description:
+      'A cached update or an unexpected startup error interrupted the app. Clear the app cache and reload safely.',
+    action: 'Recover and reload',
+  },
+  ar: {
+    eyebrow: 'وضع الاستعادة',
+    title: 'تعذر تشغيل التطبيق بشكل صحيح',
+    description:
+      'أوقف تحديث مخزن مؤقت أو خطأ غير متوقع تشغيل التطبيق. امسح ذاكرة التطبيق وأعد التحميل بأمان.',
+    action: 'استعادة وإعادة التحميل',
+  },
+} as const;
+""")
+write('src/app/errors/app-error-boundary.component.tsx', """import './app-error-boundary.css';
+
+import { Component } from 'react';
+
+import { getDocumentLanguage, recoverApplication } from '@/platform/browser';
+
+import { APP_ERROR_MESSAGES } from './app-error-boundary.messages';
+import type {
+  AppErrorBoundaryProps,
+  AppErrorBoundaryState,
+} from './app-error-boundary.types';
+
+export class AppErrorBoundary extends Component<
+  AppErrorBoundaryProps,
+  AppErrorBoundaryState
+> {
+  override state: AppErrorBoundaryState = { hasError: false };
+
+  static getDerivedStateFromError(): AppErrorBoundaryState {
+    return { hasError: true };
+  }
+
+  override render() {
+    if (!this.state.hasError) return this.props.children;
+
+    const locale = getDocumentLanguage().toLowerCase().startsWith('ar')
+      ? 'ar'
+      : 'en';
+    const message = APP_ERROR_MESSAGES[locale];
+
+    return (
+      <main className=\"app-error-boundary\" dir={locale === 'ar' ? 'rtl' : 'ltr'}>
+        <section className=\"app-error-boundary__card\" role=\"alert\">
+          <p className=\"eyebrow\">{message.eyebrow}</p>
+          <h1>{message.title}</h1>
+          <p>{message.description}</p>
+          <button
+            type=\"button\"
+            className=\"button primary\"
+            onClick={() => void recoverApplication()}
+          >
+            {message.action}
+          </button>
+        </section>
+      </main>
+    );
+  }
+}
+""")
+write('src/app/errors/app-error-boundary.css', """.app-error-boundary {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right))
+    max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+  background: var(--color-background, #fff7ed);
+  color: var(--color-text, #1f2937);
+}
+
+.app-error-boundary__card {
+  width: min(100%, 38rem);
+  display: grid;
+  gap: 1rem;
+  padding: clamp(1.25rem, 4vw, 2rem);
+  border: 1px solid color-mix(in srgb, currentColor 16%, transparent);
+  border-radius: 1.25rem;
+  background: var(--color-surface, #ffffff);
+  box-shadow: 0 1.25rem 3rem rgb(15 23 42 / 12%);
+}
+
+.app-error-boundary__card h1,
+.app-error-boundary__card p {
+  margin: 0;
+}
+""")
+replace('src/app/index.ts', "export { AppRoutes } from './router/app.routes';\n", "export { AppErrorBoundary } from './errors/app-error-boundary.component';\nexport { AppRoutes } from './router/app.routes';\n")
+replace('src/main.tsx', "import { AppRoutes } from '@/app';", "import { AppErrorBoundary, AppRoutes } from '@/app';")
+old = """  <StrictMode>
+    <BrowserRouter>
+      <AppProvider>
+        <AppRoutes />
+      </AppProvider>
+    </BrowserRouter>
+  </StrictMode>,
+"""
+new = """  <StrictMode>
+    <AppErrorBoundary>
+      <BrowserRouter>
+        <AppProvider>
+          <AppRoutes />
+        </AppProvider>
+      </BrowserRouter>
+    </AppErrorBoundary>
+  </StrictMode>,
+"""
+replace('src/main.tsx', old, new)
+
+# Direct component test for the recovery boundary.
+write('tests/components/AppErrorBoundary.test.tsx', """import { fireEvent, render, screen } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+
+const recoverApplication = vi.fn<() => Promise<void>>().mockResolvedValue();
+
+vi.mock('@/platform/browser', async (importOriginal) => {
+  const original = await importOriginal<typeof import('@/platform/browser')>();
+  return {
+    ...original,
+    getDocumentLanguage: () => 'en',
+    recoverApplication,
+  };
+});
+
+import { AppErrorBoundary } from '@/app';
+
+function BrokenChild(): never {
+  throw new Error('startup failed');
+}
+
+describe('AppErrorBoundary', () => {
+  beforeEach(() => {
+    recoverApplication.mockClear();
+  });
+
+  it('renders a recoverable startup state and invokes cache recovery', () => {
+    render(
+      <AppErrorBoundary>
+        <BrokenChild />
+      </AppErrorBoundary>,
+    );
+
+    expect(
+      screen.getByRole('heading', { name: 'The app could not start correctly' }),
+    ).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Recover and reload' }));
+    expect(recoverApplication).toHaveBeenCalledOnce();
+  });
+});
+""")
+
+print('Applied v1.7 grouped fixes')
