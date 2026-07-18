@@ -1,4 +1,4 @@
-name: v1.7 Apply Lint Autofix Once
+name: v1.7 Export Autofixed Source
 
 on:
   pull_request:
@@ -7,22 +7,20 @@ on:
       - '.github/workflows/v170-apply-lint-autofix-once.yml'
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
-  group: v170-apply-lint-autofix-once
+  group: v170-export-autofixed-source
   cancel-in-progress: false
 
 jobs:
-  apply:
-    if: github.actor != 'github-actions[bot]'
+  export:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v7
         with:
           ref: 1.7.0
-          fetch-depth: 2
       - uses: actions/setup-node@v6
         with:
           node-version: 26
@@ -34,13 +32,17 @@ jobs:
       - run: npm --prefix functions ci
       - name: Apply repository-owned autofixes
         run: npm run lint:fix || true
-      - name: Commit one bulk autofix batch
+      - name: Remove transfer-only workflow from exported tree
+        run: rm .github/workflows/v170-apply-lint-autofix-once.yml
+      - name: Package complete source tree
         shell: bash
         run: |
-          set -euo pipefail
-          rm .github/workflows/v170-apply-lint-autofix-once.yml
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -A
-          git commit -m 'fix(quality): apply canonical lint autofixes'
-          git push origin HEAD:1.7.0
+          zip -qr "${RUNNER_TEMP}/FoodOrderV1-v170-autofixed.zip" . \
+            -x '.git/*' 'node_modules/*' 'functions/node_modules/*' 'dist/*' 'coverage/*' \
+               'playwright-report/*' 'test-results/*'
+      - uses: actions/upload-artifact@v7
+        with:
+          name: FoodOrderV1-v170-autofixed-source
+          path: ${{ runner.temp }}/FoodOrderV1-v170-autofixed.zip
+          if-no-files-found: error
+          retention-days: 7
