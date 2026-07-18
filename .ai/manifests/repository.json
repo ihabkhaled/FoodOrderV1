@@ -4,86 +4,6 @@
   ],
   "files": [
     {
-      "path": ".ai/BOOTSTRAP.md",
-      "bytes": 5798,
-      "hash": "ef2ae90add789bb947168dbf64b26473403926221b69f514e2e2259b566682dd"
-    },
-    {
-      "path": ".ai/CURRENT_STATE.md",
-      "bytes": 405,
-      "hash": "c1bda96c150e503997bb1efb0c8ccfad05801b137db459cf2443b2d6a34f5c33"
-    },
-    {
-      "path": ".ai/HOT_MEMORY.md",
-      "bytes": 709,
-      "hash": "08e0320607cb7d0122c3f2cb2aa9b1fe4ca6a5119b7e006561f90529c937094c"
-    },
-    {
-      "path": ".ai/QUICK_ROUTER.md",
-      "bytes": 364,
-      "hash": "f4da8f679fa02cb063318543ee054299848555ba027e673b751756df07f250d8"
-    },
-    {
-      "path": ".ai/README.md",
-      "bytes": 232,
-      "hash": "f5486f5a36e4e4cd24681cd460610671ed51ebdf28cb5965256e90f339aa834b"
-    },
-    {
-      "path": ".ai/graphs/source-test-graph.json",
-      "bytes": 47017,
-      "hash": "c6f13a6c035f56de7f5a8967c659ac74862aace3b11762cc2cf394e7e96bbeae"
-    },
-    {
-      "path": ".ai/hashes/documents.json",
-      "bytes": 20064,
-      "hash": "fa5589e2a9fad6053ae68b4593b0d828655093197e1d14859a7792f46441f0a8"
-    },
-    {
-      "path": ".ai/hashes/source.json",
-      "bytes": 43304,
-      "hash": "c8ed013374c1523ab18f7d8b9377e46b71cc4833c21af055a126d33d47bd7f7b"
-    },
-    {
-      "path": ".ai/indexes/task-types.json",
-      "bytes": 2203,
-      "hash": "d9ecfcf8b5fb1c4836ea1c2ee39bf5df6a5717cb2f22a341b48516701d589257"
-    },
-    {
-      "path": ".ai/manifests/modules.json",
-      "bytes": 595,
-      "hash": "718f3ddec700bc50123647a54a11806114818402f020ab54ea90e8acc75b33b2"
-    },
-    {
-      "path": ".ai/manifests/repository.json",
-      "bytes": 122588,
-      "hash": "867ef00195fe137b527a258f547c011f76a65b263f7af7e62d3f921205228abf"
-    },
-    {
-      "path": ".ai/manifests/tests.json",
-      "bytes": 9154,
-      "hash": "907a4ca354ca29df268890501a84c6b7aa626d9fe659bf0841a35ef938622ca6"
-    },
-    {
-      "path": ".ai/profiles/project.json",
-      "bytes": 274,
-      "hash": "4d22116e1d649d9ef167873da89c1c7b52d8dfb2782c3c4bfa2e5b081778eb60"
-    },
-    {
-      "path": ".ai/reports/context-performance.json",
-      "bytes": 655,
-      "hash": "169da2b19d2aadb1a37720f27262210efee8822c715f310c4d84d5a2a97cb816"
-    },
-    {
-      "path": ".ai/reports/token-usage.json",
-      "bytes": 75,
-      "hash": "1910b4646a94ffc9dd18921f7d32f0acd0093f8021413a0213e0b392279d756f"
-    },
-    {
-      "path": ".ai/reports/validation.json",
-      "bytes": 76,
-      "hash": "e45d784e73b2e8cd38ad3fbdfe5060a19ae32e9bdf7c5134d6be4a11fdcc5905"
-    },
-    {
       "path": ".editorconfig",
       "bytes": 188,
       "hash": "a6b98ea7cb6d61ed8d430dd0dffa46c87012b5cf859d4ce7207898954951fdcd"
@@ -1385,8 +1305,8 @@
     },
     {
       "path": "scripts/knowledge/cli.mjs",
-      "bytes": 9877,
-      "hash": "d3f460a27646c2af95e22650be72b79520e46ef3c78d579efa071037bc1e8685"
+      "bytes": 9921,
+      "hash": "f0cb90a11b1d6960f17354272fbfb43a3aefe3b30c7c8a6d8fd2f8c77fa34038"
     },
     {
       "path": "scripts/migrate-legacy-data.mjs",
