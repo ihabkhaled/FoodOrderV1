@@ -44,7 +44,29 @@ jobs:
           rm -rf .github/automation
           rm .github/workflows/v170-apply-lint-autofix-once.yml
           npm run format 2>&1 | tee diagnostic-format.log
+          npm run knowledge:build 2>&1 | tee diagnostic-knowledge.log
           npm run lint:fix 2>&1 | tee diagnostic-final-lint.log
+      - name: Build exact local-mode application
+        shell: bash
+        env:
+          VITE_FORCE_LOCAL_MODE: 'true'
+        run: |
+          set -o pipefail
+          npm run build 2>&1 | tee diagnostic-local-build.log
+      - name: Probe preview server
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm run preview -- --host 127.0.0.1 > diagnostic-preview.log 2>&1 &
+          PREVIEW_PID=$!
+          trap 'kill ${PREVIEW_PID} 2>/dev/null || true' EXIT
+          for attempt in {1..30}; do
+            if curl --fail --silent --show-error http://127.0.0.1:4173/ > diagnostic-preview-response.html; then
+              break
+            fi
+            sleep 1
+          done
+          curl --fail --silent --show-error http://127.0.0.1:4173/ > /dev/null
       - name: Run critical browser journey with trace
         shell: bash
         run: |
@@ -57,6 +79,7 @@ jobs:
           name: v170-critical-browser-diagnostics
           path: |
             diagnostic-*.log
+            diagnostic-preview-response.html
             gate-critical-e2e.log
             playwright-report/
             test-results/
