@@ -34,17 +34,13 @@ jobs:
       - run: npm --prefix functions ci
       - name: Apply repository-owned autofixes
         run: npm run lint:fix || true
-      - name: Replace triggers with one bulk commit
+      - name: Commit one bulk autofix batch
         shell: bash
         run: |
           set -euo pipefail
-          CURRENT_HEAD="$(git rev-parse HEAD)"
-          PREVIOUS_HEAD="$(git rev-parse HEAD~2)"
           rm .github/workflows/v170-apply-lint-autofix-once.yml
-          git add -A
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          TREE_SHA="$(git write-tree)"
-          COMMIT_SHA="$(printf '%s\n' 'fix(quality): apply canonical lint autofixes' | git commit-tree "$TREE_SHA" -p "$PREVIOUS_HEAD")"
-          git push origin "$COMMIT_SHA:refs/heads/1.7.0" \
-            --force-with-lease="refs/heads/1.7.0:${CURRENT_HEAD}"
+          git add -A
+          git commit -m 'fix(quality): apply canonical lint autofixes'
+          git push origin HEAD:1.7.0
