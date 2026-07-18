@@ -1,0 +1,104 @@
+# Follow-up lint refinements discovered by the first clean remote lint pass.
+replace(
+    'src/app/errors/app-error-boundary.component.tsx',
+    "import { APP_ERROR_MESSAGES } from './app-error-boundary.messages';",
+    "import { APP_ERROR_MESSAGES } from './app-error-boundary-messages.constants';",
+)
+replace(
+    'src/app/errors/app-error-boundary.component.tsx',
+    "    if (!this.state.hasError) return this.props.children;",
+    "    if (!this.state.hasError) return <>{this.props.children}</>;",
+)
+messages = read('src/app/errors/app-error-boundary.messages.ts')
+write('src/app/errors/app-error-boundary-messages.constants.ts', messages)
+(root / 'src/app/errors/app-error-boundary.messages.ts').unlink()
+write(
+    'src/app/errors/app-error-boundary.types.ts',
+    """import type { ReactNode } from 'react';
+
+export interface AppErrorBoundaryProps {
+  children: ReactNode;
+}
+
+export interface AppErrorBoundaryState {
+  hasError: boolean;
+}
+""",
+)
+
+path = 'src/modules/data-access/helpers/settlement.helper.ts'
+insert_before = "export const summarizeSettlements = (\n"
+status_map = """const PAYMENT_STATUS_COUNT_KEY = {
+  [PAYMENT_STATUS.unpaid]: 'unpaidCount',
+  [PAYMENT_STATUS.declaredPaid]: 'declaredPaidCount',
+  [PAYMENT_STATUS.proofSubmitted]: 'proofSubmittedCount',
+  [PAYMENT_STATUS.verified]: 'verifiedCount',
+  [PAYMENT_STATUS.rejected]: 'rejectedCount',
+  [PAYMENT_STATUS.waived]: 'waivedCount',
+  [PAYMENT_STATUS.refunded]: 'refundedCount',
+} as const satisfies Record<
+  PaymentStatus,
+  | 'unpaidCount'
+  | 'declaredPaidCount'
+  | 'proofSubmittedCount'
+  | 'verifiedCount'
+  | 'rejectedCount'
+  | 'waivedCount'
+  | 'refundedCount'
+>;
+
+"""
+replace(path, insert_before, status_map + insert_before)
+old = """    if (settlement.status === PAYMENT_STATUS.unpaid) summary.unpaidCount += 1;
+    if (settlement.status === PAYMENT_STATUS.declaredPaid) {
+      summary.declaredPaidCount += 1;
+    }
+    if (settlement.status === PAYMENT_STATUS.proofSubmitted) {
+      summary.proofSubmittedCount += 1;
+    }
+    if (settlement.status === PAYMENT_STATUS.verified) summary.verifiedCount += 1;
+    if (settlement.status === PAYMENT_STATUS.rejected) summary.rejectedCount += 1;
+    if (settlement.status === PAYMENT_STATUS.waived) summary.waivedCount += 1;
+    if (settlement.status === PAYMENT_STATUS.refunded) summary.refundedCount += 1;
+"""
+new = """    const statusCountKey = PAYMENT_STATUS_COUNT_KEY[settlement.status];
+    summary[statusCountKey] += 1;
+"""
+replace(path, old, new)
+
+path = 'tests/components/AppErrorBoundary.test.tsx'
+old = """vi.mock('@/platform/browser', async (importOriginal) => {
+  const original = await importOriginal<typeof import('@/platform/browser')>();
+  return {
+    ...original,
+    getDocumentLanguage: () => 'en',
+    recoverApplication,
+  };
+});
+"""
+new = """vi.mock('@/platform/browser', () => ({
+  getDocumentLanguage: () => 'en',
+  recoverApplication,
+}));
+"""
+replace(path, old, new)
+
+path = 'tests/services/localOrderSessionService.test.ts'
+old = """    expect((await service.listSessions(OWNER)).map((item) => item.id)).toEqual([
+      session.id,
+    ]);
+    expect((await service.listSessions(VIEWER)).map((item) => item.id)).toEqual([
+      session.id,
+    ]);
+    expect((await service.getSessionView(VIEWER, session.id))?.session.id).toBe(
+      session.id,
+    );
+"""
+new = """    const ownerSessions = await service.listSessions(OWNER);
+    expect(ownerSessions.map((item) => item.id)).toEqual([session.id]);
+    const viewerSessions = await service.listSessions(VIEWER);
+    expect(viewerSessions.map((item) => item.id)).toEqual([session.id]);
+    const viewerSession = await service.getSessionView(VIEWER, session.id);
+    expect(viewerSession?.session.id).toBe(session.id);
+"""
+replace(path, old, new)
