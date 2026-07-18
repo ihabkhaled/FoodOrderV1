@@ -2,8 +2,8 @@ import { nowIso } from '@/shared/helpers';
 
 import {
   PAYMENT_STATUS,
-  SETTLEMENT_ALLOCATION_STRATEGY,
   type PaymentStatus,
+  SETTLEMENT_ALLOCATION_STRATEGY,
 } from '../enums';
 import type {
   ParticipantSettlement,
@@ -48,7 +48,7 @@ const assertRequiredText = (value: string, label: string): string => {
 
 const assertIsoTimestamp = (value: string, label: string): string => {
   if (Number.isNaN(Date.parse(value))) {
-    throw new Error(`${label} must be a valid ISO timestamp.`);
+    throw new TypeError(`${label} must be a valid ISO timestamp.`);
   }
   return value;
 };
@@ -106,6 +106,44 @@ export const canTransitionPaymentStatus = (
   currentStatus === nextStatus ||
   PAYMENT_STATUS_TRANSITIONS[currentStatus].includes(nextStatus);
 
+const settlementAmountsForStatus = (
+  settlement: ParticipantSettlement,
+  nextStatus: PaymentStatus,
+): Pick<ParticipantSettlement, 'outstandingMinor' | 'paidMinor'> => {
+  if (nextStatus === PAYMENT_STATUS.verified || nextStatus === PAYMENT_STATUS.waived) {
+    return { paidMinor: settlement.reconciledTotalMinor, outstandingMinor: 0 };
+  }
+  if (nextStatus === PAYMENT_STATUS.refunded) {
+    return { paidMinor: 0, outstandingMinor: settlement.reconciledTotalMinor };
+  }
+  return {
+    paidMinor: settlement.paidMinor,
+    outstandingMinor: settlement.outstandingMinor,
+  };
+};
+
+const settlementTimestampPatch = (
+  nextStatus: PaymentStatus,
+  at: string,
+): Partial<ParticipantSettlement> => {
+  switch (nextStatus) {
+    case PAYMENT_STATUS.declaredPaid:
+      return { declaredAt: at };
+    case PAYMENT_STATUS.proofSubmitted:
+      return { proofSubmittedAt: at };
+    case PAYMENT_STATUS.verified:
+      return { verifiedAt: at };
+    case PAYMENT_STATUS.rejected:
+      return { rejectedAt: at };
+    case PAYMENT_STATUS.waived:
+      return { waivedAt: at };
+    case PAYMENT_STATUS.refunded:
+      return { refundedAt: at };
+    case PAYMENT_STATUS.unpaid:
+      return {};
+  }
+};
+
 export const transitionParticipantPaymentStatus = (
   settlement: ParticipantSettlement,
   nextStatus: PaymentStatus,
@@ -128,32 +166,17 @@ export const transitionParticipantPaymentStatus = (
     throw new Error('A payment proof attachment is required.');
   }
 
-  const isSettled =
-    nextStatus === PAYMENT_STATUS.verified || nextStatus === PAYMENT_STATUS.waived;
-  const isRefunded = nextStatus === PAYMENT_STATUS.refunded;
-  const next: ParticipantSettlement = {
+  const amounts = settlementAmountsForStatus(settlement, nextStatus);
+  return {
     ...settlement,
+    ...amounts,
+    ...settlementTimestampPatch(nextStatus, at),
     status: nextStatus,
     proofAttachmentId: normalizedProofId ?? settlement.proofAttachmentId,
-    paidMinor: isSettled ? settlement.reconciledTotalMinor : isRefunded ? 0 : settlement.paidMinor,
-    outstandingMinor: isSettled
-      ? 0
-      : isRefunded
-        ? settlement.reconciledTotalMinor
-        : settlement.outstandingMinor,
     statusActorId: normalizedActorId,
     revision: settlement.revision + 1,
     updatedAt: at,
   };
-
-  if (nextStatus === PAYMENT_STATUS.declaredPaid) next.declaredAt = at;
-  if (nextStatus === PAYMENT_STATUS.proofSubmitted) next.proofSubmittedAt = at;
-  if (nextStatus === PAYMENT_STATUS.verified) next.verifiedAt = at;
-  if (nextStatus === PAYMENT_STATUS.rejected) next.rejectedAt = at;
-  if (nextStatus === PAYMENT_STATUS.waived) next.waivedAt = at;
-  if (nextStatus === PAYMENT_STATUS.refunded) next.refundedAt = at;
-
-  return next;
 };
 
 const buildAutomaticAdjustments = (
@@ -322,6 +345,25 @@ export const applySettlementReconciliation = (
   };
 };
 
+const PAYMENT_STATUS_COUNT_KEY = {
+  [PAYMENT_STATUS.unpaid]: 'unpaidCount',
+  [PAYMENT_STATUS.declaredPaid]: 'declaredPaidCount',
+  [PAYMENT_STATUS.proofSubmitted]: 'proofSubmittedCount',
+  [PAYMENT_STATUS.verified]: 'verifiedCount',
+  [PAYMENT_STATUS.rejected]: 'rejectedCount',
+  [PAYMENT_STATUS.waived]: 'waivedCount',
+  [PAYMENT_STATUS.refunded]: 'refundedCount',
+} as const satisfies Record<
+  PaymentStatus,
+  | 'unpaidCount'
+  | 'declaredPaidCount'
+  | 'proofSubmittedCount'
+  | 'verifiedCount'
+  | 'rejectedCount'
+  | 'waivedCount'
+  | 'refundedCount'
+>;
+
 export const summarizeSettlements = (
   settlements: ParticipantSettlement[],
 ): SettlementStatusSummary => {
@@ -351,17 +393,8 @@ export const summarizeSettlements = (
       summary.verifiedGrandTotalMinor += settlement.paidMinor;
     }
 
-    if (settlement.status === PAYMENT_STATUS.unpaid) summary.unpaidCount += 1;
-    if (settlement.status === PAYMENT_STATUS.declaredPaid) {
-      summary.declaredPaidCount += 1;
-    }
-    if (settlement.status === PAYMENT_STATUS.proofSubmitted) {
-      summary.proofSubmittedCount += 1;
-    }
-    if (settlement.status === PAYMENT_STATUS.verified) summary.verifiedCount += 1;
-    if (settlement.status === PAYMENT_STATUS.rejected) summary.rejectedCount += 1;
-    if (settlement.status === PAYMENT_STATUS.waived) summary.waivedCount += 1;
-    if (settlement.status === PAYMENT_STATUS.refunded) summary.refundedCount += 1;
+    const statusCountKey = PAYMENT_STATUS_COUNT_KEY[settlement.status];
+    summary[statusCountKey] += 1;
   }
 
   return summary;

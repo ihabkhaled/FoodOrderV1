@@ -1,23 +1,23 @@
 import { describe, expect, it } from 'vitest';
 
 import {
-  DEFAULT_PRICING_POLICY,
-  ORDER_SESSION_STATUS,
-  PARTICIPANT_IDENTITY_KIND,
-  PARTICIPANT_RESPONSE,
-  SESSION_PARTICIPANT_ROLE,
   assertSessionAcceptsContributions,
   canTransitionOrderSession,
   canTransitionParticipantResponse,
   createOrderSession,
   createSessionParticipant,
+  DEFAULT_PRICING_POLICY,
   isParticipantEligibleForFinalization,
   isSessionContributionOpen,
   markParticipantResponse,
+  ORDER_SESSION_STATUS,
+  type OrderSessionDraft,
+  PARTICIPANT_IDENTITY_KIND,
+  PARTICIPANT_RESPONSE,
+  SESSION_PARTICIPANT_ROLE,
+  type SessionMenuItemSnapshot,
   summarizeParticipantResponses,
   transitionOrderSession,
-  type OrderSessionDraft,
-  type SessionMenuItemSnapshot,
 } from '@/modules/data-access';
 
 const CREATED_AT = '2026-07-18T08:00:00.000Z';
@@ -408,15 +408,15 @@ describe('session contribution availability', () => {
     expect(isSessionContributionOpen(collecting, 'invalid')).toBe(false);
     expect(isSessionContributionOpen(session(), CREATED_AT)).toBe(false);
     expect(() =>
-      assertSessionAcceptsContributions(
+      { assertSessionAcceptsContributions(
         collecting,
         '2026-07-18T09:00:00.000Z',
-      ),
+      ); },
     ).not.toThrow();
     expect(() =>
-      assertSessionAcceptsContributions(collecting, DEADLINE_AT),
+      { assertSessionAcceptsContributions(collecting, DEADLINE_AT); },
     ).toThrow(/deadline/);
-    expect(() => assertSessionAcceptsContributions(session(), CREATED_AT)).toThrow(
+    expect(() => { assertSessionAcceptsContributions(session(), CREATED_AT); }).toThrow(
       /not collecting/,
     );
   });

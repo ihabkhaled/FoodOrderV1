@@ -25,6 +25,10 @@ export type {
   UserProfile,
 } from './domain.types';
 export type {
+  AppNotification,
+  NotificationDraft,
+} from './notifications.types';
+export type {
   OrderSession,
   OrderSessionDraft,
   OrderSessionView,
@@ -58,10 +62,6 @@ export type {
   SettlementReconciliationSnapshot,
   SettlementStatusSummary,
 } from './settlement.types';
-export type {
-  AppNotification,
-  NotificationDraft,
-} from './notifications.types';
 export type {
   BucketAccessGrant,
   BucketInvitation,

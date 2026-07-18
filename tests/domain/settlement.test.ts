@@ -1,15 +1,15 @@
 import { describe, expect, it } from 'vitest';
 
 import {
-  PAYMENT_STATUS,
-  SETTLEMENT_ALLOCATION_STRATEGY,
   applySettlementReconciliation,
   buildSettlementReconciliation,
   canTransitionPaymentStatus,
   createParticipantSettlement,
+  PAYMENT_STATUS,
+  SETTLEMENT_ALLOCATION_STRATEGY,
+  type SettlementParticipantInput,
   summarizeSettlements,
   transitionParticipantPaymentStatus,
-  type SettlementParticipantInput,
 } from '@/modules/data-access';
 
 const createdAt = '2026-07-18T11:00:00.000Z';

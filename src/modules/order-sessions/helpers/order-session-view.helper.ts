@@ -1,10 +1,10 @@
 import {
-  ORDER_SESSION_STATUS,
-  PARTICIPANT_RESPONSE,
   type CurrencyCode,
   type Locale,
+  ORDER_SESSION_STATUS,
   type OrderSession,
   type OrderSessionStatus,
+  PARTICIPANT_RESPONSE,
   type ParticipantResponse,
   type SessionContribution,
   type SessionParticipant,

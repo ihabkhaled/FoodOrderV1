@@ -1,15 +1,15 @@
 import { createId, nowIso } from '@/shared/helpers';
 
 import {
-  type AnalyticsEventName,
   ANALYTICS_EVENT_PURPOSE,
+  type AnalyticsEventName,
   FORBIDDEN_ANALYTICS_PROPERTY_KEYS,
 } from '../constants/analytics-events.constants';
 import {
-  type AnalyticsConsent,
   ANALYTICS_CONSENT,
-  type TelemetryPurpose,
+  type AnalyticsConsent,
   TELEMETRY_PURPOSE,
+  type TelemetryPurpose,
 } from '../enums/telemetry.enums';
 import type {
   AnalyticsEventPropertiesMap,

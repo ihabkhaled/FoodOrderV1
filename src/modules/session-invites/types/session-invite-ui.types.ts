@@ -35,7 +35,7 @@ export interface SessionInviteViewModel {
   registerPath: string;
   translate: SessionInviteTranslator;
   refresh: () => Promise<void>;
-  join: () => Promise<void>;
+  joinAsGuest: () => Promise<void>;
   changeQuantity: (item: GuestSessionMenuItem, quantity: number) => Promise<void>;
   updateResponse: (response: GuestResponseAction) => Promise<void>;
   linkAccount: () => Promise<void>;

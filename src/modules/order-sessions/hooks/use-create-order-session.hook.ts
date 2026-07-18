@@ -1,9 +1,9 @@
 import { type SyntheticEvent, useEffect, useState } from 'react';
 
 import {
+  type Bucket,
   dataService,
   orderSessionService,
-  type Bucket,
 } from '@/modules/data-access';
 import { useApp } from '@/modules/session';
 import { useNavigate, useParams } from '@/packages/router';

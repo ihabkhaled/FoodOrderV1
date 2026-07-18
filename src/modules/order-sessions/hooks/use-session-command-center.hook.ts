@@ -2,10 +2,10 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import {
   ORDER_SESSION_STATUS,
-  PARTICIPANT_RESPONSE,
   orderSessionService,
   type OrderSessionStatus,
   type OrderSessionView,
+  PARTICIPANT_RESPONSE,
   type SessionMenuItemSnapshot,
   type SessionParticipant,
 } from '@/modules/data-access';

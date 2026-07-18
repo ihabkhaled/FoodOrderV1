@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 
 import { ANALYTICS_CONSENT } from '@/modules/telemetry';
+
 import { AnalyticsConsentSection } from '../../src/modules/settings/components/analytics-consent-section/analytics-consent-section.component';
 
 const options = [
@@ -65,8 +66,7 @@ describe('AnalyticsConsentSection', () => {
 
     await user.click(screen.getByRole('radio', { name: /No analytics/ }));
 
-    expect(onChange).toHaveBeenCalledOnce();
-    expect(onChange).toHaveBeenCalledWith(ANALYTICS_CONSENT.denied);
+    expect(onChange).toHaveBeenCalledExactlyOnceWith(ANALYTICS_CONSENT.denied);
   });
 
   it('disables every option while consent is loading or saving', () => {

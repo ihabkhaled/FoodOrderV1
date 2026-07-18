@@ -8,7 +8,7 @@ import {
 import { collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
-const PROJECT_ID = 'food-order-v1-rules-test';
+const PROJECT_ID = 'food-order-v1-order-session-rules-test';
 const SESSION_ID = 'session-private';
 const OWNER_ID = 'owner-user';
 const PARTICIPANT_ID = 'participant-user';

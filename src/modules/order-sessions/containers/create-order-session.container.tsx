@@ -1,6 +1,7 @@
+import '../order-sessions.css';
+
 import { BackLink, ErrorState, Loading } from '@/shared/ui';
 
-import '../order-sessions.css';
 import { CreateOrderSessionForm } from '../components/create-order-session-form/create-order-session-form.component';
 import { useCreateOrderSession } from '../hooks/use-create-order-session.hook';
 import { ORDER_SESSIONS_PATH } from '../routes/order-sessions-route-paths.constants';

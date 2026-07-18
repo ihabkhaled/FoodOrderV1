@@ -1,7 +1,6 @@
 import type { AnalyticsEventName } from '../constants/analytics-events.constants';
 import type {
   AnalyticsConsent,
-  PerformanceMeasure,
   ReliabilityErrorCategory,
   TelemetryPurpose,
 } from '../enums/telemetry.enums';
@@ -151,25 +150,4 @@ export interface AnalyticsService {
   track<EventName extends AnalyticsEventName>(
     event: TelemetryEvent<EventName>,
   ): void;
-}
-
-export interface ErrorReportContext {
-  category: ReliabilityErrorCategory;
-  operation: string;
-  errorCode: string;
-  correlationId: string;
-  appVersion: string;
-}
-
-export interface ErrorReporter {
-  capture(error: unknown, context: ErrorReportContext): string;
-}
-
-export interface PerformanceSpan {
-  success(): void;
-  failure(errorCode: string): void;
-}
-
-export interface PerformanceMonitor {
-  start(measure: PerformanceMeasure, correlationId: string): PerformanceSpan;
 }

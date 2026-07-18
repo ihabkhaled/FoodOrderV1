@@ -8,6 +8,15 @@ import {
   SESSION_PARTICIPANT_ROLE,
 } from '../enums/order-session.enums';
 import {
+  markParticipantResponse,
+  summarizeParticipantResponses,
+} from '../helpers/order-session.helper';
+import {
+  applySessionContributionMutation,
+  calculateSessionExpectedGrandTotalMinor,
+  computeSessionAggregate,
+} from '../helpers/session-contribution.helper';
+import {
   consumeSessionInvite,
   createGuestCapability,
   createSessionInvite,
@@ -18,15 +27,6 @@ import {
   validatePublicSessionInvitePreview,
   verifyGuestCapability,
 } from '../helpers/session-invite.helper';
-import {
-  markParticipantResponse,
-  summarizeParticipantResponses,
-} from '../helpers/order-session.helper';
-import {
-  applySessionContributionMutation,
-  calculateSessionExpectedGrandTotalMinor,
-  computeSessionAggregate,
-} from '../helpers/session-contribution.helper';
 import { hashInviteToken } from '../helpers/sharing.helper';
 import type { SessionUser } from '../types/domain.types';
 import type { SessionContribution } from '../types/order-session.types';
@@ -219,7 +219,7 @@ export class LocalSessionInviteService implements SessionInviteService {
     const invites = store.invites[sessionId] ?? [];
     const index = invites.findIndex((invite) => invite.id === inviteId);
     const invite = invites[index];
-    if (index < 0 || !invite) throw new Error('Invitation was not found.');
+    if (index === -1 || !invite) throw new Error('Invitation was not found.');
     const saved = revokeSessionInvite(invite);
     invites[index] = saved;
     store.invites[sessionId] = invites;
@@ -314,7 +314,7 @@ export class LocalSessionInviteService implements SessionInviteService {
       (participant) => participant.userId === stored.guestId,
     );
     const participant = participants[participantIndex];
-    if (participantIndex < 0 || !participant) {
+    if (participantIndex === -1 || !participant) {
       throw new Error('Guest participant was not found.');
     }
     const contributions = database.orderSessions.contributions[session.id] ?? [];
@@ -391,7 +391,7 @@ export class LocalSessionInviteService implements SessionInviteService {
       (participant) => participant.userId === stored.guestId,
     );
     const participant = participants[index];
-    if (index < 0 || !participant) throw new Error('Guest participant was not found.');
+    if (index === -1 || !participant) throw new Error('Guest participant was not found.');
     if (participant.revision !== input.expectedParticipantRevision) {
       throw new Error('Your participant status changed. Refresh and try again.');
     }
@@ -425,7 +425,7 @@ export class LocalSessionInviteService implements SessionInviteService {
       (participant) => participant.userId === stored.guestId,
     );
     const guestParticipant = participants[guestIndex];
-    if (guestIndex < 0 || !guestParticipant) {
+    if (guestIndex === -1 || !guestParticipant) {
       throw new Error('Guest participant was not found.');
     }
     const existingAccount = participants.find(

@@ -1,7 +1,7 @@
 import type { Locale } from '@/modules/data-access';
 
-import type { OrderSessionMessageKey } from '../../i18n/order-session-messages.constants';
 import type { SessionLifecycleAction } from '../../hooks/use-session-command-center.hook';
+import type { OrderSessionMessageKey } from '../../i18n/order-session-messages.constants';
 
 interface SessionActionPanelProps {
   locale: Locale;

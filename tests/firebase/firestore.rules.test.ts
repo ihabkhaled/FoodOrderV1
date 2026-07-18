@@ -227,14 +227,8 @@ describe('bucket invite acceptance rules', () => {
     const membership = await assertSucceeds(
       getDoc(doc(database, 'buckets', BUCKET_ID, 'members', INVITEE_ID)),
     );
+    expect(membership.exists()).toBe(true);
     expect(membership.data()).not.toHaveProperty('email');
-    expect(
-      (
-        await assertSucceeds(
-          getDoc(doc(database, 'buckets', BUCKET_ID)),
-        )
-      ).exists(),
-    ).toBe(true);
   });
 
   it('rejects an invite acceptance that adds email to shared membership', async () => {

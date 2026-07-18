@@ -6,7 +6,7 @@ import {
 } from '../../src/modules/auth/helpers/post-auth-redirect.helper';
 
 describe('post-auth redirect safety', () => {
-  it.each([null, '', 'dashboard', '//evil.example/path', '/\\evil']) (
+  it.each([null, '', 'dashboard', '//evil.example/path', String.raw`/\evil`]) (
     'falls back for unsafe return target %s',
     (value) => {
       expect(resolvePostAuthRedirect(value)).toBe('/');

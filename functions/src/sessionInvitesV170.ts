@@ -112,12 +112,14 @@ interface SessionContributionRecord {
   updatedAt: string;
 }
 
+type ContributionOperation = 'set' | 'increment';
+
 interface SessionMutationRecord {
   id: string;
   sessionId: string;
   userId: string;
   itemId: string;
-  operation: 'set' | 'increment';
+  operation: ContributionOperation;
   requestedValue: number;
   appliedDelta: number;
   resultQuantity: number;
@@ -160,6 +162,70 @@ const requiredRevision = (value: unknown, label: string): number => {
     throw new HttpsError('invalid-argument', `${label} must be a positive integer.`);
   }
   return value as number;
+};
+
+const requiredContributionOperation = (value: unknown): ContributionOperation => {
+  if (value !== 'set' && value !== 'increment') {
+    throw new HttpsError('invalid-argument', 'Contribution operation is invalid.');
+  }
+  return value;
+};
+
+const requiredContributionValue = (value: unknown): number => {
+  if (!Number.isSafeInteger(value)) {
+    throw new HttpsError('invalid-argument', 'Contribution value must be an integer.');
+  }
+  return value as number;
+};
+
+const updatedQuantities = (
+  current: Readonly<Record<string, number>> | undefined,
+  itemId: string,
+  target: number,
+): Record<string, number> => {
+  const entries = Object.entries(current ?? {}).filter(
+    ([candidateItemId]) => candidateItemId !== itemId,
+  );
+  if (target > 0) entries.push([itemId, target]);
+  return Object.fromEntries(entries);
+};
+
+const assertGuestContributionAccess = (
+  guest: GuestIdentityRecord,
+  guestSecret: string,
+  session: OrderSessionRecord,
+  expectedSessionRevision: number,
+): void => {
+  if (!guestUsable(guest, guestSecret)) {
+    throw new HttpsError('permission-denied', 'Guest access is invalid or expired.');
+  }
+  if (session.revision !== expectedSessionRevision) {
+    throw new HttpsError('aborted', 'The order session changed. Refresh and try again.');
+  }
+  if (
+    session.status !== 'collecting' ||
+    (session.deadlineAt && Date.now() >= Date.parse(session.deadlineAt))
+  ) {
+    throw new HttpsError(
+      'failed-precondition',
+      'The order session is not collecting contributions.',
+    );
+  }
+};
+
+const requiredTargetQuantity = (
+  currentQuantity: number,
+  operation: ContributionOperation,
+  value: number,
+): number => {
+  const target = operation === 'set' ? value : currentQuantity + value;
+  if (!Number.isSafeInteger(target) || target < 0 || target > MAX_QUANTITY) {
+    throw new HttpsError(
+      'invalid-argument',
+      `Quantity must be between 0 and ${MAX_QUANTITY}.`,
+    );
+  }
+  return target;
 };
 
 const randomToken = (): string => randomBytes(TOKEN_BYTES).toString('hex');
@@ -604,16 +670,8 @@ export const updateGuestSessionContributionV170 = onCall(
     );
     const itemId = requiredString(data.itemId, 'Menu item ID');
     const mutationId = requiredString(data.mutationId, 'Mutation ID');
-    const operation = requiredString(data.operation, 'Contribution operation') as
-      | 'set'
-      | 'increment';
-    if (!['set', 'increment'].includes(operation)) {
-      throw new HttpsError('invalid-argument', 'Contribution operation is invalid.');
-    }
-    if (!Number.isSafeInteger(data.value)) {
-      throw new HttpsError('invalid-argument', 'Contribution value must be an integer.');
-    }
-    const value = data.value as number;
+    const operation = requiredContributionOperation(data.operation);
+    const value = requiredContributionValue(data.value);
     const reference = sessionReference(sessionId);
     const guestReference = reference.collection('guestIdentities').doc(guestId);
     const participantReference = reference.collection('participants').doc(guestId);
@@ -654,18 +712,7 @@ export const updateGuestSessionContributionV170 = onCall(
       }
       const session = sessionSnapshot.data() as OrderSessionRecord;
       const participant = participantSnapshot.data() as SessionParticipantRecord;
-      if (session.revision !== expectedSessionRevision) {
-        throw new HttpsError('aborted', 'The order session changed. Refresh and try again.');
-      }
-      if (
-        session.status !== 'collecting' ||
-        (session.deadlineAt && Date.now() >= Date.parse(session.deadlineAt))
-      ) {
-        throw new HttpsError(
-          'failed-precondition',
-          'The order session is not collecting contributions.',
-        );
-      }
+      assertGuestContributionAccess(guest, guestSecret, session, expectedSessionRevision);
       const item = session.menuItems.find((candidate) => candidate.id === itemId);
       if (!item?.active) {
         throw new HttpsError('failed-precondition', 'This item is not available.');
@@ -674,17 +721,9 @@ export const updateGuestSessionContributionV170 = onCall(
         ? (contributionSnapshot.data() as SessionContributionRecord)
         : null;
       const currentQuantity = current?.quantities[itemId] ?? 0;
-      const target = operation === 'set' ? value : currentQuantity + value;
-      if (!Number.isSafeInteger(target) || target < 0 || target > MAX_QUANTITY) {
-        throw new HttpsError(
-          'invalid-argument',
-          `Quantity must be between 0 and ${MAX_QUANTITY}.`,
-        );
-      }
+      const target = requiredTargetQuantity(currentQuantity, operation, value);
       const timestamp = new Date().toISOString();
-      const quantities = { ...(current?.quantities ?? {}) };
-      if (target === 0) delete quantities[itemId];
-      else quantities[itemId] = target;
+      const quantities = updatedQuantities(current?.quantities, itemId, target);
       const contribution: SessionContributionRecord = {
         sessionId,
         userId: guestId,

@@ -1,6 +1,7 @@
+import '../order-sessions.css';
+
 import { ErrorState, Loading } from '@/shared/ui';
 
-import '../order-sessions.css';
 import { OrderSessionList } from '../components/order-session-list/order-session-list.component';
 import { useOrderSessions } from '../hooks/use-order-sessions.hook';
 

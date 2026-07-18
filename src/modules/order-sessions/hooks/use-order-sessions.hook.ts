@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import {
-  orderSessionService,
   type OrderSession,
+  orderSessionService,
 } from '@/modules/data-access';
 import { useApp } from '@/modules/session';
 

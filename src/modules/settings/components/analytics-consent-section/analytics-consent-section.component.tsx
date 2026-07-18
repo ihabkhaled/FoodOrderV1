@@ -50,22 +50,25 @@ export function AnalyticsConsentSection({
           if (!option) return null;
           const inputId = `analytics-consent-${consent}`;
           return (
-            <label className="choice-card" htmlFor={inputId} key={consent}>
+            <div className="choice-card" key={consent}>
               <input
                 id={inputId}
                 type="radio"
                 name="analytics-consent"
                 value={consent}
                 checked={value === consent}
+                aria-describedby={`${inputId}-description`}
                 onChange={() => {
                   onChange(consent);
                 }}
               />
-              <span className="stack-xs">
+              <label className="stack-xs" htmlFor={inputId}>
                 <strong>{option.label}</strong>
-                <span className="muted">{option.description}</span>
-              </span>
-            </label>
+                <span id={`${inputId}-description`} className="muted">
+                  {option.description}
+                </span>
+              </label>
+            </div>
           );
         })}
       </fieldset>

@@ -12,11 +12,11 @@ import {
   REGISTER_PATH,
 } from '@/modules/auth';
 import {
-  parseSessionShareCode,
-  sessionInviteService,
   type GuestSessionCapability,
   type GuestSessionView,
+  parseSessionShareCode,
   type PublicSessionInvitePreview,
+  sessionInviteService,
 } from '@/modules/data-access';
 import {
   buildOrderSessionDetailsRoute,
@@ -133,7 +133,7 @@ export function useSessionInvite(): SessionInviteViewModel {
     };
   }, [refresh]);
 
-  const join = async (): Promise<void> => {
+  const joinAsGuest = async (): Promise<void> => {
     const normalizedName = guestName.trim();
     if (normalizedName.length < 2) {
       setError(translateSessionInvite(locale, 'guestNameRequired'));
@@ -260,7 +260,7 @@ export function useSessionInvite(): SessionInviteViewModel {
     registerPath,
     translate: translateSessionInvite,
     refresh,
-    join,
+    joinAsGuest,
     changeQuantity,
     updateResponse,
     linkAccount,

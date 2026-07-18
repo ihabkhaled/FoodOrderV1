@@ -24,6 +24,7 @@ const SESSION_STATUS = {
 } as const;
 
 type SessionStatus = (typeof SESSION_STATUS)[keyof typeof SESSION_STATUS];
+type ContributionOperation = 'set' | 'increment';
 
 const PARTICIPANT_RESPONSE = {
   pending: 'pending',
@@ -268,6 +269,72 @@ const requiredRevision = (value: unknown, label: string): number => {
   return value as number;
 };
 
+const requiredContributionOperation = (value: unknown): ContributionOperation => {
+  if (value !== 'set' && value !== 'increment') {
+    throw new HttpsError('invalid-argument', 'The contribution operation is invalid.');
+  }
+  return value;
+};
+
+const requiredContributionValue = (value: unknown): number => {
+  if (!Number.isSafeInteger(value)) {
+    throw new HttpsError('invalid-argument', 'The contribution value must be an integer.');
+  }
+  return value as number;
+};
+
+const updatedQuantities = (
+  current: Readonly<Record<string, number>> | undefined,
+  itemId: string,
+  target: number,
+): Record<string, number> => {
+  const entries = Object.entries(current ?? {}).filter(
+    ([candidateItemId]) => candidateItemId !== itemId,
+  );
+  if (target > 0) entries.push([itemId, target]);
+  return Object.fromEntries(entries);
+};
+
+const assertContributionAccess = (
+  session: OrderSessionRecord,
+  participant: SessionParticipantRecord,
+  expectedSessionRevision: number,
+): void => {
+  if (session.revision !== expectedSessionRevision) {
+    throw new HttpsError('aborted', 'The order session changed. Refresh and try again.');
+  }
+  if (session.status !== SESSION_STATUS.collecting) {
+    throw new HttpsError(
+      'failed-precondition',
+      'The order session is not collecting contributions.',
+    );
+  }
+  if (session.deadlineAt && Date.now() >= Date.parse(session.deadlineAt)) {
+    throw new HttpsError('failed-precondition', 'The order session deadline has passed.');
+  }
+  if (participant.role === 'viewer' || participant.response === PARTICIPANT_RESPONSE.removed) {
+    throw new HttpsError(
+      'permission-denied',
+      'You do not have permission to contribute to this session.',
+    );
+  }
+};
+
+const requiredTargetQuantity = (
+  currentQuantity: number,
+  operation: ContributionOperation,
+  value: number,
+): number => {
+  const target = operation === 'set' ? value : currentQuantity + value;
+  if (!Number.isSafeInteger(target) || target < 0 || target > MAX_QUANTITY) {
+    throw new HttpsError(
+      'invalid-argument',
+      `Quantity must be between 0 and ${MAX_QUANTITY}.`,
+    );
+  }
+  return target;
+};
+
 const optionalBoolean = (value: unknown, fallback = false): boolean => {
   if (value === undefined || value === null) return fallback;
   if (typeof value !== 'boolean') {
@@ -327,7 +394,7 @@ const normalizeMenuItems = (value: unknown): SessionMenuItemRecord[] => {
   }
   const identifiers = new Set<string>();
   return value
-    .map((rawValue, index) => {
+    .map<SessionMenuItemRecord>((rawValue, index) => {
       const raw = requestData(rawValue as BucketItemRecord);
       const id = requiredString(raw.id, 'Menu item ID');
       if (identifiers.has(id)) {
@@ -864,16 +931,8 @@ export const updateSessionContributionV170 = onCall(
       'Expected session revision',
     );
     const itemId = requiredString(data.itemId, 'Menu item ID');
-    const operation = requiredString(data.operation, 'Contribution operation') as
-      | 'set'
-      | 'increment';
-    if (!['set', 'increment'].includes(operation)) {
-      throw new HttpsError('invalid-argument', 'The contribution operation is invalid.');
-    }
-    if (!Number.isSafeInteger(data.value)) {
-      throw new HttpsError('invalid-argument', 'The contribution value must be an integer.');
-    }
-    const value = data.value as number;
+    const operation = requiredContributionOperation(data.operation);
+    const value = requiredContributionValue(data.value);
     const mutationId = requiredString(data.mutationId, 'Mutation ID');
     const sessionReference = firestore.collection('orderSessions').doc(sessionId);
     const participantReference = sessionReference
@@ -914,24 +973,7 @@ export const updateSessionContributionV170 = onCall(
       }
       const session = sessionSnapshot.data() as OrderSessionRecord;
       const participant = participantSnapshot.data() as SessionParticipantRecord;
-      if (session.revision !== expectedSessionRevision) {
-        throw new HttpsError('aborted', 'The order session changed. Refresh and try again.');
-      }
-      if (session.status !== SESSION_STATUS.collecting) {
-        throw new HttpsError(
-          'failed-precondition',
-          'The order session is not collecting contributions.',
-        );
-      }
-      if (session.deadlineAt && Date.now() >= Date.parse(session.deadlineAt)) {
-        throw new HttpsError('failed-precondition', 'The order session deadline has passed.');
-      }
-      if (participant.role === 'viewer' || participant.response === 'removed') {
-        throw new HttpsError(
-          'permission-denied',
-          'You do not have permission to contribute to this session.',
-        );
-      }
+      assertContributionAccess(session, participant, expectedSessionRevision);
       const item = session.menuItems.find((candidate) => candidate.id === itemId);
       if (!item?.active) {
         throw new HttpsError('failed-precondition', 'This item is not available.');
@@ -940,17 +982,9 @@ export const updateSessionContributionV170 = onCall(
         ? (contributionSnapshot.data() as SessionContributionRecord)
         : null;
       const currentQuantity = current?.quantities[itemId] ?? 0;
-      const target = operation === 'set' ? value : currentQuantity + value;
-      if (!Number.isSafeInteger(target) || target < 0 || target > MAX_QUANTITY) {
-        throw new HttpsError(
-          'invalid-argument',
-          `Quantity must be between 0 and ${MAX_QUANTITY}.`,
-        );
-      }
+      const target = requiredTargetQuantity(currentQuantity, operation, value);
       const timestamp = new Date().toISOString();
-      const quantities = { ...(current?.quantities ?? {}) };
-      if (target === 0) delete quantities[itemId];
-      else quantities[itemId] = target;
+      const quantities = updatedQuantities(current?.quantities, itemId, target);
       const contribution: SessionContributionRecord = {
         sessionId,
         userId: auth.uid,

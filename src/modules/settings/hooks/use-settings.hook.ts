@@ -9,10 +9,10 @@ import type {
 import { authService, dataService } from '@/modules/data-access';
 import { useApp } from '@/modules/session';
 import {
+  type AnalyticsConsent,
   DEFAULT_ANALYTICS_CONSENT,
   loadAnalyticsConsent,
   saveAnalyticsConsent,
-  type AnalyticsConsent,
 } from '@/modules/telemetry';
 import { downloadTextFile } from '@/platform/browser';
 import { env } from '@/platform/environment';

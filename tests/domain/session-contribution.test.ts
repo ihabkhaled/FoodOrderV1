@@ -1,16 +1,16 @@
 import { describe, expect, it } from 'vitest';
 
 import {
-  DEFAULT_PRICING_POLICY,
   applySessionContributionMutation,
+  type Bucket,
   calculateSessionExpectedGrandTotalMinor,
   computeSessionAggregate,
   createSessionMenuSnapshot,
-  validateSessionMenuItems,
-  validateSessionPricingPolicy,
-  type Bucket,
+  DEFAULT_PRICING_POLICY,
   type SessionContribution,
   type SessionMenuItemSnapshot,
+  validateSessionMenuItems,
+  validateSessionPricingPolicy,
 } from '@/modules/data-access';
 
 const occurredAt = '2026-07-18T09:00:00.000Z';

@@ -7,27 +7,25 @@ export {
 export {
   ANALYTICS_EVENT,
   ANALYTICS_EVENT_PURPOSE,
-  FORBIDDEN_ANALYTICS_PROPERTY_KEYS,
   type AnalyticsEventName,
+  FORBIDDEN_ANALYTICS_PROPERTY_KEYS,
 } from './constants/analytics-events.constants';
 export { ANALYTICS_CONSENT_PREFERENCE_KEY } from './constants/telemetry-storage.constants';
 export {
   ANALYTICS_CONSENT,
-  PERFORMANCE_MEASURE,
-  RELIABILITY_ERROR_CATEGORY,
-  TELEMETRY_PURPOSE,
   type AnalyticsConsent,
-  type PerformanceMeasure,
+  RELIABILITY_ERROR_CATEGORY,
   type ReliabilityErrorCategory,
+  TELEMETRY_PURPOSE,
   type TelemetryPurpose,
 } from './enums/telemetry.enums';
 export {
-  RecordingAnalyticsService,
   assertAnalyticsObjectIsSafe,
   consentAllowsPurpose,
   createTelemetryEvent,
-  trackTelemetrySafely,
   type CreateTelemetryEventInput,
+  RecordingAnalyticsService,
+  trackTelemetrySafely,
 } from './helpers/telemetry.helper';
 export type {
   ActivationEventProperties,
@@ -36,14 +34,10 @@ export type {
   AnalyticsPropertyValue,
   AnalyticsService,
   AuthEventProperties,
-  ErrorReportContext,
-  ErrorReporter,
   ExportEventProperties,
   FeatureFlagExposureProperties,
   InviteEventProperties,
   MonetizationEventProperties,
-  PerformanceMonitor,
-  PerformanceSpan,
   ReliabilityEventProperties,
   ReminderEventProperties,
   SafeTelemetryContext,

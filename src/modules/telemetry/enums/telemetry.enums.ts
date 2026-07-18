@@ -35,20 +35,3 @@ export const RELIABILITY_ERROR_CATEGORY = {
 
 export type ReliabilityErrorCategory =
   (typeof RELIABILITY_ERROR_CATEGORY)[keyof typeof RELIABILITY_ERROR_CATEGORY];
-
-export const PERFORMANCE_MEASURE = {
-  appBootstrap: 'app_bootstrap',
-  authResolution: 'auth_resolution',
-  publicInvitePreview: 'public_invite_preview',
-  activeSessionsReady: 'active_sessions_ready',
-  contributionReady: 'contribution_ready',
-  contributionMutation: 'contribution_mutation',
-  organizerCommandCenterReady: 'organizer_command_center_ready',
-  sessionFinalization: 'session_finalization',
-  receiptRender: 'receipt_render',
-  attachmentUpload: 'attachment_upload',
-  checkoutOpen: 'checkout_open',
-} as const;
-
-export type PerformanceMeasure =
-  (typeof PERFORMANCE_MEASURE)[keyof typeof PERFORMANCE_MEASURE];

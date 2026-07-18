@@ -93,7 +93,7 @@ export function SessionInviteContainer() {
             translate={viewModel.translate}
             onGuestNameChange={viewModel.setGuestName}
             onJoin={() => {
-              void viewModel.join();
+              void viewModel.joinAsGuest();
             }}
           />
         )}

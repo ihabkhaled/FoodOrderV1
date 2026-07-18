@@ -1,6 +1,7 @@
+import '../order-sessions.css';
+
 import { BackLink, ConfirmDialog, ErrorState, Loading } from '@/shared/ui';
 
-import '../order-sessions.css';
 import { SessionActionPanel } from '../components/session-action-panel/session-action-panel.component';
 import { SessionMenu } from '../components/session-menu/session-menu.component';
 import { SessionParticipantList } from '../components/session-participant-list/session-participant-list.component';

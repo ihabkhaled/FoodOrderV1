@@ -3,14 +3,14 @@ import { describe, expect, it } from 'vitest';
 import {
   ANALYTICS_CONSENT,
   ANALYTICS_EVENT,
-  RELIABILITY_ERROR_CATEGORY,
-  TELEMETRY_PURPOSE,
-  RecordingAnalyticsService,
   assertAnalyticsObjectIsSafe,
   consentAllowsPurpose,
   createTelemetryEvent,
-  trackTelemetrySafely,
+  RecordingAnalyticsService,
+  RELIABILITY_ERROR_CATEGORY,
   type SafeTelemetryContext,
+  TELEMETRY_PURPOSE,
+  trackTelemetrySafely,
 } from '@/modules/telemetry';
 
 const occurredAt = '2026-07-18T14:00:00.000Z';
@@ -71,12 +71,12 @@ describe('telemetry consent', () => {
 describe('telemetry privacy guard', () => {
   it('accepts flat finite primitive properties', () => {
     expect(() =>
-      assertAnalyticsObjectIsSafe({
+      { assertAnalyticsObjectIsSafe({
         itemCount: 3,
         isGuest: true,
         source: 'direct',
         optionalValue: null,
-      }),
+      }); },
     ).not.toThrow();
   });
 
@@ -88,38 +88,38 @@ describe('telemetry privacy guard', () => {
     ['note', 'private note'],
     ['inviteToken', 'secret-token'],
   ])('rejects forbidden key %s', (key, value) => {
-    expect(() => assertAnalyticsObjectIsSafe({ [key]: value })).toThrow(
+    expect(() => { assertAnalyticsObjectIsSafe({ [key]: value }); }).toThrow(
       /forbidden/,
     );
   });
 
   it('rejects email values even under a safe-looking key', () => {
     expect(() =>
-      assertAnalyticsObjectIsSafe({ source: 'person@example.com' }),
+      { assertAnalyticsObjectIsSafe({ source: 'person@example.com' }); },
     ).toThrow(/email address/);
   });
 
   it('rejects URL values and oversized/free-form strings', () => {
     expect(() =>
-      assertAnalyticsObjectIsSafe({ source: 'https://example.com/private' }),
+      { assertAnalyticsObjectIsSafe({ source: 'https://example.com/private' }); },
     ).toThrow(/URL/);
     expect(() =>
-      assertAnalyticsObjectIsSafe({ source: 'x'.repeat(129) }),
+      { assertAnalyticsObjectIsSafe({ source: 'x'.repeat(129) }); },
     ).toThrow(/128/);
   });
 
   it('rejects nested, undefined, and non-finite values', () => {
-    expect(() => assertAnalyticsObjectIsSafe({ nested: { unsafe: true } })).toThrow(
+    expect(() => { assertAnalyticsObjectIsSafe({ nested: { unsafe: true } }); }).toThrow(
       /primitive/,
     );
-    expect(() => assertAnalyticsObjectIsSafe({ missing: undefined })).toThrow(
+    expect(() => { assertAnalyticsObjectIsSafe({ missing: undefined }); }).toThrow(
       /primitive/,
     );
-    expect(() => assertAnalyticsObjectIsSafe({ count: Number.NaN })).toThrow(
+    expect(() => { assertAnalyticsObjectIsSafe({ count: Number.NaN }); }).toThrow(
       /finite/,
     );
     expect(() =>
-      assertAnalyticsObjectIsSafe({ count: Number.POSITIVE_INFINITY }),
+      { assertAnalyticsObjectIsSafe({ count: Number.POSITIVE_INFINITY }); },
     ).toThrow(/finite/);
   });
 });

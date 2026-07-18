@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 
 import { BrowserRouter } from '@/packages/router';
+
 import { SessionInvitePreview } from '../../src/modules/session-invites/components/session-invite-preview/session-invite-preview.component';
 import { translateSessionInvite } from '../../src/modules/session-invites/i18n/translate-session-invite.helper';
 

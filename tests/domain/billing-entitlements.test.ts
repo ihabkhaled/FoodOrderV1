@@ -1,19 +1,19 @@
 import { describe, expect, it } from 'vitest';
 
 import {
+  assertEntitlement,
   BILLING_PLAN,
   BILLING_PLAN_CATALOG,
-  ENTITLEMENT,
-  ENTITLEMENT_DECISION,
-  SUBSCRIPTION_STATUS,
-  USAGE_METER,
-  assertEntitlement,
   createEntitlementSnapshot,
   effectiveBillingPlan,
+  ENTITLEMENT,
+  ENTITLEMENT_DECISION,
   evaluateEntitlement,
   hasEntitlement,
+  SUBSCRIPTION_STATUS,
   subscriptionProvidesPaidAccess,
   type SubscriptionRecord,
+  USAGE_METER,
 } from '@/modules/billing';
 
 const effectiveAt = '2026-07-18T13:00:00.000Z';

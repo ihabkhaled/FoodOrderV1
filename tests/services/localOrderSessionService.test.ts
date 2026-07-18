@@ -1,14 +1,14 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 
 import {
+  type Bucket,
+  type BucketDraft,
   DEFAULT_PRICING_POLICY,
   LocalDataService,
   LocalOrderSessionService,
   LocalSharingService,
   ORDER_SESSION_STATUS,
   PARTICIPANT_RESPONSE,
-  type Bucket,
-  type BucketDraft,
   type SessionUser,
 } from '@/modules/data-access';
 
@@ -149,15 +149,12 @@ describe('LocalOrderSessionService', () => {
       timezone: 'Africa/Cairo',
     });
 
-    expect((await service.listSessions(OWNER)).map((item) => item.id)).toEqual([
-      session.id,
-    ]);
-    expect((await service.listSessions(VIEWER)).map((item) => item.id)).toEqual([
-      session.id,
-    ]);
-    expect((await service.getSessionView(VIEWER, session.id))?.session.id).toBe(
-      session.id,
-    );
+    const ownerSessions = await service.listSessions(OWNER);
+    expect(ownerSessions.map((item) => item.id)).toEqual([session.id]);
+    const viewerSessions = await service.listSessions(VIEWER);
+    expect(viewerSessions.map((item) => item.id)).toEqual([session.id]);
+    const viewerSession = await service.getSessionView(VIEWER, session.id);
+    expect(viewerSession?.session.id).toBe(session.id);
     expect(await service.listSessions(CONTRIBUTOR)).toEqual([]);
     expect(await service.getSessionView(CONTRIBUTOR, session.id)).toBeNull();
   });
