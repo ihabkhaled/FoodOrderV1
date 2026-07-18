@@ -1,8 +1,8 @@
 name: v1.7 Apply Lint Autofix Once
 
 on:
-  push:
-    branches: ['1.7.0']
+  pull_request:
+    branches: [main]
     paths:
       - '.github/workflows/v170-apply-lint-autofix-once.yml'
 
@@ -34,12 +34,12 @@ jobs:
       - run: npm --prefix functions ci
       - name: Apply repository-owned autofixes
         run: npm run lint:fix || true
-      - name: Replace trigger with one bulk commit
+      - name: Replace triggers with one bulk commit
         shell: bash
         run: |
           set -euo pipefail
           CURRENT_HEAD="$(git rev-parse HEAD)"
-          PREVIOUS_HEAD="$(git rev-parse HEAD^)"
+          PREVIOUS_HEAD="$(git rev-parse HEAD~2)"
           rm .github/workflows/v170-apply-lint-autofix-once.yml
           git add -A
           git config user.name 'github-actions[bot]'
