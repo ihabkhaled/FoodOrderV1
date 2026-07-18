@@ -14,6 +14,10 @@ export default defineConfig({
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
     actionTimeout: 15_000,
+    // The app fully supports prefers-reduced-motion (global 0.01ms override in
+    // styles.css). Running e2e in that mode keeps WebKit's actionability
+    // "stable" check from spinning on transitions under loaded CI runners.
+    contextOptions: { reducedMotion: 'reduce' },
   },
   webServer: {
     command: 'npm run build && npm run preview',
