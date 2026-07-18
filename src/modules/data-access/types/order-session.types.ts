@@ -79,16 +79,16 @@ export interface OrderSessionDraft {
   menuTemplateId: string;
   sourceMenuRevision: number;
   organizerId: string;
-  workspaceId?: string | null;
+  workspaceId?: string | null | undefined;
   title: string;
   currency: CurrencyCode;
   timezone: string;
-  deadlineAt?: string | null;
-  autoLock?: boolean;
-  scheduleOccurrenceKey?: string | null;
+  deadlineAt?: string | null | undefined;
+  autoLock?: boolean | undefined;
+  scheduleOccurrenceKey?: string | null | undefined;
   menuItems: SessionMenuItemSnapshot[];
   pricingPolicy: BucketPricingPolicy;
-  createdAt?: string;
+  createdAt?: string | undefined;
 }
 
 export interface SessionParticipant {
@@ -115,7 +115,7 @@ export interface SessionParticipantDraft {
   displayName: string;
   identityKind: ParticipantIdentityKind;
   role: SessionParticipantRole;
-  joinedAt?: string;
+  joinedAt?: string | undefined;
 }
 
 export interface SessionContribution {

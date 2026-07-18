@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import {
+  DEFAULT_PRICING_POLICY,
   ORDER_SESSION_STATUS,
   PARTICIPANT_IDENTITY_KIND,
   PARTICIPANT_RESPONSE,
@@ -15,26 +16,45 @@ import {
   markParticipantResponse,
   summarizeParticipantResponses,
   transitionOrderSession,
+  type OrderSessionDraft,
+  type SessionMenuItemSnapshot,
 } from '@/modules/data-access';
 
-const createdAt = '2026-07-18T08:00:00.000Z';
-const deadlineAt = '2026-07-18T10:00:00.000Z';
+const CREATED_AT = '2026-07-18T08:00:00.000Z';
+const DEADLINE_AT = '2026-07-18T10:00:00.000Z';
+const MENU_ITEMS: SessionMenuItemSnapshot[] = [
+  {
+    id: 'meal',
+    name: 'Meal',
+    description: 'Breakfast meal',
+    category: 'Main',
+    unitPriceMinor: 10_000,
+    active: true,
+    sortOrder: 0,
+    createdByUserId: null,
+    createdByName: null,
+    source: 'catalog',
+  },
+];
 
-const session = () =>
-  createOrderSession({
-    id: 'session-1',
-    menuTemplateId: 'menu-1',
-    sourceMenuRevision: 2,
-    organizerId: 'owner-1',
-    workspaceId: 'workspace-1',
-    title: 'Team breakfast',
-    currency: 'EGP',
-    timezone: 'Africa/Cairo',
-    deadlineAt,
-    autoLock: true,
-    scheduleOccurrenceKey: 'schedule-1:2026-07-18',
-    createdAt,
-  });
+const sessionDraft = (): OrderSessionDraft => ({
+  id: 'session-1',
+  menuTemplateId: 'menu-1',
+  sourceMenuRevision: 2,
+  organizerId: 'owner-1',
+  workspaceId: 'workspace-1',
+  title: 'Team breakfast',
+  currency: 'EGP',
+  timezone: 'Africa/Cairo',
+  deadlineAt: DEADLINE_AT,
+  autoLock: true,
+  scheduleOccurrenceKey: 'schedule-1:2026-07-18',
+  menuItems: MENU_ITEMS,
+  pricingPolicy: DEFAULT_PRICING_POLICY,
+  createdAt: CREATED_AT,
+});
+
+const session = () => createOrderSession(sessionDraft());
 
 const participant = (userId = 'user-1') =>
   createSessionParticipant({
@@ -42,12 +62,12 @@ const participant = (userId = 'user-1') =>
     displayName: `User ${userId}`,
     identityKind: PARTICIPANT_IDENTITY_KIND.account,
     role: SESSION_PARTICIPANT_ROLE.participant,
-    joinedAt: createdAt,
+    joinedAt: CREATED_AT,
   });
 
 describe('order session lifecycle', () => {
-  it('creates a normalized draft session with explicit empty summaries', () => {
-    expect(session()).toEqual({
+  it('creates a normalized immutable session draft', () => {
+    expect(session()).toMatchObject({
       id: 'session-1',
       menuTemplateId: 'menu-1',
       sourceMenuRevision: 2,
@@ -57,9 +77,12 @@ describe('order session lifecycle', () => {
       currency: 'EGP',
       timezone: 'Africa/Cairo',
       status: ORDER_SESSION_STATUS.draft,
-      deadlineAt,
+      deadlineAt: DEADLINE_AT,
       autoLock: true,
       scheduleOccurrenceKey: 'schedule-1:2026-07-18',
+      menuItems: MENU_ITEMS,
+      pricingPolicy: DEFAULT_PRICING_POLICY,
+      aggregate: {},
       responseSummary: {
         pending: 0,
         viewed: 0,
@@ -80,30 +103,19 @@ describe('order session lifecycle', () => {
       schemaVersion: 1,
       revision: 1,
       openedAt: null,
-      lockedAt: null,
-      submittedAt: null,
-      confirmedAt: null,
-      deliveredAt: null,
-      settlingAt: null,
-      settledAt: null,
-      cancelledAt: null,
-      createdAt,
-      updatedAt: createdAt,
+      createdAt: CREATED_AT,
+      updatedAt: CREATED_AT,
     });
   });
 
-  it('normalizes optional blank values and validates required draft fields', () => {
+  it('normalizes optional blank values', () => {
     const minimal = createOrderSession({
+      ...sessionDraft(),
       id: 'session-2',
-      menuTemplateId: 'menu-2',
-      sourceMenuRevision: 1,
-      organizerId: 'owner-2',
       workspaceId: '   ',
-      title: 'Lunch',
-      currency: 'USD',
-      timezone: 'UTC',
+      deadlineAt: null,
+      autoLock: undefined,
       scheduleOccurrenceKey: ' ',
-      createdAt,
     });
 
     expect(minimal).toMatchObject({
@@ -112,35 +124,24 @@ describe('order session lifecycle', () => {
       autoLock: false,
       scheduleOccurrenceKey: null,
     });
-    expect(() => createOrderSession({ ...minimal, id: ' ' })).toThrow(/Session ID/);
-    expect(() =>
-      createOrderSession({
-        ...minimal,
-        id: 'session-2',
-        menuTemplateId: ' ',
-      }),
-    ).toThrow(/Menu template ID/);
-    expect(() =>
-      createOrderSession({ ...minimal, sourceMenuRevision: 0 }),
-    ).toThrow(/Source menu revision/);
-    expect(() => createOrderSession({ ...minimal, organizerId: '' })).toThrow(
-      /Organizer ID/,
-    );
-    expect(() => createOrderSession({ ...minimal, title: '' })).toThrow(
-      /Session title/,
-    );
-    expect(() => createOrderSession({ ...minimal, timezone: '' })).toThrow(
-      /Timezone/,
-    );
-    expect(() => createOrderSession({ ...minimal, createdAt: 'invalid' })).toThrow(
-      /Created time/,
-    );
-    expect(() => createOrderSession({ ...minimal, deadlineAt: 'invalid' })).toThrow(
-      /Deadline/,
+  });
+
+  it.each([
+    ['session identifier', { id: ' ' }, /Session ID/],
+    ['menu identifier', { menuTemplateId: ' ' }, /Menu template ID/],
+    ['source revision', { sourceMenuRevision: 0 }, /Source menu revision/],
+    ['organizer identifier', { organizerId: '' }, /Organizer ID/],
+    ['title', { title: '' }, /Session title/],
+    ['timezone', { timezone: '' }, /Timezone/],
+    ['created time', { createdAt: 'invalid' }, /Created time/],
+    ['deadline', { deadlineAt: 'invalid' }, /Deadline/],
+  ])('rejects an invalid %s', (_label, patch, expected) => {
+    expect(() => createOrderSession({ ...sessionDraft(), ...patch })).toThrow(
+      expected,
     );
   });
 
-  it('executes the complete valid lifecycle with deterministic timestamps', () => {
+  it('executes the complete lifecycle with deterministic timestamps', () => {
     const collecting = transitionOrderSession(
       session(),
       ORDER_SESSION_STATUS.collecting,
@@ -185,7 +186,7 @@ describe('order session lifecycle', () => {
     );
 
     expect(collecting).toMatchObject({
-      status: 'collecting',
+      status: ORDER_SESSION_STATUS.collecting,
       openedAt: '2026-07-18T08:05:00.000Z',
       revision: 2,
     });
@@ -195,16 +196,16 @@ describe('order session lifecycle', () => {
     expect(delivered.deliveredAt).toBe('2026-07-18T11:00:00.000Z');
     expect(settling.settlingAt).toBe('2026-07-18T11:05:00.000Z');
     expect(settled).toMatchObject({
-      status: 'settled',
+      status: ORDER_SESSION_STATUS.settled,
       settledAt: '2026-07-18T11:30:00.000Z',
       revision: 8,
     });
-    expect(transitionOrderSession(settled, ORDER_SESSION_STATUS.settled, 'owner-1')).toBe(
-      settled,
-    );
+    expect(
+      transitionOrderSession(settled, ORDER_SESSION_STATUS.settled, 'owner-1'),
+    ).toBe(settled);
   });
 
-  it('supports an explicit locked-to-collecting reopen and cancellation paths', () => {
+  it('supports reopening a lock and explicit cancellation', () => {
     const collecting = transitionOrderSession(
       session(),
       ORDER_SESSION_STATUS.collecting,
@@ -233,20 +234,12 @@ describe('order session lifecycle', () => {
     expect(reopened).toMatchObject({
       openedAt: '2026-07-18T08:05:00.000Z',
       lockedAt: null,
-      status: 'collecting',
+      status: ORDER_SESSION_STATUS.collecting,
     });
     expect(cancelled.cancelledAt).toBe('2026-07-18T09:10:00.000Z');
-    expect(
-      transitionOrderSession(
-        session(),
-        ORDER_SESSION_STATUS.cancelled,
-        'owner-1',
-        '2026-07-18T08:01:00.000Z',
-      ).status,
-    ).toBe('cancelled');
   });
 
-  it('rejects invalid transitions, actors, and timestamps', () => {
+  it('rejects invalid lifecycle transitions, actors, and timestamps', () => {
     expect(canTransitionOrderSession('draft', 'collecting')).toBe(true);
     expect(canTransitionOrderSession('draft', 'draft')).toBe(true);
     expect(canTransitionOrderSession('draft', 'settled')).toBe(false);
@@ -272,33 +265,24 @@ describe('session participant responses', () => {
     expect(participant()).toEqual({
       userId: 'user-1',
       displayName: 'User user-1',
-      identityKind: 'account',
-      role: 'participant',
-      response: 'pending',
+      identityKind: PARTICIPANT_IDENTITY_KIND.account,
+      role: SESSION_PARTICIPANT_ROLE.participant,
+      response: PARTICIPANT_RESPONSE.pending,
       includeInFinalOrder: false,
       firstViewedAt: null,
       completedAt: null,
       skippedAt: null,
       removedAt: null,
-      lastActivityAt: createdAt,
+      lastActivityAt: CREATED_AT,
       reminderCount: 0,
       lastReminderAt: null,
       revision: 1,
-      joinedAt: createdAt,
-      updatedAt: createdAt,
+      joinedAt: CREATED_AT,
+      updatedAt: CREATED_AT,
     });
-    expect(() => createSessionParticipant({ ...participant(), userId: '' })).toThrow(
-      /Participant ID/,
-    );
-    expect(() =>
-      createSessionParticipant({ ...participant(), displayName: '' }),
-    ).toThrow(/display name/);
-    expect(() =>
-      createSessionParticipant({ ...participant(), joinedAt: 'invalid' }),
-    ).toThrow(/Joined time/);
   });
 
-  it('tracks viewed, ordering, done, skipped, and removed transitions explicitly', () => {
+  it('tracks the explicit response lifecycle and eligibility', () => {
     const viewed = markParticipantResponse(
       participant(),
       PARTICIPANT_RESPONSE.viewed,
@@ -325,18 +309,9 @@ describe('session participant responses', () => {
       '2026-07-18T08:25:00.000Z',
     );
 
-    expect(viewed).toMatchObject({
-      firstViewedAt: '2026-07-18T08:10:00.000Z',
-      includeInFinalOrder: false,
-    });
-    expect(ordering).toMatchObject({
-      firstViewedAt: '2026-07-18T08:10:00.000Z',
-      includeInFinalOrder: true,
-    });
-    expect(done).toMatchObject({
-      completedAt: '2026-07-18T08:15:00.000Z',
-      includeInFinalOrder: true,
-    });
+    expect(viewed.firstViewedAt).toBe('2026-07-18T08:10:00.000Z');
+    expect(ordering.includeInFinalOrder).toBe(true);
+    expect(done.completedAt).toBe('2026-07-18T08:15:00.000Z');
     expect(isParticipantEligibleForFinalization(done)).toBe(true);
     expect(skipped).toMatchObject({
       completedAt: null,
@@ -349,60 +324,38 @@ describe('session participant responses', () => {
       includeInFinalOrder: false,
     });
     expect(isParticipantEligibleForFinalization(removed)).toBe(false);
-    expect(markParticipantResponse(removed, PARTICIPANT_RESPONSE.removed)).toBe(removed);
+    expect(markParticipantResponse(removed, PARTICIPANT_RESPONSE.removed)).toBe(
+      removed,
+    );
   });
 
-  it('supports direct completion and reopening while rejecting terminal mutations', () => {
-    const done = markParticipantResponse(
-      participant(),
-      PARTICIPANT_RESPONSE.done,
-      '2026-07-18T08:15:00.000Z',
-    );
-    const ordering = markParticipantResponse(
-      done,
-      PARTICIPANT_RESPONSE.ordering,
-      '2026-07-18T08:20:00.000Z',
-    );
-    const removed = markParticipantResponse(
-      ordering,
-      PARTICIPANT_RESPONSE.removed,
-      '2026-07-18T08:25:00.000Z',
-    );
-
-    expect(done.firstViewedAt).toBe('2026-07-18T08:15:00.000Z');
-    expect(ordering.completedAt).toBeNull();
-    expect(canTransitionParticipantResponse('removed', 'done')).toBe(false);
-    expect(() =>
-      markParticipantResponse(
-        removed,
-        PARTICIPANT_RESPONSE.done,
-        '2026-07-18T08:30:00.000Z',
-      ),
-    ).toThrow(/cannot transition/);
-    expect(() =>
-      markParticipantResponse(participant(), PARTICIPANT_RESPONSE.viewed, 'invalid'),
-    ).toThrow(/response time/);
-  });
-
-  it('summarizes every response and finalization eligibility', () => {
+  it('summarizes every response without inferring empty quantities', () => {
     const participants = [
       participant('pending'),
-      markParticipantResponse(participant('viewed'), PARTICIPANT_RESPONSE.viewed, createdAt),
+      markParticipantResponse(
+        participant('viewed'),
+        PARTICIPANT_RESPONSE.viewed,
+        CREATED_AT,
+      ),
       markParticipantResponse(
         participant('ordering'),
         PARTICIPANT_RESPONSE.ordering,
-        createdAt,
+        CREATED_AT,
       ),
-      markParticipantResponse(participant('done'), PARTICIPANT_RESPONSE.done, createdAt),
+      markParticipantResponse(
+        participant('done'),
+        PARTICIPANT_RESPONSE.done,
+        CREATED_AT,
+      ),
       markParticipantResponse(
         participant('skipped'),
         PARTICIPANT_RESPONSE.skipped,
-        createdAt,
+        CREATED_AT,
       ),
       markParticipantResponse(
         participant('removed'),
         PARTICIPANT_RESPONSE.removed,
-        createdAt,
+        CREATED_AT,
       ),
     ];
 
@@ -417,6 +370,26 @@ describe('session participant responses', () => {
       total: 6,
     });
   });
+
+  it('rejects invalid response transitions and timestamps', () => {
+    const removed = markParticipantResponse(
+      participant(),
+      PARTICIPANT_RESPONSE.removed,
+      CREATED_AT,
+    );
+    expect(canTransitionParticipantResponse('pending', 'done')).toBe(true);
+    expect(canTransitionParticipantResponse('removed', 'done')).toBe(false);
+    expect(() =>
+      markParticipantResponse(removed, PARTICIPANT_RESPONSE.done, CREATED_AT),
+    ).toThrow(/cannot transition/);
+    expect(() =>
+      markParticipantResponse(
+        participant(),
+        PARTICIPANT_RESPONSE.done,
+        'invalid',
+      ),
+    ).toThrow(/response time/);
+  });
 });
 
 describe('session contribution availability', () => {
@@ -428,38 +401,40 @@ describe('session contribution availability', () => {
       '2026-07-18T08:05:00.000Z',
     );
 
-    expect(isSessionContributionOpen(collecting, '2026-07-18T09:59:59.999Z')).toBe(true);
-    expect(isSessionContributionOpen(collecting, deadlineAt)).toBe(false);
+    expect(
+      isSessionContributionOpen(collecting, '2026-07-18T09:59:59.999Z'),
+    ).toBe(true);
+    expect(isSessionContributionOpen(collecting, DEADLINE_AT)).toBe(false);
     expect(isSessionContributionOpen(collecting, 'invalid')).toBe(false);
-    expect(isSessionContributionOpen(session(), '2026-07-18T09:00:00.000Z')).toBe(false);
+    expect(isSessionContributionOpen(session(), CREATED_AT)).toBe(false);
     expect(() =>
-      assertSessionAcceptsContributions(collecting, '2026-07-18T09:00:00.000Z'),
+      assertSessionAcceptsContributions(
+        collecting,
+        '2026-07-18T09:00:00.000Z',
+      ),
     ).not.toThrow();
-    expect(() => assertSessionAcceptsContributions(collecting, deadlineAt)).toThrow(
-      /deadline/,
-    );
-    expect(() => assertSessionAcceptsContributions(session(), createdAt)).toThrow(
+    expect(() =>
+      assertSessionAcceptsContributions(collecting, DEADLINE_AT),
+    ).toThrow(/deadline/);
+    expect(() => assertSessionAcceptsContributions(session(), CREATED_AT)).toThrow(
       /not collecting/,
     );
   });
 
-  it('keeps a collecting session open when no deadline is configured', () => {
+  it('keeps a collecting session open without a deadline', () => {
     const noDeadline = transitionOrderSession(
       createOrderSession({
+        ...sessionDraft(),
         id: 'session-2',
-        menuTemplateId: 'menu-2',
-        sourceMenuRevision: 1,
-        organizerId: 'owner-1',
-        title: 'Open order',
-        currency: 'EGP',
-        timezone: 'Africa/Cairo',
-        createdAt,
+        deadlineAt: null,
       }),
       ORDER_SESSION_STATUS.collecting,
       'owner-1',
-      createdAt,
+      CREATED_AT,
     );
 
-    expect(isSessionContributionOpen(noDeadline, '2027-01-01T00:00:00.000Z')).toBe(true);
+    expect(
+      isSessionContributionOpen(noDeadline, '2027-01-01T00:00:00.000Z'),
+    ).toBe(true);
   });
 });

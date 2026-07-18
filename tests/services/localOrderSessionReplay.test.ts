@@ -7,7 +7,7 @@ import {
   type SessionUser,
 } from '@/modules/data-access';
 
-const owner: SessionUser = {
+const OWNER: SessionUser = {
   id: 'owner-replay',
   email: 'owner-replay@example.com',
   displayName: 'Owner Replay',
@@ -22,7 +22,7 @@ describe('LocalOrderSessionService idempotent replay', () => {
   it('returns an already-applied record before stale revision rejection', async () => {
     const dataService = new LocalDataService();
     const sessionService = new LocalOrderSessionService();
-    const menu = await dataService.saveBucket(owner, {
+    const menu = await dataService.createBucket(OWNER, {
       title: 'Replay menu',
       description: '',
       currency: 'EGP',
@@ -39,7 +39,7 @@ describe('LocalOrderSessionService idempotent replay', () => {
         },
       ],
     });
-    const session = await sessionService.createSession(owner, {
+    const session = await sessionService.createSession(OWNER, {
       menuTemplateId: menu.id,
       timezone: 'Africa/Cairo',
     });
@@ -52,9 +52,9 @@ describe('LocalOrderSessionService idempotent replay', () => {
       mutationId: 'stable-replay-mutation',
     };
 
-    const first = await sessionService.updateContribution(owner, input);
-    const replayed = await sessionService.updateContribution(owner, input);
-    const view = await sessionService.getSessionView(owner, session.id);
+    const first = await sessionService.updateContribution(OWNER, input);
+    const replayed = await sessionService.updateContribution(OWNER, input);
+    const view = await sessionService.getSessionView(OWNER, session.id);
 
     expect(replayed).toEqual(first);
     expect(view?.session.aggregate).toEqual({ meal: 2 });

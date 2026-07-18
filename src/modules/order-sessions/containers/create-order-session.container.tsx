@@ -7,6 +7,7 @@ import { ORDER_SESSIONS_PATH } from '../routes/order-sessions-route-paths.consta
 
 export function CreateOrderSessionContainer() {
   const viewModel = useCreateOrderSession();
+  const backLabel = viewModel.translate(viewModel.locale, 'backToSessions');
 
   if (viewModel.loading) {
     return <Loading label={viewModel.translate(viewModel.locale, 'loadingSession')} />;
@@ -15,19 +16,18 @@ export function CreateOrderSessionContainer() {
   if (!viewModel.menu) {
     return (
       <div className="page narrow stack-lg">
-        <BackLink to={ORDER_SESSIONS_PATH}>
-          {viewModel.translate(viewModel.locale, 'backToSessions')}
-        </BackLink>
-        <ErrorState message={viewModel.error} />
+        <BackLink fallback={ORDER_SESSIONS_PATH} label={backLabel} />
+        <ErrorState
+          message={viewModel.error}
+          retryLabel={viewModel.translate(viewModel.locale, 'refresh')}
+        />
       </div>
     );
   }
 
   return (
     <div className="page narrow stack-lg">
-      <BackLink to={ORDER_SESSIONS_PATH}>
-        {viewModel.translate(viewModel.locale, 'backToSessions')}
-      </BackLink>
+      <BackLink fallback={ORDER_SESSIONS_PATH} label={backLabel} />
       <header className="page-heading">
         <div>
           <p className="eyebrow">

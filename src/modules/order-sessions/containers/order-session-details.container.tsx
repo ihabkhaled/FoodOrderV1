@@ -12,6 +12,7 @@ import { ORDER_SESSIONS_PATH } from '../routes/order-sessions-route-paths.consta
 export function OrderSessionDetailsContainer() {
   const viewModel = useSessionCommandCenter();
   const confirmation = useSessionLifecycleConfirmation();
+  const backLabel = viewModel.translate(viewModel.locale, 'backToSessions');
 
   if (viewModel.loading) {
     return <Loading label={viewModel.translate(viewModel.locale, 'loadingSession')} />;
@@ -20,9 +21,7 @@ export function OrderSessionDetailsContainer() {
   if (!viewModel.view) {
     return (
       <div className="page stack-lg">
-        <BackLink to={ORDER_SESSIONS_PATH}>
-          {viewModel.translate(viewModel.locale, 'backToSessions')}
-        </BackLink>
+        <BackLink fallback={ORDER_SESSIONS_PATH} label={backLabel} />
         <ErrorState
           message={
             viewModel.error ||
@@ -39,9 +38,7 @@ export function OrderSessionDetailsContainer() {
 
   return (
     <div className="page session-command-center stack-lg">
-      <BackLink to={ORDER_SESSIONS_PATH}>
-        {viewModel.translate(viewModel.locale, 'backToSessions')}
-      </BackLink>
+      <BackLink fallback={ORDER_SESSIONS_PATH} label={backLabel} />
       <SessionSummary
         session={session}
         locale={viewModel.locale}
@@ -136,7 +133,7 @@ export function OrderSessionDetailsContainer() {
               )
             : viewModel.translate(viewModel.locale, 'status')
         }
-        cancelLabel={viewModel.translate(viewModel.locale, 'backToSessions')}
+        cancelLabel={backLabel}
         danger={confirmation.pendingAction?.danger ?? false}
         onConfirm={() => void confirmation.confirm(viewModel.transition)}
         onCancel={confirmation.cancel}

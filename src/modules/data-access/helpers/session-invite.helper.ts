@@ -21,7 +21,9 @@ const assertRequiredText = (value: string, label: string): string => {
 
 const expiryIso = (from: string, hours: number): string => {
   const fromMillis = Date.parse(from);
-  if (Number.isNaN(fromMillis)) throw new Error('Expiry source must be a valid ISO timestamp.');
+  if (Number.isNaN(fromMillis)) {
+    throw new Error('Expiry source must be a valid ISO timestamp.');
+  }
   return new Date(fromMillis + hours * 3_600_000).toISOString();
 };
 
@@ -46,8 +48,8 @@ export const parseSessionShareCode = (
 export const createSessionInvite = async (input: {
   sessionId: string;
   createdBy: string;
-  createdAt?: string;
-  maxUses?: number;
+  createdAt?: string | undefined;
+  maxUses?: number | undefined;
 }): Promise<{ invite: SessionInvite; shareCode: string }> => {
   const sessionId = assertRequiredText(input.sessionId, 'Session ID');
   const createdBy = assertRequiredText(input.createdBy, 'Invitation creator');
@@ -104,20 +106,25 @@ export const revokeSessionInvite = (
   at: string = nowIso(),
 ): SessionInvite => {
   if (invite.status === 'revoked') return invite;
-  if (Number.isNaN(Date.parse(at))) throw new Error('Revocation time must be valid.');
+  if (Number.isNaN(Date.parse(at))) {
+    throw new Error('Revocation time must be valid.');
+  }
   return { ...invite, status: 'revoked', revokedAt: at };
 };
 
 export const createGuestCapability = async (input: {
   sessionId: string;
   displayName: string;
-  createdAt?: string;
+  createdAt?: string | undefined;
 }): Promise<{
   publicCapability: GuestSessionCapability;
   storedCapability: StoredGuestSessionCapability;
 }> => {
   const sessionId = assertRequiredText(input.sessionId, 'Session ID');
-  const displayName = assertRequiredText(input.displayName, 'Guest display name').slice(0, 120);
+  const displayName = assertRequiredText(
+    input.displayName,
+    'Guest display name',
+  ).slice(0, 120);
   const createdAt = input.createdAt ?? nowIso();
   const guestId = `guest_${generateInviteToken()}`;
   const guestSecret = generateInviteToken();
@@ -170,7 +177,9 @@ export const linkGuestCapability = (
   if (stored.status !== 'active') {
     throw new Error('This guest capability cannot be linked.');
   }
-  if (Number.isNaN(Date.parse(at))) throw new Error('Link time must be valid.');
+  if (Number.isNaN(Date.parse(at))) {
+    throw new Error('Link time must be valid.');
+  }
   return {
     ...stored,
     status: 'linked',
