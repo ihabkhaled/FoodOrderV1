@@ -64,7 +64,9 @@ jobs:
         run: |
           npm run format:check
           npm run lint:fix
-          git diff --exit-code
+          # knowledge:build regenerates timestamped reports (generatedAt/checkedAt);
+          # exclude them so this diff only catches real lint-autofix drift.
+          git diff --exit-code -- . ':(exclude).ai/reports'
           npm run lint
 
       - name: Validate types, functions, and release integrity
