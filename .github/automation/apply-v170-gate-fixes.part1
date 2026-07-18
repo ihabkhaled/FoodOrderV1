@@ -1,0 +1,470 @@
+from pathlib import Path
+import json
+
+root = Path.cwd()
+
+def read(path):
+    return (root / path).read_text(encoding='utf-8')
+
+def write(path, content):
+    p = root / path
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text(content, encoding='utf-8')
+
+def replace(path, old, new, count=1):
+    text = read(path)
+    actual = text.count(old)
+    if actual < count:
+        raise SystemExit(f'{path}: expected at least {count} occurrence(s), found {actual}: {old[:120]!r}')
+    write(path, text.replace(old, new, count))
+
+# Synchronize stable release versions across lockfiles.
+for path in ['package-lock.json', 'functions/package-lock.json']:
+    data = json.loads(read(path))
+    data['version'] = '1.7.0'
+    if '' in data.get('packages', {}):
+        data['packages']['']['version'] = '1.7.0'
+    write(path, json.dumps(data, indent=2) + '\n')
+
+# Functions: explicit menu item mapper type and reusable contribution validation/update helpers.
+path = 'functions/src/orderSessionsV170.ts'
+replace(path, "type SessionStatus = (typeof SESSION_STATUS)[keyof typeof SESSION_STATUS];\n", "type SessionStatus = (typeof SESSION_STATUS)[keyof typeof SESSION_STATUS];\ntype ContributionOperation = 'set' | 'increment';\n")
+replace(path, "  return value\n    .map((rawValue, index) => {", "  return value\n    .map<SessionMenuItemRecord>((rawValue, index) => {")
+insert_after = "const requiredRevision = (value: unknown, label: string): number => {\n  if (!Number.isSafeInteger(value) || (value as number) < 1) {\n    throw new HttpsError('invalid-argument', `${label} must be a positive integer.`);\n  }\n  return value as number;\n};\n"
+helpers = """
+
+const requiredContributionOperation = (value: unknown): ContributionOperation => {
+  if (value !== 'set' && value !== 'increment') {
+    throw new HttpsError('invalid-argument', 'The contribution operation is invalid.');
+  }
+  return value;
+};
+
+const requiredContributionValue = (value: unknown): number => {
+  if (!Number.isSafeInteger(value)) {
+    throw new HttpsError('invalid-argument', 'The contribution value must be an integer.');
+  }
+  return value as number;
+};
+
+const updatedQuantities = (
+  current: Readonly<Record<string, number>> | undefined,
+  itemId: string,
+  target: number,
+): Record<string, number> => {
+  const entries = Object.entries(current ?? {}).filter(
+    ([candidateItemId]) => candidateItemId !== itemId,
+  );
+  if (target > 0) entries.push([itemId, target]);
+  return Object.fromEntries(entries);
+};
+
+const assertContributionAccess = (
+  session: OrderSessionRecord,
+  participant: SessionParticipantRecord,
+  expectedSessionRevision: number,
+): void => {
+  if (session.revision !== expectedSessionRevision) {
+    throw new HttpsError('aborted', 'The order session changed. Refresh and try again.');
+  }
+  if (session.status !== SESSION_STATUS.collecting) {
+    throw new HttpsError(
+      'failed-precondition',
+      'The order session is not collecting contributions.',
+    );
+  }
+  if (session.deadlineAt && Date.now() >= Date.parse(session.deadlineAt)) {
+    throw new HttpsError('failed-precondition', 'The order session deadline has passed.');
+  }
+  if (participant.role === 'viewer' || participant.response === PARTICIPANT_RESPONSE.removed) {
+    throw new HttpsError(
+      'permission-denied',
+      'You do not have permission to contribute to this session.',
+    );
+  }
+};
+
+const requiredTargetQuantity = (
+  currentQuantity: number,
+  operation: ContributionOperation,
+  value: number,
+): number => {
+  const target = operation === 'set' ? value : currentQuantity + value;
+  if (!Number.isSafeInteger(target) || target < 0 || target > MAX_QUANTITY) {
+    throw new HttpsError(
+      'invalid-argument',
+      `Quantity must be between 0 and ${MAX_QUANTITY}.`,
+    );
+  }
+  return target;
+};
+"""
+replace(path, insert_after, insert_after + helpers)
+old = """    const operation = requiredString(data.operation, 'Contribution operation') as
+      | 'set'
+      | 'increment';
+    if (!['set', 'increment'].includes(operation)) {
+      throw new HttpsError('invalid-argument', 'The contribution operation is invalid.');
+    }
+    if (!Number.isSafeInteger(data.value)) {
+      throw new HttpsError('invalid-argument', 'The contribution value must be an integer.');
+    }
+    const value = data.value as number;
+"""
+new = """    const operation = requiredContributionOperation(data.operation);
+    const value = requiredContributionValue(data.value);
+"""
+replace(path, old, new)
+old = """      if (session.revision !== expectedSessionRevision) {
+        throw new HttpsError('aborted', 'The order session changed. Refresh and try again.');
+      }
+      if (session.status !== SESSION_STATUS.collecting) {
+        throw new HttpsError(
+          'failed-precondition',
+          'The order session is not collecting contributions.',
+        );
+      }
+      if (session.deadlineAt && Date.now() >= Date.parse(session.deadlineAt)) {
+        throw new HttpsError('failed-precondition', 'The order session deadline has passed.');
+      }
+      if (participant.role === 'viewer' || participant.response === 'removed') {
+        throw new HttpsError(
+          'permission-denied',
+          'You do not have permission to contribute to this session.',
+        );
+      }
+"""
+replace(path, old, "      assertContributionAccess(session, participant, expectedSessionRevision);\n")
+old = """      const currentQuantity = current?.quantities[itemId] ?? 0;
+      const target = operation === 'set' ? value : currentQuantity + value;
+      if (!Number.isSafeInteger(target) || target < 0 || target > MAX_QUANTITY) {
+        throw new HttpsError(
+          'invalid-argument',
+          `Quantity must be between 0 and ${MAX_QUANTITY}.`,
+        );
+      }
+      const timestamp = new Date().toISOString();
+      const quantities = { ...current?.quantities };
+      if (target === 0) delete quantities[itemId];
+      else quantities[itemId] = target;
+"""
+new = """      const currentQuantity = current?.quantities[itemId] ?? 0;
+      const target = requiredTargetQuantity(currentQuantity, operation, value);
+      const timestamp = new Date().toISOString();
+      const quantities = updatedQuantities(current?.quantities, itemId, target);
+"""
+replace(path, old, new)
+
+# Guest Functions: same strict parsing, immutable quantity update, and access validation.
+path = 'functions/src/sessionInvitesV170.ts'
+replace(path, "interface SessionMutationRecord {\n", "type ContributionOperation = 'set' | 'increment';\n\ninterface SessionMutationRecord {\n")
+replace(path, "  operation: 'set' | 'increment';", "  operation: ContributionOperation;")
+insert_after = "const requiredRevision = (value: unknown, label: string): number => {\n  if (!Number.isSafeInteger(value) || (value as number) < 1) {\n    throw new HttpsError('invalid-argument', `${label} must be a positive integer.`);\n  }\n  return value as number;\n};\n"
+helpers = """
+
+const requiredContributionOperation = (value: unknown): ContributionOperation => {
+  if (value !== 'set' && value !== 'increment') {
+    throw new HttpsError('invalid-argument', 'Contribution operation is invalid.');
+  }
+  return value;
+};
+
+const requiredContributionValue = (value: unknown): number => {
+  if (!Number.isSafeInteger(value)) {
+    throw new HttpsError('invalid-argument', 'Contribution value must be an integer.');
+  }
+  return value as number;
+};
+
+const updatedQuantities = (
+  current: Readonly<Record<string, number>> | undefined,
+  itemId: string,
+  target: number,
+): Record<string, number> => {
+  const entries = Object.entries(current ?? {}).filter(
+    ([candidateItemId]) => candidateItemId !== itemId,
+  );
+  if (target > 0) entries.push([itemId, target]);
+  return Object.fromEntries(entries);
+};
+
+const assertGuestContributionAccess = (
+  guest: GuestIdentityRecord,
+  guestSecret: string,
+  session: OrderSessionRecord,
+  expectedSessionRevision: number,
+): void => {
+  if (!guestUsable(guest, guestSecret)) {
+    throw new HttpsError('permission-denied', 'Guest access is invalid or expired.');
+  }
+  if (session.revision !== expectedSessionRevision) {
+    throw new HttpsError('aborted', 'The order session changed. Refresh and try again.');
+  }
+  if (
+    session.status !== 'collecting' ||
+    (session.deadlineAt && Date.now() >= Date.parse(session.deadlineAt))
+  ) {
+    throw new HttpsError(
+      'failed-precondition',
+      'The order session is not collecting contributions.',
+    );
+  }
+};
+
+const requiredTargetQuantity = (
+  currentQuantity: number,
+  operation: ContributionOperation,
+  value: number,
+): number => {
+  const target = operation === 'set' ? value : currentQuantity + value;
+  if (!Number.isSafeInteger(target) || target < 0 || target > MAX_QUANTITY) {
+    throw new HttpsError(
+      'invalid-argument',
+      `Quantity must be between 0 and ${MAX_QUANTITY}.`,
+    );
+  }
+  return target;
+};
+"""
+replace(path, insert_after, insert_after + helpers)
+old = """    const operation = requiredString(data.operation, 'Contribution operation') as
+      | 'set'
+      | 'increment';
+    if (!['set', 'increment'].includes(operation)) {
+      throw new HttpsError('invalid-argument', 'Contribution operation is invalid.');
+    }
+    if (!Number.isSafeInteger(data.value)) {
+      throw new HttpsError('invalid-argument', 'Contribution value must be an integer.');
+    }
+    const value = data.value as number;
+"""
+replace(path, old, """    const operation = requiredContributionOperation(data.operation);
+    const value = requiredContributionValue(data.value);
+""")
+old = """      const guest = guestSnapshot.data() as GuestIdentityRecord;
+      if (!guestUsable(guest, guestSecret)) {
+        throw new HttpsError('permission-denied', 'Guest access is invalid or expired.');
+      }
+      if (mutationSnapshot.exists) {
+"""
+new = """      const guest = guestSnapshot.data() as GuestIdentityRecord;
+      if (mutationSnapshot.exists) {
+"""
+replace(path, old, new)
+old = """      if (session.revision !== expectedSessionRevision) {
+        throw new HttpsError('aborted', 'The order session changed. Refresh and try again.');
+      }
+      if (
+        session.status !== 'collecting' ||
+        (session.deadlineAt && Date.now() >= Date.parse(session.deadlineAt))
+      ) {
+        throw new HttpsError(
+          'failed-precondition',
+          'The order session is not collecting contributions.',
+        );
+      }
+"""
+replace(path, old, "      assertGuestContributionAccess(guest, guestSecret, session, expectedSessionRevision);\n")
+old = """      const currentQuantity = current?.quantities[itemId] ?? 0;
+      const target = operation === 'set' ? value : currentQuantity + value;
+      if (!Number.isSafeInteger(target) || target < 0 || target > MAX_QUANTITY) {
+        throw new HttpsError(
+          'invalid-argument',
+          `Quantity must be between 0 and ${MAX_QUANTITY}.`,
+        );
+      }
+      const timestamp = new Date().toISOString();
+      const quantities = { ...current?.quantities };
+      if (target === 0) delete quantities[itemId];
+      else quantities[itemId] = target;
+"""
+replace(path, old, """      const currentQuantity = current?.quantities[itemId] ?? 0;
+      const target = requiredTargetQuantity(currentQuantity, operation, value);
+      const timestamp = new Date().toISOString();
+      const quantities = updatedQuantities(current?.quantities, itemId, target);
+""")
+
+# Settlement helper: extract status and reconciliation details to reduce complexity.
+path = 'src/modules/data-access/helpers/settlement.helper.ts'
+insert_before = "export const transitionParticipantPaymentStatus = (\n"
+helpers = """const settlementAmountsForStatus = (
+  settlement: ParticipantSettlement,
+  nextStatus: PaymentStatus,
+): Pick<ParticipantSettlement, 'outstandingMinor' | 'paidMinor'> => {
+  if (nextStatus === PAYMENT_STATUS.verified || nextStatus === PAYMENT_STATUS.waived) {
+    return { paidMinor: settlement.reconciledTotalMinor, outstandingMinor: 0 };
+  }
+  if (nextStatus === PAYMENT_STATUS.refunded) {
+    return { paidMinor: 0, outstandingMinor: settlement.reconciledTotalMinor };
+  }
+  return {
+    paidMinor: settlement.paidMinor,
+    outstandingMinor: settlement.outstandingMinor,
+  };
+};
+
+const settlementTimestampPatch = (
+  nextStatus: PaymentStatus,
+  at: string,
+): Partial<ParticipantSettlement> => {
+  switch (nextStatus) {
+    case PAYMENT_STATUS.declaredPaid:
+      return { declaredAt: at };
+    case PAYMENT_STATUS.proofSubmitted:
+      return { proofSubmittedAt: at };
+    case PAYMENT_STATUS.verified:
+      return { verifiedAt: at };
+    case PAYMENT_STATUS.rejected:
+      return { rejectedAt: at };
+    case PAYMENT_STATUS.waived:
+      return { waivedAt: at };
+    case PAYMENT_STATUS.refunded:
+      return { refundedAt: at };
+    case PAYMENT_STATUS.unpaid:
+      return {};
+  }
+};
+
+"""
+replace(path, insert_before, helpers + insert_before)
+old = """  const isSettled =
+    nextStatus === PAYMENT_STATUS.verified || nextStatus === PAYMENT_STATUS.waived;
+  const isRefunded = nextStatus === PAYMENT_STATUS.refunded;
+  const next: ParticipantSettlement = {
+    ...settlement,
+    status: nextStatus,
+    proofAttachmentId: normalizedProofId ?? settlement.proofAttachmentId,
+    paidMinor: isSettled ? settlement.reconciledTotalMinor : isRefunded ? 0 : settlement.paidMinor,
+    outstandingMinor: isSettled
+      ? 0
+      : isRefunded
+        ? settlement.reconciledTotalMinor
+        : settlement.outstandingMinor,
+    statusActorId: normalizedActorId,
+    revision: settlement.revision + 1,
+    updatedAt: at,
+  };
+
+  if (nextStatus === PAYMENT_STATUS.declaredPaid) next.declaredAt = at;
+  if (nextStatus === PAYMENT_STATUS.proofSubmitted) next.proofSubmittedAt = at;
+  if (nextStatus === PAYMENT_STATUS.verified) next.verifiedAt = at;
+  if (nextStatus === PAYMENT_STATUS.rejected) next.rejectedAt = at;
+  if (nextStatus === PAYMENT_STATUS.waived) next.waivedAt = at;
+  if (nextStatus === PAYMENT_STATUS.refunded) next.refundedAt = at;
+
+  return next;
+"""
+new = """  const amounts = settlementAmountsForStatus(settlement, nextStatus);
+  return {
+    ...settlement,
+    ...amounts,
+    ...settlementTimestampPatch(nextStatus, at),
+    status: nextStatus,
+    proofAttachmentId: normalizedProofId ?? settlement.proofAttachmentId,
+    statusActorId: normalizedActorId,
+    revision: settlement.revision + 1,
+    updatedAt: at,
+  };
+"""
+replace(path, old, new)
+insert_before = "export const buildSettlementReconciliation = (\n"
+helpers = """const validateReconciliationParticipants = (
+  input: SettlementReconciliationInput,
+  expectedGrandTotalMinor: number,
+): void => {
+  if (input.participants.length === 0) {
+    throw new Error('Reconciliation requires at least one participant.');
+  }
+
+  const participantIds = new Set<string>();
+  const participantExpectedTotal = input.participants.reduce((total, participant) => {
+    const userId = assertRequiredText(participant.userId, 'Participant ID');
+    if (participantIds.has(userId)) {
+      throw new Error('Reconciliation participant identifiers must be unique.');
+    }
+    participantIds.add(userId);
+    return (
+      total +
+      assertMinorUnits(participant.expectedTotalMinor, 'Participant expected total')
+    );
+  }, 0);
+
+  if (participantExpectedTotal !== expectedGrandTotalMinor) {
+    throw new Error('Participant expected totals must equal the expected grand total.');
+  }
+};
+
+const buildParticipantAdjustments = (
+  input: SettlementReconciliationInput,
+  adjustments: Readonly<Record<string, number>>,
+) =>
+  input.participants
+    .map((participant) => {
+      const adjustmentMinor = adjustments[participant.userId] ?? 0;
+      const reconciledTotalMinor = participant.expectedTotalMinor + adjustmentMinor;
+      if (reconciledTotalMinor < 0) {
+        throw new Error('A reconciliation cannot make a participant total negative.');
+      }
+      return {
+        userId: participant.userId,
+        expectedTotalMinor: participant.expectedTotalMinor,
+        adjustmentMinor,
+        reconciledTotalMinor,
+      };
+    })
+    .toSorted((left, right) => left.userId.localeCompare(right.userId));
+
+const assertReconciledGrandTotal = (
+  participantAdjustments: SettlementReconciliationSnapshot['participantAdjustments'],
+  actualGrandTotalMinor: number,
+): void => {
+  const reconciledGrandTotal = participantAdjustments.reduce(
+    (sum, participant) => sum + participant.reconciledTotalMinor,
+    0,
+  );
+  if (reconciledGrandTotal !== actualGrandTotalMinor) {
+    throw new Error('Reconciliation did not resolve to the actual grand total.');
+  }
+};
+
+"""
+replace(path, insert_before, helpers + insert_before)
+old = """  if (input.participants.length === 0) {
+    throw new Error('Reconciliation requires at least one participant.');
+  }
+
+  const participantIds = new Set<string>();
+  let participantExpectedTotal = 0;
+  for (const participant of input.participants) {
+    const userId = assertRequiredText(participant.userId, 'Participant ID');
+    if (participantIds.has(userId)) {
+      throw new Error('Reconciliation participant identifiers must be unique.');
+    }
+    participantIds.add(userId);
+    participantExpectedTotal += assertMinorUnits(
+      participant.expectedTotalMinor,
+      'Participant expected total',
+    );
+  }
+  if (participantExpectedTotal !== expectedGrandTotalMinor) {
+    throw new Error('Participant expected totals must equal the expected grand total.');
+  }
+"""
+replace(path, old, "  validateReconciliationParticipants(input, expectedGrandTotalMinor);\n")
+old = """  const participantAdjustments = input.participants
+    .map((participant) => {
+      const adjustmentMinor = adjustments[participant.userId] ?? 0;
+      const reconciledTotalMinor = participant.expectedTotalMinor + adjustmentMinor;
+      if (reconciledTotalMinor < 0) {
+        throw new Error('A reconciliation cannot make a participant total negative.');
+      }
+      return {
+        userId: participant.userId,
+        expectedTotalMinor: participant.expectedTotalMinor,
+        adjustmentMinor,
+        reconciledTotalMinor,
+      };
+    })
+    .toSorted((left, right) => left.userId.localeCompare(right.userId));
+
+  const reconciledGrandTotal = participantAdjustments.reduce(
