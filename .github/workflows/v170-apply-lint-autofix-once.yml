@@ -35,21 +35,33 @@ jobs:
           java-version: 21
       - run: npm ci
       - run: npm --prefix functions ci
-      - name: Apply canonical formatting and grouped repairs
+      - name: Apply canonical autofixes
+        run: npm run lint:fix || true
+      - name: Apply grouped repairs
         shell: bash
         run: |
-          set -euo pipefail
-          npm run lint:fix || true
+          set -o pipefail
           cat \
             .github/automation/apply-v170-gate-fixes.part1 \
             .github/automation/apply-v170-gate-fixes.part2 \
             > "${RUNNER_TEMP}/apply-v170-gate-fixes.py"
-          python "${RUNNER_TEMP}/apply-v170-gate-fixes.py"
+          python "${RUNNER_TEMP}/apply-v170-gate-fixes.py" 2>&1 | tee grouped-repair.log
+      - name: Remove transport files
+        run: |
           rm -rf .github/automation
           rm .github/workflows/v170-apply-lint-autofix-once.yml
-          npm run format
-          npm run knowledge:build
-          npm run lint:fix
+      - name: Format and rebuild knowledge
+        shell: bash
+        run: |
+          set -o pipefail
+          npm run format 2>&1 | tee repair-format.log
+          npm run knowledge:build 2>&1 | tee repair-knowledge.log
+      - name: Run clean lint gate
+        shell: bash
+        run: |
+          set -o pipefail
+          npm run lint:fix 2>&1 | tee repair-lint-fix.log
+          npm run lint 2>&1 | tee repair-lint.log
       - name: Resolve main version for PR integrity
         shell: bash
         run: |
@@ -64,7 +76,6 @@ jobs:
           npm run knowledge:validate
           npm run format:check
           git diff --check
-          npm run lint
           npm run typecheck
           npm run typecheck:tsc
           npm run functions:validate
@@ -90,3 +101,20 @@ jobs:
           git add -A
           git commit -m 'fix(v1.7): restore runtime and release gates'
           git push origin HEAD:refs/heads/automation/v170-gate-fixes --force
+      - name: Export diagnostics and repaired source
+        if: always()
+        shell: bash
+        run: |
+          zip -qr "${RUNNER_TEMP}/v170-repaired-source.zip" . \
+            -x '.git/*' 'node_modules/*' 'functions/node_modules/*' 'dist/*' 'coverage/*' \
+               'playwright-report/*' 'test-results/*'
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: v170-repair-diagnostics
+          path: |
+            grouped-repair.log
+            repair-*.log
+            ${{ runner.temp }}/v170-repaired-source.zip
+          if-no-files-found: warn
+          retention-days: 7
