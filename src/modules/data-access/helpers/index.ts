@@ -47,9 +47,11 @@ export {
 } from './order-session.helper';
 export {
   applySessionContributionMutation,
+  calculateSessionExpectedGrandTotalMinor,
   computeSessionAggregate,
   type SessionContributionMutationResult,
   type SessionContributionMutationState,
+  type SessionPricingSnapshot,
 } from './session-contribution.helper';
 export {
   buildSessionShareCode,
