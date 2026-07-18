@@ -47,7 +47,7 @@ export type {
   GuestSessionView,
   PublicSessionInvitePreview,
   SessionInvite,
-  SessionInviteStatus,
+  StoredGuestSessionCapability,
 } from './session-invite.types';
 export type {
   ParticipantSettlement,
