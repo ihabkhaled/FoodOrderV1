@@ -1,4 +1,4 @@
-name: v1.7 Export Autofixed Source
+name: v1.7 Validate Grouped Repairs
 
 on:
   pull_request:
@@ -7,20 +7,21 @@ on:
       - '.github/workflows/v170-apply-lint-autofix-once.yml'
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
-  group: v170-export-autofixed-source
+  group: v170-validate-grouped-repairs
   cancel-in-progress: false
 
 jobs:
-  export:
+  validate-and-export:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v7
         with:
           ref: 1.7.0
+          fetch-depth: 0
       - uses: actions/setup-node@v6
         with:
           node-version: 26
@@ -28,21 +29,64 @@ jobs:
           cache-dependency-path: |
             package-lock.json
             functions/package-lock.json
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
       - run: npm ci
       - run: npm --prefix functions ci
-      - name: Apply repository-owned autofixes
-        run: npm run lint:fix || true
-      - name: Remove transfer-only workflow from exported tree
-        run: rm .github/workflows/v170-apply-lint-autofix-once.yml
-      - name: Package complete source tree
+      - name: Apply canonical formatting and grouped repairs
         shell: bash
         run: |
-          zip -qr "${RUNNER_TEMP}/FoodOrderV1-v170-autofixed.zip" . \
-            -x '.git/*' 'node_modules/*' 'functions/node_modules/*' 'dist/*' 'coverage/*' \
-               'playwright-report/*' 'test-results/*'
-      - uses: actions/upload-artifact@v7
-        with:
-          name: FoodOrderV1-v170-autofixed-source
-          path: ${{ runner.temp }}/FoodOrderV1-v170-autofixed.zip
-          if-no-files-found: error
-          retention-days: 7
+          set -euo pipefail
+          npm run lint:fix || true
+          cat \
+            .github/automation/apply-v170-gate-fixes.part1 \
+            .github/automation/apply-v170-gate-fixes.part2 \
+            > "${RUNNER_TEMP}/apply-v170-gate-fixes.py"
+          python "${RUNNER_TEMP}/apply-v170-gate-fixes.py"
+          rm -rf .github/automation
+          rm .github/workflows/v170-apply-lint-autofix-once.yml
+          npm run format
+          npm run knowledge:build
+          npm run lint:fix
+      - name: Resolve main version for PR integrity
+        shell: bash
+        run: |
+          git fetch --no-tags origin main
+          git show origin/main:package.json > "${RUNNER_TEMP}/base-package.json"
+          echo "BASE_VERSION=$(node -p "require('${RUNNER_TEMP}/base-package.json').version")" >> "${GITHUB_ENV}"
+          echo 'GITHUB_EVENT_NAME=pull_request' >> "${GITHUB_ENV}"
+      - name: Run core release gates
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm run knowledge:validate
+          npm run format:check
+          git diff --check
+          npm run lint
+          npm run typecheck
+          npm run typecheck:tsc
+          npm run functions:validate
+          npm run test
+          npm run test:coverage
+          npm run test:rules
+          npm run quality:dead-code
+          npm run quality:circular
+          npm run quality:release
+          npm run quality:agent-docs
+          npm run build
+      - name: Run critical browser journey
+        shell: bash
+        run: |
+          npx playwright install --with-deps chromium
+          npm run test:e2e:critical
+      - name: Create grouped transport commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'fix(v1.7): restore runtime and release gates'
+          git push origin HEAD:refs/heads/automation/v170-gate-fixes --force
