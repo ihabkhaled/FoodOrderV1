@@ -2,9 +2,20 @@ name: Reusable Android APK
 
 on:
   workflow_call:
+    inputs:
+      checkout_ref:
+        description: 'Optional branch, tag, or commit SHA to build.'
+        required: false
+        type: string
+        default: ''
+      build_version:
+        description: 'Optional explicit artifact version. Source manifests remain stable semver.'
+        required: false
+        type: string
+        default: ''
     outputs:
       build_version:
-        description: 'Resolved build version: X.Y.Z on tags, X.Y.Z-<run_number> on main, X.Y.Z-dev.<run_number> otherwise'
+        description: 'Resolved immutable APK artifact version.'
         value: ${{ jobs.build-apk.outputs.build_version }}
 
 permissions:
@@ -20,6 +31,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.checkout_ref || github.ref }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v6
@@ -42,9 +55,13 @@ jobs:
       - name: Resolve build version
         id: version
         shell: bash
+        env:
+          REQUESTED_BUILD_VERSION: ${{ inputs.build_version }}
         run: |
           BASE="$(node -p "require('./package.json').version")"
-          if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
+          if [[ -n "${REQUESTED_BUILD_VERSION}" ]]; then
+            BUILD_VERSION="${REQUESTED_BUILD_VERSION}"
+          elif [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
             BUILD_VERSION="${GITHUB_REF_NAME#v}"
           elif [[ "${GITHUB_REF}" == "refs/heads/main" ]]; then
             BUILD_VERSION="${BASE}-${GITHUB_RUN_NUMBER}"
@@ -70,7 +87,7 @@ jobs:
       - name: Sync committed Android project
         run: npx cap sync android
 
-      - name: Apply build version to Android versionName
+      - name: Apply immutable build version to Android versionName
         shell: bash
         run: |
           sed -i "s/versionName \"[^\"]*\"/versionName \"${BUILD_VERSION}\"/" android/app/build.gradle

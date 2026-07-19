@@ -2,40 +2,38 @@
 
 Governance-Version: 1
 
-Canonical source of truth: `AGENTS.md` at the repo root. Read it first; this file is a digest.
-Task playbooks live in `skills/`, hard rules in `rules/00-non-negotiable-rules.md`,
-architecture in `architecture/README.md`.
+Canonical source of truth: `AGENTS.md`. Read it before writing code. Then read `.ai/BOOTSTRAP.md`, resolve task context with `npm run knowledge:context`, and follow the matching `skills/` playbook and canonical `rules/` documents.
 
 ## Hard rules
 
-- Layers are one-way: `src/app` → `src/modules/*` → `src/shared`/`src/platform` → `src/packages` → vendor.
-- Feature code lives in exactly one module (auth, buckets, group-orders, orders, social,
-  notifications, dashboard, settings, session, data-access).
-- Import other modules and vendor facades only via `@/modules/<name>` / `@/packages/<name>`;
-  no deep imports.
-- Vendor packages (firebase, react-router-dom, lucide-react, react-virtuoso, @capacitor/*)
-  are imported only inside their owner under `src/packages/*`
-  (registry: `eslint/package-ownership.config.mjs`).
-- React hooks only in `*.hook.ts` files or `hooks/` dirs; `*.component.tsx` calls zero hooks;
-  containers call project hooks only.
-- Browser globals only in `src/platform`; `import.meta.env`/`process.env` only in
-  `src/platform/environment`.
-- Absolute route strings only in `routes/` files; kebab-case filenames with responsibility
-  suffixes (`.component.tsx`, `.container.tsx`, `.hook.ts`, `.service.ts`, `.gateway.ts`, ...).
-- `enum` is banned — use `as const` objects in `*.enums.ts`.
-- Every user-visible string has `en` and `ar` catalog entries; RTL must keep working.
-- Never weaken `firestore.rules`, auth, ownership isolation, tests, or accessibility.
-- `.ai/` is generated — never hand-edit.
-- When a rule fails, the code is in the wrong layer. Move or redesign the code. Do not disable the rule.
+- One-way architecture: `src/app` → `src/modules/*` → `src/shared`/`src/platform` → `src/packages` → vendor.
+- Feature behavior lives in exactly one module and is consumed only through public module surfaces.
+- Vendor packages are imported only by their registered `src/packages/<name>` owner facade.
+- React hooks live only in hook files; UI components call zero hooks; containers call project hooks only.
+- Browser globals live only in `src/platform`; environment reads live only in `src/platform/environment`.
+- Absolute paths live in route ownership files; filenames are kebab-case with truthful responsibility suffixes.
+- TypeScript `enum` is banned; use typed `as const` objects and derived unions.
+- Domain constants, interfaces, types, helpers, state machines, validators, adapters, and contracts must not be hidden inline in screens or giant hooks. Give each artifact a truthful owned file.
+- No new state/query library. Session context, service contracts, and owning hooks remain the state model.
+- Every user-visible string has complete English and Arabic entries; RTL, accessibility, privacy, and dark mode remain first-class behavior.
+- Never weaken Firestore/Storage rules, auth, ownership, tests, coverage, migration safety, or rollback readiness.
+- `.ai/` is generated. Never hand-edit it.
+
+## Version branches
+
+For branches named `X.Y.Z`, `release/X.Y.Z`, or `X.Y.Z/<feature>`, follow `skills/start-version-branch.md`. The committed source version must match the target before commit/push. Every green branch push creates a unique checksum-verified prerelease APK without CI committing back to the branch.
 
 ## Validation
 
 ```bash
-npm run lint:fix && npm run lint     # CI requires zero diff from lint:fix
-npm run typecheck && npm run typecheck:tsc   # both TypeScript versions must pass
-npm run test && npm run build
-npm run test:e2e                     # Playwright, always local mode
+npm run release:branch-check
+npm run lint:fix && git diff --exit-code && npm run lint
+npm run typecheck && npm run typecheck:tsc
+npm run test && npm run test:coverage
+npm run build
+npm run quality:circular && npm run quality:dead-code && npm run quality:release
+npm run test:e2e && npm run test:e2e:critical && npm run test:e2e:cross-browser
 npm run knowledge:build:incremental && npm run knowledge:validate
 ```
 
-Commits follow conventional-commits (`commitlint`); never bypass husky hooks.
+Use conditional Functions, rules, security, native, accessibility, visual, migration, performance, telemetry, and billing gates whenever the change touches them. Never bypass Husky or report an unexecuted gate as green.

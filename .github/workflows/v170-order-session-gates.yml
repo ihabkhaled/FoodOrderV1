@@ -1,0 +1,111 @@
+name: v1.7 Order Session Gates
+
+on:
+  pull_request:
+    paths:
+      - 'src/modules/order-sessions/**'
+      - 'src/modules/data-access/**order-session**'
+      - 'src/modules/data-access/**session-**'
+      - 'functions/src/orderSessionsV170.ts'
+      - 'functions/src/entry.ts'
+      - 'firestore.rules'
+      - 'tests/domain/order-session.test.ts'
+      - 'tests/domain/session-contribution.test.ts'
+      - 'tests/services/localOrderSessionService.test.ts'
+      - 'tests/firebase/order-session.rules.test.ts'
+      - '.github/workflows/v170-order-session-gates.yml'
+  push:
+    branches: ['1.7.0']
+    paths:
+      - 'src/modules/order-sessions/**'
+      - 'src/modules/data-access/**order-session**'
+      - 'src/modules/data-access/**session-**'
+      - 'functions/src/orderSessionsV170.ts'
+      - 'functions/src/entry.ts'
+      - 'firestore.rules'
+      - 'tests/domain/order-session.test.ts'
+      - 'tests/domain/session-contribution.test.ts'
+      - 'tests/services/localOrderSessionService.test.ts'
+      - 'tests/firebase/order-session.rules.test.ts'
+      - '.github/workflows/v170-order-session-gates.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: v170-order-session-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  application:
+    name: Application Typecheck, Test, and Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 26
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            functions/package-lock.json
+      - run: npm ci
+      # Typed lint resolves functions/src imports, so functions deps must be
+      # installed even though this job only builds the application.
+      - run: npm --prefix functions ci
+      - run: npm run format:check
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run typecheck:tsc
+      - run: >-
+          npx vitest run
+          tests/domain/order-session.test.ts
+          tests/domain/session-contribution.test.ts
+          tests/domain/settlement.test.ts
+          tests/services/localOrderSessionService.test.ts
+      - run: npm run build
+
+  functions:
+    name: Trusted Callable Typecheck and Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: functions/package-lock.json
+      - run: npm --prefix functions ci
+      - run: npm --prefix functions run typecheck
+      - run: npm --prefix functions run build
+      - run: npm --prefix functions run test
+
+  rules:
+    name: Callable-only Firestore Boundary
+    uses: ./.github/workflows/_firebase-emulator.yml
+    permissions:
+      contents: read
+
+  all-session-gates-green:
+    name: All v1.7 Session Gates Green
+    if: always()
+    needs: [application, functions, rules]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Require every session gate
+        env:
+          NEEDS_JSON: ${{ toJson(needs) }}
+        run: |
+          node <<'NODE'
+          const needs = JSON.parse(process.env.NEEDS_JSON ?? '{}');
+          const failures = Object.entries(needs).filter(([, value]) => value.result !== 'success');
+          if (failures.length > 0) {
+            for (const [name, value] of failures) console.error(`${name}: ${value.result}`);
+            process.exit(1);
+          }
+          console.log('All v1.7 order-session gates are green.');
+          NODE

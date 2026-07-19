@@ -2,7 +2,6 @@ import { Link } from '@/packages/router';
 import { PasswordField } from '@/shared/ui';
 
 import { useRegister } from '../hooks/use-register.hook';
-import { LOGIN_PATH } from '../routes/auth-route-paths.constants';
 
 export function RegisterContainer() {
   const vm = useRegister();
@@ -53,7 +52,8 @@ export function RegisterContainer() {
         {vm.busy ? vm.t('loading') : vm.t('register')}
       </button>
       <p>
-        {vm.t('haveAccount')} <Link to={LOGIN_PATH}>{vm.t('login')}</Link>
+        {vm.t('haveAccount')}{' '}
+        <Link to={vm.loginPath}>{vm.t('login')}</Link>
       </p>
     </form>
   );

@@ -1,6 +1,9 @@
 import { nowIso } from '@/shared/helpers';
 
-import type { SharedBucketView, SharingService } from '../contracts/sharing-service.interfaces';
+import type {
+  SharedBucketView,
+  SharingService,
+} from '../contracts/sharing-service.interfaces';
 import { createOrder } from '../helpers/order.helper';
 import {
   applyContributionMutation,
@@ -50,13 +53,17 @@ export class LocalSharingService implements SharingService {
         .flat()
         .filter(
           (bucket) =>
-            bucket.ownerId !== user.id && isActiveMember(memberOf(database, bucket.id, user.id)),
+            bucket.ownerId !== user.id &&
+            isActiveMember(memberOf(database, bucket.id, user.id)),
         )
-        .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt)),
+        .sort((left, right) => right.updatedAt.localeCompare(left.updatedAt)),
     );
   }
 
-  async getSharedBucketView(user: SessionUser, bucketId: string): Promise<SharedBucketView | null> {
+  async getSharedBucketView(
+    user: SessionUser,
+    bucketId: string,
+  ): Promise<SharedBucketView | null> {
     const database = readDatabase();
     const entry = findBucketEntry(database, bucketId);
     if (!entry) return null;
@@ -76,7 +83,9 @@ export class LocalSharingService implements SharingService {
     const database = readDatabase();
     const entry = findBucketEntry(database, bucketId);
     if (!entry) throw new Error('Bucket was not found.');
-    if (entry.bucket.ownerId !== user.id) throw new Error('You do not have permission for this action.');
+    if (entry.bucket.ownerId !== user.id) {
+      throw new Error('You do not have permission for this action.');
+    }
     if (entry.bucket.visibility === 'shared') return structuredClone(entry.bucket);
     const shared: Bucket = {
       ...entry.bucket,
@@ -102,8 +111,12 @@ export class LocalSharingService implements SharingService {
     const database = readDatabase();
     const entry = findBucketEntry(database, bucketId);
     if (!entry) throw new Error('Bucket was not found.');
-    if (entry.bucket.ownerId !== user.id) throw new Error('You do not have permission for this action.');
-    if (entry.bucket.visibility !== 'shared') throw new Error('Enable sharing before inviting members.');
+    if (entry.bucket.ownerId !== user.id) {
+      throw new Error('You do not have permission for this action.');
+    }
+    if (entry.bucket.visibility !== 'shared') {
+      throw new Error('Enable sharing before inviting members.');
+    }
     const token = generateInviteToken();
     const tokenHash = await hashInviteToken(token);
     const createdAt = nowIso();
@@ -122,8 +135,13 @@ export class LocalSharingService implements SharingService {
       acceptedAt: null,
       revokedAt: null,
     };
-    database.sharing.invites[bucketId] = [invite, ...(database.sharing.invites[bucketId] ?? [])];
-    appendActivity(database, bucketId, user, 'invite_created', 'invite', invite.id, { role });
+    database.sharing.invites[bucketId] = [
+      invite,
+      ...(database.sharing.invites[bucketId] ?? []),
+    ];
+    appendActivity(database, bucketId, user, 'invite_created', 'invite', invite.id, {
+      role,
+    });
     writeDatabase(database);
     return { invite: structuredClone(invite), joinCode: buildJoinCode(bucketId, token) };
   }
@@ -131,20 +149,29 @@ export class LocalSharingService implements SharingService {
   async listInvites(user: SessionUser, bucketId: string): Promise<BucketInvite[]> {
     const database = readDatabase();
     const entry = findBucketEntry(database, bucketId);
-    if (!entry || entry.bucket.ownerId !== user.id) throw new Error('You do not have permission for this action.');
+    if (!entry || entry.bucket.ownerId !== user.id) {
+      throw new Error('You do not have permission for this action.');
+    }
     return structuredClone(database.sharing.invites[bucketId] ?? []);
   }
 
-  async revokeInvite(user: SessionUser, bucketId: string, inviteId: string): Promise<void> {
+  async revokeInvite(
+    user: SessionUser,
+    bucketId: string,
+    inviteId: string,
+  ): Promise<void> {
     const database = readDatabase();
     const entry = findBucketEntry(database, bucketId);
-    if (!entry || entry.bucket.ownerId !== user.id) throw new Error('You do not have permission for this action.');
-    const invites = database.sharing.invites[bucketId] ?? [];
-    const invite = invites.find((item) => item.id === inviteId);
+    if (!entry || entry.bucket.ownerId !== user.id) {
+      throw new Error('You do not have permission for this action.');
+    }
+    const invite = (database.sharing.invites[bucketId] ?? []).find(
+      (candidate) => candidate.id === inviteId,
+    );
     if (!invite || invite.status !== 'pending') return;
     invite.status = 'revoked';
     invite.revokedAt = nowIso();
-    appendActivity(database, bucketId, user, 'invite_revoked', 'invite', inviteId, {});
+    appendActivity(database, bucketId, user, 'invite_revoked', 'invite', inviteId);
     writeDatabase(database);
   }
 
@@ -154,10 +181,12 @@ export class LocalSharingService implements SharingService {
     const database = readDatabase();
     const tokenHash = await hashInviteToken(parsed.token);
     const invite = (database.sharing.invites[parsed.bucketId] ?? []).find(
-      (item) => item.id === tokenHash,
+      (candidate) => candidate.id === tokenHash,
     );
     if (!invite) throw new Error('This join code is not valid.');
-    if (!isInviteUsable(invite)) throw new Error('This invite has expired or was already used.');
+    if (!isInviteUsable(invite)) {
+      throw new Error('This invite has expired or was already used.');
+    }
     return structuredClone(invite);
   }
 
@@ -167,20 +196,30 @@ export class LocalSharingService implements SharingService {
     const database = readDatabase();
     const tokenHash = await hashInviteToken(parsed.token);
     const invite = (database.sharing.invites[parsed.bucketId] ?? []).find(
-      (item) => item.id === tokenHash,
+      (candidate) => candidate.id === tokenHash,
     );
-    if (!invite) throw new Error('This join code is not valid.');
-    if (!isInviteUsable(invite)) throw new Error('This invite has expired or was already used.');
+    if (!invite || !isInviteUsable(invite)) {
+      throw new Error('This invite has expired or was already used.');
+    }
     const entry = findBucketEntry(database, parsed.bucketId);
-    if (!entry || entry.bucket.visibility !== 'shared') throw new Error('This join code is not valid.');
-    if (entry.bucket.ownerId === user.id) throw new Error('You are already a member of this bucket.');
+    if (!entry || entry.bucket.visibility !== 'shared') {
+      throw new Error('This join code is not valid.');
+    }
+    if (entry.bucket.ownerId === user.id) {
+      throw new Error('You are already a member of this bucket.');
+    }
     const members = database.sharing.members[parsed.bucketId] ?? [];
     const existing = members.find((member) => member.userId === user.id);
-    if (existing && existing.status === 'active') throw new Error('You are already a member of this bucket.');
+    if (existing?.status === 'active') {
+      throw new Error('You are already a member of this bucket.');
+    }
     const activeCount = members.filter((member) => member.status === 'active').length;
-    if (activeCount >= MAX_BUCKET_MEMBERS) throw new Error(`A bucket supports up to ${MAX_BUCKET_MEMBERS} members.`);
+    if (activeCount >= MAX_BUCKET_MEMBERS) {
+      throw new Error(`A bucket supports up to ${MAX_BUCKET_MEMBERS} members.`);
+    }
     const at = nowIso();
     if (existing) {
+      existing.displayName = user.displayName;
       existing.status = 'active';
       existing.role = invite.role;
       existing.invitedBy = invite.createdBy;
@@ -189,7 +228,6 @@ export class LocalSharingService implements SharingService {
       members.push({
         userId: user.id,
         displayName: user.displayName,
-        email: user.email,
         role: invite.role,
         status: 'active',
         invitedBy: invite.createdBy,
@@ -217,8 +255,12 @@ export class LocalSharingService implements SharingService {
     assertAssignableRole(role);
     const database = readDatabase();
     const entry = findBucketEntry(database, bucketId);
-    if (!entry || entry.bucket.ownerId !== user.id) throw new Error('You do not have permission for this action.');
-    if (memberId === entry.bucket.ownerId) throw new Error('Ownership cannot be assigned through invites or role changes.');
+    if (!entry || entry.bucket.ownerId !== user.id) {
+      throw new Error('You do not have permission for this action.');
+    }
+    if (memberId === entry.bucket.ownerId) {
+      throw new Error('Ownership cannot be assigned through invites or role changes.');
+    }
     const member = memberOf(database, bucketId, memberId);
     if (!isActiveMember(member)) throw new Error('Member was not found.');
     member.role = role;
@@ -231,16 +273,23 @@ export class LocalSharingService implements SharingService {
     return structuredClone(member);
   }
 
-  async revokeMember(user: SessionUser, bucketId: string, memberId: string): Promise<void> {
+  async revokeMember(
+    user: SessionUser,
+    bucketId: string,
+    memberId: string,
+  ): Promise<void> {
     const database = readDatabase();
     const entry = findBucketEntry(database, bucketId);
-    if (!entry || entry.bucket.ownerId !== user.id) throw new Error('You do not have permission for this action.');
-    if (memberId === entry.bucket.ownerId) throw new Error('The owner cannot be removed. Delete the bucket instead.');
+    if (!entry || entry.bucket.ownerId !== user.id) {
+      throw new Error('You do not have permission for this action.');
+    }
+    if (memberId === entry.bucket.ownerId) {
+      throw new Error('The owner cannot be removed. Delete the bucket instead.');
+    }
     const member = memberOf(database, bucketId, memberId);
     if (!isActiveMember(member)) return;
     member.status = 'revoked';
     member.updatedAt = nowIso();
-    // Product rule: contributions are retained in totals for order history accuracy.
     appendActivity(database, bucketId, user, 'member_revoked', 'member', memberId, {
       memberName: member.displayName,
     });
@@ -251,12 +300,14 @@ export class LocalSharingService implements SharingService {
     const database = readDatabase();
     const entry = findBucketEntry(database, bucketId);
     if (!entry) return;
-    if (entry.bucket.ownerId === user.id) throw new Error('The owner cannot leave. Delete the bucket instead.');
+    if (entry.bucket.ownerId === user.id) {
+      throw new Error('The owner cannot leave. Delete the bucket instead.');
+    }
     const member = memberOf(database, bucketId, user.id);
     if (!isActiveMember(member)) return;
     member.status = 'left';
     member.updatedAt = nowIso();
-    appendActivity(database, bucketId, user, 'member_left', 'member', user.id, {});
+    appendActivity(database, bucketId, user, 'member_left', 'member', user.id);
     writeDatabase(database);
   }
 
@@ -273,7 +324,9 @@ export class LocalSharingService implements SharingService {
     if (!entry) throw new Error('Bucket was not found.');
     const isOwner = entry.bucket.ownerId === user.id;
     const member = memberOf(database, bucketId, user.id);
-    if (!isOwner && !memberCan(member, 'contribute')) throw new Error('You do not have permission for this action.');
+    if (!isOwner && !memberCan(member, 'contribute')) {
+      throw new Error('You do not have permission for this action.');
+    }
     const item = entry.bucket.items.find((candidate) => candidate.id === itemId);
     if (!item?.active) throw new Error('This item is not available.');
     const contributions = database.sharing.contributions[bucketId] ?? [];
@@ -282,8 +335,10 @@ export class LocalSharingService implements SharingService {
       {
         bucketRevision: entry.bucket.revision,
         aggregate: entry.bucket.aggregate,
-        contribution: contributions.find((candidate) => candidate.userId === user.id) ?? null,
-        appliedMutation: mutations.find((candidate) => candidate.id === mutationId) ?? null,
+        contribution:
+          contributions.find((candidate) => candidate.userId === user.id) ?? null,
+        appliedMutation:
+          mutations.find((candidate) => candidate.id === mutationId) ?? null,
       },
       {
         mutationId,
@@ -297,7 +352,9 @@ export class LocalSharingService implements SharingService {
       },
     );
     if (!result.alreadyApplied) {
-      const nextContributions = contributions.filter((candidate) => candidate.userId !== user.id);
+      const nextContributions = contributions.filter(
+        (candidate) => candidate.userId !== user.id,
+      );
       nextContributions.push(result.contribution);
       database.sharing.contributions[bucketId] = nextContributions;
       database.sharing.mutations[bucketId] = [result.record, ...mutations].slice(0, 500);
@@ -316,10 +373,15 @@ export class LocalSharingService implements SharingService {
     return structuredClone(result.record);
   }
 
-  async listActivity(user: SessionUser, bucketId: string): Promise<BucketActivityEvent[]> {
+  async listActivity(
+    user: SessionUser,
+    bucketId: string,
+  ): Promise<BucketActivityEvent[]> {
     const database = readDatabase();
     const entry = findBucketEntry(database, bucketId);
-    if (!entry || !roleOf(database, entry.bucket, user.id)) throw new Error('You do not have permission for this action.');
+    if (!entry || !roleOf(database, entry.bucket, user.id)) {
+      throw new Error('You do not have permission for this action.');
+    }
     return structuredClone(database.sharing.activity[bucketId] ?? []);
   }
 
@@ -329,10 +391,14 @@ export class LocalSharingService implements SharingService {
   ): Promise<{ bucket: Bucket; drifted: boolean }> {
     const database = readDatabase();
     const entry = findBucketEntry(database, bucketId);
-    if (!entry || entry.bucket.ownerId !== user.id) throw new Error('You do not have permission for this action.');
+    if (!entry || entry.bucket.ownerId !== user.id) {
+      throw new Error('You do not have permission for this action.');
+    }
     const contributions = database.sharing.contributions[bucketId] ?? [];
     const { drifted } = detectAggregateDrift(entry.bucket.aggregate, contributions);
-    if (!drifted) return { bucket: structuredClone(entry.bucket), drifted: false };
+    if (!drifted) {
+      return { bucket: structuredClone(entry.bucket), drifted: false };
+    }
     const repaired: Bucket = {
       ...entry.bucket,
       aggregate: computeAggregate(contributions),
@@ -340,17 +406,23 @@ export class LocalSharingService implements SharingService {
       updatedAt: nowIso(),
     };
     storeBucket(database, entry, repaired);
-    appendActivity(database, bucketId, user, 'aggregate_repaired', 'bucket', bucketId, {});
+    appendActivity(database, bucketId, user, 'aggregate_repaired', 'bucket', bucketId);
     writeDatabase(database);
     return { bucket: structuredClone(repaired), drifted: true };
   }
 
-  async placeGroupOrder(user: SessionUser, bucketId: string, notes: string): Promise<Order> {
+  async placeGroupOrder(
+    user: SessionUser,
+    bucketId: string,
+    notes: string,
+  ): Promise<Order> {
     const database = readDatabase();
     const entry = findBucketEntry(database, bucketId);
     if (!entry) throw new Error('Bucket was not found.');
     const role = roleOf(database, entry.bucket, user.id);
-    if (!role || !['owner', 'editor'].includes(role)) throw new Error('You do not have permission for this action.');
+    if (!role || !['owner', 'editor'].includes(role)) {
+      throw new Error('You do not have permission for this action.');
+    }
     const lines = buildGroupOrderLines(entry.bucket);
     if (lines.length === 0) throw new Error('Choose at least one item.');
     const contributions = database.sharing.contributions[bucketId] ?? [];

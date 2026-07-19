@@ -1,0 +1,55 @@
+.choice-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: start;
+  min-block-size: 3.5rem;
+  padding: 0.875rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md, 0.875rem);
+  background: var(--surface);
+  cursor: pointer;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.choice-card:hover {
+  border-color: var(--primary);
+}
+
+.choice-card:has(input:checked) {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 8%, var(--surface));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--primary) 45%, transparent);
+}
+
+.choice-card:has(input:focus-visible) {
+  outline: 3px solid color-mix(in srgb, var(--primary) 35%, transparent);
+  outline-offset: 2px;
+}
+
+.choice-card input {
+  inline-size: 1.15rem;
+  block-size: 1.15rem;
+  margin-block-start: 0.15rem;
+  accent-color: var(--primary);
+}
+
+.choice-card .muted {
+  line-height: 1.5;
+}
+
+@media (max-width: 360px) {
+  .choice-card {
+    gap: 0.625rem;
+    padding: 0.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .choice-card {
+    transition: none;
+  }
+}

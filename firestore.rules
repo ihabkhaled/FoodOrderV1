@@ -262,6 +262,9 @@ service cloud.firestore {
       allow delete: if isBucketOwner();
 
       match /members/{memberId} {
+        function privacySafeMember() {
+          return !request.resource.data.keys().hasAny(['email']);
+        }
         function inviteAfter() {
           return getAfter(/databases/$(database)/documents/buckets/$(bucketId)/invites/$(request.resource.data.inviteId)).data;
         }
@@ -269,7 +272,8 @@ service cloud.firestore {
           return get(/databases/$(database)/documents/buckets/$(bucketId)/invites/$(request.resource.data.inviteId)).data;
         }
         function validSelfJoin() {
-          return owns(memberId)
+          return privacySafeMember()
+            && owns(memberId)
             && request.resource.data.userId == memberId
             && request.resource.data.status == 'active'
             && request.resource.data.inviteId is string
@@ -281,14 +285,16 @@ service cloud.firestore {
             && request.resource.data.role in ['editor', 'contributor', 'viewer'];
         }
         function ownerSelfDoc() {
-          return owns(memberId)
+          return privacySafeMember()
+            && owns(memberId)
             && request.resource.data.userId == memberId
             && request.resource.data.role == 'owner'
             && request.resource.data.status == 'active'
             && getAfter(/databases/$(database)/documents/buckets/$(bucketId)).data.ownerId == memberId;
         }
         function validManagedMember() {
-          return request.resource.data.userId == resource.data.userId
+          return privacySafeMember()
+            && request.resource.data.userId == resource.data.userId
             && request.resource.data.role in ['editor', 'contributor', 'viewer']
             && request.resource.data.status in ['active', 'revoked']
             && request.resource.data.get('canCreateCustomItems', false) is bool
@@ -308,6 +314,7 @@ service cloud.firestore {
           || (isBucketOwner() && resource.data.role != 'owner' && validManagedMember())
           || (owns(memberId)
             && resource.data.role != 'owner'
+            && privacySafeMember()
             && request.resource.data.diff(resource.data).affectedKeys()
               .hasOnly(['status', 'updatedAt'])
             && request.resource.data.status == 'left')

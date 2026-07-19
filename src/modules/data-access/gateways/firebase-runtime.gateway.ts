@@ -47,10 +47,16 @@ export const PERMISSION_ERROR = 'You do not have permission for this action.';
 
 export const bucketRef = (firestore: Firestore, bucketId: string): DocumentReference =>
   doc(firestore, 'buckets', bucketId);
-export const memberRef = (firestore: Firestore, bucketId: string, userId: string): DocumentReference =>
-  doc(firestore, 'buckets', bucketId, 'members', userId);
-export const inviteRef = (firestore: Firestore, bucketId: string, inviteId: string): DocumentReference =>
-  doc(firestore, 'buckets', bucketId, 'invites', inviteId);
+export const memberRef = (
+  firestore: Firestore,
+  bucketId: string,
+  userId: string,
+): DocumentReference => doc(firestore, 'buckets', bucketId, 'members', userId);
+export const inviteRef = (
+  firestore: Firestore,
+  bucketId: string,
+  inviteId: string,
+): DocumentReference => doc(firestore, 'buckets', bucketId, 'invites', inviteId);
 export const contributionRef = (
   firestore: Firestore,
   bucketId: string,
@@ -61,8 +67,11 @@ export const mutationRef = (
   bucketId: string,
   mutationId: string,
 ): DocumentReference => doc(firestore, 'buckets', bucketId, 'mutations', mutationId);
-export const activityRef = (firestore: Firestore, bucketId: string, eventId: string): DocumentReference =>
-  doc(firestore, 'buckets', bucketId, 'activity', eventId);
+export const activityRef = (
+  firestore: Firestore,
+  bucketId: string,
+  eventId: string,
+): DocumentReference => doc(firestore, 'buckets', bucketId, 'activity', eventId);
 export const membershipRef = (
   firestore: Firestore,
   userId: string,
@@ -93,7 +102,6 @@ export const ownerMemberDoc = (owner: SessionUser): BucketMember => {
   return {
     userId: owner.id,
     displayName: owner.displayName,
-    email: owner.email,
     role: 'owner',
     status: 'active',
     invitedBy: owner.id,

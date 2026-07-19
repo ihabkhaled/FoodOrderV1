@@ -1,88 +1,119 @@
 ---
 id: SKILL-VERSIONING
 name: versioning
-title: Version bump and release
+title: Version branch, bump, and release
 type: skill
 authority: canonical
 status: active
 owner: release-owner
 audience: [engineer, ai-agent, release-manager]
 description: >
-  Bump the app version (prompt-density decides patch/minor/major), sync every derived version,
-  write changelog + release notes, then commit, tag, build the APK, and publish a GitHub release.
+  Start or verify a target-version branch, synchronize every derived version, run the complete release ladder, tag the exact green commit, build its APK, and publish a checksum-verified release.
 lastVerified: 2026-07-18
 generated: false
 ---
 
-# Skill: versioning — bump & release
+# Skill: version branch, bump, and release
 
-Use this whenever a change is ready to ship. It enforces [rules/versioning.md](../../rules/versioning.md).
+Use this skill with [rules/versioning.md](../../rules/versioning.md). Use [../start-version-branch.md](../start-version-branch.md) when creating or checking out a version branch.
 
-## 0. Automated streams — know which path you are on
+## 0. Identify the release stream
 
-CI automates two version streams (details in
-[docs/operations/versioning.md](../../docs/operations/versioning.md)):
+- **New feature/version branch:** synchronize the target stable version before implementation with `npm run release:start`; a PR must remain strictly above `main`.
+- **Push to `main`:** CI produces `X.Y.Z-<run_number>` and an APK/release without mutating `package.json`.
+- **Push to a non-main branch:** after all mandatory gates, CI may produce `X.Y.Z-dev.<run_number>` from the exact commit.
+- **Stable `X.Y.Z`:** use the final tag flow below.
 
-- **Cut a branch off `main`** → bump MINOR **first**, before any work is reviewed:
-  `npm run release:minor -- "what this branch does"` (syncs package.json + functions +
-  gradle), commit it. The PR's `release-integrity` gate fails until `version` is above
-  `main`. Patch/major instead per prompt density.
-- **Push to `main`** → CI auto-builds and releases `X.Y.Z-<run_number>` (APK + GitHub
-  release) with no `package.json` change. You do nothing.
-- **Ship a clean `X.Y.Z`** → the manual tag flow below (steps 1–4).
+## 1. Decide and verify the bump
 
-## 1. Decide the bump (prompt density)
-
-Read the driving prompt and classify (see the rule for the table):
-
-- localized fix / copy / style / docs → **patch**
-- new feature / flow / UX overhaul (backward-compatible) → **minor**
-- breaking schema / contract / rules / architecture → **major**
-
-Mixed → take the highest. Unsure → the higher one, and say why in the notes.
-
-## 2. Ensure gates are green
+Prompt density controls patch, minor, or major. Mixed scope takes the highest level. Additive migration may remain minor only when old data and clients remain supported.
 
 ```bash
-npm run lint && npm run typecheck && npm run test && npm run build
-npm run test:e2e            # UI/flow gate
+npm run release:branch-check
+npm run quality:release
 ```
 
-Do not proceed on any red gate.
+Root and Functions manifests and locks, Android source version, changelog, and release notes must agree. On a pull request, the branch version must be greater than the base.
 
-## 3. Bump (single command)
+## 2. Synchronize only when needed
 
 ```bash
-npm run release:patch -- "summary of the change"
-# or release:minor / release:major, or an explicit version:
-node tools/release/bump-version.mjs 1.2.3 "summary"
+npm run release:patch -- "summary"
+npm run release:minor -- "summary"
+npm run release:major -- "summary"
+node tools/release/bump-version.mjs 1.7.0 "summary"
 ```
 
-This updates `package.json`, `android/app/build.gradle` (versionName + versionCode+1),
-`CHANGELOG.md`, and scaffolds `release-notes/vX.Y.Z.md`. Then flesh out the release notes file.
+The tool synchronizes root and Functions manifests and locks, Android `versionName` and monotonic `versionCode`, changelog, and release notes. It never commits, tags, pushes, or publishes.
 
-## 4. Commit, tag, build APK, release
+## 3. Run the complete final validation
+
+Follow [../final-validation.md](../final-validation.md) from one final tree. At minimum:
+
+```bash
+npm run knowledge:build:incremental && npm run knowledge:validate
+npm run format:check
+npm run lint:fix && git diff --exit-code && npm run lint
+npm run typecheck && npm run typecheck:tsc
+npm run test && npm run test:coverage
+npm run functions:validate
+npm run test:rules
+npm run build
+npm run quality:circular && npm run quality:dead-code
+npm run quality:release && npm run quality:agent-docs
+npm run test:e2e
+npm run test:e2e:critical
+npm run test:e2e:cross-browser
+npm run security:audit
+npm run cap:sync
+```
+
+Run every additional release-specific emulator, Storage-rules, accessibility, visual-regression, migration, performance, telemetry, billing, Android, and security gate. Do not proceed on red, skipped, weakened, or unexplained flaky results.
+
+## 4. Review release evidence
+
+- Release notes list only verified behavior.
+- Migrations and rollback are documented.
+- Generated `.ai/` content was produced by the knowledge tooling.
+- Lint autofix leaves no diff.
+- APK limitations are honest.
+- The working tree contains only intended files.
+
+## 5. Commit, tag, build, and publish
 
 ```bash
 V=$(node -p "require('./package.json').version")
-git add -A && git commit -m "Release v$V"
+git add -A
+git commit -m "chore(release): publish v$V"
 git tag -a "v$V" -m "FoodOrderV1 v$V"
+git push origin HEAD
+git push origin "v$V"
+```
 
-# Build the APK from the tagged commit
-npm run build && npx cap sync android
-( cd android && ./gradlew assembleDebug )
+CI must build the APK from the exact tagged commit. For a manual fallback:
+
+```bash
+npm run build
+npx cap sync android
+( cd android && ./gradlew lintDebug assembleDebug --no-daemon --stacktrace )
 cp android/app/build/outputs/apk/debug/app-debug.apk "FoodOrderV1-v$V-debug.apk"
 sha256sum "FoodOrderV1-v$V-debug.apk" | tee "FoodOrderV1-v$V-debug.apk.sha256"
-
-git push origin main && git push origin "v$V"
-gh release create "v$V" "FoodOrderV1-v$V-debug.apk" "FoodOrderV1-v$V-debug.apk.sha256" \
-  --title "FoodOrderV1 v$V" --notes-file "release-notes/v$V.md" --verify-tag
-rm "FoodOrderV1-v$V-debug.apk" "FoodOrderV1-v$V-debug.apk.sha256"   # artifacts live on the release, not the repo
+gh release create "v$V" \
+  "FoodOrderV1-v$V-debug.apk" \
+  "FoodOrderV1-v$V-debug.apk.sha256" \
+  --title "FoodOrderV1 v$V" \
+  --notes-file "release-notes/v$V.md" \
+  --verify-tag
 ```
+
+Delete local APK artifacts after upload.
 
 ## Invariants
 
-- APK is built from the exact tagged commit.
-- `versionCode` only ever increases.
-- SHA-256 recorded in the release notes and attached as an asset.
-- Never leave build artifacts (`*.apk`) committed to the repo.
+- Stable tag and committed stable source version match exactly.
+- Every APK is built from the exact represented commit.
+- `versionCode` only increases.
+- SHA-256 is attached and recorded.
+- Branch prereleases are never relabeled as stable.
+- Native iOS validation is never claimed without macOS/Xcode evidence.
+- No hook bypass, force-push over gate failure, or release from a dirty tree.

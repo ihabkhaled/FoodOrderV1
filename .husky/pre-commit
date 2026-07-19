@@ -1,1 +1,1 @@
-npx lint-staged
+npm run release:branch-check && npx lint-staged

@@ -13,7 +13,10 @@ import {
 } from '@/packages/firebase';
 import { nowIso } from '@/shared/helpers';
 
-import type { SharedBucketView, SharingService } from '../contracts/sharing-service.interfaces';
+import type {
+  SharedBucketView,
+  SharingService,
+} from '../contracts/sharing-service.interfaces';
 import { createOrder } from '../helpers/order.helper';
 import {
   applyContributionMutation,
@@ -59,6 +62,27 @@ import {
   PERMISSION_ERROR,
 } from './firebase-runtime.gateway';
 
+interface LegacyBucketMember extends BucketMember {
+  email?: string;
+  inviteId?: string;
+}
+
+const sanitizeBucketMember = (member: LegacyBucketMember): BucketMember => ({
+  userId: member.userId,
+  displayName: member.displayName,
+  role: member.role,
+  status: member.status,
+  ...(member.canCreateCustomItems === undefined
+    ? {}
+    : { canCreateCustomItems: member.canCreateCustomItems }),
+  ...(member.canSetCustomItemPrice === undefined
+    ? {}
+    : { canSetCustomItemPrice: member.canSetCustomItemPrice }),
+  invitedBy: member.invitedBy,
+  joinedAt: member.joinedAt,
+  updatedAt: member.updatedAt,
+});
+
 export class FirestoreSharingService implements SharingService {
   private get firestore(): Firestore {
     return getFirebaseRuntime().firestore;
@@ -72,61 +96,66 @@ export class FirestoreSharingService implements SharingService {
     for (const membership of memberships.docs) {
       const data = membership.data() as BucketMembershipRef;
       if (data.role === 'owner') continue;
-      try {
-        const snapshot = await getDoc(bucketRef(this.firestore, data.bucketId));
-        if (snapshot.exists()) buckets.push(snapshot.data() as Bucket);
-        else await deleteDoc(membership.ref); // bucket deleted → clean stale mirror
-      } catch {
-        await deleteDoc(membership.ref).catch(() => {}); // access revoked → clean mirror
+      const snapshot = await getDoc(bucketRef(this.firestore, data.bucketId));
+      if (snapshot.exists()) {
+        buckets.push(snapshot.data() as Bucket);
+      } else {
+        await deleteDoc(membership.ref);
       }
     }
-    return buckets.sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+    return buckets.sort((left, right) => right.updatedAt.localeCompare(left.updatedAt));
   }
 
-  async getSharedBucketView(user: SessionUser, bucketId: string): Promise<SharedBucketView | null> {
-    const bucketSnap = await getDoc(bucketRef(this.firestore, bucketId));
-    if (!bucketSnap.exists()) return null;
-    const bucket = bucketSnap.data() as Bucket;
-    const [membersSnap, contributionsSnap] = await Promise.all([
+  async getSharedBucketView(
+    user: SessionUser,
+    bucketId: string,
+  ): Promise<SharedBucketView | null> {
+    const bucketSnapshot = await getDoc(bucketRef(this.firestore, bucketId));
+    if (!bucketSnapshot.exists()) return null;
+    const bucket = bucketSnapshot.data() as Bucket;
+    const [membersSnapshot, contributionsSnapshot] = await Promise.all([
       getDocs(collection(this.firestore, 'buckets', bucketId, 'members')),
       getDocs(collection(this.firestore, 'buckets', bucketId, 'contributions')),
     ]);
-    const members = membersSnap.docs
-      .map((item) => item.data() as BucketMember)
+    const members = membersSnapshot.docs
+      .map((item) => sanitizeBucketMember(item.data() as LegacyBucketMember))
       .filter((member) => member.status === 'active');
     const me = members.find((member) => member.userId === user.id);
-    const myRole: BucketRole | null = bucket.ownerId === user.id ? 'owner' : (me?.role ?? null);
+    const myRole: BucketRole | null =
+      bucket.ownerId === user.id ? 'owner' : (me?.role ?? null);
     if (!myRole) return null;
     return {
       bucket,
       members,
-      contributions: contributionsSnap.docs.map((item) => item.data() as BucketContribution),
+      contributions: contributionsSnapshot.docs.map(
+        (item) => item.data() as BucketContribution,
+      ),
       myRole,
     };
   }
 
   async enableSharing(user: SessionUser, bucketId: string): Promise<Bucket> {
-    const shared = await runTransaction(this.firestore, async (tx) => {
-      const snapshot = await tx.get(bucketRef(this.firestore, bucketId));
+    return runTransaction(this.firestore, async (transaction) => {
+      const reference = bucketRef(this.firestore, bucketId);
+      const snapshot = await transaction.get(reference);
       if (!snapshot.exists()) throw new Error('Bucket was not found.');
       const bucket = snapshot.data() as Bucket;
       if (bucket.ownerId !== user.id) throw new Error(PERMISSION_ERROR);
       if (bucket.visibility === 'shared') return bucket;
-      const next: Bucket = {
+      const saved: Bucket = {
         ...bucket,
         visibility: 'shared',
         revision: bucket.revision + 1,
         updatedAt: nowIso(),
       };
-      tx.set(bucketRef(this.firestore, bucketId), next);
-      tx.set(memberRef(this.firestore, bucketId, user.id), ownerMemberDoc(user));
+      transaction.set(reference, saved);
+      transaction.set(memberRef(this.firestore, bucketId, user.id), ownerMemberDoc(user));
       const event = activityEvent(bucketId, user, 'bucket_shared', 'bucket', bucketId, {
-        title: next.title,
+        title: saved.title,
       });
-      tx.set(activityRef(this.firestore, bucketId, event.id), event);
-      return next;
+      transaction.set(activityRef(this.firestore, bucketId, event.id), event);
+      return saved;
     });
-    return shared;
   }
 
   async createInvite(
@@ -135,11 +164,13 @@ export class FirestoreSharingService implements SharingService {
     role: Exclude<BucketRole, 'owner'>,
   ): Promise<{ invite: BucketInvite; joinCode: string }> {
     assertAssignableRole(role);
-    const bucketSnap = await getDoc(bucketRef(this.firestore, bucketId));
-    if (!bucketSnap.exists()) throw new Error('Bucket was not found.');
-    const bucket = bucketSnap.data() as Bucket;
+    const bucketSnapshot = await getDoc(bucketRef(this.firestore, bucketId));
+    if (!bucketSnapshot.exists()) throw new Error('Bucket was not found.');
+    const bucket = bucketSnapshot.data() as Bucket;
     if (bucket.ownerId !== user.id) throw new Error(PERMISSION_ERROR);
-    if (bucket.visibility !== 'shared') throw new Error('Enable sharing before inviting members.');
+    if (bucket.visibility !== 'shared') {
+      throw new Error('Enable sharing before inviting members.');
+    }
     const token = generateInviteToken();
     const tokenHash = await hashInviteToken(token);
     const createdAt = nowIso();
@@ -160,28 +191,38 @@ export class FirestoreSharingService implements SharingService {
     };
     const batch = writeBatch(this.firestore);
     batch.set(inviteRef(this.firestore, bucketId, tokenHash), invite);
-    const event = activityEvent(bucketId, user, 'invite_created', 'invite', tokenHash, { role });
+    const event = activityEvent(bucketId, user, 'invite_created', 'invite', tokenHash, {
+      role,
+    });
     batch.set(activityRef(this.firestore, bucketId, event.id), event);
     await batch.commit();
     return { invite, joinCode: buildJoinCode(bucketId, token) };
   }
 
-  async listInvites(_user: SessionUser, bucketId: string): Promise<BucketInvite[]> {
-    // Rules restrict invite listing to the bucket owner.
-    const snapshot = await getDocs(collection(this.firestore, 'buckets', bucketId, 'invites'));
+  async listInvites(
+    _user: SessionUser,
+    bucketId: string,
+  ): Promise<BucketInvite[]> {
+    const snapshot = await getDocs(
+      collection(this.firestore, 'buckets', bucketId, 'invites'),
+    );
     return snapshot.docs
       .map((item) => item.data() as BucketInvite)
-      .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+      .sort((left, right) => right.createdAt.localeCompare(left.createdAt));
   }
 
-  async revokeInvite(user: SessionUser, bucketId: string, inviteId: string): Promise<void> {
+  async revokeInvite(
+    user: SessionUser,
+    bucketId: string,
+    inviteId: string,
+  ): Promise<void> {
     const batch = writeBatch(this.firestore);
     batch.set(
       inviteRef(this.firestore, bucketId, inviteId),
       { status: 'revoked', revokedAt: nowIso() },
       { merge: true },
     );
-    const event = activityEvent(bucketId, user, 'invite_revoked', 'invite', inviteId, {});
+    const event = activityEvent(bucketId, user, 'invite_revoked', 'invite', inviteId);
     batch.set(activityRef(this.firestore, bucketId, event.id), event);
     await batch.commit();
   }
@@ -190,10 +231,14 @@ export class FirestoreSharingService implements SharingService {
     const parsed = parseJoinCode(code);
     if (!parsed) throw new Error('This join code is not valid.');
     const tokenHash = await hashInviteToken(parsed.token);
-    const snapshot = await getDoc(inviteRef(this.firestore, parsed.bucketId, tokenHash));
+    const snapshot = await getDoc(
+      inviteRef(this.firestore, parsed.bucketId, tokenHash),
+    );
     if (!snapshot.exists()) throw new Error('This join code is not valid.');
     const invite = snapshot.data() as BucketInvite;
-    if (!isInviteUsable(invite)) throw new Error('This invite has expired or was already used.');
+    if (!isInviteUsable(invite)) {
+      throw new Error('This invite has expired or was already used.');
+    }
     return invite;
   }
 
@@ -201,31 +246,36 @@ export class FirestoreSharingService implements SharingService {
     const parsed = parseJoinCode(code);
     if (!parsed) throw new Error('This join code is not valid.');
     const tokenHash = await hashInviteToken(parsed.token);
-    // Advisory member-limit check (rules cannot count; bounded fan-out contract).
-    const currentMembers = await getDocs(
+    const memberSnapshots = await getDocs(
       collection(this.firestore, 'buckets', parsed.bucketId, 'members'),
-    ).catch(() => null);
-    const activeCount =
-      currentMembers?.docs.filter((item) => (item.data() as BucketMember).status === 'active')
-        .length ?? 0;
+    );
+    const activeCount = memberSnapshots.docs.filter(
+      (item) => (item.data() as LegacyBucketMember).status === 'active',
+    ).length;
     if (activeCount >= MAX_BUCKET_MEMBERS) {
       throw new Error(`A bucket supports up to ${MAX_BUCKET_MEMBERS} members.`);
     }
-    const invite = await runTransaction(this.firestore, async (tx) => {
-      const inviteSnap = await tx.get(inviteRef(this.firestore, parsed.bucketId, tokenHash));
-      if (!inviteSnap.exists()) throw new Error('This join code is not valid.');
-      const pending = inviteSnap.data() as BucketInvite;
-      if (!isInviteUsable(pending)) throw new Error('This invite has expired or was already used.');
-      const memberSnap = await tx.get(memberRef(this.firestore, parsed.bucketId, user.id));
-      const existing = memberSnap.exists() ? (memberSnap.data() as BucketMember) : null;
-      if (existing && existing.status === 'active') {
+
+    const invite = await runTransaction(this.firestore, async (transaction) => {
+      const inviteReference = inviteRef(this.firestore, parsed.bucketId, tokenHash);
+      const inviteSnapshot = await transaction.get(inviteReference);
+      if (!inviteSnapshot.exists()) throw new Error('This join code is not valid.');
+      const pending = inviteSnapshot.data() as BucketInvite;
+      if (!isInviteUsable(pending)) {
+        throw new Error('This invite has expired or was already used.');
+      }
+      const memberReference = memberRef(this.firestore, parsed.bucketId, user.id);
+      const memberSnapshot = await transaction.get(memberReference);
+      const existing = memberSnapshot.exists()
+        ? sanitizeBucketMember(memberSnapshot.data() as LegacyBucketMember)
+        : null;
+      if (existing?.status === 'active') {
         throw new Error('You are already a member of this bucket.');
       }
       const at = nowIso();
       const member: BucketMember & { inviteId: string } = {
         userId: user.id,
         displayName: user.displayName,
-        email: user.email,
         role: pending.role,
         status: 'active',
         invitedBy: pending.createdBy,
@@ -233,28 +283,34 @@ export class FirestoreSharingService implements SharingService {
         updatedAt: at,
         inviteId: tokenHash,
       };
-      tx.set(memberRef(this.firestore, parsed.bucketId, user.id), member);
-      tx.set(
-        inviteRef(this.firestore, parsed.bucketId, tokenHash),
+      transaction.set(memberReference, member);
+      transaction.set(
+        inviteReference,
         { status: 'accepted', acceptedBy: user.id, acceptedAt: at },
         { merge: true },
       );
-      tx.set(membershipRef(this.firestore, user.id, parsed.bucketId), {
+      transaction.set(membershipRef(this.firestore, user.id, parsed.bucketId), {
         bucketId: parsed.bucketId,
         role: pending.role,
         bucketTitle: pending.bucketTitle,
         ownerName: pending.ownerName,
         joinedAt: at,
       });
-      const event = activityEvent(parsed.bucketId, user, 'member_joined', 'member', user.id, {
-        role: pending.role,
-      });
-      tx.set(activityRef(this.firestore, parsed.bucketId, event.id), event);
+      const event = activityEvent(
+        parsed.bucketId,
+        user,
+        'member_joined',
+        'member',
+        user.id,
+        { role: pending.role },
+      );
+      transaction.set(activityRef(this.firestore, parsed.bucketId, event.id), event);
       return pending;
     });
-    const bucketSnap = await getDoc(bucketRef(this.firestore, invite.bucketId));
-    if (!bucketSnap.exists()) throw new Error('Bucket was not found.');
-    return bucketSnap.data() as Bucket;
+
+    const bucketSnapshot = await getDoc(bucketRef(this.firestore, invite.bucketId));
+    if (!bucketSnapshot.exists()) throw new Error('Bucket was not found.');
+    return bucketSnapshot.data() as Bucket;
   }
 
   async changeMemberRole(
@@ -264,13 +320,16 @@ export class FirestoreSharingService implements SharingService {
     role: Exclude<BucketRole, 'owner'>,
   ): Promise<BucketMember> {
     assertAssignableRole(role);
-    const snapshot = await getDoc(memberRef(this.firestore, bucketId, memberId));
+    const reference = memberRef(this.firestore, bucketId, memberId);
+    const snapshot = await getDoc(reference);
     if (!snapshot.exists()) throw new Error('Member was not found.');
-    const member = snapshot.data() as BucketMember;
-    if (member.role === 'owner') throw new Error('Ownership cannot be assigned through invites or role changes.');
+    const member = sanitizeBucketMember(snapshot.data() as LegacyBucketMember);
+    if (member.role === 'owner') {
+      throw new Error('Ownership cannot be assigned through invites or role changes.');
+    }
     const saved: BucketMember = { ...member, role, updatedAt: nowIso() };
     const batch = writeBatch(this.firestore);
-    batch.set(memberRef(this.firestore, bucketId, memberId), saved, { merge: true });
+    batch.set(reference, saved);
     const event = activityEvent(bucketId, user, 'member_role_changed', 'member', memberId, {
       role,
       memberName: member.displayName,
@@ -280,18 +339,20 @@ export class FirestoreSharingService implements SharingService {
     return saved;
   }
 
-  async revokeMember(user: SessionUser, bucketId: string, memberId: string): Promise<void> {
-    const snapshot = await getDoc(memberRef(this.firestore, bucketId, memberId));
+  async revokeMember(
+    user: SessionUser,
+    bucketId: string,
+    memberId: string,
+  ): Promise<void> {
+    const reference = memberRef(this.firestore, bucketId, memberId);
+    const snapshot = await getDoc(reference);
     if (!snapshot.exists()) return;
-    const member = snapshot.data() as BucketMember;
-    if (member.role === 'owner') throw new Error('The owner cannot be removed. Delete the bucket instead.');
+    const member = sanitizeBucketMember(snapshot.data() as LegacyBucketMember);
+    if (member.role === 'owner') {
+      throw new Error('The owner cannot be removed. Delete the bucket instead.');
+    }
     const batch = writeBatch(this.firestore);
-    // Contributions are retained in totals; revoked members lose access through rules.
-    batch.set(
-      memberRef(this.firestore, bucketId, memberId),
-      { status: 'revoked', updatedAt: nowIso() },
-      { merge: true },
-    );
+    batch.set(reference, { status: 'revoked', updatedAt: nowIso() }, { merge: true });
     const event = activityEvent(bucketId, user, 'member_revoked', 'member', memberId, {
       memberName: member.displayName,
     });
@@ -300,18 +361,17 @@ export class FirestoreSharingService implements SharingService {
   }
 
   async leaveBucket(user: SessionUser, bucketId: string): Promise<void> {
-    const snapshot = await getDoc(memberRef(this.firestore, bucketId, user.id));
+    const reference = memberRef(this.firestore, bucketId, user.id);
+    const snapshot = await getDoc(reference);
     if (!snapshot.exists()) return;
-    const member = snapshot.data() as BucketMember;
-    if (member.role === 'owner') throw new Error('The owner cannot leave. Delete the bucket instead.');
+    const member = sanitizeBucketMember(snapshot.data() as LegacyBucketMember);
+    if (member.role === 'owner') {
+      throw new Error('The owner cannot leave. Delete the bucket instead.');
+    }
     const batch = writeBatch(this.firestore);
-    batch.set(
-      memberRef(this.firestore, bucketId, user.id),
-      { status: 'left', updatedAt: nowIso() },
-      { merge: true },
-    );
+    batch.set(reference, { status: 'left', updatedAt: nowIso() }, { merge: true });
     batch.delete(membershipRef(this.firestore, user.id, bucketId));
-    const event = activityEvent(bucketId, user, 'member_left', 'member', user.id, {});
+    const event = activityEvent(bucketId, user, 'member_left', 'member', user.id);
     batch.set(activityRef(this.firestore, bucketId, event.id), event);
     await batch.commit();
   }
@@ -324,26 +384,35 @@ export class FirestoreSharingService implements SharingService {
     value: number,
     mutationId: string,
   ): Promise<ContributionMutationRecord> {
-    return runTransaction(this.firestore, async (tx) => {
-      const mutationSnap = await tx.get(mutationRef(this.firestore, bucketId, mutationId));
-      if (mutationSnap.exists()) return mutationSnap.data() as ContributionMutationRecord;
-      const bucketSnap = await tx.get(bucketRef(this.firestore, bucketId));
-      if (!bucketSnap.exists()) throw new Error('Bucket was not found.');
-      const bucket = bucketSnap.data() as Bucket;
+    return runTransaction(this.firestore, async (transaction) => {
+      const mutationReference = mutationRef(this.firestore, bucketId, mutationId);
+      const mutationSnapshot = await transaction.get(mutationReference);
+      if (mutationSnapshot.exists()) {
+        return mutationSnapshot.data() as ContributionMutationRecord;
+      }
+      const bucketReference = bucketRef(this.firestore, bucketId);
+      const bucketSnapshot = await transaction.get(bucketReference);
+      if (!bucketSnapshot.exists()) throw new Error('Bucket was not found.');
+      const bucket = bucketSnapshot.data() as Bucket;
       const item = bucket.items.find((candidate) => candidate.id === itemId);
       if (!item?.active) throw new Error('This item is not available.');
       if (bucket.ownerId !== user.id) {
-        const memberSnap = await tx.get(memberRef(this.firestore, bucketId, user.id));
-        const member = memberSnap.exists() ? (memberSnap.data() as BucketMember) : null;
+        const memberSnapshot = await transaction.get(
+          memberRef(this.firestore, bucketId, user.id),
+        );
+        const member = memberSnapshot.exists()
+          ? sanitizeBucketMember(memberSnapshot.data() as LegacyBucketMember)
+          : null;
         if (!memberCan(member, 'contribute')) throw new Error(PERMISSION_ERROR);
       }
-      const contributionSnap = await tx.get(contributionRef(this.firestore, bucketId, user.id));
+      const contributionReference = contributionRef(this.firestore, bucketId, user.id);
+      const contributionSnapshot = await transaction.get(contributionReference);
       const result = applyContributionMutation(
         {
           bucketRevision: bucket.revision,
           aggregate: bucket.aggregate,
-          contribution: contributionSnap.exists()
-            ? (contributionSnap.data() as BucketContribution)
+          contribution: contributionSnapshot.exists()
+            ? (contributionSnapshot.data() as BucketContribution)
             : null,
           appliedMutation: null,
         },
@@ -358,24 +427,33 @@ export class FirestoreSharingService implements SharingService {
           occurredAt: nowIso(),
         },
       );
-      tx.set(contributionRef(this.firestore, bucketId, user.id), result.contribution);
-      tx.update(bucketRef(this.firestore, bucketId), {
+      transaction.set(contributionReference, result.contribution);
+      transaction.update(bucketReference, {
         aggregate: result.aggregate,
         revision: result.bucketRevision,
         updatedAt: nowIso(),
       });
-      tx.set(mutationRef(this.firestore, bucketId, mutationId), result.record);
-      const event = activityEvent(bucketId, user, 'contribution_updated', 'item', itemId, {
-        itemName: item.name,
-        quantity: String(result.record.resultQuantity),
-      });
-      tx.set(activityRef(this.firestore, bucketId, event.id), event);
+      transaction.set(mutationReference, result.record);
+      const event = activityEvent(
+        bucketId,
+        user,
+        'contribution_updated',
+        'item',
+        itemId,
+        {
+          itemName: item.name,
+          quantity: String(result.record.resultQuantity),
+        },
+      );
+      transaction.set(activityRef(this.firestore, bucketId, event.id), event);
       return result.record;
     });
   }
 
-  async listActivity(_user: SessionUser, bucketId: string): Promise<BucketActivityEvent[]> {
-    // Rules restrict activity reads to active members.
+  async listActivity(
+    _user: SessionUser,
+    bucketId: string,
+  ): Promise<BucketActivityEvent[]> {
     const snapshot = await getDocs(
       query(
         collection(this.firestore, 'buckets', bucketId, 'activity'),
@@ -390,19 +468,22 @@ export class FirestoreSharingService implements SharingService {
     user: SessionUser,
     bucketId: string,
   ): Promise<{ bucket: Bucket; drifted: boolean }> {
-    const contributionsSnap = await getDocs(
+    const contributionsSnapshot = await getDocs(
       collection(this.firestore, 'buckets', bucketId, 'contributions'),
     );
-    const contributionRefs = contributionsSnap.docs.map((item) => item.ref);
-    return runTransaction(this.firestore, async (tx) => {
-      const bucketSnap = await tx.get(bucketRef(this.firestore, bucketId));
-      if (!bucketSnap.exists()) throw new Error('Bucket was not found.');
-      const bucket = bucketSnap.data() as Bucket;
+    const contributionReferences = contributionsSnapshot.docs.map((item) => item.ref);
+    return runTransaction(this.firestore, async (transaction) => {
+      const reference = bucketRef(this.firestore, bucketId);
+      const snapshot = await transaction.get(reference);
+      if (!snapshot.exists()) throw new Error('Bucket was not found.');
+      const bucket = snapshot.data() as Bucket;
       if (bucket.ownerId !== user.id) throw new Error(PERMISSION_ERROR);
       const contributions: BucketContribution[] = [];
-      for (const reference of contributionRefs) {
-        const snapshot = await tx.get(reference);
-        if (snapshot.exists()) contributions.push(snapshot.data() as BucketContribution);
+      for (const contributionReference of contributionReferences) {
+        const contributionSnapshot = await transaction.get(contributionReference);
+        if (contributionSnapshot.exists()) {
+          contributions.push(contributionSnapshot.data() as BucketContribution);
+        }
       }
       const { drifted } = detectAggregateDrift(bucket.aggregate, contributions);
       if (!drifted) return { bucket, drifted: false };
@@ -412,28 +493,44 @@ export class FirestoreSharingService implements SharingService {
         revision: bucket.revision + 1,
         updatedAt: nowIso(),
       };
-      tx.set(bucketRef(this.firestore, bucketId), repaired);
-      const event = activityEvent(bucketId, user, 'aggregate_repaired', 'bucket', bucketId, {});
-      tx.set(activityRef(this.firestore, bucketId, event.id), event);
+      transaction.set(reference, repaired);
+      const event = activityEvent(
+        bucketId,
+        user,
+        'aggregate_repaired',
+        'bucket',
+        bucketId,
+      );
+      transaction.set(activityRef(this.firestore, bucketId, event.id), event);
       return { bucket: repaired, drifted: true };
     });
   }
 
-  async placeGroupOrder(user: SessionUser, bucketId: string, notes: string): Promise<Order> {
-    const bucketSnap = await getDoc(bucketRef(this.firestore, bucketId));
-    if (!bucketSnap.exists()) throw new Error('Bucket was not found.');
-    const bucket = bucketSnap.data() as Bucket;
+  async placeGroupOrder(
+    user: SessionUser,
+    bucketId: string,
+    notes: string,
+  ): Promise<Order> {
+    const bucketSnapshot = await getDoc(bucketRef(this.firestore, bucketId));
+    if (!bucketSnapshot.exists()) throw new Error('Bucket was not found.');
+    const bucket = bucketSnapshot.data() as Bucket;
     if (bucket.ownerId !== user.id) {
-      const memberSnap = await getDoc(memberRef(this.firestore, bucketId, user.id));
-      const member = memberSnap.exists() ? (memberSnap.data() as BucketMember) : null;
+      const memberSnapshot = await getDoc(
+        memberRef(this.firestore, bucketId, user.id),
+      );
+      const member = memberSnapshot.exists()
+        ? sanitizeBucketMember(memberSnapshot.data() as LegacyBucketMember)
+        : null;
       if (!memberCan(member, 'placeGroupOrder')) throw new Error(PERMISSION_ERROR);
     }
     const lines = buildGroupOrderLines(bucket);
     if (lines.length === 0) throw new Error('Choose at least one item.');
-    const contributionsSnap = await getDocs(
+    const contributionsSnapshot = await getDocs(
       collection(this.firestore, 'buckets', bucketId, 'contributions'),
     );
-    const contributions = contributionsSnap.docs.map((item) => item.data() as BucketContribution);
+    const contributions = contributionsSnapshot.docs.map(
+      (item) => item.data() as BucketContribution,
+    );
     const order = createOrder(user.id, {
       bucketId,
       bucketTitle: bucket.title,

@@ -1,6 +1,5 @@
 import type { CurrencyCode, Locale, Theme } from '@/shared/types';
 
-
 export type OrderStatus = 'draft' | 'placed' | 'completed' | 'cancelled';
 export type BucketVisibility = 'private' | 'shared';
 export type BucketRole = 'owner' | 'editor' | 'contributor' | 'viewer';
@@ -84,10 +83,17 @@ export interface Bucket {
   updatedAt: string;
 }
 
+/**
+ * Privacy-minimal shared membership projection.
+ * Contact information remains in the user's owner-only profile. The optional
+ * email field exists only so v1.6 local fixtures can be read during migration;
+ * every cloud writer and every shared read projection must remove it.
+ */
 export interface BucketMember {
   userId: string;
   displayName: string;
-  email: string;
+  /** @deprecated v1.6 local compatibility input; never expose or persist in cloud membership. */
+  email?: string;
   role: BucketRole;
   status: MemberStatus;
   canCreateCustomItems?: boolean;
@@ -295,4 +301,4 @@ export interface DashboardSummary {
   recentOrders: Order[];
 }
 
-export {type CurrencyCode, type Locale, type Theme} from '@/shared/types';
+export { type CurrencyCode, type Locale, type Theme } from '@/shared/types';
