@@ -101,6 +101,11 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/auth/helpers/post-auth-redirect.helper.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/auth/hooks/use-forgot-password.hook.ts",
       "tests": [],
       "relationship": "inferred"
@@ -132,6 +137,36 @@
     },
     {
       "source": "src/modules/auth/routes/auth.routes.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/billing/README.md",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/billing/constants/billing-plans.constants.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/billing/enums/billing.enums.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/billing/helpers/entitlement.helper.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/billing/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/billing/types/billing.types.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -276,7 +311,17 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/data-access/contracts/order-session-service.interfaces.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/data-access/contracts/pagination-service.interfaces.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/data-access/contracts/session-invite-service.interfaces.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -287,6 +332,16 @@
     },
     {
       "source": "src/modules/data-access/contracts/social-service.interfaces.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/data-access/enums/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/data-access/enums/order-session.enums.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -312,6 +367,16 @@
     },
     {
       "source": "src/modules/data-access/gateways/firestore-callable-order-lifecycle.gateway.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/data-access/gateways/firestore-callable-order-session.gateway.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/data-access/gateways/firestore-callable-session-invite.gateway.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -381,7 +446,17 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/data-access/gateways/local-order-session.gateway.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/data-access/gateways/local-pagination.gateway.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/data-access/gateways/local-session-invite.gateway.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -426,7 +501,32 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/data-access/helpers/order-session.helper.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/data-access/helpers/order.helper.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/data-access/helpers/session-contribution.helper.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/data-access/helpers/session-invite.helper.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/data-access/helpers/session-menu-snapshot.helper.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/data-access/helpers/settlement.helper.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -457,6 +557,21 @@
     },
     {
       "source": "src/modules/data-access/types/notifications.types.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/data-access/types/order-session.types.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/data-access/types/session-invite.types.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/data-access/types/settlement.types.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -646,6 +761,116 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/order-sessions/README.md",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/order-sessions/components/create-order-session-form/create-order-session-form.component.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/order-sessions/components/order-session-list/order-session-list.component.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/order-sessions/components/session-action-panel/session-action-panel.component.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/order-sessions/components/session-menu/session-menu.component.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/order-sessions/components/session-participant-list/session-participant-list.component.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/order-sessions/components/session-status-badge/session-status-badge.component.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/order-sessions/components/session-summary/session-summary.component.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/order-sessions/containers/create-order-session.container.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/order-sessions/containers/order-session-details.container.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/order-sessions/containers/order-sessions.container.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/order-sessions/helpers/order-session-view.helper.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/order-sessions/hooks/use-create-order-session.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/order-sessions/hooks/use-order-sessions.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/order-sessions/hooks/use-session-command-center.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/order-sessions/hooks/use-session-lifecycle-confirmation.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/order-sessions/i18n/order-session-messages.constants.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/order-sessions/i18n/translate-order-session.helper.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/order-sessions/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/order-sessions/order-sessions.css",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/order-sessions/routes/order-sessions-route-paths.constants.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/order-sessions/routes/order-sessions.routes.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/orders/README.md",
       "tests": [],
       "relationship": "inferred"
@@ -721,6 +946,76 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/session-invites/components/guest-session-order/guest-session-order.component.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/session-invites/components/session-invite-language-switch/session-invite-language-switch.component.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/session-invites/components/session-invite-preview/session-invite-preview.component.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/session-invites/helpers/guest-capability-storage.helper.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/session-invites/helpers/session-invite-view.helper.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/session-invites/hooks/use-session-invite.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/session-invites/i18n/session-invite-messages.constants.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/session-invites/i18n/translate-session-invite.helper.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/session-invites/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/session-invites/routes/session-invite-route-paths.constants.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/session-invites/routes/session-invite.routes.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/session-invites/session-invite.container.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/session-invites/session-invites.css",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/session-invites/types/session-invite-ui.types.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/session/hooks/use-app.hook.ts",
       "tests": [],
       "relationship": "inferred"
@@ -756,6 +1051,11 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/settings/components/analytics-consent-section/analytics-consent-section.component.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/settings/components/change-password-section/change-password-section.component.tsx",
       "tests": [],
       "relationship": "inferred"
@@ -771,12 +1071,27 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/settings/helpers/analytics-consent-options.helper.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/settings/hooks/use-change-password.hook.ts",
       "tests": [],
       "relationship": "inferred"
     },
     {
       "source": "src/modules/settings/hooks/use-settings.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/settings/i18n/settings-messages.constants.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/settings/i18n/translate-settings.helper.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -792,6 +1107,16 @@
     },
     {
       "source": "src/modules/settings/routes/settings.routes.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/settings/settings.css",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/settings/types/analytics-consent.types.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -897,6 +1222,46 @@
     },
     {
       "source": "src/modules/social/routes/social.routes.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/telemetry/README.md",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/telemetry/adapters/telemetry-consent.adapter.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/telemetry/constants/analytics-events.constants.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/telemetry/constants/telemetry-storage.constants.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/telemetry/enums/telemetry.enums.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/telemetry/helpers/telemetry.helper.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/telemetry/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/telemetry/types/telemetry.types.ts",
       "tests": [],
       "relationship": "inferred"
     },

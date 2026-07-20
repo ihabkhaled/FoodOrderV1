@@ -17,6 +17,12 @@ import type {
   SessionUser,
   UserProfile,
 } from '../types/domain.types';
+import type {
+  OrderSession,
+  SessionContribution,
+  SessionContributionMutationRecord,
+  SessionParticipant,
+} from '../types/order-session.types';
 
 interface SharingTables {
   members: Record<string, BucketMember[]>;
@@ -26,11 +32,23 @@ interface SharingTables {
   activity: Record<string, BucketActivityEvent[]>;
 }
 
+export interface OrderSessionTables {
+  sessions: Record<string, OrderSession>;
+  participants: Record<string, SessionParticipant[]>;
+  contributions: Record<string, SessionContribution[]>;
+  mutations: Record<string, SessionContributionMutationRecord[]>;
+}
+
+interface LegacyBucketMember extends BucketMember {
+  email?: string;
+}
+
 export interface LocalDatabase {
   users: Record<string, { password: string; profile: UserProfile }>;
   buckets: Record<string, Bucket[]>;
   orders: Record<string, Order[]>;
   sharing: SharingTables;
+  orderSessions: OrderSessionTables;
 }
 
 const DB_KEY = 'foodorder:v1:database';
@@ -46,15 +64,40 @@ const emptySharing = (): SharingTables => ({
   activity: {},
 });
 
+const emptyOrderSessions = (): OrderSessionTables => ({
+  sessions: {},
+  participants: {},
+  contributions: {},
+  mutations: {},
+});
+
 const defaultDatabase = (): LocalDatabase => ({
   users: {},
   buckets: {},
   orders: {},
   sharing: emptySharing(),
+  orderSessions: emptyOrderSessions(),
+});
+
+const sanitizeBucketMember = (member: LegacyBucketMember): BucketMember => ({
+  userId: member.userId,
+  displayName: member.displayName,
+  role: member.role,
+  status: member.status,
+  ...(member.canCreateCustomItems === undefined
+    ? {}
+    : { canCreateCustomItems: member.canCreateCustomItems }),
+  ...(member.canSetCustomItemPrice === undefined
+    ? {}
+    : { canSetCustomItemPrice: member.canSetCustomItemPrice }),
+  invitedBy: member.invitedBy,
+  joinedAt: member.joinedAt,
+  updatedAt: member.updatedAt,
 });
 
 export const readDatabase = (): LocalDatabase => {
-  // Stored JSON may predate the sharing schema, so treat every table as optional.
+  // Stored JSON may predate sharing and order-session schemas, so treat every
+  // table as optional and normalize legacy records on read.
   let raw: Partial<LocalDatabase>;
   try {
     raw = JSON.parse(readWebStorage(DB_KEY) ?? '') as Partial<LocalDatabase>;
@@ -66,6 +109,7 @@ export const readDatabase = (): LocalDatabase => {
     buckets: raw.buckets ?? {},
     orders: raw.orders ?? {},
     sharing: { ...emptySharing(), ...raw.sharing },
+    orderSessions: { ...emptyOrderSessions(), ...raw.orderSessions },
   };
   for (const [ownerId, buckets] of Object.entries(parsed.buckets)) {
     const owner = parsed.users[ownerId];
@@ -76,6 +120,11 @@ export const readDatabase = (): LocalDatabase => {
             id: ownerId,
             displayName: owner?.profile.fullName ?? 'Owner',
           }),
+    );
+  }
+  for (const [bucketId, members] of Object.entries(parsed.sharing.members)) {
+    parsed.sharing.members[bucketId] = members.map((member) =>
+      sanitizeBucketMember(member),
     );
   }
   return parsed;
@@ -113,7 +162,9 @@ export const memberOf = (
   bucketId: string,
   userId: string,
 ): BucketMember | null =>
-  (database.sharing.members[bucketId] ?? []).find((member) => member.userId === userId) ?? null;
+  (database.sharing.members[bucketId] ?? []).find(
+    (member) => member.userId === userId,
+  ) ?? null;
 
 export const storeBucket = (
   database: LocalDatabase,
@@ -125,7 +176,11 @@ export const storeBucket = (
   database.buckets[entry.ownerId] = owned;
 };
 
-export const roleOf = (database: LocalDatabase, bucket: Bucket, userId: string): BucketRole | null => {
+export const roleOf = (
+  database: LocalDatabase,
+  bucket: Bucket,
+  userId: string,
+): BucketRole | null => {
   if (bucket.ownerId === userId) return 'owner';
   const member = memberOf(database, bucket.id, userId);
   return isActiveMember(member) ? member.role : null;
@@ -163,7 +218,6 @@ export const seedOwnerMember = (database: LocalDatabase, bucket: Bucket): void =
     members.push({
       userId: bucket.ownerId,
       displayName: owner?.profile.fullName ?? bucket.ownerName,
-      email: owner?.profile.email ?? '',
       role: 'owner',
       status: 'active',
       invitedBy: bucket.ownerId,

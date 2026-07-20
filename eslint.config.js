@@ -27,6 +27,7 @@ export default tseslint.config(
       'ios',
       'functions/lib',
       '.ai/local',
+      '.vercel',
       '.worktrees',
       'playwright-report',
       'test-results',
@@ -95,6 +96,13 @@ export default tseslint.config(
       'unicorn/prefer-top-level-await': 'off',
       'unicorn/switch-case-braces': 'off',
       'unicorn/no-useless-undefined': ['error', { checkArguments: false }],
+      'unicorn/numeric-separators-style': [
+        'error',
+        {
+          onlyIfContainsSeparator: true,
+          number: { minimumDigits: 4, groupLength: 3 },
+        },
+      ],
       'unicorn/prefer-query-selector': 'off',
 
       // SonarJS: allow the readable nested conditionals and single-line guard
@@ -157,10 +165,12 @@ export default tseslint.config(
     rules: { 'react-refresh/only-export-components': 'off' },
   },
   {
-    // The local-device gateways implement async contracts over sync storage.
+    // Local-device gateways implement async contracts over synchronous storage.
     files: [
       'src/modules/data-access/gateways/local-auth.gateway.ts',
       'src/modules/data-access/gateways/local-data.gateway.ts',
+      'src/modules/data-access/gateways/local-order-session.gateway.ts',
+      'src/modules/data-access/gateways/local-session-invite.gateway.ts',
       'src/modules/data-access/gateways/local-sharing.gateway.ts',
     ],
     rules: { '@typescript-eslint/require-await': 'off' },

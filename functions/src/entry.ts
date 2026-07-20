@@ -3,6 +3,14 @@ import './globalOptions.js';
 export * from './main.js';
 export * from './notifications.js';
 export {
+  createOrderSessionV170,
+  getOrderSessionViewV170,
+  listOrderSessionsV170,
+  transitionOrderSessionV170,
+  updateSessionContributionV170,
+  updateSessionParticipantResponseV170,
+} from './orderSessionsV170.js';
+export {
   createFriendGroup,
   getSocialOverview,
   inviteFriendToBucketV151,

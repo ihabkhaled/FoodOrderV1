@@ -7,6 +7,7 @@ playbook assumes you already ran the knowledge flow
 
 | Skill                                                        | Use when                                            |
 | ------------------------------------------------------------ | --------------------------------------------------- |
+| [start-version-branch.md](start-version-branch.md)           | Create, checkout, commit, or push a target-version branch |
 | [create-feature-module.md](create-feature-module.md)         | A new feature needs its own `src/modules/<name>`    |
 | [create-component.md](create-component.md)                   | New UI-only component                               |
 | [create-container.md](create-container.md)                   | New screen/panel orchestration                      |
@@ -22,7 +23,7 @@ playbook assumes you already ran the knowledge flow
 | [fix-eslint-typecheck.md](fix-eslint-typecheck.md)           | Lint or typecheck failures                          |
 | [document-exception.md](document-exception.md)               | A rule genuinely cannot hold                        |
 | [final-validation.md](final-validation.md)                   | Pre-merge / pre-release full pass                   |
-| [versioning/SKILL.md](versioning/SKILL.md)                   | Version bump and release (pre-existing)             |
+| [versioning/SKILL.md](versioning/SKILL.md)                   | Final stable bump, tag, APK, and GitHub release     |
 
 Universal forbidden shortcuts: disabling `architecture/*` rules, skipping tests, hand-editing
-`.ai/`, bypassing husky hooks, claiming unexecuted validation.
+`.ai/`, bypassing Husky hooks, claiming unexecuted validation, or publishing an APK from a red commit.

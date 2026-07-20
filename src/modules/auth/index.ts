@@ -1,3 +1,8 @@
+export {
+  buildAuthPathWithReturnTo,
+  resolvePostAuthRedirect,
+  RETURN_TO_QUERY_PARAMETER,
+} from './helpers/post-auth-redirect.helper';
 export { authRoutes } from './routes/auth.routes';
 export {
   AUTH_PATH,
