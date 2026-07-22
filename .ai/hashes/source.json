@@ -449,7 +449,7 @@
   "src/shared/ui/virtual-list-footer/virtual-list-footer.component.tsx": "165b75efc273a8c07943be2a872a877b5c17de2bf923172f9afbca5e8d369cf7",
   "src/shared/ui/virtual-list-footer/virtual-list-footer.types.ts": "ab1fbff58dcf1961485b072a037b9c8bec99f8b5c5c3aa7adf83eaef8555b441",
   "src/socialNotifications.css": "c170cd3eda853b93495494dc907b63c29d2b0d842ced7753adcb5856d7c7ef31",
-  "src/styles.css": "2ca469a2cc9cb0bbe09db371769550370caea951ade57ab10ebc79074be20670",
+  "src/styles.css": "746296ff4718b734a1ba7bfb557d5ad4e70187069a10af7751a28e19c4e6161e",
   "src/virtualLists.css": "aa14f08b15c6c0711177dc6dbf9bf16eb58f6d6974af0c3c76fce6f0f2909922",
   "src/vite-env.d.ts": "0f83db65d25bc3bffbebd21dd6199eec457158dbbcf1abebb3b0fbad533b4097"
 }
