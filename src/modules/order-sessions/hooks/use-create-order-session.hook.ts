@@ -3,6 +3,7 @@ import { type SyntheticEvent, useEffect, useState } from 'react';
 import {
   type Bucket,
   dataService,
+  type Locale,
   orderSessionService,
 } from '@/modules/data-access';
 import { useApp } from '@/modules/session';
@@ -33,7 +34,7 @@ export interface CreateOrderSessionViewModel {
   loading: boolean;
   saving: boolean;
   error: string;
-  locale: 'en' | 'ar';
+  locale: Locale;
   translate: typeof translateOrderSession;
   submit: (event: SyntheticEvent<HTMLFormElement>) => Promise<void>;
 }
@@ -41,8 +42,7 @@ export interface CreateOrderSessionViewModel {
 export function useCreateOrderSession(): CreateOrderSessionViewModel {
   const { menuTemplateId = '' } = useParams<{ menuTemplateId: string }>();
   const navigate = useNavigate();
-  const { user, profile, showToast } = useApp();
-  const locale = profile?.locale ?? 'en';
+  const { user, locale, showToast } = useApp();
   const [menu, setMenu] = useState<Bucket | null>(null);
   const [title, setTitle] = useState('');
   const [deadline, setDeadline] = useState('');

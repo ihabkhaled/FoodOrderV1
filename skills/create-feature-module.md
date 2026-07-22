@@ -17,7 +17,9 @@ reference (e.g. `src/modules/settings` for a simple one).
 ## Steps
 
 1. Create `src/modules/<kebab-name>/` with only the layers needed:
-   `components/`, `containers/`, `hooks/`, `routes/`, `helpers/`, `types/`.
+   `components/`, `containers/`, `hooks/`, `routes/`, `helpers/`, and declaration
+   owners. Interfaces use `*.interfaces.ts`, type aliases use `*.types.ts`, enum-like
+   sets use `*.enums.ts`, and runtime constants use `*.constants.ts`.
 2. Define route constants/builders in `routes/<name>.routes.tsx` and the module `<Route>`
    fragment ([add-route.md](add-route.md)).
 3. Build inside-out: helpers (pure) → hooks (view-model, consuming `@/modules/data-access`
@@ -36,6 +38,8 @@ reference (e.g. `src/modules/settings` for a simple one).
 - Empty placeholder directories or a barrel that re-exports internals wholesale.
 - Importing another module's internals instead of its surface.
 - Parking "temporarily shared" code in `src/shared` before two modules need it.
+- Declaring interfaces, type aliases, enum-like sets, or module constants inside behavior
+  files such as components, containers, hooks, helpers, services, gateways, or adapters.
 - Creating a module-level context when session + props suffice.
 
 ## Required tests

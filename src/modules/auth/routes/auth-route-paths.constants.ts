@@ -7,4 +7,4 @@ export const FORGOT_PASSWORD_PATH = '/auth/forgot';
 export const RESET_PASSWORD_PATH = '/auth/action';
 
 /** Where a freshly authenticated user lands. */
-export const POST_AUTH_REDIRECT_PATH = '/';
+export const POST_AUTH_REDIRECT_PATH = '/app';

@@ -58,6 +58,18 @@ When a rule fails, the code is in the wrong layer. Move or redesign the code. Do
 - **Purpose**: every file in the new layout declares its responsibility by suffix (`.component.tsx`, `.container.tsx`, `.provider.tsx`, `.routes.tsx`, `.hook.ts`, `.service.ts`, `.gateway.ts`, `.repository.ts`, `.queries.ts`, `.mutations.ts`, `.store.ts`, `.selectors.ts`, `.schema.ts`, `.mapper.ts`, `.helper.ts`, `.utils.ts`, `.factory.ts`, `.constants.ts`, `.types.ts`, `.interfaces.ts`, `.enums.ts`, `.variants.ts`, `.errors.ts`, `.adapter.ts`, `.api.ts`), with `index.ts`, `main.tsx`, and `*.d.ts` exempt.
 - Paired with `unicorn/filename-case` (kebab-case) on the same paths.
 
+### `architecture/enforce-declaration-placement`
+
+- **Purpose**: declaration kinds have exclusive owner suffixes across the entire layered
+  tree, including migrated legacy code.
+- **Behavior**: interfaces are valid only in `*.interfaces.ts`; type aliases only in
+  `*.types.ts` (or `*.enums.ts` beside their enum-like object); module-scope non-callable
+  constants only in `*.constants.ts` or `*.enums.ts`. Store/selector state values and
+  behavior functions remain with their truthful behavior owners.
+- **Invalid**: props interface in a component, view-model alias in a hook, message table in
+  an adapter, or regular-expression constant in a helper.
+- **Valid**: those declarations imported from correctly suffixed sibling owner files.
+
 ## Requirement-to-enforcement mapping
 
 The architecture specification's rule list is enforced by a combination of the custom plugin and the configured third-party plugins. Where a listed rule name has no dedicated custom implementation, this table records the mechanical equivalent:
@@ -75,6 +87,7 @@ The architecture specification's rule list is enforced by a combination of the c
 | no-direct-browser-api-outside-platform / no-direct-storage-api-outside-platform | `architecture/no-browser-globals-outside-platform` |
 | no-import-meta-env-outside-environment / no-process-env-outside-environment | `architecture/no-env-outside-environment` |
 | require-hook-filename / require-service-filename / require-gateway-filename / require-component-folder naming | `architecture/enforce-file-suffixes` + `unicorn/filename-case` |
+| require-interface/type/enum-like/constant owner files | `architecture/enforce-declaration-placement` |
 | no-empty-catch | `no-empty` (eslint recommended) + `sonarjs` |
 | no-undocumented-eslint-disable | `eslint-comments` behavior via review checklist; suppressions require an exception document (docs/exceptions/) |
 | no-floating-promises / no-misused-promises | `@typescript-eslint` strict type-checked |

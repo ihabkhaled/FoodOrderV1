@@ -26,7 +26,7 @@ FoodOrderV1 is a single client application (React 19 + Vite 8 + Capacitor 8) wit
 Firebase backend (Auth, Firestore, callable Functions) and a fully functional local-device
 fallback selected at build time. As of v1.6.0 the source tree is a layered, module-first
 architecture whose boundaries are mechanically enforced by the project-owned ESLint plugin
-(`eslint/architecture-plugin/`, 9 rules at error severity, tested in
+(`eslint/architecture-plugin/`, 10 rules at error severity, tested in
 `tests/eslint/architecture-plugin.test.ts`, documented in
 [../docs/eslint/README.md](../docs/eslint/README.md)).
 
@@ -58,7 +58,7 @@ src/
 ├── shared/                      # FEATURE-AGNOSTIC
 │   ├── ui/                      # Loading, EmptyState, ErrorState, ConfirmDialog, ...
 │   ├── helpers/                 # date, money, id, validation, pagination (pure)
-│   └── i18n/                    # translate(locale, key) engine + core en/ar catalog
+│   └── i18n/                    # translate(locale, key) engine + core 12-locale catalog
 ├── platform/                    # RUNTIME CAPABILITIES (sole browser-global territory)
 │   ├── environment/             # sole env reader → typed env object
 │   ├── browser/                 # document/window adapters (theme, lang/dir, listeners)
@@ -108,6 +108,9 @@ Module internals follow one anatomy — `routes/`, `containers/`, `components/`,
 
 - **Hook isolation**: hooks only in `*.hook.ts`/`hooks/`; components zero hooks;
   containers project-hooks-only ([ADR-0002](adrs/0002-ui-only-components-and-hook-isolation.md)).
+- **Declaration ownership**: interfaces, aliases, enum-like sets, and module constants live
+  in matching `*.interfaces.ts`, `*.types.ts`, `*.enums.ts`, and `*.constants.ts`
+  files; components, containers, hooks, helpers, gateways, and adapters import them.
 - **Routing**: typed constants/builders in module `routes/`; the real route table lives in
   [../context/routing-map.md](../context/routing-map.md).
 - **State**: session context + service singletons; no store/query library

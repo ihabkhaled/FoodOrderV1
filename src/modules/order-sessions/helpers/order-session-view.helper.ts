@@ -50,7 +50,7 @@ export const formatSessionMoney = (
   currency: CurrencyCode,
   locale: Locale,
 ): string =>
-  new Intl.NumberFormat(locale === 'ar' ? 'ar-EG' : 'en-EG', {
+  new Intl.NumberFormat(locale, {
     style: 'currency',
     currency,
     maximumFractionDigits: 2,
@@ -60,7 +60,7 @@ export const formatSessionDateTime = (
   value: string,
   locale: Locale,
 ): string =>
-  new Intl.DateTimeFormat(locale === 'ar' ? 'ar-EG' : 'en-EG', {
+  new Intl.DateTimeFormat(locale, {
     dateStyle: 'medium',
     timeStyle: 'short',
   }).format(new Date(value));

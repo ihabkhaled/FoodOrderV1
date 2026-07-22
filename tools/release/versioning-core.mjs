@@ -83,6 +83,33 @@ const synchronizeAndroidVersion = (filePath, nextVersion) => {
   return nextCode;
 };
 
+const synchronizeIosVersion = (filePath, nextVersion) => {
+  const current = readFileSync(filePath, 'utf8');
+  const currentMarketingVersion =
+    /MARKETING_VERSION = ([^;]+);/u.exec(current)?.[1] ?? null;
+  const buildMatches = [
+    ...current.matchAll(/CURRENT_PROJECT_VERSION = (\d+);/gu),
+  ];
+  const currentBuild = Math.max(
+    0,
+    ...buildMatches.map((match) => Number(match[1])),
+  );
+  const nextBuild =
+    currentMarketingVersion === nextVersion ? currentBuild : currentBuild + 1;
+  const updated = current
+    .replace(
+      /MARKETING_VERSION = [^;]+;/gu,
+      `MARKETING_VERSION = ${nextVersion};`,
+    )
+    .replace(
+      /CURRENT_PROJECT_VERSION = \d+;/gu,
+      `CURRENT_PROJECT_VERSION = ${nextBuild};`,
+    );
+
+  writeFileSync(filePath, updated);
+  return nextBuild;
+};
+
 const ensureChangelogEntry = ({ filePath, nextVersion, summary, date }) => {
   const header = `## [${nextVersion}] - ${date}`;
   const entry = `${header}\n\n- ${summary || `Release ${nextVersion}`}\n`;
@@ -139,6 +166,10 @@ export const synchronizeRepositoryVersion = ({
     join(rootDirectory, 'android', 'app', 'build.gradle'),
     nextVersion,
   );
+  const iosBuildNumber = synchronizeIosVersion(
+    join(rootDirectory, 'ios', 'App', 'App.xcodeproj', 'project.pbxproj'),
+    nextVersion,
+  );
 
   ensureChangelogEntry({
     filePath: join(rootDirectory, 'CHANGELOG.md'),
@@ -153,5 +184,5 @@ export const synchronizeRepositoryVersion = ({
     summary,
   });
 
-  return { androidVersionCode, notesPath };
+  return { androidVersionCode, iosBuildNumber, notesPath };
 };

@@ -8,7 +8,7 @@ import type { PageResult } from '@/shared/helpers';
 import type { MessageKey } from '@/shared/i18n';
 import { usePageRefresh } from '@/shared/ui';
 
-import type { BucketScope } from '../components/bucket-filters/bucket-filters.component';
+import type { BucketScope } from '../components/bucket-filters/bucket-filters.types';
 import { useBucketMutations } from './use-bucket-mutations.hook';
 
 const emptyBucketPage = (): Promise<PageResult<Bucket>> =>

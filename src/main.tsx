@@ -1,27 +1,52 @@
-import '@/styles.css';
-import '@/groupOrder.css';
-import '@/virtualLists.css';
-import '@/socialNotifications.css';
-import '@/shared/ui/ux-polish.css';
-import '@/shared/ui/shell-alignment.css';
-
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
-import { AppRoutes } from '@/app';
-import { AppProvider } from '@/modules/session';
+import {
+  getPublicContentCatalog,
+  isPublicContentPath,
+  PublicContentRoutes,
+} from '@/modules/public-content';
 import { BrowserRouter } from '@/packages/router';
-import { initializePlatform } from '@/platform/device';
+import {
+  getBrowserBootstrapContext,
+  replaceBrowserPath,
+} from '@/platform/browser';
+import {
+  initializePlatform,
+  isNativeApplication,
+} from '@/platform/device';
 
-void initializePlatform();
-const container = document.getElementById('root');
-if (!container) throw new Error('Root element was not found.');
-createRoot(container).render(
-  <StrictMode>
-    <BrowserRouter>
-      <AppProvider>
-        <AppRoutes />
-      </AppProvider>
-    </BrowserRouter>
-  </StrictMode>,
-);
+const bootstrap = async (): Promise<void> => {
+  const context = getBrowserBootstrapContext();
+  if (!context.root) throw new Error('Root element was not found.');
+  if (context.prerenderedPublicContent) return;
+
+  const applicationPath = getPublicContentCatalog().site.applicationPath;
+  const nativeApplication = isNativeApplication();
+  let pathname = context.pathname;
+  if (nativeApplication && isPublicContentPath(pathname)) {
+    replaceBrowserPath(applicationPath);
+    pathname = applicationPath;
+  }
+
+  if (!nativeApplication && isPublicContentPath(pathname)) {
+    createRoot(context.root).render(
+      <StrictMode>
+        <BrowserRouter>
+          <PublicContentRoutes applicationPath={applicationPath} />
+        </BrowserRouter>
+      </StrictMode>,
+    );
+    return;
+  }
+
+  await initializePlatform();
+  const { AppBootstrap } = await import('@/app');
+  createRoot(context.root).render(
+    <StrictMode>
+      <AppBootstrap />
+    </StrictMode>,
+  );
+};
+
+void bootstrap();

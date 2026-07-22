@@ -33,6 +33,7 @@ const firebase: FirebaseEnvironment = {
 };
 
 const forceLocalMode = get('VITE_FORCE_LOCAL_MODE') === 'true';
+const configuredLocale = get('VITE_DEFAULT_LOCALE');
 
 export const env = {
   appName: get('VITE_APP_NAME') || 'FoodOrder',
@@ -41,7 +42,9 @@ export const env = {
    * Initial defaults only. Locale and currency are runtime settings the user
    * changes anytime (src/platform/device); these seed first launch.
    */
-  initialLocale: get('VITE_DEFAULT_LOCALE') === 'ar' ? ('ar' as const) : ('en' as const),
+  initialLocale: isSupportedLocale(configuredLocale)
+    ? configuredLocale
+    : DEFAULT_LOCALE,
   initialCurrency: get('VITE_DEFAULT_CURRENCY') || 'EGP',
   firebase,
   firebaseEnabled:
@@ -51,3 +54,4 @@ export const env = {
 
 /** Production-build flag consumed by service worker registration. */
 export const isProdBuild: boolean = import.meta.env.PROD;
+import { DEFAULT_LOCALE, isSupportedLocale } from '@/shared/i18n';

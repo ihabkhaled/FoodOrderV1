@@ -1,35 +1,11 @@
-import type { Bucket, Locale } from '@/modules/data-access';
 import { Plus, ShoppingBasket } from '@/packages/icons';
 import { Link } from '@/packages/router';
-import type { MessageKey } from '@/shared/i18n';
 import { EmptyState } from '@/shared/ui';
 
 import { BUCKET_NEW_PATH } from '../../routes/buckets-route-paths.constants';
 import { BucketCollectionSection } from '../bucket-collection-section/bucket-collection-section.component';
-import type { BucketScope } from '../bucket-filters/bucket-filters.component';
 import { BucketFilters } from '../bucket-filters/bucket-filters.component';
-
-interface BucketResultsProps {
-  readonly totalLoaded: number;
-  readonly query: string;
-  readonly scope: BucketScope;
-  readonly locale: Locale;
-  readonly t: (key: MessageKey) => string;
-  readonly ownedItems: Bucket[];
-  readonly sharedItems: Bucket[];
-  readonly ownedLoadingMore: boolean;
-  readonly sharedLoadingMore: boolean;
-  readonly ownedHasMore: boolean;
-  readonly sharedHasMore: boolean;
-  readonly ownedError: string;
-  readonly sharedError: string;
-  readonly onQueryChange: (value: string) => void;
-  readonly onScopeChange: (value: BucketScope) => void;
-  readonly onOwnedLoadMore: () => void;
-  readonly onSharedLoadMore: () => void;
-  readonly onDuplicate: (bucket: Bucket) => void;
-  readonly onDelete: (bucket: Bucket) => void;
-}
+import type { BucketResultsProps } from './bucket-results.types';
 
 export function BucketResults({
   totalLoaded,

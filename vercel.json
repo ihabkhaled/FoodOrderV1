@@ -1,10 +1,90 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "node scripts/validate-preview.mjs",
+  "trailingSlash": false,
+  "headers": [
+    {
+      "source": "/app",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" },
+        { "key": "Cache-Control", "value": "private, no-store" }
+      ]
+    },
+    {
+      "source": "/(auth|invite|buckets|sessions|orders|join|social|settings)",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" },
+        { "key": "Cache-Control", "value": "private, no-store" }
+      ]
+    },
+    {
+      "source": "/(auth|invite|buckets|sessions|orders|join|social|settings)/(.*)",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" },
+        { "key": "Cache-Control", "value": "private, no-store" }
+      ]
+    }
+  ],
   "rewrites": [
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "source": "/app",
+      "destination": "/app.html"
+    },
+    {
+      "source": "/auth",
+      "destination": "/app.html"
+    },
+    {
+      "source": "/auth/:path*",
+      "destination": "/app.html"
+    },
+    {
+      "source": "/invite/:path*",
+      "destination": "/app.html"
+    },
+    {
+      "source": "/buckets",
+      "destination": "/app.html"
+    },
+    {
+      "source": "/buckets/:path*",
+      "destination": "/app.html"
+    },
+    {
+      "source": "/sessions",
+      "destination": "/app.html"
+    },
+    {
+      "source": "/sessions/:path*",
+      "destination": "/app.html"
+    },
+    {
+      "source": "/orders",
+      "destination": "/app.html"
+    },
+    {
+      "source": "/orders/:path*",
+      "destination": "/app.html"
+    },
+    {
+      "source": "/join",
+      "destination": "/app.html"
+    },
+    {
+      "source": "/social",
+      "destination": "/app.html"
+    },
+    {
+      "source": "/social/:path*",
+      "destination": "/app.html"
+    },
+    {
+      "source": "/settings",
+      "destination": "/app.html"
+    },
+    {
+      "source": "/settings/:path*",
+      "destination": "/app.html"
     }
   ]
 }

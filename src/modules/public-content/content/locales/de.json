@@ -1,0 +1,189 @@
+{
+  "locale": "de",
+  "ui": {
+    "primaryNavigationLabel": "Öffentliche Navigation",
+    "mobileNavigationLabel": "Navigation öffnen",
+    "languageLabel": "Sprache",
+    "openApplicationLabel": "App öffnen",
+    "skipToContentLabel": "Zum Inhalt springen",
+    "footerNavigationLabel": "Fußzeilennavigation",
+    "footerTagline": "Klare Gruppenbestellungen – von der ersten Auswahl bis zum fertigen Beleg.",
+    "allRightsReservedLabel": "Alle Rechte vorbehalten.",
+    "backHomeLabel": "Zurück zur Startseite",
+    "tryAgainLabel": "Erneut versuchen",
+    "learnMoreLabel": "So funktioniert es"
+  },
+  "pages": {
+    "home": {
+      "navigationLabel": "Startseite",
+      "seoTitle": "Gama3 Orderak | Gruppenbestellungen ohne Chaos",
+      "description": "Erstellen Sie wiederverwendbare Menüs, sammeln Sie die Auswahl aller Beteiligten, berechnen Sie Gebühren, frieren Sie die Bestellung ein und teilen Sie klare Belege.",
+      "eyebrow": "Eine gemeinsame Bestellung. Alle bleiben auf dem Laufenden.",
+      "heading": "Gruppenbestellungen sammeln, ohne Nachrichten hinterherzulaufen",
+      "introduction": "Gama3 Orderak gibt Organisatoren einen verlässlichen Ort, um ein Menü aufzubauen, Personen einzuladen, jede Auswahl zu verfolgen und die Endsumme in Belege zu verwandeln, die die ganze Gruppe versteht.",
+      "sections": [
+        {
+          "heading": "Beginnen Sie mit einem wiederverwendbaren Menü",
+          "paragraphs": ["Speichern Sie die Artikel, die Ihre Gruppe am häufigsten bestellt – mit Preisen und optionalen Regeln für Mehrwertsteuer, Service und Lieferung. Beim nächsten Mal nutzen Sie einfach dasselbe Menü, statt es im Chat neu aufzubauen."],
+          "bullets": ["Menüartikel erstellen und bearbeiten", "Wiederkehrende Bestellungen konsistent halten", "Private oder gemeinsame Abläufe wählen"]
+        },
+        {
+          "heading": "Einladen, sammeln und prüfen",
+          "paragraphs": ["Teilen Sie eine kontrollierte Einladung, lassen Sie jede Person ihre eigenen Mengen eintragen und sehen Sie zu, wie sich die Gesamtsumme mit jedem eingehenden Beitrag aktualisiert."],
+          "bullets": ["Gastfreundliche Bestell-Einladungen", "Klarer Status jedes Beitrags", "Abschluss unter Kontrolle des Organisators"]
+        },
+        {
+          "heading": "Abschließen mit nachvollziehbaren Summen",
+          "paragraphs": ["Frieren Sie die Bestellung vor der Aufgabe ein, berechnen Sie konfigurierte Gebühren einheitlich und verteilen Sie die Belegbeträge pro Person oder pro Artikel."],
+          "bullets": ["Stabile finale Mengen", "Transparente Gebührenaufschlüsselung", "Teilbare Belegansichten"]
+        }
+      ]
+    },
+    "about": {
+      "navigationLabel": "Über uns",
+      "seoTitle": "Über Gama3 Orderak | Für echte Gruppenbestellungen gemacht",
+      "description": "Erfahren Sie, warum Gama3 Orderak verstreute Bestellnachrichten in einen klaren, nachvollziehbaren Ablauf für die ganze Gruppe verwandelt.",
+      "eyebrow": "Warum es dieses Produkt gibt",
+      "heading": "Gemeinsames Bestellen sollte koordiniert sein, nicht kompliziert",
+      "introduction": "Gama3 Orderak entstand aus einem bekannten Problem: Eine Person sammelt viele wechselnde Wünsche aus Nachrichten zusammen und muss die Summen anschließend unter Zeitdruck abgleichen.",
+      "sections": [
+        {
+          "heading": "Eine praktische, verlässliche Quelle",
+          "paragraphs": ["Die Anwendung hält Menü, Teilnehmende, Mengen, Status und den finalen Beleg zusammen. Organisatoren sehen sofort, was sich geändert hat, ohne einen Chatverlauf rekonstruieren zu müssen."]
+        },
+        {
+          "heading": "Nützlich mit oder ohne Cloud-Dienste",
+          "paragraphs": ["Das Produkt unterstützt vernetzte Zusammenarbeit ebenso wie einen voll funktionsfähigen lokalen Modus. Die verfügbaren Funktionen werden ehrlich angezeigt, damit alle wissen, wo ihre Bestellung gespeichert ist."]
+        },
+        {
+          "heading": "Privatsphäre und Eigentum zuerst",
+          "paragraphs": ["Private Datensätze bleiben auf ihre Eigentümer und eingeladene Teilnehmende beschränkt. Das Produkt macht private Bestelldaten nicht öffentlich und zeigt in jedem Ablauf nur die Informationen, die wirklich benötigt werden."]
+        }
+      ]
+    },
+    "how-it-works": {
+      "navigationLabel": "So funktioniert es",
+      "seoTitle": "So funktioniert Gama3 Orderak | Vom Menü zum Beleg",
+      "description": "Folgen Sie dem Ablauf einer Gruppenbestellung: Menü vorbereiten, Teilnehmende einladen, Auswahl sammeln, Bestellung sperren und Belege verteilen.",
+      "eyebrow": "Ein vorhersehbarer Ablauf in fünf Schritten",
+      "heading": "Vom Menü bis zum fertigen Beleg in einem gemeinsamen Ablauf",
+      "introduction": "Jede Phase hat eine klare Zuständigkeit und einen klaren Status. So weiß die Gruppe immer, wann die Auswahl noch offen ist und wann die Bestellung aufgegeben werden kann.",
+      "sections": [
+        { "heading": "1. Menü vorbereiten", "paragraphs": ["Erstellen Sie eine wiederverwendbare Sammlung mit Artikelnamen, Preisen und der Gebührenregel, die für diese Bestellung gilt."] },
+        { "heading": "2. Gruppensitzung starten", "paragraphs": ["Wählen Sie das Menü, öffnen Sie eine Sammelrunde und teilen Sie die Einladung mit allen, die mitbestellen möchten."] },
+        { "heading": "3. Individuelle Auswahl sammeln", "paragraphs": ["Die Teilnehmenden tragen ihre eigenen Mengen ein, während der Organisator den Fortschritt und die Gesamtbestellung im Blick behält."] },
+        { "heading": "4. Sperren und bestätigen", "paragraphs": ["Schließen Sie die Sammlung, bevor Sie beim Restaurant bestellen – so können spätere Änderungen die finalen Mengen nicht mehr unbemerkt verändern."] },
+        { "heading": "5. Abrechnen mit einem klaren Beleg", "paragraphs": ["Prüfen Sie Zwischensumme und konfigurierte Gebühren und erklären Sie mit den Personen- und Artikelansichten, welchen Betrag jede Person schuldet."] }
+      ]
+    },
+    "features": {
+      "navigationLabel": "Funktionen",
+      "seoTitle": "Funktionen von Gama3 Orderak | Menüs, Sitzungen, Summen, Belege",
+      "description": "Entdecken Sie wiederverwendbare Menüs, laufende Gruppenbeiträge, Bestellsperre, Gebührenberechnung, Belegzuordnung, Privatsphäre und lokalen Modus.",
+      "eyebrow": "Werkzeuge für den gesamten Bestellzyklus",
+      "heading": "Die Details, die eine Gruppenbestellung verlässlich machen",
+      "introduction": "Gama3 Orderak verbindet Vorbereitung, Zusammenarbeit, Bestätigung und Abrechnung, statt sie auf getrennte Tabellen und Chatverläufe zu verteilen.",
+      "sections": [
+        { "heading": "Wiederverwendbare Menüs", "paragraphs": ["Speichern Sie wiederkehrende Menüs mit bepreisten Artikeln, Regeln für eigene Artikel, Sichtbarkeitseinstellungen und Preisrichtlinien."] },
+        { "heading": "Beiträge der Teilnehmenden", "paragraphs": ["Verfolgen Sie die Mengen jeder Person separat und behalten Sie zugleich eine genaue Gesamtsumme für den Organisator."] },
+        { "heading": "Kontrolle über den Bestellzyklus", "paragraphs": ["Führen Sie eine Bestellung mit expliziten Übergängen durch Sammeln, Sperren, Bestätigung, Lieferung und Abrechnung."] },
+        { "heading": "Preise und Belege", "paragraphs": ["Berechnen Sie Zwischensumme, Mehrwertsteuer, Service- und Liefergebühren und prüfen Sie anschließend die Belegzuordnung pro Person oder pro Artikel."] },
+        { "heading": "Responsive und zweisprachige Oberfläche", "paragraphs": ["Nutzen Sie die Anwendung auf Mobilgeräten und am Desktop mit englischer und arabischer Oberfläche, einschließlich der Darstellung von rechts nach links."] },
+        { "heading": "Cloud- oder lokale Speicherung", "paragraphs": ["Arbeiten Sie über Firebase zusammen, wenn es konfiguriert ist, oder nutzen Sie weiterhin die deterministische lokale Umsetzung auf dem Gerät."] }
+      ]
+    },
+    "group-ordering": {
+      "navigationLabel": "Gruppenbestellung",
+      "seoTitle": "Essen in der Gruppe bestellen | Klare Auswahl ohne Chat-Chaos",
+      "description": "Organisieren Sie gemeinsame Bestellungen mit kontrollierten Einladungen, individuellen Beiträgen, aktuellen Summen und einer gesperrten Endbestellung.",
+      "eyebrow": "Für Organisatoren und Teilnehmende entwickelt",
+      "heading": "Geben Sie jeder Person einen klaren Ort für ihre Auswahl",
+      "introduction": "Eine gemeinsame Bestellung funktioniert am besten, wenn alle ihre eigene Auswahl aktualisieren können und der Organisator trotzdem bestimmt, wann die Sammlung endet.",
+      "sections": [
+        { "heading": "Genau das richtige Maß an Zugriff teilen", "paragraphs": ["Laden Sie Teilnehmende in die passende Sitzung ein, ohne unbeteiligte private Menüs oder Bestellungen offenzulegen."] },
+        { "heading": "Beiträge zuordenbar halten", "paragraphs": ["Die Auswahl jeder Person bleibt erkennbar. Änderungen lassen sich so viel leichter prüfen als ein Strom nachträglich bearbeiteter Chatnachrichten."] },
+        { "heading": "Die finale Bestellung schützen", "paragraphs": ["Sperren Sie die Sammlung vor der Bestätigung, bewahren Sie die erfasste Gesamtsumme und behalten Sie einen Verlauf, der den aktuellen Stand erklärt."] },
+        { "heading": "Gäste bewusst einbinden", "paragraphs": ["Gast-Einladungen erfassen nur die Informationen, die für eine einzelne Sitzung nötig sind, ohne weitreichenden Kontozugriff zu gewähren."] }
+      ]
+    },
+    "split-bill-and-receipts": {
+      "navigationLabel": "Rechnung und Belege",
+      "seoTitle": "Gruppenrechnungen aufteilen und jeden Beleg erklären",
+      "description": "Verwandeln Sie Artikelmengen und konfigurierte Gebühren in transparente Belegansichten pro Person und pro Artikel für Gruppenbestellungen.",
+      "eyebrow": "Abrechnung ohne Rätselraten",
+      "heading": "Machen Sie die Endsumme leicht erklärbar",
+      "introduction": "Der Beleg beginnt bei der eingefrorenen Bestellung, wendet die konfigurierten Preisregeln an und hält die Aufschlüsselung mit den Mengen verbunden, aus denen sie entstanden ist.",
+      "sections": [
+        { "heading": "Von Fakten auf Artikelebene ausgehen", "paragraphs": ["Die Berechnung nutzt erfasste Artikelpreise und finale Mengen statt einer groben Schätzung, die aus dem Chat kopiert wurde."] },
+        { "heading": "Konfigurierte Gebühren getrennt ausweisen", "paragraphs": ["Mehrwertsteuer, Service und Lieferung bleiben in der Aufschlüsselung sichtbar, damit alle Beteiligten nachvollziehen können, wie der Endbetrag zustande kam."] },
+        { "heading": "Pro Person oder pro Artikel prüfen", "paragraphs": ["Personenansichten helfen bei der Abrechnung, während Artikelansichten dem Organisator zeigen, ob Mengen und Kosten zur Bestellung passen."] },
+        { "heading": "Den finalen Stand bewahren", "paragraphs": ["Das Sperren der Bestellung verhindert, dass spätere Beitragsänderungen den Beleg, den die Gruppe gerade abrechnet, unbemerkt verändern."] }
+      ]
+    },
+    "faq": {
+      "navigationLabel": "FAQ",
+      "seoTitle": "Gama3 Orderak FAQ | Bestellungen, Speicherung, Gebühren, Gäste",
+      "description": "Antworten zu wiederverwendbaren Menüs, Gruppensitzungen, Gästen, lokalem Modus, Preisgebühren, Belegen und Bestellsperre.",
+      "eyebrow": "Häufige Fragen",
+      "heading": "Was Sie vor einer Gruppenbestellung wissen sollten",
+      "introduction": "Diese Antworten beschreiben das aktuelle Verhalten der Anwendung, ohne nicht unterstützte Zahlungen, Restaurant-Integrationen oder Rabatte zu versprechen.",
+      "sections": [],
+      "faq": [
+        { "question": "Was ist ein Food-Bucket?", "answer": "Ein Food-Bucket ist ein wiederverwendbares Menü aus Artikeln und Preisen, das sich für individuelle und gemeinsame Bestellabläufe nutzen lässt." },
+        { "question": "Können Personen teilnehmen, ohne meine anderen Bestellungen zu sehen?", "answer": "Ja. Einladungen gelten nur für das betreffende gemeinsame Menü oder die jeweilige Bestellsitzung und machen keine anderen privaten Datensätze öffentlich." },
+        { "question": "Welche Gebühren kann die App berechnen?", "answer": "Ein Menü kann unterstützte Regeln für Mehrwertsteuer, Service und Lieferung anwenden. Der Beleg weist diese konfigurierten Beträge sichtbar aus." },
+        { "question": "Warum sollte ich eine Bestellung sperren?", "answer": "Das Sperren erzeugt vor Bestätigung und Abrechnung einen stabilen Stand der finalen Mengen und verhindert unbemerkte späte Änderungen." },
+        { "question": "Funktioniert die App ohne Firebase?", "answer": "Ja. Ohne Cloud-Konfiguration wählt die Anwendung ihren voll funktionsfähigen lokalen Speichermodus auf dem Gerät." },
+        { "question": "Nimmt Gama3 Orderak Zahlungen entgegen oder bestellt automatisch beim Restaurant?", "answer": "Nein. Das aktuelle Produkt organisiert Auswahl, Summen, Status und Belege; Zahlung und Restaurantabwicklung bleiben außerhalb der Anwendung." }
+      ]
+    },
+    "contact": {
+      "navigationLabel": "Kontakt",
+      "seoTitle": "Gama3 Orderak kontaktieren | Support und Feedback",
+      "description": "Finden Sie den offiziellen Projektkanal für Supportanfragen, reproduzierbare Fehlerberichte, Barrierefreiheits-Feedback und Sicherheitshinweise.",
+      "eyebrow": "Support und Feedback",
+      "heading": "Sagen Sie uns, was passiert ist und was Sie erwartet haben",
+      "introduction": "Am schnellsten erhalten Sie nützliche Hilfe mit einem kurzen, datenschutzfreundlichen Bericht im offiziellen Repository des Projekts.",
+      "sections": [
+        { "heading": "Bevor Sie einen Bericht öffnen", "paragraphs": ["Nennen Sie den Bildschirm, das Gerät oder den Browser, den Speichermodus, die Schritte zur Reproduktion und das erwartete Ergebnis. Veröffentlichen Sie niemals Passwörter, Einladungsgeheimnisse, private Bestellinhalte oder Firebase-Zugangsdaten."] },
+        { "heading": "Feedback zur Barrierefreiheit", "paragraphs": ["Beschreiben Sie die Hilfstechnologie, die Eingabemethode, den Viewport und die konkrete Barriere. Barrierefreiheitsmängel behandeln wir als Produktfehler."] },
+        { "heading": "Sicherheitsbedenken", "paragraphs": ["Veröffentlichen Sie keine ausnutzbaren Details oder persönlichen Daten in einem öffentlichen Issue. Nutzen Sie den privaten Sicherheitskontakt des Repository-Inhabers, sofern vorhanden."] }
+      ]
+    },
+    "privacy": {
+      "navigationLabel": "Datenschutz",
+      "seoTitle": "Datenschutz bei Gama3 Orderak | Daten und Speichermodi",
+      "description": "Verstehen Sie, welche Datenkategorien Gama3 Orderak nutzt, wie lokale und Cloud-Speicherung funktionieren, wo Weitergabe endet und welche Wahlmöglichkeiten Sie haben.",
+      "eyebrow": "Datenschutz im Überblick",
+      "heading": "Ihre Bestelldaten sollen in dem Ablauf bleiben, den Sie gewählt haben",
+      "introduction": "Diese Produktübersicht erklärt das aktuelle technische Verhalten und ersetzt weder eine rechtliche Beratung für Ihre Region noch die endgültige Datenschutzerklärung des Betreibers.",
+      "sections": [
+        { "heading": "Daten, die die Anwendung verwendet", "paragraphs": ["Je nach gewähltem Ablauf kann die Anwendung Kontodaten, Profileinstellungen, Menüs, Bestellsitzungen, Artikelmengen, Einladungen, Benachrichtigungen und Beleginformationen verarbeiten."] },
+        { "heading": "Lokale und Cloud-Speicherung", "paragraphs": ["Im lokalen Modus werden die Datensätze der Anwendung auf dem Gerät gespeichert. Im konfigurierten Firebase-Modus nutzen Anmeldung und Anwendungsdaten die Firebase-Dienste des Projekts, damit eingeladene Personen zusammenarbeiten können."] },
+        { "heading": "Weitergabe und Sichtbarkeit", "paragraphs": ["Private Datensätze sind für ihren Eigentümer und autorisierte Teilnehmende bestimmt. Behandeln Sie Einladungslinks als sensibel, da sie Zugriff auf einen bestimmten Ablauf gewähren können."] },
+        { "heading": "Analyse und Werbung", "paragraphs": ["Die Anwendung bietet eine Einwilligungsauswahl für Analysen. Werbung ist auf angemeldeten, Aktions-, Fehler- und Richtlinienseiten standardmäßig deaktiviert; jede spätere Aktivierung erfordert die nötigen Einwilligungen und Betreiberhinweise."] },
+        { "heading": "Ihre Wahlmöglichkeiten", "paragraphs": ["Sie können unterstützte Geräteeinstellungen anpassen und sich für Auskunft, Berichtigung, Löschung oder Aufbewahrung an den Betreiber der jeweiligen bereitgestellten Instanz wenden."] }
+      ]
+    },
+    "terms": {
+      "navigationLabel": "Nutzungsbedingungen",
+      "seoTitle": "Nutzungsbedingungen von Gama3 Orderak | Verantwortungsvolle Nutzung",
+      "description": "Lesen Sie die Nutzungsgrenzen für Konten, Einladungen, Bestellgenauigkeit, externe Abwicklung, Verfügbarkeit und angemessenes Verhalten.",
+      "eyebrow": "Bedingungen im Überblick",
+      "heading": "Nutzen Sie den gemeinsamen Ablauf verantwortungsvoll",
+      "introduction": "Diese verständliche Übersicht beschreibt die vorgesehenen Produktgrenzen und ersetzt nicht die endgültigen Bedingungen des Betreibers eines bereitgestellten Dienstes.",
+      "sections": [
+        { "heading": "Konten und Einladungen", "paragraphs": ["Machen Sie korrekte Kontoangaben, schützen Sie Zugangsdaten und Einladungslinks und nutzen Sie nur Datensätze, die Ihnen gehören oder für die Sie autorisiert sind."] },
+        { "heading": "Bestellgenauigkeit", "paragraphs": ["Teilnehmende sind für die Prüfung ihrer eigenen Auswahl verantwortlich. Organisatoren prüfen gesperrte Gesamtsumme, Preise, Gebühren und die Restaurantbestellung, bevor sie sich auf das Ergebnis verlassen."] },
+        { "heading": "Externe Dienste und Abwicklung", "paragraphs": ["Die Anwendung nimmt selbst keine Zahlungen entgegen, garantiert keine Verfügbarkeit des Restaurants, gibt keine Restaurantbestellung auf und kontrolliert weder Lieferung noch Essensqualität."] },
+        { "heading": "Verfügbarkeit und lokale Daten", "paragraphs": ["Die Verfügbarkeit des Dienstes kann sich ändern. Wer den lokalen Modus nutzt, ist für Gerät und Sicherungen verantwortlich; das Löschen des App-Speichers kann lokal gespeicherte Datensätze entfernen."] },
+        { "heading": "Zulässige Nutzung", "paragraphs": ["Missbrauchen Sie keine Einladungen, versuchen Sie keinen unbefugten Zugriff, laden Sie keine rechtswidrigen Inhalte hoch, stören Sie den Dienst nicht und verwenden Sie fremde Daten nicht ohne Erlaubnis."] }
+      ]
+    }
+  },
+  "systemPages": {
+    "not-found": { "seoTitle": "Seite nicht gefunden | Gama3 Orderak", "description": "Die angeforderte öffentliche Seite wurde nicht gefunden.", "heading": "Diese Seite steht nicht auf der Karte", "body": "Die Adresse ist möglicherweise veraltet oder falsch geschrieben. Kehren Sie zur Startseite zurück, um fortzufahren." },
+    "error": { "seoTitle": "Etwas ist schiefgelaufen | Gama3 Orderak", "description": "Gama3 Orderak konnte diese Seitenanfrage nicht abschließen.", "heading": "Wir konnten diese Seite nicht anzeigen", "body": "Es wurden keine privaten Bestelldaten offengelegt. Versuchen Sie es erneut oder kehren Sie zur Startseite zurück." },
+    "offline": { "seoTitle": "Sie sind offline | Gama3 Orderak", "description": "Stellen Sie die Verbindung wieder her, um diese Seite zu laden.", "heading": "Sie sind offline", "body": "Eine gespeicherte öffentliche Seite ist möglicherweise weiterhin verfügbar. Verbinden Sie sich erneut, bevor Sie eine gemeinsame Bestellung öffnen oder ändern." }
+  }
+}

@@ -22,12 +22,16 @@ components pure and containers thin.
   stays on), cleans up subscriptions/timers, and guards async completion after unmount.
 - Timers and browser APIs inside hooks go through `src/platform` abstractions, not
   `window.setTimeout` directly.
+- Hook inputs/view-model contracts live in sibling `*.interfaces.ts`, state unions live
+  in `*.types.ts`, and debounce/limit/lookup constants live in `*.constants.ts`.
 
 ## Forbidden
 
 - Calling any hook in a `*.component.tsx` file (zero-hook rule).
 - Calling built-in/vendor hooks in containers/providers/shell/router files.
 - Defining a `useX` function outside a hook file (the plugin rejects the definition site).
+- Declaring named interfaces, type aliases, enum-like sets, or module constants in the
+  hook file.
 - Suppressing `react-hooks/rules-of-hooks` or `react-hooks/exhaustive-deps`.
 - Data fetching in effects that duplicates what a service subscription already provides.
 

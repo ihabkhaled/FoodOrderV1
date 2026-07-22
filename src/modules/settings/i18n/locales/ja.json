@@ -1,0 +1,14 @@
+{
+  "analyticsPrivacy": "分析とプライバシー",
+  "analyticsPrivacyDescription": "FoodOrderが記録できる匿名の診断情報と利用状況イベントを選択します。メールアドレス、氏名、メモ、支払い証明などの個人的な内容が分析データに含まれることはありません。",
+  "analyticsConsent": "分析への同意",
+  "analyticsDenied": "分析を記録しない",
+  "analyticsOperationalOnly": "動作診断のみ",
+  "analyticsProduct": "動作診断と利用状況の分析",
+  "analyticsProductAndMarketing": "動作・利用状況・アップグレードの分析",
+  "analyticsDeniedDescription": "任意の分析イベントは一切記録されません。注文は通常どおり利用できます。",
+  "analyticsOperationalDescription": "プライバシーに配慮した信頼性の障害情報とパフォーマンス診断を記録します。",
+  "analyticsProductDescription": "さらに、プライバシーに配慮した登録・利用開始・機能利用のイベントも記録します。",
+  "analyticsMarketingDescription": "さらに、プライバシーに配慮したアップグレード案内とサブスクリプション導線のイベントも記録します。",
+  "analyticsConsentSaved": "分析の設定を保存しました。"
+}

@@ -1,3 +1,5 @@
+import type { Locale } from '@/shared/types';
+
 import type { AnalyticsEventName } from '../constants/analytics-events.constants';
 import type {
   AnalyticsConsent,
@@ -9,7 +11,7 @@ export type AnalyticsPropertyValue = string | number | boolean | null;
 
 export interface SafeTelemetryContext {
   appVersion: string;
-  locale: 'en' | 'ar';
+  locale: Locale;
   platform: 'web' | 'android' | 'ios';
   storageMode: 'firebase' | 'local-device';
   plan: string;

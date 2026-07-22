@@ -22,6 +22,8 @@
 4. Navigation through typed builders from `routes/` (inside the hook or as constants —
    never inline `'/...'`).
 5. Export the container from the module `index.ts` if `src/app`'s router mounts it.
+6. Put container props in sibling `*.interfaces.ts`, view-state aliases in `*.types.ts`,
+   enum-like sets in `*.enums.ts`, and module constants in `*.constants.ts`.
 
 ## Forbidden shortcuts
 
@@ -30,6 +32,7 @@
 - Inlining business logic (calculations, permission checks) in the container body.
 - Reaching past the view-model into gateways or `@/packages/firebase`.
 - Growing bespoke JSX blocks that should be `*.component.tsx` files.
+- Declaring an interface, type alias, enum-like set, or module constant in the container.
 
 ## Required tests
 
@@ -46,5 +49,6 @@ npm run test:e2e
 
 ## Definition of done
 
-Container is thin wiring only; every hook it calls is project-owned; journey green on
-chromium and mobile-chrome; zero architecture errors.
+Container is thin wiring only; every hook it calls is project-owned; declarations come
+from correctly suffixed siblings; journey green on Chromium and mobile Chrome; zero
+architecture errors.

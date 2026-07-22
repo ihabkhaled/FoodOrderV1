@@ -63,7 +63,7 @@ export function DashboardContainer() {
       to: `${ORDERS_PATH}?status=placed`,
     },
     {
-      label: vm.locale === 'ar' ? 'الطلبات المكتملة' : 'Completed orders',
+      label: vm.t('completedOrders'),
       value: summary.completedOrderCount,
       icon: CheckCircle2,
       to: `${ORDERS_PATH}?status=completed`,

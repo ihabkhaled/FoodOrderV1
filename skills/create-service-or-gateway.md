@@ -28,6 +28,9 @@
 5. If Firestore document paths or access patterns changed: update `firestore.rules` WITH
    emulator allow/deny tests, and review `firestore.indexes.json`.
 6. Expose the capability through `data-access`'s public surface; consume via a module hook.
+7. Keep implementation files behavior-only: contracts in `*.interfaces.ts`, aliases in
+   `*.types.ts`, enum-like sets in `*.enums.ts`, and module constants/message tables in
+   `*.constants.ts`.
 
 ## Forbidden shortcuts
 
@@ -37,6 +40,8 @@
   `src/packages/firebase`.
 - Behavior that differs between the two backends beyond documented mode limits.
 - Client-side-only authorization checks.
+- Inline interfaces, type aliases, enum-like sets, regular expressions, limits, lookup
+  tables, or message records in service, gateway, or adapter implementations.
 
 ## Required tests
 

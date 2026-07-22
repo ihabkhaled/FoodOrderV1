@@ -1,0 +1,14 @@
+{
+  "analyticsPrivacy": "تحلیل و حریم خصوصی",
+  "analyticsPrivacyDescription": "انتخاب کنید FoodOrder کدام داده‌های تشخیصی ناشناس و رویدادهای استفاده از محصول را ثبت کند. ایمیل‌ها، نام‌ها، یادداشت‌ها، مدارک پرداخت و دیگر محتوای خصوصی هرگز در ویژگی‌های تحلیلی قرار نمی‌گیرند.",
+  "analyticsConsent": "رضایت برای تحلیل",
+  "analyticsDenied": "داده تحلیلی ثبت نشود",
+  "analyticsOperationalOnly": "فقط تشخیص‌های عملیاتی",
+  "analyticsProduct": "تحلیل عملیاتی و محصول",
+  "analyticsProductAndMarketing": "تحلیل عملیاتی، محصول و ارتقا",
+  "analyticsDeniedDescription": "هیچ رویداد تحلیلی اختیاری ثبت نمی‌شود. سفارش‌دادن به‌طور عادی ادامه دارد.",
+  "analyticsOperationalDescription": "خرابی‌های قابلیت اطمینان و داده‌های تشخیصی عملکرد را با حفظ حریم خصوصی ثبت می‌کند.",
+  "analyticsProductDescription": "رویدادهای جذب، فعال‌سازی و استفاده از قابلیت‌ها را نیز با حفظ حریم خصوصی ثبت می‌کند.",
+  "analyticsMarketingDescription": "نمایش پیشنهادهای ارتقا و رویدادهای مسیر اشتراک را نیز با حفظ حریم خصوصی ثبت می‌کند.",
+  "analyticsConsentSaved": "ترجیح تحلیل ذخیره شد."
+}

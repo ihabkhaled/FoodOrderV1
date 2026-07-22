@@ -1,0 +1,168 @@
+{
+  "locale": "fr",
+  "ui": {
+    "primaryNavigationLabel": "Navigation publique",
+    "mobileNavigationLabel": "Ouvrir la navigation",
+    "languageLabel": "Langue",
+    "openApplicationLabel": "Ouvrir l’application",
+    "skipToContentLabel": "Aller au contenu",
+    "footerNavigationLabel": "Navigation de pied de page",
+    "footerTagline": "Des commandes de groupe claires, du premier choix au reçu final.",
+    "allRightsReservedLabel": "Tous droits réservés.",
+    "backHomeLabel": "Retour à l’accueil",
+    "tryAgainLabel": "Réessayer",
+    "learnMoreLabel": "Voir comment ça marche"
+  },
+  "pages": {
+    "home": {
+      "navigationLabel": "Accueil",
+      "seoTitle": "Gama3 Orderak | Commandes de groupe sans confusion",
+      "description": "Créez des menus réutilisables, recueillez les choix, calculez les frais, verrouillez la commande et partagez des reçus clairs.",
+      "eyebrow": "Une commande partagée. Tout le monde reste informé.",
+      "heading": "Recueillez les commandes de groupe sans courir après les messages",
+      "introduction": "Gama3 Orderak offre à l’organisateur un espace fiable pour préparer le menu, inviter les participants, suivre chaque choix et transformer le total en reçus compréhensibles.",
+      "sections": [
+        { "heading": "Commencez par un menu réutilisable", "paragraphs": ["Enregistrez les articles habituels avec leurs prix et les règles facultatives de TVA, service et livraison, puis réutilisez le même menu."], "bullets": ["Créer et modifier les articles", "Garder les commandes récurrentes cohérentes", "Choisir un flux privé ou collaboratif"] },
+        { "heading": "Invitez, recueillez et vérifiez", "paragraphs": ["Partagez une invitation contrôlée, laissez chacun saisir ses quantités et suivez l’agrégat pendant l’arrivée des contributions."], "bullets": ["Invitations adaptées aux invités", "État clair des contributions", "Finalisation contrôlée par l’organisateur"] },
+        { "heading": "Terminez avec des totaux vérifiables", "paragraphs": ["Verrouillez la commande avant l’envoi, appliquez les frais configurés et répartissez le reçu par personne ou par article."], "bullets": ["Quantités finales stables", "Détail transparent des frais", "Vues de reçu partageables"] }
+      ]
+    },
+    "about": {
+      "navigationLabel": "À propos",
+      "seoTitle": "À propos de Gama3 Orderak | Conçu pour les vraies commandes",
+      "description": "Découvrez pourquoi Gama3 Orderak transforme des messages dispersés en un processus de commande de groupe clair et responsable.",
+      "eyebrow": "Pourquoi ce produit existe",
+      "heading": "Commander en groupe doit être coordonné, pas compliqué",
+      "introduction": "Gama3 Orderak répond à un problème courant : une personne recueille de nombreux choix changeants dans les messages puis doit reconstituer les totaux dans l’urgence.",
+      "sections": [
+        { "heading": "Une source de vérité pratique", "paragraphs": ["Menu, participants, quantités, état et reçu final restent réunis, sans devoir reconstruire l’historique d’une conversation."] },
+        { "heading": "Utile avec ou sans cloud", "paragraphs": ["Le produit propose la collaboration connectée et un mode local complet, tout en indiquant clairement où les commandes sont stockées."] },
+        { "heading": "Confidentialité et propriété d’abord", "paragraphs": ["Les données privées restent limitées à leurs propriétaires et aux participants invités, avec uniquement les informations nécessaires à chaque flux."] }
+      ]
+    },
+    "how-it-works": {
+      "navigationLabel": "Fonctionnement",
+      "seoTitle": "Fonctionnement de Gama3 Orderak | Du menu au reçu",
+      "description": "Préparez un menu, invitez les participants, recueillez les choix, verrouillez la commande et distribuez les reçus.",
+      "eyebrow": "Un processus prévisible en cinq étapes",
+      "heading": "Du menu au reçu final dans un seul flux partagé",
+      "introduction": "Chaque étape a un responsable et un état clairs : le groupe sait quand les choix sont ouverts et quand la commande est prête.",
+      "sections": [
+        { "heading": "1. Préparer le menu", "paragraphs": ["Créez une liste réutilisable avec noms, prix et règles de frais applicables."] },
+        { "heading": "2. Démarrer une session de groupe", "paragraphs": ["Choisissez le menu, ouvrez la collecte et partagez l’invitation avec les participants."] },
+        { "heading": "3. Recueillir les choix individuels", "paragraphs": ["Chacun ajoute ses quantités tandis que l’organisateur suit la progression et le total."] },
+        { "heading": "4. Verrouiller et confirmer", "paragraphs": ["Fermez la collecte avant de commander au restaurant afin d’éviter des changements tardifs invisibles."] },
+        { "heading": "5. Régler avec un reçu clair", "paragraphs": ["Vérifiez le sous-total et les frais, puis consultez le reçu par personne ou par article."] }
+      ]
+    },
+    "features": {
+      "navigationLabel": "Fonctionnalités",
+      "seoTitle": "Fonctionnalités Gama3 Orderak | Menus, totaux et reçus",
+      "description": "Découvrez menus réutilisables, contributions, verrouillage, calcul des frais, reçus, confidentialité et mode local.",
+      "eyebrow": "Des outils pour tout le cycle de commande",
+      "heading": "Les détails qui rendent une commande de groupe fiable",
+      "introduction": "Gama3 Orderak relie préparation, collaboration, confirmation et règlement au lieu de les disperser entre tableaux et conversations.",
+      "sections": [
+        { "heading": "Menus réutilisables", "paragraphs": ["Conservez des menus récurrents avec articles, prix, règles d’articles personnalisés, visibilité et politiques tarifaires."] },
+        { "heading": "Contributions des participants", "paragraphs": ["Suivez séparément les quantités de chacun tout en gardant un agrégat exact pour l’organisateur."] },
+        { "heading": "Contrôles du cycle", "paragraphs": ["Faites passer la commande de la collecte au verrouillage, à la confirmation, à la livraison et au règlement par des transitions explicites."] },
+        { "heading": "Tarification et reçus", "paragraphs": ["Calculez sous-total, TVA, service et livraison, puis vérifiez la répartition par participant ou article."] },
+        { "heading": "Interface adaptative et bilingue", "paragraphs": ["Utilisez l’application sur mobile et ordinateur avec les interfaces anglaise et arabe, y compris l’affichage de droite à gauche."] },
+        { "heading": "Stockage cloud ou local", "paragraphs": ["Collaborez via Firebase lorsqu’il est configuré ou utilisez l’implémentation locale déterministe sur l’appareil."] }
+      ]
+    },
+    "group-ordering": {
+      "navigationLabel": "Commande de groupe",
+      "seoTitle": "Commande de repas en groupe | Des choix clairs sans chaos",
+      "description": "Organisez les commandes partagées avec invitations contrôlées, contributions individuelles, agrégats à jour et commande verrouillée.",
+      "eyebrow": "Conçu pour organisateurs et participants",
+      "heading": "Donnez à chaque participant un endroit clair pour choisir",
+      "introduction": "Une commande partagée fonctionne mieux lorsque chacun met à jour ses choix et que l’organisateur décide de la fin de la collecte.",
+      "sections": [
+        { "heading": "Partager le bon niveau d’accès", "paragraphs": ["Invitez les personnes à la session concernée sans exposer d’autres menus ou commandes privés."] },
+        { "heading": "Garder les contributions attribuables", "paragraphs": ["Les sélections restent liées à chaque personne et sont plus simples à vérifier qu’une suite de messages modifiés."] },
+        { "heading": "Protéger la commande finale", "paragraphs": ["Verrouillez la collecte avant confirmation, conservez l’agrégat et gardez un historique expliquant l’état actuel."] },
+        { "heading": "Gérer les invités avec précision", "paragraphs": ["Une invitation d’invité ne collecte que les informations nécessaires à la session, sans accès général au compte."] }
+      ]
+    },
+    "split-bill-and-receipts": {
+      "navigationLabel": "Addition et reçus",
+      "seoTitle": "Partager l’addition d’un groupe et expliquer chaque reçu",
+      "description": "Transformez quantités et frais configurés en reçus transparents par personne et par article.",
+      "eyebrow": "Un règlement sans approximation",
+      "heading": "Rendez le total final facile à expliquer",
+      "introduction": "Le reçu part de la commande verrouillée, applique les règles configurées et relie chaque montant aux quantités réelles.",
+      "sections": [
+        { "heading": "Partir des faits par article", "paragraphs": ["Le calcul utilise les prix et quantités finales enregistrés, pas une estimation copiée depuis la conversation."] },
+        { "heading": "Afficher les frais séparément", "paragraphs": ["TVA, service et livraison restent visibles pour expliquer la formation du montant final."] },
+        { "heading": "Vérifier par personne ou article", "paragraphs": ["La vue participant aide au règlement et la vue article aide à contrôler quantités et frais."] },
+        { "heading": "Conserver l’instantané final", "paragraphs": ["Le verrouillage empêche des modifications tardives de changer silencieusement le reçu à régler."] }
+      ]
+    },
+    "faq": {
+      "navigationLabel": "FAQ",
+      "seoTitle": "FAQ Gama3 Orderak | Commandes, stockage, frais et invités",
+      "description": "Réponses sur les menus réutilisables, sessions, invités, mode local, frais, reçus et verrouillage.",
+      "eyebrow": "Questions fréquentes",
+      "heading": "Ce qu’il faut savoir avant une commande de groupe",
+      "introduction": "Ces réponses décrivent le produit actuel sans promettre de paiements, d’intégrations restaurant ou de remises non pris en charge.",
+      "sections": [],
+      "faq": [
+        { "question": "Qu’est-ce qu’un food bucket ?", "answer": "C’est un menu réutilisable d’articles et de prix destiné aux commandes individuelles ou de groupe." },
+        { "question": "Les invités peuvent-ils éviter de voir mes autres commandes ?", "answer": "Oui. Les invitations sont limitées à la liste ou à la session concernée et ne publient pas les autres données privées." },
+        { "question": "Quels frais l’application calcule-t-elle ?", "answer": "Elle peut appliquer les politiques prises en charge de TVA, service et livraison, affichées séparément sur le reçu." },
+        { "question": "Pourquoi verrouiller une commande ?", "answer": "Le verrouillage crée un instantané stable des quantités avant confirmation et évite les changements tardifs inaperçus." },
+        { "question": "L’application fonctionne-t-elle sans Firebase ?", "answer": "Oui. Sans configuration cloud, elle utilise son mode local complet sur l’appareil." },
+        { "question": "Gama3 Orderak encaisse-t-il ou commande-t-il au restaurant ?", "answer": "Non. Il organise choix, totaux, état et reçus ; paiement et exécution restent externes." }
+      ]
+    },
+    "contact": {
+      "navigationLabel": "Contact",
+      "seoTitle": "Contacter Gama3 Orderak | Assistance et retours",
+      "description": "Trouvez le canal officiel pour l’assistance, les bogues reproductibles, l’accessibilité et les alertes de sécurité.",
+      "eyebrow": "Assistance et retours",
+      "heading": "Dites-nous ce qui s’est passé et ce que vous attendiez",
+      "introduction": "Pour obtenir une aide utile, envoyez dans le dépôt officiel un rapport concis qui respecte la confidentialité.",
+      "sections": [
+        { "heading": "Avant d’ouvrir un rapport", "paragraphs": ["Indiquez l’écran, l’appareil ou navigateur, le mode de stockage, les étapes et le résultat attendu. Ne publiez jamais de mots de passe, secrets d’invitation, commandes privées ou identifiants Firebase."] },
+        { "heading": "Retour sur l’accessibilité", "paragraphs": ["Décrivez la technologie d’assistance, le mode de saisie, la taille d’écran et l’obstacle exact. Une barrière d’accessibilité est un défaut produit."] },
+        { "heading": "Problèmes de sécurité", "paragraphs": ["Ne publiez pas de détails exploitables ni de données personnelles ; utilisez le contact de sécurité privé du propriétaire lorsqu’il existe."] }
+      ]
+    },
+    "privacy": {
+      "navigationLabel": "Confidentialité",
+      "seoTitle": "Confidentialité Gama3 Orderak | Données et stockage",
+      "description": "Comprenez les données utilisées, le stockage local et cloud, les limites de partage et vos choix.",
+      "eyebrow": "Aperçu de la confidentialité",
+      "heading": "Vos données de commande doivent rester dans le flux choisi",
+      "introduction": "Cet aperçu décrit le comportement technique actuel et ne remplace pas un avis juridique ni la politique finale de l’opérateur.",
+      "sections": [
+        { "heading": "Données utilisées par l’application", "paragraphs": ["Selon le flux, l’application peut traiter compte, préférences, menus, sessions, quantités, invitations, notifications et reçus."] },
+        { "heading": "Stockage local et cloud", "paragraphs": ["En mode local, les données restent sur l’appareil ; avec Firebase configuré, l’authentification et les données utilisent les services cloud pour collaborer."] },
+        { "heading": "Partage et visibilité", "paragraphs": ["Les données privées sont destinées au propriétaire et aux participants autorisés. Les liens d’invitation doivent rester confidentiels."] },
+        { "heading": "Analyse et publicité", "paragraphs": ["L’application propose un choix de consentement analytique. La publicité est désactivée par défaut sur les espaces authentifiés, d’action, d’erreur et juridiques."] },
+        { "heading": "Vos choix", "paragraphs": ["Vous pouvez modifier les préférences prises en charge et contacter l’opérateur du déploiement pour l’accès, la correction, la suppression ou la conservation."] }
+      ]
+    },
+    "terms": {
+      "navigationLabel": "Conditions",
+      "seoTitle": "Conditions Gama3 Orderak | Utilisation responsable",
+      "description": "Consultez les limites relatives aux comptes, invitations, exactitude, services externes, disponibilité et conduite.",
+      "eyebrow": "Aperçu des conditions",
+      "heading": "Utilisez le flux partagé de manière responsable",
+      "introduction": "Ce résumé en langage clair présente les limites prévues et ne remplace pas les conditions définitives publiées par l’opérateur.",
+      "sections": [
+        { "heading": "Comptes et invitations", "paragraphs": ["Fournissez des informations exactes, protégez identifiants et liens, et n’accédez qu’aux données que vous possédez ou êtes autorisé à utiliser."] },
+        { "heading": "Exactitude de la commande", "paragraphs": ["Les participants vérifient leurs choix ; l’organisateur contrôle l’agrégat verrouillé, les prix, les frais et la commande au restaurant."] },
+        { "heading": "Services externes et exécution", "paragraphs": ["L’application n’encaisse pas, ne garantit pas la disponibilité, ne passe pas la commande et ne contrôle ni livraison ni qualité des repas."] },
+        { "heading": "Disponibilité et données locales", "paragraphs": ["La disponibilité peut changer. En mode local, l’utilisateur est responsable de son appareil et de ses sauvegardes ; effacer le stockage peut supprimer les données."] },
+        { "heading": "Utilisation acceptable", "paragraphs": ["N’abusez pas des invitations, ne tentez pas d’accès non autorisé, ne chargez rien d’illégal, ne perturbez pas le service et n’utilisez pas les données d’autrui sans autorisation."] }
+      ]
+    }
+  },
+  "systemPages": {
+    "not-found": { "seoTitle": "Page introuvable | Gama3 Orderak", "description": "La page publique demandée est introuvable.", "heading": "Cette page n’est pas au menu", "body": "L’adresse est peut-être ancienne ou incorrecte. Revenez à l’accueil pour continuer." },
+    "error": { "seoTitle": "Un problème est survenu | Gama3 Orderak", "description": "Gama3 Orderak n’a pas pu traiter cette demande.", "heading": "Impossible d’afficher cette page", "body": "Aucune donnée privée n’a été exposée. Réessayez ou revenez à l’accueil." },
+    "offline": { "seoTitle": "Vous êtes hors ligne | Gama3 Orderak", "description": "Reconnectez-vous pour charger cette page.", "heading": "Vous êtes hors ligne", "body": "Une page publique enregistrée peut rester disponible. Reconnectez-vous avant d’ouvrir ou de modifier une commande partagée." }
+  }
+}

@@ -1,5 +1,6 @@
 import './session-invites.css';
 
+import { localeDirection } from '@/shared/i18n';
 import { ErrorState, Loading } from '@/shared/ui';
 
 import { GuestSessionOrder } from './components/guest-session-order/guest-session-order.component';
@@ -9,7 +10,7 @@ import { useSessionInvite } from './hooks/use-session-invite.hook';
 
 export function SessionInviteContainer() {
   const viewModel = useSessionInvite();
-  const direction = viewModel.locale === 'ar' ? 'rtl' : 'ltr';
+  const direction = localeDirection(viewModel.locale);
 
   if (viewModel.loading && !viewModel.preview) {
     return (
@@ -27,7 +28,6 @@ export function SessionInviteContainer() {
         <div className="session-invite-shell stack-lg">
           <SessionInviteLanguageSwitch
             locale={viewModel.locale}
-            translate={viewModel.translate}
             onChange={viewModel.setLocale}
           />
           <ErrorState
@@ -48,7 +48,6 @@ export function SessionInviteContainer() {
       <div className="session-invite-shell stack-lg">
         <SessionInviteLanguageSwitch
           locale={viewModel.locale}
-          translate={viewModel.translate}
           onChange={viewModel.setLocale}
         />
         {viewModel.error ? (

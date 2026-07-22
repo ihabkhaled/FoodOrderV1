@@ -3,10 +3,14 @@ import { describe, expect, it } from 'vitest';
 import {
   createId,
   formatDateTime,
+  formatList,
   formatMoney,
+  formatNumber,
   isEmail,
   nowIso,
+  pluralCategory,
   roundMoney,
+  selectPlural,
   validatePassword,
 } from '@/shared/helpers';
 
@@ -71,5 +75,28 @@ describe('money.helper', () => {
   it('formats currency for the default and explicit locales', () => {
     expect(formatMoney(12.5, 'USD')).toContain('12.50');
     expect(formatMoney(12.5, 'EGP', 'ar')).toBeTruthy();
+  });
+});
+
+describe('intl.helper', () => {
+  it('formats numbers and lists with locale-aware Intl APIs', () => {
+    expect(formatNumber(1234.5, 'en')).toBe('1,234.5');
+    expect(formatNumber(0.42, 'de', { style: 'percent' })).toContain('42');
+    expect(formatList(['apples', 'rice'], 'en')).toBe('apples and rice');
+    expect(formatList(['A', 'B', 'C'], 'en', { type: 'disjunction' })).toContain('or');
+  });
+
+  it('selects cardinal and ordinal plural categories with an other fallback', () => {
+    expect(pluralCategory(1, 'en')).toBe('one');
+    expect(pluralCategory(2, 'en', { type: 'ordinal' })).toBe('two');
+    expect(selectPlural(1, 'en', { one: 'item', other: 'items' })).toBe('item');
+    expect(selectPlural(2, 'en', { one: 'item', other: 'items' })).toBe('items');
+  });
+
+  it('falls back to the other form when a plural category has no entry', () => {
+    // Arabic resolves 2 to the "two" category, which this form set omits.
+    expect(pluralCategory(2, 'ar')).toBe('two');
+    expect(selectPlural(2, 'ar', { one: 'عنصر', other: 'عناصر' })).toBe('عناصر');
+    expect(selectPlural(1, 'en', { other: 'items' })).toBe('items');
   });
 });

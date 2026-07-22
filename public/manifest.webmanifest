@@ -1,1 +1,37 @@
-{"name":"Gama3 Orderak — Collect Order","short_name":"Gama3 Orderak","description":"جمع أوردرك — Collect and track group food orders with reusable buckets.","start_url":"/","display":"standalone","background_color":"#fffaf2","theme_color":"#f97316","icons":[{"src":"/icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]}
+{
+  "name": "Gama3 Orderak — Collect Order",
+  "short_name": "Gama3 Orderak",
+  "description": "Collect and track group food orders with reusable buckets.",
+  "id": "/app",
+  "start_url": "/app",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#fffaf2",
+  "theme_color": "#f97316",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/maskable-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

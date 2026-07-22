@@ -46,7 +46,10 @@ These 35 rules are absolute for FoodOrderV1. They are enforced by the custom ESL
     (`.component.tsx`, `.container.tsx`, `.provider.tsx`, `.routes.tsx`, `.hook.ts`,
     `.service.ts`, `.gateway.ts`, `.helper.ts`, `.constants.ts`, `.types.ts`,
     `.interfaces.ts`, `.enums.ts`, `.adapter.ts`, ...) — `architecture/enforce-file-suffixes`
-    - `unicorn/filename-case`.
+    + `unicorn/filename-case`. Interfaces, type aliases, enum-like sets, and module-scope
+    constants live only in matching declaration owners (`*.interfaces.ts`, `*.types.ts`,
+    `*.enums.ts`, `*.constants.ts`) — `architecture/enforce-declaration-placement`.
+    Behavior files import them; old code is not exempt.
 14. The `enum` keyword is banned; use `as const` objects with derived union types in
     `*.enums.ts` (`architecture/no-typescript-enum`).
 15. Both typechecks pass: `npm run typecheck` (TS 7.0.2) and `npm run typecheck:tsc`
@@ -95,7 +98,9 @@ These 35 rules are absolute for FoodOrderV1. They are enforced by the custom ESL
     characterization tests (this is why EXC-1 exists).
 34. Every deviation is a documented exception with owner and removal condition; silent or
     expanding exceptions are forbidden.
-35. Every user-visible string has `en` and `ar` catalog entries with RTL-safe layout, and
-    accessibility (labels, focus, keyboard, `jsx-a11y`) is never regressed.
+35. Every user-visible string has complete, non-placeholder catalog entries for all
+    supported locales (`en`, `ar`, `it`, `fa`, `fr`, `de`, `es`, `pt-BR`,
+    `hi`, `th`, `zh-CN`, `ja`); `ar` and `fa` are RTL-safe, and accessibility
+    (labels, focus, keyboard, `jsx-a11y`) is never regressed.
 
 When a rule fails, the code is in the wrong layer. Move or redesign the code. Do not disable the rule.

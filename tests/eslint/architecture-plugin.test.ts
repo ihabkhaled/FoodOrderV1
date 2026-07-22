@@ -23,6 +23,63 @@ const rule = (name: string) => {
   return found;
 };
 
+tester.run(
+  'enforce-declaration-placement',
+  rule('enforce-declaration-placement'),
+  {
+    valid: [
+      {
+        filename: 'src/modules/orders/types/order-row.interfaces.ts',
+        code: 'export interface OrderRowProps { title: string }',
+      },
+      {
+        filename: 'src/modules/orders/types/order-status.types.ts',
+        code: "export type OrderStatus = 'open' | 'closed';",
+      },
+      {
+        filename: 'src/modules/orders/enums/order-status.enums.ts',
+        code: "export const OrderStatus = { Open: 'open' } as const; export type OrderStatus = (typeof OrderStatus)[keyof typeof OrderStatus];",
+      },
+      {
+        filename: 'src/modules/orders/constants/order-limits.constants.ts',
+        code: 'export const MAX_ORDERS = 50;',
+      },
+      {
+        filename: 'src/modules/orders/hooks/use-orders.hook.ts',
+        code: 'export const useOrders = () => ({ orders: [] });',
+      },
+    ],
+    invalid: [
+      {
+        filename:
+          'src/modules/orders/components/order-row/order-row.component.tsx',
+        code: 'interface OrderRowProps { title: string } export function OrderRow(_props: OrderRowProps) { return null; }',
+        errors: [{ messageId: 'interfaceFile' }],
+      },
+      {
+        filename: 'src/modules/orders/hooks/use-orders.hook.ts',
+        code: "export type OrdersState = 'loading' | 'ready'; export const useOrders = () => null;",
+        errors: [{ messageId: 'typeFile' }],
+      },
+      {
+        filename: 'src/modules/orders/helpers/order.helper.ts',
+        code: 'export const MAX_ORDERS = 50;',
+        errors: [{ messageId: 'constantFile' }],
+      },
+      {
+        filename: 'src/modules/orders/types/order-row.types.ts',
+        code: 'export interface OrderRowProps { title: string }',
+        errors: [{ messageId: 'interfaceFile' }],
+      },
+      {
+        filename: 'src/modules/orders/constants/order.constants.ts',
+        code: "export type OrderKind = 'dine-in' | 'delivery';",
+        errors: [{ messageId: 'typeFile' }],
+      },
+    ],
+  },
+);
+
 tester.run('no-raw-package-imports', rule('no-raw-package-imports'), {
   valid: [
     {

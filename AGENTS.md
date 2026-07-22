@@ -16,7 +16,9 @@ FoodOrderV1 is a mobile-first food-bucket and group-order application:
   (`VITE_FORCE_LOCAL_MODE` / empty `VITE_FIREBASE_*`).
 - **Testing**: Vitest + Testing Library (jsdom), Playwright across Chromium desktop/mobile/
   tablet plus Firefox, WebKit, and mobile Safari, Firestore rules tests against the emulator.
-- **i18n**: hand-rolled `en`/`ar` catalogs with `translate(locale, key)` lookups and full RTL support.
+- **i18n**: hand-rolled 12-locale catalogs (`en`, `ar`, `it`, `fa`, `fr`, `de`,
+  `es`, `pt-BR`, `hi`, `th`, `zh-CN`, `ja`) with `translate(locale, key)`
+  lookups and complete Arabic/Persian RTL support.
 - **State**: React context (session) + service singletons. No server-state query library,
   no global store library. Do not add either.
 - **Version**: `package.json` is the place of record; `functions/package.json` must match
@@ -49,7 +51,7 @@ Do not read the entire knowledge system for routine tasks and do not manually ed
 ## Architecture summary
 
 Layered module-first architecture, enforced mechanically by the custom ESLint plugin
-(`eslint/architecture-plugin/`, 9 rules at `error` severity, tested in
+(`eslint/architecture-plugin/`, 10 rules at `error` severity, tested in
 `tests/eslint/architecture-plugin.test.ts`). Dependency direction is one-way:
 
 ```text
@@ -90,6 +92,9 @@ Full list: [rules/00-non-negotiable-rules.md](rules/00-non-negotiable-rules.md).
   (registry: `eslint/package-ownership.config.mjs`).
 - Hooks only in `*.hook.ts` / `hooks/`; `*.component.tsx` files call zero hooks;
   containers call project hooks only.
+- Interfaces, type aliases, enum-like sets, and module constants live only in matching
+  `*.interfaces.ts`, `*.types.ts`, `*.enums.ts`, and `*.constants.ts` owners;
+  behavior files import them and legacy code is not exempt.
 - Browser globals only in `src/platform`; env reads only in `src/platform/environment`.
 - Absolute route strings only in `routes/` files; kebab-case + responsibility suffixes;
   `enum` is banned (`as const` objects).
@@ -112,6 +117,8 @@ Full list: [rules/00-non-negotiable-rules.md](rules/00-non-negotiable-rules.md).
 | Add a Capacitor plugin                      | [skills/add-capacitor-plugin.md](skills/add-capacitor-plugin.md)           |
 | Add any new npm dependency to app code      | [skills/create-package-owner.md](skills/create-package-owner.md)           |
 | Add or change user-visible copy             | [skills/add-i18n-key.md](skills/add-i18n-key.md)                           |
+| Add or modify a supported locale            | [skills/modify-locale.md](skills/modify-locale.md)                         |
+| Audit translation completeness              | [skills/verify-translation-completeness.md](skills/verify-translation-completeness.md) |
 | Write unit/integration tests                | [skills/write-unit-tests.md](skills/write-unit-tests.md)                   |
 | Write Playwright e2e tests                  | [skills/write-e2e-tests.md](skills/write-e2e-tests.md)                     |
 | Migrate a legacy file into the layered tree | [skills/refactor-legacy-component.md](skills/refactor-legacy-component.md) |
@@ -134,7 +141,10 @@ npm run typecheck:tsc                       # TypeScript 5.9.3 (compatibility) â
 npm run test                                # Vitest
 npm run test:coverage
 npm run format:check
+npm run i18n:check                          # 12-locale parity, interpolation, clone gates
 npm run build
+npm run public:generate                     # prerender public pages into dist (after build)
+npm run public:validate                     # verify prerendered HTML, metadata, sitemap
 npm run quality:circular                    # madge
 npm run quality:dead-code                   # knip
 npm run quality:release                     # root/functions version match

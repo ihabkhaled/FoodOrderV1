@@ -21,6 +21,8 @@ gives each part a single reason to change and a natural test level.
 - Rendering delegates to `*.component.tsx` children; conditional branches (loading / error /
   empty / content) use the shared UI states from `src/shared/ui`.
 - Navigation via typed route constants/builders from the module's `routes/`.
+- Container props contracts come from sibling `*.interfaces.ts`; view-state types and
+  constants remain in their own declaration files.
 
 ## Forbidden
 
@@ -31,6 +33,7 @@ gives each part a single reason to change and a natural test level.
 - Business rules (price math, status transitions, permission checks) — those live in
   `data-access` domain helpers and are exercised through hooks.
 - Rendering large bespoke markup blocks that should be components.
+- Declaring interfaces, type aliases, enum-like value sets, or module constants inline.
 
 ## Enforcement
 

@@ -1,6 +1,10 @@
 import { env } from '@/platform/environment';
+import {
+  resolvePreferredLocale,
+} from '@/shared/i18n';
 import type { CurrencyCode, Locale, Theme } from '@/shared/types';
 
+import { getBrowserLanguages } from '../browser/browser-language.adapter';
 import { getPreference, setPreference } from '../storage/preferences.adapter';
 
 /**
@@ -16,7 +20,6 @@ export interface DeviceConfig {
   theme: Theme;
 }
 
-export const SUPPORTED_LOCALES: Locale[] = ['en', 'ar'];
 export const SUPPORTED_CURRENCIES: CurrencyCode[] = ['EGP', 'USD', 'EUR', 'GBP', 'SAR', 'AED'];
 export const SUPPORTED_THEMES: Theme[] = ['system', 'light', 'dark'];
 
@@ -30,8 +33,6 @@ export const DEFAULT_DEVICE_CONFIG: DeviceConfig = {
 
 const KEYS = { locale: 'locale', currency: 'currency', theme: 'theme' } as const;
 
-const isLocale = (value: string | null): value is Locale =>
-  SUPPORTED_LOCALES.includes(value as Locale);
 const isCurrency = (value: string | null): value is CurrencyCode =>
   SUPPORTED_CURRENCIES.includes(value as CurrencyCode);
 const isTheme = (value: string | null): value is Theme => SUPPORTED_THEMES.includes(value as Theme);
@@ -43,11 +44,17 @@ export const loadDeviceConfig = async (): Promise<DeviceConfig> => {
     getPreference(KEYS.theme),
   ]);
   return {
-    locale: isLocale(locale) ? locale : DEFAULT_DEVICE_CONFIG.locale,
+    locale: resolvePreferredLocale(
+      locale,
+      getBrowserLanguages(),
+      DEFAULT_DEVICE_CONFIG.locale,
+    ),
     currency: isCurrency(currency) ? currency : DEFAULT_DEVICE_CONFIG.currency,
     theme: isTheme(theme) ? theme : DEFAULT_DEVICE_CONFIG.theme,
   };
 };
+
+
 
 export const saveDeviceConfig = async (changes: Partial<DeviceConfig>): Promise<void> => {
   const writes: Promise<void>[] = [];
@@ -68,3 +75,5 @@ export const saveSidebarCollapsed = async (collapsed: boolean): Promise<void> =>
 /** The next theme in a system → light → dark → system cycle. */
 export const nextTheme = (current: Theme): Theme =>
   current === 'system' ? 'light' : current === 'light' ? 'dark' : 'system';
+
+export {SUPPORTED_LOCALES} from '@/shared/i18n';

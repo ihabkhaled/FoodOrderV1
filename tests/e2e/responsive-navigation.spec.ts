@@ -346,7 +346,7 @@ test('Back returns to each real bucket and order origin', async ({ page }) => {
   );
   await goBack(/\/buckets$/u);
 
-  await page.goto('/');
+  await page.goto('/app');
   await page
     .getByRole('link')
     .filter({ hasText: responsiveBucketTitle(LAST_ORDER_INDEX) })
@@ -355,7 +355,7 @@ test('Back returns to each real bucket and order origin', async ({ page }) => {
   await expect(page).toHaveURL(
     `/orders/responsive-order-${LAST_ORDER_INDEX}`,
   );
-  await goBack(/\/$/u);
+  await goBack(/\/app$/u);
 
   await page.goto('/orders');
   await page

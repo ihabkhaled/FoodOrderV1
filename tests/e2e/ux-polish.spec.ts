@@ -23,7 +23,7 @@ const register = async (page: Page, suffix: string): Promise<void> => {
     .fill(`ux-polish-${suffix}-${Date.now()}@example.com`);
   await page.getByLabel('Password').fill('Password1');
   await page.getByRole('button', { name: 'Create account' }).click();
-  await page.waitForURL(/\/$/u);
+  await page.waitForURL(/\/app$/u);
 };
 
 const expectNoHorizontalOverflow = async (page: Page): Promise<void> => {
@@ -119,7 +119,7 @@ test('core navigation and actions keep accessible touch targets', async ({ page 
   await page.setViewportSize({ width: 390, height: 844 });
   await register(page, 'touch-targets');
 
-  for (const route of ['/', '/buckets', '/orders', '/social', '/settings']) {
+  for (const route of ['/app', '/buckets', '/orders', '/social', '/settings']) {
     await page.goto(route);
     const navigationLinks = page.locator('.bottom-nav a:visible');
     await expect(navigationLinks).toHaveCount(5);

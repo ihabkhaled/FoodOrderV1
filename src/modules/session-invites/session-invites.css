@@ -21,22 +21,10 @@
 .session-invite-language-switch {
   display: flex;
   justify-content: flex-end;
-  gap: 0.35rem;
 }
 
-.session-invite-language-switch button {
-  min-block-size: 2.75rem;
-  padding-inline: 0.85rem;
-  color: var(--muted);
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  background: var(--surface);
-}
-
-.session-invite-language-switch button.is-active {
-  color: var(--text);
-  border-color: var(--primary);
-  background: color-mix(in srgb, var(--primary) 10%, var(--surface));
+.session-invite-language-select {
+  inline-size: min(100%, 12rem);
 }
 
 .session-invite-hero,

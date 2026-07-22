@@ -10,6 +10,9 @@ checklists: [../agents/README.md](../agents/README.md).
 - [ ] Every new/moved file sits in its owning layer (`app`/`modules/<name>`/`shared`/
       `platform`/`packages/<name>`) — no feature logic outside its module.
 - [ ] Filenames are kebab-case with a truthful responsibility suffix.
+- [ ] Interfaces, type aliases, enum-like sets, and module constants are imported from
+      matching `*.interfaces.ts`, `*.types.ts`, `*.enums.ts`, and `*.constants.ts`
+      owners; no old or new behavior file declares them inline.
 - [ ] No import points upward in the layer matrix; no cross-module deep imports; only
       `@/modules/<name>` / `@/packages/<name>` surfaces used.
 
@@ -30,12 +33,13 @@ checklists: [../agents/README.md](../agents/README.md).
 ## Behavior and safety
 
 - [ ] UI reaches persistence only through `data-access` contracts.
-- [ ] Errors normalized; bilingual copy for new failure modes; no floating promises, no
+- [ ] Errors normalized; complete supported-locale copy for new failure modes; no floating promises, no
       empty catch, no `console.*` in `src/`.
 - [ ] `firestore.rules` untouched — or changed WITH emulator allow/deny tests and a
       security review.
 - [ ] No secret, credential, or production data in the diff.
-- [ ] New user-visible strings exist in BOTH `en` and `ar`; RTL layout verified.
+- [ ] New user-visible strings exist in all 12 supported locales; clone/placeholder checks
+      pass; Arabic and Persian RTL layouts are verified.
 - [ ] Interactive elements labeled and keyboard-operable; no `jsx-a11y` suppression.
 
 ## Evidence

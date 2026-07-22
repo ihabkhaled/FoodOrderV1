@@ -1,0 +1,189 @@
+{
+  "locale": "es",
+  "ui": {
+    "primaryNavigationLabel": "Navegación pública",
+    "mobileNavigationLabel": "Abrir la navegación",
+    "languageLabel": "Idioma",
+    "openApplicationLabel": "Abrir la aplicación",
+    "skipToContentLabel": "Saltar al contenido",
+    "footerNavigationLabel": "Navegación del pie de página",
+    "footerTagline": "Pedidos de comida en grupo claros, desde la primera elección hasta el recibo final.",
+    "allRightsReservedLabel": "Todos los derechos reservados.",
+    "backHomeLabel": "Volver a la página de inicio",
+    "tryAgainLabel": "Intentar de nuevo",
+    "learnMoreLabel": "Descubre cómo funciona"
+  },
+  "pages": {
+    "home": {
+      "navigationLabel": "Inicio",
+      "seoTitle": "Gama3 Orderak | Pedidos de comida en grupo sin caos",
+      "description": "Crea menús reutilizables, reúne las elecciones de todos, calcula las tarifas, congela el pedido final y comparte recibos claros.",
+      "eyebrow": "Un pedido compartido. Todos siempre al día.",
+      "heading": "Reúne los pedidos del grupo sin perseguir mensajes",
+      "introduction": "Gama3 Orderak da a quien organiza un lugar fiable para montar el menú, invitar a la gente, seguir cada elección y convertir el total final en recibos que todo el grupo puede entender.",
+      "sections": [
+        {
+          "heading": "Empieza con un menú reutilizable",
+          "paragraphs": ["Guarda los artículos que tu grupo pide con más frecuencia, con sus precios y reglas opcionales de IVA, servicio y entrega. La próxima vez reutiliza el mismo menú en lugar de reconstruirlo en el chat."],
+          "bullets": ["Crea y edita los artículos del menú", "Mantén coherentes los pedidos recurrentes", "Elige flujos privados o colaborativos"]
+        },
+        {
+          "heading": "Invita, recopila y revisa",
+          "paragraphs": ["Comparte una invitación controlada, deja que cada participante registre sus propias cantidades y observa cómo el total se actualiza a medida que llegan las aportaciones."],
+          "bullets": ["Invitaciones aptas para invitados", "Estado claro de cada aportación", "Cierre controlado por el organizador"]
+        },
+        {
+          "heading": "Termina con totales verificables",
+          "paragraphs": ["Congela el pedido antes de realizarlo, calcula las tarifas configuradas de forma coherente y reparte los importes del recibo por persona o por artículo."],
+          "bullets": ["Cantidades finales estables", "Desglose transparente de tarifas", "Vistas del recibo para compartir"]
+        }
+      ]
+    },
+    "about": {
+      "navigationLabel": "Acerca de",
+      "seoTitle": "Acerca de Gama3 Orderak | Hecho para pedidos de grupo reales",
+      "description": "Descubre por qué Gama3 Orderak convierte mensajes dispersos sobre comida en un flujo de grupo claro y responsable.",
+      "eyebrow": "Por qué existe este producto",
+      "heading": "Pedir en grupo debería sentirse coordinado, no complicado",
+      "introduction": "Gama3 Orderak nació de un problema conocido: una persona reúne muchas elecciones cambiantes entre mensajes y luego tiene que cuadrar los totales con el tiempo en contra.",
+      "sections": [
+        {
+          "heading": "Una fuente de verdad práctica",
+          "paragraphs": ["La aplicación mantiene juntos el menú, los participantes, las cantidades, el estado y el recibo final. Quien organiza ve qué cambió sin reconstruir el historial de una conversación."]
+        },
+        {
+          "heading": "Útil con o sin servicios en la nube",
+          "paragraphs": ["El producto admite la colaboración conectada y un modo local totalmente funcional en el dispositivo, y muestra con honestidad las capacidades disponibles para que cada persona sepa dónde se guarda su pedido."]
+        },
+        {
+          "heading": "Privacidad y propiedad ante todo",
+          "paragraphs": ["Los registros privados quedan limitados a sus propietarios y a los participantes invitados. El producto no hace públicos los datos privados de los pedidos y cada flujo expone solo la información que realmente necesita."]
+        }
+      ]
+    },
+    "how-it-works": {
+      "navigationLabel": "Cómo funciona",
+      "seoTitle": "Cómo funciona Gama3 Orderak | Del menú al recibo",
+      "description": "Sigue el flujo del pedido en grupo: prepara un menú, invita a los participantes, reúne las elecciones, bloquea el pedido y reparte los recibos.",
+      "eyebrow": "Un flujo predecible en cinco pasos",
+      "heading": "Del menú al recibo final en un solo flujo compartido",
+      "introduction": "Cada etapa tiene un responsable y un estado claros, así el grupo sabe cuándo las elecciones siguen abiertas y cuándo el pedido está listo para realizarse.",
+      "sections": [
+        { "heading": "1. Prepara el menú", "paragraphs": ["Crea una colección reutilizable con los nombres de los artículos, los precios y la política de tarifas que se aplica a este pedido."] },
+        { "heading": "2. Inicia una sesión de grupo", "paragraphs": ["Elige el menú, abre una sesión de recogida y comparte su invitación con las personas que van a pedir."] },
+        { "heading": "3. Reúne las elecciones individuales", "paragraphs": ["Los participantes añaden sus propias cantidades mientras el organizador supervisa el avance y el pedido combinado."] },
+        { "heading": "4. Bloquea y confirma", "paragraphs": ["Cierra la recogida antes de hacer el pedido al restaurante para que las ediciones posteriores no cambien en silencio las cantidades finales."] },
+        { "heading": "5. Liquida con un recibo claro", "paragraphs": ["Revisa el subtotal y las tarifas configuradas, y usa las vistas por persona y por artículo para explicar cuánto debe cada uno."] }
+      ]
+    },
+    "features": {
+      "navigationLabel": "Funciones",
+      "seoTitle": "Funciones de Gama3 Orderak | Menús, sesiones, totales y recibos",
+      "description": "Explora menús reutilizables, aportaciones del grupo en vivo, bloqueo del pedido, cálculo de tarifas, reparto del recibo, privacidad y modo local.",
+      "eyebrow": "Herramientas para todo el ciclo del pedido",
+      "heading": "Los detalles que hacen fiable un pedido en grupo",
+      "introduction": "Gama3 Orderak conecta preparación, colaboración, confirmación y liquidación en lugar de repartirlas entre hojas de cálculo e hilos de mensajes.",
+      "sections": [
+        { "heading": "Menús reutilizables", "paragraphs": ["Guarda menús recurrentes con artículos con precio, controles de artículos personalizados, visibilidad y políticas de precios."] },
+        { "heading": "Aportaciones de los participantes", "paragraphs": ["Sigue por separado las cantidades de cada persona mientras mantienes un total exacto para el organizador."] },
+        { "heading": "Controles del ciclo de vida", "paragraphs": ["Lleva el pedido por la recogida, el bloqueo, la confirmación, la entrega y la liquidación con transiciones explícitas."] },
+        { "heading": "Precios y recibos", "paragraphs": ["Calcula el subtotal, el IVA, el servicio y la entrega, y examina después el reparto del recibo por participante o por artículo."] },
+        { "heading": "Interfaz adaptable y bilingüe", "paragraphs": ["Usa la aplicación en móvil y escritorio con interfaz en inglés y árabe, incluida la presentación de derecha a izquierda."] },
+        { "heading": "Almacenamiento en la nube o en el dispositivo", "paragraphs": ["Colabora mediante Firebase cuando está configurado o continúa con la implementación local determinista en el dispositivo."] }
+      ]
+    },
+    "group-ordering": {
+      "navigationLabel": "Pedidos en grupo",
+      "seoTitle": "Pedidos de comida en grupo | Elecciones claras sin líos de chat",
+      "description": "Organiza pedidos compartidos con invitaciones controladas, aportaciones individuales, totales al día y un pedido final bloqueado.",
+      "eyebrow": "Diseñado para organizadores y participantes",
+      "heading": "Da a cada participante un lugar claro donde elegir",
+      "introduction": "Un pedido compartido funciona mejor cuando cada persona puede actualizar sus elecciones y el organizador sigue decidiendo cuándo termina la recogida.",
+      "sections": [
+        { "heading": "Comparte el nivel de acceso justo", "paragraphs": ["Invita a los participantes a la sesión pertinente sin exponer otros menús o pedidos privados que no les corresponden."] },
+        { "heading": "Mantén las aportaciones atribuibles", "paragraphs": ["Las elecciones de cada persona siguen siendo identificables, lo que hace que revisar cambios sea mucho más fácil que repasar una cadena de mensajes editados."] },
+        { "heading": "Protege el pedido final", "paragraphs": ["Bloquea la recogida antes de confirmar, conserva el total registrado y guarda un historial del ciclo que explica el estado actual."] },
+        { "heading": "Gestiona a los invitados con criterio", "paragraphs": ["Las invitaciones de invitado recogen solo la información necesaria para una sesión, sin conceder un acceso amplio a la cuenta."] }
+      ]
+    },
+    "split-bill-and-receipts": {
+      "navigationLabel": "Cuentas y recibos",
+      "seoTitle": "Divide la cuenta del grupo y explica cada recibo",
+      "description": "Convierte cantidades de artículos y tarifas configuradas en vistas de recibo transparentes por participante y por artículo.",
+      "eyebrow": "Liquidación sin suposiciones",
+      "heading": "Haz que el total final sea fácil de explicar",
+      "introduction": "El recibo parte del pedido congelado, aplica las reglas de precios configuradas y mantiene el desglose conectado con las cantidades que lo generaron.",
+      "sections": [
+        { "heading": "Parte de datos a nivel de artículo", "paragraphs": ["El cálculo usa los precios y las cantidades finales registrados, no una estimación informal copiada del chat."] },
+        { "heading": "Muestra las tarifas configuradas por separado", "paragraphs": ["El IVA, el servicio y la entrega permanecen visibles en el desglose para que los participantes entiendan cómo se formó el importe final."] },
+        { "heading": "Revisa por persona o por artículo", "paragraphs": ["Las vistas por participante ayudan a liquidar, y las vistas por artículo ayudan al organizador a comprobar que las cantidades y los cargos coinciden con el pedido."] },
+        { "heading": "Conserva la instantánea final", "paragraphs": ["Bloquear el pedido evita que ediciones posteriores de las aportaciones cambien en silencio el recibo que el grupo está liquidando."] }
+      ]
+    },
+    "faq": {
+      "navigationLabel": "Preguntas frecuentes",
+      "seoTitle": "Preguntas frecuentes de Gama3 Orderak | Pedidos, datos, tarifas e invitados",
+      "description": "Respuestas sobre menús reutilizables, sesiones de grupo, invitados, modo local, tarifas de precios, recibos y bloqueo del pedido.",
+      "eyebrow": "Preguntas habituales",
+      "heading": "Lo que conviene saber antes de empezar un pedido en grupo",
+      "introduction": "Estas respuestas describen el comportamiento actual de la aplicación sin prometer pagos, integraciones con restaurantes ni descuentos que no existen.",
+      "sections": [],
+      "faq": [
+        { "question": "¿Qué es un food bucket?", "answer": "Un food bucket es un menú reutilizable de artículos y precios que sirve para flujos de pedido individuales o en grupo." },
+        { "question": "¿Puede la gente unirse sin ver mis otros pedidos?", "answer": "Sí. Las invitaciones se limitan al menú colaborativo o a la sesión de pedido correspondiente y no hacen públicos otros registros privados." },
+        { "question": "¿Qué tarifas puede calcular la aplicación?", "answer": "Un menú puede aplicar las políticas admitidas de IVA, servicio y entrega. El recibo mantiene visibles esos importes configurados." },
+        { "question": "¿Por qué bloquear un pedido?", "answer": "El bloqueo fija una instantánea estable de las cantidades finales antes de confirmar y liquidar, y evita cambios tardíos que pasen desapercibidos." },
+        { "question": "¿Funciona la aplicación sin Firebase?", "answer": "Sí. Cuando no hay configuración en la nube, la aplicación usa su modo de almacenamiento local totalmente funcional en el dispositivo." },
+        { "question": "¿Gama3 Orderak cobra pagos o hace el pedido al restaurante automáticamente?", "answer": "No. El producto actual organiza elecciones, totales, estados del ciclo y recibos; el pago y la gestión con el restaurante quedan fuera de la aplicación." }
+      ]
+    },
+    "contact": {
+      "navigationLabel": "Contacto",
+      "seoTitle": "Contacta con Gama3 Orderak | Soporte y comentarios",
+      "description": "Encuentra el canal oficial del proyecto para solicitudes de soporte, errores reproducibles, comentarios de accesibilidad y avisos de seguridad.",
+      "eyebrow": "Soporte y comentarios",
+      "heading": "Cuéntanos qué pasó y qué esperabas",
+      "introduction": "La forma más rápida de recibir ayuda útil es enviar un informe breve y respetuoso con la privacidad a través del repositorio oficial del proyecto.",
+      "sections": [
+        { "heading": "Antes de abrir un informe", "paragraphs": ["Incluye la pantalla, el dispositivo o navegador, el modo de almacenamiento, los pasos para reproducirlo y el resultado que esperabas. Nunca publiques contraseñas, secretos de invitación, contenido de pedidos privados ni credenciales de Firebase."] },
+        { "heading": "Comentarios de accesibilidad", "paragraphs": ["Describe la tecnología de asistencia, el método de entrada, el tamaño de pantalla y la barrera exacta. Los defectos de accesibilidad se tratan como defectos del producto."] },
+        { "heading": "Avisos de seguridad", "paragraphs": ["Evita publicar detalles explotables o datos personales en un informe público. Usa el contacto de seguridad privado del propietario del repositorio cuando esté disponible."] }
+      ]
+    },
+    "privacy": {
+      "navigationLabel": "Privacidad",
+      "seoTitle": "Privacidad en Gama3 Orderak | Datos y modos de almacenamiento",
+      "description": "Conoce las categorías de datos que usa Gama3 Orderak, el comportamiento del almacenamiento local y en la nube, los límites de compartición y tus opciones.",
+      "eyebrow": "Resumen de privacidad",
+      "heading": "Tus datos de pedido deben quedarse en el flujo que elegiste",
+      "introduction": "Este resumen del producto explica el comportamiento técnico actual y no sustituye el asesoramiento legal de cada jurisdicción ni el aviso de privacidad definitivo del operador.",
+      "sections": [
+        { "heading": "Datos que usa la aplicación", "paragraphs": ["Según el flujo elegido, la aplicación puede procesar datos de la cuenta, preferencias del perfil, menús, sesiones de pedido, cantidades de artículos, invitaciones, notificaciones e información de recibos."] },
+        { "heading": "Almacenamiento local y en la nube", "paragraphs": ["En modo local, los registros se guardan en el dispositivo. Con Firebase configurado, la autenticación y los registros usan los servicios de Firebase del proyecto para que las personas invitadas puedan colaborar."] },
+        { "heading": "Compartición y visibilidad", "paragraphs": ["Los registros privados están destinados a su propietario y a los participantes autorizados. Trata los enlaces de invitación como información sensible, porque pueden dar acceso a un flujo concreto."] },
+        { "heading": "Analítica y publicidad", "paragraphs": ["La aplicación ofrece una opción de consentimiento para la analítica. La publicidad está desactivada por defecto en las superficies autenticadas, de acción, de error y de políticas; cualquier activación futura deberá incluir los consentimientos y avisos exigidos al operador."] },
+        { "heading": "Tus opciones", "paragraphs": ["Puedes ajustar las preferencias admitidas del dispositivo y contactar con el operador responsable de la instancia desplegada para solicitudes de acceso, corrección, eliminación o conservación."] }
+      ]
+    },
+    "terms": {
+      "navigationLabel": "Términos",
+      "seoTitle": "Términos de Gama3 Orderak | Uso responsable del producto",
+      "description": "Revisa los límites de uso del producto sobre cuentas, invitaciones, exactitud del pedido, gestión externa, disponibilidad y conducta aceptable.",
+      "eyebrow": "Resumen de términos",
+      "heading": "Usa el flujo compartido con responsabilidad",
+      "introduction": "Este resumen en lenguaje claro describe los límites previstos del producto y no sustituye los términos definitivos que publique el operador de un servicio desplegado.",
+      "sections": [
+        { "heading": "Cuentas e invitaciones", "paragraphs": ["Proporciona información de cuenta veraz, protege las credenciales y los enlaces de invitación, y usa solo los registros que te pertenecen o a los que estás autorizado a acceder."] },
+        { "heading": "Exactitud del pedido", "paragraphs": ["Los participantes son responsables de revisar sus elecciones. El organizador debe comprobar el total bloqueado, los precios, las tarifas y el pedido al restaurante antes de confiar en el resultado."] },
+        { "heading": "Servicios externos y gestión del pedido", "paragraphs": ["La aplicación no cobra pagos, no garantiza la disponibilidad del restaurante, no realiza el pedido al restaurante ni controla la entrega o la calidad de la comida."] },
+        { "heading": "Disponibilidad y datos locales", "paragraphs": ["La disponibilidad del servicio puede cambiar. Quien usa el modo local es responsable de su dispositivo y de sus copias de seguridad; borrar el almacenamiento de la aplicación puede eliminar los registros locales."] },
+        { "heading": "Uso aceptable", "paragraphs": ["No hagas mal uso de las invitaciones, no intentes accesos no autorizados, no subas material ilegal, no interfieras con el servicio y no uses los datos de otra persona sin permiso."] }
+      ]
+    }
+  },
+  "systemPages": {
+    "not-found": { "seoTitle": "Página no encontrada | Gama3 Orderak", "description": "No se pudo encontrar la página pública solicitada.", "heading": "Esa página no está en el menú", "body": "La dirección puede estar obsoleta o mal escrita. Vuelve a la página de inicio para continuar." },
+    "error": { "seoTitle": "Algo salió mal | Gama3 Orderak", "description": "Gama3 Orderak no pudo completar esta solicitud de página.", "heading": "No pudimos mostrar esta página", "body": "No se expuso ningún dato privado de pedidos. Inténtalo de nuevo o vuelve a la página de inicio." },
+    "offline": { "seoTitle": "Estás sin conexión | Gama3 Orderak", "description": "Vuelve a conectarte para cargar esta página de Gama3 Orderak.", "heading": "Estás sin conexión", "body": "Puede que una página pública guardada siga disponible. Recupera la conexión antes de abrir o cambiar un pedido compartido." }
+  }
+}

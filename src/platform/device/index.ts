@@ -12,3 +12,4 @@ export {
 } from './device-config.adapter';
 export { impact } from './haptics.adapter';
 export { initializePlatform } from './platform-init.adapter';
+export { isNativeApplication } from './runtime-platform.adapter';

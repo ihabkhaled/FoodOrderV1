@@ -1,0 +1,14 @@
+{
+  "analyticsPrivacy": "Analisi e privacy",
+  "analyticsPrivacyDescription": "Scegli quali eventi anonimi di diagnostica e di utilizzo del prodotto FoodOrder può registrare. Email, nomi, note, prove di pagamento e altri contenuti privati non diventano mai proprietà di analisi.",
+  "analyticsConsent": "Consenso all'analisi",
+  "analyticsDenied": "Non registrare dati di analisi",
+  "analyticsOperationalOnly": "Solo diagnostica operativa",
+  "analyticsProduct": "Analisi operativa e di prodotto",
+  "analyticsProductAndMarketing": "Analisi operativa, di prodotto e degli upgrade",
+  "analyticsDeniedDescription": "Nessun evento di analisi facoltativo viene registrato. Gli ordini continuano a funzionare normalmente.",
+  "analyticsOperationalDescription": "Registra errori di affidabilità e diagnostica delle prestazioni nel rispetto della privacy.",
+  "analyticsProductDescription": "Registra anche eventi di acquisizione, attivazione e utilizzo delle funzionalità nel rispetto della privacy.",
+  "analyticsMarketingDescription": "Registra anche promemoria di upgrade ed eventi del funnel di abbonamento nel rispetto della privacy.",
+  "analyticsConsentSaved": "Preferenza di analisi salvata."
+}

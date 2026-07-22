@@ -10,6 +10,7 @@ const validationSteps = [
   ['npm', ['run', 'functions:validate']],
   ['npm', ['run', 'test']],
   ['npm', ['run', 'test:coverage']],
+  ['npm', ['run', 'i18n:check']],
   ['npm', ['run', 'quality:circular']],
   ['npm', ['run', 'quality:dead-code']],
   ['npm', ['run', 'quality:release']],
@@ -17,6 +18,8 @@ const validationSteps = [
   ['npm', ['run', 'security:audit']],
   ['npm', ['--prefix', 'functions', 'audit', '--audit-level=high']],
   ['npm', ['run', 'build']],
+  ['npm', ['run', 'public:generate']],
+  ['npm', ['run', 'public:validate']],
 ];
 
 for (const [command, arguments_] of validationSteps) {

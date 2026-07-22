@@ -1,37 +1,17 @@
-import type { Bucket, Locale } from '@/modules/data-access';
 import { AppVirtuosoGrid } from '@/packages/virtuoso';
 import type { MessageKey } from '@/shared/i18n';
 import { VirtualListFooter } from '@/shared/ui';
 
 import { OwnedBucketCard } from '../owned-bucket-card/owned-bucket-card.component';
 import { SharedBucketCard } from '../shared-bucket-card/shared-bucket-card.component';
-
-interface BucketCollectionSectionProps {
-  readonly kind: 'owned' | 'shared';
-  readonly items: Bucket[];
-  readonly locale: Locale;
-  readonly query: string;
-  readonly loadingMore: boolean;
-  readonly hasMore: boolean;
-  readonly error: string;
-  readonly t: (key: MessageKey) => string;
-  readonly onLoadMore: () => void;
-  readonly onRetry: () => void;
-  readonly onDuplicate: (bucket: Bucket) => void;
-  readonly onDelete: (bucket: Bucket) => void;
-}
+import type { BucketCollectionSectionProps } from './bucket-collection-section.types';
 
 const emptyMessage = (
   kind: 'owned' | 'shared',
   query: string,
-  locale: Locale,
   t: (key: MessageKey) => string,
 ): string => {
-  if (query) {
-    return locale === 'ar'
-      ? 'لا توجد نتائج مطابقة في القوائم المحمّلة.'
-      : 'No matching results in the loaded buckets.';
-  }
+  if (query) return t('noMatchingBuckets');
   return kind === 'owned'
     ? t('emptyBuckets')
     : `${t('emptyShared')} ${t('emptySharedHint')}`;
@@ -99,7 +79,7 @@ export function BucketCollectionSection({
           }}
         />
       ) : (
-        <p className="muted">{emptyMessage(kind, query, locale, t)}</p>
+        <p className="muted">{emptyMessage(kind, query, t)}</p>
       )}
     </section>
   );

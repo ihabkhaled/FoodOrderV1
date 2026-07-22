@@ -16,8 +16,10 @@
 
 1. Create `src/modules/<name>/components/<kebab-name>.component.tsx` (or
    `src/shared/ui/<kebab-name>.component.tsx`).
-2. Define a typed props interface (in-file or `<name>.types.ts` if shared): data in,
-   `on<Event>` callbacks out. No service, platform, or firebase imports.
+2. Define the props contract in sibling `<name>.interfaces.ts`, then import it with
+   `import type`: data in, `on<Event>` callbacks out. Component files contain JSX behavior
+   only; they never declare interfaces, type aliases, enum-like values, or module constants.
+   No service, platform, or Firebase imports.
 3. Render semantic, labeled, keyboard-operable markup; icons from `@/packages/icons`;
    long lists via `@/packages/virtuoso`; logical CSS properties for RTL.
 4. Localized copy only — message values arrive as props or via catalog keys
@@ -28,6 +30,8 @@
 
 - Any hook call ("just one `useState`" is still a violation — lift it to the container's
   view-model hook).
+- Declaring props interfaces, type aliases, enum-like value sets, or module constants in
+  the component file; import each from its correctly suffixed sibling owner.
 - Fetching, navigating, or reading `window`/`document` inside the component.
 - Copying an existing component instead of extending it with a variant prop.
 

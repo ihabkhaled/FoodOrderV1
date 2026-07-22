@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import {
+  type Locale,
   ORDER_SESSION_STATUS,
   orderSessionService,
   type OrderSessionStatus,
@@ -126,7 +127,7 @@ export interface SessionCommandCenterViewModel {
   busy: boolean;
   busyItemId: string | null;
   error: string;
-  locale: 'en' | 'ar';
+  locale: Locale;
   translate: typeof translateOrderSession;
   isOrganizer: boolean;
   canContribute: boolean;
@@ -146,8 +147,7 @@ export interface SessionCommandCenterViewModel {
 
 export function useSessionCommandCenter(): SessionCommandCenterViewModel {
   const { sessionId = '' } = useParams<{ sessionId: string }>();
-  const { user, profile, showToast } = useApp();
-  const locale = profile?.locale ?? 'en';
+  const { user, locale, showToast } = useApp();
   const [view, setView] = useState<OrderSessionView | null>(null);
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);

@@ -1,4 +1,10 @@
 export { dispatchAppEvent, subscribeToAppEvent } from './app-events.adapter';
+export type { BrowserBootstrapContext } from './bootstrap-document.adapter';
+export {
+  getBrowserBootstrapContext,
+  replaceBrowserPath,
+} from './bootstrap-document.adapter';
+export { getBrowserLanguages } from './browser-language.adapter';
 export { copyToClipboard } from './clipboard.adapter';
 export { subscribeToPointerDown } from './document-events.adapter';
 export {

@@ -33,6 +33,9 @@ Examples: `order-row.component.tsx`, `orders-page.container.tsx`,
   ([03](03-components.md), [04](04-containers.md), [05](05-hooks-and-effects.md),
   [06](06-services-and-gateways.md), [07](07-types-interfaces-enums-constants.md)).
 - Directories are kebab-case, plural for collections (`components/`, `hooks/`, `routes/`).
+- Declaration suffixes are exclusive owners: interfaces only in `*.interfaces.ts`, type
+  aliases only in `*.types.ts`, enum-like `as const` sets in `*.enums.ts`, and
+  module-scope runtime constants in `*.constants.ts`. Behavior files import them.
 
 ## Forbidden
 
@@ -40,12 +43,15 @@ Examples: `order-row.component.tsx`, `orders-page.container.tsx`,
   ends at migration).
 - Suffix-less `.ts`/`.tsx` files (other than the exempt three).
 - Lying suffixes — a `.helper.ts` that performs I/O, a `.component.tsx` exporting a hook.
+- Inline declarations in behavior files, including props interfaces in components,
+  view-model aliases in hooks, and lookup/message constants in helpers or adapters.
 - Multi-responsibility files (two gateways, two components) — one unit per file.
 
 ## Enforcement
 
-- `architecture/enforce-file-suffixes` + `unicorn/filename-case` (kebab-case), both error
-  on the layered paths.
+- `architecture/enforce-file-suffixes`,
+  `architecture/enforce-declaration-placement`, and `unicorn/filename-case`
+  (kebab-case), all error on the layered paths.
 
 ## Definition of done
 

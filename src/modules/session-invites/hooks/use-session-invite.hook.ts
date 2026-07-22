@@ -35,20 +35,13 @@ import { buildSessionInviteRoute } from '../routes/session-invite-route-paths.co
 import type {
   GuestResponseAction,
   GuestSessionMenuItem,
-  SessionInviteLocale,
   SessionInviteViewModel,
 } from '../types/session-invite-ui.types';
-
-const normalizeLocale = (value: string | undefined): SessionInviteLocale =>
-  value === 'ar' ? 'ar' : 'en';
 
 export function useSessionInvite(): SessionInviteViewModel {
   const { shareCode = '' } = useParams<{ shareCode: string }>();
   const navigate = useNavigate();
-  const { user, profile } = useApp();
-  const [locale, setLocale] = useState<SessionInviteLocale>(() =>
-    normalizeLocale(profile?.locale),
-  );
+  const { user, locale, setDeviceLocale } = useApp();
   const [preview, setPreview] =
     useState<PublicSessionInvitePreview | null>(null);
   const [capability, setCapability] =
@@ -243,7 +236,9 @@ export function useSessionInvite(): SessionInviteViewModel {
 
   return {
     locale,
-    setLocale,
+    setLocale: (nextLocale) => {
+      void setDeviceLocale(nextLocale);
+    },
     loading,
     error,
     notice,

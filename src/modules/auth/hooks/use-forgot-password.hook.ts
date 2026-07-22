@@ -4,16 +4,6 @@ import { useApp } from '@/modules/session';
 import { isEmail } from '@/shared/helpers';
 import type { MessageKey } from '@/shared/i18n';
 
-const resetConfirmation = (locale: 'en' | 'ar'): string =>
-  locale === 'ar'
-    ? 'إذا كان هناك حساب بهذا البريد، فستصلك رسالة إعادة تعيين كلمة المرور. افحص البريد غير المرغوب فيه أيضًا.'
-    : 'If an account exists for this email, a password-reset message will arrive. Check your spam folder too.';
-
-const firebaseRequired = (locale: 'en' | 'ar'): string =>
-  locale === 'ar'
-    ? 'إرسال رسائل إعادة تعيين كلمة المرور يحتاج إلى تفعيل Firebase في هذا الإصدار.'
-    : 'Password-reset email requires Firebase to be configured for this build.';
-
 export interface ForgotPasswordViewModel {
   t: (key: MessageKey) => string;
   email: string;
@@ -26,7 +16,7 @@ export interface ForgotPasswordViewModel {
 }
 
 export function useForgotPassword(): ForgotPasswordViewModel {
-  const { t, resetPassword, errorMessage, locale, storageMode } = useApp();
+  const { t, resetPassword, errorMessage, storageMode } = useApp();
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [done, setDone] = useState(false);
@@ -41,7 +31,7 @@ export function useForgotPassword(): ForgotPasswordViewModel {
       return;
     }
     if (storageMode !== 'firebase') {
-      setError(firebaseRequired(locale));
+      setError(t('firebaseRequired'));
       return;
     }
     try {
@@ -62,7 +52,7 @@ export function useForgotPassword(): ForgotPasswordViewModel {
     error,
     done,
     busy,
-    confirmationMessage: resetConfirmation(locale),
+    confirmationMessage: t('resetConfirmation'),
     submit,
   };
 }
