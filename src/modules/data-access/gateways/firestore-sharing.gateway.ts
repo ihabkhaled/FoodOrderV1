@@ -103,7 +103,7 @@ export class FirestoreSharingService implements SharingService {
         await deleteDoc(membership.ref);
       }
     }
-    return buckets.sort((left, right) => right.updatedAt.localeCompare(left.updatedAt));
+    return buckets.toSorted((left, right) => right.updatedAt.localeCompare(left.updatedAt));
   }
 
   async getSharedBucketView(
@@ -208,7 +208,7 @@ export class FirestoreSharingService implements SharingService {
     );
     return snapshot.docs
       .map((item) => item.data() as BucketInvite)
-      .sort((left, right) => right.createdAt.localeCompare(left.createdAt));
+      .toSorted((left, right) => right.createdAt.localeCompare(left.createdAt));
   }
 
   async revokeInvite(

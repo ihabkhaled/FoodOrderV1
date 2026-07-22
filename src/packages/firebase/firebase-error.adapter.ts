@@ -33,14 +33,19 @@ const firebaseCode = (error: unknown): string | null => {
     : null;
 };
 
+const FIREBASE_FAMILY_VALUES: ReadonlySet<string> = new Set([
+  'auth',
+  'firestore',
+  'functions',
+  'storage',
+] satisfies readonly FirebaseErrorFamily[]);
+
+const isFirebaseFamily = (value: string): value is FirebaseErrorFamily =>
+  FIREBASE_FAMILY_VALUES.has(value);
+
 const firebaseFamily = (code: string): FirebaseErrorFamily | null => {
-  const family = code.split('/')[0];
-  return family === 'auth' ||
-    family === 'firestore' ||
-    family === 'functions' ||
-    family === 'storage'
-    ? family
-    : null;
+  const family = code.split('/', 1)[0];
+  return family !== undefined && isFirebaseFamily(family) ? family : null;
 };
 
 export const firebaseErrorMessage = (

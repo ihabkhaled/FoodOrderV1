@@ -96,7 +96,7 @@ export class FirestoreDataService implements DataService {
     );
     return snapshot.docs
       .map((item) => item.data() as Bucket)
-      .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+      .toSorted((a, b) => b.updatedAt.localeCompare(a.updatedAt));
   }
 
   async getBucket(_user: SessionUser, bucketId: string): Promise<Bucket | null> {
@@ -155,7 +155,7 @@ export class FirestoreDataService implements DataService {
 
   async listOrders(userId: string): Promise<Order[]> {
     const snapshot = await getDocs(collection(this.firestore, 'users', userId, 'orders'));
-    return snapshot.docs.map((item) => item.data() as Order).sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+    return snapshot.docs.map((item) => item.data() as Order).toSorted((a, b) => b.createdAt.localeCompare(a.createdAt));
   }
 
   async getOrder(userId: string, orderId: string): Promise<Order | null> {

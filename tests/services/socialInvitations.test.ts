@@ -13,16 +13,17 @@ import {
   LocalSocialManagementService,
 } from '@/modules/data-access';
 
-const SESSION_KEY = 'foodorder:v1:session';
 const NOTIFICATION_KEY = 'foodorder:v1:notifications';
+const TEST_PASSWORD = 'Password1';
 const defaults: ProfileDefaults = {
   locale: 'en',
   theme: 'system',
   defaultCurrency: 'EGP',
 };
 
-const switchUser = (user: SessionUser): void => {
-  localStorage.setItem(SESSION_KEY, user.id);
+/** Switches the active session through the auth service, as the app does. */
+const switchUser = async (user: SessionUser): Promise<void> => {
+  await new LocalAuthService().login(user.email, TEST_PASSWORD);
 };
 
 const notificationsFor = (userId: string): AppNotification[] => {
@@ -51,24 +52,24 @@ describe('targeted bucket invitations', () => {
     owner = await auth.register(
       'Bucket Owner',
       'owner@example.com',
-      'Password1',
+      TEST_PASSWORD,
       defaults,
     );
     recipient = await auth.register(
       'Intended Recipient',
       'recipient@example.com',
-      'Password1',
+      TEST_PASSWORD,
       defaults,
     );
     intruder = await auth.register(
       'Other User',
       'other@example.com',
-      'Password1',
+      TEST_PASSWORD,
       defaults,
     );
-    switchUser(owner);
+    await switchUser(owner);
     await social.sendFriendRequest(recipient.email);
-    switchUser(recipient);
+    await switchUser(recipient);
     await social.respondFriendRequest(owner.id, 'accepted');
     localStorage.removeItem(NOTIFICATION_KEY);
   });
@@ -77,10 +78,10 @@ describe('targeted bucket invitations', () => {
     const freshRecipient = await auth.register(
       'Fresh Recipient',
       'fresh-recipient@example.com',
-      'Password1',
+      TEST_PASSWORD,
       defaults,
     );
-    switchUser(owner);
+    await switchUser(owner);
 
     await social.sendFriendRequest(freshRecipient.email);
 
@@ -96,7 +97,7 @@ describe('targeted bucket invitations', () => {
   });
 
   it('withholds access until the intended recipient accepts and notifies the owner once', async () => {
-    switchUser(owner);
+    await switchUser(owner);
     const bucket = await data.createBucket(owner, {
       title: 'Private team lunch',
       description: '',
@@ -127,13 +128,13 @@ describe('targeted bucket invitations', () => {
       }),
     ]);
 
-    switchUser(intruder);
+    await switchUser(intruder);
     await expect(
       social.respondBucketInvitation(bucket.id, 'accepted'),
     ).rejects.toThrow(/not found/i);
     expect(await sharing.listSharedWithMe(intruder)).toEqual([]);
 
-    switchUser(recipient);
+    await switchUser(recipient);
     const pendingOverview = await social.getOverview();
     expect(pendingOverview.bucketInvitations).toEqual([
       expect.objectContaining({ bucketId: bucket.id, status: 'pending' }),
@@ -158,7 +159,7 @@ describe('targeted bucket invitations', () => {
   });
 
   it('reactivates a revoked editor only with the newly invited viewer role', async () => {
-    switchUser(owner);
+    await switchUser(owner);
     const bucket = await data.createBucket(owner, {
       title: 'Rejoin with lower access',
       description: '',
@@ -180,7 +181,7 @@ describe('targeted bucket invitations', () => {
     await sharing.revokeMember(owner, bucket.id, recipient.id);
 
     await social.inviteFriendToBucket(bucket.id, recipient.id, 'viewer');
-    switchUser(recipient);
+    await switchUser(recipient);
     await social.respondBucketInvitation(bucket.id, 'accepted');
 
     const view = await sharing.getSharedBucketView(recipient, bucket.id);
@@ -196,7 +197,7 @@ describe('targeted bucket invitations', () => {
   });
 
   it('lets the recipient dismiss a pending invitation after bucket deletion', async () => {
-    switchUser(owner);
+    await switchUser(owner);
     const bucket = await data.createBucket(owner, {
       title: 'Deleted invitation target',
       description: '',
@@ -215,7 +216,7 @@ describe('targeted bucket invitations', () => {
     await social.inviteFriendToBucket(bucket.id, recipient.id, 'viewer');
     await data.deleteBucket(owner, bucket.id);
 
-    switchUser(recipient);
+    await switchUser(recipient);
     await social.respondBucketInvitation(bucket.id, 'declined');
     await social.respondBucketInvitation(bucket.id, 'declined');
 
@@ -229,7 +230,7 @@ describe('targeted bucket invitations', () => {
   });
 
   it('keeps declined invitations access-free and preserves legacy active grants', async () => {
-    switchUser(owner);
+    await switchUser(owner);
     const declinedBucket = await data.createBucket(owner, {
       title: 'Declined lunch',
       description: '',
@@ -250,11 +251,11 @@ describe('targeted bucket invitations', () => {
       recipient.id,
       'viewer',
     );
-    switchUser(recipient);
+    await switchUser(recipient);
     await social.respondBucketInvitation(declinedBucket.id, 'declined');
     expect(await sharing.listSharedWithMe(recipient)).toEqual([]);
 
-    switchUser(owner);
+    await switchUser(owner);
     const legacyBucket = await data.createBucket(owner, {
       title: 'Existing direct access',
       description: '',

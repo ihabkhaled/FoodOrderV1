@@ -43,8 +43,16 @@ interface LegacyBucketMember extends BucketMember {
   email?: string;
 }
 
+export interface LocalUserRecord {
+  /** Legacy clear-text credential; upgraded to a salted hash on first login. */
+  password?: string;
+  passwordHash?: string;
+  passwordSalt?: string;
+  profile: UserProfile;
+}
+
 export interface LocalDatabase {
-  users: Record<string, { password: string; profile: UserProfile }>;
+  users: Record<string, LocalUserRecord>;
   buckets: Record<string, Bucket[]>;
   orders: Record<string, Order[]>;
   sharing: SharingTables;

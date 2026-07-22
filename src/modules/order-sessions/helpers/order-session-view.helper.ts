@@ -95,12 +95,16 @@ export const participantSubtotalMinor = (
   }, 0);
 };
 
+const AWAITING_RESPONSE_VALUES: ReadonlySet<SessionParticipant['response']> =
+  new Set([
+    PARTICIPANT_RESPONSE.pending,
+    PARTICIPANT_RESPONSE.viewed,
+    PARTICIPANT_RESPONSE.ordering,
+  ]);
+
 export const pendingParticipants = (
   participants: readonly SessionParticipant[],
 ): SessionParticipant[] =>
-  participants.filter(
-    (participant) =>
-      participant.response === PARTICIPANT_RESPONSE.pending ||
-      participant.response === PARTICIPANT_RESPONSE.viewed ||
-      participant.response === PARTICIPANT_RESPONSE.ordering,
+  participants.filter((participant) =>
+    AWAITING_RESPONSE_VALUES.has(participant.response),
   );

@@ -36,7 +36,7 @@ const writeLocalDatabase = (database: LocalNotificationDatabase): void => {
 
 const newestFirst = (notifications: AppNotification[]): AppNotification[] =>
   [...notifications]
-    .sort((left, right) => right.createdAt.localeCompare(left.createdAt))
+    .toSorted((left, right) => right.createdAt.localeCompare(left.createdAt))
     .slice(0, 50);
 
 export const pushLocalNotification = (

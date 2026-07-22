@@ -445,7 +445,7 @@ export class LocalSessionInviteService implements SessionInviteService {
       revision: guestParticipant.revision + 1,
     };
     const contributions = database.orderSessions.contributions[session.id] ?? [];
-    const guestContribution = contributions.find(
+    const hasGuestContribution = contributions.some(
       (contribution) => contribution.userId === stored.guestId,
     );
     database.orderSessions.contributions[session.id] = contributions.map(
@@ -477,7 +477,7 @@ export class LocalSessionInviteService implements SessionInviteService {
       guestId: stored.guestId,
       userId: user.id,
       linkedAt: timestamp,
-      transferredMutationCount: guestContribution ? 1 : 0,
+      transferredMutationCount: hasGuestContribution ? 1 : 0,
     };
   }
 }

@@ -44,7 +44,7 @@ const PUBLIC_SYSTEM_SLUGS: Record<PublicSystemRouteId, string> = {
 export const PUBLIC_HOME_PATH = '/';
 
 const normalizePathname = (pathname: string): string => {
-  const pathOnly = pathname.split(/[?#]/u)[0]?.trim() || PUBLIC_HOME_PATH;
+  const pathOnly = pathname.split(/[?#]/u, 1)[0]?.trim() || PUBLIC_HOME_PATH;
   const withLeadingSlash = pathOnly.startsWith('/') ? pathOnly : `/${pathOnly}`;
   let normalized = withLeadingSlash;
   while (normalized.length > 1 && normalized.endsWith('/')) {

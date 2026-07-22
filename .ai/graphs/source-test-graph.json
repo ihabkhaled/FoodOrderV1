@@ -1866,6 +1866,16 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/platform/crypto/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/platform/crypto/password-hash.adapter.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/platform/device/device-config.adapter.ts",
       "tests": [],
       "relationship": "inferred"

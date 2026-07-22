@@ -61,10 +61,17 @@ export const requiredText = (
 export const optionalText = (value: unknown, maxLength: number): string =>
   typeof value === 'string' ? value.trim().slice(0, maxLength) : '';
 
+const SHARE_ROLE_VALUES: readonly unknown[] = [
+  'editor',
+  'contributor',
+  'viewer',
+] satisfies readonly ShareRole[];
+
+export const isShareRole = (value: unknown): value is ShareRole =>
+  SHARE_ROLE_VALUES.includes(value);
+
 export const shareRole = (value: unknown): ShareRole => {
-  if (value === 'editor' || value === 'contributor' || value === 'viewer') {
-    return value;
-  }
+  if (isShareRole(value)) return value;
   throw new Error('A valid sharing role is required.');
 };
 
@@ -72,20 +79,14 @@ export const strongestRole = (
   current: unknown,
   requested: ShareRole,
 ): ShareRole => {
-  const normalized =
-    current === 'editor' || current === 'contributor' || current === 'viewer'
-      ? current
-      : 'viewer';
+  const normalized = isShareRole(current) ? current : 'viewer';
   return ROLE_PRIORITY[normalized] >= ROLE_PRIORITY[requested]
     ? normalized
     : requested;
 };
 
 export const strongestRoleFromGrants = (roles: unknown[]): ShareRole | null => {
-  const validRoles = roles.filter(
-    (role): role is ShareRole =>
-      role === 'editor' || role === 'contributor' || role === 'viewer',
-  );
+  const validRoles = roles.filter((role): role is ShareRole => isShareRole(role));
   const firstRole = validRoles[0];
   if (!firstRole) return null;
   return validRoles
@@ -100,7 +101,7 @@ export const mergeAccessSources = (
   const existing = Array.isArray(current)
     ? current.filter((value): value is string => typeof value === 'string')
     : [];
-  return [...new Set([...existing, sourceId])].sort((left, right) =>
+  return [...new Set([...existing, sourceId])].toSorted((left, right) =>
     left.localeCompare(right),
   );
 };
@@ -133,7 +134,7 @@ export const removeAccessSource = (
   const existing = Array.isArray(current)
     ? current.filter((value): value is string => typeof value === 'string')
     : [];
-  return [...new Set(existing.filter((value) => value !== sourceId))].sort(
+  return [...new Set(existing.filter((value) => value !== sourceId))].toSorted(
     (left, right) => left.localeCompare(right),
   );
 };

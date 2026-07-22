@@ -63,7 +63,7 @@ describe('message catalog validation failures', () => {
     expect(
       validateMessageCatalogs({
         en: { alpha: 'Alpha', beta: 'Beta' },
-        ar: { alpha: '   ', beta: 7 },
+        ar: { alpha: ' '.repeat(3), beta: 7 },
       }),
     ).toEqual([
       {

@@ -253,12 +253,14 @@ const requiredString = (
   return normalized;
 };
 
+const ABSENT_OPTIONAL_VALUES: ReadonlySet<unknown> = new Set([undefined, null, '']);
+
 const optionalString = (
   value: unknown,
   label: string,
   maximumLength = MAX_IDENTIFIER_LENGTH,
 ): string | null => {
-  if (value === undefined || value === null || value === '') return null;
+  if (ABSENT_OPTIONAL_VALUES.has(value)) return null;
   return requiredString(value, label, maximumLength);
 };
 
@@ -357,7 +359,7 @@ const actorName = (token: Record<string, unknown>): string => {
   if (typeof name === 'string' && name.trim()) return name.trim().slice(0, 120);
   const email = token.email;
   if (typeof email === 'string' && email.includes('@')) {
-    return (email.split('@')[0] ?? 'User').slice(0, 120);
+    return (email.split('@', 1)[0] ?? 'User').slice(0, 120);
   }
   return 'User';
 };
@@ -430,7 +432,7 @@ const normalizeMenuItems = (value: unknown): SessionMenuItemRecord[] => {
         source: raw.source === 'custom' ? 'custom' : 'catalog',
       };
     })
-    .sort((left, right) => left.sortOrder - right.sortOrder);
+    .toSorted((left, right) => left.sortOrder - right.sortOrder);
 };
 
 const emptyResponseSummary = (participantCount: number): ResponseSummaryRecord => ({
@@ -636,7 +638,7 @@ export const listOrderSessionsV170 = onCall({ region: REGION }, async (request) 
     .get();
   return snapshot.docs
     .map((documentSnapshot) => documentSnapshot.data() as OrderSessionRecord)
-    .sort((left, right) => right.updatedAt.localeCompare(left.updatedAt));
+    .toSorted((left, right) => right.updatedAt.localeCompare(left.updatedAt));
 });
 
 export const createOrderSessionV170 = onCall({ region: REGION }, async (request) => {

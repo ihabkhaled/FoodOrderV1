@@ -92,8 +92,8 @@
     },
     {
       "path": "tests/domain/order-session.test.ts",
-      "bytes": 12860,
-      "hash": "8f628315a8f347137e95779af5f982dbf97e73a383963da65b931bb1c3557c0b"
+      "bytes": 12868,
+      "hash": "6a6f8860edc8b8e499de434131ce1329934ae9b6806ad78187459c906b3cbd0b"
     },
     {
       "path": "tests/domain/order.test.ts",
@@ -242,8 +242,8 @@
     },
     {
       "path": "tests/i18n/message-catalog-validation.test.ts",
-      "bytes": 4722,
-      "hash": "5c7d58849a819d49d331a1c4c0a57891abacc4e303862be256e7ecc4834f0096"
+      "bytes": 4730,
+      "hash": "76c27cde68c752cec2073f856047434a5ccc466b71118a4f8b1758991573ba10"
     },
     {
       "path": "tests/order-repeat.test.ts",
@@ -297,8 +297,8 @@
     },
     {
       "path": "tests/services/socialInvitations.test.ts",
-      "bytes": 8195,
-      "hash": "7424888d5f233cc513c01fbc5547b0d5a92ff8abb69a36c80888c480db50b08d"
+      "bytes": 8384,
+      "hash": "d948915cfc32def09229dc7dbf375b4e79e9e0edd07f54d4925c61f62c8ce93d"
     },
     {
       "path": "tests/setup.ts",

@@ -575,8 +575,8 @@
     },
     {
       "path": "eslint.config.js",
-      "bytes": 7929,
-      "hash": "2023838d44e7b21c7476e7dbab03da00b500037e3ddd899e5a9f20614be3d8d5"
+      "bytes": 8175,
+      "hash": "003ce0ca1ef635c602234e2ac31ba7eb70ef17460949da230a36a02f3fdabb58"
     },
     {
       "path": "eslint/architecture-plugin/index.mjs",
@@ -665,8 +665,8 @@
     },
     {
       "path": "functions/lib/functions/src/index.js",
-      "bytes": 11034,
-      "hash": "7bba329ed31a74e1eaa5541a38b3aca556254219b518038040e3e1bd5c569593"
+      "bytes": 11037,
+      "hash": "823e147bab371e34ce4c16e7935ef061fa562af40e688232ef9a306f6720b432"
     },
     {
       "path": "functions/lib/functions/src/main.js",
@@ -705,33 +705,33 @@
     },
     {
       "path": "functions/lib/functions/src/orderSessionsV170.js",
-      "bytes": 30602,
-      "hash": "95cb331d56faa4111fe5b33a21f0564cfd2bf4d52e6d397b735bb2c6243793fc"
+      "bytes": 30656,
+      "hash": "9b151449072b49f152a73e7364c9fadab905bb04bdbff2ae152b5b1d39ab09de"
     },
     {
       "path": "functions/lib/functions/src/sessionInvitesV170.js",
-      "bytes": 30118,
-      "hash": "b627dd8be9a12459b59927f65698021789e017d1ccf630c8051579c104da4a0b"
+      "bytes": 30122,
+      "hash": "f52192dd8d52e6dedfda2329ee0110cfea5dcf2fdbd8115f8314ec4c994bcd3f"
     },
     {
       "path": "functions/lib/functions/src/social.js",
-      "bytes": 29824,
-      "hash": "0c5bc9f330b320a586058df9fbb2cffcef8b84365af676446750b2658de86542"
+      "bytes": 29831,
+      "hash": "69c1c2a29aaa8c7a6b3253720dd4d78a8d6c5f75d427abc75b23d976a378d7e0"
     },
     {
       "path": "functions/lib/functions/src/socialDomain.js",
-      "bytes": 3789,
-      "hash": "74e0759db8cbe01fee466b7f0d0d8d5f0572c3243ddbbbcfffc4582176b7025d"
+      "bytes": 3775,
+      "hash": "625b930bb2511773e7564717cf6ffafa8436aca3fe6072b28ed9fea4098238dd"
     },
     {
       "path": "functions/lib/functions/src/socialV150.js",
-      "bytes": 16043,
-      "hash": "2e5a1f0277f20bedbf480956ce53d6d47a927d1a9cf2b8cead9223a9c3573f36"
+      "bytes": 16046,
+      "hash": "2dfe39e31f2c2a0b6228e74f8482b592c4a424fc3353b1a43816a8611adf2c8f"
     },
     {
       "path": "functions/lib/functions/src/v132Callables.js",
-      "bytes": 15284,
-      "hash": "a76a27fa6e3381d315a56ecd9b5149f8bda169bfce89fb3ad3d630f75d73b7d1"
+      "bytes": 15287,
+      "hash": "b6257799d9376cb964a622c0c9351cfc8b537568ebbaa3eba904f3eab302530d"
     },
     {
       "path": "functions/lib/functions/src/v133Callables.js",
@@ -740,8 +740,8 @@
     },
     {
       "path": "functions/lib/packages/group-order-engine/src/index.js",
-      "bytes": 8715,
-      "hash": "fefe5e79a505e5ba00ea18ef5370a8dae7dac9d235f194b2022690aa1046cd74"
+      "bytes": 8719,
+      "hash": "0dba342deb9bdb80e88b44015078cddaf44a2ee1b8663125f85fe6cd144cf408"
     },
     {
       "path": "functions/package-lock.json",
@@ -765,8 +765,8 @@
     },
     {
       "path": "functions/src/index.ts",
-      "bytes": 11558,
-      "hash": "d28169b8fe1cf6a28a08a221a15879d06c1d6cc6665d0764a4ca770190d83652"
+      "bytes": 11561,
+      "hash": "5abf792d22ed2aaa405c0189a347d20a6c8fada33e3754568f8b952089f2f582"
     },
     {
       "path": "functions/src/main.ts",
@@ -805,33 +805,33 @@
     },
     {
       "path": "functions/src/orderSessionsV170.ts",
-      "bytes": 35611,
-      "hash": "f4bf7e87ef1e6484be7e2cae5bc823d7395374fe91f04489134ad41db1bb25d3"
+      "bytes": 35688,
+      "hash": "aff02b3d9a7efc608fc9e9b9d2800e8f6859655aec1a22b2abb046fff6281837"
     },
     {
       "path": "functions/src/sessionInvitesV170.ts",
-      "bytes": 34326,
-      "hash": "83ea84a75aad4cc14454ff712a850bf43ee1177027dd5603092334c251289577"
+      "bytes": 34330,
+      "hash": "795edc023bbdf0caf33b0c02b1228136ae1dce68d2ccf768b9cd3480a7351b2f"
     },
     {
       "path": "functions/src/social.ts",
-      "bytes": 34212,
-      "hash": "27b656d66e2f10ee48d06e97a36567cd116ee5dd7bdbd63ab8b6658c98f89eee"
+      "bytes": 34219,
+      "hash": "f4d7146a001b15c8c09e5c084188c1441f2e9158c260a7ec9cb565ee9948eb58"
     },
     {
       "path": "functions/src/socialDomain.ts",
-      "bytes": 5105,
-      "hash": "40a0195c447b8ed1825bf926bf19af5b04209f6ccdffbd6dbf78023dc1ae9e99"
+      "bytes": 5152,
+      "hash": "dc9460319053673306c6ae5ea5c8d625fe74ac6646bbf42775231399a3b9aa94"
     },
     {
       "path": "functions/src/socialV150.ts",
-      "bytes": 18573,
-      "hash": "a96883d1e21e7b1cf94f37f081e211955220df2f04f4d6339272869825b4a3e7"
+      "bytes": 18576,
+      "hash": "d90c390a2b6d91580bbf05521e5f0fb5027ed4f0e11e78c771b2c42f939f126a"
     },
     {
       "path": "functions/src/v132Callables.ts",
-      "bytes": 16208,
-      "hash": "b97b51e243c8ec3ff90ab8772ae6171fef3a3a29c373f4aff57decfa4056472b"
+      "bytes": 16211,
+      "hash": "9a231125066eb8cb5c04b90fece47e2132b6e87da7a488b48466c7b017905de1"
     },
     {
       "path": "functions/src/v133Callables.ts",
@@ -1025,18 +1025,18 @@
     },
     {
       "path": "package-lock.json",
-      "bytes": 702858,
-      "hash": "49cfceaebf71d37209812ccd9dbe2057763df2eadd63c2f23e0a8c219a4e3318"
+      "bytes": 686130,
+      "hash": "b311e3b64c6ceb53bf289c7c736f79708141714f87eed86c28a34d790f6068b9"
     },
     {
       "path": "package.json",
       "bytes": 7725,
-      "hash": "b31ca3331677e16009ffba85e37b3d2ca84a6f48a4adda6697b72804eb24cade"
+      "hash": "55fd4db315e516e137f803c3a65baad25df6c9911a06d37ec617f082df591c25"
     },
     {
       "path": "packages/group-order-engine/src/index.ts",
-      "bytes": 10243,
-      "hash": "27506d4b19dd35e1403b4f5a08f84357040193e2951a08f31951cfcc199ee3d6"
+      "bytes": 10247,
+      "hash": "97100bc940624541edbf04da6869db42d07cbedeb8d2f1b7f0cad2cec281f89e"
     },
     {
       "path": "playwright.config.ts",
@@ -1820,8 +1820,8 @@
     },
     {
       "path": "src/modules/data-access/gateways/firebase-auth.gateway.ts",
-      "bytes": 3593,
-      "hash": "9b13c4ac4debd4523613939398db2936a8d11f3a49cabefd6e2a1ee4674973b3"
+      "bytes": 3596,
+      "hash": "6917ab1981f9421dc690832cd22c5099af7b9963c4af15e8908794ee1a6d4447"
     },
     {
       "path": "src/modules/data-access/gateways/firebase-runtime.gateway.ts",
@@ -1855,8 +1855,8 @@
     },
     {
       "path": "src/modules/data-access/gateways/firestore-data.gateway.ts",
-      "bytes": 9868,
-      "hash": "33f42acbaac7c3d73900b50638a5762c32aebfe89ac99e18c64db7900993ac08"
+      "bytes": 9876,
+      "hash": "7b51548a49713d6c75ff79ae74b0eb265cd5954caca74a7d1e136631e38acea5"
     },
     {
       "path": "src/modules/data-access/gateways/firestore-group-order.gateway.ts",
@@ -1875,8 +1875,8 @@
     },
     {
       "path": "src/modules/data-access/gateways/firestore-sharing.gateway.ts",
-      "bytes": 19830,
-      "hash": "dc19613038bdcb7374916e5189d7a598ea60e380ab48702afb85116cf92392d7"
+      "bytes": 19838,
+      "hash": "2d4f9c0f3ae03dbf160a24ab5dcaff52f2ff800f33ffbc40c49a87f0d7e1f7be"
     },
     {
       "path": "src/modules/data-access/gateways/group-order-gateway.helper.ts",
@@ -1885,18 +1885,18 @@
     },
     {
       "path": "src/modules/data-access/gateways/local-auth.gateway.ts",
-      "bytes": 3879,
-      "hash": "6324d57857f3e84aec9031f2c449eb7fcd77fa35ae2b36f2bff15b64be35eb17"
+      "bytes": 5059,
+      "hash": "797534a7191eb78c5c18237389158cdd9c982a3e0eaa848725818854566a35ed"
     },
     {
       "path": "src/modules/data-access/gateways/local-data.gateway.ts",
-      "bytes": 8213,
-      "hash": "0c121a7584c08b2ff5dc298eec972edf0508378ca650d62acf358f386b84dcfb"
+      "bytes": 8221,
+      "hash": "457e8147eae7ef3e94b229ec15f0cd76490b7ad3cc9ab07b827d6d2b9f9f92c9"
     },
     {
       "path": "src/modules/data-access/gateways/local-database.helper.ts",
-      "bytes": 6644,
-      "hash": "ef867932690b3757ed14b0fd724e2381b2c561a33a38b7bbf8614dfe73496b7d"
+      "bytes": 6831,
+      "hash": "848a78697a3c2141185fbd1837ece67c68032fae2c5a9192b3935305fc6391ea"
     },
     {
       "path": "src/modules/data-access/gateways/local-group-order.gateway.ts",
@@ -1905,8 +1905,8 @@
     },
     {
       "path": "src/modules/data-access/gateways/local-notification.gateway.ts",
-      "bytes": 3045,
-      "hash": "1103c40699536d37a22f80ba678ae1dc7ab54ff5976a8182763aca4c063230cd"
+      "bytes": 3049,
+      "hash": "2b00559f62e625d5bcd5f2be32d92350937c3b27f960d7c17b5dbdd0998641f6"
     },
     {
       "path": "src/modules/data-access/gateways/local-order-lifecycle.gateway.ts",
@@ -1925,23 +1925,23 @@
     },
     {
       "path": "src/modules/data-access/gateways/local-session-invite.gateway.ts",
-      "bytes": 17204,
-      "hash": "4167441090fa2acaeff22090838afb678a531707e61a6537568f546acacdfda0"
+      "bytes": 17210,
+      "hash": "e11c86cb936d20cc515f494ec8c97114c976add719bb34a0f0e1b5797e0cd760"
     },
     {
       "path": "src/modules/data-access/gateways/local-sharing.gateway.ts",
-      "bytes": 15510,
-      "hash": "9d7ef72e4407d3ad01ff1aea78a0dfd54649070e7ac4a24ee3d2290a88097d48"
+      "bytes": 15514,
+      "hash": "1f57cf6a0020be91fef658eddd0b6752a8a284e38202358d629276ed7eb62d98"
     },
     {
       "path": "src/modules/data-access/gateways/local-social-management.gateway.ts",
-      "bytes": 18741,
-      "hash": "35a2833b4c339beba4c30a3eaf94ec2203c184edc0d4efd8697e33b3a1ac7fdf"
+      "bytes": 18769,
+      "hash": "ac688098b7ade46feee1d9fd85894f4346b08ffa32b38c135ca8b34795b25cd6"
     },
     {
       "path": "src/modules/data-access/gateways/local-social.gateway.ts",
-      "bytes": 19534,
-      "hash": "23474a5e1f188be99a153553a93b86a1740cf597acac6a9af86633f604dff9af"
+      "bytes": 19497,
+      "hash": "e22d38a31d6aeb5fc364c87cb38dca2c996265f2577382fc2ae37d6b1d9311c3"
     },
     {
       "path": "src/modules/data-access/helpers/bucket-lifecycle.helper.ts",
@@ -2000,8 +2000,8 @@
     },
     {
       "path": "src/modules/data-access/helpers/sharing.helper.ts",
-      "bytes": 8895,
-      "hash": "2f0f7df14d585e0a65579e10178f0f5b2d38424dad48b70698a18247aa7e23c3"
+      "bytes": 8899,
+      "hash": "3c8c540b057c2435a78e35b1c0d40840a5b896454dc6e0a89acc88d8041edd64"
     },
     {
       "path": "src/modules/data-access/hooks/use-cursor-page.hook.ts",
@@ -2350,8 +2350,8 @@
     },
     {
       "path": "src/modules/order-sessions/helpers/order-session-view.helper.ts",
-      "bytes": 3086,
-      "hash": "1c0ade123b1a4f485f8fabe458ce3656acc0aea926d77c413b3e43ab8cf61b39"
+      "bytes": 3149,
+      "hash": "263dd50af57c00ba191a434170ce9fec8a8db5b93397f5a31bf44c39f43abf0d"
     },
     {
       "path": "src/modules/order-sessions/hooks/use-create-order-session.hook.ts",
@@ -2655,8 +2655,8 @@
     },
     {
       "path": "src/modules/public-content/routes/public-content-route-registry.helper.ts",
-      "bytes": 5797,
-      "hash": "3c82df64e2d2f0dcfce2632fe5affee79ad0d323851e0d570938215801b22552"
+      "bytes": 5800,
+      "hash": "fce28f8ef61f24be445909838aaa4bfccdc9eadc820c81d70e4a723fad0621ed"
     },
     {
       "path": "src/modules/public-content/routes/public-content.routes.tsx",
@@ -3210,8 +3210,8 @@
     },
     {
       "path": "src/packages/firebase/firebase-error.adapter.ts",
-      "bytes": 3116,
-      "hash": "e099448282f0ad11a8fe2d123093434810b41aba377038cdfd2fed9718f0c62c"
+      "bytes": 3327,
+      "hash": "90aebaa5a50bcedcf31fcfced3864cbc33e26c34d2624b4486714ed1ddaec587"
     },
     {
       "path": "src/packages/firebase/firebase-error.interfaces.ts",
@@ -3314,6 +3314,16 @@
       "hash": "ce3046443ff428d0ad6728bce87bd00d99f68f8d1b9ce9de3bc823597427d755"
     },
     {
+      "path": "src/platform/crypto/index.ts",
+      "bytes": 76,
+      "hash": "c6bd42445f018b1b82ac4ad06d940ea2cf4878cfd08ade6801dcd3f56f584fa6"
+    },
+    {
+      "path": "src/platform/crypto/password-hash.adapter.ts",
+      "bytes": 1243,
+      "hash": "8f95387b33a66d3e959138c8893ff82328e3a9f54d61f4129b0da3e0b55f9007"
+    },
+    {
       "path": "src/platform/device/device-config.adapter.ts",
       "bytes": 3093,
       "hash": "2a28846a6f1c4e50656736d779d8bfd8b1c7c83dc24dbad4645597b18c6c450c"
@@ -3405,8 +3415,8 @@
     },
     {
       "path": "src/shared/helpers/pagination.helper.ts",
-      "bytes": 2774,
-      "hash": "2f9ec0361cdbef4868faa1282d62811048587e7dc04b9250e61e82bdb733632e"
+      "bytes": 2778,
+      "hash": "e0a9b05ebdefbb4dc2d3dbeca26a4ecc6359dbc034cec46206bfe65322839da9"
     },
     {
       "path": "src/shared/helpers/validation.helper.ts",
@@ -3805,8 +3815,8 @@
     },
     {
       "path": "tests/domain/order-session.test.ts",
-      "bytes": 12860,
-      "hash": "8f628315a8f347137e95779af5f982dbf97e73a383963da65b931bb1c3557c0b"
+      "bytes": 12868,
+      "hash": "6a6f8860edc8b8e499de434131ce1329934ae9b6806ad78187459c906b3cbd0b"
     },
     {
       "path": "tests/domain/order.test.ts",
@@ -3955,8 +3965,8 @@
     },
     {
       "path": "tests/i18n/message-catalog-validation.test.ts",
-      "bytes": 4722,
-      "hash": "5c7d58849a819d49d331a1c4c0a57891abacc4e303862be256e7ecc4834f0096"
+      "bytes": 4730,
+      "hash": "76c27cde68c752cec2073f856047434a5ccc466b71118a4f8b1758991573ba10"
     },
     {
       "path": "tests/order-repeat.test.ts",
@@ -4010,8 +4020,8 @@
     },
     {
       "path": "tests/services/socialInvitations.test.ts",
-      "bytes": 8195,
-      "hash": "7424888d5f233cc513c01fbc5547b0d5a92ff8abb69a36c80888c480db50b08d"
+      "bytes": 8384,
+      "hash": "d948915cfc32def09229dc7dbf375b4e79e9e0edd07f54d4925c61f62c8ce93d"
     },
     {
       "path": "tests/setup.ts",
