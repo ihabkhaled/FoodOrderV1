@@ -130,7 +130,7 @@
     "knip": "^6.26.0",
     "lint-staged": "^17.1.0",
     "madge": "^8.0.0",
-    "sharp": "^0.34.5",
+    "sharp": "^0.35.0",
     "typescript": "5.9.3",
     "typescript-eslint": "8.63.0",
     "typescript7": "npm:typescript@7.0.2",
