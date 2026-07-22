@@ -35,13 +35,13 @@
     },
     {
       "path": ".github/workflows/branch-continuous-release.yml",
-      "bytes": 4721,
-      "hash": "39994d55566e7a11a281ac6e60c94eab0badb322742c985338dcdd7804234e17"
+      "bytes": 4738,
+      "hash": "51786af066ac411eb54cf60ccb2170947d24438afc14ddee9cc87d7ee8de1f7a"
     },
     {
       "path": ".github/workflows/ci.yml",
-      "bytes": 16473,
-      "hash": "3f28ecc4cb6c390f448036ce3caae1bbae01d8cee31160350e9868c6a58028ab"
+      "bytes": 16524,
+      "hash": "f1cddf2d828656205310be1c39eb13c56d686cc7fe88fb8390e8424d665ccc9d"
     },
     {
       "path": ".github/workflows/cross-browser-e2e.yml",
@@ -50,8 +50,8 @@
     },
     {
       "path": ".github/workflows/diagnostics.yml",
-      "bytes": 3623,
-      "hash": "0d25ad9e456c16b0cc2c25ef5c5ebee9b00b4ac0c2cec935eb6f3dd5aaa7576b"
+      "bytes": 3640,
+      "hash": "4c79bb431705f5440bf999777bc0e1925221c2651102b069eeb089f538bdd7e8"
     },
     {
       "path": ".github/workflows/firebase-artifact-cleanup.yml",
@@ -65,23 +65,23 @@
     },
     {
       "path": ".github/workflows/functions-diagnostics.yml",
-      "bytes": 881,
-      "hash": "106c052012371dce8d53544627461367bbf03967e2a93528efd865abe69f9e72"
+      "bytes": 898,
+      "hash": "8d5ddce9cc05a28dd8952c9a83a05a22de91f2ed259b65c0e79516ce87650cb5"
     },
     {
       "path": ".github/workflows/lint-diagnostics.yml",
-      "bytes": 1189,
-      "hash": "d9264a3275af313781691f3003952c29125e5e6044588bd549962f0e49e086f9"
+      "bytes": 1206,
+      "hash": "d8e6f4a6f6cc36b38805c13982925ab7c2a5fc4b21d82fb322bce477408d07bf"
     },
     {
       "path": ".github/workflows/social-acceptance.yml",
-      "bytes": 1203,
-      "hash": "5222c0eb80967ce0743132ce967bbc8b532ff38f69a51100353d761357b4df0c"
+      "bytes": 1220,
+      "hash": "c026da210e32c165cd2b8ce4be62aaede36d1b5c8949ffbb706648fd4773f377"
     },
     {
       "path": ".github/workflows/v170-order-session-gates.yml",
-      "bytes": 3608,
-      "hash": "95a8a9122cfa8756d2037b966c38d69c051bfde93fd9942e3ca9cb4db1a18a39"
+      "bytes": 3642,
+      "hash": "c525d2b3dbce97e3e922c76f0cc418fe5fd1341f6751a2da78e15d35c2d8097f"
     },
     {
       "path": ".gitignore",
@@ -1345,13 +1345,13 @@
     },
     {
       "path": "scripts/public-content/validate-public-content.mjs",
-      "bytes": 4821,
-      "hash": "9ed36784d9759e806d8b2281751662d2ec4ff7c4b0aafe398cfd01e60fb23987"
+      "bytes": 4852,
+      "hash": "880434400e9260bff29ebadf8c2583aca63b4dc6a58ac2ebdebbdf977124cf1b"
     },
     {
       "path": "scripts/serve-dist.mjs",
-      "bytes": 3438,
-      "hash": "b277c3e984ebe7d89bd813be0056d5338307598bf1e9df67e93206d7b0bfea7b"
+      "bytes": 3855,
+      "hash": "4dc908d21735a1e11061a6e6ddbe67614c00760a9295f6089ec415d78ee76c51"
     },
     {
       "path": "scripts/validate-preview.mjs",

@@ -68,9 +68,20 @@ const server = http.createServer((request, response) => {
   const pathname = decodeURIComponent((request.url ?? '/').split(/[?#]/u)[0]);
 
   if (pathname !== '/' && pathname.endsWith('/')) {
-    response.writeHead(308, { Location: pathname.replace(/\/+$/u, '') });
-    response.end();
-    return;
+    // Rebuild the target from path segments so the redirect can never leave
+    // this origin (e.g. a protocol-relative "//host/" request), and keep the
+    // explicit same-origin guard as defense in depth.
+    const segments = pathname.split('/').filter(Boolean);
+    const target = `/${segments.join('/')}`;
+    if (
+      target.startsWith('/') &&
+      !target.startsWith('//') &&
+      !target.startsWith('/\\')
+    ) {
+      response.writeHead(308, { Location: target });
+      response.end();
+      return;
+    }
   }
 
   const resolved = path.normalize(path.join(root, pathname));

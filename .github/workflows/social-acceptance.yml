@@ -26,7 +26,7 @@ jobs:
             package-lock.json
             functions/package-lock.json
       - run: npm ci
-      - run: (cd functions && npm ci)
+      - run: (cd functions && npm ci --ignore-scripts)
       - name: Verify release version consistency
         run: npm run quality:release
       - name: Compile and test trusted social functions

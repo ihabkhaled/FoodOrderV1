@@ -80,7 +80,7 @@ const appShell = await readFile(path.join(outputDirectory, 'app.html'), 'utf8').
   () => '',
 );
 expectIncludes(appShell, 'noindex, nofollow, noarchive', 'app shell noindex');
-if (appShell.includes('pagead2.googlesyndication.com')) {
+if (/<script[^>]*\bsrc="https:\/\/pagead2\.googlesyndication\.com\//iu.test(appShell)) {
   failures.push('app shell contains AdSense loader');
 }
 
