@@ -41,7 +41,7 @@
     {
       "path": ".github/workflows/ci.yml",
       "bytes": 16476,
-      "hash": "8eb94a5eb521e9cfe3693fe33afb773d05c0d7fd8275553e1de20f6cbc0b2d06"
+      "hash": "f1b0390224086e182e6121407554c71c5754e1c1a81eae3209d8503dc312c127"
     },
     {
       "path": ".github/workflows/cross-browser-e2e.yml",
@@ -745,13 +745,13 @@
     },
     {
       "path": "functions/package-lock.json",
-      "bytes": 110298,
-      "hash": "49d7005b3bc6119cb8d4c2ebed2160435c921dd7ab6e37d3c4b00ccc1ae1b48f"
+      "bytes": 112654,
+      "hash": "9ea1053ce31cbaab8918db4e277a74abd6cd6db9f4adcd85577a987034f5abe6"
     },
     {
       "path": "functions/package.json",
-      "bytes": 457,
-      "hash": "194ad81405148cfa58ab0c315a55f0183f54ad6ad250b235d41fc89794e07305"
+      "bytes": 533,
+      "hash": "db904b2cb266bde3d344582b95811894671d2ac22b3cdbbbab50a1f713030448"
     },
     {
       "path": "functions/src/entry.ts",
@@ -1025,13 +1025,13 @@
     },
     {
       "path": "package-lock.json",
-      "bytes": 703566,
-      "hash": "281fd61b011dbf0b486f2263989ec97f61078c38f2e1f77d31686dd3ba84c4c1"
+      "bytes": 702858,
+      "hash": "49cfceaebf71d37209812ccd9dbe2057763df2eadd63c2f23e0a8c219a4e3318"
     },
     {
       "path": "package.json",
-      "bytes": 7520,
-      "hash": "799dd7d8f11320b35ebcc9c29e0cde553e2c9348a065b827d8c76b606cbd928c"
+      "bytes": 7725,
+      "hash": "b31ca3331677e16009ffba85e37b3d2ca84a6f48a4adda6697b72804eb24cade"
     },
     {
       "path": "packages/group-order-engine/src/index.ts",
