@@ -311,7 +311,7 @@ jobs:
           output: trivy-results.sarif
           severity: CRITICAL,HIGH
           ignore-unfixed: true
-          exit-code: '0'
+          exit-code: '1'
           skip-dirs: node_modules,dist,coverage,android,ios,ui-shots
       - uses: actions/upload-artifact@v7
         if: always()

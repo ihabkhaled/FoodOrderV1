@@ -14,9 +14,13 @@
   },
   "dependencies": {
     "firebase-admin": "13.10.0",
-    "firebase-functions": "7.2.5"
+    "firebase-functions": "7.2.5",
+    "food-order-v1": "file:.."
   },
   "devDependencies": {
     "typescript": "5.9.3"
+  },
+  "overrides": {
+    "uuid": "^11.1.1"
   }
 }

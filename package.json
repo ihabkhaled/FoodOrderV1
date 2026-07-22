@@ -70,7 +70,7 @@
     "knowledge:refresh": "npm run knowledge:build && npm run knowledge:validate",
     "prepare": "husky",
     "security:audit": "npm audit --audit-level=high",
-    "security:scan": "trivy fs --scanners vuln,secret,misconfig --skip-dirs node_modules,dist,coverage,android,ios,.git,ui-shots --exit-code 0 .",
+    "security:scan": "trivy fs --scanners vuln,secret,misconfig --skip-dirs node_modules,dist,coverage,android,ios,.git,ui-shots,.worktrees --exit-code 1 .",
     "quality:dead-code": "knip",
     "quality:circular": "madge src --circular --extensions ts,tsx",
     "quality:release": "node scripts/check-release-version.mjs",
@@ -143,5 +143,15 @@
   },
   "lint-staged": {
     "*.{ts,tsx}": "eslint --fix --max-warnings 0"
+  },
+  "overrides": {
+    "teeny-request": {
+      "uuid": "^11.1.1"
+    },
+    "gaxios": {
+      "uuid": "^11.1.1"
+    },
+    "@opentelemetry/core": "^2.8.0",
+    "@hono/node-server": "^2.0.5"
   }
 }
