@@ -22,7 +22,7 @@ jobs:
             package-lock.json
             functions/package-lock.json
       - run: npm ci
-      - run: npm --prefix functions ci
+      - run: (cd functions && npm ci)
       - name: Run autofix and capture all diagnostics
         continue-on-error: true
         shell: bash

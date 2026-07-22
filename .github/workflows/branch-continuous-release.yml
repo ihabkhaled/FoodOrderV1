@@ -41,7 +41,7 @@ jobs:
       - name: Install dependencies
         run: |
           npm ci
-          npm --prefix functions ci
+          (cd functions && npm ci)
           npx playwright install --with-deps chromium firefox webkit
 
       - name: Resolve immutable development version
