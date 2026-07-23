@@ -55,6 +55,13 @@ const CONTENT_TYPES = {
 
 const isFile = (candidate) => existsSync(candidate) && statSync(candidate).isFile();
 
+const isSafeLocalRedirectPath = (value) =>
+  typeof value === 'string' &&
+  value.startsWith('/') &&
+  !value.startsWith('//') &&
+  !value.includes('\\') &&
+  !/[\u0000-\u001F\u007F]/u.test(value);
+
 const sendFile = (response, status, filePath) => {
   response.writeHead(status, {
     'Content-Type':
@@ -68,16 +75,10 @@ const server = http.createServer((request, response) => {
   const pathname = decodeURIComponent((request.url ?? '/').split(/[?#]/u)[0]);
 
   if (pathname !== '/' && pathname.endsWith('/')) {
-    // Rebuild the target from path segments so the redirect can never leave
-    // this origin (e.g. a protocol-relative "//host/" request), and keep the
-    // explicit same-origin guard as defense in depth.
+    // Rebuild the target from path segments so the redirect stays local.
     const segments = pathname.split('/').filter(Boolean);
     const target = `/${segments.join('/')}`;
-    if (
-      target.startsWith('/') &&
-      !target.startsWith('//') &&
-      !target.startsWith('/\\')
-    ) {
+    if (isSafeLocalRedirectPath(target)) {
       response.writeHead(308, { Location: target });
       response.end();
       return;
