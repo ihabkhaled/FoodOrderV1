@@ -18,8 +18,13 @@ jobs:
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: functions/package-lock.json
-      - run: npm --prefix functions ci
+          cache-dependency-path: |
+            package-lock.json
+            functions/package-lock.json
+      # functions depends on the repo root (file:..), whose prepare script
+      # needs root devDependencies, so the root install must come first.
+      - run: npm ci
+      - run: (cd functions && npm ci --ignore-scripts)
       - name: Capture strict TypeScript diagnostics
         shell: bash
         run: |

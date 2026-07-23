@@ -1,7 +1,7 @@
 import { useApp } from '@/modules/session';
-import { Languages } from '@/packages/icons';
 import { Outlet } from '@/packages/router';
 import { nextTheme } from '@/platform/device';
+import { LanguageSelect } from '@/shared/ui';
 
 import { THEME_ICON, THEME_LABEL } from './app-layout.constants';
 
@@ -15,23 +15,17 @@ export function AuthLayoutContainer() {
     setDeviceLocale,
     setDeviceTheme,
   } = useApp();
-  const nextLocale = locale === 'ar' ? 'en' : 'ar';
-  const languageLabel =
-    nextLocale === 'ar' ? t('switchToArabic') : t('switchToEnglish');
   const ThemeIcon = THEME_ICON[theme];
 
   return (
     <main className="auth-shell">
       <div className="auth-controls">
-        <button
-          type="button"
-          className="icon-button auth-control-button"
-          onClick={() => void setDeviceLocale(nextLocale)}
-          title={languageLabel}
-          aria-label={languageLabel}
-        >
-          <Languages />
-        </button>
+        <LanguageSelect
+          locale={locale}
+          label={t('language')}
+          className="auth-language-select"
+          onChange={(nextLocale) => void setDeviceLocale(nextLocale)}
+        />
         <button
           type="button"
           className="icon-button auth-control-button"

@@ -30,11 +30,20 @@ const readAndroidVersion = async () => {
   return /versionName\s+"([^"]+)"/u.exec(gradle)?.[1] ?? null;
 };
 
+const readIosVersion = async () => {
+  const project = await readFile(
+    new URL('../ios/App/App.xcodeproj/project.pbxproj', import.meta.url),
+    'utf8',
+  );
+  return /MARKETING_VERSION = ([^;]+);/u.exec(project)?.[1] ?? null;
+};
+
 const rootPackage = await readJson('../package.json');
 const rootLock = await readJson('../package-lock.json');
 const functionsPackage = await readJson('../functions/package.json');
 const functionsLock = await readJson('../functions/package-lock.json');
 const androidVersion = await readAndroidVersion();
+const iosVersion = await readIosVersion();
 const failures = [];
 
 if (!parseStableVersion(rootPackage.version)) {
@@ -50,6 +59,7 @@ for (const [label, version] of [
   ['functions/package-lock.json', functionsLock.version],
   ['functions/package-lock.json root package', functionsLock.packages?.['']?.version],
   ['Android versionName', androidVersion],
+  ['iOS MARKETING_VERSION', iosVersion],
 ]) {
   if (version !== rootPackage.version) {
     failures.push(

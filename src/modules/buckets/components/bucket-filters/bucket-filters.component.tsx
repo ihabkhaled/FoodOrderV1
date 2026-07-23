@@ -1,33 +1,24 @@
-import type { Locale } from '@/modules/data-access';
 import { Search } from '@/packages/icons';
 import type { MessageKey } from '@/shared/i18n';
 
-export type BucketScope = 'all' | 'owned' | 'shared';
-
-interface BucketFiltersProps {
-  readonly query: string;
-  readonly scope: BucketScope;
-  readonly locale: Locale;
-  readonly t: (key: MessageKey) => string;
-  readonly onQueryChange: (value: string) => void;
-  readonly onScopeChange: (scope: BucketScope) => void;
-}
+import type {
+  BucketFiltersProps,
+  BucketScope,
+} from './bucket-filters.types';
 
 const scopes: BucketScope[] = ['all', 'owned', 'shared'];
 
 const scopeLabel = (
   scope: BucketScope,
-  locale: Locale,
   t: (key: MessageKey) => string,
 ): string => {
-  if (scope === 'all') return locale === 'ar' ? 'الكل' : 'All';
+  if (scope === 'all') return t('all');
   return scope === 'owned' ? t('myBuckets') : t('sharedWithMe');
 };
 
 export function BucketFilters({
   query,
   scope,
-  locale,
   t,
   onQueryChange,
   onScopeChange,
@@ -55,7 +46,7 @@ export function BucketFilters({
               onScopeChange(value);
             }}
           >
-            {scopeLabel(value, locale, t)}
+            {scopeLabel(value, t)}
           </button>
         ))}
       </div>

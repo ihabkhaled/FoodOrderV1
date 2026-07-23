@@ -131,7 +131,7 @@ const authUser = (
   const displayName =
     typeof auth.token.name === 'string' && auth.token.name.trim()
       ? auth.token.name.trim()
-      : email.split('@')[0] || 'User';
+      : email.split('@', 1)[0] || 'User';
   return { userId: auth.uid, displayName, email };
 };
 
@@ -1128,6 +1128,6 @@ export const listBucketAccessGrants = onCall(
     const snapshot = await reference.collection('accessGrants').get();
     return snapshot.docs
       .map((document) => document.data() as BucketGrantRecord)
-      .sort((left, right) => right.createdAt.localeCompare(left.createdAt));
+      .toSorted((left, right) => right.createdAt.localeCompare(left.createdAt));
   },
 );

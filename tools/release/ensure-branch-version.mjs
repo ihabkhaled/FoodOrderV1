@@ -43,12 +43,21 @@ const readAndroidVersion = () => {
   return /versionName\s+"([^"]+)"/u.exec(gradle)?.[1] ?? null;
 };
 
+const readIosVersion = () => {
+  const project = readFileSync(
+    join(rootDirectory, 'ios', 'App', 'App.xcodeproj', 'project.pbxproj'),
+    'utf8',
+  );
+  return /MARKETING_VERSION = ([^;]+);/u.exec(project)?.[1] ?? null;
+};
+
 const collectMismatches = (targetVersion) => {
   const rootVersion = readJsonFile(join(rootDirectory, 'package.json')).version;
   const functionsVersion = readJsonFile(
     join(rootDirectory, 'functions', 'package.json'),
   ).version;
   const androidVersion = readAndroidVersion();
+  const iosVersion = readIosVersion();
   const mismatches = [];
 
   if (rootVersion !== targetVersion) {
@@ -59,6 +68,9 @@ const collectMismatches = (targetVersion) => {
   }
   if (androidVersion !== targetVersion) {
     mismatches.push(`android versionName=${androidVersion}`);
+  }
+  if (iosVersion !== targetVersion) {
+    mismatches.push(`iOS MARKETING_VERSION=${iosVersion}`);
   }
 
   return { mismatches, rootVersion };
@@ -113,6 +125,7 @@ console.log(
       from: rootVersion,
       to: targetVersion,
       androidVersionCode: result.androidVersionCode,
+      iosBuildNumber: result.iosBuildNumber,
       action: 'Commit the synchronized release files before implementation.',
     },
     null,

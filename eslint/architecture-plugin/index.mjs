@@ -1,10 +1,11 @@
 /**
- * Project-owned ESLint plugin enforcing the v1.6.0 module-first architecture.
+ * Project-owned ESLint plugin enforcing the module-first architecture.
  *
  * Rule documentation lives in docs/eslint/. Rules are tested with ESLint's
  * RuleTester in tests/eslint/.
  */
 import enforceFileSuffixes from './rules/enforce-file-suffixes.mjs';
+import enforceDeclarationPlacement from './rules/enforce-declaration-placement.mjs';
 import noBrowserGlobalsOutsidePlatform from './rules/no-browser-globals-outside-platform.mjs';
 import noCrossModuleDeepImports from './rules/no-cross-module-deep-imports.mjs';
 import noEnvOutsideEnvironment from './rules/no-env-outside-environment.mjs';
@@ -17,6 +18,7 @@ import noTypescriptEnum from './rules/no-typescript-enum.mjs';
 export default {
   meta: { name: 'architecture', version: '1.0.0' },
   rules: {
+    'enforce-declaration-placement': enforceDeclarationPlacement,
     'enforce-file-suffixes': enforceFileSuffixes,
     'no-browser-globals-outside-platform': noBrowserGlobalsOutsidePlatform,
     'no-cross-module-deep-imports': noCrossModuleDeepImports,

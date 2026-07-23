@@ -1,9 +1,9 @@
 import '../settings.css';
 
-import type { CurrencyCode, Locale, Theme } from '@/modules/data-access';
+import type { CurrencyCode, Theme } from '@/modules/data-access';
 import { Download, Save, Trash2 } from '@/packages/icons';
 import { SUPPORTED_CURRENCIES } from '@/platform/device';
-import { ConfirmDialog } from '@/shared/ui';
+import { ConfirmDialog, LanguageSelect } from '@/shared/ui';
 
 import { AnalyticsConsentSection } from '../components/analytics-consent-section/analytics-consent-section.component';
 import { ChangePasswordSection } from '../components/change-password-section/change-password-section.component';
@@ -42,15 +42,11 @@ export function SettingsContainer() {
           </label>
           <label>
             {vm.t('language')}
-            <select
-              value={vm.locale}
-              onChange={(event) => {
-                vm.setLocale(event.target.value as Locale);
-              }}
-            >
-              <option value="en">English</option>
-              <option value="ar">العربية</option>
-            </select>
+            <LanguageSelect
+              locale={vm.locale}
+              label={vm.t('language')}
+              onChange={vm.setLocale}
+            />
           </label>
           <label>
             {vm.t('theme')}

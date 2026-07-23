@@ -16,7 +16,10 @@ export default defineConfig({
     actionTimeout: 15_000,
   },
   webServer: {
-    command: 'npm run build && npm run preview',
+    // Build, prerender the public pages, then serve dist with the same
+    // routing split as Vercel (static public pages, app.html SPA shell).
+    command:
+      'npm run build && npm run public:generate && node scripts/serve-dist.mjs --port=4173',
     url: 'http://127.0.0.1:4173',
     reuseExistingServer: !process.env.CI,
     timeout: 180_000,

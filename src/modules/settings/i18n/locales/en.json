@@ -1,0 +1,14 @@
+{
+  "analyticsPrivacy": "Analytics and privacy",
+  "analyticsPrivacyDescription": "Choose which anonymous diagnostics and product usage events FoodOrder may record. Emails, names, notes, payment proofs, and other private content are never analytics properties.",
+  "analyticsConsent": "Analytics consent",
+  "analyticsDenied": "Do not record analytics",
+  "analyticsOperationalOnly": "Operational diagnostics only",
+  "analyticsProduct": "Operational and product analytics",
+  "analyticsProductAndMarketing": "Operational, product, and upgrade analytics",
+  "analyticsDeniedDescription": "No optional analytics events are recorded. Ordering continues normally.",
+  "analyticsOperationalDescription": "Records privacy-safe reliability failures and performance diagnostics.",
+  "analyticsProductDescription": "Also records privacy-safe acquisition, activation, and feature usage events.",
+  "analyticsMarketingDescription": "Also records privacy-safe upgrade prompts and subscription funnel events.",
+  "analyticsConsentSaved": "Analytics preference saved."
+}

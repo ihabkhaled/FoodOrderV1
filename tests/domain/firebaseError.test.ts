@@ -6,11 +6,54 @@ import {
   userFacingErrorMessage,
   withFirebaseErrorTranslation,
 } from '@/packages/firebase';
+import { FIREBASE_ERROR_MESSAGES } from '@/packages/firebase/firebase-error-messages.constants';
+import { SUPPORTED_LOCALES } from '@/shared/i18n';
 
 const codedError = (code: string): Error & { code: string } =>
   Object.assign(new Error(`Firebase: Error (${code}).`), { code });
 
+const compareText = (left: string, right: string): number =>
+  left.localeCompare(right);
+
 describe('Firebase error localization', () => {
+  it('has nonblank, key-parity translations for every supported locale', () => {
+    const englishKeys = Object.keys(FIREBASE_ERROR_MESSAGES.en).toSorted(
+      compareText,
+    );
+
+    expect(Object.keys(FIREBASE_ERROR_MESSAGES).toSorted(compareText)).toEqual(
+      [...SUPPORTED_LOCALES].toSorted(compareText),
+    );
+    for (const locale of SUPPORTED_LOCALES) {
+      const messages = FIREBASE_ERROR_MESSAGES[locale];
+      expect(Object.keys(messages).toSorted(compareText)).toEqual(englishKeys);
+      for (const key of englishKeys) {
+        const message = messages[key as keyof typeof messages];
+        expect(message.trim()).not.toBe('');
+      }
+    }
+    for (const locale of SUPPORTED_LOCALES.filter((value) => value !== 'en')) {
+      const messages = FIREBASE_ERROR_MESSAGES[locale];
+      for (const key of englishKeys) {
+        expect(messages[key as keyof typeof messages]).not.toBe(
+          FIREBASE_ERROR_MESSAGES.en[
+            key as keyof typeof FIREBASE_ERROR_MESSAGES.en
+          ],
+        );
+      }
+    }
+  });
+
+  it('returns the selected locale instead of a binary English fallback', () => {
+    const error = codedError('auth/invalid-credential');
+
+    for (const locale of SUPPORTED_LOCALES) {
+      expect(firebaseErrorMessage(error, locale)).toBe(
+        FIREBASE_ERROR_MESSAGES[locale].invalidCredentials,
+      );
+    }
+  });
+
   it('translates invalid credentials without exposing Firebase text', () => {
     const error = codedError('auth/invalid-credential');
 

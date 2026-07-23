@@ -1,4 +1,5 @@
 import { subscribeToAppEvent } from '@/platform/browser';
+import { createPasswordSalt, hashPassword } from '@/platform/crypto';
 import { readWebStorage, removeWebStorage, writeWebStorage } from '@/platform/storage';
 import { createId, nowIso } from '@/shared/helpers';
 
@@ -6,6 +7,7 @@ import type { AuthService } from '../contracts/auth-service.interfaces';
 import type { ProfileDefaults, SessionUser, UserProfile } from '../types/domain.types';
 import {
   AUTH_EVENT,
+  type LocalUserRecord,
   notifyAuth,
   readDatabase,
   SESSION_KEY,
@@ -18,6 +20,27 @@ const rejectLocalResetLink = (): never => {
   throw new Error(
     'Password reset links require Firebase mode. In local mode, change your password from Settings.',
   );
+};
+
+/** Verifies a candidate password against a hashed (or legacy) record. */
+const matchesRecordPassword = async (
+  record: LocalUserRecord,
+  candidate: string,
+): Promise<boolean> => {
+  if (record.passwordHash !== undefined && record.passwordSalt !== undefined) {
+    return (await hashPassword(candidate, record.passwordSalt)) === record.passwordHash;
+  }
+  return record.password === candidate;
+};
+
+/** Replaces any stored credential with a freshly salted one-way hash. */
+const storeHashedPassword = async (
+  record: LocalUserRecord,
+  password: string,
+): Promise<void> => {
+  record.passwordSalt = createPasswordSalt();
+  record.passwordHash = await hashPassword(password, record.passwordSalt);
+  delete record.password;
 };
 
 export class LocalAuthService implements AuthService {
@@ -36,7 +59,14 @@ export class LocalAuthService implements AuthService {
     const record = Object.values(database.users).find(
       (item) => item.profile.email.toLowerCase() === email.trim().toLowerCase(),
     );
-    if (!record || record.password !== password) throw new Error('Invalid email or password.');
+    if (!record || !(await matchesRecordPassword(record, password))) {
+      throw new Error('Invalid email or password.');
+    }
+    if (record.password !== undefined) {
+      // Upgrade a legacy clear-text record to a salted hash in place.
+      await storeHashedPassword(record, password);
+      writeDatabase(database);
+    }
     writeWebStorage(SESSION_KEY, record.profile.id);
     notifyAuth();
     return toSessionUser(record.profile);
@@ -64,7 +94,9 @@ export class LocalAuthService implements AuthService {
       createdAt,
       updatedAt: createdAt,
     };
-    database.users[id] = { password, profile };
+    const record: LocalUserRecord = { profile };
+    await storeHashedPassword(record, password);
+    database.users[id] = record;
     database.buckets[id] = [];
     database.orders[id] = [];
     writeDatabase(database);
@@ -80,10 +112,10 @@ export class LocalAuthService implements AuthService {
   ): Promise<void> {
     const database = readDatabase();
     const record = database.users[user.id];
-    if (!record || record.password !== currentPassword) {
+    if (!record || !(await matchesRecordPassword(record, currentPassword))) {
       throw new Error('Invalid email or password.');
     }
-    record.password = newPassword;
+    await storeHashedPassword(record, newPassword);
     record.profile.updatedAt = nowIso();
     writeDatabase(database);
   }

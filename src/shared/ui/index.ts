@@ -2,6 +2,7 @@ export { BackLink } from './back-link';
 export { ConfirmDialog } from './confirm-dialog';
 export { EmptyState } from './empty-state';
 export { ErrorState } from './error-state';
+export { LanguageSelect } from './language-select';
 export { Loading } from './loading';
 export { PasswordField } from './password-field';
 export { RefreshableViewport, usePageRefresh } from './refresh';

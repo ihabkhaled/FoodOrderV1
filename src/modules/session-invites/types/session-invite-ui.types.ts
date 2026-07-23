@@ -6,7 +6,7 @@ import type {
 
 import type { SessionInviteMessageKey } from '../i18n/session-invite-messages.constants';
 
-export type SessionInviteLocale = Extract<Locale, 'en' | 'ar'>;
+export type SessionInviteLocale = Locale;
 export type GuestSessionMenuItem = GuestSessionView['menuItems'][number];
 export type GuestResponseAction = 'done' | 'skipped';
 
@@ -43,7 +43,6 @@ export interface SessionInviteViewModel {
 
 export interface SessionInviteLanguageSwitchProps {
   locale: SessionInviteLocale;
-  translate: SessionInviteTranslator;
   onChange: (locale: SessionInviteLocale) => void;
 }
 

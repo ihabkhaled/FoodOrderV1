@@ -94,7 +94,7 @@ const authUser = (
   const displayName =
     typeof auth.token.name === 'string' && auth.token.name.trim()
       ? auth.token.name.trim()
-      : email.split('@')[0] || 'User';
+      : email.split('@', 1)[0] || 'User';
   return { userId: auth.uid, displayName, email };
 };
 

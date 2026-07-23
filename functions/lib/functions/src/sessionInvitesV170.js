@@ -265,7 +265,7 @@ export const listSessionInvitesV170 = onCall({ region: REGION }, async (request)
     const snapshot = await reference.collection('invites').limit(100).get();
     return snapshot.docs
         .map((documentSnapshot) => documentSnapshot.data())
-        .sort((left, right) => right.createdAt.localeCompare(left.createdAt));
+        .toSorted((left, right) => right.createdAt.localeCompare(left.createdAt));
 });
 export const revokeSessionInviteV170 = onCall({ region: REGION }, async (request) => {
     const userId = requireAuth(request.auth);

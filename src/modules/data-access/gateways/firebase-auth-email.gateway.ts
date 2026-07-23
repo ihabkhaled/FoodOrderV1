@@ -1,5 +1,7 @@
 import { doc, sendPasswordResetEmail, setDoc } from '@/packages/firebase';
 import { getDocumentLanguage } from '@/platform/browser';
+import { DEFAULT_LOCALE, matchSupportedLocale } from '@/shared/i18n';
+import type { Locale } from '@/shared/types';
 
 import type {
   ProfileDefaults,
@@ -8,8 +10,8 @@ import type {
 import { FirebaseAuthService } from './firebase-auth.gateway';
 import { getFirebaseRuntime } from './firebase-runtime.gateway';
 
-const activeEmailLanguage = (): 'ar' | 'en' =>
-  getDocumentLanguage().toLowerCase().startsWith('ar') ? 'ar' : 'en';
+const activeEmailLanguage = (): Locale =>
+  matchSupportedLocale([getDocumentLanguage()]) ?? DEFAULT_LOCALE;
 
 export class FirebaseEmailAuthService extends FirebaseAuthService {
   override async register(

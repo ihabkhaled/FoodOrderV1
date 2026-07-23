@@ -48,6 +48,7 @@ console.log(
       from: currentVersion,
       to: nextVersion,
       androidVersionCode: result.androidVersionCode,
+      iosBuildNumber: result.iosBuildNumber,
       notes: result.notesPath.replace(`${rootDirectory}/`, ''),
       package: JSON.parse(readFileSync(packagePath, 'utf8')).version,
     },

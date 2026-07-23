@@ -207,7 +207,7 @@ export const toOrderParticipants = (
       displayName: contribution.displayName,
       quantities: { ...contribution.quantities },
     }))
-    .sort((a, b) => a.displayName.localeCompare(b.displayName));
+    .toSorted((a, b) => a.displayName.localeCompare(b.displayName));
 
 /** Group order lines snapshot the aggregate against current item pricing. */
 export const buildGroupOrderLines = (

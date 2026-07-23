@@ -1,6 +1,11 @@
 {
   "edges": [
     {
+      "source": "src/app/app-bootstrap.component.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/app/index.ts",
       "tests": [],
       "relationship": "inferred"
@@ -181,12 +186,27 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/buckets/components/bucket-collection-section/bucket-collection-section.types.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/buckets/components/bucket-filters/bucket-filters.component.tsx",
       "tests": [],
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/buckets/components/bucket-filters/bucket-filters.types.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/buckets/components/bucket-results/bucket-results.component.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/buckets/components/bucket-results/bucket-results.types.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -716,6 +736,66 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/group-orders/i18n/locales/ar.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/group-orders/i18n/locales/de.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/group-orders/i18n/locales/en.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/group-orders/i18n/locales/es.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/group-orders/i18n/locales/fa.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/group-orders/i18n/locales/fr.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/group-orders/i18n/locales/hi.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/group-orders/i18n/locales/it.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/group-orders/i18n/locales/ja.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/group-orders/i18n/locales/pt-BR.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/group-orders/i18n/locales/th.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/group-orders/i18n/locales/zh-CN.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/group-orders/i18n/translate-group-order.helper.ts",
       "tests": [],
       "relationship": "inferred"
@@ -747,6 +827,11 @@
     },
     {
       "source": "src/modules/notifications/components/notification-center/notification-center.container.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/notifications/components/notification-center/notification-center.types.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -837,6 +922,66 @@
     },
     {
       "source": "src/modules/order-sessions/hooks/use-session-lifecycle-confirmation.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/order-sessions/i18n/locales/ar.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/order-sessions/i18n/locales/de.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/order-sessions/i18n/locales/en.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/order-sessions/i18n/locales/es.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/order-sessions/i18n/locales/fa.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/order-sessions/i18n/locales/fr.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/order-sessions/i18n/locales/hi.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/order-sessions/i18n/locales/it.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/order-sessions/i18n/locales/ja.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/order-sessions/i18n/locales/pt-BR.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/order-sessions/i18n/locales/th.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/order-sessions/i18n/locales/zh-CN.json",
       "tests": [],
       "relationship": "inferred"
     },
@@ -946,6 +1091,136 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/public-content/components/public-footer.component.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/public-content/components/public-header.component.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/public-content/components/public-page.component.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/public-content/components/public-system-page.component.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/public-content/containers/public-content.container.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/public-content/content/locales/de.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/public-content/content/locales/es.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/public-content/content/locales/fa.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/public-content/content/locales/fr.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/public-content/content/locales/hi.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/public-content/content/locales/it.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/public-content/content/locales/ja.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/public-content/content/locales/pt-BR.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/public-content/content/locales/th.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/public-content/content/locales/zh-CN.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/public-content/content/public-content.catalog.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/public-content/helpers/ad-eligibility.helper.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/public-content/helpers/build-public-content-view-model.helper.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/public-content/helpers/build-public-metadata.helper.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/public-content/helpers/public-content-catalog.helper.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/public-content/hooks/use-public-content.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/public-content/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/public-content/public-content.css",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/public-content/routes/public-content-route-registry.helper.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/public-content/routes/public-content.routes.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/public-content/types/public-content.types.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/session-invites/components/guest-session-order/guest-session-order.component.tsx",
       "tests": [],
       "relationship": "inferred"
@@ -972,6 +1247,66 @@
     },
     {
       "source": "src/modules/session-invites/hooks/use-session-invite.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/session-invites/i18n/locales/ar.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/session-invites/i18n/locales/de.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/session-invites/i18n/locales/en.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/session-invites/i18n/locales/es.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/session-invites/i18n/locales/fa.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/session-invites/i18n/locales/fr.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/session-invites/i18n/locales/hi.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/session-invites/i18n/locales/it.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/session-invites/i18n/locales/ja.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/session-invites/i18n/locales/pt-BR.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/session-invites/i18n/locales/th.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/session-invites/i18n/locales/zh-CN.json",
       "tests": [],
       "relationship": "inferred"
     },
@@ -1082,6 +1417,66 @@
     },
     {
       "source": "src/modules/settings/hooks/use-settings.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/settings/i18n/locales/ar.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/settings/i18n/locales/de.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/settings/i18n/locales/en.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/settings/i18n/locales/es.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/settings/i18n/locales/fa.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/settings/i18n/locales/fr.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/settings/i18n/locales/hi.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/settings/i18n/locales/it.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/settings/i18n/locales/ja.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/settings/i18n/locales/pt-BR.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/settings/i18n/locales/th.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/settings/i18n/locales/zh-CN.json",
       "tests": [],
       "relationship": "inferred"
     },
@@ -1201,6 +1596,66 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/social/i18n/locales/ar.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/social/i18n/locales/de.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/social/i18n/locales/en.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/social/i18n/locales/es.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/social/i18n/locales/fa.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/social/i18n/locales/fr.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/social/i18n/locales/hi.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/social/i18n/locales/it.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/social/i18n/locales/ja.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/social/i18n/locales/pt-BR.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/social/i18n/locales/th.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/social/i18n/locales/zh-CN.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/social/i18n/social-messages.constants.ts",
       "tests": [],
       "relationship": "inferred"
@@ -1301,7 +1756,22 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/packages/firebase/firebase-error-messages.constants.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/packages/firebase/firebase-error.adapter.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/packages/firebase/firebase-error.interfaces.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/packages/firebase/firebase-error.types.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -1337,6 +1807,16 @@
     },
     {
       "source": "src/platform/browser/app-events.adapter.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/platform/browser/bootstrap-document.adapter.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/platform/browser/browser-language.adapter.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -1386,6 +1866,16 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/platform/crypto/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/platform/crypto/password-hash.adapter.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/platform/device/device-config.adapter.ts",
       "tests": [],
       "relationship": "inferred"
@@ -1402,6 +1892,11 @@
     },
     {
       "source": "src/platform/device/platform-init.adapter.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/platform/device/runtime-platform.adapter.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -1461,6 +1956,11 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/shared/helpers/intl.helper.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/shared/helpers/money.helper.ts",
       "tests": [],
       "relationship": "inferred"
@@ -1477,6 +1977,76 @@
     },
     {
       "source": "src/shared/i18n/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/i18n/locale.constants.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/i18n/locales/ar.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/i18n/locales/de.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/i18n/locales/en.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/i18n/locales/es.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/i18n/locales/fa.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/i18n/locales/fr.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/i18n/locales/hi.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/i18n/locales/it.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/i18n/locales/ja.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/i18n/locales/pt-BR.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/i18n/locales/th.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/i18n/locales/zh-CN.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/i18n/message-catalog-validation.helper.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -1571,6 +2141,21 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/shared/ui/language-select/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/ui/language-select/language-select.component.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/ui/language-select/language-select.types.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/shared/ui/loading/index.ts",
       "tests": [],
       "relationship": "inferred"
@@ -1626,6 +2211,11 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/shared/ui/refresh/refreshable-viewport.types.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/shared/ui/refresh/use-page-refresh.hook.ts",
       "tests": [],
       "relationship": "inferred"
@@ -1657,6 +2247,11 @@
     },
     {
       "source": "src/shared/ui/virtual-list-footer/virtual-list-footer.component.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/ui/virtual-list-footer/virtual-list-footer.types.ts",
       "tests": [],
       "relationship": "inferred"
     },

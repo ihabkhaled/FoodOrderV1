@@ -100,7 +100,7 @@ const actorName = (token: Record<string, unknown>): string => {
   if (typeof name === 'string' && name.trim()) return name.trim();
   const email = token.email;
   if (typeof email === 'string' && email.includes('@')) {
-    return email.split('@')[0] ?? 'User';
+    return email.split('@', 1)[0] ?? 'User';
   }
   return 'User';
 };

@@ -2,14 +2,13 @@ import { NotificationCenter } from '@/modules/notifications';
 import {
   ChevronLeft,
   ChevronRight,
-  Languages,
   LogOut,
   Wifi,
   WifiOff,
 } from '@/packages/icons';
 import { NavLink, Outlet } from '@/packages/router';
 import { nextTheme } from '@/platform/device';
-import { RefreshableViewport } from '@/shared/ui';
+import { LanguageSelect, RefreshableViewport } from '@/shared/ui';
 
 import { HOME_PATH } from '../router/app-route-paths.constants';
 import { THEME_ICON, THEME_LABEL } from './app-layout.constants';
@@ -38,7 +37,6 @@ export function AppLayoutContainer() {
     markNotificationsRead,
   } = useAppLayout();
 
-  const otherLocale = locale === 'ar' ? 'en' : 'ar';
   const ThemeIcon = THEME_ICON[theme];
   const connection = (
     <span className={`connection ${online ? 'online' : 'offline'}`}>
@@ -48,17 +46,13 @@ export function AppLayoutContainer() {
       </span>
     </span>
   );
-  const localeButton = (
-    <button
-      className="icon-button"
-      onClick={() => void setDeviceLocale(otherLocale)}
-      title={otherLocale === 'ar' ? t('switchToArabic') : t('switchToEnglish')}
-      aria-label={
-        otherLocale === 'ar' ? t('switchToArabic') : t('switchToEnglish')
-      }
-    >
-      <Languages />
-    </button>
+  const localeSelect = (
+    <LanguageSelect
+      locale={locale}
+      label={t('language')}
+      className="shell-language-select"
+      onChange={(nextLocale) => void setDeviceLocale(nextLocale)}
+    />
   );
   const themeButton = (
     <button
@@ -108,7 +102,7 @@ export function AppLayoutContainer() {
               placement="sidebar"
               onMarkRead={markNotificationsRead}
             />
-            {localeButton}
+            {localeSelect}
             {themeButton}
           </div>
           {connection}
@@ -138,7 +132,7 @@ export function AppLayoutContainer() {
             placement="topbar"
             onMarkRead={markNotificationsRead}
           />
-          {localeButton}
+          {localeSelect}
           {themeButton}
           {connection}
           {logoutButton}

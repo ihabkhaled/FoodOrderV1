@@ -1,0 +1,14 @@
+{
+  "analyticsPrivacy": "分析与隐私",
+  "analyticsPrivacyDescription": "选择 FoodOrder 可以记录哪些匿名诊断信息和产品使用事件。电子邮箱、姓名、备注、付款凭证及其他私密内容绝不会成为分析属性。",
+  "analyticsConsent": "分析数据授权",
+  "analyticsDenied": "不记录分析数据",
+  "analyticsOperationalOnly": "仅记录运行诊断",
+  "analyticsProduct": "运行与产品分析",
+  "analyticsProductAndMarketing": "运行、产品与升级分析",
+  "analyticsDeniedDescription": "不会记录任何可选分析事件。下单功能仍可正常使用。",
+  "analyticsOperationalDescription": "记录保护隐私的可靠性故障和性能诊断信息。",
+  "analyticsProductDescription": "同时记录保护隐私的获客、激活和功能使用事件。",
+  "analyticsMarketingDescription": "同时记录保护隐私的升级提示和订阅流程事件。",
+  "analyticsConsentSaved": "分析偏好已保存。"
+}

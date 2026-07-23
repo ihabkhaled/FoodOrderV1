@@ -54,7 +54,7 @@ jobs:
       - run: npm ci
       # Typed lint resolves functions/src imports, so functions deps must be
       # installed even though this job only builds the application.
-      - run: npm --prefix functions ci
+      - run: (cd functions && npm ci --ignore-scripts)
       - run: npm run format:check
       - run: npm run lint
       - run: npm run typecheck
@@ -77,8 +77,13 @@ jobs:
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: functions/package-lock.json
-      - run: npm --prefix functions ci
+          cache-dependency-path: |
+            package-lock.json
+            functions/package-lock.json
+      # functions depends on the repo root (file:..), whose prepare script
+      # needs root devDependencies, so the root install must come first.
+      - run: npm ci
+      - run: (cd functions && npm ci --ignore-scripts)
       - run: npm --prefix functions run typecheck
       - run: npm --prefix functions run build
       - run: npm --prefix functions run test

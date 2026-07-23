@@ -63,7 +63,7 @@ jobs:
             package-lock.json
             functions/package-lock.json
       - run: npm ci
-      - run: npm --prefix functions ci
+      - run: (cd functions && npm ci --ignore-scripts)
       - name: Run ESLint autofix
         run: npm run lint:fix
       - name: Require committed autofixes
@@ -116,8 +116,13 @@ jobs:
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: functions/package-lock.json
-      - run: npm --prefix functions ci
+          cache-dependency-path: |
+            package-lock.json
+            functions/package-lock.json
+      # functions depends on the repo root (file:..), whose prepare script
+      # needs root devDependencies, so the root install must come first.
+      - run: npm ci
+      - run: (cd functions && npm ci --ignore-scripts)
       - run: npm --prefix functions run typecheck
       - run: npm --prefix functions run build
       - run: npm --prefix functions run test
@@ -311,7 +316,7 @@ jobs:
           output: trivy-results.sarif
           severity: CRITICAL,HIGH
           ignore-unfixed: true
-          exit-code: '0'
+          exit-code: '1'
           skip-dirs: node_modules,dist,coverage,android,ios,ui-shots
       - uses: actions/upload-artifact@v7
         if: always()
@@ -388,7 +393,7 @@ jobs:
             package-lock.json
             functions/package-lock.json
       - run: npm ci
-      - run: npm --prefix functions ci
+      - run: (cd functions && npm ci --ignore-scripts)
       - name: Revalidate release and callable package
         run: |
           npm run quality:release

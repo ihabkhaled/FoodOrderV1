@@ -24,10 +24,15 @@ module homes land).
    unmount guard for async setState.
 4. Return a cohesive view-model object (data, status flags, callbacks) — not a grab-bag.
 5. Extract pure logic into `helpers/` so it is unit-testable without React.
+6. Put input/view-model interfaces in sibling `*.interfaces.ts`, state/type aliases in
+   `*.types.ts`, enum-like sets in `*.enums.ts`, and module constants in
+   `*.constants.ts`. The hook file contains hook behavior only.
 
 ## Forbidden shortcuts
 
 - Defining the hook in a container/component file ("inline for now").
+- Declaring interfaces, type aliases, enum-like sets, lookup tables, regular expressions,
+  limits, or other module constants in the hook file.
 - `window.setTimeout`/listeners directly — go through `src/platform`.
 - Suppressing `exhaustive-deps` instead of restructuring dependencies.
 - Duplicating session state or caching gateway data in module state.
@@ -46,5 +51,6 @@ npm run test:e2e   # owning journey
 
 ## Definition of done
 
-Hook file lints clean under `architecture/no-hooks-outside-hook-files`, effects clean up,
-pure logic extracted and tested, consumers import it from the module path.
+Hook file lints clean under `architecture/no-hooks-outside-hook-files` and
+`architecture/enforce-declaration-placement`; effects clean up, declarations and pure
+logic are extracted and tested, and consumers import it from the module path.

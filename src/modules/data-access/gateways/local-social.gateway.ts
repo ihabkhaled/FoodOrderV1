@@ -57,9 +57,7 @@ const strongestRole = (
   requested: ShareRole,
 ): ShareRole => {
   const normalized: ShareRole =
-    current === 'editor' || current === 'contributor' || current === 'viewer'
-      ? current
-      : 'viewer';
+    current !== undefined && current !== 'owner' ? current : 'viewer';
   return rolePriority[normalized] >= rolePriority[requested]
     ? normalized
     : requested;
@@ -170,7 +168,7 @@ const updateBucketMember = (
     updatedAt: timestamp,
     accessSources: [
       ...new Set([...(activeExisting?.accessSources ?? []), sourceId]),
-    ].sort((left, right) => left.localeCompare(right)),
+    ].toSorted((left, right) => left.localeCompare(right)),
   };
   if (index === -1) members.push(saved);
   else members[index] = saved;

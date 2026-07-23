@@ -1,6 +1,6 @@
 {
   "name": "food-order-v1-functions",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "private": true,
   "type": "module",
   "main": "lib/functions/src/entry.js",
@@ -14,9 +14,13 @@
   },
   "dependencies": {
     "firebase-admin": "13.10.0",
-    "firebase-functions": "7.2.5"
+    "firebase-functions": "7.2.5",
+    "food-order-v1": "file:.."
   },
   "devDependencies": {
     "typescript": "5.9.3"
+  },
+  "overrides": {
+    "uuid": "^11.1.1"
   }
 }

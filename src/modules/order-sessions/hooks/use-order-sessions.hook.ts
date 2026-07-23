@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import {
+  type Locale,
   type OrderSession,
   orderSessionService,
 } from '@/modules/data-access';
@@ -12,17 +13,16 @@ export interface OrderSessionsViewModel {
   sessions: OrderSession[];
   loading: boolean;
   error: string;
-  locale: 'en' | 'ar';
+  locale: Locale;
   translate: typeof translateOrderSession;
   refresh: () => Promise<void>;
 }
 
 export function useOrderSessions(): OrderSessionsViewModel {
-  const { user, profile } = useApp();
+  const { user, locale } = useApp();
   const [sessions, setSessions] = useState<OrderSession[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const locale = profile?.locale ?? 'en';
 
   const refresh = useCallback(async () => {
     if (!user) {

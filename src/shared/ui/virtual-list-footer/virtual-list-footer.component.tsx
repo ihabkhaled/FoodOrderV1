@@ -1,10 +1,6 @@
-interface VirtualListFooterProps {
-  readonly loading: boolean;
-  readonly hasMore: boolean;
-  readonly error: string;
-  readonly locale: 'en' | 'ar';
-  readonly onRetry: () => void;
-}
+import { translate } from '@/shared/i18n';
+
+import type { VirtualListFooterProps } from './virtual-list-footer.types';
 
 export function VirtualListFooter({
   loading,
@@ -18,7 +14,7 @@ export function VirtualListFooter({
       <div className="virtual-list-footer" role="alert">
         <span>{error}</span>
         <button type="button" className="button secondary" onClick={onRetry}>
-          {locale === 'ar' ? 'إعادة المحاولة' : 'Retry'}
+          {translate(locale, 'tryAgain')}
         </button>
       </div>
     );
@@ -26,14 +22,14 @@ export function VirtualListFooter({
   if (loading) {
     return (
       <div className="virtual-list-footer" role="status">
-        {locale === 'ar' ? 'جارٍ تحميل المزيد…' : 'Loading more…'}
+        {translate(locale, 'loadingMore')}
       </div>
     );
   }
   if (!hasMore) {
     return (
       <div className="virtual-list-footer">
-        {locale === 'ar' ? 'تم تحميل كل النتائج.' : 'All results loaded.'}
+        {translate(locale, 'allResultsLoaded')}
       </div>
     );
   }

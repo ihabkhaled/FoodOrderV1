@@ -1,0 +1,1009 @@
+{
+  "site": {
+    "brandName": "Gama3 Orderak",
+    "canonicalOrigin": "https://food-order-v1-peach.vercel.app",
+    "socialImagePath": "/social-preview.png",
+    "applicationPath": "/app",
+    "repositoryUrl": "https://github.com/ihabkhaled/FoodOrderV1"
+  },
+  "locales": [
+    {
+      "code": "en",
+      "segment": "",
+      "htmlLang": "en",
+      "openGraphLocale": "en_US",
+      "direction": "ltr",
+      "label": "English",
+      "contentSource": "en"
+    },
+    {
+      "code": "ar",
+      "segment": "ar",
+      "htmlLang": "ar",
+      "openGraphLocale": "ar_AR",
+      "direction": "rtl",
+      "label": "العربية",
+      "contentSource": "ar"
+    },
+    {
+      "code": "it",
+      "segment": "it",
+      "htmlLang": "it",
+      "openGraphLocale": "it_IT",
+      "direction": "ltr",
+      "label": "Italiano",
+      "contentSource": "it"
+    },
+    {
+      "code": "fa",
+      "segment": "fa",
+      "htmlLang": "fa",
+      "openGraphLocale": "fa_IR",
+      "direction": "rtl",
+      "label": "فارسی",
+      "contentSource": "fa"
+    },
+    {
+      "code": "fr",
+      "segment": "fr",
+      "htmlLang": "fr",
+      "openGraphLocale": "fr_FR",
+      "direction": "ltr",
+      "label": "Français",
+      "contentSource": "fr"
+    },
+    {
+      "code": "de",
+      "segment": "de",
+      "htmlLang": "de",
+      "openGraphLocale": "de_DE",
+      "direction": "ltr",
+      "label": "Deutsch",
+      "contentSource": "de"
+    },
+    {
+      "code": "es",
+      "segment": "es",
+      "htmlLang": "es",
+      "openGraphLocale": "es_ES",
+      "direction": "ltr",
+      "label": "Español",
+      "contentSource": "es"
+    },
+    {
+      "code": "pt-BR",
+      "segment": "pt-br",
+      "htmlLang": "pt-BR",
+      "openGraphLocale": "pt_BR",
+      "direction": "ltr",
+      "label": "Português (Brasil)",
+      "contentSource": "pt-BR"
+    },
+    {
+      "code": "hi",
+      "segment": "hi",
+      "htmlLang": "hi",
+      "openGraphLocale": "hi_IN",
+      "direction": "ltr",
+      "label": "हिन्दी",
+      "contentSource": "hi"
+    },
+    {
+      "code": "th",
+      "segment": "th",
+      "htmlLang": "th",
+      "openGraphLocale": "th_TH",
+      "direction": "ltr",
+      "label": "ไทย",
+      "contentSource": "th"
+    },
+    {
+      "code": "zh-CN",
+      "segment": "zh-cn",
+      "htmlLang": "zh-CN",
+      "openGraphLocale": "zh_CN",
+      "direction": "ltr",
+      "label": "简体中文",
+      "contentSource": "zh-CN"
+    },
+    {
+      "code": "ja",
+      "segment": "ja",
+      "htmlLang": "ja",
+      "openGraphLocale": "ja_JP",
+      "direction": "ltr",
+      "label": "日本語",
+      "contentSource": "ja"
+    }
+  ],
+  "ui": {
+    "en": {
+      "primaryNavigationLabel": "Public navigation",
+      "mobileNavigationLabel": "Open navigation",
+      "languageLabel": "Language",
+      "openApplicationLabel": "Open the app",
+      "skipToContentLabel": "Skip to content",
+      "footerNavigationLabel": "Footer navigation",
+      "footerTagline": "Clear group food orders, from the first choice to the final receipt.",
+      "allRightsReservedLabel": "All rights reserved.",
+      "backHomeLabel": "Return to the homepage",
+      "tryAgainLabel": "Try again",
+      "learnMoreLabel": "See how it works"
+    },
+    "ar": {
+      "primaryNavigationLabel": "التنقل في الصفحات العامة",
+      "mobileNavigationLabel": "فتح قائمة التنقل",
+      "languageLabel": "اللغة",
+      "openApplicationLabel": "افتح التطبيق",
+      "skipToContentLabel": "انتقل إلى المحتوى",
+      "footerNavigationLabel": "روابط التذييل",
+      "footerTagline": "طلبات جماعية واضحة، من أول اختيار حتى الإيصال النهائي.",
+      "allRightsReservedLabel": "جميع الحقوق محفوظة.",
+      "backHomeLabel": "العودة إلى الصفحة الرئيسية",
+      "tryAgainLabel": "حاول مرة أخرى",
+      "learnMoreLabel": "اعرف كيف يعمل"
+    }
+  },
+  "pages": [
+    {
+      "id": "home",
+      "slug": "",
+      "navigation": true,
+      "adEligible": true,
+      "copy": {
+        "en": {
+          "navigationLabel": "Home",
+          "seoTitle": "Gama3 Orderak | Group Food Orders Without the Chaos",
+          "description": "Create reusable food buckets, collect everyone's choices, calculate fees, freeze the final order, and share clear receipts.",
+          "eyebrow": "One shared order. Everyone stays in sync.",
+          "heading": "Collect group food orders without chasing messages",
+          "introduction": "Gama3 Orderak gives organizers one dependable place to build a menu, invite people, track every choice, and turn the final total into receipts the group can understand.",
+          "sections": [
+            {
+              "heading": "Start with a reusable food bucket",
+              "paragraphs": [
+                "Save the items your group orders most often, including prices and optional VAT, service, and delivery rules. Reuse the same bucket next time instead of rebuilding a menu in chat."
+              ],
+              "bullets": [
+                "Create and edit menu items",
+                "Keep recurring orders consistent",
+                "Choose private or collaborative workflows"
+              ]
+            },
+            {
+              "heading": "Invite, collect, and review",
+              "paragraphs": [
+                "Share a controlled invitation, let each participant record their own quantities, and see the aggregate update as contributions arrive."
+              ],
+              "bullets": [
+                "Guest-friendly order invitations",
+                "Clear contribution status",
+                "An organizer-controlled finalization step"
+              ]
+            },
+            {
+              "heading": "Finish with totals people can verify",
+              "paragraphs": [
+                "Freeze the order before it is placed, calculate configured fees consistently, and distribute receipt amounts by person or by item."
+              ],
+              "bullets": [
+                "Stable final quantities",
+                "Transparent fee breakdowns",
+                "Shareable receipt views"
+              ]
+            }
+          ]
+        },
+        "ar": {
+          "navigationLabel": "الرئيسية",
+          "seoTitle": "جمّع أوردرَك | طلبات الأكل الجماعية بدون فوضى",
+          "description": "أنشئ قوائم طعام قابلة لإعادة الاستخدام، واجمع اختيارات الجميع، واحسب الرسوم، وثبّت الطلب النهائي، وشارك إيصالات واضحة.",
+          "eyebrow": "طلب واحد مشترك، وكل شخص يعرف آخر تحديث.",
+          "heading": "اجمع طلبات الأكل الجماعية بدون مطاردة الرسائل",
+          "introduction": "يمنح جمّع أوردرَك المنظّم مكانًا واحدًا لبناء القائمة ودعوة المشاركين ومتابعة كل اختيار وتحويل الإجمالي النهائي إلى إيصالات مفهومة للجميع.",
+          "sections": [
+            {
+              "heading": "ابدأ بقائمة طعام قابلة لإعادة الاستخدام",
+              "paragraphs": [
+                "احفظ الأصناف التي تطلبها مجموعتك عادةً مع الأسعار وقواعد ضريبة القيمة المضافة والخدمة والتوصيل الاختيارية، ثم استخدم القائمة نفسها في المرة القادمة بدلًا من بنائها من جديد داخل المحادثات."
+              ],
+              "bullets": [
+                "إنشاء أصناف القائمة وتعديلها",
+                "توحيد الطلبات المتكررة",
+                "اختيار سير عمل خاص أو تعاوني"
+              ]
+            },
+            {
+              "heading": "ادعُ المشاركين واجمع اختياراتهم وراجعها",
+              "paragraphs": [
+                "شارك دعوة محكومة، ودع كل مشارك يسجل كمياته بنفسه، وشاهد الإجمالي يتحدث مع وصول المساهمات."
+              ],
+              "bullets": [
+                "دعوات مناسبة للضيوف",
+                "حالة واضحة لكل مساهمة",
+                "خطوة إنهاء يتحكم بها المنظّم"
+              ]
+            },
+            {
+              "heading": "اختم بإجماليات يمكن للجميع مراجعتها",
+              "paragraphs": [
+                "ثبّت الطلب قبل إرساله، واحسب الرسوم المضبوطة بطريقة متسقة، ووزّع مبالغ الإيصال حسب الشخص أو حسب الصنف."
+              ],
+              "bullets": [
+                "كميات نهائية ثابتة",
+                "تفصيل شفاف للرسوم",
+                "عروض إيصال قابلة للمشاركة"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "about",
+      "slug": "about",
+      "navigation": true,
+      "adEligible": true,
+      "copy": {
+        "en": {
+          "navigationLabel": "About",
+          "seoTitle": "About Gama3 Orderak | Built for Real Group Orders",
+          "description": "Learn why Gama3 Orderak turns scattered food-order messages into a clear, accountable group workflow.",
+          "eyebrow": "Why this product exists",
+          "heading": "Group ordering should feel coordinated, not complicated",
+          "introduction": "Gama3 Orderak was designed around a familiar problem: one person collects many changing choices across messages, then has to reconcile totals under time pressure.",
+          "sections": [
+            {
+              "heading": "A practical source of truth",
+              "paragraphs": [
+                "The application keeps the menu, participants, quantities, status, and final receipt together. Organizers can see what changed without reconstructing a conversation history."
+              ]
+            },
+            {
+              "heading": "Useful with or without cloud services",
+              "paragraphs": [
+                "The product supports connected collaboration and a fully functional local-device mode. The available capabilities are shown honestly so people know where their order is stored."
+              ]
+            },
+            {
+              "heading": "Privacy and ownership first",
+              "paragraphs": [
+                "Private records remain scoped to their owners and invited participants. The product avoids making public claims about private order data and exposes only the information required for each workflow."
+              ]
+            }
+          ]
+        },
+        "ar": {
+          "navigationLabel": "عن التطبيق",
+          "seoTitle": "عن جمّع أوردرَك | مصمم للطلبات الجماعية الحقيقية",
+          "description": "اعرف لماذا يحوّل جمّع أوردرَك رسائل طلب الطعام المتفرقة إلى سير عمل جماعي واضح ومسؤول.",
+          "eyebrow": "لماذا صنعنا هذا المنتج",
+          "heading": "الطلب الجماعي يجب أن يكون منظمًا لا معقدًا",
+          "introduction": "صُمم جمّع أوردرَك حول مشكلة مألوفة: شخص واحد يجمع اختيارات كثيرة ومتغيرة من الرسائل، ثم يطابق الإجماليات تحت ضغط الوقت.",
+          "sections": [
+            {
+              "heading": "مرجع عملي واحد",
+              "paragraphs": [
+                "يجمع التطبيق القائمة والمشاركين والكميات والحالة والإيصال النهائي في مكان واحد، فيرى المنظّم ما تغير دون إعادة بناء سجل المحادثة."
+              ]
+            },
+            {
+              "heading": "مفيد مع الخدمات السحابية أو بدونها",
+              "paragraphs": [
+                "يدعم المنتج التعاون المتصل ووضعًا محليًا كامل الوظائف على الجهاز، ويعرض الإمكانات المتاحة بوضوح حتى يعرف المستخدم أين تُحفظ طلباته."
+              ]
+            },
+            {
+              "heading": "الخصوصية والملكية أولًا",
+              "paragraphs": [
+                "تبقى السجلات الخاصة محصورة في أصحابها والمشاركين المدعوين، ولا ينشر المنتج بيانات الطلبات الخاصة أو يعرض أكثر مما يحتاجه كل سير عمل."
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "how-it-works",
+      "slug": "how-it-works",
+      "navigation": true,
+      "adEligible": true,
+      "copy": {
+        "en": {
+          "navigationLabel": "How it works",
+          "seoTitle": "How Gama3 Orderak Works | From Menu to Receipt",
+          "description": "Follow the group-order workflow: prepare a menu, invite participants, collect choices, lock the order, and distribute receipts.",
+          "eyebrow": "A predictable five-step workflow",
+          "heading": "From menu to final receipt in one shared flow",
+          "introduction": "Each stage has a clear owner and status, so the group knows when choices are still open and when the order is ready to place.",
+          "sections": [
+            {
+              "heading": "1. Prepare the menu",
+              "paragraphs": [
+                "Create a reusable bucket with item names, prices, and the fee policy that applies to this order."
+              ]
+            },
+            {
+              "heading": "2. Start a group session",
+              "paragraphs": [
+                "Choose the menu, open a collection session, and share its invitation with the people ordering."
+              ]
+            },
+            {
+              "heading": "3. Collect individual choices",
+              "paragraphs": [
+                "Participants add their own quantities while the organizer monitors progress and the combined order."
+              ]
+            },
+            {
+              "heading": "4. Lock and confirm",
+              "paragraphs": [
+                "Close collection before placing the restaurant order so later edits cannot silently change the final quantities."
+              ]
+            },
+            {
+              "heading": "5. Settle with a clear receipt",
+              "paragraphs": [
+                "Review subtotal and configured fees, then use participant and item views to explain what each person owes."
+              ]
+            }
+          ]
+        },
+        "ar": {
+          "navigationLabel": "كيف يعمل",
+          "seoTitle": "كيف يعمل جمّع أوردرَك | من القائمة إلى الإيصال",
+          "description": "اتبع سير الطلب الجماعي: جهّز القائمة، وادعُ المشاركين، واجمع الاختيارات، وثبّت الطلب، ووزّع الإيصالات.",
+          "eyebrow": "سير متوقع من خمس خطوات",
+          "heading": "من القائمة إلى الإيصال النهائي في مسار مشترك واحد",
+          "introduction": "لكل مرحلة مسؤول وحالة واضحان، لذلك تعرف المجموعة متى تظل الاختيارات مفتوحة ومتى يصبح الطلب جاهزًا للإرسال.",
+          "sections": [
+            {
+              "heading": "١. جهّز القائمة",
+              "paragraphs": [
+                "أنشئ قائمة قابلة لإعادة الاستخدام بأسماء الأصناف وأسعارها وسياسة الرسوم التي تنطبق على الطلب."
+              ]
+            },
+            {
+              "heading": "٢. ابدأ جلسة جماعية",
+              "paragraphs": [
+                "اختر القائمة وافتح جلسة جمع وشارك دعوتها مع الأشخاص المشاركين في الطلب."
+              ]
+            },
+            {
+              "heading": "٣. اجمع اختيارات كل شخص",
+              "paragraphs": [
+                "يضيف المشاركون كمياتهم بأنفسهم، بينما يتابع المنظّم التقدم والطلب المجمّع."
+              ]
+            },
+            {
+              "heading": "٤. ثبّت الطلب وأكده",
+              "paragraphs": [
+                "أغلق الجمع قبل إرسال الطلب للمطعم حتى لا تغير تعديلات لاحقة الكميات النهائية دون علمك."
+              ]
+            },
+            {
+              "heading": "٥. سوِّ الحساب بإيصال واضح",
+              "paragraphs": [
+                "راجع المجموع الفرعي والرسوم المضبوطة، ثم استخدم عرض الأشخاص أو الأصناف لتوضيح نصيب كل مشارك."
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "features",
+      "slug": "features",
+      "navigation": true,
+      "adEligible": true,
+      "copy": {
+        "en": {
+          "navigationLabel": "Features",
+          "seoTitle": "Gama3 Orderak Features | Menus, Sessions, Totals, Receipts",
+          "description": "Explore reusable menus, live group contributions, order locking, fee calculations, receipt allocation, privacy, and local mode.",
+          "eyebrow": "Tools for the entire order lifecycle",
+          "heading": "The details that keep a group order dependable",
+          "introduction": "Gama3 Orderak connects preparation, collaboration, confirmation, and settlement instead of treating them as separate spreadsheets and message threads.",
+          "sections": [
+            {
+              "heading": "Reusable buckets",
+              "paragraphs": [
+                "Store recurring menus with priced items, custom-item controls, visibility, and pricing policies."
+              ]
+            },
+            {
+              "heading": "Participant contributions",
+              "paragraphs": [
+                "Track each person's quantities separately while maintaining an accurate aggregate for the organizer."
+              ]
+            },
+            {
+              "heading": "Lifecycle controls",
+              "paragraphs": [
+                "Move an order through collecting, locking, confirmation, delivery, and settlement with explicit transitions."
+              ]
+            },
+            {
+              "heading": "Pricing and receipts",
+              "paragraphs": [
+                "Calculate subtotal, VAT, service, and delivery rules, then inspect receipt allocation by participant or by item."
+              ]
+            },
+            {
+              "heading": "Responsive and bilingual interface",
+              "paragraphs": [
+                "Use the application across mobile and desktop layouts with English and Arabic interface support, including right-to-left presentation."
+              ]
+            },
+            {
+              "heading": "Cloud or local-device storage",
+              "paragraphs": [
+                "Use Firebase-backed collaboration when configured or continue with the deterministic local-device implementation."
+              ]
+            }
+          ]
+        },
+        "ar": {
+          "navigationLabel": "المزايا",
+          "seoTitle": "مزايا جمّع أوردرَك | قوائم وجلسات وإجماليات وإيصالات",
+          "description": "اكتشف القوائم القابلة لإعادة الاستخدام والمساهمات الجماعية وتثبيت الطلب وحساب الرسوم وتوزيع الإيصال والخصوصية والوضع المحلي.",
+          "eyebrow": "أدوات لكل مراحل الطلب",
+          "heading": "التفاصيل التي تجعل الطلب الجماعي موثوقًا",
+          "introduction": "يربط جمّع أوردرَك التحضير والتعاون والتأكيد والتسوية بدلًا من توزيعها بين جداول ورسائل منفصلة.",
+          "sections": [
+            {
+              "heading": "قوائم قابلة لإعادة الاستخدام",
+              "paragraphs": [
+                "احفظ القوائم المتكررة بأصنافها وأسعارها وضوابط الأصناف المخصصة والرؤية وسياسات التسعير."
+              ]
+            },
+            {
+              "heading": "مساهمات المشاركين",
+              "paragraphs": [
+                "تابع كميات كل شخص بشكل منفصل مع الحفاظ على إجمالي دقيق للمنظّم."
+              ]
+            },
+            {
+              "heading": "ضوابط دورة الطلب",
+              "paragraphs": [
+                "انقل الطلب بين الجمع والتثبيت والتأكيد والتوصيل والتسوية من خلال انتقالات صريحة."
+              ]
+            },
+            {
+              "heading": "التسعير والإيصالات",
+              "paragraphs": [
+                "احسب المجموع الفرعي وضريبة القيمة المضافة والخدمة والتوصيل، ثم راجع توزيع الإيصال حسب المشارك أو الصنف."
+              ]
+            },
+            {
+              "heading": "واجهة متجاوبة وثنائية اللغة",
+              "paragraphs": [
+                "استخدم التطبيق على الهاتف وسطح المكتب بواجهتي الإنجليزية والعربية، مع دعم كامل للعرض من اليمين إلى اليسار."
+              ]
+            },
+            {
+              "heading": "تخزين سحابي أو محلي",
+              "paragraphs": [
+                "استخدم تعاون Firebase عند تهيئته أو استمر بالتنفيذ المحلي المحدد على الجهاز."
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "group-ordering",
+      "slug": "group-ordering",
+      "navigation": true,
+      "adEligible": true,
+      "copy": {
+        "en": {
+          "navigationLabel": "Group ordering",
+          "seoTitle": "Group Food Ordering | Collect Choices Without Chat Confusion",
+          "description": "Organize shared food orders with controlled invitations, individual contributions, live aggregates, and a locked final order.",
+          "eyebrow": "Designed for organizers and participants",
+          "heading": "Give every participant a clear place to choose",
+          "introduction": "A shared order works best when people can update their own choices and the organizer can still control when collection ends.",
+          "sections": [
+            {
+              "heading": "Share the right level of access",
+              "paragraphs": [
+                "Invite participants into the relevant session without exposing unrelated private buckets or orders."
+              ]
+            },
+            {
+              "heading": "Keep contributions attributable",
+              "paragraphs": [
+                "Each person's selections remain identifiable, making changes easier to review than a stream of edited chat messages."
+              ]
+            },
+            {
+              "heading": "Protect the final order",
+              "paragraphs": [
+                "Lock collection before confirmation, preserve the recorded aggregate, and keep a lifecycle history that explains the current state."
+              ]
+            },
+            {
+              "heading": "Handle guests deliberately",
+              "paragraphs": [
+                "Guest invitations can collect the information needed for one session without granting broad account access."
+              ]
+            }
+          ]
+        },
+        "ar": {
+          "navigationLabel": "الطلب الجماعي",
+          "seoTitle": "طلب الطعام الجماعي | اجمع الاختيارات بدون ارتباك المحادثات",
+          "description": "نظّم طلبات الطعام المشتركة بدعوات محكومة ومساهمات فردية وإجماليات محدثة وطلب نهائي مثبت.",
+          "eyebrow": "مصمم للمنظّمين والمشاركين",
+          "heading": "امنح كل مشارك مكانًا واضحًا للاختيار",
+          "introduction": "ينجح الطلب المشترك عندما يستطيع كل شخص تحديث اختياراته ويحتفظ المنظّم بالتحكم في موعد إغلاق الجمع.",
+          "sections": [
+            {
+              "heading": "شارك مستوى الوصول المناسب",
+              "paragraphs": [
+                "ادعُ المشاركين إلى الجلسة المطلوبة دون كشف قوائم أو طلبات خاصة لا تخصهم."
+              ]
+            },
+            {
+              "heading": "اربط كل مساهمة بصاحبها",
+              "paragraphs": [
+                "تبقى اختيارات كل شخص معروفة، فيصبح تتبع التعديلات أسهل من سلسلة رسائل جرى تعديلها."
+              ]
+            },
+            {
+              "heading": "احمِ الطلب النهائي",
+              "paragraphs": [
+                "أغلق الجمع قبل التأكيد، واحتفظ بالإجمالي المسجل، واترك سجلًا للمراحل يوضح الحالة الحالية."
+              ]
+            },
+            {
+              "heading": "تعامل مع الضيوف بشكل مقصود",
+              "paragraphs": [
+                "تجمع دعوات الضيوف المعلومات اللازمة لجلسة واحدة دون منح وصول واسع إلى الحساب."
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "split-bill-and-receipts",
+      "slug": "split-bill-and-receipts",
+      "navigation": true,
+      "adEligible": true,
+      "copy": {
+        "en": {
+          "navigationLabel": "Bills and receipts",
+          "seoTitle": "Split Group Food Bills and Explain Every Receipt",
+          "description": "Turn item quantities and configured fees into transparent participant and item receipt views for group food orders.",
+          "eyebrow": "Settlement without guesswork",
+          "heading": "Make the final total easy to explain",
+          "introduction": "The receipt starts from the frozen order, applies the configured pricing rules, and keeps the breakdown connected to the quantities that produced it.",
+          "sections": [
+            {
+              "heading": "Start from item-level facts",
+              "paragraphs": [
+                "The calculation uses recorded item prices and final quantities rather than an informal estimate copied from chat."
+              ]
+            },
+            {
+              "heading": "Show configured fees separately",
+              "paragraphs": [
+                "VAT, service, and delivery remain visible in the breakdown so participants can understand how the final amount was formed."
+              ]
+            },
+            {
+              "heading": "Review by person or by item",
+              "paragraphs": [
+                "Participant views help with settlement, while item views help the organizer check that quantities and charges match the order."
+              ]
+            },
+            {
+              "heading": "Preserve the final snapshot",
+              "paragraphs": [
+                "Locking the order prevents later contribution edits from silently changing the receipt that the group is settling."
+              ]
+            }
+          ]
+        },
+        "ar": {
+          "navigationLabel": "الحساب والإيصالات",
+          "seoTitle": "قسّم حساب طلب الطعام الجماعي واشرح كل إيصال",
+          "description": "حوّل كميات الأصناف والرسوم المضبوطة إلى عروض شفافة للإيصال حسب المشارك أو الصنف.",
+          "eyebrow": "تسوية بلا تخمين",
+          "heading": "اجعل الإجمالي النهائي سهل الشرح",
+          "introduction": "يبدأ الإيصال من الطلب المثبت، ويطبق قواعد التسعير المضبوطة، ويبقي التفصيل مرتبطًا بالكميات التي أنتجته.",
+          "sections": [
+            {
+              "heading": "ابدأ من حقائق كل صنف",
+              "paragraphs": [
+                "يستخدم الحساب أسعار الأصناف والكميات النهائية المسجلة بدلًا من تقدير غير رسمي منسوخ من المحادثة."
+              ]
+            },
+            {
+              "heading": "اعرض الرسوم المضبوطة منفصلة",
+              "paragraphs": [
+                "تبقى ضريبة القيمة المضافة والخدمة والتوصيل ظاهرة حتى يفهم المشاركون كيف تكوّن المبلغ النهائي."
+              ]
+            },
+            {
+              "heading": "راجع حسب الشخص أو الصنف",
+              "paragraphs": [
+                "يساعد عرض المشاركين في التسوية، بينما يساعد عرض الأصناف المنظّم على مطابقة الكميات والرسوم مع الطلب."
+              ]
+            },
+            {
+              "heading": "احتفظ بالنسخة النهائية",
+              "paragraphs": [
+                "يمنع تثبيت الطلب تعديلات المساهمات اللاحقة من تغيير الإيصال الذي تسويه المجموعة دون تنبيه."
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "faq",
+      "slug": "faq",
+      "navigation": true,
+      "adEligible": true,
+      "copy": {
+        "en": {
+          "navigationLabel": "FAQ",
+          "seoTitle": "Gama3 Orderak FAQ | Group Orders, Storage, Fees, and Guests",
+          "description": "Answers about reusable buckets, group sessions, guest participation, local mode, pricing fees, receipts, and order locking.",
+          "eyebrow": "Common questions",
+          "heading": "What to know before starting a group order",
+          "introduction": "These answers describe the current application behavior without promising unsupported payments, restaurant integrations, or discounts.",
+          "sections": [],
+          "faq": [
+            {
+              "question": "What is a food bucket?",
+              "answer": "A food bucket is a reusable menu of items and prices that can be used for individual or group ordering workflows."
+            },
+            {
+              "question": "Can people join without seeing my other orders?",
+              "answer": "Yes. Invitations are scoped to the relevant collaborative bucket or order session and do not make unrelated private records public."
+            },
+            {
+              "question": "Which fees can the app calculate?",
+              "answer": "A bucket can apply supported VAT, service, and delivery policies. The receipt keeps those configured amounts visible."
+            },
+            {
+              "question": "Why lock an order?",
+              "answer": "Locking establishes a stable final quantity snapshot before confirmation and settlement, preventing unnoticed late changes."
+            },
+            {
+              "question": "Does the app work without Firebase?",
+              "answer": "Yes. When cloud configuration is absent, the application selects its fully functional local-device storage mode."
+            },
+            {
+              "question": "Does Gama3 Orderak take payments or place restaurant orders automatically?",
+              "answer": "No. The current product organizes choices, totals, lifecycle state, and receipts; payment and restaurant fulfillment remain outside the application."
+            }
+          ]
+        },
+        "ar": {
+          "navigationLabel": "الأسئلة الشائعة",
+          "seoTitle": "أسئلة جمّع أوردرَك الشائعة | الطلبات والتخزين والرسوم والضيوف",
+          "description": "إجابات عن القوائم القابلة لإعادة الاستخدام والجلسات والضيوف والوضع المحلي ورسوم التسعير والإيصالات وتثبيت الطلب.",
+          "eyebrow": "أسئلة متكررة",
+          "heading": "ما تحتاج إلى معرفته قبل بدء طلب جماعي",
+          "introduction": "تصف هذه الإجابات سلوك التطبيق الحالي دون وعود بمدفوعات أو تكاملات مطاعم أو خصومات غير مدعومة.",
+          "sections": [],
+          "faq": [
+            {
+              "question": "ما قائمة الطعام القابلة لإعادة الاستخدام؟",
+              "answer": "هي مجموعة محفوظة من الأصناف والأسعار يمكن استخدامها في طلبات فردية أو جماعية لاحقة."
+            },
+            {
+              "question": "هل يمكن للناس الانضمام دون رؤية طلباتي الأخرى؟",
+              "answer": "نعم. تقتصر الدعوات على القائمة التعاونية أو جلسة الطلب المعنية ولا تجعل السجلات الخاصة الأخرى عامة."
+            },
+            {
+              "question": "ما الرسوم التي يحسبها التطبيق؟",
+              "answer": "يمكن للقائمة تطبيق سياسات ضريبة القيمة المضافة والخدمة والتوصيل المدعومة، ويعرض الإيصال هذه المبالغ بوضوح."
+            },
+            {
+              "question": "لماذا أثبّت الطلب؟",
+              "answer": "ينشئ التثبيت نسخة مستقرة من الكميات النهائية قبل التأكيد والتسوية ويمنع التغييرات المتأخرة غير الملحوظة."
+            },
+            {
+              "question": "هل يعمل التطبيق بدون Firebase؟",
+              "answer": "نعم. عندما لا تتوفر تهيئة سحابية، يختار التطبيق وضع التخزين المحلي كامل الوظائف على الجهاز."
+            },
+            {
+              "question": "هل ينفذ جمّع أوردرَك المدفوعات أو يرسل الطلب للمطعم تلقائيًا؟",
+              "answer": "لا. ينظم المنتج الحالي الاختيارات والإجماليات والحالة والإيصالات، بينما تبقى المدفوعات وتنفيذ المطعم خارج التطبيق."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "contact",
+      "slug": "contact",
+      "navigation": false,
+      "adEligible": false,
+      "copy": {
+        "en": {
+          "navigationLabel": "Contact",
+          "seoTitle": "Contact Gama3 Orderak | Product Support and Feedback",
+          "description": "Find the official project channel for support requests, reproducible bug reports, accessibility feedback, and security concerns.",
+          "eyebrow": "Support and feedback",
+          "heading": "Tell us what happened and what you expected",
+          "introduction": "The fastest way to get useful help is to provide a concise, privacy-safe report through the project's official repository.",
+          "sections": [
+            {
+              "heading": "Before opening a report",
+              "paragraphs": [
+                "Include the screen, device or browser, storage mode, steps to reproduce, and the result you expected. Never post passwords, invitation secrets, private order contents, or Firebase credentials."
+              ]
+            },
+            {
+              "heading": "Accessibility feedback",
+              "paragraphs": [
+                "Describe the assistive technology, input method, viewport, and exact barrier. Accessibility defects are treated as product defects."
+              ]
+            },
+            {
+              "heading": "Security concerns",
+              "paragraphs": [
+                "Avoid publishing exploitable details or personal data in a public issue. Use the repository owner's private security contact when one is available."
+              ]
+            }
+          ]
+        },
+        "ar": {
+          "navigationLabel": "تواصل معنا",
+          "seoTitle": "تواصل مع جمّع أوردرَك | دعم المنتج والملاحظات",
+          "description": "اعثر على قناة المشروع الرسمية لطلبات الدعم وتقارير الأخطاء القابلة لإعادة الإنتاج وملاحظات الوصول والمخاوف الأمنية.",
+          "eyebrow": "الدعم والملاحظات",
+          "heading": "أخبرنا بما حدث وما النتيجة التي توقعتها",
+          "introduction": "أسرع طريق للحصول على مساعدة مفيدة هو تقديم وصف مختصر وآمن للخصوصية عبر مستودع المشروع الرسمي.",
+          "sections": [
+            {
+              "heading": "قبل فتح بلاغ",
+              "paragraphs": [
+                "اذكر الشاشة والجهاز أو المتصفح ووضع التخزين وخطوات إعادة المشكلة والنتيجة المتوقعة. لا تنشر كلمات المرور أو أسرار الدعوات أو محتوى الطلبات الخاصة أو بيانات Firebase."
+              ]
+            },
+            {
+              "heading": "ملاحظات سهولة الوصول",
+              "paragraphs": [
+                "صف التقنية المساعدة وطريقة الإدخال وحجم الشاشة والعائق المحدد. نتعامل مع عيوب الوصول كعيوب في المنتج."
+              ]
+            },
+            {
+              "heading": "المخاوف الأمنية",
+              "paragraphs": [
+                "لا تنشر تفاصيل قابلة للاستغلال أو بيانات شخصية في بلاغ عام. استخدم قناة الأمان الخاصة بمالك المستودع عندما تكون متاحة."
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "privacy",
+      "slug": "privacy",
+      "navigation": false,
+      "adEligible": false,
+      "copy": {
+        "en": {
+          "navigationLabel": "Privacy",
+          "seoTitle": "Gama3 Orderak Privacy Overview | Data and Storage Modes",
+          "description": "Understand the categories of data used by Gama3 Orderak, local and cloud storage behavior, sharing boundaries, and user choices.",
+          "eyebrow": "Privacy overview",
+          "heading": "Your order data should stay within the workflow you chose",
+          "introduction": "This product overview explains current technical behavior and is not a substitute for jurisdiction-specific legal advice or a final operator privacy notice.",
+          "sections": [
+            {
+              "heading": "Data the application uses",
+              "paragraphs": [
+                "Depending on the selected workflow, the application may process account details, profile preferences, food buckets, order sessions, item quantities, invitations, notifications, and receipt information."
+              ]
+            },
+            {
+              "heading": "Local and cloud storage",
+              "paragraphs": [
+                "In local mode, application records are stored on the device. In configured Firebase mode, authentication and application records use the project's Firebase services so invited people can collaborate."
+              ]
+            },
+            {
+              "heading": "Sharing and visibility",
+              "paragraphs": [
+                "Private records are intended for their owner and authorized participants. Invitation links should be treated as sensitive because they can grant access to a specific workflow."
+              ]
+            },
+            {
+              "heading": "Analytics and advertising",
+              "paragraphs": [
+                "The application exposes an analytics consent choice. Advertising is disabled by default on authenticated, action, error, and policy surfaces; any future activation must include the required consent and operator disclosures."
+              ]
+            },
+            {
+              "heading": "Your choices",
+              "paragraphs": [
+                "Users can adjust supported device preferences and should contact the operator responsible for a deployed instance regarding access, correction, deletion, or retention requests."
+              ]
+            }
+          ]
+        },
+        "ar": {
+          "navigationLabel": "الخصوصية",
+          "seoTitle": "نظرة على خصوصية جمّع أوردرَك | البيانات وأوضاع التخزين",
+          "description": "افهم فئات البيانات التي يستخدمها جمّع أوردرَك وسلوك التخزين المحلي والسحابي وحدود المشاركة وخيارات المستخدم.",
+          "eyebrow": "نظرة عامة على الخصوصية",
+          "heading": "يجب أن تبقى بيانات طلبك داخل سير العمل الذي اخترته",
+          "introduction": "تشرح هذه النظرة سلوك المنتج التقني الحالي، ولا تستبدل المشورة القانونية الخاصة بكل بلد أو إشعار الخصوصية النهائي للمشغّل.",
+          "sections": [
+            {
+              "heading": "البيانات التي يستخدمها التطبيق",
+              "paragraphs": [
+                "بحسب سير العمل، قد يعالج التطبيق بيانات الحساب وتفضيلات الملف وقوائم الطعام وجلسات الطلب وكميات الأصناف والدعوات والإشعارات ومعلومات الإيصال."
+              ]
+            },
+            {
+              "heading": "التخزين المحلي والسحابي",
+              "paragraphs": [
+                "في الوضع المحلي تُحفظ سجلات التطبيق على الجهاز. وعند تهيئة Firebase تستخدم المصادقة والسجلات خدمات المشروع السحابية حتى يتمكن المدعوون من التعاون."
+              ]
+            },
+            {
+              "heading": "المشاركة والرؤية",
+              "paragraphs": [
+                "السجلات الخاصة مخصصة لصاحبها والمشاركين المصرح لهم. تعامل مع روابط الدعوة كبيانات حساسة لأنها قد تمنح وصولًا إلى سير عمل محدد."
+              ]
+            },
+            {
+              "heading": "التحليلات والإعلانات",
+              "paragraphs": [
+                "يوفر التطبيق اختيارًا لموافقة التحليلات. الإعلانات معطلة افتراضيًا في الشاشات المسجلة وشاشات الإجراءات والأخطاء والسياسات، وأي تفعيل لاحق يحتاج الموافقات والإفصاحات المطلوبة."
+              ]
+            },
+            {
+              "heading": "خياراتك",
+              "paragraphs": [
+                "يمكن للمستخدم تعديل تفضيلات الجهاز المدعومة، وعليه التواصل مع مشغّل النسخة المنشورة بشأن طلبات الوصول أو التصحيح أو الحذف أو الاحتفاظ."
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "terms",
+      "slug": "terms",
+      "navigation": false,
+      "adEligible": false,
+      "copy": {
+        "en": {
+          "navigationLabel": "Terms",
+          "seoTitle": "Gama3 Orderak Terms Overview | Responsible Product Use",
+          "description": "Review the product-use boundaries for accounts, invitations, order accuracy, external fulfillment, availability, and acceptable conduct.",
+          "eyebrow": "Terms overview",
+          "heading": "Use the shared workflow responsibly",
+          "introduction": "This plain-language overview describes intended product boundaries and is not a substitute for final terms issued by the operator of a deployed service.",
+          "sections": [
+            {
+              "heading": "Accounts and invitations",
+              "paragraphs": [
+                "Provide accurate account information, protect credentials and invitation links, and use only records that you own or are authorized to access."
+              ]
+            },
+            {
+              "heading": "Order accuracy",
+              "paragraphs": [
+                "Participants are responsible for reviewing their choices. Organizers are responsible for checking the locked aggregate, prices, fees, and restaurant order before relying on the result."
+              ]
+            },
+            {
+              "heading": "External services and fulfillment",
+              "paragraphs": [
+                "The application does not itself take payment, guarantee restaurant availability, place the restaurant order, or control delivery and food quality."
+              ]
+            },
+            {
+              "heading": "Availability and local data",
+              "paragraphs": [
+                "Service availability can change. Local-mode users are responsible for their device and backups; clearing application storage can remove locally held records."
+              ]
+            },
+            {
+              "heading": "Acceptable use",
+              "paragraphs": [
+                "Do not misuse invitations, attempt unauthorized access, upload unlawful material, interfere with the service, or use another person's data without permission."
+              ]
+            }
+          ]
+        },
+        "ar": {
+          "navigationLabel": "الشروط",
+          "seoTitle": "نظرة على شروط جمّع أوردرَك | استخدام مسؤول للمنتج",
+          "description": "راجع حدود استخدام المنتج للحسابات والدعوات ودقة الطلب والتنفيذ الخارجي والتوفر والسلوك المقبول.",
+          "eyebrow": "نظرة عامة على الشروط",
+          "heading": "استخدم سير العمل المشترك بمسؤولية",
+          "introduction": "تصف هذه النظرة المبسطة حدود المنتج المقصودة، ولا تستبدل الشروط النهائية التي يصدرها مشغّل الخدمة المنشورة.",
+          "sections": [
+            {
+              "heading": "الحسابات والدعوات",
+              "paragraphs": [
+                "قدّم معلومات حساب صحيحة، واحمِ بيانات الدخول وروابط الدعوة، ولا تستخدم إلا السجلات التي تملكها أو لديك تصريح للوصول إليها."
+              ]
+            },
+            {
+              "heading": "دقة الطلب",
+              "paragraphs": [
+                "يتحمل المشاركون مسؤولية مراجعة اختياراتهم، ويتحمل المنظّم مسؤولية فحص الإجمالي المثبت والأسعار والرسوم وطلب المطعم قبل الاعتماد على النتيجة."
+              ]
+            },
+            {
+              "heading": "الخدمات الخارجية والتنفيذ",
+              "paragraphs": [
+                "لا ينفذ التطبيق المدفوعات ولا يضمن توفر المطعم ولا يرسل الطلب إليه ولا يتحكم في التوصيل أو جودة الطعام."
+              ]
+            },
+            {
+              "heading": "التوفر والبيانات المحلية",
+              "paragraphs": [
+                "قد يتغير توفر الخدمة. مستخدم الوضع المحلي مسؤول عن جهازه ونسخه الاحتياطية، وقد يؤدي مسح تخزين التطبيق إلى حذف السجلات المحلية."
+              ]
+            },
+            {
+              "heading": "الاستخدام المقبول",
+              "paragraphs": [
+                "لا تُسئ استخدام الدعوات، ولا تحاول وصولًا غير مصرح، ولا ترفع مواد غير قانونية، ولا تعطل الخدمة، ولا تستخدم بيانات شخص آخر دون إذنه."
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "systemPages": {
+    "not-found": {
+      "en": {
+        "seoTitle": "Page not found | Gama3 Orderak",
+        "description": "The requested public page could not be found.",
+        "heading": "That page is not on the menu",
+        "body": "The address may be outdated or mistyped. Return to the homepage to continue."
+      },
+      "ar": {
+        "seoTitle": "الصفحة غير موجودة | جمّع أوردرَك",
+        "description": "تعذر العثور على الصفحة العامة المطلوبة.",
+        "heading": "هذه الصفحة ليست في القائمة",
+        "body": "قد يكون العنوان قديمًا أو مكتوبًا بشكل غير صحيح. عُد إلى الصفحة الرئيسية للمتابعة."
+      }
+    },
+    "error": {
+      "en": {
+        "seoTitle": "Something went wrong | Gama3 Orderak",
+        "description": "Gama3 Orderak could not complete this public-page request.",
+        "heading": "We could not serve this page",
+        "body": "No private order data was exposed. Try again, or return to the homepage."
+      },
+      "ar": {
+        "seoTitle": "حدث خطأ | جمّع أوردرَك",
+        "description": "تعذر على جمّع أوردرَك إكمال طلب الصفحة العامة.",
+        "heading": "تعذر عرض هذه الصفحة",
+        "body": "لم يتم كشف أي بيانات طلب خاصة. حاول مرة أخرى أو عُد إلى الصفحة الرئيسية."
+      }
+    },
+    "offline": {
+      "en": {
+        "seoTitle": "You are offline | Gama3 Orderak",
+        "description": "Reconnect to load this Gama3 Orderak page.",
+        "heading": "You are offline",
+        "body": "A saved public page may still be available. Reconnect before opening or changing a shared order."
+      },
+      "ar": {
+        "seoTitle": "أنت غير متصل | جمّع أوردرَك",
+        "description": "أعد الاتصال لتحميل صفحة جمّع أوردرَك.",
+        "heading": "أنت غير متصل",
+        "body": "قد تظل بعض الصفحات العامة المحفوظة متاحة. أعد الاتصال قبل فتح طلب مشترك أو تغييره."
+      }
+    }
+  }
+}

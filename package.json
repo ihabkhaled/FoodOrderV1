@@ -1,6 +1,6 @@
 {
   "name": "food-order-v1",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "private": true,
   "type": "module",
   "description": "A mobile-first Capacitor application for reusable food buckets and order tracking.",
@@ -12,6 +12,9 @@
   "scripts": {
     "dev": "vite",
     "build": "node node_modules/typescript7/bin/tsc -b && vite build",
+    "public:generate": "node scripts/public-content/generate-public-content.mjs",
+    "public:validate": "node scripts/public-content/validate-public-content.mjs",
+    "build:web": "npm run build && npm run public:generate && npm run public:validate",
     "preview": "vite preview",
     "typecheck": "node node_modules/typescript7/bin/tsc -b --pretty false",
     "typecheck:tsc": "tsc -b --pretty false",
@@ -32,7 +35,8 @@
     "functions:build": "npm --prefix functions run build",
     "functions:test": "npm --prefix functions run test",
     "functions:validate": "npm run functions:typecheck && npm run functions:build && npm run functions:test",
-    "validate": "npm run knowledge:validate && npm run typecheck && npm run lint && npm run test && npm run build",
+    "i18n:check": "node scripts/i18n/check-translations.mjs",
+    "validate": "npm run knowledge:validate && npm run i18n:check && npm run typecheck && npm run lint && npm run test && npm run build",
     "icons:prepare": "node scripts/icons/prepare-sources.mjs",
     "icons": "npm run icons:prepare && npx --yes @capacitor/assets generate --ios --android --iconBackgroundColor \"#020d0b\" --iconBackgroundColorDark \"#020d0b\" --splashBackgroundColor \"#020d0b\" --splashBackgroundColorDark \"#020d0b\"",
     "cap:sync": "npm run build && cap sync",
@@ -66,7 +70,7 @@
     "knowledge:refresh": "npm run knowledge:build && npm run knowledge:validate",
     "prepare": "husky",
     "security:audit": "npm audit --audit-level=high",
-    "security:scan": "trivy fs --scanners vuln,secret,misconfig --skip-dirs node_modules,dist,coverage,android,ios,.git,ui-shots --exit-code 0 .",
+    "security:scan": "trivy fs --scanners vuln,secret,misconfig --skip-dirs node_modules,dist,coverage,android,ios,.git,ui-shots,.worktrees --exit-code 1 .",
     "quality:dead-code": "knip",
     "quality:circular": "madge src --circular --extensions ts,tsx",
     "quality:release": "node scripts/check-release-version.mjs",
@@ -120,7 +124,7 @@
     "eslint-plugin-simple-import-sort": "^14.0.0",
     "eslint-plugin-sonarjs": "^4.1.0",
     "eslint-plugin-testing-library": "^7.16.2",
-    "eslint-plugin-unicorn": "^72.0.0",
+    "eslint-plugin-unicorn": "^65.0.0",
     "eslint-plugin-unused-imports": "^4.4.1",
     "firebase-admin": "^14.2.0",
     "firebase-tools": "15.23.0",
@@ -130,7 +134,7 @@
     "knip": "^6.26.0",
     "lint-staged": "^17.1.0",
     "madge": "^8.0.0",
-    "sharp": "^0.35.0",
+    "sharp": "^0.35.3",
     "typescript": "5.9.3",
     "typescript-eslint": "8.63.0",
     "typescript7": "npm:typescript@7.0.2",
@@ -139,5 +143,15 @@
   },
   "lint-staged": {
     "*.{ts,tsx}": "eslint --fix --max-warnings 0"
+  },
+  "overrides": {
+    "teeny-request": {
+      "uuid": "^11.1.1"
+    },
+    "gaxios": {
+      "uuid": "^11.1.1"
+    },
+    "@opentelemetry/core": "^2.8.0",
+    "@hono/node-server": "^2.0.5"
   }
 }

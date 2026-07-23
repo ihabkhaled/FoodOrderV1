@@ -100,11 +100,7 @@ export function OrdersContainer() {
               />
             </section>
           ) : (
-            <p className="muted">
-              {vm.locale === 'ar'
-                ? 'لا توجد طلبات مطابقة في النتائج المحمّلة.'
-                : 'No matching orders in the loaded results.'}
-            </p>
+            <p className="muted">{vm.t('noMatchingOrders')}</p>
           )}
         </>
       ) : (

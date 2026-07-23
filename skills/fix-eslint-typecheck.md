@@ -19,6 +19,10 @@ means and its exact valid/invalid shapes).
    - `architecture/*` → the code is in the wrong layer. Move or redesign it using the
      matching skill (component/container/hook/gateway/route/package-owner). Do not disable
      the rule.
+   - `architecture/enforce-declaration-placement` → move every interface, type alias,
+     enum-like set, and module constant into the matching `*.interfaces.ts`,
+     `*.types.ts`, `*.enums.ts`, or `*.constants.ts` owner. Apply this to old code too;
+     do not merely fix the newest declaration.
    - Type error → fix the types truthfully. It must compile under BOTH TS 7.0.2
      (`npm run typecheck`) and TS 5.9.3 (`npm run typecheck:tsc`); if the versions
      disagree, find the shape both accept — do not fork behavior by version.
@@ -34,6 +38,8 @@ means and its exact valid/invalid shapes).
 - `eslint-disable` for `architecture/*` (never), or undocumented disables for anything else.
 - `any`, `as unknown as`, `@ts-expect-error` to silence the compiler.
 - Deleting/weakening a test because the lint plugin flagged it.
+- Converting a module constant into a function-local duplicate to evade declaration
+  placement; give the shared value its truthful owner file.
 - Loosening `tsconfig.app.json` strictness or widening config `ignores`.
 
 ## Required tests

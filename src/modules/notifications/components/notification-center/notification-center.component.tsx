@@ -1,29 +1,15 @@
-import type { RefObject } from 'react';
-
-import type { AppNotification, Locale } from '@/modules/data-access';
-import type { SocialMessageKey } from '@/modules/social';
+import type { Locale } from '@/modules/data-access';
 import { Bell, CheckCheck } from '@/packages/icons';
 
+import type { NotificationCenterViewProps } from './notification-center.types';
+
 const formatTimestamp = (locale: Locale, timestamp: string): string =>
-  new Intl.DateTimeFormat(locale === 'ar' ? 'ar-EG' : 'en-GB', {
+  new Intl.DateTimeFormat(locale, {
     day: 'numeric',
     month: 'short',
     hour: 'numeric',
     minute: '2-digit',
   }).format(new Date(timestamp));
-
-interface NotificationCenterViewProps {
-  notifications: AppNotification[];
-  locale: Locale;
-  placement: 'topbar' | 'sidebar';
-  open: boolean;
-  rootRef: RefObject<HTMLDivElement | null>;
-  unreadCount: number;
-  s: (key: SocialMessageKey) => string;
-  onToggle: () => void;
-  onMarkAllRead: () => void;
-  onOpenNotification: (notification: AppNotification) => void;
-}
 
 export function NotificationCenterView({
   notifications,

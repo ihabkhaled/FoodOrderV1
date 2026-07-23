@@ -56,7 +56,7 @@ export class LocalSharingService implements SharingService {
             bucket.ownerId !== user.id &&
             isActiveMember(memberOf(database, bucket.id, user.id)),
         )
-        .sort((left, right) => right.updatedAt.localeCompare(left.updatedAt)),
+        .toSorted((left, right) => right.updatedAt.localeCompare(left.updatedAt)),
     );
   }
 

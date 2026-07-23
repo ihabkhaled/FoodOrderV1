@@ -66,7 +66,7 @@ export const paginateDescending = <Item extends { id: string }>(
 ): PageResult<Item> => {
   const limit = normalizePageLimit(request.limit);
   const cursor = decodeSortCursor(request.cursor);
-  const sorted = [...values].sort((left, right) =>
+  const sorted = [...values].toSorted((left, right) =>
     compareDescending(left, right, sortValue),
   );
   const startIndex = cursor

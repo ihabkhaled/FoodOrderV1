@@ -27,7 +27,7 @@ service cloud.firestore {
         return request.resource.data.id == userId
           && request.resource.data.email == request.auth.token.email
           && request.resource.data.fullName is string
-          && request.resource.data.locale in ['en', 'ar']
+          && request.resource.data.locale in ['en', 'ar', 'it', 'fa', 'fr', 'de', 'es', 'pt-BR', 'hi', 'th', 'zh-CN', 'ja']
           && request.resource.data.theme in ['system', 'light', 'dark'];
       }
 

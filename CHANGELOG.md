@@ -5,6 +5,11 @@ The version bump level is decided by prompt density — see [rules/versioning.md
 
 <!-- releases -->
 
+## [1.7.1] - 2026-07-22
+
+- Start v1.7.1 development
+
+
 ## [1.7.0] - 2026-07-18
 
 - Begin the high-impact v1.7.0 product release covering order sessions, organizer productivity, secure guest activation, settlement, monetization readiness, analytics, observability, and a complete responsive UX quality pass.

@@ -12,7 +12,7 @@ const register = async (page: Page): Promise<void> => {
     .fill(`ui-${Date.now()}-${Math.round(performance.now())}@example.com`);
   await page.getByLabel('Password').fill('Password1');
   await page.getByRole('button', { name: 'Create account' }).click();
-  await page.waitForURL(/\/$/u);
+  await page.waitForURL(/\/app$/u);
 };
 
 const expectNoHorizontalOverflow = async (page: Page): Promise<void> => {
@@ -77,31 +77,42 @@ test.describe('signed-out shell controls', () => {
     await page.goto('/auth/login');
 
     const controls = page.locator('.auth-controls');
-    const buttons = controls.locator('.auth-control-button');
+    const languageSelect = controls.locator('select');
+    const themeButton = controls.locator('.auth-control-button');
     await expect(controls).toBeVisible();
-    await expect(buttons).toHaveCount(2);
+    await expect(languageSelect).toHaveCount(1);
+    await expect(themeButton).toHaveCount(1);
 
     const [languageBox, themeBox, controlsBox] = await Promise.all([
-      requireBox(buttons.nth(0), 'Language button'),
-      requireBox(buttons.nth(1), 'Theme button'),
+      requireBox(languageSelect, 'Language selector'),
+      requireBox(themeButton, 'Theme button'),
       requireBox(controls, 'Auth controls'),
     ]);
 
-    expect(languageBox.width).toBe(44);
-    expect(languageBox.height).toBe(44);
+    expect(languageBox.width).toBeGreaterThanOrEqual(120);
+    expect(languageBox.height).toBeGreaterThanOrEqual(44);
+    expect(languageBox.height).toBeLessThanOrEqual(48);
     expect(themeBox.width).toBe(44);
     expect(themeBox.height).toBe(44);
     expect(Math.abs(languageBox.y - themeBox.y)).toBeLessThanOrEqual(1);
-    expect(controlsBox.width).toBeLessThanOrEqual(100);
+    expect(controlsBox.width).toBeLessThanOrEqual(210);
 
     const html = page.locator('html');
     await expect(html).toHaveAttribute('dir', 'ltr');
-    await buttons.nth(0).click();
+    await languageSelect.selectOption('it');
+    await expect(html).toHaveAttribute('lang', 'it');
+    await expect(html).toHaveAttribute('dir', 'ltr');
+    await languageSelect.selectOption('fa');
     await expect(html).toHaveAttribute('dir', 'rtl');
-    await expect(html).toHaveAttribute('lang', 'ar');
+    await expect(html).toHaveAttribute('lang', 'fa');
+    await page.reload();
+    await expect(page.locator('html')).toHaveAttribute('lang', 'fa');
+    await page.locator('.auth-controls select').selectOption('de');
+    await expect(page.locator('html')).toHaveAttribute('dir', 'ltr');
+    await expect(page.locator('html')).toHaveAttribute('lang', 'de');
 
-    await buttons.nth(1).click();
-    await buttons.nth(1).click();
+    await page.locator('.auth-control-button').click();
+    await page.locator('.auth-control-button').click();
     await expect(html).toHaveAttribute('data-theme', 'dark');
     await expectNoHorizontalOverflow(page);
   });
@@ -220,19 +231,24 @@ test.describe('instant sidebar controls', () => {
     await expect(root).toHaveAttribute('data-theme', 'light');
   });
 
-  test('language toggle flips locale and direction immediately', async ({
+  test('language selector applies and persists RTL and LTR locales', async ({
     page,
   }) => {
     await page.setViewportSize({ width: 1280, height: 900 });
     await register(page);
     const html = page.locator('html');
     await expect(html).toHaveAttribute('dir', 'ltr');
-    await page
-      .locator('.sidebar')
-      .getByRole('button', { name: /العربية/u })
-      .click();
+    await page.locator('.sidebar .shell-language-select').selectOption('it');
+    await expect(html).toHaveAttribute('lang', 'it');
+    await expect(html).toHaveAttribute('dir', 'ltr');
+    await page.locator('.sidebar .shell-language-select').selectOption('fa');
     await expect(html).toHaveAttribute('dir', 'rtl');
-    await expect(html).toHaveAttribute('lang', 'ar');
+    await expect(html).toHaveAttribute('lang', 'fa');
+    await page.reload();
+    await expect(page.locator('html')).toHaveAttribute('lang', 'fa');
+    await page.locator('.sidebar .shell-language-select').selectOption('de');
+    await expect(page.locator('html')).toHaveAttribute('dir', 'ltr');
+    await expect(page.locator('html')).toHaveAttribute('lang', 'de');
   });
 
   test('collapsing the sidebar narrows the shell and persists', async ({ page }) => {

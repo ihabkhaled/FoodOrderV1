@@ -161,14 +161,14 @@ export class LocalSocialManagementService
     response: 'accepted' | 'declined',
   ): Promise<void> {
     const recipient = currentUser();
-    const request = readSocialDatabase().requests.find(
+    const hasPendingRequest = readSocialDatabase().requests.some(
       (candidate) =>
         candidate.sender.userId === senderId &&
         candidate.recipient.userId === recipient.userId &&
         candidate.status === 'pending',
     );
     await super.respondFriendRequest(senderId, response);
-    if (request && response === 'accepted') {
+    if (hasPendingRequest && response === 'accepted') {
       pushLocalNotification(senderId, {
         kind: 'friend_request_accepted',
         title: 'Friend request accepted',
@@ -184,10 +184,10 @@ export class LocalSocialManagementService
   unfriend(friendId: string): Promise<void> {
     const actor = currentUser();
     const database = readSocialDatabase();
-    const friend = (database.friends[actor.userId] ?? []).find(
+    const isFriend = (database.friends[actor.userId] ?? []).some(
       (candidate) => candidate.userId === friendId,
     );
-    if (!friend) throw new Error('Friend was not found.');
+    if (!isFriend) throw new Error('Friend was not found.');
     database.friends[actor.userId] = (database.friends[actor.userId] ?? []).filter(
       (candidate) => candidate.userId !== friendId,
     );
@@ -220,11 +220,11 @@ export class LocalSocialManagementService
     const actor = currentUser();
     const database = readSocialDatabase();
     const group = database.groups.find((candidate) => candidate.id === groupId);
-    const friend = (database.friends[actor.userId] ?? []).find(
+    const isFriend = (database.friends[actor.userId] ?? []).some(
       (candidate) => candidate.userId === friendId,
     );
     await super.inviteFriendToGroup(groupId, friendId);
-    if (group && friend) {
+    if (group && isFriend) {
       pushLocalNotification(friendId, {
         kind: 'group_invitation',
         title: 'New group invitation',

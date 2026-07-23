@@ -23,7 +23,7 @@ import { getFirebaseRuntime } from './firebase-runtime.gateway';
 const sessionUser = (user: { uid: string; email: string | null; displayName: string | null }): SessionUser => ({
   id: user.uid,
   email: user.email ?? '',
-  displayName: user.displayName ?? user.email?.split('@')[0] ?? 'User',
+  displayName: user.displayName ?? user.email?.split('@', 1)[0] ?? 'User',
   isDemo: false,
 });
 

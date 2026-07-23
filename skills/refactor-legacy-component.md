@@ -32,6 +32,10 @@ behavior-preserving.
    - inline route strings → the module's `routes/` constants;
    - raw vendor imports → `@/packages/*` facades;
    - browser globals → `src/platform` calls;
+   - interfaces → sibling `*.interfaces.ts`;
+   - type aliases → sibling `*.types.ts`;
+   - enum-like sets → sibling `*.enums.ts`;
+   - module constants/lookups/regular expressions → sibling `*.constants.ts`;
    - hardcoded copy → catalog keys ([add-i18n-key.md](add-i18n-key.md)).
 4. Restructure, do not rewrite: identical behavior, same message keys, same data flow.
 5. Move its tests alongside, update imports, and re-run the baseline suites.
@@ -45,6 +49,8 @@ behavior-preserving.
 - Leaving a re-export shim at the legacy path longer than the same PR.
 - Moving a file without its tests, or disabling architecture rules to make the old shape
   fit the new location.
+- Carrying old inline declarations into the layered tree; migration is where declaration
+  ownership and hook isolation become compliant.
 - Migrating half a file (one component of two) and leaving a cross-referencing twin behind.
 
 ## Required tests

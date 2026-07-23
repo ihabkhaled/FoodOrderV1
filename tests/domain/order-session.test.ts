@@ -112,7 +112,7 @@ describe('order session lifecycle', () => {
     const minimal = createOrderSession({
       ...sessionDraft(),
       id: 'session-2',
-      workspaceId: '   ',
+      workspaceId: ' '.repeat(3),
       deadlineAt: null,
       autoLock: undefined,
       scheduleOccurrenceKey: ' ',

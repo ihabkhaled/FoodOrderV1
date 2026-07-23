@@ -17,6 +17,9 @@ Hook-free components are trivially testable, reusable across containers, and saf
   (or `src/shared/ui` when genuinely feature-agnostic, e.g. the migrated `Loading`,
   `EmptyState`, `ErrorState`, `ConfirmDialog`, `VirtualListFooter`, `RefreshableViewport`).
 - Exactly one exported component per file.
+- Props are declared in a sibling `*.interfaces.ts` file and imported with
+  `import type`; no interface, type alias, enum-like value set, or module constant is
+  declared beside JSX.
 - All text via i18n message props/keys ([15-internationalization.md](15-internationalization.md));
   all icons via `@/packages/icons`; virtual lists via `@/packages/virtuoso`.
 - Accessible markup by construction: semantic elements, labels, keyboard operability
@@ -25,6 +28,8 @@ Hook-free components are trivially testable, reusable across containers, and saf
 ## Forbidden
 
 - Any hook call (enforced), including third-party hooks.
+- Inline props interfaces/type aliases or module-scope runtime constants; these belong to
+  their declaration owner files under rule 07.
 - Importing services, gateways, `@/packages/firebase`, or `src/platform` — data arrives as
   props.
 - Local component state for anything a container should own; DOM access (`document`,
@@ -36,7 +41,9 @@ Hook-free components are trivially testable, reusable across containers, and saf
 
 - `architecture/no-hooks-outside-hook-files` (component files: zero hooks).
 - `architecture/no-browser-globals-outside-platform`, `architecture/no-inline-route-strings`,
-  `architecture/enforce-file-suffixes`, `react-refresh/only-export-components`, `jsx-a11y`.
+  `architecture/enforce-file-suffixes`,
+  `architecture/enforce-declaration-placement`,
+  `react-refresh/only-export-components`, `jsx-a11y`.
 
 ## Definition of done
 

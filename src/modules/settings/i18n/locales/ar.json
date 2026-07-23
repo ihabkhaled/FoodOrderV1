@@ -1,0 +1,14 @@
+{
+  "analyticsPrivacy": "التحليلات والخصوصية",
+  "analyticsPrivacyDescription": "اختر بيانات التشخيص والاستخدام المجهولة التي يمكن لفود أوردر تسجيلها. لا تُرسل عناوين البريد أو الأسماء أو الملاحظات أو إثباتات الدفع أو أي محتوى خاص ضمن التحليلات.",
+  "analyticsConsent": "موافقة التحليلات",
+  "analyticsDenied": "عدم تسجيل التحليلات",
+  "analyticsOperationalOnly": "تشخيصات التشغيل فقط",
+  "analyticsProduct": "تشخيصات التشغيل وتحليلات استخدام المنتج",
+  "analyticsProductAndMarketing": "تشخيصات التشغيل وتحليلات المنتج والترقية",
+  "analyticsDeniedDescription": "لن تُسجل أي تحليلات اختيارية، وسيستمر استخدام الطلبات بصورة طبيعية.",
+  "analyticsOperationalDescription": "يسجل أعطال الاعتمادية وقياسات الأداء بصورة آمنة للخصوصية.",
+  "analyticsProductDescription": "يسجل أيضًا بيانات آمنة عن الانضمام والتفعيل واستخدام الخصائص.",
+  "analyticsMarketingDescription": "يسجل أيضًا عرض خيارات الترقية ومسار الاشتراك بصورة آمنة للخصوصية.",
+  "analyticsConsentSaved": "تم حفظ تفضيل التحليلات."
+}

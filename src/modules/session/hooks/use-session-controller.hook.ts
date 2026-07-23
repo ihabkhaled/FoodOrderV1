@@ -19,7 +19,7 @@ import {
   isNavigatorOnline,
   subscribeToOnlineChange,
 } from '@/platform/network';
-import { translate } from '@/shared/i18n';
+import { localeDirection, translate } from '@/shared/i18n';
 
 import type { AppContextValue, ToastState } from '../types/session.types';
 
@@ -87,7 +87,7 @@ export const useSessionController = (): AppContextValue => {
   useEffect(() => {
     setFirebaseErrorLocale(locale);
     applyDocumentTheme(theme);
-    applyDocumentLocale(locale, locale === 'ar' ? 'rtl' : 'ltr');
+    applyDocumentLocale(locale, localeDirection(locale));
   }, [locale, theme]);
 
   useEffect(() => {
@@ -167,25 +167,47 @@ export const useSessionController = (): AppContextValue => {
         showToast(translate(saved.locale, 'settingsSaved'), 'success');
       },
       setDeviceLocale: async (nextLocale) => {
-        await saveDeviceConfig({ locale: nextLocale });
+        // Switch the visible locale immediately; persistence follows and its
+        // failure is surfaced without reverting or blocking the switch.
         setDevice((current) => ({ ...current, locale: nextLocale }));
-        if (profile) {
-          const saved = await dataService.saveProfile({
-            ...profile,
-            locale: nextLocale,
-          });
-          setProfile(saved);
+        if (profile) setProfile({ ...profile, locale: nextLocale });
+        try {
+          await saveDeviceConfig({ locale: nextLocale });
+          if (profile) {
+            const saved = await dataService.saveProfile({
+              ...profile,
+              locale: nextLocale,
+            });
+            setProfile(saved);
+          }
+        } catch (error) {
+          showToast(
+            userFacingErrorMessage(
+              error,
+              nextLocale,
+              translate(nextLocale, 'tryAgain'),
+            ),
+            'error',
+          );
         }
       },
       setDeviceTheme: async (nextTheme) => {
-        await saveDeviceConfig({ theme: nextTheme });
         setDevice((current) => ({ ...current, theme: nextTheme }));
-        if (profile) {
-          const saved = await dataService.saveProfile({
-            ...profile,
-            theme: nextTheme,
-          });
-          setProfile(saved);
+        if (profile) setProfile({ ...profile, theme: nextTheme });
+        try {
+          await saveDeviceConfig({ theme: nextTheme });
+          if (profile) {
+            const saved = await dataService.saveProfile({
+              ...profile,
+              theme: nextTheme,
+            });
+            setProfile(saved);
+          }
+        } catch (error) {
+          showToast(
+            userFacingErrorMessage(error, locale, translate(locale, 'tryAgain')),
+            'error',
+          );
         }
       },
       showToast,

@@ -193,6 +193,12 @@ export default tseslint.config(
     rules: { 'sonarjs/no-empty-test-file': 'off' },
   },
   {
+    // jsdom lacks <dialog> methods; prototype polyfills necessarily use
+    // `this` inside plain function expressions assigned to the prototype.
+    files: ['tests/setup.ts'],
+    rules: { 'unicorn/no-this-outside-of-class': 'off' },
+  },
+  {
     // E2E specs: Playwright conventions.
     files: ['tests/e2e/**/*.spec.ts'],
     extends: [playwright.configs['flat/recommended']],

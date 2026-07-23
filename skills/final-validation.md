@@ -19,6 +19,11 @@ For releases, continue into [versioning/SKILL.md](versioning/SKILL.md) afterward
 
 Run in this order (fail fast, cheapest first):
 
+Before running the ladder, grep the entire layered tree—not only the diff—for named
+interfaces/type aliases outside their owner suffixes, module constants outside
+`*.constants.ts`/`*.enums.ts`, and hook definitions/calls outside allowed hook files.
+Any hit is fixed before validation; no baseline violation is grandfathered.
+
 ```bash
 npm run knowledge:build:incremental && npm run knowledge:validate
 npm run format:check

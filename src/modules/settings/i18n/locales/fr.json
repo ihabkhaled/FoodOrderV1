@@ -1,0 +1,14 @@
+{
+  "analyticsPrivacy": "Analyses et confidentialité",
+  "analyticsPrivacyDescription": "Choisissez quels diagnostics anonymes et événements d'utilisation du produit FoodOrder peut enregistrer. Les e-mails, noms, notes, preuves de paiement et autres contenus privés ne sont jamais des propriétés d'analyse.",
+  "analyticsConsent": "Consentement aux analyses",
+  "analyticsDenied": "Ne pas enregistrer d'analyses",
+  "analyticsOperationalOnly": "Diagnostics opérationnels uniquement",
+  "analyticsProduct": "Analyses opérationnelles et produit",
+  "analyticsProductAndMarketing": "Analyses opérationnelles, produit et de mise à niveau",
+  "analyticsDeniedDescription": "Aucun événement d'analyse facultatif n'est enregistré. Les commandes continuent normalement.",
+  "analyticsOperationalDescription": "Enregistre les échecs de fiabilité et les diagnostics de performance, dans le respect de la vie privée.",
+  "analyticsProductDescription": "Enregistre également, dans le respect de la vie privée, les événements d'acquisition, d'activation et d'utilisation des fonctionnalités.",
+  "analyticsMarketingDescription": "Enregistre également, dans le respect de la vie privée, les invitations à la mise à niveau et les événements du parcours d'abonnement.",
+  "analyticsConsentSaved": "Préférence d'analyse enregistrée."
+}

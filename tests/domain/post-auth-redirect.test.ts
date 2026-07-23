@@ -9,7 +9,7 @@ describe('post-auth redirect safety', () => {
   it.each([null, '', 'dashboard', '//evil.example/path', String.raw`/\evil`]) (
     'falls back for unsafe return target %s',
     (value) => {
-      expect(resolvePostAuthRedirect(value)).toBe('/');
+      expect(resolvePostAuthRedirect(value)).toBe('/app');
     },
   );
 
@@ -24,7 +24,7 @@ describe('post-auth redirect safety', () => {
       '/auth/login?returnTo=%2Finvite%2Fa.b',
     );
     expect(buildAuthPathWithReturnTo('/auth/login', 'https://evil.example')).toBe(
-      '/auth/login?returnTo=%2F',
+      '/auth/login?returnTo=%2Fapp',
     );
   });
 });

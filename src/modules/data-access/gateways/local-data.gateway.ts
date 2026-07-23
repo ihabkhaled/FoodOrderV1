@@ -44,7 +44,7 @@ export class LocalDataService implements DataService {
   }
 
   async listBuckets(user: SessionUser): Promise<Bucket[]> {
-    return structuredClone(readDatabase().buckets[user.id] ?? []).sort((a, b) =>
+    return structuredClone(readDatabase().buckets[user.id] ?? []).toSorted((a, b) =>
       b.updatedAt.localeCompare(a.updatedAt),
     );
   }
@@ -100,7 +100,7 @@ export class LocalDataService implements DataService {
   }
 
   async listOrders(userId: string): Promise<Order[]> {
-    return structuredClone(readDatabase().orders[userId] ?? []).sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+    return structuredClone(readDatabase().orders[userId] ?? []).toSorted((a, b) => b.createdAt.localeCompare(a.createdAt));
   }
 
   async getOrder(userId: string, orderId: string): Promise<Order | null> {

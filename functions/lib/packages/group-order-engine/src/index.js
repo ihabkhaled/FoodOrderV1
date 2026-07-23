@@ -53,7 +53,7 @@ export const allocateMinorUnits = (totalMinor, entries) => {
     });
     const allocatedFloor = calculations.reduce((sum, entry) => sum + entry.allocated, 0n);
     let residual = total - allocatedFloor;
-    const ranked = [...calculations].sort((left, right) => {
+    const ranked = [...calculations].toSorted((left, right) => {
         if (left.remainder === right.remainder)
             return left.id.localeCompare(right.id);
         return left.remainder > right.remainder ? -1 : 1;

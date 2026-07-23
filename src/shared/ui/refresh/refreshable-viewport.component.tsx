@@ -1,26 +1,14 @@
-import type { ReactNode, TouchEvent } from 'react';
-
 import { RefreshCw } from '@/packages/icons';
+import { translate } from '@/shared/i18n';
 import type { Locale } from '@/shared/types';
 
-const refreshLabel = (locale: Locale, refreshing: boolean, armed: boolean): string => {
-  if (refreshing) return locale === 'ar' ? 'جارٍ التحديث…' : 'Refreshing…';
-  if (armed) return locale === 'ar' ? 'اترك للتحديث' : 'Release to refresh';
-  return locale === 'ar' ? 'اسحب لأسفل للتحديث' : 'Pull down to refresh';
-};
+import type { RefreshableViewportViewProps } from './refreshable-viewport.types';
 
-interface RefreshableViewportViewProps {
-  readonly locale: Locale;
-  readonly available: boolean;
-  readonly refreshing: boolean;
-  readonly armed: boolean;
-  readonly distance: number;
-  readonly refresh: () => Promise<void>;
-  readonly onTouchStart: (event: TouchEvent<HTMLDivElement>) => void;
-  readonly onTouchMove: (event: TouchEvent<HTMLDivElement>) => void;
-  readonly onTouchEnd: () => void;
-  readonly children: ReactNode;
-}
+const refreshLabel = (locale: Locale, refreshing: boolean, armed: boolean): string => {
+  if (refreshing) return translate(locale, 'refreshing');
+  if (armed) return translate(locale, 'releaseToRefresh');
+  return translate(locale, 'pullDownToRefresh');
+};
 
 export function RefreshableViewportView({
   locale,
@@ -34,7 +22,7 @@ export function RefreshableViewportView({
   onTouchEnd,
   children,
 }: RefreshableViewportViewProps) {
-  const buttonLabel = locale === 'ar' ? 'تحديث الصفحة' : 'Refresh page';
+  const buttonLabel = translate(locale, 'refreshPage');
 
   return (
     <div
