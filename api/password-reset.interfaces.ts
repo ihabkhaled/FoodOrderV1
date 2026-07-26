@@ -16,6 +16,13 @@ export interface FirebaseServiceAccount {
   privateKey: string;
 }
 
+export interface PasswordResetTransportConfiguration {
+  smtpHost: string;
+  smtpUser: string;
+  smtpPass: string;
+  from: string;
+}
+
 export interface PasswordResetEmailCopy {
   subject: string;
   heading: string;

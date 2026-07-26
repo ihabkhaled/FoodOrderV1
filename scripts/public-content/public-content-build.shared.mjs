@@ -95,6 +95,9 @@ export const localePath = (page, locale) => {
   return segments.length === 0 ? '/' : `/${segments.join('/')}`;
 };
 
+export const localizedApplicationPath = (catalog, locale) =>
+  `/${locale.segment}${catalog.site.applicationPath}`;
+
 const SYSTEM_SLUGS = {
   'not-found': '404.html',
   error: 'error',
@@ -213,7 +216,7 @@ const renderHeader = (catalog, locale, page, systemRouteId) => {
 <nav class="public-navigation public-navigation--desktop" aria-label="${escapeHtml(ui.primaryNavigationLabel)}">${primaryLinks}</nav>
 <div class="public-header__actions">
 <details class="public-language-menu"><summary><span class="public-language-menu__prefix">${escapeHtml(ui.languageLabel)}: </span><span>${escapeHtml(locale.label)}</span></summary><ul>${renderLocaleLinks(catalog, locale, page, systemRouteId)}</ul></details>
-<a class="public-button public-button--small" href="${escapeHtml(catalog.site.applicationPath)}">${escapeHtml(ui.openApplicationLabel)}</a>
+<a class="public-button public-button--small" href="${escapeHtml(localizedApplicationPath(catalog, locale))}">${escapeHtml(ui.openApplicationLabel)}</a>
 <details class="public-mobile-menu"><summary><span class="public-mobile-menu__icon" aria-hidden="true">☰</span><span class="public-mobile-menu__label">${escapeHtml(ui.mobileNavigationLabel)}</span></summary><nav aria-label="${escapeHtml(ui.primaryNavigationLabel)}">${primaryLinks}</nav></details>
 </div></div></header>`;
 };
@@ -286,7 +289,7 @@ const renderPageMain = (catalog, locale, page) => {
   return `<main id="public-main" class="public-main"><section class="public-hero"><div class="public-hero__content">
 <p class="public-eyebrow">${escapeHtml(copy.eyebrow)}</p><h1>${escapeHtml(copy.heading)}</h1>
 <p class="public-hero__introduction">${escapeHtml(copy.introduction)}</p>
-<div class="public-hero__actions"><a class="public-button" href="${escapeHtml(catalog.site.applicationPath)}">${escapeHtml(ui.openApplicationLabel)}</a>${secondaryAction}</div></div>
+<div class="public-hero__actions"><a class="public-button" href="${escapeHtml(localizedApplicationPath(catalog, locale))}">${escapeHtml(ui.openApplicationLabel)}</a>${secondaryAction}</div></div>
 <div class="public-hero__visual" aria-hidden="true"><span class="public-order-card public-order-card--one"></span><span class="public-order-card public-order-card--two"></span><span class="public-order-card public-order-card--three"></span></div>
 </section>${renderSections(copy)}${renderFaq(copy)}${renderContactForm(catalog, locale, page)}</main>`;
 };
@@ -526,7 +529,26 @@ export const buildRssFeed = (catalog, locale) => {
   return `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>${escapeXml(`${catalog.site.brandName} — ${locale.label}`)}</title><link>${escapeXml(canonicalUrl(catalog, localePath(catalog.pages[0], locale)))}</link><description>${escapeXml(uiCopy(catalog, locale).footerTagline)}</description><language>${escapeXml(locale.htmlLang)}</language><atom:link href="${escapeXml(canonicalUrl(catalog, selfPath))}" rel="self" type="application/rss+xml" />${items}</channel></rss>\n`;
 };
 
-export const buildRobots = (catalog, indexable) =>
-  indexable
-    ? `User-agent: *\nAllow: /\nDisallow: /app\nDisallow: /auth\nDisallow: /invite\nDisallow: /buckets\nDisallow: /sessions\nDisallow: /orders\nDisallow: /join\nDisallow: /social\nDisallow: /settings\n\nSitemap: ${catalog.site.canonicalOrigin}/sitemap.xml\n`
-    : 'User-agent: *\nDisallow: /\n';
+export const buildRobots = (catalog, indexable) => {
+  if (!indexable) return 'User-agent: *\nDisallow: /\n';
+  const privatePaths = [
+    'app',
+    'auth',
+    'invite',
+    'buckets',
+    'sessions',
+    'orders',
+    'join',
+    'social',
+    'settings',
+  ];
+  const disallowRules = ['', ...catalog.locales.map((locale) => locale.segment)]
+    .flatMap((segment) =>
+      privatePaths.map(
+        (privatePath) =>
+          `Disallow: /${[segment, privatePath].filter(Boolean).join('/')}`,
+      ),
+    )
+    .join('\n');
+  return `User-agent: *\nAllow: /\n${disallowRules}\n\nSitemap: ${catalog.site.canonicalOrigin}/sitemap.xml\n`;
+};

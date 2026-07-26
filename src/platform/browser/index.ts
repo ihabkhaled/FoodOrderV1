@@ -5,6 +5,11 @@ export {
   replaceBrowserPath,
 } from './bootstrap-document.adapter';
 export { getBrowserLanguages } from './browser-language.adapter';
+export { navigateToBrowserLocale } from './browser-locale-navigation.adapter';
+export {
+  buildBrowserLocalePath,
+  hasBrowserLocalePrefix,
+} from './browser-locale-path.helper';
 export { copyToClipboard } from './clipboard.adapter';
 export { subscribeToPointerDown } from './document-events.adapter';
 export {

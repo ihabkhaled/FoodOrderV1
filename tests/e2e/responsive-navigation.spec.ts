@@ -299,7 +299,7 @@ test('Back returns to each real bucket and order origin', async ({ page }) => {
   let sharedCard = bucketCard(page, sharedTitle).first();
   await sharedCard.getByRole('link', { name: 'Edit', exact: true }).click();
   await expect(page).toHaveURL(
-    `/buckets/responsive-bucket-${SHARED_BUCKET_INDEX}/edit`,
+    `/en/buckets/responsive-bucket-${SHARED_BUCKET_INDEX}/edit`,
   );
   await goBack(/\/buckets$/u);
 
@@ -308,7 +308,7 @@ test('Back returns to each real bucket and order origin', async ({ page }) => {
     .getByRole('link', { name: `Sharing — ${sharedTitle}` })
     .click();
   await expect(page).toHaveURL(
-    `/buckets/responsive-bucket-${SHARED_BUCKET_INDEX}/share`,
+    `/en/buckets/responsive-bucket-${SHARED_BUCKET_INDEX}/share`,
   );
   await goBack(/\/buckets$/u);
 
@@ -317,7 +317,7 @@ test('Back returns to each real bucket and order origin', async ({ page }) => {
     .getByRole('link', { name: `Members — ${sharedTitle}` })
     .click();
   await expect(page).toHaveURL(
-    `/buckets/responsive-bucket-${SHARED_BUCKET_INDEX}/social-share`,
+    `/en/buckets/responsive-bucket-${SHARED_BUCKET_INDEX}/social-share`,
   );
   await goBack(/\/buckets$/u);
 
@@ -326,14 +326,14 @@ test('Back returns to each real bucket and order origin', async ({ page }) => {
     .getByRole('link', { name: 'Collaborate', exact: true })
     .click();
   await expect(page).toHaveURL(
-    `/buckets/responsive-bucket-${SHARED_BUCKET_INDEX}/collaborate`,
+    `/en/buckets/responsive-bucket-${SHARED_BUCKET_INDEX}/collaborate`,
   );
   await page.getByRole('link', { name: 'Sharing', exact: true }).click();
   await expect(page).toHaveURL(
-    `/buckets/responsive-bucket-${SHARED_BUCKET_INDEX}/share`,
+    `/en/buckets/responsive-bucket-${SHARED_BUCKET_INDEX}/share`,
   );
   await goBack(
-    `/buckets/responsive-bucket-${SHARED_BUCKET_INDEX}/collaborate`,
+    `/en/buckets/responsive-bucket-${SHARED_BUCKET_INDEX}/collaborate`,
   );
   await goBack(/\/buckets$/u);
 
@@ -342,7 +342,7 @@ test('Back returns to each real bucket and order origin', async ({ page }) => {
     .getByRole('link', { name: 'Order now', exact: true })
     .click();
   await expect(page).toHaveURL(
-    `/buckets/responsive-bucket-${PRIVATE_BUCKET_INDEX}/order`,
+    `/en/buckets/responsive-bucket-${PRIVATE_BUCKET_INDEX}/order`,
   );
   await goBack(/\/buckets$/u);
 
@@ -353,7 +353,7 @@ test('Back returns to each real bucket and order origin', async ({ page }) => {
     .first()
     .click();
   await expect(page).toHaveURL(
-    `/orders/responsive-order-${LAST_ORDER_INDEX}`,
+    `/en/orders/responsive-order-${LAST_ORDER_INDEX}`,
   );
   await goBack(/\/app$/u);
 
@@ -364,7 +364,7 @@ test('Back returns to each real bucket and order origin', async ({ page }) => {
     .getByRole('link')
     .click();
   await expect(page).toHaveURL(
-    `/orders/responsive-order-${SHARED_BUCKET_INDEX}`,
+    `/en/orders/responsive-order-${SHARED_BUCKET_INDEX}`,
   );
   await goBack(/\/orders$/u);
 });

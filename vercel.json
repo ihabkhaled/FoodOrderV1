@@ -2,6 +2,28 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "npm run build:web",
   "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/en",
+      "permanent": true
+    },
+    {
+      "source": "/:path(about|how-it-works|features|group-ordering|split-bill-and-receipts|faq|contact|privacy|terms|error|offline|404.html)",
+      "destination": "/en/:path",
+      "permanent": true
+    },
+    {
+      "source": "/feed.xml",
+      "destination": "/en/feed.xml",
+      "permanent": true
+    },
+    {
+      "source": "/feeds/:path*",
+      "destination": "/en/feeds/:path*",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/app",
@@ -23,9 +45,20 @@
         { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" },
         { "key": "Cache-Control", "value": "private, no-store" }
       ]
+    },
+    {
+      "source": "/:locale(en|ar|it|fa|fr|de|es|pt-br|hi|th|zh-cn|ja)/:section(app|auth|invite|buckets|sessions|orders|join|social|settings)/:path*",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" },
+        { "key": "Cache-Control", "value": "private, no-store" }
+      ]
     }
   ],
   "rewrites": [
+    {
+      "source": "/:locale(en|ar|it|fa|fr|de|es|pt-br|hi|th|zh-cn|ja)/:section(app|auth|invite|buckets|sessions|orders|join|social|settings)/:path*",
+      "destination": "/app.html"
+    },
     {
       "source": "/app",
       "destination": "/app.html"

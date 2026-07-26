@@ -2,9 +2,11 @@
 
 ## In-app reset handler
 
-The web app ships its own Firebase email-action handler at the route
-`/auth/action` (`RESET_PASSWORD_PATH`, `src/modules/auth/containers/reset-password.container.tsx`).
-When it is opened as `/auth/action?mode=resetPassword&oobCode=<code>` it:
+The web app ships its own Firebase email-action handler at the internal route
+`/auth/action` (`RESET_PASSWORD_PATH`,
+`src/modules/auth/containers/reset-password.container.tsx`). On the web, the active
+locale basename makes the external URL `/:locale/auth/action`. When it is opened as
+`/ar/auth/action?mode=resetPassword&oobCode=<code>` (for example), it:
 
 1. verifies the one-time `oobCode` with `verifyPasswordResetCode` (verification does
    **not** consume the code),
@@ -14,6 +16,31 @@ When it is opened as `/auth/action?mode=resetPassword&oobCode=<code>` it:
 
 An invalid, expired, or already-used link renders a localized explanation and a
 link back to `/auth/forgot` to request a fresh email.
+
+## Custom SMTP delivery
+
+`POST /api/password-reset` is a serverless boundary. Firebase Admin mints the secure,
+single-use reset action link; Nodemailer sends the localized subject/body through the
+same `CONTACT_SMTP_*` transport used by contact delivery. Firebase does not send this
+custom message.
+
+Required server-only variables:
+
+- `CONTACT_EMAIL_FROM`, `CONTACT_SMTP_HOST`, `CONTACT_SMTP_PORT`,
+  `CONTACT_SMTP_SECURE`, `CONTACT_SMTP_USER`, and `CONTACT_SMTP_PASS`.
+- `FIREBASE_SERVICE_ACCOUNT_JSON`, containing the complete one-line JSON from a Firebase
+  Admin service-account key. `FIREBASE_SERVICE_ACCOUNT` is accepted as a compatibility
+  alias; `GOOGLE_APPLICATION_CREDENTIALS`/Application Default Credentials are supported
+  for trusted server environments.
+
+Never use a `VITE_*` prefix, commit a service-account file, or log/paste its private key.
+Store production/preview values as Vercel Sensitive variables. If a key is exposed,
+revoke it immediately and replace every environment/secret that used it.
+
+The requesting document locale selects copy from `api/password-reset.locales.json` and
+is added to the Firebase link as `lang`. SMTP acceptance logs contain only the locale and
+transport message ID. Account-not-found responses remain indistinguishable from accepted
+requests.
 
 ## REQUIRED Firebase console step
 
@@ -30,7 +57,9 @@ action page — not the in-app handler above.
    ```
 
    Replace `<deployed-web-domain>` with the production web domain (the Vercel
-   deployment domain for this project). The domain must also be listed under
+   deployment domain for this project). The unprefixed compatibility route reads the
+   action link's `lang` value, normalizes to `/:locale/auth/action`, and preserves the
+   one-time query parameters. The domain must also be listed under
    **Authentication → Settings → Authorized domains**.
 4. Save. All auth email templates of the project share this action URL.
 

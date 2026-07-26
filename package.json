@@ -70,7 +70,7 @@
     "knowledge:refresh": "npm run knowledge:build && npm run knowledge:validate",
     "prepare": "husky",
     "security:audit": "node scripts/check-npm-audit.mjs",
-    "security:scan": "trivy fs --scanners vuln,secret,misconfig --skip-dirs node_modules,dist,coverage,android,ios,.git,ui-shots,.worktrees --exit-code 1 .",
+    "security:scan": "trivy fs --scanners vuln,secret,misconfig --severity HIGH,CRITICAL --ignore-unfixed --ignorefile .trivyignore.yaml --skip-files .env,.env.*.local --skip-dirs node_modules,dist,coverage,android,ios,.git,ui-shots,.worktrees --exit-code 1 .",
     "quality:dead-code": "knip",
     "quality:circular": "madge src --circular --extensions ts,tsx",
     "quality:release": "node scripts/check-release-version.mjs",

@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+
 import type {
   CurrencyCode,
   Locale,
@@ -6,6 +8,11 @@ import type {
   UserProfile,
 } from '@/modules/data-access';
 import type { MessageKey } from '@/shared/i18n';
+
+export interface AppProviderProps {
+  children: ReactNode;
+  initialLocale?: Locale;
+}
 
 export interface ToastState {
   message: string;

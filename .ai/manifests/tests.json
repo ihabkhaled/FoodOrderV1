@@ -2,8 +2,8 @@
   "tests": [
     {
       "path": "tests/api/password-reset.test.ts",
-      "bytes": 3671,
-      "hash": "6742f6c81f56b975f29a1338ab23ec62ec7ea2883abd73d44e364696b3d659b8"
+      "bytes": 5811,
+      "hash": "12911fdcfd53b8e606766521bd70a7e0eb2261cf81e6d6d13ab4f8c48c396164"
     },
     {
       "path": "tests/bucket-pricing.test.ts",
@@ -52,8 +52,8 @@
     },
     {
       "path": "tests/components/PublicContent.test.tsx",
-      "bytes": 2661,
-      "hash": "7adc10520549ea27eb3816d4e9440848ea57a2c16c22498b69fb8c39fc48b168"
+      "bytes": 2672,
+      "hash": "9cc18f583be52a58baac993e1b309499c5c246b96349e34a08074af16ba4c239"
     },
     {
       "path": "tests/components/ResetPasswordRoute.test.tsx",
@@ -69,6 +69,11 @@
       "path": "tests/domain/billing-entitlements.test.ts",
       "bytes": 10025,
       "hash": "96a5e4a039af651c8def870ebede2a059ab89e9f9f39cd1169b7dc75108d87b5"
+    },
+    {
+      "path": "tests/domain/browser-locale-path.test.ts",
+      "bytes": 1235,
+      "hash": "308ddd8b2186f88c42fce0923d308ee051a698cb1a12d2b26ca657f07b08ca68"
     },
     {
       "path": "tests/domain/bucket.test.ts",
@@ -117,8 +122,8 @@
     },
     {
       "path": "tests/domain/public-content.test.ts",
-      "bytes": 3563,
-      "hash": "64a5755d1611df68a7e51a92d111f763c7c3e3dccab9b584eb0c801632950b97"
+      "bytes": 3566,
+      "hash": "f3613dc8c22ccd6a6d4c99f6f3388b51a51fc291f1f3747aab7c9847001df7fb"
     },
     {
       "path": "tests/domain/session-contribution.test.ts",
@@ -172,13 +177,13 @@
     },
     {
       "path": "tests/e2e/public-content.spec.ts",
-      "bytes": 4624,
-      "hash": "740da3d44fed97661d02fc2d5fe9d8ce867d51ce77572d17dac3028807935deb"
+      "bytes": 5197,
+      "hash": "66c1ece71424573560cae1ea5e618e6c04ac32f67918a82a12db4b54ff7024b8"
     },
     {
       "path": "tests/e2e/responsive-navigation.spec.ts",
-      "bytes": 11474,
-      "hash": "5b2ae21945f670d0bbaffe7e9e3ac164c6e47a5864a245ce2185e4eb8bafd0e6"
+      "bytes": 11501,
+      "hash": "8c6e81bb8aa4e6564e2e313ac86956d090492bcb1da3cc5def5fd8d04792b452"
     },
     {
       "path": "tests/e2e/responsive-overlays.spec.ts",

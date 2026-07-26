@@ -9,10 +9,17 @@ import type {
 import passwordResetEmailCopy from '../../api/password-reset.locales.json';
 const mocks = vi.hoisted(() => ({
   generatePasswordResetLink: vi.fn(),
-  sendMail: vi.fn(),
+  sendMail: vi.fn<
+    (message: {
+      to: string;
+      subject: string;
+      text: string;
+    }) => Promise<{ messageId: string }>
+  >(),
 }));
 
 vi.mock('firebase-admin/app', () => ({
+  applicationDefault: vi.fn(() => ({ projectId: 'food-order-test' })),
   cert: vi.fn(() => ({ projectId: 'food-order-test' })),
   getApps: vi.fn(() => []),
   initializeApp: vi.fn(() => ({ name: 'password-reset-test' })),
@@ -62,6 +69,8 @@ describe('password-reset email endpoint', () => {
     process.env.CONTACT_SMTP_USER = 'smtp-user';
     process.env.CONTACT_SMTP_PASS = 'smtp-pass';
     process.env.CONTACT_EMAIL_FROM = 'FoodOrder <support@example.test>';
+    process.env.CONTACT_RATE_LIMIT_MAX = '100';
+    process.env.VITE_FIREBASE_PROJECT_ID = 'food-order-test';
     mocks.generatePasswordResetLink.mockResolvedValue(
       'https://food-order-test.firebaseapp.com/__/auth/action?mode=resetPassword&oobCode=test',
     );
@@ -75,6 +84,11 @@ describe('password-reset email endpoint', () => {
     delete process.env.CONTACT_SMTP_USER;
     delete process.env.CONTACT_SMTP_PASS;
     delete process.env.CONTACT_EMAIL_FROM;
+    delete process.env.CONTACT_RATE_LIMIT_MAX;
+    delete process.env.FIREBASE_SERVICE_ACCOUNT;
+    delete process.env.GOOGLE_APPLICATION_CREDENTIALS;
+    delete process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON;
+    delete process.env.VITE_FIREBASE_PROJECT_ID;
   });
 
   it('has email copy for every supported application locale', () => {
@@ -99,6 +113,7 @@ describe('password-reset email endpoint', () => {
         subject: 'إعادة تعيين كلمة مرور FoodOrder',
       }),
     );
+    expect(mocks.sendMail.mock.calls[0]?.[0].text).toContain('lang=ar');
   });
 
   it('does not disclose that an account is missing', async () => {
@@ -109,6 +124,47 @@ describe('password-reset email endpoint', () => {
     await expect(
       invoke({ email: 'missing@example.com', locale: 'en' }),
     ).resolves.toEqual({ statusCode: 200, responseBody: { ok: true } });
+    expect(mocks.sendMail).not.toHaveBeenCalled();
+  });
+
+  it('accepts the repository service-account variable name', async () => {
+    process.env.FIREBASE_SERVICE_ACCOUNT =
+      process.env.FIREBASE_SERVICE_ACCOUNT_JSON;
+    delete process.env.FIREBASE_SERVICE_ACCOUNT_JSON;
+
+    await expect(
+      invoke({ email: 'user@example.com', locale: 'fr' }),
+    ).resolves.toEqual({ statusCode: 200, responseBody: { ok: true } });
+    expect(mocks.sendMail).toHaveBeenCalledWith(
+      expect.objectContaining({
+        subject: 'Réinitialisez votre mot de passe FoodOrder',
+      }),
+    );
+  });
+
+  it('reports unavailable before attempting delivery without Admin credentials', async () => {
+    delete process.env.FIREBASE_SERVICE_ACCOUNT_JSON;
+
+    await expect(
+      invoke({ email: 'user@example.com', locale: 'en' }),
+    ).resolves.toEqual({
+      statusCode: 503,
+      responseBody: { error: 'Password reset is currently unavailable.' },
+    });
+    expect(mocks.generatePasswordResetLink).not.toHaveBeenCalled();
+    expect(mocks.sendMail).not.toHaveBeenCalled();
+  });
+
+  it('rejects a service account for a different Firebase project', async () => {
+    process.env.VITE_FIREBASE_PROJECT_ID = 'another-project';
+
+    await expect(
+      invoke({ email: 'user@example.com', locale: 'en' }),
+    ).resolves.toEqual({
+      statusCode: 503,
+      responseBody: { error: 'Password reset is currently unavailable.' },
+    });
+    expect(mocks.generatePasswordResetLink).not.toHaveBeenCalled();
     expect(mocks.sendMail).not.toHaveBeenCalled();
   });
 });

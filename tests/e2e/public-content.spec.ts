@@ -5,7 +5,7 @@ test('public navigation serves unique crawler metadata through real links', asyn
 }) => {
   // Pin a desktop viewport so the header links are rendered inline.
   await page.setViewportSize({ width: 1280, height: 800 });
-  await page.goto('/');
+  await page.goto('/en');
   await expect(
     page.getByRole('heading', {
       level: 1,
@@ -17,11 +17,11 @@ test('public navigation serves unique crawler metadata through real links', asyn
     .locator('.public-navigation--desktop')
     .getByRole('link', { name: 'About' })
     .click();
-  await expect(page).toHaveURL(/\/about$/u);
+  await expect(page).toHaveURL(/\/en\/about$/u);
   await expect(page).toHaveTitle(/About Gama3 Orderak/u);
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     'href',
-    'https://food-order-v1-peach.vercel.app/about',
+    'https://food-order-v1-peach.vercel.app/en/about',
   );
   await expect(page.locator('link[rel="alternate"][hreflang]')).toHaveCount(13);
 });
@@ -30,14 +30,14 @@ test('the mobile menu exposes the public navigation on narrow viewports', async 
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto('/');
+  await page.goto('/en');
 
   await page.locator('.public-mobile-menu summary').click();
   await page
     .locator('.public-mobile-menu nav')
     .getByRole('link', { name: 'About' })
     .click();
-  await expect(page).toHaveURL(/\/about$/u);
+  await expect(page).toHaveURL(/\/en\/about$/u);
   await expect(page).toHaveTitle(/About Gama3 Orderak/u);
 });
 
@@ -56,20 +56,20 @@ test('Arabic public content is RTL and remains usable at a mobile viewport', asy
 test('public policy, offline, and app documents deny advertising and indexing', async ({
   page,
 }) => {
-  await page.goto('/privacy');
+  await page.goto('/en/privacy');
   await expect(page.locator('.public-site')).toHaveAttribute(
     'data-ad-eligible',
     'false',
   );
   await expect(page.locator('script[src*="googlesyndication"]')).toHaveCount(0);
 
-  await page.goto('/offline');
+  await page.goto('/en/offline');
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
     'content',
     /noindex/u,
   );
 
-  await page.goto('/app');
+  await page.goto('/en/app');
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
     'content',
     /noindex/u,
@@ -107,6 +107,20 @@ test('contact page exposes an accessible localized form without private-data pro
   await expect(page).toHaveURL(/\/ja\/contact$/u);
   await expect(page.getByRole('status')).toHaveText('メッセージを送信しました。');
   await expect(page.getByRole('alert')).toHaveCount(0);
+});
+
+test('changing the app language updates the URL and reloads the active screen', async ({
+  page,
+}) => {
+  await page.goto('/en/auth/forgot');
+  await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+
+  await page.locator('.auth-language-select').selectOption('ar');
+
+  await expect(page).toHaveURL(/\/ar\/auth\/forgot$/u);
+  await expect(page.locator('html')).toHaveAttribute('lang', 'ar');
+  await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
+  await expect(page.locator('.auth-language-select')).toHaveValue('ar');
 });
 
 test('public discovery exposes a locale sitemap index and bounded RSS', async ({

@@ -38,6 +38,20 @@ const APP_SHELL_PREFIXES = new Set([
   'social',
   'settings',
 ]);
+const LOCALE_PREFIXES = new Set([
+  'en',
+  'ar',
+  'it',
+  'fa',
+  'fr',
+  'de',
+  'es',
+  'pt-br',
+  'hi',
+  'th',
+  'zh-cn',
+  'ja',
+]);
 
 const CONTENT_TYPES = {
   '.css': 'text/css; charset=utf-8',
@@ -86,14 +100,22 @@ const server = http.createServer((request, response) => {
     return;
   }
 
-  const firstSegment = pathname.split('/').filter(Boolean)[0] ?? '';
+  const segments = pathname.split('/').filter(Boolean);
+  const firstSegment = segments[0] ?? '';
+  const applicationSegment = LOCALE_PREFIXES.has(firstSegment)
+    ? (segments[1] ?? '')
+    : firstSegment;
   const appShell = path.join(root, 'app.html');
-  if (APP_SHELL_PREFIXES.has(firstSegment) && isFile(appShell)) {
+  if (APP_SHELL_PREFIXES.has(applicationSegment) && isFile(appShell)) {
     sendFile(response, 200, appShell);
     return;
   }
 
-  const notFoundPage = path.join(root, '404.html');
+  const notFoundPage = path.join(
+    root,
+    LOCALE_PREFIXES.has(firstSegment) ? firstSegment : 'en',
+    '404.html',
+  );
   if (isFile(notFoundPage)) {
     sendFile(response, 404, notFoundPage);
     return;

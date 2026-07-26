@@ -9,7 +9,7 @@
   "locales": [
     {
       "code": "en",
-      "segment": "",
+      "segment": "en",
       "htmlLang": "en",
       "openGraphLocale": "en_US",
       "direction": "ltr",

@@ -10,8 +10,8 @@
     },
     {
       "path": ".env.example",
-      "bytes": 1200,
-      "hash": "a72fad951c1bf25762a6f491b5aba7494c520068549e5b6f3843d72f1e1bf92e"
+      "bytes": 1354,
+      "hash": "be100a34d0dfba856b37b1e896beff35a6492fffa2e19fb8029b3e1025ecd263"
     },
     {
       "path": ".github/copilot-instructions.md",
@@ -210,8 +210,8 @@
     },
     {
       "path": "api/password-reset.interfaces.ts",
-      "bytes": 691,
-      "hash": "a7f9211e0df80139cb6b2d64c922c6669da9e5969aa5a93c80a0b9a3b8c71713"
+      "bytes": 825,
+      "hash": "ca0ec685bde2805ef0d3bf17779cab506e21b7ebeb2967a5db1775aa2bb96077"
     },
     {
       "path": "api/password-reset.locales.json",
@@ -220,8 +220,8 @@
     },
     {
       "path": "api/password-reset.ts",
-      "bytes": 5273,
-      "hash": "a87dfe4c95504b08d0c11b198035a6787622bf3bf2c33cb137e2c48dcde5dd52"
+      "bytes": 7675,
+      "hash": "9821015a20565f214552783ec44a740f8cc8388b00ed99f6da9ba45540ef45fe"
     },
     {
       "path": "architecture/README.md",
@@ -455,8 +455,8 @@
     },
     {
       "path": "context/routing-map.md",
-      "bytes": 2881,
-      "hash": "0fa78673d9d12a658b3435e10c5bea316a52bd8d0071dd6220ace63cf56e1f96"
+      "bytes": 3799,
+      "hash": "4871b98be8b38bd68757aa8e96205fd07c44e767c5f3102ced7476975a18fe29"
     },
     {
       "path": "context/state-ownership-map.md",
@@ -565,8 +565,8 @@
     },
     {
       "path": "docs/operations/password-reset.md",
-      "bytes": 2640,
-      "hash": "2a1391c93ca3aafdfcbabf2e356756f9b943f2d048b5f287f2578041b914a196"
+      "bytes": 4210,
+      "hash": "01c61c5997c7802f9312e0709b6b8a1cd5f1aa16be1066d0d34a21f434b9ae0b"
     },
     {
       "path": "docs/operations/platform-support.md",
@@ -575,8 +575,8 @@
     },
     {
       "path": "docs/operations/public-discovery.md",
-      "bytes": 2829,
-      "hash": "a17d32b730f78324b6c7de1cca6379bfe578dc3c1d1c9deea5ed0824a95878df"
+      "bytes": 3383,
+      "hash": "c55b7a10beb5cc2e329ebbeba88e77340fb42c75e5074a85ef6a18272c7f27b9"
     },
     {
       "path": "docs/operations/reference-parity-roadmap.md",
@@ -1075,8 +1075,8 @@
     },
     {
       "path": "package.json",
-      "bytes": 7791,
-      "hash": "ebbe1b70591be7ba89558f9b2a91b5aaca8fdea5a5180e2d5eec30ea68380771"
+      "bytes": 7895,
+      "hash": "d082a84348c068b404d0b5e38337376e630ee2ef41fc82d37c412064d8b3cdbb"
     },
     {
       "path": "packages/group-order-engine/src/index.ts",
@@ -1195,8 +1195,8 @@
     },
     {
       "path": "release-notes/v1.7.2.md",
-      "bytes": 3559,
-      "hash": "9da3f0c4f7d30a173c8d63bf167cfe08d75606b21bcc6fd40f9636e4bd14719d"
+      "bytes": 3702,
+      "hash": "26a20f37b970280b9dc938b31eedcea3a723237f4dec3f6c61b19213d3e2e9c0"
     },
     {
       "path": "reports/phases/PHASE_00_report.md",
@@ -1270,8 +1270,8 @@
     },
     {
       "path": "rules/10-routing.md",
-      "bytes": 2247,
-      "hash": "21d91fe2794df69cf28b782d6e94aafdae4bb865615341f5c0a7ee6c60ef5b95"
+      "bytes": 2907,
+      "hash": "af874798d2cdc9e1afd3f7176ccd682240c3c7321dff25bb3b6abd199d38b357"
     },
     {
       "path": "rules/11-state-management.md",
@@ -1395,18 +1395,18 @@
     },
     {
       "path": "scripts/public-content/public-content-build.shared.mjs",
-      "bytes": 24524,
-      "hash": "92cc4acc479583fed606090d292a7a0a422d6bb2a21bf26daf13b9abc73bb573"
+      "bytes": 24950,
+      "hash": "a731798a83c5283c2f1b60362958f47adb7ee2c3405edc3cd736b8d7dc50bdea"
     },
     {
       "path": "scripts/public-content/validate-public-content.mjs",
-      "bytes": 5637,
-      "hash": "2293df3035743fec9cb33b34755c0a09bd5b6b14ed6bcb7bbffeccc1b14150d5"
+      "bytes": 6075,
+      "hash": "90c425553c9dc53045ac63dd602954b4ea9a57c3a0a89890d1dba84a97078ab3"
     },
     {
       "path": "scripts/serve-dist.mjs",
-      "bytes": 3415,
-      "hash": "b69c729ca9a714c86ad884f0255916a03a729e9581996e04773c4fc78acfa5a6"
+      "bytes": 3773,
+      "hash": "4f8a1dc35103075b5ae1cd159df1e87dbe06f3147c0f358bc24e2f1b2bbc21a6"
     },
     {
       "path": "scripts/validate-preview.mjs",
@@ -1510,8 +1510,13 @@
     },
     {
       "path": "src/app/app-bootstrap.component.tsx",
-      "bytes": 500,
-      "hash": "2244186682b581ed9267d41de46c055ccf97db179ecc34815f1ad6101481af27"
+      "bytes": 697,
+      "hash": "41b9c916cdb3ef5eeb328e11ab011dbf93d464f56dbb977e4eb3906e3fa56af3"
+    },
+    {
+      "path": "src/app/app-bootstrap.interfaces.ts",
+      "bytes": 140,
+      "hash": "d517adcb053bc7ec68563d08373534d07a9aad241807c0aab136c28dbc3f2d21"
     },
     {
       "path": "src/app/index.ts",
@@ -1585,13 +1590,13 @@
     },
     {
       "path": "src/main.tsx",
-      "bytes": 1416,
-      "hash": "f00a8e1e11a8edb956023092f981490fdd0407b590b6dea54b5dfe84dddc0c36"
+      "bytes": 2496,
+      "hash": "67da10444576cb69e70e2985632fefb74aee694f465f159354a68ee019c602ea"
     },
     {
       "path": "src/modules/auth/README.md",
-      "bytes": 1812,
-      "hash": "1ab5a7fa2a2d80c8240fb05c9a6b9dd52d5d9df0c97f323586b752688400cb8e"
+      "bytes": 1925,
+      "hash": "badf534781f3cf2443db58cd6b62123100b6acfa14cc35c4aace9431a1fa5572"
     },
     {
       "path": "src/modules/auth/containers/forgot-password.container.tsx",
@@ -2600,8 +2605,8 @@
     },
     {
       "path": "src/modules/public-content/README.md",
-      "bytes": 981,
-      "hash": "7dd6719071a44647ee6e3f6aead967aaf8fab16d9e59bb5b15474a4a4a876f43"
+      "bytes": 1053,
+      "hash": "6199137365ccc610b3bb2ac2b6897629123b7be7e221280d7a5308ac483c01ab"
     },
     {
       "path": "src/modules/public-content/components/public-footer.component.tsx",
@@ -2630,8 +2635,8 @@
     },
     {
       "path": "src/modules/public-content/containers/public-content.container.tsx",
-      "bytes": 1918,
-      "hash": "f92d18636ed36a517d46803870a6a1c80893eecf2b964bd0e0ef0a82bcd6c658"
+      "bytes": 2129,
+      "hash": "f5e59f5fce7179679580a1a5686352b9b59438bf289183443be1cd796cc72735"
     },
     {
       "path": "src/modules/public-content/content/contact-form.locales.json",
@@ -2690,8 +2695,8 @@
     },
     {
       "path": "src/modules/public-content/content/public-content.catalog.json",
-      "bytes": 52017,
-      "hash": "cfd693e6a3ba68c963d86ca71b76668ed1394f5db700a055543c3dd73e771748"
+      "bytes": 52019,
+      "hash": "d95af9db3ecb2473499d3e65e5f0e6ac9655358d636575fda618ac93c4865fb2"
     },
     {
       "path": "src/modules/public-content/helpers/ad-eligibility.helper.ts",
@@ -2730,8 +2735,8 @@
     },
     {
       "path": "src/modules/public-content/index.ts",
-      "bytes": 958,
-      "hash": "66f2b484d6d884e4e0e3673868bdb67b73304e4fad4c4902da37a846b9e64c7b"
+      "bytes": 978,
+      "hash": "66b80774adfb16a568bbbccbb17de3bf5990bdcb3e212bf598dcea8ba0c73709"
     },
     {
       "path": "src/modules/public-content/public-content.css",
@@ -2740,8 +2745,8 @@
     },
     {
       "path": "src/modules/public-content/routes/public-content-route-registry.helper.ts",
-      "bytes": 5799,
-      "hash": "09e018809423adb5767b805ed9f44266d505b15836d7944d06410a4e0b8b336b"
+      "bytes": 6234,
+      "hash": "f8d7729d4ba4224fb7033cb35db96933ce14821940a8cc0ab325d944288188c5"
     },
     {
       "path": "src/modules/public-content/routes/public-content.routes.tsx",
@@ -2890,8 +2895,8 @@
     },
     {
       "path": "src/modules/session/hooks/use-session-controller.hook.ts",
-      "bytes": 6911,
-      "hash": "b947701f319894ee1d8c35d6ad2037ea1e4f2b8f5993aedb78fbd1658c676ed7"
+      "bytes": 7146,
+      "hash": "ee9436bddb5a6852c7f122b1c283681b632bf9c649ef0170ef04a2ac44329c3b"
     },
     {
       "path": "src/modules/session/index.ts",
@@ -2900,8 +2905,8 @@
     },
     {
       "path": "src/modules/session/providers/session.provider.tsx",
-      "bytes": 369,
-      "hash": "472d6930d59de954b378fca19d569b3f04c30c6ee92d4901f3956173a5b71a0e"
+      "bytes": 413,
+      "hash": "5fc325f07d16b14bb823cadbf01eade004c2e12ed165bab1ab22d2a928ef8c3f"
     },
     {
       "path": "src/modules/session/store/session-context.store.ts",
@@ -2910,8 +2915,8 @@
     },
     {
       "path": "src/modules/session/types/session.types.ts",
-      "bytes": 1280,
-      "hash": "3260f998b9d45ac06811648c6f27ea85a1c542a7f9332ae9ff6da948ff3438a2"
+      "bytes": 1409,
+      "hash": "c012f41baea90622a4539d859444ff9d7b99a6a45215fad7e71d54eb01666211"
     },
     {
       "path": "src/modules/settings/README.md",
@@ -3345,13 +3350,28 @@
     },
     {
       "path": "src/platform/browser/bootstrap-document.adapter.ts",
-      "bytes": 527,
-      "hash": "420a2e72276604f776d3c9df5c50d9c7e09fd0efa53fb835c6d16be380e9e88a"
+      "bytes": 688,
+      "hash": "4c698e667a139fea6fb5a1f18d8c776b3e59d2c00317179e4a3f723c1dbf714c"
     },
     {
       "path": "src/platform/browser/browser-language.adapter.ts",
       "bytes": 193,
       "hash": "65ed74c371d3e6397bf0b12a9ec1a7c23f827300d44795d53fd8e6898123c0ba"
+    },
+    {
+      "path": "src/platform/browser/browser-locale-navigation.adapter.ts",
+      "bytes": 327,
+      "hash": "f9a07bfc7e6c8318cad2c02c14cb753b68ee787cb4e53ebf83f04006b1392c76"
+    },
+    {
+      "path": "src/platform/browser/browser-locale-path.constants.ts",
+      "bytes": 108,
+      "hash": "4f3b83b77dcd973a5f1b3dc46e55d065c08ed6867dc1ca77c892e0c08de5bafc"
+    },
+    {
+      "path": "src/platform/browser/browser-locale-path.helper.ts",
+      "bytes": 537,
+      "hash": "271cec1c90714dc1422ea44dd3c26030de6ebaf9b55572887628271a53496ad7"
     },
     {
       "path": "src/platform/browser/clipboard.adapter.ts",
@@ -3380,8 +3400,8 @@
     },
     {
       "path": "src/platform/browser/index.ts",
-      "bytes": 888,
-      "hash": "110db0a0c7da0b787cf3fa95952980816c62eaf6a5a082156a09d93047ae7dea"
+      "bytes": 1067,
+      "hash": "1937074406b318642d355c765327d0613c78407d1af52f97afd6ac5ed2a51268"
     },
     {
       "path": "src/platform/browser/service-worker.adapter.ts",
@@ -3825,8 +3845,8 @@
     },
     {
       "path": "tests/api/password-reset.test.ts",
-      "bytes": 3671,
-      "hash": "6742f6c81f56b975f29a1338ab23ec62ec7ea2883abd73d44e364696b3d659b8"
+      "bytes": 5811,
+      "hash": "12911fdcfd53b8e606766521bd70a7e0eb2261cf81e6d6d13ab4f8c48c396164"
     },
     {
       "path": "tests/bucket-pricing.test.ts",
@@ -3875,8 +3895,8 @@
     },
     {
       "path": "tests/components/PublicContent.test.tsx",
-      "bytes": 2661,
-      "hash": "7adc10520549ea27eb3816d4e9440848ea57a2c16c22498b69fb8c39fc48b168"
+      "bytes": 2672,
+      "hash": "9cc18f583be52a58baac993e1b309499c5c246b96349e34a08074af16ba4c239"
     },
     {
       "path": "tests/components/ResetPasswordRoute.test.tsx",
@@ -3892,6 +3912,11 @@
       "path": "tests/domain/billing-entitlements.test.ts",
       "bytes": 10025,
       "hash": "96a5e4a039af651c8def870ebede2a059ab89e9f9f39cd1169b7dc75108d87b5"
+    },
+    {
+      "path": "tests/domain/browser-locale-path.test.ts",
+      "bytes": 1235,
+      "hash": "308ddd8b2186f88c42fce0923d308ee051a698cb1a12d2b26ca657f07b08ca68"
     },
     {
       "path": "tests/domain/bucket.test.ts",
@@ -3940,8 +3965,8 @@
     },
     {
       "path": "tests/domain/public-content.test.ts",
-      "bytes": 3563,
-      "hash": "64a5755d1611df68a7e51a92d111f763c7c3e3dccab9b584eb0c801632950b97"
+      "bytes": 3566,
+      "hash": "f3613dc8c22ccd6a6d4c99f6f3388b51a51fc291f1f3747aab7c9847001df7fb"
     },
     {
       "path": "tests/domain/session-contribution.test.ts",
@@ -3995,13 +4020,13 @@
     },
     {
       "path": "tests/e2e/public-content.spec.ts",
-      "bytes": 4624,
-      "hash": "740da3d44fed97661d02fc2d5fe9d8ce867d51ce77572d17dac3028807935deb"
+      "bytes": 5197,
+      "hash": "66c1ece71424573560cae1ea5e618e6c04ac32f67918a82a12db4b54ff7024b8"
     },
     {
       "path": "tests/e2e/responsive-navigation.spec.ts",
-      "bytes": 11474,
-      "hash": "5b2ae21945f670d0bbaffe7e9e3ac164c6e47a5864a245ce2185e4eb8bafd0e6"
+      "bytes": 11501,
+      "hash": "8c6e81bb8aa4e6564e2e313ac86956d090492bcb1da3cc5def5fd8d04792b452"
     },
     {
       "path": "tests/e2e/responsive-overlays.spec.ts",
@@ -4175,13 +4200,13 @@
     },
     {
       "path": "vercel.json",
-      "bytes": 2036,
-      "hash": "3488363691bd488834fb2b156e67381e5443417d93753e262b18db35dac4814a"
+      "bytes": 3096,
+      "hash": "435f4587a1a917ba225d4240691ae9c659e7b3946ccd03ef735891113844c0c2"
     },
     {
       "path": "vite.config.ts",
-      "bytes": 7120,
-      "hash": "a3ecba69944fa8929e2b44ad5afb7cfe0dc8cca2ef0e26e6825751ff04348aca"
+      "bytes": 7313,
+      "hash": "977254318bf41e77f3dcbe739a5d890f429ea6851f6a5855afa3cc21052cc358"
     },
     {
       "path": "vitest.config.ts",

@@ -20,12 +20,12 @@ describe('public content registry and metadata', () => {
 
     expect(paths).toHaveLength(120);
     expect(new Set(paths).size).toBe(120);
-    expect(paths).toContain('/');
-    expect(paths).toContain('/about');
+    expect(paths).toContain('/en');
+    expect(paths).toContain('/en/about');
     expect(paths).toContain('/ar');
     expect(paths).toContain('/pt-br/split-bill-and-receipts');
     expect(paths).toContain('/zh-cn/faq');
-    expect(paths).not.toContain('/en');
+    expect(paths).not.toContain('/');
   });
 
   it('resolves locale-prefixed pages and rejects application paths', () => {

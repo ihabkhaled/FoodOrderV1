@@ -6,6 +6,11 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/app/app-bootstrap.interfaces.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/app/index.ts",
       "tests": [],
       "relationship": "inferred"
@@ -1842,6 +1847,21 @@
     },
     {
       "source": "src/platform/browser/browser-language.adapter.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/platform/browser/browser-locale-navigation.adapter.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/platform/browser/browser-locale-path.constants.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/platform/browser/browser-locale-path.helper.ts",
       "tests": [],
       "relationship": "inferred"
     },

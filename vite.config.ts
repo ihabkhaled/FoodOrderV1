@@ -69,7 +69,11 @@ const handlePasswordResetDevelopmentRequest = async (
     if (
       key.startsWith('CONTACT_') ||
       key.startsWith('FIREBASE_ADMIN_') ||
-      key === 'FIREBASE_SERVICE_ACCOUNT_JSON'
+      key === 'FIREBASE_SERVICE_ACCOUNT_JSON' ||
+      key === 'FIREBASE_SERVICE_ACCOUNT' ||
+      key === 'GOOGLE_APPLICATION_CREDENTIALS' ||
+      key === 'GOOGLE_APPLICATION_CREDENTIALS_JSON' ||
+      key === 'VITE_FIREBASE_PROJECT_ID'
     ) {
       process.env[key] = value;
     }

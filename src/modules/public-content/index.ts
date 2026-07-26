@@ -6,9 +6,10 @@ export { getPublicContentCatalog } from './helpers/public-content-catalog.helper
 export { getPublicPageCopy } from './helpers/public-content-catalog.helper';
 export { PublicContentRoutes } from './routes/public-content.routes';
 export {
+  buildLocalizedPath,
   buildPublicContentPath,
   buildPublicSystemPath,
-  isPublicContentPath,
+  inferPublicLocale,
   matchPublicContentPath,
   PUBLIC_HOME_PATH,
   PUBLIC_LOCALES,
