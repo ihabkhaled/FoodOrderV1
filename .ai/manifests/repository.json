@@ -2700,8 +2700,8 @@
     },
     {
       "path": "src/modules/public-content/public-content.css",
-      "bytes": 13870,
-      "hash": "3649af0c9682aca963770d0cd7dd54b4898b7c949358bde41d32c8803ce3d5dd"
+      "bytes": 14002,
+      "hash": "3110e0e1123be63d48ff8b5db854a69be4c83f0cf3f47642b239af2698e15990"
     },
     {
       "path": "src/modules/public-content/routes/public-content-route-registry.helper.ts",

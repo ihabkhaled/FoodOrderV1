@@ -9,6 +9,7 @@
   --public-accent-soft: #fff0e5;
   --public-green: #0f766e;
   --public-shadow: 0 20px 55px rgb(65 40 20 / 10%);
+  color-scheme: light;
 }
 
 html.public-document,
@@ -362,7 +363,7 @@ body:has(.public-site) {
 .public-faq__item {
   border: 1px solid var(--public-border);
   border-radius: 1.25rem;
-  background: rgb(255 255 255 / 78%);
+  background: color-mix(in srgb, var(--public-surface-raised) 88%, transparent);
   box-shadow: 0 12px 35px rgb(65 40 20 / 5%);
 }
 
@@ -469,7 +470,7 @@ body:has(.public-site) {
   padding: 0.8rem 0.9rem;
   border: 1px solid var(--public-border);
   border-radius: 0.75rem;
-  background: white;
+  background: var(--public-surface-raised);
   color: var(--public-ink);
   font: inherit;
 }
@@ -662,6 +663,7 @@ body:has(.public-site) {
     --public-accent-soft: #3b2418;
     --public-green: #5eead4;
     --public-shadow: 0 20px 55px rgb(0 0 0 / 28%);
+    color-scheme: dark;
   }
 
   html.public-document,
@@ -682,6 +684,7 @@ body:has(.public-site) {
 
   .public-content-card,
   .public-faq__item,
+  .public-contact,
   .public-footer {
     background: rgb(23 34 31 / 78%);
   }
