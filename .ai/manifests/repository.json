@@ -3830,8 +3830,8 @@
     },
     {
       "path": "src/styles.css",
-      "bytes": 25385,
-      "hash": "c48df8ef77d51aa607c9addf1fa451cb873a07e0a7704ae74cb940aa52b52080"
+      "bytes": 25478,
+      "hash": "35c95b524972115a4e2a49b017f97f293882f3c95aceee71902a5671905d20c0"
     },
     {
       "path": "src/virtualLists.css",
@@ -4050,8 +4050,8 @@
     },
     {
       "path": "tests/e2e/ui.spec.ts",
-      "bytes": 10588,
-      "hash": "bf5b6f3f0d09b690540668e5f761576c2e7a239d959df21567966c330ed54197"
+      "bytes": 11407,
+      "hash": "4fe15e2f27640bc9bda622d027c927a7292fa6e1333a1db4da60016bccd4c192"
     },
     {
       "path": "tests/e2e/ux-polish.spec.ts",

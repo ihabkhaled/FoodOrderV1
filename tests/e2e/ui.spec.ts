@@ -158,6 +158,33 @@ test.describe('responsive shell', () => {
     await expect(page.locator('.stat-card')).toHaveCount(6);
   });
 
+  test('dashboard welcome badge stays readable on the light hero', async ({
+    page,
+  }) => {
+    await page.emulateMedia({ colorScheme: 'light' });
+    await register(page);
+    const badge = page.locator('.hero-card .eyebrow');
+
+    await expect(badge).toHaveCSS('color', 'rgb(36, 26, 18)');
+    await expect(badge).toHaveCSS(
+      'background-color',
+      'rgba(255, 255, 255, 0.72)',
+    );
+
+    const themeButton = page
+      .locator('.sidebar')
+      .getByRole('button', { name: /Theme:/u });
+    await themeButton.click();
+    await themeButton.click();
+
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+    await expect(badge).toHaveCSS('color', 'rgb(36, 26, 18)');
+    await expect(badge).toHaveCSS(
+      'background-color',
+      'rgba(255, 255, 255, 0.72)',
+    );
+  });
+
   test('loading presentation is centered horizontally and vertically', async ({
     page,
   }) => {
