@@ -3,7 +3,7 @@ import type { IncomingMessage, ServerResponse } from 'node:http';
 import { fileURLToPath, URL } from 'node:url';
 
 import react from '@vitejs/plugin-react';
-import { defineConfig, type Plugin } from 'vite';
+import { defineConfig, loadEnv, type Plugin } from 'vite';
 
 import contactHandler from './api/contact';
 import type { ContactRequest, ContactResponse } from './api/contact.interfaces';
@@ -20,9 +20,25 @@ const readRequestBody = async (request: IncomingMessage): Promise<string> => {
 const handleContactDevelopmentRequest = async (
   request: IncomingMessage,
   response: ServerResponse,
+  contactEnvironment: Record<string, string>,
 ): Promise<void> => {
+  const smtpKeys = [
+    'CONTACT_EMAIL_FROM',
+    'CONTACT_EMAIL_TO',
+    'CONTACT_SMTP_HOST',
+    'CONTACT_SMTP_USER',
+    'CONTACT_SMTP_PASS',
+  ] as const;
+  const hasSmtpConfiguration = smtpKeys.every(
+    (key) => Boolean(contactEnvironment[key] || process.env[key]),
+  );
+  for (const [key, value] of Object.entries(contactEnvironment)) {
+    if (key.startsWith('CONTACT_')) process.env[key] = value;
+  }
   process.env.CONTACT_EMAIL_ENABLED ??= 'true';
-  process.env.CONTACT_DEVELOPMENT_ETHEREAL ??= 'true';
+  process.env.CONTACT_DEVELOPMENT_ETHEREAL ??= hasSmtpConfiguration
+    ? 'false'
+    : 'true';
 
   const contactRequest = request as ContactRequest;
   const rawBody = await readRequestBody(request);
@@ -39,11 +55,17 @@ const handleContactDevelopmentRequest = async (
   await contactHandler(contactRequest, contactResponse);
 };
 
-const contactDevelopmentPlugin = (): Plugin => ({
+const contactDevelopmentPlugin = (
+  contactEnvironment: Record<string, string>,
+): Plugin => ({
   name: 'contact-development-endpoint',
   configureServer(server) {
     server.middlewares.use('/api/contact', (request, response) => {
-      void handleContactDevelopmentRequest(request, response).catch(
+      void handleContactDevelopmentRequest(
+        request,
+        response,
+        contactEnvironment,
+      ).catch(
         (error: unknown) => {
           console.error('Development contact endpoint failed.', error);
           if (!response.headersSent) {
@@ -66,8 +88,11 @@ const contactDevelopmentPlugin = (): Plugin => ({
 const { version } = JSON.parse(
   readFileSync(fileURLToPath(new URL('package.json', import.meta.url)), 'utf8'),
 ) as { version: string };
-export default defineConfig({
-  plugins: [contactDevelopmentPlugin(), react()],
+export default defineConfig(({ mode }) => ({
+  plugins: [
+    contactDevelopmentPlugin(loadEnv(mode, process.cwd(), '')),
+    react(),
+  ],
   define: { __APP_VERSION__: JSON.stringify(version) },
   resolve: { alias: { '@': fileURLToPath(new URL('src', import.meta.url)) } },
   // No sourcemaps in the production bundle: they are copied verbatim into the
@@ -94,4 +119,4 @@ export default defineConfig({
   // breaks tooling (Playwright webServer) that polls 127.0.0.1.
   server: { host: '127.0.0.1', port: 5173, strictPort: true },
   preview: { host: '127.0.0.1', port: 4173, strictPort: true },
-});
+}));

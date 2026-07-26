@@ -4150,8 +4150,8 @@
     },
     {
       "path": "vite.config.ts",
-      "bytes": 3726,
-      "hash": "f3cb4027cc1c55bcad1d0e6fb048328ec178ac1f5aab097dbb0e43be5569607c"
+      "bytes": 4395,
+      "hash": "599fc49b2eb607fd50f64340d348b20c41fab814da0f91228cb78f1371e42c93"
     },
     {
       "path": "vitest.config.ts",
