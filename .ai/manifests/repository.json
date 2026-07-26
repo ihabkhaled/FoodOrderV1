@@ -2645,58 +2645,58 @@
     },
     {
       "path": "src/modules/public-content/content/locales/de.json",
-      "bytes": 19728,
-      "hash": "089715427b9f38c83dc447c6e8dd667c8acb3477078643a12a78f3364f9b54e7"
+      "bytes": 19729,
+      "hash": "ef7c36670fea7bdbc7057761124c617178efca4bfefb7ced2743eac2e6d47142"
     },
     {
       "path": "src/modules/public-content/content/locales/es.json",
-      "bytes": 19082,
-      "hash": "f9215c41de87954c863aff49529d5f6b0d0e4f84455b669ad7ae20d38b3f7298"
+      "bytes": 19094,
+      "hash": "e24a572714c804b7221c61eb6cc6abd72fa0ca74e4299b0053afd202f5b87553"
     },
     {
       "path": "src/modules/public-content/content/locales/fa.json",
-      "bytes": 26725,
-      "hash": "54d1b51671d5f3a38e985f1d73865e172c97821a6a07ddc31d1678f33af4594a"
+      "bytes": 26734,
+      "hash": "519b8d9f19b1c3d589c451b586cc21d0e898b74bb72f37796b0d01439a2aa042"
     },
     {
       "path": "src/modules/public-content/content/locales/fr.json",
-      "bytes": 16946,
-      "hash": "4b27a3dd799785da10b34f7c9ef02c5c4a00be202b8beef36afabf4af8ea5128"
+      "bytes": 16958,
+      "hash": "ba00511d93d36c9294ca37b6307205fa0d506e44c06ba2defc1947e2b6e6fd0b"
     },
     {
       "path": "src/modules/public-content/content/locales/hi.json",
-      "bytes": 38222,
-      "hash": "c4066120a9061997abd671f89c9b18c4ac03b66e3c9c1fb2782c72ec0a32b143"
+      "bytes": 38244,
+      "hash": "5821197402a872f34f269205b1f5b1b337d2bec07f2c70e662c56bfb27d08067"
     },
     {
       "path": "src/modules/public-content/content/locales/it.json",
-      "bytes": 16267,
-      "hash": "04b47564fb973b22d83d77602a107d33396bae88e8f2427465ff309705c7f694"
+      "bytes": 16285,
+      "hash": "293e1df725460aa7a03b55b5edde5fbe1059b19d7c50bf660d0478d738cc4f99"
     },
     {
       "path": "src/modules/public-content/content/locales/ja.json",
-      "bytes": 23491,
-      "hash": "b7ed6d58353c61384a35064e5f4cdc8308f467c2e22f74f869413633215b7b50"
+      "bytes": 23509,
+      "hash": "fa1d0de923088bcca25e04e634cdba5f9ac9f1a1ad897722950709062661ccd6"
     },
     {
       "path": "src/modules/public-content/content/locales/pt-BR.json",
-      "bytes": 18588,
-      "hash": "24f8a2667e74cecea4a9f5e93c756f4f675719af8287d638aa64f4fa074e4c9f"
+      "bytes": 18599,
+      "hash": "bfc2faa5aa584a96b876cce9662e034d94b9c054789d439ebbe252ab7299c55c"
     },
     {
       "path": "src/modules/public-content/content/locales/th.json",
-      "bytes": 39022,
-      "hash": "5d3b1c390cadba2af8ffc6a18725e5ba647e108f4417aff12d44dc5867ed4e82"
+      "bytes": 39034,
+      "hash": "ba40f88edf487109714af3559ec10aba2d109844955854f7b499ddf868763234"
     },
     {
       "path": "src/modules/public-content/content/locales/zh-CN.json",
-      "bytes": 15601,
-      "hash": "14729a9ebfce48e7b1ec3aeb69d99543585356ba4d1b6621cd7889275bd1c992"
+      "bytes": 15604,
+      "hash": "e0cc62c4e7a8218abc61622e6a0b39e5068f35144feaf58c40e304cd392697f4"
     },
     {
       "path": "src/modules/public-content/content/public-content.catalog.json",
-      "bytes": 52019,
-      "hash": "d95af9db3ecb2473499d3e65e5f0e6ac9655358d636575fda618ac93c4865fb2"
+      "bytes": 52042,
+      "hash": "732c550ce2bc792d37a88302d26c3aa00237fbeeb9035f61153d33d95b8e51d7"
     },
     {
       "path": "src/modules/public-content/helpers/ad-eligibility.helper.ts",
