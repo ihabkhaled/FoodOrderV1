@@ -1,3 +1,4 @@
+import { PublicContactFormContainer } from '../containers/public-contact-form.container';
 import type { PublicPageProps } from '../types/public-content.types';
 
 export function PublicPage({
@@ -6,6 +7,7 @@ export function PublicPage({
   applicationPath,
   learnMorePath,
   ui,
+  contactForm,
 }: PublicPageProps) {
   return (
     <main id="public-main" className="public-main">
@@ -64,6 +66,10 @@ export function PublicPage({
             ))}
           </dl>
         </section>
+      )}
+
+      {definition.id === 'contact' && (
+        <PublicContactFormContainer copy={contactForm} />
       )}
     </main>
   );

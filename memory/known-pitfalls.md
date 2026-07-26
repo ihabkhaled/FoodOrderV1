@@ -24,12 +24,27 @@ correction.
 
 ## Process and tooling
 
+### Importing a foreign prompt pack literally
+
+Prompt packs often encode another repository's framework, locale inventory, schemas,
+commands, and deployment topology. Applying those nouns directly creates parallel
+systems and architecture drift. Read the pack fully, classify requirements as
+adopt/adapt/defer/skip, and use existing FoodOrderV1 owners.
+
 - **Lint CI requires committed autofixes.** The `lint` job runs `npm run lint:fix` and then
   `git diff --exit-code` — locally-clean-but-unfixed formatting/import order fails CI even
   though `npm run lint` passes on your machine. Always run `lint:fix` and commit the result.
 - **`.ai/` is generated.** Hand edits are overwritten by the next build and can fail
   `knowledge:validate`. Edit the canonical source doc, then run
   `npm run knowledge:build:incremental`.
+- **Windows hides case-only filename drift.** Git can track `Loading.test.tsx` while a
+  case-insensitive worktree exposes `loading.test.tsx`; the Linux knowledge manifest then
+  differs after `lint:fix`. Normalize the on-disk case to `git ls-files`, run formatting
+  and autofix, and regenerate knowledge as the final fixed point.
+- **Branch release artifacts are gated outputs.** `Generate Immutable Branch APK` and
+  `Publish Branch Prerelease` are expected to be skipped after an upstream failure. They
+  are fulfilled only after a repaired push makes the all-gates job green and both
+  downstream jobs succeed.
 - **Typecheck runs under TWO TypeScript versions.** `npm run typecheck` (7.0.2) and
   `npm run typecheck:tsc` (5.9.3) both gate CI. A fix valid in one can fail the other —
   run both before claiming green.
@@ -66,6 +81,15 @@ correction.
 
 ## UI and responsive layout
 
+- **Light semantic pills need fixed dark ink in every theme.** A light success/member
+  background cannot inherit dark-theme text or broad `.list-row span` color rules. Keep
+  its foreground explicit and exclude `.status` from generic muted selectors.
+- **Mixed RTL names and LTR metadata need isolated layout units.** Do not concatenate an
+  Arabic actor, translated action, separator, and date into one bidi run; use `bdi` plus
+  flex gaps so names and numbers do not glue together or reorder adjacent copy.
+- **Shell chrome exposes user state, not infrastructure.** Connection and the
+  package-derived app version are useful; Firebase/local storage provider labels are
+  implementation details and do not belong in client-facing status UI.
 - **Broad descendant selectors can silently change layout ownership.** A rule such as
   `.group-card-head > div` can accidentally target both the title copy and action container,
   stacking controls or gluing metadata to titles. Target the exact semantic class and add a

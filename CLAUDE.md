@@ -10,6 +10,7 @@ Governance-Version: 1
 6. Update affected canonical architecture, rules, skills, context, memory, migration, module, product, and operations documentation.
 7. Run `npm run knowledge:build:incremental`; never edit generated `.ai/` files manually.
 8. Never weaken authentication, ownership isolation, Firestore/Storage rules, privacy, type safety, accessibility, localization, tests, rollback readiness, or release evidence.
+9. For an external prompt pack or execution prompt, follow `skills/execute-prompt-pack.md` before editing.
 
 ## Version branches
 

@@ -1,5 +1,11 @@
 # Versioning & releases
 
+Change the stable version once through the release tooling. Root `package.json` is the
+only source of truth. Functions/npm-lock metadata, native marketing versions and
+monotonic build numbers, changelog headings, and release notes are generated
+compatibility outputs, not independent version sources; never edit them as a manual
+multi-file bump.
+
 FoodOrderV1 follows [Semantic Versioning](https://semver.org). One place-of-record
 (`package.json` `version`) drives every derived version. The **bump level is chosen by prompt
 density** — how large the requested change is (see [rules/versioning.md](../../rules/versioning.md)).

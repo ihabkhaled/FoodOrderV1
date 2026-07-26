@@ -14,6 +14,14 @@ production incident path, not a formality.
 
 ## Required
 
+### Execution order
+
+Use focused direct tests and targeted lint/type/build checks during implementation. Once
+the feature behavior is stable, update affected canonical docs and regenerate knowledge.
+Then run the mandatory suite below against that completed fixed point. Avoid restarting
+the full suite after every small edit; if a final gate fails, repair it, rerun the affected
+gate, and reproduce the final aggregate before push or hand-off.
+
 The mandatory gate set (all must succeed):
 
 | Gate                               | Command / job                                        |
@@ -42,6 +50,15 @@ The mandatory gate set (all must succeed):
   commit with SHA-256 attached. Bump level by prompt density (see
   [versioning.md](versioning.md)).
 - Governance docs integrity: `node scripts/check-agent-docs.mjs` passes.
+- Branch pushes run the same mandatory repository gates before the immutable APK and
+  prerelease jobs may start. A skipped downstream job is not success: repair the upstream
+  gate, push the fix, and verify all three jobs complete.
+- Generated knowledge is part of the committed fixed point. Run format and `lint:fix`
+  first, regenerate `.ai/`, then reproduce `knowledge:build` followed by `lint:fix` and
+  require no non-report diff. Case-only file names must match Git exactly on Linux.
+- Time-bounded scanner exceptions require a written `docs/exceptions/EXC-*` owner,
+  exact advisory/package scope, expiration/removal condition, and fail-closed tooling for
+  every non-excepted finding.
 - PR version bump: on a pull request, `quality:release` also requires `package.json`
   `version` to be strictly greater than `main` (MINOR by default for feature branches).
   Bump at branch start: `npm run release:minor -- "summary"`.
@@ -56,6 +73,7 @@ The mandatory gate set (all must succeed):
 ## Forbidden
 
 - Merging with any red gate; retrying flakes into green without diagnosing.
+- Treating skipped APK/prerelease jobs as fulfilled when their upstream branch gate failed.
 - `--no-verify`, hook bypasses, force-pushes over gate failures.
 - Hand-editing derived versions (gradle versionName/versionCode, docs) — run the tool.
 - Claiming release readiness with unexecuted evidence (e.g. iOS, see EXC-5) or open

@@ -8,7 +8,7 @@ import type {
 } from '../types/public-content.types';
 
 export const PUBLIC_LOCALES = [
-  { code: 'en', segment: '', htmlLang: 'en', openGraphLocale: 'en_US', direction: 'ltr', label: 'English', contentSource: 'en' },
+  { code: 'en', segment: 'en', htmlLang: 'en', openGraphLocale: 'en_US', direction: 'ltr', label: 'English', contentSource: 'en' },
   { code: 'ar', segment: 'ar', htmlLang: 'ar', openGraphLocale: 'ar_AR', direction: 'rtl', label: 'العربية', contentSource: 'ar' },
   { code: 'it', segment: 'it', htmlLang: 'it', openGraphLocale: 'it_IT', direction: 'ltr', label: 'Italiano', contentSource: 'it' },
   { code: 'fa', segment: 'fa', htmlLang: 'fa', openGraphLocale: 'fa_IR', direction: 'rtl', label: 'فارسی', contentSource: 'fa' },
@@ -30,7 +30,7 @@ export const PUBLIC_ROUTE_DEFINITIONS = [
   { id: 'group-ordering', slug: 'group-ordering', navigation: true, adEligible: true },
   { id: 'split-bill-and-receipts', slug: 'split-bill-and-receipts', navigation: true, adEligible: true },
   { id: 'faq', slug: 'faq', navigation: true, adEligible: true },
-  { id: 'contact', slug: 'contact', navigation: false, adEligible: false },
+  { id: 'contact', slug: 'contact', navigation: true, adEligible: false },
   { id: 'privacy', slug: 'privacy', navigation: false, adEligible: false },
   { id: 'terms', slug: 'terms', navigation: false, adEligible: false },
 ] as const satisfies readonly PublicRouteDefinition[];
@@ -41,7 +41,7 @@ const PUBLIC_SYSTEM_SLUGS: Record<PublicSystemRouteId, string> = {
   offline: 'offline',
 };
 
-export const PUBLIC_HOME_PATH = '/';
+export const PUBLIC_HOME_PATH = '/en';
 
 const normalizePathname = (pathname: string): string => {
   const pathOnly = pathname.split(/[?#]/u, 1)[0]?.trim() || PUBLIC_HOME_PATH;
@@ -81,6 +81,23 @@ export const buildPublicContentPath = (
   return segments.length === 0 ? PUBLIC_HOME_PATH : `/${segments.join('/')}`;
 };
 
+export const buildLocalizedPath = (
+  pathname: string,
+  locale: PublicLocale,
+): string => {
+  const localeDefinition = findPublicLocale(locale);
+  const normalized = normalizePathname(pathname);
+  const currentLocale = PUBLIC_LOCALES.find(
+    (candidate) =>
+      normalized === `/${candidate.segment}` ||
+      normalized.startsWith(`/${candidate.segment}/`),
+  );
+  const unprefixed = currentLocale
+    ? normalized.slice(currentLocale.segment.length + 1)
+    : normalized;
+  return `/${localeDefinition.segment}${unprefixed === '/' ? '' : unprefixed}`;
+};
+
 export const buildPublicSystemPath = (
   routeId: PublicSystemRouteId,
   locale: PublicLocale,
@@ -95,7 +112,7 @@ const splitLocalizedPath = (
 ): { locale: PublicLocale; slug: string } => {
   const segments = normalizePathname(pathname).split('/').filter(Boolean);
   const localized = PUBLIC_LOCALES.find(
-    (candidate) => candidate.segment && candidate.segment === segments[0],
+    (candidate) => candidate.segment === segments[0],
   );
   if (!localized) return { locale: 'en', slug: segments.join('/') };
   return { locale: localized.code, slug: segments.slice(1).join('/') };
@@ -123,6 +140,3 @@ export const matchPublicContentPath = (
     routeId: systemEntry[0] as PublicSystemRouteId,
   };
 };
-
-export const isPublicContentPath = (pathname: string): boolean =>
-  matchPublicContentPath(pathname) !== null;

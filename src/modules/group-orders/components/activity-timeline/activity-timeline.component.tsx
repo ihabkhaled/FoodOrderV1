@@ -48,11 +48,21 @@ export function ActivityTimeline({ events, locale, t }: ActivityTimelineProps) {
       {events.map((event) => (
         <li key={event.id} className="activity-row">
           <History aria-hidden="true" />
-          <div>
-            <p>
-              <strong>{event.actorName}</strong> {t(LABELS[event.type])}
+          <div className="activity-copy">
+            <p className="activity-message">
+              <strong>
+                <bdi>{event.actorName}</bdi>
+              </strong>
+              <span>
+                <bdi>{t(LABELS[event.type])}</bdi>
+              </span>
               {detail(event) ? (
-                <span className="activity-detail"> · {detail(event)}</span>
+                <span className="activity-detail">
+                  <span className="activity-separator" aria-hidden="true">
+                    ·
+                  </span>{' '}
+                  <bdi>{detail(event)}</bdi>
+                </span>
               ) : null}
             </p>
             <span className="muted">

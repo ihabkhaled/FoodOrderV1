@@ -7,6 +7,12 @@ route-constants files) — one route table per module, composed by `src/app`'s r
 absolute path literals in `to=`, `href=`, or `navigate()` are forbidden outside route-owner
 files. Router APIs come only from `@/packages/router`.
 
+On the web, every user-facing public and application URL has a canonical locale prefix
+(`/:locale/...`, including English `/en/...`). Module route constants remain
+locale-independent (`/auth/forgot`, `/app`, and so on); the top-level browser router owns
+the active locale basename. Language changes persist the preference, replace the locale
+prefix, and reload the same screen. Capacitor routes remain unprefixed.
+
 ## Motivation
 
 The pre-migration tree had inline `'/...'` literals in ~16 files; renaming a path was a
@@ -16,8 +22,9 @@ parameter usage type-checked.
 ## Required
 
 - The real route map (target ownership):
-  - `auth`: `/auth`, `/auth/login`, `/auth/register`, `/auth/forgot` (guest-only layout).
-  - `dashboard`: `/` (index).
+  - `auth`: `/auth`, `/auth/login`, `/auth/register`, `/auth/forgot`, `/auth/action`
+    (guest-only layout).
+  - `dashboard`: `/app`.
   - `buckets`: `/buckets`, `/buckets/new`, `/buckets/:bucketId/edit`.
   - `orders`: `/orders`, `/orders/:orderId`, `/buckets/:bucketId/order`.
   - `group-orders`: `/buckets/:bucketId/collaborate`, `/buckets/:bucketId/share`, `/join`.
@@ -25,7 +32,10 @@ parameter usage type-checked.
   - `settings`: `/settings`. Catch-all `*` → not-found (app shell).
 - Each module's `routes/` exports path constants, param-typed builders, and the module's
   `<Route>` fragment; `src/app` assembles them with the guard layouts (protected vs guest).
-- Auth guards redirect via constants (`/auth/login`, `/`), owned by their route files.
+- Auth guards redirect via constants (`/auth/login`, `/app`), owned by their route files.
+- Public search discovery includes only reviewed public `/:locale/...` documents.
+  Locale-prefixed auth/app/invitation/order routes receive noindex headers and never enter
+  a sitemap, RSS feed, or crawler-facing data source.
 
 ## Forbidden
 

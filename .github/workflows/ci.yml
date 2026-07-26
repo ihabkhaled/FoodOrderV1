@@ -316,6 +316,7 @@ jobs:
           output: trivy-results.sarif
           severity: CRITICAL,HIGH
           ignore-unfixed: true
+          trivyignores: .trivyignore.yaml
           exit-code: '1'
           skip-dirs: node_modules,dist,coverage,android,ios,ui-shots
       - uses: actions/upload-artifact@v7
@@ -333,6 +334,7 @@ jobs:
           format: table
           severity: CRITICAL,HIGH
           ignore-unfixed: true
+          trivyignores: .trivyignore.yaml
           exit-code: '1'
           skip-setup-trivy: true
           skip-dirs: node_modules,dist,coverage,android,ios,ui-shots

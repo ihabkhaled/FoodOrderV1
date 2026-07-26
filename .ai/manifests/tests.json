@@ -1,6 +1,11 @@
 {
   "tests": [
     {
+      "path": "tests/api/password-reset.test.ts",
+      "bytes": 5811,
+      "hash": "12911fdcfd53b8e606766521bd70a7e0eb2261cf81e6d6d13ab4f8c48c396164"
+    },
+    {
       "path": "tests/bucket-pricing.test.ts",
       "bytes": 3507,
       "hash": "29dcee9ae619fc2d53fd17e61e9420a7825753ec9d9f2346b45c96eaabe1814e"
@@ -27,8 +32,8 @@
     },
     {
       "path": "tests/components/LanguageSelect.test.tsx",
-      "bytes": 1592,
-      "hash": "3aacaf49433f9798cef9c10e4d882423b6e09f789519172ac569453b2ac5189b"
+      "bytes": 2211,
+      "hash": "a45564187dce51b70f86d3ed01c26b56aba38b7ca150e7e91522db15adfcb0e9"
     },
     {
       "path": "tests/components/Loading.test.tsx",
@@ -47,8 +52,8 @@
     },
     {
       "path": "tests/components/PublicContent.test.tsx",
-      "bytes": 2661,
-      "hash": "7adc10520549ea27eb3816d4e9440848ea57a2c16c22498b69fb8c39fc48b168"
+      "bytes": 2672,
+      "hash": "9cc18f583be52a58baac993e1b309499c5c246b96349e34a08074af16ba4c239"
     },
     {
       "path": "tests/components/ResetPasswordRoute.test.tsx",
@@ -64,6 +69,11 @@
       "path": "tests/domain/billing-entitlements.test.ts",
       "bytes": 10025,
       "hash": "96a5e4a039af651c8def870ebede2a059ab89e9f9f39cd1169b7dc75108d87b5"
+    },
+    {
+      "path": "tests/domain/browser-locale-path.test.ts",
+      "bytes": 1235,
+      "hash": "308ddd8b2186f88c42fce0923d308ee051a698cb1a12d2b26ca657f07b08ca68"
     },
     {
       "path": "tests/domain/bucket.test.ts",
@@ -112,8 +122,8 @@
     },
     {
       "path": "tests/domain/public-content.test.ts",
-      "bytes": 3121,
-      "hash": "db13ad80887bb9c9f7f613e913749ef723cfae3299152acbdc6e6b658fb349a9"
+      "bytes": 3566,
+      "hash": "f3613dc8c22ccd6a6d4c99f6f3388b51a51fc291f1f3747aab7c9847001df7fb"
     },
     {
       "path": "tests/domain/session-contribution.test.ts",
@@ -167,13 +177,13 @@
     },
     {
       "path": "tests/e2e/public-content.spec.ts",
-      "bytes": 2438,
-      "hash": "3e5c8a65f89897e7239f86eabe63079f30a9eda74ec21ee30802c390059abe2a"
+      "bytes": 5197,
+      "hash": "66c1ece71424573560cae1ea5e618e6c04ac32f67918a82a12db4b54ff7024b8"
     },
     {
       "path": "tests/e2e/responsive-navigation.spec.ts",
-      "bytes": 11474,
-      "hash": "5b2ae21945f670d0bbaffe7e9e3ac164c6e47a5864a245ce2185e4eb8bafd0e6"
+      "bytes": 11501,
+      "hash": "8c6e81bb8aa4e6564e2e313ac86956d090492bcb1da3cc5def5fd8d04792b452"
     },
     {
       "path": "tests/e2e/responsive-overlays.spec.ts",
@@ -197,13 +207,13 @@
     },
     {
       "path": "tests/e2e/ui.spec.ts",
-      "bytes": 10363,
-      "hash": "508313bf44de7b36f8d5eb5d839dc8d3097f7efe123b34d60b63f1f12d7ea772"
+      "bytes": 11407,
+      "hash": "4fe15e2f27640bc9bda622d027c927a7292fa6e1333a1db4da60016bccd4c192"
     },
     {
       "path": "tests/e2e/ux-polish.spec.ts",
-      "bytes": 4401,
-      "hash": "c9699f37df95941a165ae6e4ca4573627394265dc348314a52bac68d5c8ce73e"
+      "bytes": 4413,
+      "hash": "bbd752519ed77efd367a2fd660b6c67fbec0c0413fd87f897231f845bbbafbf7"
     },
     {
       "path": "tests/eslint/architecture-plugin.test.ts",

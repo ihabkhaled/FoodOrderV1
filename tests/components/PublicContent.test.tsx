@@ -13,7 +13,7 @@ const renderPublicRoute = (pathname: string) =>
 
 describe('PublicContentRoutes', () => {
   it('renders the English homepage with semantic navigation and footer', () => {
-    renderPublicRoute('/');
+    renderPublicRoute('/en');
 
     expect(
       screen.getByRole('heading', {
@@ -24,7 +24,7 @@ describe('PublicContentRoutes', () => {
     expect(screen.getAllByRole('link', { name: 'About' }).length).toBeGreaterThan(0);
     expect(screen.getAllByRole('link', { name: 'Open the app' })[0]).toHaveAttribute(
       'href',
-      '/app',
+      '/en/app',
     );
     expect(screen.getByRole('contentinfo')).toBeVisible();
     expect(
@@ -65,14 +65,14 @@ describe('PublicContentRoutes', () => {
   });
 
   it('marks policy and system pages as advertising-ineligible', () => {
-    const { unmount } = renderPublicRoute('/privacy');
+    const { unmount } = renderPublicRoute('/en/privacy');
     expect(screen.getByRole('document', { name: 'Gama3 Orderak' })).toHaveAttribute(
       'data-ad-eligible',
       'false',
     );
     unmount();
 
-    renderPublicRoute('/does-not-exist');
+    renderPublicRoute('/en/does-not-exist');
     expect(screen.getByRole('document', { name: 'Gama3 Orderak' })).toHaveAttribute(
       'data-ad-eligible',
       'false',

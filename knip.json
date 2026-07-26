@@ -3,10 +3,11 @@
   "entry": [
     "tests/**/*.{test,spec}.{ts,tsx}",
     "*.config.{ts,mts,js,mjs}",
+    "api/**/*.ts",
     "tools/**/*.mjs",
     "scripts/**/*.mjs"
   ],
-  "project": ["src/**/*.{ts,tsx}"],
+  "project": ["src/**/*.{ts,tsx}", "api/**/*.ts"],
   "ignoreDependencies": ["@capacitor/app", "@capacitor/keyboard", "lint-staged"],
   "ignoreBinaries": ["trivy"],
   "ignoreExportsUsedInFile": true

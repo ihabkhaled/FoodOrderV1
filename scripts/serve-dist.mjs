@@ -6,7 +6,9 @@
  * Mirrors the Vercel routing in vercel.json so e2e tests exercise the same
  * split as production: prerendered public pages are served as static files,
  * application routes rewrite to the app.html SPA shell, unknown paths get the
- * prerendered 404 page, and trailing slashes redirect permanently.
+ * prerendered 404 page. Vercel owns production trailing-slash canonicalization;
+ * this local server serves the matching directory index without reflecting a
+ * request-derived value into a redirect header.
  *
  * Usage: node scripts/serve-dist.mjs [--port=4173] [--dir=dist]
  */
@@ -36,6 +38,20 @@ const APP_SHELL_PREFIXES = new Set([
   'social',
   'settings',
 ]);
+const LOCALE_PREFIXES = new Set([
+  'en',
+  'ar',
+  'it',
+  'fa',
+  'fr',
+  'de',
+  'es',
+  'pt-br',
+  'hi',
+  'th',
+  'zh-cn',
+  'ja',
+]);
 
 const CONTENT_TYPES = {
   '.css': 'text/css; charset=utf-8',
@@ -55,13 +71,6 @@ const CONTENT_TYPES = {
 
 const isFile = (candidate) => existsSync(candidate) && statSync(candidate).isFile();
 
-const isSafeLocalRedirectPath = (value) =>
-  typeof value === 'string' &&
-  value.startsWith('/') &&
-  !value.startsWith('//') &&
-  !value.includes('\\') &&
-  !/[\u0000-\u001F\u007F]/u.test(value);
-
 const sendFile = (response, status, filePath) => {
   response.writeHead(status, {
     'Content-Type':
@@ -73,17 +82,6 @@ const sendFile = (response, status, filePath) => {
 
 const server = http.createServer((request, response) => {
   const pathname = decodeURIComponent((request.url ?? '/').split(/[?#]/u)[0]);
-
-  if (pathname !== '/' && pathname.endsWith('/')) {
-    // Rebuild the target from path segments so the redirect stays local.
-    const segments = pathname.split('/').filter(Boolean);
-    const target = `/${segments.join('/')}`;
-    if (isSafeLocalRedirectPath(target)) {
-      response.writeHead(308, { Location: target });
-      response.end();
-      return;
-    }
-  }
 
   const resolved = path.normalize(path.join(root, pathname));
   if (!resolved.startsWith(root)) {
@@ -102,14 +100,22 @@ const server = http.createServer((request, response) => {
     return;
   }
 
-  const firstSegment = pathname.split('/').filter(Boolean)[0] ?? '';
+  const segments = pathname.split('/').filter(Boolean);
+  const firstSegment = segments[0] ?? '';
+  const applicationSegment = LOCALE_PREFIXES.has(firstSegment)
+    ? (segments[1] ?? '')
+    : firstSegment;
   const appShell = path.join(root, 'app.html');
-  if (APP_SHELL_PREFIXES.has(firstSegment) && isFile(appShell)) {
+  if (APP_SHELL_PREFIXES.has(applicationSegment) && isFile(appShell)) {
     sendFile(response, 200, appShell);
     return;
   }
 
-  const notFoundPage = path.join(root, '404.html');
+  const notFoundPage = path.join(
+    root,
+    LOCALE_PREFIXES.has(firstSegment) ? firstSegment : 'en',
+    '404.html',
+  );
   if (isFile(notFoundPage)) {
     sendFile(response, 404, notFoundPage);
     return;

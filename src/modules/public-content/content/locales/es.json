@@ -15,7 +15,7 @@
   },
   "pages": {
     "home": {
-      "navigationLabel": "Inicio",
+      "navigationLabel": "Página de destino",
       "seoTitle": "Gama3 Orderak | Pedidos de comida en grupo sin caos",
       "description": "Crea menús reutilizables, reúne las elecciones de todos, calcula las tarifas, congela el pedido final y comparte recibos claros.",
       "eyebrow": "Un pedido compartido. Todos siempre al día.",

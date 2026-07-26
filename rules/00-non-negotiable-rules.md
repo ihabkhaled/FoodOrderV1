@@ -103,4 +103,14 @@ These 35 rules are absolute for FoodOrderV1. They are enforced by the custom ESL
     `hi`, `th`, `zh-CN`, `ja`); `ar` and `fa` are RTL-safe, and accessibility
     (labels, focus, keyboard, `jsx-a11y`) is never regressed.
 
+### Gate execution order
+
+Implement coherent feature work first using the owning architecture, matching skill, and
+focused direct tests. While source is still changing, prefer targeted lint, typecheck,
+unit, browser, and build checks over repeatedly invoking the entire repository suite.
+After the feature stabilizes, update affected canonical documentation and generated
+knowledge. Run the complete risk-appropriate gate suite at the final source/docs fixed
+point before commit/push or hand-off. A final-gates workflow changes timing only: no gate,
+test, security review, or platform evidence may be skipped or weakened.
+
 When a rule fails, the code is in the wrong layer. Move or redesign the code. Do not disable the rule.

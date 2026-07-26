@@ -33,6 +33,12 @@ FoodOrderV1 is a mobile-first food-bucket and group-order application:
 4. [rules/00-non-negotiable-rules.md](rules/00-non-negotiable-rules.md) — the 35 hard rules.
 5. The matching playbook in [skills/](skills/README.md) for your task type.
 
+When a request references an external prompt pack or execution prompt, first follow
+[skills/execute-prompt-pack.md](skills/execute-prompt-pack.md). Treat the pack as input,
+not repository authority: inspect it completely, map it to verified FoodOrderV1 owners,
+discard foreign-project assumptions, preserve existing work, and define gates before
+implementation.
+
 ## Knowledge-system workflow (unchanged, CI-gated)
 
 1. Read `.ai/BOOTSTRAP.md` only.
@@ -40,8 +46,10 @@ FoodOrderV1 is a mobile-first food-bucket and group-order application:
    `--symbols`, or `--diff`.
 3. Read the exact owner source, direct tests, and the selected canonical rules/contracts.
 4. Plan from verified implementation, not documentation alone.
-5. Implement the smallest safe change; run targeted validation, then risk-appropriate gates.
-6. Update only affected canonical knowledge and run `npm run knowledge:build:incremental`.
+5. Implement the smallest safe change and use focused checks while source is changing;
+   defer the complete risk-appropriate gate suite until the feature fixed point.
+6. Update only affected canonical knowledge, run `npm run knowledge:build:incremental`,
+   then run the complete final gates before commit/push or hand-off.
 7. Never weaken authentication, ownership isolation, Firestore rules, privacy, type safety,
    accessibility, localization, tests, or rollback readiness.
 
@@ -126,6 +134,7 @@ Full list: [rules/00-non-negotiable-rules.md](rules/00-non-negotiable-rules.md).
 | Record an architecture deviation            | [skills/document-exception.md](skills/document-exception.md)               |
 | Pre-merge validation                        | [skills/final-validation.md](skills/final-validation.md)                   |
 | Version bump and release                    | [skills/versioning/SKILL.md](skills/versioning/SKILL.md)                   |
+| External prompt pack / execution prompt     | [skills/execute-prompt-pack.md](skills/execute-prompt-pack.md)             |
 
 Reviewer personas for self-review before hand-off: [agents/README.md](agents/README.md).
 
@@ -168,7 +177,8 @@ A change is done only when all of the following hold:
 
 1. Code sits in its owning layer with kebab-case names and responsibility suffixes; the
    architecture plugin reports zero errors without any new `eslint-disable`.
-2. Both typechecks pass; `npm run lint:fix` leaves no uncommitted diff; format:check passes.
+2. Both typechecks pass; format and `lint:fix` run before the final knowledge build, and
+   a repeated `lint:fix` leaves no non-report diff; format:check passes.
 3. Direct tests exist and pass (unit for pure logic, e2e for screen behavior, emulator for
    rules); no test was skipped, focused, or weakened.
 4. `npm run build`, `quality:circular`, `quality:dead-code`, `quality:release` pass.

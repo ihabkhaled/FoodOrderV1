@@ -6,6 +6,11 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/app/app-bootstrap.interfaces.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/app/index.ts",
       "tests": [],
       "relationship": "inferred"
@@ -1091,6 +1096,11 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/public-content/README.md",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/public-content/components/public-footer.component.tsx",
       "tests": [],
       "relationship": "inferred"
@@ -1111,7 +1121,17 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/public-content/containers/public-contact-form.container.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/public-content/containers/public-content.container.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/public-content/content/contact-form.locales.json",
       "tests": [],
       "relationship": "inferred"
     },
@@ -1187,6 +1207,16 @@
     },
     {
       "source": "src/modules/public-content/helpers/public-content-catalog.helper.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/public-content/hooks/use-contact-form.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/public-content/hooks/use-contact-form.interfaces.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -1821,6 +1851,21 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/platform/browser/browser-locale-navigation.adapter.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/platform/browser/browser-locale-path.constants.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/platform/browser/browser-locale-path.helper.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/platform/browser/clipboard.adapter.ts",
       "tests": [],
       "relationship": "inferred"
@@ -1916,12 +1961,27 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/platform/network/contact-submission.adapter.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/platform/network/contact-submission.interfaces.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/platform/network/index.ts",
       "tests": [],
       "relationship": "inferred"
     },
     {
       "source": "src/platform/network/network-status.adapter.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/platform/network/password-reset-request.adapter.ts",
       "tests": [],
       "relationship": "inferred"
     },

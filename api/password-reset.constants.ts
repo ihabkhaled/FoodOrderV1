@@ -1,0 +1,1 @@
+export const PASSWORD_RESET_MAX_BODY_BYTES = 4096;

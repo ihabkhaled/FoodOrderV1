@@ -11,9 +11,16 @@ export function LanguageSelect({
   locale,
   label,
   className,
+  compact = false,
   onChange,
 }: LanguageSelectProps) {
-  const classes = ['language-select', className].filter(Boolean).join(' ');
+  const classes = [
+    'language-select',
+    compact ? 'language-select--compact' : '',
+    className,
+  ]
+    .filter(Boolean)
+    .join(' ');
 
   return (
     <select
@@ -26,6 +33,11 @@ export function LanguageSelect({
         if (isSupportedLocale(nextLocale)) onChange(nextLocale);
       }}
     >
+      {compact ? (
+        <option value={locale} hidden>
+          {LOCALE_DEFINITIONS[locale].compactName}
+        </option>
+      ) : null}
       {SUPPORTED_LOCALES.map((supportedLocale) => {
         const definition = LOCALE_DEFINITIONS[supportedLocale];
         return (

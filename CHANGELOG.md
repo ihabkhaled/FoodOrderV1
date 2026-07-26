@@ -5,6 +5,11 @@ The version bump level is decided by prompt density — see [rules/versioning.md
 
 <!-- releases -->
 
+## [1.7.2] - 2026-07-26
+
+- Start v1.7.2 development
+
+
 ## [1.7.1] - 2026-07-22
 
 - Start v1.7.1 development

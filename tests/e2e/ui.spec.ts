@@ -78,13 +78,16 @@ test.describe('signed-out shell controls', () => {
 
     const controls = page.locator('.auth-controls');
     const languageSelect = controls.locator('select');
-    const themeButton = controls.locator('.auth-control-button');
+    const homeLink = controls.getByRole('link');
+    const themeButton = controls.getByRole('button');
     await expect(controls).toBeVisible();
     await expect(languageSelect).toHaveCount(1);
+    await expect(homeLink).toHaveCount(1);
     await expect(themeButton).toHaveCount(1);
 
-    const [languageBox, themeBox, controlsBox] = await Promise.all([
+    const [languageBox, homeBox, themeBox, controlsBox] = await Promise.all([
       requireBox(languageSelect, 'Language selector'),
+      requireBox(homeLink, 'Home link'),
       requireBox(themeButton, 'Theme button'),
       requireBox(controls, 'Auth controls'),
     ]);
@@ -92,10 +95,13 @@ test.describe('signed-out shell controls', () => {
     expect(languageBox.width).toBeGreaterThanOrEqual(120);
     expect(languageBox.height).toBeGreaterThanOrEqual(44);
     expect(languageBox.height).toBeLessThanOrEqual(48);
+    expect(homeBox.width).toBe(44);
+    expect(homeBox.height).toBe(44);
     expect(themeBox.width).toBe(44);
     expect(themeBox.height).toBe(44);
+    expect(Math.abs(languageBox.y - homeBox.y)).toBeLessThanOrEqual(1);
     expect(Math.abs(languageBox.y - themeBox.y)).toBeLessThanOrEqual(1);
-    expect(controlsBox.width).toBeLessThanOrEqual(210);
+    expect(controlsBox.width).toBeLessThanOrEqual(260);
 
     const html = page.locator('html');
     await expect(html).toHaveAttribute('dir', 'ltr');
@@ -111,8 +117,8 @@ test.describe('signed-out shell controls', () => {
     await expect(page.locator('html')).toHaveAttribute('dir', 'ltr');
     await expect(page.locator('html')).toHaveAttribute('lang', 'de');
 
-    await page.locator('.auth-control-button').click();
-    await page.locator('.auth-control-button').click();
+    await themeButton.click();
+    await themeButton.click();
     await expect(html).toHaveAttribute('data-theme', 'dark');
     await expectNoHorizontalOverflow(page);
   });
@@ -150,6 +156,33 @@ test.describe('responsive shell', () => {
     await expect(firstStat.locator('span')).toBeVisible();
     // Six clickable destination tiles; value and label remain distinct elements.
     await expect(page.locator('.stat-card')).toHaveCount(6);
+  });
+
+  test('dashboard welcome badge stays readable on the light hero', async ({
+    page,
+  }) => {
+    await page.emulateMedia({ colorScheme: 'light' });
+    await register(page);
+    const badge = page.locator('.hero-card .eyebrow');
+
+    await expect(badge).toHaveCSS('color', 'rgb(36, 26, 18)');
+    await expect(badge).toHaveCSS(
+      'background-color',
+      'rgba(255, 255, 255, 0.72)',
+    );
+
+    const themeButton = page
+      .locator('.sidebar')
+      .getByRole('button', { name: /Theme:/u });
+    await themeButton.click();
+    await themeButton.click();
+
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+    await expect(badge).toHaveCSS('color', 'rgb(36, 26, 18)');
+    await expect(badge).toHaveCSS(
+      'background-color',
+      'rgba(255, 255, 255, 0.72)',
+    );
   });
 
   test('loading presentation is centered horizontally and vertically', async ({

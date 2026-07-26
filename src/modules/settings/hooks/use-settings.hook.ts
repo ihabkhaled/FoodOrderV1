@@ -39,7 +39,6 @@ export interface SettingsViewModel {
   busy: boolean;
   error: string;
   submit: (event: SyntheticEvent) => Promise<void>;
-  storageModeValue: string;
   connectionValue: string;
   appVersionValue: string;
   exporting: boolean;
@@ -52,8 +51,7 @@ export interface SettingsViewModel {
 }
 
 export function useSettings(): SettingsViewModel {
-  const { user, profile, storageMode, online, t, saveProfile, showToast } =
-    useApp();
+  const { user, profile, online, t, saveProfile, showToast } = useApp();
   const [fullName, setFullName] = useState(profile?.fullName ?? '');
   const [locale, setLocale] = useState<Locale>(profile?.locale ?? 'en');
   const [theme, setTheme] = useState<Theme>(profile?.theme ?? 'system');
@@ -191,8 +189,6 @@ export function useSettings(): SettingsViewModel {
     busy,
     error,
     submit,
-    storageModeValue:
-      storageMode === 'firebase' ? t('firebaseMode') : t('localMode'),
     connectionValue: online ? t('online') : t('offline'),
     appVersionValue: `v${env.appVersion}`,
     exporting,

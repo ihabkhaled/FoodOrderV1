@@ -5,6 +5,7 @@ export type LocaleDirection = 'ltr' | 'rtl';
 export interface LocaleDefinition {
   readonly code: Locale;
   readonly nativeName: string;
+  readonly compactName: string;
   readonly direction: LocaleDirection;
   readonly browserLanguagePrefixes: readonly string[];
 }
@@ -30,72 +31,84 @@ export const LOCALE_DEFINITIONS = {
   en: {
     code: 'en',
     nativeName: 'English',
+    compactName: 'E',
     direction: 'ltr',
     browserLanguagePrefixes: ['en'],
   },
   ar: {
     code: 'ar',
     nativeName: 'العربية',
+    compactName: 'ع',
     direction: 'rtl',
     browserLanguagePrefixes: ['ar'],
   },
   it: {
     code: 'it',
     nativeName: 'Italiano',
+    compactName: 'I',
     direction: 'ltr',
     browserLanguagePrefixes: ['it'],
   },
   fa: {
     code: 'fa',
     nativeName: 'فارسی',
+    compactName: 'ف',
     direction: 'rtl',
     browserLanguagePrefixes: ['fa'],
   },
   fr: {
     code: 'fr',
     nativeName: 'Français',
+    compactName: 'F',
     direction: 'ltr',
     browserLanguagePrefixes: ['fr'],
   },
   de: {
     code: 'de',
     nativeName: 'Deutsch',
+    compactName: 'D',
     direction: 'ltr',
     browserLanguagePrefixes: ['de'],
   },
   es: {
     code: 'es',
     nativeName: 'Español',
+    compactName: 'E',
     direction: 'ltr',
     browserLanguagePrefixes: ['es'],
   },
   'pt-BR': {
     code: 'pt-BR',
     nativeName: 'Português',
+    compactName: 'P',
     direction: 'ltr',
     browserLanguagePrefixes: ['pt'],
   },
   hi: {
     code: 'hi',
     nativeName: 'हिन्दी',
+    compactName: 'ह',
     direction: 'ltr',
     browserLanguagePrefixes: ['hi'],
   },
   th: {
     code: 'th',
     nativeName: 'ไทย',
+    compactName: 'ไ',
     direction: 'ltr',
     browserLanguagePrefixes: ['th'],
   },
   'zh-CN': {
     code: 'zh-CN',
     nativeName: '简体中文',
+    compactName: '简',
     direction: 'ltr',
     browserLanguagePrefixes: ['zh-cn', 'zh-hans', 'zh-sg', 'zh'],
   },
   ja: {
     code: 'ja',
     nativeName: '日本語',
+    compactName: '日',
     direction: 'ltr',
     browserLanguagePrefixes: ['ja'],
   },

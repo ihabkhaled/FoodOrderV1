@@ -8,12 +8,13 @@ import '@/shared/ui/shell-alignment.css';
 import { AppProvider } from '@/modules/session';
 import { BrowserRouter } from '@/packages/router';
 
+import type { AppBootstrapProps } from './app-bootstrap.interfaces';
 import { AppRoutes } from './router/app.routes';
 
-export function AppBootstrap() {
+export function AppBootstrap({ basename, initialLocale }: AppBootstrapProps) {
   return (
-    <BrowserRouter>
-      <AppProvider>
+    <BrowserRouter {...(basename ? { basename } : {})}>
+      <AppProvider {...(initialLocale ? { initialLocale } : {})}>
         <AppRoutes />
       </AppProvider>
     </BrowserRouter>

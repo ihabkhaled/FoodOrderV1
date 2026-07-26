@@ -15,7 +15,16 @@ net — **CI remains the source of truth**, so hooks never replace the pipeline 
 `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`.
 Example: `feat(sidebar): add collapsible rail`.
 
-## Escape hatches (use sparingly, with reason)
+## Gate handoff
 
-- Skip hooks for a single commit/push only when truly necessary: `git commit --no-verify` / `git push --no-verify`.
 - `pre-push` intentionally excludes e2e (too slow for every push); CI runs the full suite including e2e.
+- A non-main branch push must complete `Branch All Gates Green` before CI generates the
+  immutable APK and publishes its prerelease. Skipped downstream jobs after a red gate
+  are incomplete, not accepted skips.
+- Vercel runs install plus `npm run build:web` only. Hooks and GitHub CI own repository
+  quality checks; hosting does not duplicate them.
+
+## Forbidden bypasses
+
+`git commit --no-verify` and `git push --no-verify` are forbidden. Fix the hook or gate
+failure and run it again.

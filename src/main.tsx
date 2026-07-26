@@ -2,19 +2,26 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
 import {
+  buildPublicContentPath,
+  buildPublicSystemPath,
   getPublicContentCatalog,
-  isPublicContentPath,
+  inferPublicLocale,
+  matchPublicContentPath,
   PublicContentRoutes,
 } from '@/modules/public-content';
 import { BrowserRouter } from '@/packages/router';
 import {
+  buildBrowserLocalePath,
   getBrowserBootstrapContext,
+  hasBrowserLocalePrefix,
   replaceBrowserPath,
 } from '@/platform/browser';
 import {
   initializePlatform,
   isNativeApplication,
+  saveDeviceConfig,
 } from '@/platform/device';
+import { matchSupportedLocale } from '@/shared/i18n';
 
 const bootstrap = async (): Promise<void> => {
   const context = getBrowserBootstrapContext();
@@ -24,12 +31,18 @@ const bootstrap = async (): Promise<void> => {
   const applicationPath = getPublicContentCatalog().site.applicationPath;
   const nativeApplication = isNativeApplication();
   let pathname = context.pathname;
-  if (nativeApplication && isPublicContentPath(pathname)) {
+  const publicMatch = matchPublicContentPath(pathname);
+  if (nativeApplication && publicMatch) {
     replaceBrowserPath(applicationPath);
     pathname = applicationPath;
   }
 
-  if (!nativeApplication && isPublicContentPath(pathname)) {
+  if (!nativeApplication && publicMatch) {
+    const localizedPath =
+      publicMatch.kind === 'page'
+        ? buildPublicContentPath(publicMatch.routeId, publicMatch.locale)
+        : buildPublicSystemPath(publicMatch.routeId, publicMatch.locale);
+    if (localizedPath !== pathname) replaceBrowserPath(localizedPath);
     createRoot(context.root).render(
       <StrictMode>
         <BrowserRouter>
@@ -42,9 +55,24 @@ const bootstrap = async (): Promise<void> => {
 
   await initializePlatform();
   const { AppBootstrap } = await import('@/app');
+  if (nativeApplication) {
+    createRoot(context.root).render(
+      <StrictMode>
+        <AppBootstrap />
+      </StrictMode>,
+    );
+    return;
+  }
+  const pathLocale = inferPublicLocale(pathname);
+  const locale = hasBrowserLocalePrefix(pathname)
+    ? pathLocale
+    : (matchSupportedLocale([context.requestedLocale ?? '']) ?? pathLocale);
+  const localizedPath = buildBrowserLocalePath(pathname, locale);
+  if (localizedPath !== pathname) replaceBrowserPath(localizedPath);
+  await saveDeviceConfig({ locale });
   createRoot(context.root).render(
     <StrictMode>
-      <AppBootstrap />
+      <AppBootstrap basename={`/${locale.toLowerCase()}`} initialLocale={locale} />
     </StrictMode>,
   );
 };

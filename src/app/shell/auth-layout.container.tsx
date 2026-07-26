@@ -1,4 +1,9 @@
+import {
+  buildPublicContentPath,
+  getPublicPageCopy,
+} from '@/modules/public-content';
 import { useApp } from '@/modules/session';
+import { Home } from '@/packages/icons';
 import { Outlet } from '@/packages/router';
 import { nextTheme } from '@/platform/device';
 import { LanguageSelect } from '@/shared/ui';
@@ -7,19 +12,22 @@ import { THEME_ICON, THEME_LABEL } from './app-layout.constants';
 
 /** Signed-out shell: compact preferences, hero branding, and the auth card. */
 export function AuthLayoutContainer() {
-  const {
-    t,
-    storageMode,
-    locale,
-    theme,
-    setDeviceLocale,
-    setDeviceTheme,
-  } = useApp();
+  const { t, locale, theme, setDeviceLocale, setDeviceTheme } = useApp();
   const ThemeIcon = THEME_ICON[theme];
+  const welcomePath = buildPublicContentPath('home', locale);
+  const welcomeLabel = getPublicPageCopy('home', locale).navigationLabel;
 
   return (
     <main className="auth-shell">
       <div className="auth-controls">
+        <a
+          className="icon-button auth-control-button"
+          href={welcomePath}
+          title={welcomeLabel}
+          aria-label={welcomeLabel}
+        >
+          <Home />
+        </a>
         <LanguageSelect
           locale={locale}
           label={t('language')}
@@ -44,9 +52,6 @@ export function AuthLayoutContainer() {
       </section>
       <section className="auth-card">
         <Outlet />
-        {storageMode === 'firebase' ? null : (
-          <p className="notice">{t('localModeNotice')}</p>
-        )}
       </section>
     </main>
   );

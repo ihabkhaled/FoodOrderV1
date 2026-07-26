@@ -9,7 +9,7 @@
   "locales": [
     {
       "code": "en",
-      "segment": "",
+      "segment": "en",
       "htmlLang": "en",
       "openGraphLocale": "en_US",
       "direction": "ltr",
@@ -152,7 +152,7 @@
       "adEligible": true,
       "copy": {
         "en": {
-          "navigationLabel": "Home",
+          "navigationLabel": "Landing page",
           "seoTitle": "Gama3 Orderak | Group Food Orders Without the Chaos",
           "description": "Create reusable food buckets, collect everyone's choices, calculate fees, freeze the final order, and share clear receipts.",
           "eyebrow": "One shared order. Everyone stays in sync.",
@@ -195,7 +195,7 @@
           ]
         },
         "ar": {
-          "navigationLabel": "الرئيسية",
+          "navigationLabel": "الصفحة التعريفية",
           "seoTitle": "جمّع أوردرَك | طلبات الأكل الجماعية بدون فوضى",
           "description": "أنشئ قوائم طعام قابلة لإعادة الاستخدام، واجمع اختيارات الجميع، واحسب الرسوم، وثبّت الطلب النهائي، وشارك إيصالات واضحة.",
           "eyebrow": "طلب واحد مشترك، وكل شخص يعرف آخر تحديث.",

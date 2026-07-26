@@ -1,0 +1,8 @@
+vulnerabilities:
+  - id: GHSA-qwww-vcr4-c8h2
+    purls:
+      - pkg:npm/react-router@7.18.1
+    expired_at: 2026-09-30
+    statement: >-
+      EXC-6: the vulnerable React Server Components action path is not present in
+      this Vite SPA. No patched React Router v7 release is currently available.

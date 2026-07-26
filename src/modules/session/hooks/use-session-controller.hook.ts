@@ -6,11 +6,16 @@ import {
   setFirebaseErrorLocale,
   userFacingErrorMessage,
 } from '@/packages/firebase';
-import { applyDocumentLocale, applyDocumentTheme } from '@/platform/browser';
+import {
+  applyDocumentLocale,
+  applyDocumentTheme,
+  navigateToBrowserLocale,
+} from '@/platform/browser';
 import {
   DEFAULT_DEVICE_CONFIG,
   type DeviceConfig,
   impact,
+  isNativeApplication,
   loadDeviceConfig,
   saveDeviceConfig,
 } from '@/platform/device';
@@ -20,6 +25,7 @@ import {
   subscribeToOnlineChange,
 } from '@/platform/network';
 import { localeDirection, translate } from '@/shared/i18n';
+import type { Locale } from '@/shared/types';
 
 import type { AppContextValue, ToastState } from '../types/session.types';
 
@@ -28,14 +34,14 @@ import type { AppContextValue, ToastState } from '../types/session.types';
  * auth subscription, profile loading, document locale/theme application,
  * online tracking, and the toast timer.
  */
-export const useSessionController = (): AppContextValue => {
+export const useSessionController = (initialLocale?: Locale): AppContextValue => {
   const [user, setUser] = useState<SessionUser | null>(null);
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [authLoading, setAuthLoading] = useState(true);
   const [online, setOnline] = useState(true);
   const [toast, setToast] = useState<ToastState | null>(null);
   const [device, setDevice] = useState<DeviceConfig>(DEFAULT_DEVICE_CONFIG);
-  const locale = profile?.locale ?? device.locale;
+  const locale = initialLocale ?? profile?.locale ?? device.locale;
   const theme = profile?.theme ?? device.theme;
   const currency = profile?.defaultCurrency ?? device.currency;
   const defaults: ProfileDefaults = useMemo(
@@ -189,6 +195,8 @@ export const useSessionController = (): AppContextValue => {
             ),
             'error',
           );
+        } finally {
+          if (!isNativeApplication()) navigateToBrowserLocale(nextLocale);
         }
       },
       setDeviceTheme: async (nextTheme) => {

@@ -8,10 +8,20 @@ export const PUBLIC_CATALOG_PATH = path.join(
   'content',
   'public-content.catalog.json',
 );
+const CONTACT_FORM_PATH = path.join(
+  'src',
+  'modules',
+  'public-content',
+  'content',
+  'contact-form.locales.json',
+);
 
 export const loadPublicCatalog = async (root = process.cwd()) => {
   const baseCatalog = JSON.parse(
     await readFile(path.join(root, PUBLIC_CATALOG_PATH), 'utf8'),
+  );
+  baseCatalog.contactForm = JSON.parse(
+    await readFile(path.join(root, CONTACT_FORM_PATH), 'utf8'),
   );
   const localeDirectory = path.join(
     root,
@@ -76,12 +86,17 @@ export const escapeHtml = (value) =>
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#39;');
 
+export const escapeXml = (value) =>
+  escapeHtml(String(value).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/gu, ''));
 
 
 export const localePath = (page, locale) => {
   const segments = [locale.segment, page.slug].filter(Boolean);
   return segments.length === 0 ? '/' : `/${segments.join('/')}`;
 };
+
+export const localizedApplicationPath = (catalog, locale) =>
+  `/${locale.segment}${catalog.site.applicationPath}`;
 
 const SYSTEM_SLUGS = {
   'not-found': '404.html',
@@ -201,7 +216,7 @@ const renderHeader = (catalog, locale, page, systemRouteId) => {
 <nav class="public-navigation public-navigation--desktop" aria-label="${escapeHtml(ui.primaryNavigationLabel)}">${primaryLinks}</nav>
 <div class="public-header__actions">
 <details class="public-language-menu"><summary><span class="public-language-menu__prefix">${escapeHtml(ui.languageLabel)}: </span><span>${escapeHtml(locale.label)}</span></summary><ul>${renderLocaleLinks(catalog, locale, page, systemRouteId)}</ul></details>
-<a class="public-button public-button--small" href="${escapeHtml(catalog.site.applicationPath)}">${escapeHtml(ui.openApplicationLabel)}</a>
+<a class="public-button public-button--small" href="${escapeHtml(localizedApplicationPath(catalog, locale))}">${escapeHtml(ui.openApplicationLabel)}</a>
 <details class="public-mobile-menu"><summary><span class="public-mobile-menu__icon" aria-hidden="true">☰</span><span class="public-mobile-menu__label">${escapeHtml(ui.mobileNavigationLabel)}</span></summary><nav aria-label="${escapeHtml(ui.primaryNavigationLabel)}">${primaryLinks}</nav></details>
 </div></div></header>`;
 };
@@ -224,10 +239,11 @@ const renderFooter = (catalog, locale, currentPage) => {
       return `<a href="${escapeHtml(localePath(page, locale))}"${current}>${escapeHtml(pageCopy(page, locale).navigationLabel)}</a>`;
     })
     .join('');
+  const feedPath = `/${[locale.segment, 'feed.xml'].filter(Boolean).join('/')}`;
   return `<footer class="public-footer"><div class="public-footer__inner"><div>
 <a class="public-brand" href="${escapeHtml(localePath(catalog.pages[0], locale))}"><span class="public-brand__mark" aria-hidden="true">FO</span><span>${escapeHtml(catalog.site.brandName)}</span></a>
 <p>${escapeHtml(ui.footerTagline)}</p></div>
-<nav aria-label="${escapeHtml(ui.footerNavigationLabel)}">${links}</nav></div>
+<nav aria-label="${escapeHtml(ui.footerNavigationLabel)}">${links}<a href="${escapeHtml(feedPath)}">RSS</a></nav></div>
 <p class="public-footer__legal">© 2026 ${escapeHtml(catalog.site.brandName)}. ${escapeHtml(ui.allRightsReservedLabel)}</p></footer>`;
 };
 
@@ -256,6 +272,12 @@ const renderFaq = (copy) => {
     .join('')}</dl></section>`;
 };
 
+const renderContactForm = (catalog, locale, page) => {
+  if (page.id !== 'contact') return '';
+  const copy = catalog.contactForm[locale.code];
+  return `<section class="public-contact" aria-labelledby="public-contact-heading"><h2 id="public-contact-heading">${escapeHtml(copy.heading)}</h2><form class="public-contact__form" action="/api/contact" method="post"><label>${escapeHtml(copy.name)}<input name="name" autocomplete="name" maxlength="120" required /></label><label>${escapeHtml(copy.email)}<input name="email" type="email" autocomplete="email" maxlength="200" required /></label><label>${escapeHtml(copy.subject)}<input name="subject" maxlength="200" required /></label><label>${escapeHtml(copy.message)}<textarea name="message" maxlength="5000" rows="7" required></textarea></label><label class="public-contact__honeypot" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off" /></label><input type="hidden" name="locale" value="${escapeHtml(locale.code)}" /><p>${escapeHtml(copy.privacy)}</p><p class="public-contact__success" role="status" hidden>${escapeHtml(copy.success)}</p><p class="public-contact__error" role="alert" hidden>${escapeHtml(copy.error)}</p><button class="public-button" type="submit">${escapeHtml(copy.submit)}</button></form></section><script>(()=>{const form=document.querySelector(".public-contact__form");const success=form.querySelector('[role="status"]');const error=form.querySelector('[role="alert"]');const button=form.querySelector('button[type="submit"]');form.addEventListener("submit",async(event)=>{event.preventDefault();success.hidden=true;error.hidden=true;button.disabled=true;try{const response=await fetch(form.action,{method:"POST",body:new FormData(form),headers:{Accept:"application/json"}});if(!response.ok)throw new Error("contact submission failed");form.reset();success.hidden=false}catch{error.hidden=false}finally{button.disabled=false}})})()</script>`;
+};
+
 const renderPageMain = (catalog, locale, page) => {
   const copy = pageCopy(page, locale);
   const ui = uiCopy(catalog, locale);
@@ -267,9 +289,9 @@ const renderPageMain = (catalog, locale, page) => {
   return `<main id="public-main" class="public-main"><section class="public-hero"><div class="public-hero__content">
 <p class="public-eyebrow">${escapeHtml(copy.eyebrow)}</p><h1>${escapeHtml(copy.heading)}</h1>
 <p class="public-hero__introduction">${escapeHtml(copy.introduction)}</p>
-<div class="public-hero__actions"><a class="public-button" href="${escapeHtml(catalog.site.applicationPath)}">${escapeHtml(ui.openApplicationLabel)}</a>${secondaryAction}</div></div>
+<div class="public-hero__actions"><a class="public-button" href="${escapeHtml(localizedApplicationPath(catalog, locale))}">${escapeHtml(ui.openApplicationLabel)}</a>${secondaryAction}</div></div>
 <div class="public-hero__visual" aria-hidden="true"><span class="public-order-card public-order-card--one"></span><span class="public-order-card public-order-card--two"></span><span class="public-order-card public-order-card--three"></span></div>
-</section>${renderSections(copy)}${renderFaq(copy)}</main>`;
+</section>${renderSections(copy)}${renderFaq(copy)}${renderContactForm(catalog, locale, page)}</main>`;
 };
 
 const renderSystemMain = (catalog, locale, routeId) => {
@@ -359,6 +381,10 @@ const renderHead = ({ catalog, locale, page, stylesheetLinks, indexable }) => {
     )
     .join('\n');
   const image = canonicalUrl(catalog, catalog.site.socialImagePath);
+  const feedUrl = canonicalUrl(
+    catalog,
+    `/${[locale.segment, 'feed.xml'].filter(Boolean).join('/')}`,
+  );
   return `<meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <meta name="theme-color" content="#f97316" />
@@ -387,6 +413,7 @@ ${alternates}
 <link rel="icon" href="/favicon.ico" sizes="any" />
 <link rel="icon" href="/icon.svg" type="image/svg+xml" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="alternate" type="application/rss+xml" title="${escapeHtml(`${catalog.site.brandName} — ${locale.label}`)}" href="${escapeHtml(feedUrl)}" />
 ${stylesheetLinks.join('\n')}
 ${jsonLd}`;
 };
@@ -463,25 +490,65 @@ export const outputPathForSystemPage = (outputDirectory, routeId, locale) => {
   return path.join(outputDirectory, locale.segment, SYSTEM_SLUGS[routeId], 'index.html');
 };
 
-export const buildSitemap = (catalog) => {
+export const buildLocaleSitemap = (catalog, locale) => {
   const entries = [];
   for (const page of catalog.pages) {
-    for (const locale of catalog.locales) {
-      const location = canonicalUrl(catalog, localePath(page, locale));
-      const alternates = [
-        ...catalog.locales.map(
-          (candidate) =>
-            `<xhtml:link rel="alternate" hreflang="${escapeHtml(candidate.htmlLang)}" href="${escapeHtml(canonicalUrl(catalog, localePath(page, candidate)))}" />`,
-        ),
-        `<xhtml:link rel="alternate" hreflang="x-default" href="${escapeHtml(canonicalUrl(catalog, localePath(page, catalog.locales[0])))}" />`,
-      ].join('');
-      entries.push(`<url><loc>${escapeHtml(location)}</loc>${alternates}</url>`);
-    }
+    const location = canonicalUrl(catalog, localePath(page, locale));
+    const alternates = [
+      ...catalog.locales.map(
+        (candidate) =>
+          `<xhtml:link rel="alternate" hreflang="${escapeHtml(candidate.htmlLang)}" href="${escapeHtml(canonicalUrl(catalog, localePath(page, candidate)))}" />`,
+      ),
+      `<xhtml:link rel="alternate" hreflang="x-default" href="${escapeHtml(canonicalUrl(catalog, localePath(page, catalog.locales[0])))}" />`,
+    ].join('');
+    entries.push(`<url><loc>${escapeHtml(location)}</loc>${alternates}</url>`);
   }
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">${entries.join('')}</urlset>\n`;
 };
 
-export const buildRobots = (catalog, indexable) =>
-  indexable
-    ? `User-agent: *\nAllow: /\nDisallow: /app\nDisallow: /auth\nDisallow: /invite\nDisallow: /buckets\nDisallow: /sessions\nDisallow: /orders\nDisallow: /join\nDisallow: /social\nDisallow: /settings\n\nSitemap: ${catalog.site.canonicalOrigin}/sitemap.xml\n`
-    : 'User-agent: *\nDisallow: /\n';
+export const buildSitemapIndex = (catalog) => {
+  const entries = catalog.locales
+    .map((locale) => {
+      const name = locale.segment || 'en';
+      return `<sitemap><loc>${escapeXml(canonicalUrl(catalog, `/sitemaps/${name}.xml`))}</loc></sitemap>`;
+    })
+    .join('');
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${entries}</sitemapindex>\n`;
+};
+
+export const buildRssFeed = (catalog, locale) => {
+  const selfPath = `/${[locale.segment, 'feed.xml'].filter(Boolean).join('/')}`;
+  const items = [...catalog.pages]
+    .slice(0, 50)
+    .map((page) => {
+      const copy = pageCopy(page, locale);
+      const url = canonicalUrl(catalog, localePath(page, locale));
+      return `<item><title>${escapeXml(copy.seoTitle)}</title><description>${escapeXml(copy.description)}</description><link>${escapeXml(url)}</link><guid isPermaLink="true">${escapeXml(url)}</guid><category>${escapeXml(copy.navigationLabel)}</category></item>`;
+    })
+    .join('');
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>${escapeXml(`${catalog.site.brandName} — ${locale.label}`)}</title><link>${escapeXml(canonicalUrl(catalog, localePath(catalog.pages[0], locale)))}</link><description>${escapeXml(uiCopy(catalog, locale).footerTagline)}</description><language>${escapeXml(locale.htmlLang)}</language><atom:link href="${escapeXml(canonicalUrl(catalog, selfPath))}" rel="self" type="application/rss+xml" />${items}</channel></rss>\n`;
+};
+
+export const buildRobots = (catalog, indexable) => {
+  if (!indexable) return 'User-agent: *\nDisallow: /\n';
+  const privatePaths = [
+    'app',
+    'auth',
+    'invite',
+    'buckets',
+    'sessions',
+    'orders',
+    'join',
+    'social',
+    'settings',
+  ];
+  const disallowRules = ['', ...catalog.locales.map((locale) => locale.segment)]
+    .flatMap((segment) =>
+      privatePaths.map(
+        (privatePath) =>
+          `Disallow: /${[segment, privatePath].filter(Boolean).join('/')}`,
+      ),
+    )
+    .join('\n');
+  return `User-agent: *\nAllow: /\n${disallowRules}\n\nSitemap: ${catalog.site.canonicalOrigin}/sitemap.xml\n`;
+};

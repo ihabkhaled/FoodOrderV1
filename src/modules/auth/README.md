@@ -10,7 +10,9 @@ the in-app password-reset action handler.
 - In-app Firebase email-action handler at `/auth/action`
   (`?mode=resetPassword&oobCode=…`): verifies the code on mount, consumes it
   only on submit (`authService.verifyPasswordResetCode/confirmPasswordReset`).
-  See `docs/operations/password-reset.md` for the console Action URL setup.
+  Web URLs add the active locale basename (for example `/ar/auth/action`).
+  See `docs/operations/password-reset.md` for custom SMTP/Admin configuration and the
+  console Action URL setup.
 - Post-authentication redirect and cross-links between auth screens.
 
 ## Public exports (`@/modules/auth`)

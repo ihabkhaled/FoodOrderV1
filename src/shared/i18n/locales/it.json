@@ -1,6 +1,6 @@
 {
   "appName": "FoodOrder",
-  "dashboard": "Home",
+  "dashboard": "Pannello di controllo",
   "buckets": "Bucket",
   "orders": "Ordini",
   "settings": "Impostazioni",

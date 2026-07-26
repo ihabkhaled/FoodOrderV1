@@ -142,7 +142,7 @@ export function GroupsSection({
                     </span>
                     <div>
                       <strong>{group.name}</strong>
-                      <span className="muted">
+                      <span className="member-count-pill">
                         {activeMembers.length} {s('memberCount')}
                       </span>
                     </div>

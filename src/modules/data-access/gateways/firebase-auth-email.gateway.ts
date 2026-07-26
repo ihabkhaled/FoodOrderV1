@@ -1,5 +1,6 @@
-import { doc, sendPasswordResetEmail, setDoc } from '@/packages/firebase';
+import { doc, setDoc } from '@/packages/firebase';
 import { getDocumentLanguage } from '@/platform/browser';
+import { requestPasswordResetEmail } from '@/platform/network';
 import { DEFAULT_LOCALE, matchSupportedLocale } from '@/shared/i18n';
 import type { Locale } from '@/shared/types';
 
@@ -36,8 +37,9 @@ export class FirebaseEmailAuthService extends FirebaseAuthService {
   }
 
   override async resetPassword(email: string): Promise<void> {
-    const auth = getFirebaseRuntime().auth;
-    auth.languageCode = activeEmailLanguage();
-    await sendPasswordResetEmail(auth, email.trim().toLowerCase());
+    await requestPasswordResetEmail(
+      email.trim().toLowerCase(),
+      activeEmailLanguage(),
+    );
   }
 }

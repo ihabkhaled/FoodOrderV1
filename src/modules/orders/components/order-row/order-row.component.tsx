@@ -26,10 +26,17 @@ export function OrderRow({ order, locale, t, onDelete }: OrderRowProps) {
         className="grow"
       >
         <div>
-          <strong>{order.bucketTitle}</strong>
-          <span>
-            {order.lines.length} {t('items')} ·{' '}
-            {formatDateTime(order.createdAt, locale)}
+          <strong>
+            <bdi>{order.bucketTitle}</bdi>
+          </strong>
+          <span className="order-row-meta">
+            <span className="order-item-count">
+              {order.lines.length} {t('items')}
+            </span>
+            <span aria-hidden="true">·</span>
+            <time dateTime={order.createdAt}>
+              {formatDateTime(order.createdAt, locale)}
+            </time>
           </span>
         </div>
       </Link>

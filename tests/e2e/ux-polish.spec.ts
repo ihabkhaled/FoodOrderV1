@@ -97,7 +97,7 @@ for (const viewport of VIEWPORTS) {
     await expect(group).toBeVisible();
 
     const title = group.locator('.group-card-title strong');
-    const metadata = group.locator('.group-card-title .muted');
+    const metadata = group.locator('.group-card-title .member-count-pill');
     await expect(title).toHaveText(GROUP_NAME);
     await expect(metadata).toHaveText('1 members');
     await expectSeparateRows(title, metadata);

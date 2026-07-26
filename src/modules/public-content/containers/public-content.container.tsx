@@ -5,12 +5,17 @@ import { PublicHeader } from '../components/public-header.component';
 import { PublicPage } from '../components/public-page.component';
 import { PublicSystemPage } from '../components/public-system-page.component';
 import { usePublicContent } from '../hooks/use-public-content.hook';
+import { buildLocalizedPath } from '../routes/public-content-route-registry.helper';
 import type { PublicContentContainerProps } from '../types/public-content.types';
 
 export function PublicContentContainer({
   applicationPath,
 }: PublicContentContainerProps) {
   const viewModel = usePublicContent();
+  const localizedApplicationPath = buildLocalizedPath(
+    applicationPath,
+    viewModel.locale.code,
+  );
   return (
     <div
       className="public-site"
@@ -23,7 +28,7 @@ export function PublicContentContainer({
       <PublicHeader
         brandName={viewModel.site.brandName}
         homePath={viewModel.homePath}
-        applicationPath={applicationPath}
+        applicationPath={localizedApplicationPath}
         currentLocaleLabel={viewModel.locale.label}
         navigationItems={viewModel.navigationItems}
         localeLinks={viewModel.localeLinks}
@@ -33,9 +38,10 @@ export function PublicContentContainer({
         <PublicPage
           definition={viewModel.page.definition}
           copy={viewModel.page.copy}
-          applicationPath={applicationPath}
+          applicationPath={localizedApplicationPath}
           learnMorePath={viewModel.learnMorePath}
           ui={viewModel.ui}
+          contactForm={viewModel.contactForm}
         />
       ) : viewModel.systemPage ? (
         <PublicSystemPage

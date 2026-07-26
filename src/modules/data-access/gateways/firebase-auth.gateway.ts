@@ -6,7 +6,6 @@ import {
   EmailAuthProvider,
   onAuthStateChanged,
   reauthenticateWithCredential,
-  sendPasswordResetEmail,
   setDoc,
   signInWithEmailAndPassword,
   signOut,
@@ -14,6 +13,7 @@ import {
   updateProfile,
   verifyPasswordResetCode,
 } from '@/packages/firebase';
+import { requestPasswordResetEmail } from '@/platform/network';
 import { nowIso } from '@/shared/helpers';
 
 import type { AuthService } from '../contracts/auth-service.interfaces';
@@ -62,7 +62,7 @@ export class FirebaseAuthService implements AuthService {
   }
 
   async resetPassword(email: string): Promise<void> {
-    await sendPasswordResetEmail(getFirebaseRuntime().auth, email);
+    await requestPasswordResetEmail(email.trim().toLowerCase(), 'en');
   }
 
   async changePassword(
