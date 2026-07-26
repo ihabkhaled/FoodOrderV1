@@ -1961,6 +1961,11 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/platform/network/password-reset-request.adapter.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/platform/storage/index.ts",
       "tests": [],
       "relationship": "inferred"

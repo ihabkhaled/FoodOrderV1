@@ -14,6 +14,14 @@ production incident path, not a formality.
 
 ## Required
 
+### Execution order
+
+Use focused direct tests and targeted lint/type/build checks during implementation. Once
+the feature behavior is stable, update affected canonical docs and regenerate knowledge.
+Then run the mandatory suite below against that completed fixed point. Avoid restarting
+the full suite after every small edit; if a final gate fails, repair it, rerun the affected
+gate, and reproduce the final aggregate before push or hand-off.
+
 The mandatory gate set (all must succeed):
 
 | Gate                               | Command / job                                        |

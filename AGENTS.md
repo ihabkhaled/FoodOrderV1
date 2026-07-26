@@ -46,8 +46,10 @@ implementation.
    `--symbols`, or `--diff`.
 3. Read the exact owner source, direct tests, and the selected canonical rules/contracts.
 4. Plan from verified implementation, not documentation alone.
-5. Implement the smallest safe change; run targeted validation, then risk-appropriate gates.
-6. Update only affected canonical knowledge and run `npm run knowledge:build:incremental`.
+5. Implement the smallest safe change and use focused checks while source is changing;
+   defer the complete risk-appropriate gate suite until the feature fixed point.
+6. Update only affected canonical knowledge, run `npm run knowledge:build:incremental`,
+   then run the complete final gates before commit/push or hand-off.
 7. Never weaken authentication, ownership isolation, Firestore rules, privacy, type safety,
    accessibility, localization, tests, or rollback readiness.
 

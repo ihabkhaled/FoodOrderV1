@@ -1,6 +1,11 @@
 {
   "tests": [
     {
+      "path": "tests/api/password-reset.test.ts",
+      "bytes": 3671,
+      "hash": "6742f6c81f56b975f29a1338ab23ec62ec7ea2883abd73d44e364696b3d659b8"
+    },
+    {
       "path": "tests/bucket-pricing.test.ts",
       "bytes": 3507,
       "hash": "29dcee9ae619fc2d53fd17e61e9420a7825753ec9d9f2346b45c96eaabe1814e"

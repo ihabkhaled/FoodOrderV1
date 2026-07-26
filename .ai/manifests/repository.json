@@ -10,8 +10,8 @@
     },
     {
       "path": ".env.example",
-      "bytes": 1017,
-      "hash": "286abde7c62367874fd5e366d931c1987f2b5a463fb2e55bad7e641dda1556a3"
+      "bytes": 1200,
+      "hash": "a72fad951c1bf25762a6f491b5aba7494c520068549e5b6f3843d72f1e1bf92e"
     },
     {
       "path": ".github/copilot-instructions.md",
@@ -95,8 +95,8 @@
     },
     {
       "path": "AGENTS.md",
-      "bytes": 14839,
-      "hash": "0b7f3c2cb8ed3eeb7f98fc4ab3c78083158e11253d05fd1c69c336e8cdf79798"
+      "bytes": 14980,
+      "hash": "97f97b8089e3cec0729fd2910ddbe026c87e2c3c06c03277674294e5517edc1d"
     },
     {
       "path": "CHANGELOG.md",
@@ -110,8 +110,8 @@
     },
     {
       "path": "CODEX.md",
-      "bytes": 2062,
-      "hash": "8eda3ff8054411f835a68e1b07a20885b4c295f9d9ae803f6dac0612c40514f9"
+      "bytes": 2951,
+      "hash": "1f8628de06696b352e9263457a27a26d56ec5985ae22e29400f1b32387d91f38"
     },
     {
       "path": "GEMINI.md",
@@ -202,6 +202,26 @@
       "path": "api/contact.ts",
       "bytes": 5108,
       "hash": "628ecd9ebfa9c6840ebd29a644ce08ae6d398648e5450963c3d34efd919aae0a"
+    },
+    {
+      "path": "api/password-reset.constants.ts",
+      "bytes": 51,
+      "hash": "7a0186b86c8415cdf2554618138b85bec89a086d48eecaae7fcf7b52f449525d"
+    },
+    {
+      "path": "api/password-reset.interfaces.ts",
+      "bytes": 691,
+      "hash": "a7f9211e0df80139cb6b2d64c922c6669da9e5969aa5a93c80a0b9a3b8c71713"
+    },
+    {
+      "path": "api/password-reset.locales.json",
+      "bytes": 3231,
+      "hash": "6998360427882f6d60043f4d6d1d5fb0f7a48f85781f12b3e71467430ae11f23"
+    },
+    {
+      "path": "api/password-reset.ts",
+      "bytes": 5273,
+      "hash": "a87dfe4c95504b08d0c11b198035a6787622bf3bf2c33cb137e2c48dcde5dd52"
     },
     {
       "path": "architecture/README.md",
@@ -555,8 +575,8 @@
     },
     {
       "path": "docs/operations/public-discovery.md",
-      "bytes": 1979,
-      "hash": "03ad03111d195211666f326ce4df5ff7de3c5c0f3a2d44fca5a35fbb275d3e5d"
+      "bytes": 2742,
+      "hash": "a7c0f8a373094a791458f95812a09881702e9ba2f0f1922cf2b2856423dc4de1"
     },
     {
       "path": "docs/operations/reference-parity-roadmap.md",
@@ -1175,8 +1195,8 @@
     },
     {
       "path": "release-notes/v1.7.2.md",
-      "bytes": 3342,
-      "hash": "536c0e082d97f7aeb25ed617ed60bd044873dd1bcddc82a80f0f6e5f926aacef"
+      "bytes": 3472,
+      "hash": "fd790cb5f55c9086d21f10948dccd8dce447055e5a4f30b97dec6e19bc10cfe0"
     },
     {
       "path": "reports/phases/PHASE_00_report.md",
@@ -1200,8 +1220,8 @@
     },
     {
       "path": "rules/00-non-negotiable-rules.md",
-      "bytes": 6360,
-      "hash": "37cc96be882685d31a81c9d27728937ab516794bd66be4d76d5b4069d9cc6d94"
+      "bytes": 6983,
+      "hash": "54333148a82d4d930007fcf7da0f6f8786d6f4cba6714133166ac870503b26ef"
     },
     {
       "path": "rules/01-architecture-and-dependency-direction.md",
@@ -1300,8 +1320,8 @@
     },
     {
       "path": "rules/20-release-gates.md",
-      "bytes": 4992,
-      "hash": "ec4e5d2f56c28e1b3f9b5b803d4486b171acccf24496ba7b91ebd09888b6e9eb"
+      "bytes": 5437,
+      "hash": "442243f1751acbdad2a913f88de33c8fd1bc4b2d3ae339f79db10ef2c1640910"
     },
     {
       "path": "rules/21-review-checklist.md",
@@ -1515,8 +1535,8 @@
     },
     {
       "path": "src/app/router/not-found.container.tsx",
-      "bytes": 502,
-      "hash": "f5f1a27c9b9fe1214aa84535b2548642a913537861bf33775a264398a3b0c601"
+      "bytes": 574,
+      "hash": "6e6d732b1d8ad7da8cd567b715bfd51f16b00384570f887bcca5e8aa198777ef"
     },
     {
       "path": "src/app/router/protected-route.container.tsx",
@@ -1855,13 +1875,13 @@
     },
     {
       "path": "src/modules/data-access/gateways/firebase-auth-email.gateway.ts",
-      "bytes": 1462,
-      "hash": "3456d4b1b0b377cb7094673227a803f4c001e8818563f5d4b5733a98f5f533c6"
+      "bytes": 1450,
+      "hash": "4b71bf0ba9fe50b5ed1fdc8d1f8526be6cd78d6c6816b90c2e3cc15faa9b2cbe"
     },
     {
       "path": "src/modules/data-access/gateways/firebase-auth.gateway.ts",
-      "bytes": 3596,
-      "hash": "6917ab1981f9421dc690832cd22c5099af7b9963c4af15e8908794ee1a6d4447"
+      "bytes": 3637,
+      "hash": "a14949dae7abd466187bd1e11a7bd13a3d09b6cca7c668ed71c4d95267ac54e0"
     },
     {
       "path": "src/modules/data-access/gateways/firebase-runtime.gateway.ts",
@@ -3265,8 +3285,8 @@
     },
     {
       "path": "src/packages/firebase/auth.adapter.ts",
-      "bytes": 400,
-      "hash": "47ca0d27ce1639b0dea245da1798acd0773c889db9ba6520f17b5a429ad028dd"
+      "bytes": 374,
+      "hash": "6cc7aa4e62737fc197324dad92d28781692ab8bebb7d619440c4e38a19cbbdf3"
     },
     {
       "path": "src/packages/firebase/firebase-error-messages.constants.ts",
@@ -3440,13 +3460,18 @@
     },
     {
       "path": "src/platform/network/index.ts",
-      "bytes": 258,
-      "hash": "77307df56c5b24472fc825bcdfd7fd8fb4811bd66f8f96478f4334e01fac4e8b"
+      "bytes": 336,
+      "hash": "b93064ac32be884997504a71d20235ca513b9a923f32c1b40bd4ca9eba268d43"
     },
     {
       "path": "src/platform/network/network-status.adapter.ts",
       "bytes": 702,
       "hash": "0db4e0acdbaaaec8a058ea75f69948430ed4fcad2a21190ec4127bc0c13371c6"
+    },
+    {
+      "path": "src/platform/network/password-reset-request.adapter.ts",
+      "bytes": 382,
+      "hash": "fc1b14225375e97c9325768fa4023eb32559c21ef9aeabccda80aaeed5479729"
     },
     {
       "path": "src/platform/storage/index.ts",
@@ -3760,8 +3785,8 @@
     },
     {
       "path": "src/shared/ui/ux-polish.css",
-      "bytes": 18195,
-      "hash": "8a2cdbd58352d885136c8449099515476a46b980ff45cbcf3362c951b8d5547a"
+      "bytes": 18374,
+      "hash": "bc4cba3e2f00223be5307139687f097d796819b464e3591024f2fd3d47b26684"
     },
     {
       "path": "src/shared/ui/virtual-list-footer/index.ts",
@@ -3797,6 +3822,11 @@
       "path": "src/vite-env.d.ts",
       "bytes": 170,
       "hash": "0f83db65d25bc3bffbebd21dd6199eec457158dbbcf1abebb3b0fbad533b4097"
+    },
+    {
+      "path": "tests/api/password-reset.test.ts",
+      "bytes": 3671,
+      "hash": "6742f6c81f56b975f29a1338ab23ec62ec7ea2883abd73d44e364696b3d659b8"
     },
     {
       "path": "tests/bucket-pricing.test.ts",
@@ -4150,8 +4180,8 @@
     },
     {
       "path": "vite.config.ts",
-      "bytes": 4395,
-      "hash": "599fc49b2eb607fd50f64340d348b20c41fab814da0f91228cb78f1371e42c93"
+      "bytes": 7120,
+      "hash": "a3ecba69944fa8929e2b44ad5afb7cfe0dc8cca2ef0e26e6825751ff04348aca"
     },
     {
       "path": "vitest.config.ts",

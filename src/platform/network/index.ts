@@ -5,3 +5,4 @@ export {
   isNavigatorOnline,
   subscribeToOnlineChange,
 } from './network-status.adapter';
+export { requestPasswordResetEmail } from './password-reset-request.adapter';

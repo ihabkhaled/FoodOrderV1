@@ -480,6 +480,17 @@ select:focus {
   background: linear-gradient(155deg, var(--surface-elevated), var(--surface));
 }
 
+.not-found-page {
+  display: grid;
+  min-height: 100dvh;
+  padding: 16px;
+  place-items: center;
+}
+
+.not-found-page .not-found {
+  min-height: min(580px, calc(100dvh - 32px));
+}
+
 .toast {
   border: 1px solid rgb(255 255 255 / 16%);
   border-radius: 16px;

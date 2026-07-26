@@ -7,13 +7,15 @@ import { HOME_PATH } from './app-route-paths.constants';
 export function NotFoundContainer() {
   const { t } = useApp();
   return (
-    <main className="not-found">
-      <span>404</span>
-      <h1>{t('notFoundTitle')}</h1>
-      <p>{t('notFoundBody')}</p>
-      <Link className="button" to={HOME_PATH}>
-        {t('returnHome')}
-      </Link>
+    <main className="not-found-page">
+      <section className="not-found">
+        <span>404</span>
+        <h1>{t('notFoundTitle')}</h1>
+        <p>{t('notFoundBody')}</p>
+        <Link className="button" to={HOME_PATH}>
+          {t('returnHome')}
+        </Link>
+      </section>
     </main>
   );
 }

@@ -7,6 +7,11 @@ import { defineConfig, loadEnv, type Plugin } from 'vite';
 
 import contactHandler from './api/contact';
 import type { ContactRequest, ContactResponse } from './api/contact.interfaces';
+import passwordResetHandler from './api/password-reset';
+import type {
+  PasswordResetRequest,
+  PasswordResetResponse,
+} from './api/password-reset.interfaces';
 
 const readRequestBody = async (request: IncomingMessage): Promise<string> => {
   let body = '';
@@ -55,6 +60,36 @@ const handleContactDevelopmentRequest = async (
   await contactHandler(contactRequest, contactResponse);
 };
 
+const handlePasswordResetDevelopmentRequest = async (
+  request: IncomingMessage,
+  response: ServerResponse,
+  serverEnvironment: Record<string, string>,
+): Promise<void> => {
+  for (const [key, value] of Object.entries(serverEnvironment)) {
+    if (
+      key.startsWith('CONTACT_') ||
+      key.startsWith('FIREBASE_ADMIN_') ||
+      key === 'FIREBASE_SERVICE_ACCOUNT_JSON'
+    ) {
+      process.env[key] = value;
+    }
+  }
+  const passwordResetRequest = request as PasswordResetRequest;
+  passwordResetRequest.body = Object.fromEntries(
+    new URLSearchParams(await readRequestBody(request)),
+  );
+  const passwordResetResponse = response as PasswordResetResponse;
+  passwordResetResponse.status = (statusCode) => {
+    response.statusCode = statusCode;
+    return passwordResetResponse;
+  };
+  passwordResetResponse.json = (body) => {
+    response.setHeader('Content-Type', 'application/json; charset=utf-8');
+    response.end(JSON.stringify(body));
+  };
+  await passwordResetHandler(passwordResetRequest, passwordResetResponse);
+};
+
 const contactDevelopmentPlugin = (
   contactEnvironment: Record<string, string>,
 ): Plugin => ({
@@ -83,6 +118,53 @@ const contactDevelopmentPlugin = (
         },
       );
     });
+    server.middlewares.use('/api/password-reset', (request, response) => {
+      void handlePasswordResetDevelopmentRequest(
+        request,
+        response,
+        contactEnvironment,
+      ).catch((error: unknown) => {
+        console.error('Development password-reset endpoint failed.', error);
+        if (!response.headersSent) {
+          response.statusCode = 500;
+          response.setHeader('Content-Type', 'application/json; charset=utf-8');
+        }
+        response.end(
+          JSON.stringify({ error: 'Password reset is currently unavailable.' }),
+        );
+      });
+    });
+  },
+});
+
+const publicDiscoveryDevelopmentPlugin = (): Plugin => ({
+  name: 'public-discovery-development-artifacts',
+  configureServer(server) {
+    server.middlewares.use((request, response, next) => {
+      const pathname = request.url?.split('?', 1)[0] ?? '';
+      if (
+        !/^\/(?:robots\.txt|sitemap\.xml|sitemaps\/[a-z-]+\.xml)$/u.test(
+          pathname,
+        )
+      ) {
+        next();
+        return;
+      }
+      const artifactUrl = new URL(`dist${pathname}`, import.meta.url);
+      try {
+        const body = readFileSync(fileURLToPath(artifactUrl), 'utf8');
+        response.statusCode = 200;
+        response.setHeader(
+          'Content-Type',
+          pathname.endsWith('.xml')
+            ? 'application/xml; charset=utf-8'
+            : 'text/plain; charset=utf-8',
+        );
+        response.end(body);
+      } catch {
+        next();
+      }
+    });
   },
 });
 const { version } = JSON.parse(
@@ -90,6 +172,7 @@ const { version } = JSON.parse(
 ) as { version: string };
 export default defineConfig(({ mode }) => ({
   plugins: [
+    publicDiscoveryDevelopmentPlugin(),
     contactDevelopmentPlugin(loadEnv(mode, process.cwd(), '')),
     react(),
   ],
