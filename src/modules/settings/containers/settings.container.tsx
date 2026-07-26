@@ -86,7 +86,6 @@ export function SettingsContainer() {
         />
         <SettingsMetadata
           rows={[
-            { label: vm.t('storageMode'), value: vm.storageModeValue },
             { label: vm.t('connection'), value: vm.connectionValue },
             { label: vm.t('appVersion'), value: vm.appVersionValue },
           ]}

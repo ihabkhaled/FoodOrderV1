@@ -25,6 +25,7 @@ The v1.6.0 migration set lives in
 | EXC-3 | Coverage instrumentation scoped to pure layers; screens covered by e2e       | Screen-level unit suites added module by module post-1.6.0            |
 | EXC-4 | Bilingual vendor error copy inside `src/packages/firebase`                   | A third locale converts the table to message keys                     |
 | EXC-5 | iOS validation not executed                                                  | macOS environment: `cap sync ios` + Xcode audit before an iOS release |
+| EXC-6 | React Router RSC advisory does not affect this Vite SPA                      | A compatible fixed package release is available                       |
 
 New exceptions (post-migration) are added to THIS directory as `EXC-<n>-<slug>.md`,
 numbered after EXC-5.

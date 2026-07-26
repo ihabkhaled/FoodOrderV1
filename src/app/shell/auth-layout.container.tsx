@@ -7,14 +7,7 @@ import { THEME_ICON, THEME_LABEL } from './app-layout.constants';
 
 /** Signed-out shell: compact preferences, hero branding, and the auth card. */
 export function AuthLayoutContainer() {
-  const {
-    t,
-    storageMode,
-    locale,
-    theme,
-    setDeviceLocale,
-    setDeviceTheme,
-  } = useApp();
+  const { t, locale, theme, setDeviceLocale, setDeviceTheme } = useApp();
   const ThemeIcon = THEME_ICON[theme];
 
   return (
@@ -44,9 +37,6 @@ export function AuthLayoutContainer() {
       </section>
       <section className="auth-card">
         <Outlet />
-        {storageMode === 'firebase' ? null : (
-          <p className="notice">{t('localModeNotice')}</p>
-        )}
       </section>
     </main>
   );

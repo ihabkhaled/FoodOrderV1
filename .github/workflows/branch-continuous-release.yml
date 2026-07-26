@@ -113,6 +113,7 @@ jobs:
           format: table
           severity: CRITICAL,HIGH
           ignore-unfixed: true
+          trivyignores: .trivyignore.yaml
           exit-code: '1'
           skip-dirs: node_modules,dist,coverage,android,ios,ui-shots
 

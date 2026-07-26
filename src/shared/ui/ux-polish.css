@@ -578,7 +578,7 @@ select:focus {
   letter-spacing: -0.02em;
 }
 
-.group-card-title > div > .muted {
+.group-card-title > div > .member-count-pill {
   display: inline-flex;
   align-items: center;
   width: fit-content;
@@ -586,7 +586,8 @@ select:focus {
   padding: 4px 9px;
   border: 1px solid var(--primary-border);
   border-radius: 999px;
-  background: var(--primary-soft);
+  color: var(--light-panel-text);
+  background: #fff0e4;
   font-size: 0.72rem;
   font-weight: 700;
   line-height: 1.2;
@@ -699,7 +700,7 @@ select:focus {
     border-radius: 22px;
   }
 
-  .group-card-title > div > .muted {
+  .group-card-title > div > .member-count-pill {
     padding: 4px 8px;
   }
 }

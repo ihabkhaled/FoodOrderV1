@@ -37,6 +37,24 @@ describe('LanguageSelect', () => {
     expect(onChange).toHaveBeenCalledWith('pt-BR');
   });
 
+  it('uses a one-character selected label in compact navigation', () => {
+    render(
+      <LanguageSelect
+        locale="ar"
+        label="Language"
+        compact
+        onChange={() => {}}
+      />,
+    );
+
+    const select = screen.getByRole('combobox', { name: 'Language' });
+    const compactOption = screen.getByText('ع', { selector: 'option' });
+    expect(select).toHaveClass('language-select--compact');
+    expect(compactOption).toHaveTextContent('ع');
+    expect(compactOption).toHaveAttribute('hidden');
+    expect(screen.getByRole('option', { name: 'العربية' })).toBeInTheDocument();
+  });
+
   it('ignores values outside the supported locale set', () => {
     const onChange = vi.fn();
     render(

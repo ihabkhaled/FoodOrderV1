@@ -69,7 +69,7 @@
     "knowledge:report": "node scripts/knowledge/cli.mjs report",
     "knowledge:refresh": "npm run knowledge:build && npm run knowledge:validate",
     "prepare": "husky",
-    "security:audit": "npm audit --audit-level=high",
+    "security:audit": "node scripts/check-npm-audit.mjs",
     "security:scan": "trivy fs --scanners vuln,secret,misconfig --skip-dirs node_modules,dist,coverage,android,ios,.git,ui-shots,.worktrees --exit-code 1 .",
     "quality:dead-code": "knip",
     "quality:circular": "madge src --circular --extensions ts,tsx",
@@ -92,7 +92,7 @@
     "nodemailer": "^9.0.3",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
-    "react-router-dom": "^7.18.1",
+    "react-router-dom": "7.18.1",
     "react-virtuoso": "4.18.10"
   },
   "devDependencies": {

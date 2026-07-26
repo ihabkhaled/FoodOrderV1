@@ -27,8 +27,13 @@
     },
     {
       "path": "tests/components/LanguageSelect.test.tsx",
-      "bytes": 1592,
-      "hash": "3aacaf49433f9798cef9c10e4d882423b6e09f789519172ac569453b2ac5189b"
+      "bytes": 2211,
+      "hash": "a45564187dce51b70f86d3ed01c26b56aba38b7ca150e7e91522db15adfcb0e9"
+    },
+    {
+      "path": "tests/components/Loading.test.tsx",
+      "bytes": 855,
+      "hash": "3d125d0a0e348027dfe7a1c7598ed442fadccfeaa16930d98325f1871f3123c3"
     },
     {
       "path": "tests/components/NotificationCenter.test.tsx",
@@ -54,11 +59,6 @@
       "path": "tests/components/SessionInvitePreview.test.tsx",
       "bytes": 2643,
       "hash": "8ab2378a9849de6cbdf36f14f7783ab3a72e7e49647bd51d92c5b43a3c2d5193"
-    },
-    {
-      "path": "tests/components/loading.test.tsx",
-      "bytes": 855,
-      "hash": "3d125d0a0e348027dfe7a1c7598ed442fadccfeaa16930d98325f1871f3123c3"
     },
     {
       "path": "tests/domain/billing-entitlements.test.ts",
@@ -167,8 +167,8 @@
     },
     {
       "path": "tests/e2e/public-content.spec.ts",
-      "bytes": 3730,
-      "hash": "905e9ccca6ccf81dfcc800e7e5311e604614edc0b7f0a885e535dc6a3b9aa3b4"
+      "bytes": 3731,
+      "hash": "eb043c18f3502493d74d84c79aeb5dc63e1feff6bed96d7fb0a209cec8c9b54d"
     },
     {
       "path": "tests/e2e/responsive-navigation.spec.ts",
@@ -202,8 +202,8 @@
     },
     {
       "path": "tests/e2e/ux-polish.spec.ts",
-      "bytes": 4401,
-      "hash": "c9699f37df95941a165ae6e4ca4573627394265dc348314a52bac68d5c8ce73e"
+      "bytes": 4413,
+      "hash": "bbd752519ed77efd367a2fd660b6c67fbec0c0413fd87f897231f845bbbafbf7"
     },
     {
       "path": "tests/eslint/architecture-plugin.test.ts",

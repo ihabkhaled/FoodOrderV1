@@ -18,7 +18,6 @@ export interface AppLayoutViewModel {
   userDisplayName: string | undefined;
   logout: () => Promise<void>;
   online: boolean;
-  storageMode: string;
   toast: ToastState | null;
   locale: Locale;
   theme: Theme;
@@ -41,7 +40,6 @@ export function useAppLayout(): AppLayoutViewModel {
     user,
     logout,
     online,
-    storageMode,
     toast,
     locale,
     theme,
@@ -108,7 +106,6 @@ export function useAppLayout(): AppLayoutViewModel {
     userDisplayName: user?.displayName,
     logout,
     online,
-    storageMode,
     toast,
     locale,
     theme,

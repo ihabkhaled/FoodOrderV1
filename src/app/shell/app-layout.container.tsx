@@ -24,7 +24,6 @@ export function AppLayoutContainer() {
     userDisplayName,
     logout,
     online,
-    storageMode,
     toast,
     locale,
     theme,
@@ -46,11 +45,12 @@ export function AppLayoutContainer() {
       </span>
     </span>
   );
-  const localeSelect = (
+  const localeSelect = (compact: boolean) => (
     <LanguageSelect
       locale={locale}
       label={t('language')}
       className="shell-language-select"
+      compact={compact}
       onChange={(nextLocale) => void setDeviceLocale(nextLocale)}
     />
   );
@@ -102,15 +102,10 @@ export function AppLayoutContainer() {
               placement="sidebar"
               onMarkRead={markNotificationsRead}
             />
-            {localeSelect}
+            {localeSelect(collapsed)}
             {themeButton}
           </div>
           {connection}
-          <span className="mode-pill">
-            <span className="label-collapsible">
-              {storageMode === 'firebase' ? t('firebaseMode') : t('localMode')}
-            </span>
-          </span>
           <div className="sidebar-user">
             <span className="user-name label-collapsible">
               {userDisplayName}
@@ -132,7 +127,7 @@ export function AppLayoutContainer() {
             placement="topbar"
             onMarkRead={markNotificationsRead}
           />
-          {localeSelect}
+          {localeSelect(true)}
           {themeButton}
           {connection}
           {logoutButton}

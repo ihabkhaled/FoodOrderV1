@@ -175,7 +175,8 @@ A change is done only when all of the following hold:
 
 1. Code sits in its owning layer with kebab-case names and responsibility suffixes; the
    architecture plugin reports zero errors without any new `eslint-disable`.
-2. Both typechecks pass; `npm run lint:fix` leaves no uncommitted diff; format:check passes.
+2. Both typechecks pass; format and `lint:fix` run before the final knowledge build, and
+   a repeated `lint:fix` leaves no non-report diff; format:check passes.
 3. Direct tests exist and pass (unit for pure logic, e2e for screen behavior, emulator for
    rules); no test was skipped, focused, or weakened.
 4. `npm run build`, `quality:circular`, `quality:dead-code`, `quality:release` pass.

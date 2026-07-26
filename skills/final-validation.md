@@ -25,9 +25,11 @@ interfaces/type aliases outside their owner suffixes, module constants outside
 Any hit is fixed before validation; no baseline violation is grandfathered.
 
 ```bash
+npm run format
+npm run lint:fix
 npm run knowledge:build:incremental && npm run knowledge:validate
 npm run format:check
-npm run lint:fix && git diff --exit-code && npm run lint
+npm run lint:fix && git diff --exit-code -- . ':(exclude).ai/reports' && npm run lint
 npm run typecheck && npm run typecheck:tsc
 npm run test
 npm run test:coverage
@@ -38,6 +40,10 @@ npm run test:e2e
 npm run test:e2e:cross-browser
 npm run test:e2e:critical
 ```
+
+On Windows, verify case-only renames with `git ls-files` before the knowledge build.
+The Linux branch workflow hashes Git's exact casing; a case-insensitive working tree can
+otherwise generate a different manifest and fail the committed-autofix check.
 
 For a release candidate or broad UI/platform change, also run the single combined command
 when all browser binaries are installed:
