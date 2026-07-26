@@ -236,7 +236,8 @@ textarea { resize: vertical; }
 .grand-total { font-size: 1.2rem; font-weight: 700; }
 .metadata-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; }
 .participants-line { display: block; font-size: 0.75rem; color: var(--muted); }
-.order-row .grow > div { display: grid; gap: 7px; min-width: 0; }
+.order-row .grow > div { display: grid; gap: 12px; min-width: 0; }
+.order-row .grow strong { display: block; line-height: 1.35; }
 .order-row-meta { display: flex; align-items: center; gap: 0.4em; min-width: 0; flex-wrap: wrap; }
 .list-row span.order-item-count { display: inline-flex; padding: 3px 8px; border: 1px solid #f2c9aa; border-radius: 999px; color: var(--light-panel-text); background: #fff0e4; font-size: 0.72rem; font-weight: 700; line-height: 1.2; white-space: nowrap; }
 .pending-hint { display: block; font-size: 0.74rem; font-weight: 700; color: var(--primary-dark); }
