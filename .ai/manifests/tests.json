@@ -316,6 +316,11 @@
       "hash": "18c74fe95cfe476421e85f7f0ec79ad76c4093ffd16cf600093f38eaad7644ca"
     },
     {
+      "path": "tests/tooling/firebase-deployment-gate.test.ts",
+      "bytes": 668,
+      "hash": "0897957982356d9c60823bce456fe3a960ee9458839184e27dbc9afa09f97280"
+    },
+    {
       "path": "tests/tooling/versioning-core.test.mjs",
       "bytes": 2719,
       "hash": "68936a9b7cca6d09ba238ab5fe47f61a45d528188fbbf1f8017cc5460fd3378c"
