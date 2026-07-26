@@ -31,11 +31,6 @@
       "hash": "3aacaf49433f9798cef9c10e4d882423b6e09f789519172ac569453b2ac5189b"
     },
     {
-      "path": "tests/components/Loading.test.tsx",
-      "bytes": 855,
-      "hash": "3d125d0a0e348027dfe7a1c7598ed442fadccfeaa16930d98325f1871f3123c3"
-    },
-    {
       "path": "tests/components/NotificationCenter.test.tsx",
       "bytes": 1862,
       "hash": "4018eaf75763a26c43ff7bf5400489f5b15ecf6defb0cb896e54c674f1d96046"
@@ -59,6 +54,11 @@
       "path": "tests/components/SessionInvitePreview.test.tsx",
       "bytes": 2643,
       "hash": "8ab2378a9849de6cbdf36f14f7783ab3a72e7e49647bd51d92c5b43a3c2d5193"
+    },
+    {
+      "path": "tests/components/loading.test.tsx",
+      "bytes": 855,
+      "hash": "3d125d0a0e348027dfe7a1c7598ed442fadccfeaa16930d98325f1871f3123c3"
     },
     {
       "path": "tests/domain/billing-entitlements.test.ts",
@@ -112,8 +112,8 @@
     },
     {
       "path": "tests/domain/public-content.test.ts",
-      "bytes": 3121,
-      "hash": "db13ad80887bb9c9f7f613e913749ef723cfae3299152acbdc6e6b658fb349a9"
+      "bytes": 3563,
+      "hash": "64a5755d1611df68a7e51a92d111f763c7c3e3dccab9b584eb0c801632950b97"
     },
     {
       "path": "tests/domain/session-contribution.test.ts",
@@ -167,8 +167,8 @@
     },
     {
       "path": "tests/e2e/public-content.spec.ts",
-      "bytes": 2438,
-      "hash": "3e5c8a65f89897e7239f86eabe63079f30a9eda74ec21ee30802c390059abe2a"
+      "bytes": 3730,
+      "hash": "905e9ccca6ccf81dfcc800e7e5311e604614edc0b7f0a885e535dc6a3b9aa3b4"
     },
     {
       "path": "tests/e2e/responsive-navigation.spec.ts",

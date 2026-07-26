@@ -10,8 +10,8 @@
     },
     {
       "path": ".env.example",
-      "bytes": 658,
-      "hash": "53c8bfdffc52360f3d3208c08145528af6343b25e54a5806b4065685417cb102"
+      "bytes": 1017,
+      "hash": "286abde7c62367874fd5e366d931c1987f2b5a463fb2e55bad7e641dda1556a3"
     },
     {
       "path": ".github/copilot-instructions.md",
@@ -90,23 +90,23 @@
     },
     {
       "path": "AGENTS.md",
-      "bytes": 14282,
-      "hash": "dc9dec66c94f67d5242bbd5d7996df1c0366bbe0fcb5811f61b914d651c59077"
+      "bytes": 14770,
+      "hash": "1eafb1936f91cedd3e9b13178ca13e158426270634e03291fedd008f92858dbd"
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 2991,
-      "hash": "74e765ed8cc8135ff3c2794ee4d46c06df0f66efbfe5e7ae93c8b95bc9a6039c"
+      "bytes": 3045,
+      "hash": "c9aed5420277abca99249918b4f3ee7c50a8ea9d4e8e5401eca62a17c16d3f61"
     },
     {
       "path": "CLAUDE.md",
-      "bytes": 1955,
-      "hash": "f60b5df921a161db0d352a229424ada3cfd50a4491d997f37f1993bdf40a8beb"
+      "bytes": 2062,
+      "hash": "8eda3ff8054411f835a68e1b07a20885b4c295f9d9ae803f6dac0612c40514f9"
     },
     {
       "path": "CODEX.md",
-      "bytes": 1955,
-      "hash": "f60b5df921a161db0d352a229424ada3cfd50a4491d997f37f1993bdf40a8beb"
+      "bytes": 2062,
+      "hash": "8eda3ff8054411f835a68e1b07a20885b4c295f9d9ae803f6dac0612c40514f9"
     },
     {
       "path": "GEMINI.md",
@@ -187,6 +187,16 @@
       "path": "agents/type-safety-reviewer.md",
       "bytes": 1736,
       "hash": "47f019c35a23f88e29f90ada366b3818338f21e68fab36f52546cf4e4e1d26a3"
+    },
+    {
+      "path": "api/contact.interfaces.ts",
+      "bytes": 309,
+      "hash": "38586aa120d5126772bb0f1bc62ad963cf2f8d54a42f1ab29f39afe837426e52"
+    },
+    {
+      "path": "api/contact.ts",
+      "bytes": 4033,
+      "hash": "e3bbd208ab2b2d737cce63f3031216f49192c84fe217cb93d7e8bc4d13a75be7"
     },
     {
       "path": "architecture/README.md",
@@ -430,8 +440,8 @@
     },
     {
       "path": "context/task-router.md",
-      "bytes": 929,
-      "hash": "7cf6192ba52b3d73ac20fd10c91eec524af4d0af79c4fa05e1f9951268eb25f1"
+      "bytes": 1117,
+      "hash": "531fd2a3e827bdba13a41c5542cf492b0a87d3b93a15fa3f7441e8af6a265343"
     },
     {
       "path": "context/test-strategy-map.md",
@@ -534,14 +544,19 @@
       "hash": "8191511ef003c006f388d347fb122810227a96b4a1c984dd4eed8a2d69cfe2a1"
     },
     {
+      "path": "docs/operations/public-discovery.md",
+      "bytes": 1423,
+      "hash": "2e636ad3c5ede0b585bbe8adbb0c4a2f86b9c6592c18d0242b32383356fd0d57"
+    },
+    {
       "path": "docs/operations/reference-parity-roadmap.md",
       "bytes": 3053,
       "hash": "700adb005d51762aab9fdf569380f0eb113ab21aacb897cb69b3bb3daa347183"
     },
     {
       "path": "docs/operations/versioning.md",
-      "bytes": 3688,
-      "hash": "543afc6c6b143bf8c7eb0047a00148e6bd5035290ebe5da8d7d2234358579751"
+      "bytes": 4035,
+      "hash": "29ce49cbfca2070add2e66c5d591a706a17ba12cb76f7f4b58edf970e9c94598"
     },
     {
       "path": "domain/README.md",
@@ -746,12 +761,12 @@
     {
       "path": "functions/package-lock.json",
       "bytes": 112654,
-      "hash": "9ea1053ce31cbaab8918db4e277a74abd6cd6db9f4adcd85577a987034f5abe6"
+      "hash": "fd6572b7ee6b64de55324a4e3f70971162ea1cf664cfde8c440cbc10a9510849"
     },
     {
       "path": "functions/package.json",
       "bytes": 533,
-      "hash": "db904b2cb266bde3d344582b95811894671d2ac22b3cdbbbab50a1f713030448"
+      "hash": "e23f0fa1c6e5ef56da1ac561b9e4ce44b491579cd3de07d2fa892677ef64f130"
     },
     {
       "path": "functions/src/entry.ts",
@@ -975,8 +990,8 @@
     },
     {
       "path": "memory/known-pitfalls.md",
-      "bytes": 4859,
-      "hash": "8587fc46175550da72447a8d5fe126a154e2c1fd24203b2634c18a999585184a"
+      "bytes": 5213,
+      "hash": "0cdc05e49615cf22838a6bbb81b49210da6cdc58bfdbfb00fc551f9d5fda1651"
     },
     {
       "path": "memory/migration-lessons.md",
@@ -1010,8 +1025,8 @@
     },
     {
       "path": "operations/deployment-model.md",
-      "bytes": 738,
-      "hash": "465b5b497a2aaefe852a3f29ea0331b4085bf940ec58f959a422bd76098d1dc6"
+      "bytes": 988,
+      "hash": "de340e34a34843e3ff156463f231a2307fb74aa4496bdfce664b75f23c087467"
     },
     {
       "path": "operations/observability-map.md",
@@ -1025,13 +1040,13 @@
     },
     {
       "path": "package-lock.json",
-      "bytes": 686130,
-      "hash": "b311e3b64c6ceb53bf289c7c736f79708141714f87eed86c28a34d790f6068b9"
+      "bytes": 703941,
+      "hash": "37fe4e44fb6c691dfb6607cbb8500ece205f710e5c5b5f036345510414abc01a"
     },
     {
       "path": "package.json",
-      "bytes": 7725,
-      "hash": "55fd4db315e516e137f803c3a65baad25df6c9911a06d37ec617f082df591c25"
+      "bytes": 7788,
+      "hash": "27c88046dbc12b1dcd92d9a46c145704796163b87a23d70efb15fe02e2a21833"
     },
     {
       "path": "packages/group-order-engine/src/index.ts",
@@ -1147,6 +1162,11 @@
       "path": "release-notes/v1.7.1.md",
       "bytes": 4004,
       "hash": "692e4cf48baa2258cd872b5f6cb24eb29d7ea78762755a2c79661cc0e25316b9"
+    },
+    {
+      "path": "release-notes/v1.7.2.md",
+      "bytes": 880,
+      "hash": "9567bc433e7896f6e1c207eb421c8ad4bd4785891ed0137fe142f539d7975ec7"
     },
     {
       "path": "reports/phases/PHASE_00_report.md",
@@ -1285,8 +1305,8 @@
     },
     {
       "path": "rules/versioning.md",
-      "bytes": 4258,
-      "hash": "1e46d4abca884df95b72e2ef54cb619e8c4d30c6c9517fc611711415993e4299"
+      "bytes": 4642,
+      "hash": "23dfd504f160f94f039cb1a5f5d37199bb5c3024a8b7774cf15abbd8e3e846c5"
     },
     {
       "path": "scripts/check-agent-docs.mjs",
@@ -1335,23 +1355,23 @@
     },
     {
       "path": "scripts/public-content/generate-public-content.mjs",
-      "bytes": 2860,
-      "hash": "cd0c00ebaaf97d55f1abe8697cb9a9ffe21265395e1385eac28e2c5b7dcef4b4"
+      "bytes": 3379,
+      "hash": "49477e3baa6792d205bb57411e78986b6094f07d0d1584c4be8c04ac8235806d"
     },
     {
       "path": "scripts/public-content/public-content-build.shared.mjs",
-      "bytes": 20261,
-      "hash": "b3d9ec24589c1e77792dc191da993e7c05fdc41e48c96e57998aacc35e59bd92"
+      "bytes": 23620,
+      "hash": "22ec643e154d5f3b1526b4205a7b5b2abb456b687408a15c88a98f452df2dabf"
     },
     {
       "path": "scripts/public-content/validate-public-content.mjs",
-      "bytes": 4852,
-      "hash": "880434400e9260bff29ebadf8c2583aca63b4dc6a58ac2ebdebbdf977124cf1b"
+      "bytes": 5637,
+      "hash": "2293df3035743fec9cb33b34755c0a09bd5b6b14ed6bcb7bbffeccc1b14150d5"
     },
     {
       "path": "scripts/serve-dist.mjs",
-      "bytes": 3855,
-      "hash": "4dc908d21735a1e11061a6e6ddbe67614c00760a9295f6089ec415d78ee76c51"
+      "bytes": 3846,
+      "hash": "0c06f6b93fdd6a774c06d3f57fa87d7818f9abf2942fcc1e71d8fada2b843491"
     },
     {
       "path": "scripts/validate-preview.mjs",
@@ -1360,8 +1380,8 @@
     },
     {
       "path": "skills/README.md",
-      "bytes": 2748,
-      "hash": "e718b31938ab71cccbab2d71bc2bfd4634ea94c0c4f684cd853dcebf3c956f13"
+      "bytes": 3023,
+      "hash": "f83966bca3aac3c6f381a14f128f08c2a4e57f7d7dbd7b938631c1cfc8af439f"
     },
     {
       "path": "skills/add-capacitor-plugin.md",
@@ -1412,6 +1432,11 @@
       "path": "skills/document-exception.md",
       "bytes": 2339,
       "hash": "073aeac4c89acfe0c4b23918f3c379d832b0df19eb27f85439aa6137a4006f5a"
+    },
+    {
+      "path": "skills/execute-prompt-pack.md",
+      "bytes": 2457,
+      "hash": "ac1875b36df7ec43102c148c299e750b91c7a526e90240eddc7679d85fdf9fa5"
     },
     {
       "path": "skills/final-validation.md",
@@ -2539,6 +2564,11 @@
       "hash": "ea497a874b05bbe80ed1c907518c962a1895714e21ab1a8a28d9c2e616521c31"
     },
     {
+      "path": "src/modules/public-content/README.md",
+      "bytes": 981,
+      "hash": "7dd6719071a44647ee6e3f6aead967aaf8fab16d9e59bb5b15474a4a4a876f43"
+    },
+    {
       "path": "src/modules/public-content/components/public-footer.component.tsx",
       "bytes": 997,
       "hash": "1df61ba6647425d48ed637523bd248eaf00eb857d8abf898a1c558a9f97652ac"
@@ -2550,8 +2580,8 @@
     },
     {
       "path": "src/modules/public-content/components/public-page.component.tsx",
-      "bytes": 2353,
-      "hash": "36d080a32f37c2b55b399cc40af6a4e5be7ae6e4becb6ea89bc2d07ab34fdf95"
+      "bytes": 3620,
+      "hash": "a187479d079cdf8db867e0e7e93bd405f5da6766806d11fa51ec48e7e8ef00fd"
     },
     {
       "path": "src/modules/public-content/components/public-system-page.component.tsx",
@@ -2560,8 +2590,13 @@
     },
     {
       "path": "src/modules/public-content/containers/public-content.container.tsx",
-      "bytes": 1872,
-      "hash": "72cc292a34d2bcd04f852365409e3a270a20f85580e643bd1e28f1f2efa38223"
+      "bytes": 1918,
+      "hash": "f92d18636ed36a517d46803870a6a1c80893eecf2b964bd0e0ef0a82bcd6c658"
+    },
+    {
+      "path": "src/modules/public-content/content/contact-form.locales.json",
+      "bytes": 4362,
+      "hash": "337afbd29e33893238c671911018c6e9b95d03784cd5bb6ad15d3d0b36399147"
     },
     {
       "path": "src/modules/public-content/content/locales/de.json",
@@ -2625,8 +2660,8 @@
     },
     {
       "path": "src/modules/public-content/helpers/build-public-content-view-model.helper.ts",
-      "bytes": 3125,
-      "hash": "52160f80fbbcd5dba8000b24194eb7fdc6dbea96fdf48b6d7ae0ce3ea88d3490"
+      "bytes": 3193,
+      "hash": "e79142b6728e73c4d33652801e1502ee88c4298ae1b4127465825c0322899249"
     },
     {
       "path": "src/modules/public-content/helpers/build-public-metadata.helper.ts",
@@ -2635,8 +2670,8 @@
     },
     {
       "path": "src/modules/public-content/helpers/public-content-catalog.helper.ts",
-      "bytes": 3846,
-      "hash": "2b2461944c335d540dcfb22a5bda873db9227a7fa604a07a70fc564553542c2a"
+      "bytes": 3946,
+      "hash": "ef9e7eaa5b994b445e1dc66055aa90b56abcfa414d284b4ea10d38326ef43537"
     },
     {
       "path": "src/modules/public-content/hooks/use-public-content.hook.ts",
@@ -2650,8 +2685,8 @@
     },
     {
       "path": "src/modules/public-content/public-content.css",
-      "bytes": 12960,
-      "hash": "bbd4f91ded59ab84d91a8ba76d7c88957a05dea79ddef0fc0f60aa3c492ea808"
+      "bytes": 13870,
+      "hash": "3649af0c9682aca963770d0cd7dd54b4898b7c949358bde41d32c8803ce3d5dd"
     },
     {
       "path": "src/modules/public-content/routes/public-content-route-registry.helper.ts",
@@ -2665,8 +2700,8 @@
     },
     {
       "path": "src/modules/public-content/types/public-content.types.ts",
-      "bytes": 4662,
-      "hash": "df96b1553efe3f001ce298ebfcb2eee6d56bf5f703db23ed981b1683518bf1da"
+      "bytes": 4950,
+      "hash": "06f333ab6ee030a87903ea9d9edc0ec6d97a978c49ea527272e8f07c17fc17f1"
     },
     {
       "path": "src/modules/session-invites/components/guest-session-order/guest-session-order.component.tsx",
@@ -3754,11 +3789,6 @@
       "hash": "3aacaf49433f9798cef9c10e4d882423b6e09f789519172ac569453b2ac5189b"
     },
     {
-      "path": "tests/components/Loading.test.tsx",
-      "bytes": 855,
-      "hash": "3d125d0a0e348027dfe7a1c7598ed442fadccfeaa16930d98325f1871f3123c3"
-    },
-    {
       "path": "tests/components/NotificationCenter.test.tsx",
       "bytes": 1862,
       "hash": "4018eaf75763a26c43ff7bf5400489f5b15ecf6defb0cb896e54c674f1d96046"
@@ -3782,6 +3812,11 @@
       "path": "tests/components/SessionInvitePreview.test.tsx",
       "bytes": 2643,
       "hash": "8ab2378a9849de6cbdf36f14f7783ab3a72e7e49647bd51d92c5b43a3c2d5193"
+    },
+    {
+      "path": "tests/components/loading.test.tsx",
+      "bytes": 855,
+      "hash": "3d125d0a0e348027dfe7a1c7598ed442fadccfeaa16930d98325f1871f3123c3"
     },
     {
       "path": "tests/domain/billing-entitlements.test.ts",
@@ -3835,8 +3870,8 @@
     },
     {
       "path": "tests/domain/public-content.test.ts",
-      "bytes": 3121,
-      "hash": "db13ad80887bb9c9f7f613e913749ef723cfae3299152acbdc6e6b658fb349a9"
+      "bytes": 3563,
+      "hash": "64a5755d1611df68a7e51a92d111f763c7c3e3dccab9b584eb0c801632950b97"
     },
     {
       "path": "tests/domain/session-contribution.test.ts",
@@ -3890,8 +3925,8 @@
     },
     {
       "path": "tests/e2e/public-content.spec.ts",
-      "bytes": 2438,
-      "hash": "3e5c8a65f89897e7239f86eabe63079f30a9eda74ec21ee30802c390059abe2a"
+      "bytes": 3730,
+      "hash": "905e9ccca6ccf81dfcc800e7e5311e604614edc0b7f0a885e535dc6a3b9aa3b4"
     },
     {
       "path": "tests/e2e/responsive-navigation.spec.ts",
@@ -4060,8 +4095,8 @@
     },
     {
       "path": "tsconfig.node.json",
-      "bytes": 577,
-      "hash": "b404f8f6385a55d7f440a23166725bf79c5a0cda811f361e4594d2e36a8d52d9"
+      "bytes": 596,
+      "hash": "1a506199d23fc45964053ae8bbedb40a7a9450c88a667acd073a0586f52a54fb"
     },
     {
       "path": "tsconfig.test.json",
@@ -4070,8 +4105,8 @@
     },
     {
       "path": "vercel.json",
-      "bytes": 2052,
-      "hash": "004d55e5ab9c8379f0b1bfc772e000e43c885daddba25e74e0fee06e87219024"
+      "bytes": 2036,
+      "hash": "3488363691bd488834fb2b156e67381e5443417d93753e262b18db35dac4814a"
     },
     {
       "path": "vite.config.ts",

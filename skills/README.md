@@ -5,6 +5,10 @@ Task playbooks for FoodOrderV1. Pick the one matching your task (routing table i
 playbook assumes you already ran the knowledge flow
 (`npm run knowledge:context -- --task="..."`).
 
+External prompt packs and execution briefs start with
+[execute-prompt-pack.md](execute-prompt-pack.md), then route into the task-specific
+playbooks below.
+
 | Skill                                                        | Use when                                            |
 | ------------------------------------------------------------ | --------------------------------------------------- |
 | [start-version-branch.md](start-version-branch.md)           | Create, checkout, commit, or push a target-version branch |
@@ -24,6 +28,7 @@ playbook assumes you already ran the knowledge flow
 | [document-exception.md](document-exception.md)               | A rule genuinely cannot hold                        |
 | [final-validation.md](final-validation.md)                   | Pre-merge / pre-release full pass                   |
 | [versioning/SKILL.md](versioning/SKILL.md)                   | Final stable bump, tag, APK, and GitHub release     |
+| [execute-prompt-pack.md](execute-prompt-pack.md)             | Adapt an external prompt pack safely                |
 
 Universal forbidden shortcuts: disabling `architecture/*` rules, skipping tests, hand-editing
 `.ai/`, bypassing Husky hooks, claiming unexecuted validation, or publishing an APK from a red commit.

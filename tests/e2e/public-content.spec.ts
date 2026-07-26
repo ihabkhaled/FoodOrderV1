@@ -23,7 +23,7 @@ test('public navigation serves unique crawler metadata through real links', asyn
     'href',
     'https://food-order-v1-peach.vercel.app/about',
   );
-  await expect(page.locator('link[rel="alternate"]')).toHaveCount(13);
+  await expect(page.locator('link[rel="alternate"][hreflang]')).toHaveCount(13);
 });
 
 test('the mobile menu exposes the public navigation on narrow viewports', async ({
@@ -74,4 +74,35 @@ test('public policy, offline, and app documents deny advertising and indexing', 
     'content',
     /noindex/u,
   );
+});
+
+test('contact page exposes an accessible localized form without private-data prompts', async ({
+  page,
+}) => {
+  await page.goto('/ja/contact');
+
+  await expect(page.getByRole('heading', { name: 'メッセージを送る' })).toBeVisible();
+  await expect(page.getByLabel('お名前')).toBeEditable();
+  await expect(page.getByLabel('メールアドレス')).toHaveAttribute('type', 'email');
+  await expect(
+    page.getByRole('textbox', { name: 'メッセージ', exact: true }),
+  ).toHaveAttribute('maxlength', '5000');
+  await expect(page.getByRole('button', { name: 'メッセージを送信' })).toBeVisible();
+});
+
+test('public discovery exposes a locale sitemap index and bounded RSS', async ({
+  request,
+}) => {
+  const sitemap = await request.get('/sitemap.xml');
+  expect(sitemap.ok()).toBe(true);
+  const sitemapXml = await sitemap.text();
+  expect((sitemapXml.match(/<sitemap>/gu) ?? [])).toHaveLength(12);
+  expect(sitemapXml).toContain('/sitemaps/ja.xml');
+
+  const feed = await request.get('/ja/feed.xml');
+  expect(feed.ok()).toBe(true);
+  const feedXml = await feed.text();
+  expect(feedXml).toContain('<rss version="2.0"');
+  expect(feedXml).toContain('<language>ja</language>');
+  expect((feedXml.match(/<item>/gu) ?? []).length).toBeLessThanOrEqual(50);
 });

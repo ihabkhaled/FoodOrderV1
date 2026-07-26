@@ -441,6 +441,54 @@ body:has(.public-site) {
   background: rgb(255 255 255 / 62%);
 }
 
+.public-contact {
+  max-width: 52rem;
+  margin-block: 3rem;
+  padding: clamp(1.25rem, 3vw, 2.25rem);
+  border: 1px solid var(--public-border);
+  border-radius: var(--public-radius);
+  background: rgb(255 255 255 / 78%);
+  box-shadow: var(--public-shadow);
+}
+
+.public-contact__form {
+  display: grid;
+  gap: 1rem;
+}
+
+.public-contact__form label {
+  display: grid;
+  gap: 0.45rem;
+  color: var(--public-ink);
+  font-weight: 700;
+}
+
+.public-contact__form input,
+.public-contact__form textarea {
+  inline-size: 100%;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid var(--public-border);
+  border-radius: 0.75rem;
+  background: white;
+  color: var(--public-ink);
+  font: inherit;
+}
+
+.public-contact__form textarea {
+  resize: vertical;
+}
+
+.public-contact__form p {
+  margin: 0;
+  color: var(--public-muted);
+  font-size: 0.9rem;
+}
+
+.public-contact__honeypot {
+  position: absolute;
+  inset-inline-start: -10000px;
+}
+
 .public-footer__inner {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(18rem, 1fr);

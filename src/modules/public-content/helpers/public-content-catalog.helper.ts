@@ -1,3 +1,4 @@
+import contactFormData from '../content/contact-form.locales.json';
 import catalogData from '../content/public-content.catalog.json';
 import {
   PUBLIC_LOCALES,
@@ -24,6 +25,7 @@ const localizedCatalogs = Object.values(
 const baseCatalog = catalogData as unknown as PublicContentCatalog;
 const catalog: PublicContentCatalog = {
   ...baseCatalog,
+  contactForm: contactFormData,
   ui: { ...baseCatalog.ui },
   pages: baseCatalog.pages.map((page) => ({ ...page, copy: { ...page.copy } })),
   systemPages: {

@@ -80,4 +80,15 @@ describe('public content registry and metadata', () => {
     expect(notFound.systemPage?.id).toBe('not-found');
     expect(notFound.page).toBeNull();
   });
+
+  it('provides complete localized contact-form copy', () => {
+    for (const locale of PUBLIC_LOCALES) {
+      const viewModel = buildPublicContentViewModel(
+        buildPublicContentPath('contact', locale.code),
+      );
+      expect(viewModel.contactForm.heading.trim()).not.toHaveLength(0);
+      expect(viewModel.contactForm.submit.trim()).not.toHaveLength(0);
+      expect(viewModel.contactForm.privacy).toMatch(/.{20}/u);
+    }
+  });
 });

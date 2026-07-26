@@ -5,7 +5,9 @@ import path from 'node:path';
 
 import {
   buildRobots,
-  buildSitemap,
+  buildLocaleSitemap,
+  buildRssFeed,
+  buildSitemapIndex,
   extractStylesheetLinks,
   isProductionIndexingEnabled,
   loadPublicCatalog,
@@ -63,7 +65,18 @@ for (const routeId of ['not-found', 'error', 'offline']) {
   }
 }
 
-await writeOutput(path.join(outputDirectory, 'sitemap.xml'), buildSitemap(catalog));
+await writeOutput(path.join(outputDirectory, 'sitemap.xml'), buildSitemapIndex(catalog));
+for (const locale of catalog.locales) {
+  const localeName = locale.segment || 'en';
+  const feedPath = path.join(outputDirectory, locale.segment, 'feed.xml');
+  await writeOutput(
+    path.join(outputDirectory, 'sitemaps', `${localeName}.xml`),
+    buildLocaleSitemap(catalog, locale),
+  );
+  const feed = buildRssFeed(catalog, locale);
+  await writeOutput(feedPath, feed);
+  await writeOutput(path.join(outputDirectory, locale.segment, 'feeds', 'topics.xml'), feed);
+}
 await writeOutput(path.join(outputDirectory, 'robots.txt'), buildRobots(catalog, indexable));
 
 const publisherId = String(process.env.ADSENSE_PUBLISHER_ID || '').trim();

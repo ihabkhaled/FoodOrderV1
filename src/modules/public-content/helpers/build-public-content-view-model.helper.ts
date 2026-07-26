@@ -75,6 +75,7 @@ export const buildPublicContentViewModel = (
     locale,
     site: getPublicContentCatalog().site,
     ui: getPublicUiCopy(localeCode),
+    contactForm: getPublicContentCatalog().contactForm[localeCode],
     navigationItems,
     footerItems,
     localeLinks,

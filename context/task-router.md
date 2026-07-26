@@ -20,6 +20,9 @@ generated: false
 
 # Task routing
 
+- External prompt pack: run [../skills/execute-prompt-pack.md](../skills/execute-prompt-pack.md),
+  classify each requirement, then route only adopted/adapted outcomes to current owners.
+
 - Bucket/order behavior: `src/lib`, domain invariants, unit tests.
 - Firebase, ownership, persistence: `src/services`, data contracts, Firestore rules, security/privacy.
 - Screens/navigation/accessibility/localization: `src/pages`, `src/components`, `src/App.tsx`, E2E tests.

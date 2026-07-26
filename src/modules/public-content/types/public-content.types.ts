@@ -88,6 +88,15 @@ export interface PublicUiCopy {
   learnMoreLabel: string;
 }
 
+export interface PublicContactFormCopy {
+  heading: string;
+  name: string;
+  email: string;
+  message: string;
+  submit: string;
+  privacy: string;
+}
+
 export interface PublicSiteDefinition {
   brandName: string;
   canonicalOrigin: string;
@@ -104,6 +113,7 @@ export interface PublicContentCatalog {
   site: PublicSiteDefinition;
   locales: PublicLocaleDefinition[];
   ui: Partial<Record<PublicLocale, PublicUiCopy>>;
+  contactForm: Record<PublicLocale, PublicContactFormCopy>;
   pages: PublicCatalogPage[];
   systemPages: Record<
     PublicSystemRouteId,
@@ -166,6 +176,7 @@ export interface PublicContentViewModel {
   locale: PublicLocaleDefinition;
   site: PublicSiteDefinition;
   ui: PublicUiCopy;
+  contactForm: PublicContactFormCopy;
   navigationItems: PublicNavigationItem[];
   footerItems: PublicNavigationItem[];
   localeLinks: PublicLocaleLink[];
@@ -205,6 +216,7 @@ export interface PublicPageProps {
   applicationPath: string;
   learnMorePath: string;
   ui: PublicUiCopy;
+  contactForm: PublicContactFormCopy;
 }
 
 export interface PublicSystemPageProps {

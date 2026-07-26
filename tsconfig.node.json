@@ -19,6 +19,7 @@
     "vitest.rules.config.ts",
     "playwright.config.ts",
     "capacitor.config.ts",
-    "eslint.config.js"
+    "eslint.config.js",
+    "api/**/*.ts"
   ]
 }

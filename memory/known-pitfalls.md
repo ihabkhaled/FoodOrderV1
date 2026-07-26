@@ -24,6 +24,13 @@ correction.
 
 ## Process and tooling
 
+### Importing a foreign prompt pack literally
+
+Prompt packs often encode another repository's framework, locale inventory, schemas,
+commands, and deployment topology. Applying those nouns directly creates parallel
+systems and architecture drift. Read the pack fully, classify requirements as
+adopt/adapt/defer/skip, and use existing FoodOrderV1 owners.
+
 - **Lint CI requires committed autofixes.** The `lint` job runs `npm run lint:fix` and then
   `git diff --exit-code` — locally-clean-but-unfixed formatting/import order fails CI even
   though `npm run lint` passes on your machine. Always run `lint:fix` and commit the result.

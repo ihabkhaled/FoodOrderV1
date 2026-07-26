@@ -13,6 +13,12 @@ lastVerified: 2026-07-18
 
 FoodOrderV1 uses stable **Semantic Versioning** (`MAJOR.MINOR.PATCH`) for committed source and unique build identifiers for generated artifacts. `package.json` is the single source place-of-record. Release tools synchronize Firebase Functions, both package locks, Android `versionName` and monotonic `versionCode`, changelog, and release notes.
 
+Contributors change the stable version in one place only: the root `package.json`, through
+the release tooling. Every other occurrence is derived/generated compatibility metadata
+for npm, Android, iOS, changelog, or release packaging and must never be edited as an
+independent source. Runtime and CI scripts read the root package version directly
+wherever their platform permits it.
+
 ## Prompt-density → bump level
 
 | Density of the driving prompt | Bump | Examples |

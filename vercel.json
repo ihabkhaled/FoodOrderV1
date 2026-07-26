@@ -1,6 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "node scripts/validate-preview.mjs",
+  "buildCommand": "npm run build:web",
   "trailingSlash": false,
   "headers": [
     {

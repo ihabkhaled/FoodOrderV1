@@ -36,6 +36,7 @@ export function PublicContentContainer({
           applicationPath={applicationPath}
           learnMorePath={viewModel.learnMorePath}
           ui={viewModel.ui}
+          contactForm={viewModel.contactForm}
         />
       ) : viewModel.systemPage ? (
         <PublicSystemPage

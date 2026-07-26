@@ -1091,6 +1091,11 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/public-content/README.md",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/public-content/components/public-footer.component.tsx",
       "tests": [],
       "relationship": "inferred"
@@ -1112,6 +1117,11 @@
     },
     {
       "source": "src/modules/public-content/containers/public-content.container.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/public-content/content/contact-form.locales.json",
       "tests": [],
       "relationship": "inferred"
     },

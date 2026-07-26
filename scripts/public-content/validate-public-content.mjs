@@ -87,7 +87,24 @@ if (/<script[^>]*\bsrc="https:\/\/pagead2\.googlesyndication\.com\//iu.test(appS
 const sitemap = await readFile(path.join(outputDirectory, 'sitemap.xml'), 'utf8').catch(
   () => '',
 );
-if ((sitemap.match(/<url>/gu) || []).length !== 120) failures.push('sitemap URL count');
+if ((sitemap.match(/<sitemap>/gu) || []).length !== 12) failures.push('sitemap locale count');
+let sitemapUrlCount = 0;
+for (const locale of catalog.locales) {
+  const localeName = locale.segment || 'en';
+  const localeSitemap = await readFile(
+    path.join(outputDirectory, 'sitemaps', `${localeName}.xml`),
+    'utf8',
+  ).catch(() => '');
+  sitemapUrlCount += (localeSitemap.match(/<url>/gu) || []).length;
+  const feed = await readFile(
+    path.join(outputDirectory, locale.segment, 'feed.xml'),
+    'utf8',
+  ).catch(() => '');
+  expectIncludes(feed, '<rss version="2.0"', `RSS root: ${locale.code}`);
+  expectIncludes(feed, `<language>${locale.htmlLang}</language>`, `RSS language: ${locale.code}`);
+  if ((feed.match(/<item>/gu) || []).length > 50) failures.push(`RSS item limit: ${locale.code}`);
+}
+if (sitemapUrlCount !== 120) failures.push('sitemap URL count');
 for (const privatePrefix of ['/app', '/auth', '/invite', '/buckets', '/orders', '/sessions']) {
   if (sitemap.includes(`<loc>${catalog.site.canonicalOrigin}${privatePrefix}`)) {
     failures.push(`private sitemap entry: ${privatePrefix}`);
