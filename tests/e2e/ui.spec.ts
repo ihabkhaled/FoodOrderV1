@@ -162,6 +162,7 @@ test.describe('responsive shell', () => {
     page,
   }) => {
     await page.emulateMedia({ colorScheme: 'light' });
+    await page.setViewportSize({ width: 1280, height: 900 });
     await register(page);
     const badge = page.locator('.hero-card .eyebrow');
 

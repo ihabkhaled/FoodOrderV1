@@ -207,8 +207,8 @@
     },
     {
       "path": "tests/e2e/ui.spec.ts",
-      "bytes": 11407,
-      "hash": "4fe15e2f27640bc9bda622d027c927a7292fa6e1333a1db4da60016bccd4c192"
+      "bytes": 11469,
+      "hash": "d360927bf409a2540603d4b58df663a4f9c704d89143d941113fa5955f05d5c2"
     },
     {
       "path": "tests/e2e/ux-polish.spec.ts",

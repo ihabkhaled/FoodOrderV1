@@ -36,3 +36,9 @@ For X.Y.Z, release/X.Y.Z, or X.Y.Z/<feature> branches, follow skills/start-versi
 - npm run test:rules and npm run functions:validate when their boundaries change
 - npm run knowledge:build:incremental && npm run knowledge:validate
 - Conventional commits; never bypass Husky or claim unexecuted gates.
+
+## Merge safety
+
+- Require All Gates Green and Cross-Browser All Green on the current PR head SHA or merge-queue candidate.
+- Pending, skipped, cancelled, stale, and older-commit checks never satisfy a merge gate.
+- Follow docs/operations/required-merge-gates.md; branch protection applies to administrators.

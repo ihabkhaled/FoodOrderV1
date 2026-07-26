@@ -248,3 +248,13 @@ and [context/package-ownership.md](context/package-ownership.md).
   lessons go to [memory/](memory/README.md).
 - Every agent entry point carries the marker `Governance-Version: 1`;
   `node scripts/check-agent-docs.mjs` verifies the set stays consistent.
+
+## Required merge protection
+
+A pull request may merge only when `All Gates Green` and `Cross-Browser All Green`
+succeed for its current head SHA or current merge-queue candidate. Pending, skipped,
+cancelled, stale, or successful checks from an older commit do not satisfy the gate.
+`main` must require pull requests, strict up-to-date status checks, conversation
+resolution, and administrator enforcement. Both workflows support `merge_group` so a
+queued merge is tested with the latest `main`. See
+[docs/operations/required-merge-gates.md](docs/operations/required-merge-gates.md).

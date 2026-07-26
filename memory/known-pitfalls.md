@@ -111,3 +111,15 @@ adopt/adapt/defer/skip, and use existing FoodOrderV1 owners.
 - Do not initialize Firebase with partial configuration — empty config means local mode.
 - Do not claim local-device mode syncs or securely authenticates users.
 - Do not permit transitions out of terminal order statuses (completed/cancelled).
+
+### Post-merge browser-gate incident
+
+- **Hidden desktop controls can fail only after widening the matrix.** A badge contrast
+  test located the `.sidebar` theme button while Pixel, iPad, and mobile Safari correctly
+  hid the sidebar. Set the test intent with an explicit desktop viewport or use the visible
+  responsive control; never retry a hidden locator into green.
+- **A green older SHA is not a green PR.** The latest commit can be merged while its checks
+  are pending when `main` is unprotected. Require strict current-SHA aggregate statuses and
+  administrator enforcement so the post-merge push cannot reveal a preventable red gate.
+- **Matrix job names are a fragile branch-protection API.** Require the stable
+  `Cross-Browser All Green` aggregate instead of three matrix-generated status names.

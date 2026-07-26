@@ -44,3 +44,9 @@ When creating or checking out a branch such as `1.7.0`, `release/1.7.0`, or `1.7
 or pushing before the final fixed point is green.
 
 When a rule fails, the code is in the wrong layer. Move or redesign it. Do not disable the rule, skip the test, or bypass Husky.
+
+## Merge safety
+
+Never merge from an older green SHA. `All Gates Green` and `Cross-Browser All Green`
+must both succeed on the current PR head or merge-queue candidate; pending, skipped,
+cancelled, and stale checks are failures. Follow `docs/operations/required-merge-gates.md`.

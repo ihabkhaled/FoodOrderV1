@@ -15,8 +15,8 @@
     },
     {
       "path": ".github/copilot-instructions.md",
-      "bytes": 2598,
-      "hash": "db2727ef8772c00f5ee80eb17811a687dd6256df3abe1bdc035260dfe118debf"
+      "bytes": 2857,
+      "hash": "743364674632e8549c7c7799dd30395e0b5bea70e67b4b5c481ab482f8734d20"
     },
     {
       "path": ".github/dependabot.yml",
@@ -40,13 +40,13 @@
     },
     {
       "path": ".github/workflows/ci.yml",
-      "bytes": 16820,
-      "hash": "97e1a3f5ed652c51b95cf36f593e118d1bd7e6d9f64155a1856b099848a11967"
+      "bytes": 16835,
+      "hash": "7f4957c59319759ad57e56ba5f9789b362bbe81e2efbfb702d01bc152e0ac8ad"
     },
     {
       "path": ".github/workflows/cross-browser-e2e.yml",
-      "bytes": 1468,
-      "hash": "2019f0a6badb9859de3619223614bad2945e3b772e972329ed2fbb6ab05fd82c"
+      "bytes": 2032,
+      "hash": "33aa13e5acafe2e11ed8e0407ded5aa0d4f3be994e0b6a662a9d9837cb084874"
     },
     {
       "path": ".github/workflows/diagnostics.yml",
@@ -95,23 +95,23 @@
     },
     {
       "path": "AGENTS.md",
-      "bytes": 14980,
-      "hash": "97f97b8089e3cec0729fd2910ddbe026c87e2c3c06c03277674294e5517edc1d"
+      "bytes": 15565,
+      "hash": "133c044e1c5d74347742407e7b50051496f742069c5bde0f1f49d9fc0d0199f3"
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 3045,
-      "hash": "c9aed5420277abca99249918b4f3ee7c50a8ea9d4e8e5401eca62a17c16d3f61"
+      "bytes": 3220,
+      "hash": "c3053734e003c315fb4cb79ce6394a710281a6f595cc678b75227686ba343800"
     },
     {
       "path": "CLAUDE.md",
-      "bytes": 2062,
-      "hash": "8eda3ff8054411f835a68e1b07a20885b4c295f9d9ae803f6dac0612c40514f9"
+      "bytes": 2342,
+      "hash": "dad39bc9e609ea6d749c85e122b1716401b82ccd7b8ef8fdca0fe37160431ee5"
     },
     {
       "path": "CODEX.md",
-      "bytes": 2951,
-      "hash": "1f8628de06696b352e9263457a27a26d56ec5985ae22e29400f1b32387d91f38"
+      "bytes": 3231,
+      "hash": "70b0c15c113ae449213a2d9353d52aa7e18a624d74c139bd703f6774dff16385"
     },
     {
       "path": "GEMINI.md",
@@ -470,8 +470,8 @@
     },
     {
       "path": "context/test-strategy-map.md",
-      "bytes": 3688,
-      "hash": "710c3346cc792727a34302f0607407bd5e2b659eec395a6f06355ddc0d88e44f"
+      "bytes": 4188,
+      "hash": "3cfb15a2ebbefe5fd544a48f233ccecc0daf133b2892a80f41afd44e03517e97"
     },
     {
       "path": "contracts/README.md",
@@ -560,8 +560,8 @@
     },
     {
       "path": "docs/operations/git-hooks.md",
-      "bytes": 1518,
-      "hash": "441f8851dcc979703d4cdf5e1e50f6511a29bafd570ae68e28c6f7720c0d2f2d"
+      "bytes": 1942,
+      "hash": "b572063a86b82267af93a459734e51b7fdeb81ebc1282c9f34cbf734b2697447"
     },
     {
       "path": "docs/operations/password-reset.md",
@@ -582,6 +582,11 @@
       "path": "docs/operations/reference-parity-roadmap.md",
       "bytes": 3053,
       "hash": "700adb005d51762aab9fdf569380f0eb113ab21aacb897cb69b3bb3daa347183"
+    },
+    {
+      "path": "docs/operations/required-merge-gates.md",
+      "bytes": 2650,
+      "hash": "1569acb8e85e4133b2f0039450166c89c1a6eef7eb0189b9bf8f774256727ccb"
     },
     {
       "path": "docs/operations/versioning.md",
@@ -791,12 +796,12 @@
     {
       "path": "functions/package-lock.json",
       "bytes": 112654,
-      "hash": "fd6572b7ee6b64de55324a4e3f70971162ea1cf664cfde8c440cbc10a9510849"
+      "hash": "fc6b954b18af6c652eb2bc2651a09f1261088663f5aee7aa0d325f94e855c910"
     },
     {
       "path": "functions/package.json",
       "bytes": 533,
-      "hash": "e23f0fa1c6e5ef56da1ac561b9e4ce44b491579cd3de07d2fa892677ef64f130"
+      "hash": "cf52ce060e71fa8c5d05f6bbdebb855518d36afaa98f6b07e7e9e930c866ac2d"
     },
     {
       "path": "functions/src/entry.ts",
@@ -1020,8 +1025,8 @@
     },
     {
       "path": "memory/known-pitfalls.md",
-      "bytes": 6573,
-      "hash": "6bd935e97f77b5643633f7aadfc0df0dd64af515ca03c63378b904673552863f"
+      "bytes": 7383,
+      "hash": "209f54a339ca453bbd3a13a94c09a423238108a2d74f1af043a9994852a573d5"
     },
     {
       "path": "memory/migration-lessons.md",
@@ -1071,12 +1076,12 @@
     {
       "path": "package-lock.json",
       "bytes": 703940,
-      "hash": "36cc062390338c3f9d5c8e102338440ccfadcdbd105c14f029cf98a5f8572a4f"
+      "hash": "ecde0ee3b88ef7e03a481f5aacaae166255f6470014b6917ae293421fe0ec0f8"
     },
     {
       "path": "package.json",
       "bytes": 7895,
-      "hash": "d082a84348c068b404d0b5e38337376e630ee2ef41fc82d37c412064d8b3cdbb"
+      "hash": "62de5ecd33038bd74414f906edd10b434a53ebfae8a18505fd5cbaaf58797c04"
     },
     {
       "path": "packages/group-order-engine/src/index.ts",
@@ -1199,6 +1204,11 @@
       "hash": "26a20f37b970280b9dc938b31eedcea3a723237f4dec3f6c61b19213d3e2e9c0"
     },
     {
+      "path": "release-notes/v1.7.3.md",
+      "bytes": 822,
+      "hash": "f57d437962e170054113a8198ecafebc6f6dcbac8dad3fbc9d9914014fa58597"
+    },
+    {
       "path": "reports/phases/PHASE_00_report.md",
       "bytes": 3648,
       "hash": "4a0744d91e12941f14eb4601ac627527a49da0193b13b7688809136cbe84cbd9"
@@ -1220,8 +1230,8 @@
     },
     {
       "path": "rules/00-non-negotiable-rules.md",
-      "bytes": 6983,
-      "hash": "54333148a82d4d930007fcf7da0f6f8786d6f4cba6714133166ac870503b26ef"
+      "bytes": 7472,
+      "hash": "13614eb874a3433cbd6f6284eec5bdf392373afa28ba0dbf7225e488de991c76"
     },
     {
       "path": "rules/01-architecture-and-dependency-direction.md",
@@ -1300,8 +1310,8 @@
     },
     {
       "path": "rules/16-testing-and-coverage.md",
-      "bytes": 2887,
-      "hash": "716899a91f2a48a108757d891b435d71e0204ce79acad091cf24ffb94044ffb7"
+      "bytes": 3360,
+      "hash": "5ca92c99c61db0a86ff6fd89e6e2f8b451cfce38ff78e390e3328b676549a524"
     },
     {
       "path": "rules/17-eslint-typescript.md",
@@ -1320,8 +1330,8 @@
     },
     {
       "path": "rules/20-release-gates.md",
-      "bytes": 5437,
-      "hash": "442243f1751acbdad2a913f88de33c8fd1bc4b2d3ae339f79db10ef2c1640910"
+      "bytes": 6563,
+      "hash": "3c3c75d4bb94e2582aca984b27fcb0ca1ca61c2f5afed659a55a3522966c858e"
     },
     {
       "path": "rules/21-review-checklist.md",
@@ -1475,8 +1485,8 @@
     },
     {
       "path": "skills/final-validation.md",
-      "bytes": 3363,
-      "hash": "61b3bb2fdef9e6a0aee2acc1c5b41809aee59810b303ebcff628038724f79ef9"
+      "bytes": 3781,
+      "hash": "2db9dee5d5cfe4f0d158b5c81d9d37b15604e93b3c4e495164904c6df139c93d"
     },
     {
       "path": "skills/fix-eslint-typecheck.md",
@@ -1500,8 +1510,8 @@
     },
     {
       "path": "skills/write-e2e-tests.md",
-      "bytes": 3347,
-      "hash": "a64d38f987ae9095b2cd152ccb06d6b6b3fcd8c34f4533fc7740537a86bc67bc"
+      "bytes": 3810,
+      "hash": "8975d7f9f601fbd3842dff5e13782b0e70ff925e39a0ca855c523b9dc248c18d"
     },
     {
       "path": "skills/write-unit-tests.md",
@@ -4050,8 +4060,8 @@
     },
     {
       "path": "tests/e2e/ui.spec.ts",
-      "bytes": 11407,
-      "hash": "4fe15e2f27640bc9bda622d027c927a7292fa6e1333a1db4da60016bccd4c192"
+      "bytes": 11469,
+      "hash": "d360927bf409a2540603d4b58df663a4f9c704d89143d941113fa5955f05d5c2"
     },
     {
       "path": "tests/e2e/ux-polish.spec.ts",

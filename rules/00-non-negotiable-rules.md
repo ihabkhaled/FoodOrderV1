@@ -114,3 +114,12 @@ point before commit/push or hand-off. A final-gates workflow changes timing only
 test, security review, or platform evidence may be skipped or weakened.
 
 When a rule fails, the code is in the wrong layer. Move or redesign the code. Do not disable the rule.
+
+### Protected-merge invariant
+
+Rule 26 includes every configured browser project. GitHub must require both stable
+aggregate statuses, `All Gates Green` and `Cross-Browser All Green`, with strict
+up-to-date checking on the current PR head or merge-queue commit. Older green runs,
+pending/skipped/cancelled jobs, and administrator bypasses are not valid evidence.
+Operational settings are defined in
+[../docs/operations/required-merge-gates.md](../docs/operations/required-merge-gates.md).

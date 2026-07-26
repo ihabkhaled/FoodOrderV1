@@ -37,3 +37,9 @@ npm run knowledge:build:incremental && npm run knowledge:validate
 ```
 
 Use conditional Functions, rules, security, native, accessibility, visual, migration, performance, telemetry, and billing gates whenever the change touches them. Never bypass Husky or report an unexecuted gate as green.
+
+## Merge safety
+
+`All Gates Green` and `Cross-Browser All Green` must both succeed on the current PR
+head SHA or merge-queue candidate. Never accept pending, skipped, cancelled, stale, or
+older-commit evidence. See `docs/operations/required-merge-gates.md`.

@@ -8,6 +8,7 @@ The version bump level is decided by prompt density — see [rules/versioning.md
 ## [1.7.3] - 2026-07-26
 
 - Start v1.7.3 development
+- Fixed the cross-project dashboard contrast test and added strict current-commit primary and cross-browser merge gates.
 
 
 ## [1.7.2] - 2026-07-26

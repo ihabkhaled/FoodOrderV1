@@ -90,3 +90,23 @@ The mandatory gate set (all must succeed):
 CI fully green on the PR; for releases additionally: version bumped once, changelog +
 release notes written, tag pushed, APK + SHA-256 attached, and
 [../skills/final-validation.md](../skills/final-validation.md) completed.
+
+## Protected pull-request and merge-queue gates
+
+GitHub branch protection for `main` must require these exact stable contexts:
+
+- `All Gates Green`: every job aggregated by `.github/workflows/ci.yml`, including the
+  primary Chromium desktop, Pixel 7, and iPad Mini E2E projects.
+- `Cross-Browser All Green`: Firefox, desktop WebKit, and iPhone mobile Safari from
+  `.github/workflows/cross-browser-e2e.yml`.
+
+Required status checks are strict: the branch must be current with `main`, and the green
+statuses must belong to the current PR head SHA or current merge-queue candidate.
+Successful checks on an earlier commit are stale evidence. Pending, skipped, cancelled,
+neutral, timed-out, or action-required conclusions do not satisfy the contract.
+
+Both workflows run for `pull_request`, `merge_group`, and pushes to `main`. Protection
+requires a PR, resolved conversations, no force-push/deletion, and applies to
+administrators. Do not merge while the latest commit is still running, even when an
+earlier commit was fully green. See
+[../docs/operations/required-merge-gates.md](../docs/operations/required-merge-gates.md).

@@ -63,3 +63,11 @@ npm run lint                                      # playwright plugin checks spe
 Journey green on every affected configured project, deterministic, independent, asserting
 user outcomes rather than implementation details, and
 `docs/migration/test-coverage-status.md` updated when the journey or project map changes.
+
+## Device-safe locator check
+
+Before committing a multi-project spec, classify every interacted control as universal,
+desktop-only, or mobile/tablet-only. Use an explicit viewport for layout-specific
+controls, or select the visible equivalent for the active layout. A locator scoped to
+hidden `.sidebar` chrome is invalid in mobile/tablet projects even if the element remains
+in the DOM. Verify the assertion on every project selected by both browser workflows.
