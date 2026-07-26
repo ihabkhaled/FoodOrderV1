@@ -92,8 +92,11 @@ export interface PublicContactFormCopy {
   heading: string;
   name: string;
   email: string;
+  subject: string;
   message: string;
   submit: string;
+  success: string;
+  error: string;
   privacy: string;
 }
 
@@ -217,6 +220,10 @@ export interface PublicPageProps {
   learnMorePath: string;
   ui: PublicUiCopy;
   contactForm: PublicContactFormCopy;
+}
+
+export interface PublicContactFormProps {
+  copy: PublicContactFormCopy;
 }
 
 export interface PublicSystemPageProps {

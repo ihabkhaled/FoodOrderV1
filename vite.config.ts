@@ -1,13 +1,73 @@
 import { readFileSync } from 'node:fs';
+import type { IncomingMessage, ServerResponse } from 'node:http';
 import { fileURLToPath, URL } from 'node:url';
 
 import react from '@vitejs/plugin-react';
-import { defineConfig } from 'vite';
+import { defineConfig, type Plugin } from 'vite';
+
+import contactHandler from './api/contact';
+import type { ContactRequest, ContactResponse } from './api/contact.interfaces';
+
+const readRequestBody = async (request: IncomingMessage): Promise<string> => {
+  let body = '';
+  request.setEncoding('utf8');
+  for await (const chunk of request as AsyncIterable<string | Buffer>) {
+    body += typeof chunk === 'string' ? chunk : chunk.toString('utf8');
+  }
+  return body;
+};
+
+const handleContactDevelopmentRequest = async (
+  request: IncomingMessage,
+  response: ServerResponse,
+): Promise<void> => {
+  process.env.CONTACT_EMAIL_ENABLED ??= 'true';
+  process.env.CONTACT_DEVELOPMENT_ETHEREAL ??= 'true';
+
+  const contactRequest = request as ContactRequest;
+  const rawBody = await readRequestBody(request);
+  contactRequest.body = Object.fromEntries(new URLSearchParams(rawBody));
+  const contactResponse = response as ContactResponse;
+  contactResponse.status = (statusCode) => {
+    response.statusCode = statusCode;
+    return contactResponse;
+  };
+  contactResponse.json = (body) => {
+    response.setHeader('Content-Type', 'application/json; charset=utf-8');
+    response.end(JSON.stringify(body));
+  };
+  await contactHandler(contactRequest, contactResponse);
+};
+
+const contactDevelopmentPlugin = (): Plugin => ({
+  name: 'contact-development-endpoint',
+  configureServer(server) {
+    server.middlewares.use('/api/contact', (request, response) => {
+      void handleContactDevelopmentRequest(request, response).catch(
+        (error: unknown) => {
+          console.error('Development contact endpoint failed.', error);
+          if (!response.headersSent) {
+            response.statusCode = 500;
+            response.setHeader(
+              'Content-Type',
+              'application/json; charset=utf-8',
+            );
+          }
+          response.end(
+            JSON.stringify({
+              error: 'The message could not be sent. Please try again later.',
+            }),
+          );
+        },
+      );
+    });
+  },
+});
 const { version } = JSON.parse(
   readFileSync(fileURLToPath(new URL('package.json', import.meta.url)), 'utf8'),
 ) as { version: string };
 export default defineConfig({
-  plugins: [react()],
+  plugins: [contactDevelopmentPlugin(), react()],
   define: { __APP_VERSION__: JSON.stringify(version) },
   resolve: { alias: { '@': fileURLToPath(new URL('src', import.meta.url)) } },
   // No sourcemaps in the production bundle: they are copied verbatim into the

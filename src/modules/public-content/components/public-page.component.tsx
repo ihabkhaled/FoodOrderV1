@@ -1,3 +1,4 @@
+import { PublicContactFormContainer } from '../containers/public-contact-form.container';
 import type { PublicPageProps } from '../types/public-content.types';
 
 export function PublicPage({
@@ -68,37 +69,7 @@ export function PublicPage({
       )}
 
       {definition.id === 'contact' && (
-        <section className="public-contact" aria-labelledby="public-contact-heading">
-          <h2 id="public-contact-heading">{contactForm.heading}</h2>
-          <form className="public-contact__form" action="/api/contact" method="post">
-            <label>
-              {contactForm.name}
-              <input name="name" autoComplete="name" maxLength={120} required />
-            </label>
-            <label>
-              {contactForm.email}
-              <input
-                name="email"
-                type="email"
-                autoComplete="email"
-                maxLength={200}
-                required
-              />
-            </label>
-            <label>
-              {contactForm.message}
-              <textarea name="message" maxLength={5000} rows={7} required />
-            </label>
-            <label className="public-contact__honeypot" aria-hidden="true">
-              Website
-              <input name="website" tabIndex={-1} autoComplete="off" />
-            </label>
-            <p>{contactForm.privacy}</p>
-            <button className="public-button" type="submit">
-              {contactForm.submit}
-            </button>
-          </form>
-        </section>
+        <PublicContactFormContainer copy={contactForm} />
       )}
     </main>
   );

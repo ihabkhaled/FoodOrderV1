@@ -3,6 +3,7 @@ export { isPublicAdvertisingEligible } from './helpers/ad-eligibility.helper';
 export { buildPublicContentViewModel } from './helpers/build-public-content-view-model.helper';
 export { buildPublicPageMetadata } from './helpers/build-public-metadata.helper';
 export { getPublicContentCatalog } from './helpers/public-content-catalog.helper';
+export { getPublicPageCopy } from './helpers/public-content-catalog.helper';
 export { PublicContentRoutes } from './routes/public-content.routes';
 export {
   buildPublicContentPath,

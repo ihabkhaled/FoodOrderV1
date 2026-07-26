@@ -79,15 +79,34 @@ test('public policy, offline, and app documents deny advertising and indexing', 
 test('contact page exposes an accessible localized form without private-data prompts', async ({
   page,
 }) => {
+  await page.route('**/api/contact', async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({ ok: true }),
+    });
+  });
   await page.goto('/ja/contact');
 
   await expect(page.getByRole('heading', { name: 'メッセージを送る' })).toBeVisible();
   await expect(page.getByLabel('お名前')).toBeEditable();
   await expect(page.getByLabel('メールアドレス')).toHaveAttribute('type', 'email');
+  await expect(page.locator('input[name="subject"]')).toBeEditable();
   await expect(
     page.getByRole('textbox', { name: 'メッセージ', exact: true }),
   ).toHaveAttribute('maxlength', '5000');
   await expect(page.getByRole('button', { name: 'メッセージを送信' })).toBeVisible();
+
+  await page.getByLabel('お名前').fill('テスト利用者');
+  await page.getByLabel('メールアドレス').fill('test@example.com');
+  await page.locator('input[name="subject"]').fill('送信テスト');
+  await page
+    .getByRole('textbox', { name: 'メッセージ', exact: true })
+    .fill('フォーム送信の確認です。');
+  await page.getByRole('button', { name: 'メッセージを送信' }).click();
+  await expect(page).toHaveURL(/\/ja\/contact$/u);
+  await expect(page.getByRole('status')).toHaveText('メッセージを送信しました。');
+  await expect(page.getByRole('alert')).toHaveCount(0);
 });
 
 test('public discovery exposes a locale sitemap index and bounded RSS', async ({

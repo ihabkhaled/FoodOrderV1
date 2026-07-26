@@ -93,7 +93,7 @@ export function AppLayoutContainer() {
             {collapsed ? <ChevronRight /> : <ChevronLeft />}
           </button>
         </div>
-        <SidebarNav t={t} />
+        <SidebarNav t={t} locale={locale} />
         <div className="sidebar-footer">
           <div className="sidebar-controls">
             <NotificationCenter

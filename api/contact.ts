@@ -70,6 +70,7 @@ export default async function handler(request: ContactRequest, response: Contact
       : {};
   const name = requiredString(body.name, 120);
   const email = requiredString(body.email, 200);
+  const subject = requiredString(body.subject, 200);
   const message = requiredString(body.message, 5000);
   const website = typeof body.website === 'string' ? body.website.trim() : '';
 
@@ -78,12 +79,43 @@ export default async function handler(request: ContactRequest, response: Contact
     return;
   }
 
-  if (!name || !email || !message || !isValidEmail(email)) {
-    response.status(400).json({ error: 'Please provide a valid name, email, and message.' });
+  if (!name || !email || !subject || !message || !isValidEmail(email)) {
+    response
+      .status(400)
+      .json({ error: 'Please provide a valid name, email, subject, and message.' });
     return;
   }
 
   try {
+    if (
+      process.env.NODE_ENV !== 'production' &&
+      process.env.CONTACT_DEVELOPMENT_ETHEREAL === 'true'
+    ) {
+      const account = await nodemailer.createTestAccount();
+      const transporter = nodemailer.createTransport({
+        host: account.smtp.host,
+        port: account.smtp.port,
+        secure: account.smtp.secure,
+        auth: {
+          user: account.user,
+          pass: account.pass,
+        },
+      });
+      const info = await transporter.sendMail({
+        from: `FoodOrder contact <${account.user}>`,
+        to: account.user,
+        replyTo: email,
+        subject: `${subject} — ${name}`,
+        text: `From: ${name} <${email}>\n\n${message}`,
+      });
+      const previewUrl = nodemailer.getTestMessageUrl(info) || undefined;
+      console.info('Sent development contact message to Ethereal.', {
+        messageId: info.messageId,
+        previewUrl,
+      });
+      response.status(200).json({ ok: true, simulated: true, previewUrl });
+      return;
+    }
     const smtpHost = requiredString(process.env.CONTACT_SMTP_HOST, 255);
     const smtpUser = requiredString(process.env.CONTACT_SMTP_USER, 255);
     const smtpPass = requiredString(process.env.CONTACT_SMTP_PASS, 1000);
@@ -107,7 +139,7 @@ export default async function handler(request: ContactRequest, response: Contact
       from,
       to,
       replyTo: email,
-      subject: `New contact form message from ${name}`,
+      subject: `${subject} — ${name}`,
       text: `From: ${name} <${email}>\n\n${message}`,
     });
 

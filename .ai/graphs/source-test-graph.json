@@ -1116,6 +1116,11 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/public-content/containers/public-contact-form.container.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/public-content/containers/public-content.container.tsx",
       "tests": [],
       "relationship": "inferred"
@@ -1197,6 +1202,16 @@
     },
     {
       "source": "src/modules/public-content/helpers/public-content-catalog.helper.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/public-content/hooks/use-contact-form.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/public-content/hooks/use-contact-form.interfaces.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -1922,6 +1937,16 @@
     },
     {
       "source": "src/platform/environment/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/platform/network/contact-submission.adapter.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/platform/network/contact-submission.interfaces.ts",
       "tests": [],
       "relationship": "inferred"
     },

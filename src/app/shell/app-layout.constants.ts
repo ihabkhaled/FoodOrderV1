@@ -4,7 +4,7 @@ import { ORDERS_PATH } from '@/modules/orders';
 import { SETTINGS_PATH } from '@/modules/settings';
 import { SOCIAL_PATH } from '@/modules/social';
 import {
-  Home,
+  LayoutDashboard,
   ListOrdered,
   Monitor,
   Moon,
@@ -17,8 +17,12 @@ import type { MessageKey } from '@/shared/i18n';
 
 import { HOME_PATH } from '../router/app-route-paths.constants';
 
-export const NAV_ITEMS: { to: string; icon: typeof Home; key: MessageKey }[] = [
-  { to: HOME_PATH, icon: Home, key: 'dashboard' },
+export const NAV_ITEMS: {
+  to: string;
+  icon: typeof LayoutDashboard;
+  key: MessageKey;
+}[] = [
+  { to: HOME_PATH, icon: LayoutDashboard, key: 'dashboard' },
   { to: BUCKETS_PATH, icon: ShoppingBasket, key: 'buckets' },
   { to: SOCIAL_PATH, icon: Users, key: 'members' },
   { to: ORDERS_PATH, icon: ListOrdered, key: 'orders' },

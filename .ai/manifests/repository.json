@@ -200,8 +200,8 @@
     },
     {
       "path": "api/contact.ts",
-      "bytes": 4033,
-      "hash": "e3bbd208ab2b2d737cce63f3031216f49192c84fe217cb93d7e8bc4d13a75be7"
+      "bytes": 5108,
+      "hash": "628ecd9ebfa9c6840ebd29a644ce08ae6d398648e5450963c3d34efd919aae0a"
     },
     {
       "path": "architecture/README.md",
@@ -555,8 +555,8 @@
     },
     {
       "path": "docs/operations/public-discovery.md",
-      "bytes": 1423,
-      "hash": "2e636ad3c5ede0b585bbe8adbb0c4a2f86b9c6592c18d0242b32383356fd0d57"
+      "bytes": 1979,
+      "hash": "03ad03111d195211666f326ce4df5ff7de3c5c0f3a2d44fca5a35fbb275d3e5d"
     },
     {
       "path": "docs/operations/reference-parity-roadmap.md",
@@ -1175,8 +1175,8 @@
     },
     {
       "path": "release-notes/v1.7.2.md",
-      "bytes": 3016,
-      "hash": "bd4c9462f26874e1dd8f6101f854a496ff16ad2fcebb04768d286c3700dc80f7"
+      "bytes": 3342,
+      "hash": "536c0e082d97f7aeb25ed617ed60bd044873dd1bcddc82a80f0f6e5f926aacef"
     },
     {
       "path": "reports/phases/PHASE_00_report.md",
@@ -1375,8 +1375,8 @@
     },
     {
       "path": "scripts/public-content/public-content-build.shared.mjs",
-      "bytes": 23620,
-      "hash": "22ec643e154d5f3b1526b4205a7b5b2abb456b687408a15c88a98f452df2dabf"
+      "bytes": 24524,
+      "hash": "92cc4acc479583fed606090d292a7a0a422d6bb2a21bf26daf13b9abc73bb573"
     },
     {
       "path": "scripts/public-content/validate-public-content.mjs",
@@ -1525,18 +1525,18 @@
     },
     {
       "path": "src/app/shell/app-layout.constants.ts",
-      "bytes": 1089,
-      "hash": "0bf2a2062c35d844f9b318d24b4eefda13a4211997cdc5898f46e1c604ef81b0"
+      "bytes": 1129,
+      "hash": "a25adb612ce010a83ec496b7cd4f5cf83604bc9c3cdf5e6afc746388c34400f4"
     },
     {
       "path": "src/app/shell/app-layout.container.tsx",
-      "bytes": 4362,
-      "hash": "0a5d6513bec22e58f548dc2288876100e826adfd18a38e9d951829831b7d14d0"
+      "bytes": 4378,
+      "hash": "709d67c0cf383841c546686719d8446986a3cd88d173ce2c944d656296f35355"
     },
     {
       "path": "src/app/shell/auth-layout.container.tsx",
-      "bytes": 1345,
-      "hash": "c3fac6f5c3e3cf8a3fdce6a353eab440394a90e34c82bd9c62b743fdb04508a6"
+      "bytes": 1816,
+      "hash": "f40c0821d07dcfcb8bb92166b3c93bfd55a806ae437b44019b3d8df379adcad9"
     },
     {
       "path": "src/app/shell/components/bottom-nav/bottom-nav.component.tsx",
@@ -1545,8 +1545,8 @@
     },
     {
       "path": "src/app/shell/components/sidebar-nav/sidebar-nav.component.tsx",
-      "bytes": 889,
-      "hash": "5a0e868fa9cc082cba83ae703a6a5f980d3c94400e63e2ced37b1a05b4b9e3e7"
+      "bytes": 1714,
+      "hash": "2b83c9e78f5e8b54854a204e58da8b6315187a3a13a2e63cc6f004299366710f"
     },
     {
       "path": "src/app/shell/components/toast-viewport/toast-viewport.component.tsx",
@@ -2595,13 +2595,18 @@
     },
     {
       "path": "src/modules/public-content/components/public-page.component.tsx",
-      "bytes": 3620,
-      "hash": "a187479d079cdf8db867e0e7e93bd405f5da6766806d11fa51ec48e7e8ef00fd"
+      "bytes": 2566,
+      "hash": "4b113619371415d8b86429d8779b9a8c4456498be87f3bcbccc142bc2f1498a1"
     },
     {
       "path": "src/modules/public-content/components/public-system-page.component.tsx",
       "bytes": 504,
       "hash": "0cefcc03eeb1f6c804df2827d1b013368911b507ae99ca35429b167625c28fae"
+    },
+    {
+      "path": "src/modules/public-content/containers/public-contact-form.container.tsx",
+      "bytes": 1412,
+      "hash": "ae5a838931f9a8c327b202e433210a2f5dddcc5e21389b2711fe601933ba8cca"
     },
     {
       "path": "src/modules/public-content/containers/public-content.container.tsx",
@@ -2610,8 +2615,8 @@
     },
     {
       "path": "src/modules/public-content/content/contact-form.locales.json",
-      "bytes": 4362,
-      "hash": "337afbd29e33893238c671911018c6e9b95d03784cd5bb6ad15d3d0b36399147"
+      "bytes": 6289,
+      "hash": "3619a1c87f1438b070bedc761a746d2c6f7135f28bc9dfcd57c9cbae0d9e25c9"
     },
     {
       "path": "src/modules/public-content/content/locales/de.json",
@@ -2689,19 +2694,29 @@
       "hash": "ef9e7eaa5b994b445e1dc66055aa90b56abcfa414d284b4ea10d38326ef43537"
     },
     {
+      "path": "src/modules/public-content/hooks/use-contact-form.hook.ts",
+      "bytes": 822,
+      "hash": "f959cc5b8eb5b340ce40b885e6e66dab067854346d965d23a66606c2f53fa7f9"
+    },
+    {
+      "path": "src/modules/public-content/hooks/use-contact-form.interfaces.ts",
+      "bytes": 246,
+      "hash": "56883cca21d855ea4cd492ab938b8e4a00dbeedf238489b1f2b11ed1c9d30de0"
+    },
+    {
       "path": "src/modules/public-content/hooks/use-public-content.hook.ts",
       "bytes": 282,
       "hash": "9e2108aca6de2af93fc6bc0c640aa05302ed09014b4eb96d9a3da70850a9f38a"
     },
     {
       "path": "src/modules/public-content/index.ts",
-      "bytes": 881,
-      "hash": "77063cbe84147c2037e990f177a79e3edec2d9be0736c05e68c0e8c2bb038dc3"
+      "bytes": 958,
+      "hash": "66f2b484d6d884e4e0e3673868bdb67b73304e4fad4c4902da37a846b9e64c7b"
     },
     {
       "path": "src/modules/public-content/public-content.css",
-      "bytes": 14002,
-      "hash": "3110e0e1123be63d48ff8b5db854a69be4c83f0cf3f47642b239af2698e15990"
+      "bytes": 14160,
+      "hash": "369ab0db11ab604c92f968cee85b7fca0ad4d2b5c6d352d6e6335039e43dc305"
     },
     {
       "path": "src/modules/public-content/routes/public-content-route-registry.helper.ts",
@@ -2715,8 +2730,8 @@
     },
     {
       "path": "src/modules/public-content/types/public-content.types.ts",
-      "bytes": 4950,
-      "hash": "06f333ab6ee030a87903ea9d9edc0ec6d97a978c49ea527272e8f07c17fc17f1"
+      "bytes": 5081,
+      "hash": "63f4f2a425bfcc2fe2a66396e3b8e48b6d21c31b1b728fec41857823bf0eee00"
     },
     {
       "path": "src/modules/session-invites/components/guest-session-order/guest-session-order.component.tsx",
@@ -3290,8 +3305,8 @@
     },
     {
       "path": "src/packages/icons/index.ts",
-      "bytes": 676,
-      "hash": "377872ecc1de6e434b97d2575553840238580657f3af69e151f80d0bc520df47"
+      "bytes": 703,
+      "hash": "8573199e9db23ea385c7e2609b6bd3d3212d3cdc1f3ba44bae344647f48d54a1"
     },
     {
       "path": "src/packages/router/index.ts",
@@ -3414,9 +3429,19 @@
       "hash": "10aaf18e72267b7a97dd7297f8f014d56be99cda526001eca7647130d5f03855"
     },
     {
+      "path": "src/platform/network/contact-submission.adapter.ts",
+      "bytes": 761,
+      "hash": "2ae83f323da006829ec256970c86c496c843e061faafb9a1976b1170912e78dc"
+    },
+    {
+      "path": "src/platform/network/contact-submission.interfaces.ts",
+      "bytes": 101,
+      "hash": "d1810df2098dfd9b0d7c205469bce75d83c70c3e8521536f792a4435f2acbe7f"
+    },
+    {
       "path": "src/platform/network/index.ts",
-      "bytes": 112,
-      "hash": "500d69c1814163883ffb7255781690168e01b322d0061f2de9700a3fcbdc1d61"
+      "bytes": 258,
+      "hash": "77307df56c5b24472fc825bcdfd7fd8fb4811bd66f8f96478f4334e01fac4e8b"
     },
     {
       "path": "src/platform/network/network-status.adapter.ts",
@@ -3485,63 +3510,63 @@
     },
     {
       "path": "src/shared/i18n/locales/ar.json",
-      "bytes": 13271,
-      "hash": "de61b25b3cd32e311c0450abbe1d5e3fc1c292587ac8129af684353a028ebe1b"
+      "bytes": 13276,
+      "hash": "46e43881334784630cae7f24481dde25b1dc2df248cd155ac5d3c92e8d429683"
     },
     {
       "path": "src/shared/i18n/locales/de.json",
-      "bytes": 11383,
-      "hash": "91c80c8fa10fbb9dbe699c8f245b707be523d03348ac8dde917d0c98def94085"
+      "bytes": 11388,
+      "hash": "cf16fb31dd4e014fb74167cab6884b5d74c9149ffa64a3a1aff86310d3893546"
     },
     {
       "path": "src/shared/i18n/locales/en.json",
-      "bytes": 9892,
-      "hash": "8e4a0716bfc5d2d1eb1494359b33f9ddfb840e467989f0b5f07ace3f5be6bac0"
+      "bytes": 9897,
+      "hash": "1fd9e42713c1501115a05135009c1dba2797b8b0a6e42293dc1df8322b8ad523"
     },
     {
       "path": "src/shared/i18n/locales/es.json",
-      "bytes": 11192,
-      "hash": "4d2015a3e7998ae9cb04dda65c1d346079532ba35d7e8d5e9919b38527f5a4a5"
+      "bytes": 11202,
+      "hash": "51685dc52c4393f38498d771154aaacf92da6bbc89a507ce117981955d522839"
     },
     {
       "path": "src/shared/i18n/locales/fa.json",
-      "bytes": 14424,
-      "hash": "a691b84a22a0dae0a4249c973de8966becae24695400f6bed4f3367fcc6de249"
+      "bytes": 14430,
+      "hash": "7110c5029eccb6899a9dfadfd133a4b1687f1ac3923e904d1b4d2cf61c89a464"
     },
     {
       "path": "src/shared/i18n/locales/fr.json",
-      "bytes": 11704,
-      "hash": "a32752f5c4fc737eaa400b67ab6b4515e1b2468e19d13f1ea2d84196e163fe82"
+      "bytes": 11712,
+      "hash": "43c9b03a866ec02572e70af5a79e2f65447e4e8b7232a47304cf011692766647"
     },
     {
       "path": "src/shared/i18n/locales/hi.json",
-      "bytes": 18400,
-      "hash": "77f1f4c81a29ca476eaffd3d33b3b56a9b2452b59a78313744adf31ff27d0e4d"
+      "bytes": 18415,
+      "hash": "76d297f15576c410f98ff4ecbfeabab0ef5d2588bc79e30bc1408262494b6af9"
     },
     {
       "path": "src/shared/i18n/locales/it.json",
-      "bytes": 10911,
-      "hash": "7db28cce4fb18bc4e34ed77233e29ad33a7d860ecc244b94eb94160393a5846a"
+      "bytes": 10928,
+      "hash": "8218463d5114e7daaac988fd907fd442347a676c61dd0cd16b037c0840728f7a"
     },
     {
       "path": "src/shared/i18n/locales/ja.json",
-      "bytes": 12820,
-      "hash": "8ac2841c8cbd0887211493c62a4016081bd136871c0c9213650ace0d6b312d5e"
+      "bytes": 12832,
+      "hash": "e6cf3935719f797d6ced92f3236719b14b0f396dd675b58913edbb11da04c9cd"
     },
     {
       "path": "src/shared/i18n/locales/pt-BR.json",
-      "bytes": 10912,
-      "hash": "40726b7b7705350078844d367fece1b2f11ad3807ba3be5a22b1c024a3f2f7f3"
+      "bytes": 10911,
+      "hash": "c357768a2588c926c33818e5872f8825c24e54d296b649775a440f6686c7f981"
     },
     {
       "path": "src/shared/i18n/locales/th.json",
       "bytes": 18519,
-      "hash": "ebe60a4c458b3e6eaa907de07374ad3e3bbb4f5266b5dbf42286187e58c55e69"
+      "hash": "e343a2c989effe2b3e3e21d5061be9b2fb0abf8e0ccea82ae243ff2e6cfa892f"
     },
     {
       "path": "src/shared/i18n/locales/zh-CN.json",
-      "bytes": 9877,
-      "hash": "8930a1bc4cdc34465b23737ea58cb1c36f81dc6117447ba30f99fe06e39df195"
+      "bytes": 9883,
+      "hash": "48f1f90d011dbe6981bacacdd3a0ebe9832dd83ccb8fecb61eef530156e5fdc0"
     },
     {
       "path": "src/shared/i18n/message-catalog-validation.helper.ts",
@@ -3940,8 +3965,8 @@
     },
     {
       "path": "tests/e2e/public-content.spec.ts",
-      "bytes": 3731,
-      "hash": "eb043c18f3502493d74d84c79aeb5dc63e1feff6bed96d7fb0a209cec8c9b54d"
+      "bytes": 4624,
+      "hash": "740da3d44fed97661d02fc2d5fe9d8ce867d51ce77572d17dac3028807935deb"
     },
     {
       "path": "tests/e2e/responsive-navigation.spec.ts",
@@ -3970,8 +3995,8 @@
     },
     {
       "path": "tests/e2e/ui.spec.ts",
-      "bytes": 10363,
-      "hash": "508313bf44de7b36f8d5eb5d839dc8d3097f7efe123b34d60b63f1f12d7ea772"
+      "bytes": 10588,
+      "hash": "bf5b6f3f0d09b690540668e5f761576c2e7a239d959df21567966c330ed54197"
     },
     {
       "path": "tests/e2e/ux-polish.spec.ts",
@@ -4125,8 +4150,8 @@
     },
     {
       "path": "vite.config.ts",
-      "bytes": 1631,
-      "hash": "c3561e5dabe8f2b627b99d3094f4f583d7802e2772f7b40f7d4241ab0e0f5f53"
+      "bytes": 3726,
+      "hash": "f3cb4027cc1c55bcad1d0e6fb048328ec178ac1f5aab097dbb0e43be5569607c"
     },
     {
       "path": "vitest.config.ts",

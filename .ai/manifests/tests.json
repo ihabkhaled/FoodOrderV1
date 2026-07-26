@@ -167,8 +167,8 @@
     },
     {
       "path": "tests/e2e/public-content.spec.ts",
-      "bytes": 3731,
-      "hash": "eb043c18f3502493d74d84c79aeb5dc63e1feff6bed96d7fb0a209cec8c9b54d"
+      "bytes": 4624,
+      "hash": "740da3d44fed97661d02fc2d5fe9d8ce867d51ce77572d17dac3028807935deb"
     },
     {
       "path": "tests/e2e/responsive-navigation.spec.ts",
@@ -197,8 +197,8 @@
     },
     {
       "path": "tests/e2e/ui.spec.ts",
-      "bytes": 10363,
-      "hash": "508313bf44de7b36f8d5eb5d839dc8d3097f7efe123b34d60b63f1f12d7ea772"
+      "bytes": 10588,
+      "hash": "bf5b6f3f0d09b690540668e5f761576c2e7a239d959df21567966c330ed54197"
     },
     {
       "path": "tests/e2e/ux-polish.spec.ts",

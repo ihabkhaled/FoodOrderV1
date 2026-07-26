@@ -1,3 +1,9 @@
+import type { Locale } from '@/modules/data-access';
+import {
+  buildPublicContentPath,
+  getPublicPageCopy,
+} from '@/modules/public-content';
+import { Home, Mail } from '@/packages/icons';
 import { NavLink } from '@/packages/router';
 import type { MessageKey } from '@/shared/i18n';
 
@@ -6,10 +12,15 @@ import { NAV_ITEMS } from '../../app-layout.constants';
 
 interface SidebarNavProps {
   t: (key: MessageKey) => string;
+  locale: Locale;
 }
 
 /** Primary navigation links inside the desktop sidebar. */
-export function SidebarNav({ t }: SidebarNavProps) {
+export function SidebarNav({ t, locale }: SidebarNavProps) {
+  const contactPath = buildPublicContentPath('contact', locale);
+  const contactLabel = getPublicPageCopy('contact', locale).navigationLabel;
+  const welcomePath = buildPublicContentPath('home', locale);
+  const welcomeLabel = getPublicPageCopy('home', locale).navigationLabel;
   return (
     <nav className="sidebar-nav" aria-label={t('primaryNavigation')}>
       {NAV_ITEMS.map(({ to, icon: Icon, key }) => (
@@ -26,6 +37,14 @@ export function SidebarNav({ t }: SidebarNavProps) {
           <span className="label-collapsible">{t(key)}</span>
         </NavLink>
       ))}
+      <a className="nav-link" href={welcomePath} title={welcomeLabel}>
+        <Home />
+        <span className="label-collapsible">{welcomeLabel}</span>
+      </a>
+      <a className="nav-link" href={contactPath} title={contactLabel}>
+        <Mail />
+        <span className="label-collapsible">{contactLabel}</span>
+      </a>
     </nav>
   );
 }

@@ -484,6 +484,8 @@ body:has(.public-site) {
   color: var(--public-muted);
   font-size: 0.9rem;
 }
+.public-contact__success { color: var(--public-green) !important; font-weight: 700; }
+.public-contact__error { color: #dc2626 !important; font-weight: 700; }
 
 .public-contact__honeypot {
   position: absolute;
