@@ -30,7 +30,7 @@ export const PUBLIC_ROUTE_DEFINITIONS = [
   { id: 'group-ordering', slug: 'group-ordering', navigation: true, adEligible: true },
   { id: 'split-bill-and-receipts', slug: 'split-bill-and-receipts', navigation: true, adEligible: true },
   { id: 'faq', slug: 'faq', navigation: true, adEligible: true },
-  { id: 'contact', slug: 'contact', navigation: false, adEligible: false },
+  { id: 'contact', slug: 'contact', navigation: true, adEligible: false },
   { id: 'privacy', slug: 'privacy', navigation: false, adEligible: false },
   { id: 'terms', slug: 'terms', navigation: false, adEligible: false },
 ] as const satisfies readonly PublicRouteDefinition[];

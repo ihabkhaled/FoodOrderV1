@@ -575,8 +575,8 @@
     },
     {
       "path": "docs/operations/public-discovery.md",
-      "bytes": 2742,
-      "hash": "a7c0f8a373094a791458f95812a09881702e9ba2f0f1922cf2b2856423dc4de1"
+      "bytes": 2829,
+      "hash": "a17d32b730f78324b6c7de1cca6379bfe578dc3c1d1c9deea5ed0824a95878df"
     },
     {
       "path": "docs/operations/reference-parity-roadmap.md",
@@ -1195,8 +1195,8 @@
     },
     {
       "path": "release-notes/v1.7.2.md",
-      "bytes": 3472,
-      "hash": "fd790cb5f55c9086d21f10948dccd8dce447055e5a4f30b97dec6e19bc10cfe0"
+      "bytes": 3559,
+      "hash": "9da3f0c4f7d30a173c8d63bf167cfe08d75606b21bcc6fd40f9636e4bd14719d"
     },
     {
       "path": "reports/phases/PHASE_00_report.md",
@@ -2740,8 +2740,8 @@
     },
     {
       "path": "src/modules/public-content/routes/public-content-route-registry.helper.ts",
-      "bytes": 5800,
-      "hash": "fce28f8ef61f24be445909838aaa4bfccdc9eadc820c81d70e4a723fad0621ed"
+      "bytes": 5799,
+      "hash": "09e018809423adb5767b805ed9f44266d505b15836d7944d06410a4e0b8b336b"
     },
     {
       "path": "src/modules/public-content/routes/public-content.routes.tsx",

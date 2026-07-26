@@ -14,6 +14,7 @@ Every reviewed public page has a distinct locale URL and appears in the locale c
 sitemaps (120 URLs total). Production `robots.txt` allows every crawler to fetch public
 content and advertises `/sitemap.xml`. Authenticated and shared-user routes stay excluded
 because they can contain private account, order, invitation, and collaboration data.
+The localized Contact Us page is present in both desktop and mobile public navigation.
 
 The enhanced contact form submits in place (no navigation to `/api/contact`), includes a
 required subject, and reports exactly one localized success or error state. Email delivery is disabled unless
