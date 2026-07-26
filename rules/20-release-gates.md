@@ -110,3 +110,10 @@ requires a PR, resolved conversations, no force-push/deletion, and applies to
 administrators. Do not merge while the latest commit is still running, even when an
 earlier commit was fully green. See
 [../docs/operations/required-merge-gates.md](../docs/operations/required-merge-gates.md).
+
+## Post-merge release description gate
+
+After every pull-request merge, the green `main` workflow creates or updates the
+build-numbered GitHub release. Its description must combine the canonical version release
+notes with the merged PR title, body, number, and link resolved from the exact merge
+commit. Release creation and APK checksum upload are monitored before the change is done.

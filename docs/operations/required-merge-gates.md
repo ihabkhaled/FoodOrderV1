@@ -48,6 +48,11 @@ Before merge, confirm both required aggregates are `SUCCESS` and attached to the
 reported `headRefOid` or merge-group candidate. After merge, monitor the `main` push run
 until both aggregates complete; any red result is repaired through another pull request.
 
+The `main` push is not complete until the release job also succeeds. Verify the versioned
+GitHub release contains the canonical `release-notes/vX.Y.Z.md` content followed by the
+merged pull request title, body, number, and link, and verify the APK and checksum assets
+are attached.
+
 ## Incident lesson
 
 The v1.7.2 merge included a dashboard contrast test that found the desktop sidebar

@@ -32,3 +32,9 @@ When a rule fails, the code is in the wrong layer. Move or redesign it. Do not d
 Never merge from an older green SHA. `All Gates Green` and `Cross-Browser All Green`
 must both succeed on the current PR head or merge-queue candidate; pending, skipped,
 cancelled, and stale checks are failures. Follow `docs/operations/required-merge-gates.md`.
+
+## Post-merge releases
+
+After a PR merges, monitor the green `main` workflow through GitHub release creation.
+Release notes must include the canonical version notes plus the merged PR title, body,
+number, and link; generated one-line notes alone are insufficient.

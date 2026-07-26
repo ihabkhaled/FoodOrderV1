@@ -69,3 +69,11 @@ Every green non-main push may produce an immutable prerelease artifact `X.Y.Z-de
 ## Definition of done
 
 Root and Functions manifests and locks, Android source version, changelog, and release notes agree; the PR version exceeds the base; every generated artifact is uniquely versioned and checksum-verified; and all mandatory gates are green.
+
+## Pull-request-derived release notes
+
+A green push to `main` after a pull-request merge creates a build-numbered release. CI
+starts with `release-notes/vX.Y.Z.md`, resolves the PR associated with the exact merge
+commit, and appends its title, body, number, and link. Missing/generic notes or notes from
+an older PR are a release failure. Direct tags without an associated PR use the canonical
+version notes and remain tied to the exact tagged commit.

@@ -258,3 +258,10 @@ cancelled, stale, or successful checks from an older commit do not satisfy the g
 resolution, and administrator enforcement. Both workflows support `merge_group` so a
 queued merge is tested with the latest `main`. See
 [docs/operations/required-merge-gates.md](docs/operations/required-merge-gates.md).
+
+## Post-merge release notes
+
+Every pull request merged to `main` must finish the green main release workflow. The
+resulting build release combines the canonical `release-notes/vX.Y.Z.md` content with
+the merged PR title, body, number, and link. A blank, generic, or older-PR release
+description is not complete. Monitor release creation after merge and repair it if needed.

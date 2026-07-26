@@ -123,3 +123,13 @@ adopt/adapt/defer/skip, and use existing FoodOrderV1 owners.
   administrator enforcement so the post-merge push cannot reveal a preventable red gate.
 - **Matrix job names are a fragile branch-protection API.** Require the stable
   `Cross-Browser All Green` aggregate instead of three matrix-generated status names.
+
+### Security and release evidence pitfalls
+
+- **Custom Web Crypto sanitizers may be invisible to CodeQL.** The local auth gateway
+  stores a salted PBKDF2-SHA-256 hash and deletes clear text. Keep a persisted-storage
+  regression test and record that evidence in any false-positive disposition.
+- **Removing an advisory requires removing its exception too.** After forcing the patched
+  React Router core, delete EXC-6 plus npm-audit and Trivy allowlists so gates fail closed.
+- **An APK release can still have poor notes.** Main release automation must combine the
+  canonical version notes with the exact merged PR description and verify the final release.

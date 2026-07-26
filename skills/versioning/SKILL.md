@@ -117,3 +117,10 @@ Delete local APK artifacts after upload.
 - Branch prereleases are never relabeled as stable.
 - Native iOS validation is never claimed without macOS/Xcode evidence.
 - No hook bypass, force-push over gate failure, or release from a dirty tree.
+
+## Post-merge release verification
+
+For a merged pull request, do not stop at the merge commit. Monitor the `main` workflow
+until the build-numbered release exists, its APK/checksum are attached, and its description
+contains both `release-notes/vX.Y.Z.md` and the exact merged PR title, body, number, and
+link. Repair a missing or stale description with the same notes file before hand-off.
