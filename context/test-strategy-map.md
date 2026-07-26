@@ -45,3 +45,13 @@ live posture: [../docs/migration/test-coverage-status.md](../docs/migration/test
 No `.only`/`.skip` committed; deterministic suites; primary and cross-browser projects green;
 migrated code moves with its tests; flakes diagnosed via trace, screenshot, and retained
 video, never retried into green.
+
+## Merge-gate mapping
+
+- `All Gates Green` owns the primary Chromium desktop/mobile/tablet matrix and all core
+  repository quality jobs.
+- `Cross-Browser All Green` owns Firefox, desktop WebKit, and mobile Safari as one
+  required status.
+- Multi-project tests must not interact with desktop-only controls at a mobile viewport;
+  select a visible layout equivalent or explicitly set the intended viewport.
+- Both aggregate results must be green on the current commit; an earlier SHA is irrelevant.

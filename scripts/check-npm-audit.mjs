@@ -3,11 +3,7 @@
 import { spawnSync } from 'node:child_process';
 import process from 'node:process';
 
-const ALLOWED_ADVISORIES = new Set([
-  // EXC-6: React Router 7.18.1 is affected only in RSC mode, which this Vite SPA
-  // does not enable. Remove when a patched v7 release is available.
-  'GHSA-qwww-vcr4-c8h2',
-]);
+const ALLOWED_ADVISORIES = new Set();
 
 const audit = spawnSync(
   process.execPath,
@@ -82,6 +78,6 @@ const allowed = [...ALLOWED_ADVISORIES].filter((id) =>
 );
 process.stdout.write(
   allowed.length > 0
-    ? `npm audit passed with documented EXC-6 advisory: ${allowed.join(', ')}.\n`
+    ? `npm audit passed with documented advisory exceptions: ${allowed.join(', ')}.\n`
     : 'npm audit passed with no high or critical production findings.\n',
 );

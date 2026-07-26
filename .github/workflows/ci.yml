@@ -1,6 +1,7 @@
 name: CI
 
 on:
+  merge_group:
   pull_request:
   push:
     branches: [main]
@@ -496,6 +497,7 @@ jobs:
     timeout-minutes: 12
     permissions:
       contents: write
+      pull-requests: read
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v6
@@ -511,6 +513,33 @@ jobs:
             release_tag="v${{ needs.generate-apk.outputs.build_version }}"
           fi
           echo "tag=${release_tag}" >> "${GITHUB_OUTPUT}"
+      - name: Build release notes from merged pull request
+        id: release-notes
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          source_version="$(node -p "require('./package.json').version")"
+          notes_file="${RUNNER_TEMP}/release-notes.md"
+          if [[ -f "release-notes/v${source_version}.md" ]]; then
+            cp "release-notes/v${source_version}.md" "${notes_file}"
+          else
+            printf '# FoodOrderV1 v%s\n' "${source_version}" > "${notes_file}"
+          fi
+          pr_number="$(gh api "repos/${GITHUB_REPOSITORY}/commits/${GITHUB_SHA}/pulls" \
+            --jq 'map(select(.merged_at != null))[0].number // empty')"
+          if [[ -n "${pr_number}" ]]; then
+            pr_title="$(gh pr view "${pr_number}" --repo "${GITHUB_REPOSITORY}" --json title --jq '.title')"
+            pr_body="$(gh pr view "${pr_number}" --repo "${GITHUB_REPOSITORY}" --json body --jq '.body // ""')"
+            pr_url="$(gh pr view "${pr_number}" --repo "${GITHUB_REPOSITORY}" --json url --jq '.url')"
+            {
+              printf '\n## Merged pull request\n\n### #%s - %s\n\n' "${pr_number}" "${pr_title}"
+              printf '%s\n\n' "${pr_body:-No pull request description was provided.}"
+              printf '[View pull request](%s)\n' "${pr_url}"
+            } >> "${notes_file}"
+          fi
+          echo "path=${notes_file}" >> "${GITHUB_OUTPUT}"
       - name: Download generated APK
         uses: actions/download-artifact@v4
         with:
@@ -521,9 +550,12 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           RELEASE_TAG: ${{ steps.release.outputs.tag }}
+          RELEASE_NOTES: ${{ steps.release-notes.outputs.path }}
         run: |
-          gh release view "${RELEASE_TAG}" --repo "${GITHUB_REPOSITORY}" >/dev/null 2>&1 || \
-            gh release create "${RELEASE_TAG}" --repo "${GITHUB_REPOSITORY}" \
-              --target "${GITHUB_SHA}" --generate-notes
+          if gh release view "${RELEASE_TAG}" --repo "${GITHUB_REPOSITORY}" >/dev/null 2>&1; then
+            gh release edit "${RELEASE_TAG}" --repo "${GITHUB_REPOSITORY}" --notes-file "${RELEASE_NOTES}"
+          else
+            gh release create "${RELEASE_TAG}" --repo "${GITHUB_REPOSITORY}" --target "${GITHUB_SHA}" --notes-file "${RELEASE_NOTES}"
+          fi
           gh release upload "${RELEASE_TAG}" FoodOrderV1-*-debug.apk FoodOrderV1-*-debug.apk.sha256 \
             --repo "${GITHUB_REPOSITORY}" --clobber

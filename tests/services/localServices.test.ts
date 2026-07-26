@@ -30,6 +30,23 @@ describe('local integration', () => {
     const again = await auth.login('ihab@example.com', 'Password2');
     expect(again.id).toBe(user.id);
   });
+  it('persists only salted password hashes after registration', async () => {
+    const auth = new LocalAuthService();
+    await auth.register(
+      'Ihab Khaled',
+      'ihab@example.com',
+      'Password1',
+      defaults,
+    );
+
+    const persistedDatabase = localStorage.getItem('foodorder:v1:database');
+    expect(persistedDatabase).not.toBeNull();
+    expect(persistedDatabase).not.toContain('Password1');
+    expect(persistedDatabase).toContain('"passwordHash"');
+    expect(persistedDatabase).toContain('"passwordSalt"');
+    expect(persistedDatabase).not.toContain('"password":');
+  });
+
   it('rejects a password change when the current password is wrong', async () => {
     const auth = new LocalAuthService();
     const user = await auth.register('Ihab Khaled', 'ihab@example.com', 'Password1', defaults);

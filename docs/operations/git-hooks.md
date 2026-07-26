@@ -28,3 +28,11 @@ Example: `feat(sidebar): add collapsible rail`.
 
 `git commit --no-verify` and `git push --no-verify` are forbidden. Fix the hook or gate
 failure and run it again.
+
+## Required hosted merge gates
+
+Local hooks are necessary but insufficient. `main` branch protection requires
+`All Gates Green` and `Cross-Browser All Green` on the current PR head or merge-queue
+candidate, with strict up-to-date checks and administrator enforcement. Never merge from
+an older green SHA while the latest run is pending. Full settings and audit commands:
+[required-merge-gates.md](required-merge-gates.md).

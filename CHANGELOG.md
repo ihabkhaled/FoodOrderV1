@@ -5,6 +5,15 @@ The version bump level is decided by prompt density — see [rules/versioning.md
 
 <!-- releases -->
 
+## [1.7.3] - 2026-07-26
+
+- Start v1.7.3 development
+- Fixed the cross-project dashboard contrast test and added strict current-commit primary and cross-browser merge gates.
+- Patched React Router and removed the temporary EXC-6 audit/Trivy exception.
+- Updated compatible runtime, build, testing, and browser dependencies.
+- Added mandatory post-merge GitHub releases composed from canonical and merged-PR notes.
+
+
 ## [1.7.2] - 2026-07-26
 
 - Start v1.7.2 development

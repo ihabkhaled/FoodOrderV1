@@ -53,3 +53,11 @@ over them (journeys catch integration breaks); security lives in rules (emulator
 
 Targeted suites pass locally, the right level of new evidence exists, coverage on touched
 pure files is 100%, and `docs/migration/test-coverage-status.md` reflects any posture change.
+
+## Multi-project browser invariant
+
+A spec selected by more than one Playwright project must use controls visible in every
+selected layout. When the behavior intentionally exercises desktop-only chrome, set an
+explicit desktop viewport before navigation; otherwise locate the equivalent visible
+mobile/tablet control. A passing desktop run does not excuse a hidden-control timeout in
+Pixel, iPad, Firefox, WebKit, or mobile Safari. Both aggregate browser gates must pass.

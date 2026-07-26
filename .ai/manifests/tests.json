@@ -207,8 +207,8 @@
     },
     {
       "path": "tests/e2e/ui.spec.ts",
-      "bytes": 11407,
-      "hash": "4fe15e2f27640bc9bda622d027c927a7292fa6e1333a1db4da60016bccd4c192"
+      "bytes": 11469,
+      "hash": "d360927bf409a2540603d4b58df663a4f9c704d89143d941113fa5955f05d5c2"
     },
     {
       "path": "tests/e2e/ux-polish.spec.ts",
@@ -292,8 +292,8 @@
     },
     {
       "path": "tests/services/localServices.test.ts",
-      "bytes": 3274,
-      "hash": "577d6ea290e93730e676cdefe76728c69145bc7e8f7e6ff0f2f4e6e26311cb47"
+      "bytes": 3874,
+      "hash": "ca4eb6ad5a31b864302e628603fe6a795cfa7443df679213cac70d7adcb3870b"
     },
     {
       "path": "tests/services/paginationServices.test.ts",

@@ -83,3 +83,14 @@ macOS separately (see [platform-support.md](platform-support.md)).
 - `versionCode` is monotonic: never reused or decreased.
 - The released APK is built from the exact tagged commit; its SHA-256 is recorded.
 - No release with a red gate.
+
+## Release descriptions after pull-request merges
+
+The `release-apk` job resolves the pull request associated with the exact `main` merge
+commit. It copies `release-notes/vX.Y.Z.md`, appends a `Merged pull request` section with
+the PR title, body, number, and link, and passes that file to `gh release create` or
+`gh release edit`. The APK and SHA-256 are then uploaded to the same release.
+
+After every merge, verify the release exists and that its description matches the merged
+PR. A release that contains only generic generated notes, stale PR text, or no description
+is incomplete even when the APK uploaded successfully.

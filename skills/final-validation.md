@@ -87,3 +87,11 @@ check plus the Firefox, WebKit, and mobile Safari cross-browser matrix as succes
 
 Full ladder green in one uninterrupted pass on the final tree, checklist walked, honest
 report written (including anything conditional you did NOT need to run and why).
+
+## Hosted merge evidence
+
+After push, record the current PR head SHA and verify that `All Gates Green` and
+`Cross-Browser All Green` both report `success` for that SHA (or for the current
+merge-queue candidate). Individual matrix success from an older commit, a pending latest
+run, or a skipped/cancelled aggregate is not release evidence. Rebase/update first when
+strict protection reports the branch behind `main`.

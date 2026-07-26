@@ -51,3 +51,10 @@ and CI scanning.
 Rules tests prove both allowed and denied access for the changed paths; no new scanner
 findings; no secret material in the diff; the security reviewer checklist passes for
 auth/rules/privacy-touching changes.
+
+## Scanner disposition evidence
+
+A scanner alert is fixed in code or dismissed only when the reported flow is demonstrably
+non-sensitive. False-positive dismissal requires a concise GitHub comment naming the
+sanitizer/mitigation and a direct regression test. Package advisories are fixed by
+upgrading to a patched dependency and removing every temporary allowlist or exception.

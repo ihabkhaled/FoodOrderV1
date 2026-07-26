@@ -37,3 +37,16 @@ npm run knowledge:build:incremental && npm run knowledge:validate
 ```
 
 Use conditional Functions, rules, security, native, accessibility, visual, migration, performance, telemetry, and billing gates whenever the change touches them. Never bypass Husky or report an unexecuted gate as green.
+
+## Merge safety
+
+`All Gates Green` and `Cross-Browser All Green` must both succeed on the current PR
+head SHA or merge-queue candidate. Never accept pending, skipped, cancelled, stale, or
+older-commit evidence. See `docs/operations/required-merge-gates.md`.
+
+## Post-merge releases
+
+After every pull request merge to `main`, monitor the release job through completion and
+verify that the versioned GitHub release includes the canonical release notes plus the
+merged pull request title, description, number, and link. A successful merge without a
+descriptive release is incomplete.

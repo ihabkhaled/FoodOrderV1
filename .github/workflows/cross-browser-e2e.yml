@@ -1,6 +1,7 @@
 name: Cross-Browser End-to-End
 
 on:
+  merge_group:
   pull_request:
   push:
     branches: [main]
@@ -57,3 +58,20 @@ jobs:
             playwright-report/
             test-results/
           if-no-files-found: warn
+
+  cross-browser-all-green:
+    name: Cross-Browser All Green
+    if: always()
+    needs: cross-browser
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Require every cross-browser project
+        env:
+          CROSS_BROWSER_RESULT: ${{ needs.cross-browser.result }}
+        run: |
+          if [[ "${CROSS_BROWSER_RESULT}" != "success" ]]; then
+            echo "::error::Firefox, WebKit, and mobile Safari must all succeed."
+            exit 1
+          fi
+          echo "Firefox, WebKit, and mobile Safari are green."
