@@ -317,8 +317,8 @@
     },
     {
       "path": "tests/tooling/firebase-deployment-gate.test.ts",
-      "bytes": 668,
-      "hash": "0897957982356d9c60823bce456fe3a960ee9458839184e27dbc9afa09f97280"
+      "bytes": 669,
+      "hash": "335fca77d8f76a01b2979189c5c1e7cb1dfd3ceb17de74282856b29280a4e1d3"
     },
     {
       "path": "tests/tooling/versioning-core.test.mjs",

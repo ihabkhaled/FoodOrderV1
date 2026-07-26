@@ -705,8 +705,8 @@
     },
     {
       "path": "functions/lib/functions/src/globalOptions.js",
-      "bytes": 933,
-      "hash": "3755a46efe777147003bc41dd452f5ccc042da80258dce45595324bb36da4153"
+      "bytes": 954,
+      "hash": "6f7e6134b6e8e2da37dcaf90c280dfe22017d1bacebe5cca78ad34367e7b9c12"
     },
     {
       "path": "functions/lib/functions/src/index.js",
@@ -4170,8 +4170,8 @@
     },
     {
       "path": "tests/tooling/firebase-deployment-gate.test.ts",
-      "bytes": 668,
-      "hash": "0897957982356d9c60823bce456fe3a960ee9458839184e27dbc9afa09f97280"
+      "bytes": 669,
+      "hash": "335fca77d8f76a01b2979189c5c1e7cb1dfd3ceb17de74282856b29280a4e1d3"
     },
     {
       "path": "tests/tooling/versioning-core.test.mjs",
