@@ -5,6 +5,13 @@ The version bump level is decided by prompt density — see [rules/versioning.md
 
 <!-- releases -->
 
+## [1.7.4] - 2026-07-26
+
+- Start v1.7.4 development
+- Kept 43 Firebase Functions below the regional CPU ceiling with `maxInstances: 2`.
+- Retried transient 429/503 callable smoke responses with bounded backoff.
+
+
 ## [1.7.3] - 2026-07-26
 
 - Start v1.7.3 development

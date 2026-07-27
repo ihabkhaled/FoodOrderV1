@@ -35,11 +35,11 @@ fails). This project's quota is **hard-capped at 20,000 milli vCPU in `europe-we
 self-raised**: the GCP console routes any increase through a **sales/support request** ("contact
 sales"), so raising it is not a viable unblock.
 
-**Resolution (in code).** `functions/src/globalOptions.ts` sets `maxInstances: 3` for all ~37 functions
+**Resolution (in code).** `functions/src/globalOptions.ts` sets `maxInstances: 2` for all 43 functions
 via `setGlobalOptions`. Because the quota scales with `maxInstances`, this keeps the combined reservation
-(~37 × 3 × per-instance CPU) well under 20,000 while every function still serves ~240 concurrent
-invocations (`maxInstances 3 × concurrency 80`) before scaling out — ample for this app. Empirically,
-lowering `maxInstances` from the Firebase default to 10 cut deploy failures 17 → 4; 3 removes the rest.
+(43 × 2 × per-instance CPU) under 20,000 while every function still serves about 160 concurrent
+invocations (`maxInstances 2 × concurrency 80`) before rejecting excess load. The prior value of 3
+became unsafe when the exported function count grew from about 37 to 43.
 **If the CPU quota is ever raised via sales, bump `maxInstances` back up in `globalOptions.ts`.**
 
 **Deploy batching (kept).** `scripts/deploy-functions-batched.mjs` (wired into the Firebase Deployment
@@ -50,7 +50,7 @@ a few Cloud Run revisions roll out at a time.
 **CI safety net.** If the *only* remaining failures are the specific `Quota exceeded for total allowable
 CPU` error, the deploy step exits 0 with a loud `::warning::` listing the pending functions, so the
 pipeline is not permanently red on an external quota. **Any other error** (permissions, Eventarc, build,
-config, rules) still fails the gate hard. With `maxInstances: 3` there should be no pending functions and
+config, rules) still fails the gate hard. With `maxInstances: 2` there should be no pending functions and
 no warning.
 
 ## Sequence to unblock
@@ -59,6 +59,6 @@ no warning.
 2. Run **Firebase Eventarc IAM Bootstrap** (push to main or `workflow_dispatch`) — now grants the
    Eventarc service-agent role.
 3. Keep `maxInstances` low enough that `~functions × maxInstances × per-instance CPU` stays under the
-   20,000 milli vCPU quota (currently `maxInstances: 3`). Only raise it if the quota is increased.
+   20,000 milli vCPU quota (currently `maxInstances: 2`). Only raise it if the quota is increased.
 4. Push to main (or `workflow_dispatch`) — the Firebase Deployment Gate runs the batched deploy.
 5. Remove the temporary `projectIamAdmin` grant.

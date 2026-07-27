@@ -7,14 +7,14 @@ import { setGlobalOptions } from 'firebase-functions/v2';
  * every Cloud Run service's reservable CPU (cpu x maxInstances). This project's
  * quota is capped at 20,000 milli vCPU and cannot be self-raised (Google gates
  * increases behind a sales request), so maxInstances is the lever that keeps all
- * ~37 functions' combined reservation under the ceiling at deploy time. At 3,
- * with concurrency 80, each function still serves ~240 concurrent invocations
- * before scaling out. Per-function options still override these defaults; raise
- * maxInstances here if the CPU quota is ever increased.
+ * 43 functions' combined reservation under the ceiling at deploy time. At 2,
+ * their fractional CPU reservation leaves quota headroom, while concurrency 80
+ * still serves about 160 concurrent invocations per function before rejecting
+ * excess load. Raise maxInstances only after the regional CPU quota increases.
  */
 setGlobalOptions({
     region: 'europe-west1',
-    maxInstances: 3,
+    maxInstances: 2,
     memory: '256MiB',
     concurrency: 80,
 });

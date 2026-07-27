@@ -40,8 +40,8 @@
     },
     {
       "path": ".github/workflows/ci.yml",
-      "bytes": 18526,
-      "hash": "a121d74d4ad0ce89702c4a702ffd64f6e887e44ee3fd476308f1124db89f4b87"
+      "bytes": 19213,
+      "hash": "1ecf7a771e18a44a1d32de0feada436a113c6c0095f8cd74c6eaf2aefe8d79cf"
     },
     {
       "path": ".github/workflows/cross-browser-e2e.yml",
@@ -100,8 +100,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 3460,
-      "hash": "76a258e62e2eff55f0288e90a1532287a70e4f17212a4db3df36f3a41a91ddca"
+      "bytes": 3673,
+      "hash": "da924c9c496fb993d65dcc5af2fa07b81eb1f5c1653d882e2b60637f03584640"
     },
     {
       "path": "CLAUDE.md",
@@ -550,8 +550,8 @@
     },
     {
       "path": "docs/operations/functions-deploy-blockers.md",
-      "bytes": 3848,
-      "hash": "7807bd4f53c85d85c115cd55a074a7a61fbb27a3fb323af7b7db045f62ac1b60"
+      "bytes": 3808,
+      "hash": "0d9b1c5e8c148975f504c8bef82043151f9bbef574825a7f87c11157901dd47b"
     },
     {
       "path": "docs/operations/git-hooks.md",
@@ -705,8 +705,8 @@
     },
     {
       "path": "functions/lib/functions/src/globalOptions.js",
-      "bytes": 933,
-      "hash": "3755a46efe777147003bc41dd452f5ccc042da80258dce45595324bb36da4153"
+      "bytes": 954,
+      "hash": "6f7e6134b6e8e2da37dcaf90c280dfe22017d1bacebe5cca78ad34367e7b9c12"
     },
     {
       "path": "functions/lib/functions/src/index.js",
@@ -791,12 +791,12 @@
     {
       "path": "functions/package-lock.json",
       "bytes": 112755,
-      "hash": "276837a21deb4c4d0ddc56f89d8d47654c60b2dffc64fbb28bde46805038538f"
+      "hash": "f93dd6edf1f22de56e7e46cc5dbdf37f99f68b40839f1ef4f19b0c1238656f9e"
     },
     {
       "path": "functions/package.json",
       "bytes": 533,
-      "hash": "cf52ce060e71fa8c5d05f6bbdebb855518d36afaa98f6b07e7e9e930c866ac2d"
+      "hash": "4d8b53ed1a5e254d7ddbc7536150199aa67089d143a4700fb0fedbfc104c3864"
     },
     {
       "path": "functions/src/entry.ts",
@@ -805,8 +805,8 @@
     },
     {
       "path": "functions/src/globalOptions.ts",
-      "bytes": 926,
-      "hash": "dbd2c23b60222d0ede2f14bd75770943cc2033628677ed6067a6a47dcaf49f58"
+      "bytes": 947,
+      "hash": "27a0eff33d0d4a05b143bffe7e402d6fb5476aab0e851490fe90b7eb3fdb214f"
     },
     {
       "path": "functions/src/index.ts",
@@ -1071,12 +1071,12 @@
     {
       "path": "package-lock.json",
       "bytes": 703525,
-      "hash": "eb272698a1a338cd24fbe02508799dc990761f29e4c8c52a3546f32bee1f2aeb"
+      "hash": "b7d3cdb5cd1c294c8ca3b2aedfb15eb548ba4e09c231998797deb07d4316d469"
     },
     {
       "path": "package.json",
       "bytes": 7924,
-      "hash": "bebe3fa440e0f010e54688e58166ca1673f8f3cca4bfe6588e1f0393191e5c17"
+      "hash": "560a69cacc46a3679e301fbab8544428145e0aebef57f1e9d736fe95749e29ce"
     },
     {
       "path": "packages/group-order-engine/src/index.ts",
@@ -1202,6 +1202,11 @@
       "path": "release-notes/v1.7.3.md",
       "bytes": 1312,
       "hash": "2fcdc88640dd552e086be78f90e83c86f334082d55f682b4a2861002b0a00329"
+    },
+    {
+      "path": "release-notes/v1.7.4.md",
+      "bytes": 632,
+      "hash": "7a588f680890f94a65ec075629f93ddf51df1826b6f4853b9e2246907313a188"
     },
     {
       "path": "reports/phases/PHASE_00_report.md",
@@ -4162,6 +4167,11 @@
       "path": "tests/setup.ts",
       "bytes": 1491,
       "hash": "18c74fe95cfe476421e85f7f0ec79ad76c4093ffd16cf600093f38eaad7644ca"
+    },
+    {
+      "path": "tests/tooling/firebase-deployment-gate.test.ts",
+      "bytes": 669,
+      "hash": "335fca77d8f76a01b2979189c5c1e7cb1dfd3ceb17de74282856b29280a4e1d3"
     },
     {
       "path": "tests/tooling/versioning-core.test.mjs",
