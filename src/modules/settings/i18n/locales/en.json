@@ -10,5 +10,13 @@
   "analyticsOperationalDescription": "Records privacy-safe reliability failures and performance diagnostics.",
   "analyticsProductDescription": "Also records privacy-safe acquisition, activation, and feature usage events.",
   "analyticsMarketingDescription": "Also records privacy-safe upgrade prompts and subscription funnel events.",
-  "analyticsConsentSaved": "Analytics preference saved."
+  "analyticsConsentSaved": "Analytics preference saved.",
+  "preferencesSection": "Preferences",
+  "preferencesSectionHint": "Name, language, theme, and currency.",
+  "privacySectionHint": "Control which anonymous diagnostics are recorded.",
+  "securitySection": "Password and security",
+  "securitySectionHint": "Update the password you sign in with.",
+  "accountSection": "Data and account",
+  "accountSectionHint": "Export your data or delete your account.",
+  "preferencesSaved": "Preferences saved."
 }

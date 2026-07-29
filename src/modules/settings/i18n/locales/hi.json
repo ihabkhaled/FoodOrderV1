@@ -10,5 +10,13 @@
   "analyticsOperationalDescription": "गोपनीयता-सुरक्षित विश्वसनीयता विफलताएँ और प्रदर्शन डायग्नोस्टिक्स रिकॉर्ड करता है।",
   "analyticsProductDescription": "साथ ही गोपनीयता-सुरक्षित अधिग्रहण, सक्रियण और फ़ीचर-उपयोग इवेंट भी रिकॉर्ड करता है।",
   "analyticsMarketingDescription": "साथ ही गोपनीयता-सुरक्षित अपग्रेड संकेत और सदस्यता फ़नल इवेंट भी रिकॉर्ड करता है।",
-  "analyticsConsentSaved": "एनालिटिक्स प्राथमिकता सहेजी गई।"
+  "analyticsConsentSaved": "एनालिटिक्स प्राथमिकता सहेजी गई।",
+  "preferencesSection": "प्राथमिकताएँ",
+  "preferencesSectionHint": "नाम, भाषा, थीम और मुद्रा।",
+  "privacySectionHint": "नियंत्रित करें कि कौन से अनाम निदान रिकॉर्ड होते हैं।",
+  "securitySection": "पासवर्ड और सुरक्षा",
+  "securitySectionHint": "साइन इन करने वाला पासवर्ड अपडेट करें।",
+  "accountSection": "डेटा और खाता",
+  "accountSectionHint": "अपना डेटा निर्यात करें या खाता हटाएँ।",
+  "preferencesSaved": "प्राथमिकताएँ सहेजी गईं।"
 }

@@ -10,5 +10,13 @@
   "analyticsOperationalDescription": "Erfasst datenschutzfreundlich Zuverlässigkeitsfehler und Leistungsdiagnosen.",
   "analyticsProductDescription": "Erfasst zusätzlich datenschutzfreundlich Akquise-, Aktivierungs- und Funktionsnutzungsereignisse.",
   "analyticsMarketingDescription": "Erfasst zusätzlich datenschutzfreundlich Upgrade-Hinweise und Ereignisse im Abonnementprozess.",
-  "analyticsConsentSaved": "Analyseeinstellung gespeichert."
+  "analyticsConsentSaved": "Analyseeinstellung gespeichert.",
+  "preferencesSection": "Präferenzen",
+  "preferencesSectionHint": "Name, Sprache, Design und Währung.",
+  "privacySectionHint": "Lege fest, welche anonymen Diagnosen aufgezeichnet werden.",
+  "securitySection": "Passwort und Sicherheit",
+  "securitySectionHint": "Aktualisiere das Passwort für deine Anmeldung.",
+  "accountSection": "Daten und Konto",
+  "accountSectionHint": "Exportiere deine Daten oder lösche dein Konto.",
+  "preferencesSaved": "Präferenzen gespeichert."
 }

@@ -10,5 +10,13 @@
   "analyticsOperationalDescription": "Registra fallos de fiabilidad y diagnósticos de rendimiento respetuosos con la privacidad.",
   "analyticsProductDescription": "También registra eventos de adquisición, activación y uso de funciones respetuosos con la privacidad.",
   "analyticsMarketingDescription": "También registra avisos de mejoras y eventos del proceso de suscripción respetuosos con la privacidad.",
-  "analyticsConsentSaved": "Preferencia de analítica guardada."
+  "analyticsConsentSaved": "Preferencia de analítica guardada.",
+  "preferencesSection": "Preferencias",
+  "preferencesSectionHint": "Nombre, idioma, tema y moneda.",
+  "privacySectionHint": "Controla qué diagnósticos anónimos se registran.",
+  "securitySection": "Contraseña y seguridad",
+  "securitySectionHint": "Actualiza la contraseña con la que inicias sesión.",
+  "accountSection": "Datos y cuenta",
+  "accountSectionHint": "Exporta tus datos o elimina tu cuenta.",
+  "preferencesSaved": "Preferencias guardadas."
 }

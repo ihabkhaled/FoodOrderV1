@@ -10,5 +10,13 @@
   "analyticsOperationalDescription": "Registra errori di affidabilità e diagnostica delle prestazioni nel rispetto della privacy.",
   "analyticsProductDescription": "Registra anche eventi di acquisizione, attivazione e utilizzo delle funzionalità nel rispetto della privacy.",
   "analyticsMarketingDescription": "Registra anche promemoria di upgrade ed eventi del funnel di abbonamento nel rispetto della privacy.",
-  "analyticsConsentSaved": "Preferenza di analisi salvata."
+  "analyticsConsentSaved": "Preferenza di analisi salvata.",
+  "preferencesSection": "Preferenze",
+  "preferencesSectionHint": "Nome, lingua, tema e valuta.",
+  "privacySectionHint": "Controlla quali diagnostiche anonime vengono registrate.",
+  "securitySection": "Password e sicurezza",
+  "securitySectionHint": "Aggiorna la password con cui accedi.",
+  "accountSection": "Dati e account",
+  "accountSectionHint": "Esporta i tuoi dati o elimina il tuo account.",
+  "preferencesSaved": "Preferenze salvate."
 }

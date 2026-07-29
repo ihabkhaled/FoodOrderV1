@@ -10,5 +10,13 @@
   "analyticsOperationalDescription": "プライバシーに配慮した信頼性の障害情報とパフォーマンス診断を記録します。",
   "analyticsProductDescription": "さらに、プライバシーに配慮した登録・利用開始・機能利用のイベントも記録します。",
   "analyticsMarketingDescription": "さらに、プライバシーに配慮したアップグレード案内とサブスクリプション導線のイベントも記録します。",
-  "analyticsConsentSaved": "分析の設定を保存しました。"
+  "analyticsConsentSaved": "分析の設定を保存しました。",
+  "preferencesSection": "環境設定",
+  "preferencesSectionHint": "名前、言語、テーマ、通貨。",
+  "privacySectionHint": "記録される匿名診断を管理します。",
+  "securitySection": "パスワードとセキュリティ",
+  "securitySectionHint": "ログインに使うパスワードを更新します。",
+  "accountSection": "データとアカウント",
+  "accountSectionHint": "データのエクスポートやアカウントの削除。",
+  "preferencesSaved": "環境設定を保存しました。"
 }

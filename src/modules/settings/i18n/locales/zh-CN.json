@@ -10,5 +10,13 @@
   "analyticsOperationalDescription": "记录保护隐私的可靠性故障和性能诊断信息。",
   "analyticsProductDescription": "同时记录保护隐私的获客、激活和功能使用事件。",
   "analyticsMarketingDescription": "同时记录保护隐私的升级提示和订阅流程事件。",
-  "analyticsConsentSaved": "分析偏好已保存。"
+  "analyticsConsentSaved": "分析偏好已保存。",
+  "preferencesSection": "偏好设置",
+  "preferencesSectionHint": "姓名、语言、主题和货币。",
+  "privacySectionHint": "控制记录哪些匿名诊断信息。",
+  "securitySection": "密码与安全",
+  "securitySectionHint": "更新用于登录的密码。",
+  "accountSection": "数据与账户",
+  "accountSectionHint": "导出您的数据或删除账户。",
+  "preferencesSaved": "偏好设置已保存。"
 }

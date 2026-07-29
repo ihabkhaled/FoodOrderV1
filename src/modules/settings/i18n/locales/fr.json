@@ -10,5 +10,13 @@
   "analyticsOperationalDescription": "Enregistre les échecs de fiabilité et les diagnostics de performance, dans le respect de la vie privée.",
   "analyticsProductDescription": "Enregistre également, dans le respect de la vie privée, les événements d'acquisition, d'activation et d'utilisation des fonctionnalités.",
   "analyticsMarketingDescription": "Enregistre également, dans le respect de la vie privée, les invitations à la mise à niveau et les événements du parcours d'abonnement.",
-  "analyticsConsentSaved": "Préférence d'analyse enregistrée."
+  "analyticsConsentSaved": "Préférence d'analyse enregistrée.",
+  "preferencesSection": "Préférences",
+  "preferencesSectionHint": "Nom, langue, thème et devise.",
+  "privacySectionHint": "Contrôlez quels diagnostics anonymes sont enregistrés.",
+  "securitySection": "Mot de passe et sécurité",
+  "securitySectionHint": "Mettez à jour le mot de passe de connexion.",
+  "accountSection": "Données et compte",
+  "accountSectionHint": "Exportez vos données ou supprimez votre compte.",
+  "preferencesSaved": "Préférences enregistrées."
 }

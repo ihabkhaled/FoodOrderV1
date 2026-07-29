@@ -10,5 +10,13 @@
   "analyticsOperationalDescription": "يسجل أعطال الاعتمادية وقياسات الأداء بصورة آمنة للخصوصية.",
   "analyticsProductDescription": "يسجل أيضًا بيانات آمنة عن الانضمام والتفعيل واستخدام الخصائص.",
   "analyticsMarketingDescription": "يسجل أيضًا عرض خيارات الترقية ومسار الاشتراك بصورة آمنة للخصوصية.",
-  "analyticsConsentSaved": "تم حفظ تفضيل التحليلات."
+  "analyticsConsentSaved": "تم حفظ تفضيل التحليلات.",
+  "preferencesSection": "التفضيلات",
+  "preferencesSectionHint": "الاسم واللغة والمظهر والعملة.",
+  "privacySectionHint": "تحكم في التشخيصات المجهولة التي يتم تسجيلها.",
+  "securitySection": "كلمة المرور والأمان",
+  "securitySectionHint": "حدّث كلمة المرور التي تسجل الدخول بها.",
+  "accountSection": "البيانات والحساب",
+  "accountSectionHint": "صدّر بياناتك أو احذف حسابك.",
+  "preferencesSaved": "تم حفظ التفضيلات."
 }
