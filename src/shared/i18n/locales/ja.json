@@ -211,7 +211,6 @@
   "ordersEmptyHint": "バケットを選んで最初の注文を作成しましょう。",
   "each": "1点あたり",
   "duplicate": "複製",
-  "copySuffix": "コピー",
   "bucketRevision": "リストのバージョン",
   "collapseSidebar": "サイドバーを折りたたむ",
   "expandSidebar": "サイドバーを展開",
@@ -252,5 +251,6 @@
   "deleteAccountReauthConfirm": "アカウントを完全に削除",
   "deletingAccount": "アカウントを削除中…",
   "deleteAccountWrongCredentials": "メールアドレスまたはパスワードが正しくありません。",
-  "continueAction": "続行"
+  "continueAction": "続行",
+  "startOrderRound": "ラウンドを開始"
 }

@@ -1,5 +1,6 @@
 export { orderSessionsRoutes } from './routes/order-sessions.routes';
 export {
+  buildOrderSessionCreateRoute,
   buildOrderSessionDetailsRoute,
   ORDER_SESSION_DETAILS_PATH,
   ORDER_SESSION_NEW_PATH,

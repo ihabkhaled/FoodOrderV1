@@ -211,7 +211,6 @@
   "ordersEmptyHint": "Scegli un bucket per creare il tuo primo ordine.",
   "each": "cad.",
   "duplicate": "Duplica",
-  "copySuffix": "copia",
   "bucketRevision": "Versione della lista",
   "collapseSidebar": "Comprimi barra laterale",
   "expandSidebar": "Espandi barra laterale",
@@ -252,5 +251,6 @@
   "deleteAccountReauthConfirm": "Elimina definitivamente l’account",
   "deletingAccount": "Eliminazione account…",
   "deleteAccountWrongCredentials": "Email o password non validi.",
-  "continueAction": "Continua"
+  "continueAction": "Continua",
+  "startOrderRound": "Avvia un giro"
 }

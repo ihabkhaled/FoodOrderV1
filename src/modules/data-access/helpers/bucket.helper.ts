@@ -63,11 +63,13 @@ export const normalizeBucketItems = (items: BucketDraft['items']): BucketItem[] 
   return normalized;
 };
 
-export const buildDuplicateBucketDraft = (
-  bucket: Bucket,
-  copySuffix: string,
-): BucketDraft => ({
-  title: `${bucket.title} (${copySuffix})`.slice(0, 60),
+/**
+ * Copies a bucket into a new editable draft. The title is preserved exactly:
+ * a bucket is a reusable template, so a duplicate is another template of the
+ * same meal, not a differently named artefact.
+ */
+export const buildDuplicateBucketDraft = (bucket: Bucket): BucketDraft => ({
+  title: bucket.title.slice(0, 60),
   description: bucket.description,
   currency: bucket.currency,
   pricingPolicy: {

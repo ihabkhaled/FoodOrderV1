@@ -1,6 +1,8 @@
 import type { Order, OrderStatus } from '@/modules/data-access';
 import { canTransitionOrder } from '@/modules/data-access';
-import { Check, Copy, X } from '@/packages/icons';
+import { buildOrderSessionCreateRoute } from '@/modules/order-sessions';
+import { Check, Copy, Repeat, X } from '@/packages/icons';
+import { Link } from '@/packages/router';
 import type { MessageKey } from '@/shared/i18n';
 
 interface OrderActionBarProps {
@@ -26,6 +28,15 @@ export function OrderActionBar({
         <Copy />
         {translate('repeatOrder')}
       </button>
+      {order.participants ? (
+        <Link
+          className="button secondary"
+          to={buildOrderSessionCreateRoute(order.bucketId)}
+        >
+          <Repeat />
+          {translate('startOrderRound')}
+        </Link>
+      ) : null}
       {canPlace ? (
         <button
           className="button"

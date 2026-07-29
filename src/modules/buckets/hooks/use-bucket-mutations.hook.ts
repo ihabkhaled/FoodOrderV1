@@ -44,7 +44,7 @@ export const useBucketMutations = ({
       try {
         const created = await dataService.createBucket(
           user,
-          buildDuplicateBucketDraft(bucket, t('copySuffix')),
+          buildDuplicateBucketDraft(bucket),
         );
         telemetryRecorder.record(ANALYTICS_EVENT.firstMenuCreated, {
           itemCount: created.items.length,

@@ -36,6 +36,7 @@ export {
   ReceiptText,
   RefreshCcw,
   RefreshCw,
+  Repeat,
   Save,
   Search,
   Settings,

@@ -211,7 +211,6 @@
   "ordersEmptyHint": "Elige una lista para crear tu primer pedido.",
   "each": "cada uno",
   "duplicate": "Duplicar",
-  "copySuffix": "copia",
   "bucketRevision": "Versión de la lista",
   "collapseSidebar": "Contraer barra lateral",
   "expandSidebar": "Expandir barra lateral",
@@ -252,5 +251,6 @@
   "deleteAccountReauthConfirm": "Eliminar la cuenta de forma permanente",
   "deletingAccount": "Eliminando la cuenta…",
   "deleteAccountWrongCredentials": "Correo o contraseña no válidos.",
-  "continueAction": "Continuar"
+  "continueAction": "Continuar",
+  "startOrderRound": "Iniciar ronda"
 }

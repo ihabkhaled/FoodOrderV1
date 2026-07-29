@@ -26,18 +26,37 @@ test.describe('settings hub and subpages', () => {
     ).toBeVisible();
 
     const sections = [
-      { link: 'Preferences', heading: 'Preferences' },
-      { link: 'Analytics and privacy', heading: 'Analytics and privacy' },
-      { link: 'Password and security', heading: 'Change password' },
-      { link: 'Data and account', heading: 'Data and account' },
+      {
+        link: 'Preferences',
+        heading: 'Preferences',
+        url: /\/settings\/preferences$/u,
+      },
+      {
+        link: 'Analytics and privacy',
+        heading: 'Analytics and privacy',
+        url: /\/settings\/privacy$/u,
+      },
+      {
+        link: 'Password and security',
+        heading: 'Change password',
+        url: /\/settings\/security$/u,
+      },
+      {
+        link: 'Data and account',
+        heading: 'Data and account',
+        url: /\/settings\/account$/u,
+      },
     ];
 
     for (const section of sections) {
       await page.getByRole('link', { name: section.link }).click();
+      await page.waitForURL(section.url);
       await expect(
         page.getByRole('heading', { level: 1, name: section.heading }),
       ).toBeVisible();
+
       await page.getByRole('link', { name: 'Back' }).click();
+      await page.waitForURL(/\/settings$/u);
       await expect(
         page.getByRole('heading', { level: 1, name: 'Settings' }),
       ).toBeVisible();

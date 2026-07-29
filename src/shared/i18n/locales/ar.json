@@ -211,7 +211,6 @@
   "ordersEmptyHint": "اختر قائمة لإنشاء أول طلب لك.",
   "each": "للوحدة",
   "duplicate": "نسخ",
-  "copySuffix": "نسخة",
   "bucketRevision": "إصدار القائمة",
   "collapseSidebar": "طيّ الشريط الجانبي",
   "expandSidebar": "توسيع الشريط الجانبي",
@@ -252,5 +251,6 @@
   "deleteAccountReauthConfirm": "حذف الحساب نهائيًا",
   "deletingAccount": "جارٍ حذف الحساب…",
   "deleteAccountWrongCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة.",
-  "continueAction": "متابعة"
+  "continueAction": "متابعة",
+  "startOrderRound": "ابدأ جولة"
 }

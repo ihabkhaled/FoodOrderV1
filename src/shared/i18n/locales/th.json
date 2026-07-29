@@ -211,7 +211,6 @@
   "ordersEmptyHint": "เลือกบัคเก็ตเพื่อสร้างออเดอร์แรกของคุณ",
   "each": "ต่อชิ้น",
   "duplicate": "ทำสำเนา",
-  "copySuffix": "สำเนา",
   "bucketRevision": "เวอร์ชันของรายการ",
   "collapseSidebar": "ย่อแถบด้านข้าง",
   "expandSidebar": "ขยายแถบด้านข้าง",
@@ -252,5 +251,6 @@
   "deleteAccountReauthConfirm": "ลบบัญชีอย่างถาวร",
   "deletingAccount": "กำลังลบบัญชี…",
   "deleteAccountWrongCredentials": "อีเมลหรือรหัสผ่านไม่ถูกต้อง",
-  "continueAction": "ดำเนินการต่อ"
+  "continueAction": "ดำเนินการต่อ",
+  "startOrderRound": "เริ่มรอบ"
 }

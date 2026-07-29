@@ -23,14 +23,15 @@ export type NotificationKind =
   | 'order_updated'
   | 'order_completed'
   | 'order_cancelled'
-  | 'order_deleted';
+  | 'order_deleted'
+  | 'session_opened';
 
 export interface NotificationInput {
   kind: NotificationKind;
   title: string;
   message: string;
   route: string;
-  entityType: 'friend' | 'group' | 'bucket' | 'order';
+  entityType: 'friend' | 'group' | 'bucket' | 'order' | 'session';
   entityId: string;
   actorId: string;
   actorName: string;

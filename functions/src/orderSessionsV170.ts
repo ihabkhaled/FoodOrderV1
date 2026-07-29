@@ -3,6 +3,8 @@ import { createHash, randomUUID } from 'node:crypto';
 import { getFirestore } from 'firebase-admin/firestore';
 import { HttpsError, onCall } from 'firebase-functions/v2/https';
 
+import { writeNotifications } from './notificationCore.js';
+
 const REGION = 'europe-west1';
 const MAX_MENU_ITEMS = 50;
 const MAX_SESSION_PARTICIPANTS = 20;
@@ -660,7 +662,7 @@ export const createOrderSessionV170 = onCall({ region: REGION }, async (request)
   const sessionReference = firestore.collection('orderSessions').doc(sessionId);
   const bucketReference = firestore.collection('buckets').doc(menuTemplateId);
 
-  return firestore.runTransaction(async (transaction) => {
+  const session = await firestore.runTransaction(async (transaction) => {
     const [existingSnapshot, bucketSnapshot, memberSnapshots] = await Promise.all([
       transaction.get(sessionReference),
       transaction.get(bucketReference),
@@ -765,6 +767,30 @@ export const createOrderSessionV170 = onCall({ region: REGION }, async (request)
     );
     return session;
   });
+
+  // Everyone the template is shared with hears that a new round opened. The
+  // organizer is excluded, and a notification failure never fails the round.
+  const recipients = session.participantIds.filter(
+    (participantId) => participantId !== auth.uid,
+  );
+  if (recipients.length > 0) {
+    try {
+      await writeNotifications(recipients, {
+        kind: 'session_opened',
+        title: 'New order round',
+        message: `${actorName(auth.token)} opened "${session.title}" for orders.`,
+        route: `/sessions/${session.id}`,
+        entityType: 'session',
+        entityId: session.id,
+        actorId: auth.uid,
+        actorName: actorName(auth.token),
+      });
+    } catch {
+      // The round exists; a missed notification must not roll it back.
+    }
+  }
+
+  return session;
 });
 
 export const getOrderSessionViewV170 = onCall({ region: REGION }, async (request) => {

@@ -43,3 +43,13 @@ test('recognizes only complete pending-to-accepted join-code transitions', () =>
     false,
   );
 });
+
+test('the order-session round callable is exported with its fan-out helper', async () => {
+  // entry.js initializes the admin app before the session module loads.
+  const entry = await import('../lib/functions/src/entry.js');
+  assert.equal(typeof entry.createOrderSessionV170, 'function');
+
+  // The fan-out helper the callable now depends on must stay exported.
+  const core = await import('../lib/functions/src/notificationCore.js');
+  assert.equal(typeof core.writeNotifications, 'function');
+});

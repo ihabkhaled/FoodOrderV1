@@ -211,7 +211,6 @@
   "ordersEmptyHint": "برای ایجاد نخستین سفارش، یک فهرست انتخاب کنید.",
   "each": "هر واحد",
   "duplicate": "تکثیر",
-  "copySuffix": "کپی",
   "bucketRevision": "نسخه فهرست",
   "collapseSidebar": "جمع‌کردن نوار کناری",
   "expandSidebar": "بازکردن نوار کناری",
@@ -252,5 +251,6 @@
   "deleteAccountReauthConfirm": "حذف دائمی حساب",
   "deletingAccount": "در حال حذف حساب…",
   "deleteAccountWrongCredentials": "ایمیل یا گذرواژه نادرست است.",
-  "continueAction": "ادامه"
+  "continueAction": "ادامه",
+  "startOrderRound": "شروع دور"
 }

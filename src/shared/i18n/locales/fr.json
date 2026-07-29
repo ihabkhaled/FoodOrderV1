@@ -211,7 +211,6 @@
   "ordersEmptyHint": "Choisissez un panier pour créer votre première commande.",
   "each": "l'unité",
   "duplicate": "Dupliquer",
-  "copySuffix": "copie",
   "bucketRevision": "Version de la liste",
   "collapseSidebar": "Réduire la barre latérale",
   "expandSidebar": "Développer la barre latérale",
@@ -252,5 +251,6 @@
   "deleteAccountReauthConfirm": "Supprimer définitivement le compte",
   "deletingAccount": "Suppression du compte…",
   "deleteAccountWrongCredentials": "E-mail ou mot de passe invalide.",
-  "continueAction": "Continuer"
+  "continueAction": "Continuer",
+  "startOrderRound": "Lancer un tour"
 }

@@ -211,7 +211,6 @@
   "ordersEmptyHint": "选择一个清单来创建首个订单。",
   "each": "每份",
   "duplicate": "复制",
-  "copySuffix": "副本",
   "bucketRevision": "清单版本",
   "collapseSidebar": "收起侧边栏",
   "expandSidebar": "展开侧边栏",
@@ -252,5 +251,6 @@
   "deleteAccountReauthConfirm": "永久删除账户",
   "deletingAccount": "正在删除账户…",
   "deleteAccountWrongCredentials": "邮箱或密码无效。",
-  "continueAction": "继续"
+  "continueAction": "继续",
+  "startOrderRound": "发起新一轮"
 }

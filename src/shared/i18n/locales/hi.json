@@ -211,7 +211,6 @@
   "ordersEmptyHint": "अपना पहला ऑर्डर बनाने के लिए कोई बकेट चुनें।",
   "each": "प्रत्येक",
   "duplicate": "डुप्लिकेट करें",
-  "copySuffix": "कॉपी",
   "bucketRevision": "सूची संस्करण",
   "collapseSidebar": "साइडबार समेटें",
   "expandSidebar": "साइडबार खोलें",
@@ -252,5 +251,6 @@
   "deleteAccountReauthConfirm": "खाता स्थायी रूप से हटाएँ",
   "deletingAccount": "खाता हटाया जा रहा है…",
   "deleteAccountWrongCredentials": "ईमेल या पासवर्ड अमान्य है।",
-  "continueAction": "जारी रखें"
+  "continueAction": "जारी रखें",
+  "startOrderRound": "राउंड शुरू करें"
 }
