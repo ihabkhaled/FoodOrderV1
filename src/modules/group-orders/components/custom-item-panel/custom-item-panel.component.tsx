@@ -76,9 +76,11 @@ export function CustomItemPanelView({
             {translate('customItemPrice')}
             <input
               type="number"
+              inputMode="decimal"
               min="0"
               step="0.01"
               value={draft.unitPrice}
+              placeholder="0"
               disabled={disabled || !canSetPrice}
               onChange={(event) => {
                 onDraftChange({ unitPrice: event.target.value });
@@ -111,7 +113,9 @@ export function CustomItemPanelView({
       {canApprove && pendingItems.length > 0 ? (
         <div className="pending-custom-items">
           {pendingItems.map((item) => {
-            const value = approvalPrices[item.id] ?? String(item.unitPrice);
+            const value =
+              approvalPrices[item.id] ??
+              (item.unitPrice === 0 ? '' : String(item.unitPrice));
             const parsed = Number(value);
             const valid = Number.isFinite(parsed) && parsed >= 0;
 
@@ -127,9 +131,11 @@ export function CustomItemPanelView({
                 <input
                   aria-label={`${translate('customItemPrice')} — ${item.name}`}
                   type="number"
+                  inputMode="decimal"
                   min="0"
                   step="0.01"
                   value={value}
+                  placeholder="0"
                   disabled={disabled}
                   onChange={(event) => {
                     onApprovalPriceChange(item.id, event.target.value);

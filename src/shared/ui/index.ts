@@ -4,6 +4,7 @@ export { EmptyState } from './empty-state';
 export { ErrorState } from './error-state';
 export { LanguageSelect } from './language-select';
 export { Loading } from './loading';
+export { NumericField } from './numeric-field';
 export { PasswordField } from './password-field';
 export { RefreshableViewport, usePageRefresh } from './refresh';
 export { VirtualListFooter } from './virtual-list-footer';

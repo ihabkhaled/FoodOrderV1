@@ -1,5 +1,6 @@
 import type { BucketPricingPolicy, Locale } from '@/modules/data-access';
 import { ReceiptText } from '@/packages/icons';
+import { NumericField } from '@/shared/ui';
 
 import type { GroupOrderMessageKey } from '../../i18n/group-order-messages.constants';
 import { translateGroupOrder } from '../../i18n/translate-group-order.helper';
@@ -10,18 +11,6 @@ interface BucketPricingPanelProps {
   disabled?: boolean;
   onChange: (policy: BucketPricingPolicy) => void;
 }
-
-const toBasisPoints = (value: string): number => {
-  const percentage = Number(value);
-  if (!Number.isFinite(percentage)) return 0;
-  return Math.round(Math.min(100, Math.max(0, percentage)) * 100);
-};
-
-const toMinorUnits = (value: string): number => {
-  const amount = Number(value);
-  if (!Number.isFinite(amount)) return 0;
-  return Math.round(Math.max(0, amount) * 100);
-};
 
 export function BucketPricingPanel({
   locale,
@@ -50,56 +39,35 @@ export function BucketPricingPanel({
         </div>
       </div>
       <div className="pricing-grid">
-        <label>
-          {groupTranslate('vatPercent')}
-          <input
-            type="number"
-            min="0"
-            max="100"
-            step="0.01"
-            value={policy.vatBasisPoints / 100}
-            disabled={disabled}
-            onChange={(event) => {
-              onChange({
-                ...policy,
-                vatBasisPoints: toBasisPoints(event.target.value),
-              });
-            }}
-          />
-        </label>
-        <label>
-          {groupTranslate('servicePercent')}
-          <input
-            type="number"
-            min="0"
-            max="100"
-            step="0.01"
-            value={policy.serviceBasisPoints / 100}
-            disabled={disabled}
-            onChange={(event) => {
-              onChange({
-                ...policy,
-                serviceBasisPoints: toBasisPoints(event.target.value),
-              });
-            }}
-          />
-        </label>
-        <label>
-          {groupTranslate('deliveryAmount')}
-          <input
-            type="number"
-            min="0"
-            step="0.01"
-            value={policy.deliveryMinor / 100}
-            disabled={disabled}
-            onChange={(event) => {
-              onChange({
-                ...policy,
-                deliveryMinor: toMinorUnits(event.target.value),
-              });
-            }}
-          />
-        </label>
+        <NumericField
+          id="bucket-pricing-vat"
+          label={groupTranslate('vatPercent')}
+          value={policy.vatBasisPoints / 100}
+          max={100}
+          disabled={disabled}
+          onValueChange={(next) => {
+            onChange({ ...policy, vatBasisPoints: Math.round(next * 100) });
+          }}
+        />
+        <NumericField
+          id="bucket-pricing-service"
+          label={groupTranslate('servicePercent')}
+          value={policy.serviceBasisPoints / 100}
+          max={100}
+          disabled={disabled}
+          onValueChange={(next) => {
+            onChange({ ...policy, serviceBasisPoints: Math.round(next * 100) });
+          }}
+        />
+        <NumericField
+          id="bucket-pricing-delivery"
+          label={groupTranslate('deliveryAmount')}
+          value={policy.deliveryMinor / 100}
+          disabled={disabled}
+          onValueChange={(next) => {
+            onChange({ ...policy, deliveryMinor: Math.round(next * 100) });
+          }}
+        />
       </div>
       <div className="pricing-grid">
         {(
