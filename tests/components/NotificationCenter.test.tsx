@@ -38,6 +38,7 @@ describe('NotificationCenter', () => {
       <MemoryRouter initialEntries={['/social']}>
         <NotificationCenter
           notifications={[invitation]}
+          loading={false}
           locale="en"
           placement="topbar"
           onMarkRead={onMarkRead}

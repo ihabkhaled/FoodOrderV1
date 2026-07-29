@@ -1,5 +1,6 @@
 import type { Locale } from '@/modules/data-access';
 import { Bell, CheckCheck } from '@/packages/icons';
+import { SkeletonSection } from '@/shared/ui';
 
 import type { NotificationCenterViewProps } from './notification-center.types';
 
@@ -13,6 +14,7 @@ const formatTimestamp = (locale: Locale, timestamp: string): string =>
 
 export function NotificationCenterView({
   notifications,
+  loading,
   locale,
   placement,
   open,
@@ -65,7 +67,13 @@ export function NotificationCenterView({
           </header>
 
           <div className="notification-list">
-            {notifications.length === 0 ? (
+            {loading ? (
+              <SkeletonSection
+                label={s('notifications')}
+                variant="row"
+                count={3}
+              />
+            ) : notifications.length === 0 ? (
               <p className="notification-empty muted">{s('noNotifications')}</p>
             ) : (
               notifications.map((notification) => (

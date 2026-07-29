@@ -31,6 +31,7 @@ export interface AppLayoutViewModel {
   collapsed: boolean;
   toggleCollapsed: () => void;
   notifications: AppNotification[];
+  notificationsLoading: boolean;
   markNotificationsRead: (notificationIds: string[]) => Promise<void>;
 }
 
@@ -58,6 +59,7 @@ export function useAppLayout(): AppLayoutViewModel {
       : null;
   const [collapsed, setCollapsed] = useState(false);
   const [notifications, setNotifications] = useState<AppNotification[]>([]);
+  const [notificationsLoading, setNotificationsLoading] = useState(true);
   const [confirmingLogout, setConfirmingLogout] = useState(false);
   const [loggingOut, setLoggingOut] = useState(false);
 
@@ -76,11 +78,21 @@ export function useAppLayout(): AppLayoutViewModel {
   useEffect(() => {
     if (!user) {
       setNotifications([]);
+      setNotificationsLoading(false);
       return;
     }
-    return notificationService.subscribe(user.id, setNotifications, () => {
-      setNotifications([]);
-    });
+    setNotificationsLoading(true);
+    return notificationService.subscribe(
+      user.id,
+      (incoming) => {
+        setNotifications(incoming);
+        setNotificationsLoading(false);
+      },
+      () => {
+        setNotifications([]);
+        setNotificationsLoading(false);
+      },
+    );
   }, [user]);
 
   const requestLogout = (): void => {
@@ -145,6 +157,7 @@ export function useAppLayout(): AppLayoutViewModel {
     collapsed,
     toggleCollapsed,
     notifications,
+    notificationsLoading,
     markNotificationsRead,
   };
 }

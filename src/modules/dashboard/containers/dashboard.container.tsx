@@ -9,7 +9,7 @@ import {
   Utensils,
 } from '@/packages/icons';
 import { Link } from '@/packages/router';
-import { ErrorState, Loading } from '@/shared/ui';
+import { ErrorState, SkeletonSection } from '@/shared/ui';
 
 import type { DashboardStatCard } from '../components/dashboard-stat-grid/dashboard-stat-grid.component';
 import { DashboardStatGrid } from '../components/dashboard-stat-grid/dashboard-stat-grid.component';
@@ -29,9 +29,8 @@ export function DashboardContainer() {
     );
   }
   const summary = vm.summary;
-  if (!summary) return <Loading label={vm.t('loading')} />;
-
-  const cards: DashboardStatCard[] = [
+  const cards: DashboardStatCard[] = summary
+    ? [
     {
       label: vm.t('bucketCount'),
       value: summary.bucketCount,
@@ -62,14 +61,17 @@ export function DashboardContainer() {
       icon: CheckCircle2,
       to: `${ORDERS_PATH}?status=placed`,
     },
-    {
-      label: vm.t('completedOrders'),
-      value: summary.completedOrderCount,
-      icon: CheckCircle2,
-      to: `${ORDERS_PATH}?status=completed`,
-    },
-  ];
+        {
+          label: vm.t('completedOrders'),
+          value: summary.completedOrderCount,
+          icon: CheckCircle2,
+          to: `${ORDERS_PATH}?status=completed`,
+        },
+      ]
+    : [];
 
+  // The greeting needs no data, so it paints immediately while each section
+  // below shows its own placeholder until the summary resolves.
   return (
     <div className="page stack-lg">
       <section className="hero-card">
@@ -84,13 +86,25 @@ export function DashboardContainer() {
         </Link>
       </section>
 
-      <DashboardStatGrid cards={cards} ariaLabel={vm.t('dashboard')} />
+      {summary ? (
+        <DashboardStatGrid cards={cards} ariaLabel={vm.t('dashboard')} />
+      ) : (
+        <SkeletonSection
+          label={vm.t('loading')}
+          variant="stat"
+          count={6}
+        />
+      )}
 
-      <RecentOrdersSection
-        recentOrders={summary.recentOrders}
-        locale={vm.locale}
-        t={vm.t}
-      />
+      {summary ? (
+        <RecentOrdersSection
+          recentOrders={summary.recentOrders}
+          locale={vm.locale}
+          t={vm.t}
+        />
+      ) : (
+        <SkeletonSection label={vm.t('loading')} variant="row" count={3} />
+      )}
     </div>
   );
 }

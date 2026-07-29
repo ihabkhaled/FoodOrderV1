@@ -1,6 +1,6 @@
 import { Plus, ShoppingBasket } from '@/packages/icons';
 import { Link } from '@/packages/router';
-import { EmptyState } from '@/shared/ui';
+import { EmptyState, SkeletonSection } from '@/shared/ui';
 
 import { BUCKET_NEW_PATH } from '../../routes/buckets-route-paths.constants';
 import { BucketCollectionSection } from '../bucket-collection-section/bucket-collection-section.component';
@@ -15,6 +15,8 @@ export function BucketResults({
   t,
   ownedItems,
   sharedItems,
+  ownedLoading,
+  sharedLoading,
   ownedLoadingMore,
   sharedLoadingMore,
   ownedHasMore,
@@ -28,7 +30,8 @@ export function BucketResults({
   onDuplicate,
   onDelete,
 }: BucketResultsProps) {
-  if (totalLoaded === 0) {
+  // "Nothing here" is only true once both collections have finished loading.
+  if (totalLoaded === 0 && !ownedLoading && !sharedLoading) {
     return (
       <EmptyState
         icon={<ShoppingBasket />}
@@ -54,7 +57,9 @@ export function BucketResults({
         onQueryChange={onQueryChange}
         onScopeChange={onScopeChange}
       />
-      {scope === 'shared' ? null : (
+      {scope === 'shared' ? null : ownedLoading ? (
+        <SkeletonSection label={t('loading')} variant="card" count={3} />
+      ) : (
         <BucketCollectionSection
           kind="owned"
           items={ownedItems}
@@ -70,7 +75,9 @@ export function BucketResults({
           onDelete={onDelete}
         />
       )}
-      {scope === 'owned' ? null : (
+      {scope === 'owned' ? null : sharedLoading ? (
+        <SkeletonSection label={t('loading')} variant="card" count={2} />
+      ) : (
         <BucketCollectionSection
           kind="shared"
           items={sharedItems}

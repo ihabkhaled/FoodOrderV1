@@ -5,6 +5,7 @@ import type { SocialMessageKey } from '@/modules/social';
 
 export interface NotificationCenterViewProps {
   notifications: AppNotification[];
+  loading: boolean;
   locale: Locale;
   placement: 'topbar' | 'sidebar';
   open: boolean;

@@ -829,3 +829,76 @@ select:focus {
     transform: none;
   }
 }
+
+/* Per-section loading placeholders. Each screen composes its own regions so a
+   slow section never blanks the whole page. */
+.skeleton {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.skeleton-block {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-sm, 0.5rem);
+  background: var(--soft);
+}
+
+.skeleton-block::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--primary) 22%, white),
+    transparent
+  );
+  animation: loading-shimmer 1.25s ease-in-out infinite;
+  content: '';
+  transform: translateX(-120%);
+}
+
+.skeleton-text .skeleton-block {
+  block-size: 0.7rem;
+}
+
+.skeleton-text .skeleton-block:last-child:not(:only-child) {
+  inline-size: 64%;
+}
+
+.skeleton-row .skeleton-block {
+  block-size: 3.25rem;
+}
+
+.skeleton-card {
+  grid-template-columns: repeat(auto-fill, minmax(min(16rem, 100%), 1fr));
+}
+
+.skeleton-card .skeleton-block {
+  block-size: 11rem;
+}
+
+.skeleton-stat {
+  grid-template-columns: repeat(auto-fit, minmax(min(9rem, 100%), 1fr));
+}
+
+.skeleton-stat .skeleton-block {
+  block-size: 5.5rem;
+}
+
+.skeleton-circle {
+  grid-auto-flow: column;
+  justify-content: start;
+}
+
+.skeleton-circle .skeleton-block {
+  inline-size: 2.5rem;
+  block-size: 2.5rem;
+  border-radius: 50%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-block::after {
+    animation: none;
+  }
+}

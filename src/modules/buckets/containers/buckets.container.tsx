@@ -1,7 +1,7 @@
 import { JOIN_PATH } from '@/modules/group-orders';
 import { KeyRound, Plus } from '@/packages/icons';
 import { Link } from '@/packages/router';
-import { ConfirmDialog, ErrorState, Loading } from '@/shared/ui';
+import { ConfirmDialog, ErrorState } from '@/shared/ui';
 
 import { BucketResults } from '../components/bucket-results/bucket-results.component';
 import { useBuckets } from '../hooks/use-buckets.hook';
@@ -19,8 +19,8 @@ export function BucketsContainer() {
       />
     );
   }
-  if (vm.loading) return <Loading label={vm.t('loading')} />;
-
+  // The heading and filters never wait for data; each collection below shows
+  // its own placeholder until that collection's first page arrives.
   return (
     <div className="page stack-lg">
       <div className="page-heading">
@@ -48,6 +48,8 @@ export function BucketsContainer() {
         t={vm.t}
         ownedItems={vm.filteredOwned}
         sharedItems={vm.filteredShared}
+        ownedLoading={vm.ownedLoading}
+        sharedLoading={vm.sharedLoading}
         ownedLoadingMore={vm.ownedLoadingMore}
         sharedLoadingMore={vm.sharedLoadingMore}
         ownedHasMore={vm.ownedHasMore}

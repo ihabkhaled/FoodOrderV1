@@ -41,6 +41,7 @@ export function AppLayoutContainer() {
     collapsed,
     toggleCollapsed,
     notifications,
+    notificationsLoading,
     markNotificationsRead,
   } = useAppLayout();
 
@@ -106,6 +107,7 @@ export function AppLayoutContainer() {
           <div className="sidebar-controls">
             <NotificationCenter
               notifications={notifications}
+              loading={notificationsLoading}
               locale={locale}
               placement="sidebar"
               onMarkRead={markNotificationsRead}
@@ -131,6 +133,7 @@ export function AppLayoutContainer() {
         <div className="topbar-meta">
           <NotificationCenter
             notifications={notifications}
+            loading={notificationsLoading}
             locale={locale}
             placement="topbar"
             onMarkRead={markNotificationsRead}

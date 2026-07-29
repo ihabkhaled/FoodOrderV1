@@ -1,4 +1,4 @@
-import { ErrorState, Loading } from '@/shared/ui';
+import { ErrorState, SkeletonSection } from '@/shared/ui';
 
 import { BucketInvitations } from '../components/bucket-invitations/bucket-invitations.component';
 import { FriendSearch } from '../components/friend-search/friend-search.component';
@@ -12,7 +12,17 @@ import { useSocial } from '../hooks/use-social.hook';
 export function SocialContainer() {
   const vm = useSocial();
 
-  if (vm.loading) return <Loading label={vm.t('loading')} />;
+  // Placeholders sit where the real sections will land, so the layout does not
+  // jump once the overview resolves.
+  if (vm.loading) {
+    return (
+      <div className="page stack-lg">
+        <SkeletonSection label={vm.t('loading')} variant="row" count={1} />
+        <SkeletonSection label={vm.t('loading')} variant="card" count={2} />
+        <SkeletonSection label={vm.t('loading')} variant="row" count={4} />
+      </div>
+    );
+  }
   if (vm.error) {
     return (
       <ErrorState

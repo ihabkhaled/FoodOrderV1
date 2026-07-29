@@ -8,4 +8,5 @@ export { Loading } from './loading';
 export { NumericField } from './numeric-field';
 export { PasswordField } from './password-field';
 export { RefreshableViewport, usePageRefresh } from './refresh';
+export { Skeleton, SkeletonSection } from './skeleton';
 export { VirtualListFooter } from './virtual-list-footer';

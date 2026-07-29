@@ -6,7 +6,7 @@ import {
   ConfirmDialog,
   EmptyState,
   ErrorState,
-  Loading,
+  SkeletonSection,
   VirtualListFooter,
 } from '@/shared/ui';
 
@@ -17,7 +17,6 @@ import { BUCKETS_REDIRECT_PATH } from '../routes/orders-route-paths.constants';
 export function OrdersContainer() {
   const vm = useOrders();
 
-  if (vm.loading) return <Loading label={vm.t('loading')} />;
   if (vm.error && vm.totalLoaded === 0) {
     return (
       <ErrorState
@@ -37,7 +36,9 @@ export function OrdersContainer() {
         </div>
       </div>
 
-      {vm.totalLoaded > 0 ? (
+      {vm.loading ? (
+        <SkeletonSection label={vm.t('loading')} variant="row" count={5} />
+      ) : vm.totalLoaded > 0 ? (
         <>
           <div className="filters">
             <label className="search-field">
