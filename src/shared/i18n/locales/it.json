@@ -243,5 +243,8 @@
   "completedOrders": "Ordini completati",
   "all": "Tutti",
   "noMatchingBuckets": "Nessun risultato corrispondente nei bucket caricati.",
-  "noMatchingOrders": "Nessun ordine corrispondente nei risultati caricati."
+  "noMatchingOrders": "Nessun ordine corrispondente nei risultati caricati.",
+  "confirmLogoutTitle": "Uscire?",
+  "confirmLogoutMessage": "Dovrai accedere di nuovo per consultare i tuoi bucket e i tuoi ordini.",
+  "loggingOut": "Disconnessione in corso…"
 }

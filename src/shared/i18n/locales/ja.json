@@ -243,5 +243,8 @@
   "completedOrders": "完了した注文",
   "all": "すべて",
   "noMatchingBuckets": "読み込み済みのバケットに一致する結果はありません。",
-  "noMatchingOrders": "読み込み済みの注文に一致する結果はありません。"
+  "noMatchingOrders": "読み込み済みの注文に一致する結果はありません。",
+  "confirmLogoutTitle": "ログアウトしますか？",
+  "confirmLogoutMessage": "バケットや注文を確認するには再度ログインが必要です。",
+  "loggingOut": "ログアウト中…"
 }

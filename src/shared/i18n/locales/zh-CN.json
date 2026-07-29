@@ -243,5 +243,8 @@
   "completedOrders": "已完成订单",
   "all": "全部",
   "noMatchingBuckets": "已加载的清单中没有匹配结果。",
-  "noMatchingOrders": "已加载的结果中没有匹配订单。"
+  "noMatchingOrders": "已加载的结果中没有匹配订单。",
+  "confirmLogoutTitle": "退出登录？",
+  "confirmLogoutMessage": "您需要重新登录才能访问您的清单和订单。",
+  "loggingOut": "正在退出登录…"
 }

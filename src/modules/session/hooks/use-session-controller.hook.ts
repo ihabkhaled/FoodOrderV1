@@ -61,17 +61,20 @@ export const useSessionController = (initialLocale?: Locale): AppContextValue =>
       });
   }, []);
 
+  const [profileLoadedFor, setProfileLoadedFor] = useState<string | null>(null);
   useEffect(
     () =>
       authService.subscribe((nextUser) => {
         setUser(nextUser);
         setAuthLoading(false);
-        if (!nextUser) setProfile(null);
+        if (!nextUser) {
+          setProfile(null);
+          setProfileLoadedFor(null);
+        }
       }),
     [],
   );
 
-  const [profileLoadedFor, setProfileLoadedFor] = useState<string | null>(null);
   useEffect(() => {
     if (!user || profileLoadedFor === user.id) return;
     setProfileLoadedFor(user.id);

@@ -243,5 +243,8 @@
   "completedOrders": "Commandes terminées",
   "all": "Tout",
   "noMatchingBuckets": "Aucun résultat correspondant dans les paniers chargés.",
-  "noMatchingOrders": "Aucune commande correspondante dans les résultats chargés."
+  "noMatchingOrders": "Aucune commande correspondante dans les résultats chargés.",
+  "confirmLogoutTitle": "Se déconnecter ?",
+  "confirmLogoutMessage": "Vous devrez vous reconnecter pour accéder à vos paniers et à vos commandes.",
+  "loggingOut": "Déconnexion…"
 }

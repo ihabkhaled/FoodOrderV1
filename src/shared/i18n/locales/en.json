@@ -243,5 +243,8 @@
   "completedOrders": "Completed orders",
   "all": "All",
   "noMatchingBuckets": "No matching results in the loaded buckets.",
-  "noMatchingOrders": "No matching orders in the loaded results."
+  "noMatchingOrders": "No matching orders in the loaded results.",
+  "confirmLogoutTitle": "Log out?",
+  "confirmLogoutMessage": "You will need to sign in again to access your buckets and orders.",
+  "loggingOut": "Logging out…"
 }

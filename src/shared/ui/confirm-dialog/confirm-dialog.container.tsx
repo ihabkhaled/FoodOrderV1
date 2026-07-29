@@ -8,6 +8,7 @@ export function ConfirmDialog({
   confirmLabel,
   cancelLabel,
   danger = false,
+  busy = false,
   onConfirm,
   onCancel,
 }: {
@@ -17,6 +18,7 @@ export function ConfirmDialog({
   confirmLabel: string;
   cancelLabel: string;
   danger?: boolean;
+  busy?: boolean;
   onConfirm: () => void;
   onCancel: () => void;
 }) {
@@ -29,6 +31,7 @@ export function ConfirmDialog({
       confirmLabel={confirmLabel}
       cancelLabel={cancelLabel}
       danger={danger}
+      busy={busy}
       onConfirm={onConfirm}
       onCancel={onCancel}
     />

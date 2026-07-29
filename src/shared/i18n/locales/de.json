@@ -243,5 +243,8 @@
   "completedOrders": "Abgeschlossene Bestellungen",
   "all": "Alle",
   "noMatchingBuckets": "Keine passenden Ergebnisse in den geladenen Listen.",
-  "noMatchingOrders": "Keine passenden Bestellungen in den geladenen Ergebnissen."
+  "noMatchingOrders": "Keine passenden Bestellungen in den geladenen Ergebnissen.",
+  "confirmLogoutTitle": "Abmelden?",
+  "confirmLogoutMessage": "Du musst dich erneut anmelden, um auf deine Listen und Bestellungen zuzugreifen.",
+  "loggingOut": "Abmeldung läuft…"
 }

@@ -243,5 +243,8 @@
   "completedOrders": "Pedidos completados",
   "all": "Todo",
   "noMatchingBuckets": "No hay resultados coincidentes en las listas cargadas.",
-  "noMatchingOrders": "No hay pedidos coincidentes en los resultados cargados."
+  "noMatchingOrders": "No hay pedidos coincidentes en los resultados cargados.",
+  "confirmLogoutTitle": "¿Cerrar sesión?",
+  "confirmLogoutMessage": "Tendrás que iniciar sesión de nuevo para acceder a tus listas y pedidos.",
+  "loggingOut": "Cerrando sesión…"
 }

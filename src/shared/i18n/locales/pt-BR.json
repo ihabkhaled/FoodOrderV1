@@ -243,5 +243,8 @@
   "completedOrders": "Pedidos concluídos",
   "all": "Todos",
   "noMatchingBuckets": "Não há resultados correspondentes nas listas carregadas.",
-  "noMatchingOrders": "Não há pedidos correspondentes nos resultados carregados."
+  "noMatchingOrders": "Não há pedidos correspondentes nos resultados carregados.",
+  "confirmLogoutTitle": "Sair?",
+  "confirmLogoutMessage": "Você precisará entrar novamente para acessar suas listas e pedidos.",
+  "loggingOut": "Saindo…"
 }

@@ -8,7 +8,11 @@ import {
 } from '@/packages/icons';
 import { NavLink, Outlet } from '@/packages/router';
 import { nextTheme } from '@/platform/device';
-import { LanguageSelect, RefreshableViewport } from '@/shared/ui';
+import {
+  ConfirmDialog,
+  LanguageSelect,
+  RefreshableViewport,
+} from '@/shared/ui';
 
 import { HOME_PATH } from '../router/app-route-paths.constants';
 import { THEME_ICON, THEME_LABEL } from './app-layout.constants';
@@ -22,7 +26,11 @@ export function AppLayoutContainer() {
   const {
     t,
     userDisplayName,
-    logout,
+    confirmingLogout,
+    loggingOut,
+    requestLogout,
+    cancelLogout,
+    confirmLogout,
     online,
     toast,
     locale,
@@ -67,7 +75,7 @@ export function AppLayoutContainer() {
   const logoutButton = (
     <button
       className="icon-button"
-      onClick={() => void logout()}
+      onClick={requestLogout}
       title={t('logout')}
       aria-label={t('logout')}
     >
@@ -143,6 +151,17 @@ export function AppLayoutContainer() {
       <BottomNav t={t} />
 
       <ToastViewport toast={toast} />
+
+      <ConfirmDialog
+        open={confirmingLogout}
+        title={t('confirmLogoutTitle')}
+        message={t('confirmLogoutMessage')}
+        confirmLabel={loggingOut ? t('loggingOut') : t('logout')}
+        cancelLabel={t('cancel')}
+        busy={loggingOut}
+        onConfirm={() => void confirmLogout()}
+        onCancel={cancelLogout}
+      />
     </div>
   );
 }

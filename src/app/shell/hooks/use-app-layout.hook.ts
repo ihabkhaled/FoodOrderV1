@@ -16,7 +16,11 @@ interface RouteRefreshState {
 export interface AppLayoutViewModel {
   t: (key: MessageKey) => string;
   userDisplayName: string | undefined;
-  logout: () => Promise<void>;
+  confirmingLogout: boolean;
+  loggingOut: boolean;
+  requestLogout: () => void;
+  cancelLogout: () => void;
+  confirmLogout: () => Promise<void>;
   online: boolean;
   toast: ToastState | null;
   locale: Locale;
@@ -54,6 +58,8 @@ export function useAppLayout(): AppLayoutViewModel {
       : null;
   const [collapsed, setCollapsed] = useState(false);
   const [notifications, setNotifications] = useState<AppNotification[]>([]);
+  const [confirmingLogout, setConfirmingLogout] = useState(false);
+  const [loggingOut, setLoggingOut] = useState(false);
 
   useEffect(() => {
     scrollViewportToTop();
@@ -76,6 +82,26 @@ export function useAppLayout(): AppLayoutViewModel {
       setNotifications([]);
     });
   }, [user]);
+
+  const requestLogout = (): void => {
+    setConfirmingLogout(true);
+  };
+
+  const cancelLogout = (): void => {
+    if (loggingOut) return;
+    setConfirmingLogout(false);
+  };
+
+  const confirmLogout = async (): Promise<void> => {
+    if (loggingOut) return;
+    setLoggingOut(true);
+    try {
+      await logout();
+    } finally {
+      setLoggingOut(false);
+      setConfirmingLogout(false);
+    }
+  };
 
   const toggleCollapsed = (): void => {
     setCollapsed((current) => {
@@ -104,7 +130,11 @@ export function useAppLayout(): AppLayoutViewModel {
   return {
     t,
     userDisplayName: user?.displayName,
-    logout,
+    confirmingLogout,
+    loggingOut,
+    requestLogout,
+    cancelLogout,
+    confirmLogout,
     online,
     toast,
     locale,
