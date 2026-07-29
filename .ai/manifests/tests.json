@@ -22,8 +22,13 @@
     },
     {
       "path": "tests/components/ConfirmDialog.test.tsx",
-      "bytes": 1574,
-      "hash": "3df095bb499a63a76259df135c9b99ce3989a8109f51f08c7a0c2996a82cffa3"
+      "bytes": 2186,
+      "hash": "f3a0c64865c509ccb3019d64042f3e1d256a6509049d2524f68d4b58572465e2"
+    },
+    {
+      "path": "tests/components/DangerReauthDialog.test.tsx",
+      "bytes": 2268,
+      "hash": "cf21bda79a4cf844c0042a099cac0e676732fb482858debcf6802c96aa1f08fe"
     },
     {
       "path": "tests/components/GroupOrderComponents.test.tsx",
@@ -46,6 +51,11 @@
       "hash": "4018eaf75763a26c43ff7bf5400489f5b15ecf6defb0cb896e54c674f1d96046"
     },
     {
+      "path": "tests/components/NumericField.test.tsx",
+      "bytes": 2953,
+      "hash": "b10e6f53db61e1ec645c2567bd5fb3e663bb0fe29a38572b8b5d3a39f5dfd54a"
+    },
+    {
       "path": "tests/components/PasswordField.test.tsx",
       "bytes": 1533,
       "hash": "0a251e342efa5e0853fbaca53468148c8cc47607f6805f7f3d8b9c8299e8a091"
@@ -64,6 +74,11 @@
       "path": "tests/components/SessionInvitePreview.test.tsx",
       "bytes": 2643,
       "hash": "8ab2378a9849de6cbdf36f14f7783ab3a72e7e49647bd51d92c5b43a3c2d5193"
+    },
+    {
+      "path": "tests/components/SettingsLinkRow.test.tsx",
+      "bytes": 911,
+      "hash": "6755da668fec9e5963ee0374cb4f1cf42bd0c7b5a0a39f9de98234fd338a2630"
     },
     {
       "path": "tests/domain/billing-entitlements.test.ts",
@@ -151,9 +166,19 @@
       "hash": "93d0b1cfb5f302d70a285df41e458d8942fef0b75e5bd2b1e3ffcafd249ad0af"
     },
     {
+      "path": "tests/domain/telemetry-recorder.test.ts",
+      "bytes": 4209,
+      "hash": "afab23efd717e45f3e1589c16fe675ff894e964057d5e321b9eb70c2914d733f"
+    },
+    {
       "path": "tests/domain/telemetry.test.ts",
       "bytes": 9797,
       "hash": "d65fe2adc2bf61c743851b16be72e5ac5d4272746cfce79fc97df63d1c3423da"
+    },
+    {
+      "path": "tests/e2e/auth-flows.spec.ts",
+      "bytes": 4258,
+      "hash": "83b62ef7979d846d672a601be72be613bcc80c4d569b75e5b85f5b83f5bf0e3f"
     },
     {
       "path": "tests/e2e/bucket-pricing.spec.ts",
@@ -191,6 +216,11 @@
       "hash": "ba7c77d07524bb45ec1a78fe2ac788d4b5ebe1692248a0bc252eeabe6d642bcd"
     },
     {
+      "path": "tests/e2e/settings.spec.ts",
+      "bytes": 6589,
+      "hash": "b61d92d3572c360b13b976cb749bb7ad499b5c7893d44fa0e8e627c5c82baf8b"
+    },
+    {
       "path": "tests/e2e/smoke.spec.ts",
       "bytes": 885,
       "hash": "a3f6f02607840114a29020d96f57233ac773ef2cc119d7faea6e7827ba706ef3"
@@ -222,8 +252,8 @@
     },
     {
       "path": "tests/firebase/firestore.rules.test.ts",
-      "bytes": 8932,
-      "hash": "68cfe340f5eb4faa872a57d1ed38d4cece601088a1e3d156f79527ccc445fc04"
+      "bytes": 10360,
+      "hash": "5783063e53c69e18e49230108c392f66fcf438177e2ce9a09212fe2c85e197c6"
     },
     {
       "path": "tests/firebase/notifications.rules.test.ts",
@@ -292,8 +322,8 @@
     },
     {
       "path": "tests/services/localServices.test.ts",
-      "bytes": 3874,
-      "hash": "ca4eb6ad5a31b864302e628603fe6a795cfa7443df679213cac70d7adcb3870b"
+      "bytes": 4463,
+      "hash": "518c3247942f86dea6e08ca5a25fd600b82aef95f8f31582a79bc81b30e13395"
     },
     {
       "path": "tests/services/paginationServices.test.ts",

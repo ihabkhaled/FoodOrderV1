@@ -1,7 +1,7 @@
 {
   ".github/copilot-instructions.md": "9d00d14cbbbb9e66442c140850aa74ab7f1e258e8de699e796ca11abe5693286",
   "AGENTS.md": "af3c57be3b0de7087f285461fdc0b93de6f335ac2a460bb85124482cb3f7cd45",
-  "CHANGELOG.md": "da924c9c496fb993d65dcc5af2fa07b81eb1f5c1653d882e2b60637f03584640",
+  "CHANGELOG.md": "7418e8502f0df3357c1181ae4a9e5b5da485b4d6c1f327c49a32ebb7264dd46d",
   "CLAUDE.md": "7ca3520f91743a335176a9ccac1880ed48131d073d793be096f06af7dfedfa24",
   "CODEX.md": "e6cc40b7fe420dea6f43cd1a4b93fe60347ac27ab987100c4bfe600dd0a90d01",
   "GEMINI.md": "2009ab89ebb965a0e1e524a4e85e250a09caa7e4bfbdbdb52a9e3e396d47f7bd",
@@ -90,6 +90,8 @@
   "docs/operations/reference-parity-roadmap.md": "700adb005d51762aab9fdf569380f0eb113ab21aacb897cb69b3bb3daa347183",
   "docs/operations/required-merge-gates.md": "b32cf5052a53f83601a5bd74abd8be72e4519784b9525371478af6851819b4cf",
   "docs/operations/versioning.md": "03d2d3e1190c1a560880691f2a2bd64843e392932eb5143c5d5932bc62dc2f6e",
+  "docs/superpowers/plans/2026-07-29-v1.8.0-bucket-templates-ux.md": "b1c40d4d2c7b9d87a62bd0491ee82221b8c875785d15067f2a00fd866377e7e2",
+  "docs/superpowers/specs/2026-07-29-v1.8.0-design.md": "2224d1246f713a29eff79cf33bc08ab827970e90e13dc75ed54f7c966031c84b",
   "domain/README.md": "5a50ed1c35d2c6044ad297a60b2db8aad849664d9549a0746cf0fe4eea4a54a4",
   "domain/entities.md": "bed34b09e26c218e0aa2d65b4cf79e56f569fe307ed8426d753417d97ceb5455",
   "domain/invariants.md": "7616bc32d5a688423010071988157649a1da41dc3003f5f007b8cc28f3697ad2",
@@ -138,6 +140,7 @@
   "release-notes/v1.7.2.md": "26a20f37b970280b9dc938b31eedcea3a723237f4dec3f6c61b19213d3e2e9c0",
   "release-notes/v1.7.3.md": "2fcdc88640dd552e086be78f90e83c86f334082d55f682b4a2861002b0a00329",
   "release-notes/v1.7.4.md": "7a588f680890f94a65ec075629f93ddf51df1826b6f4853b9e2246907313a188",
+  "release-notes/v1.8.0.md": "aa3cdb26c8466474dd7f5fe3c16c517c46d96fc90474924f7f9cd0e1567760b3",
   "reports/phases/PHASE_00_report.md": "4a0744d91e12941f14eb4601ac627527a49da0193b13b7688809136cbe84cbd9",
   "reports/phases/PHASE_01_05_reports.md": "bc06d99338f3e8c1ff3b4a216e19c0ccbad8b31ab9e34ae69d5eafb0a3728998",
   "reports/phases/PHASE_06_15_reports.md": "0a0b0b1ecca922aadf38c62f92a9c7fc822721cb321d69e5c9724c6a47ca63f9",
@@ -194,7 +197,7 @@
   "src/modules/order-sessions/README.md": "4217c768a7a9cfcdb3613ded61c2824947e803764bf761c8324f6620f3ff2a21",
   "src/modules/orders/README.md": "c302041f0a2f22452d6cb3a74fbab6ce976da5ab3f30ae955981e8041fb99e14",
   "src/modules/public-content/README.md": "6199137365ccc610b3bb2ac2b6897629123b7be7e221280d7a5308ac483c01ab",
-  "src/modules/settings/README.md": "7bef99c01d3df17dbdeae8816e79af9ca65b0ed4592d1c6a027dff9b666d21e5",
+  "src/modules/settings/README.md": "58d72d9ec5985a5bb77c5ca6492e797aa7077ecaf7c06119128c95f8d0c1a945",
   "src/modules/social/README.md": "1187d49ebf166aa1b3a9e9b2d50d61ffccd34f01e05834e76ec754783ba1ad49",
-  "src/modules/telemetry/README.md": "6e92ed520db2e7e9bdaf05352e007ddc9228fce54da88d9b56fea1ee211f1783"
+  "src/modules/telemetry/README.md": "c7c068194e00b0beb042e53228db33983691a8ec0b2f3c10fa69fee92ce8c483"
 }
