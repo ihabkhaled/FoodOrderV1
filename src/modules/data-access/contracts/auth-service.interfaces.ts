@@ -21,6 +21,15 @@ export interface AuthService {
   /** Consumes an emailed reset code and stores the new password. */
   confirmPasswordReset(code: string, newPassword: string): Promise<void>;
   logout(): Promise<void>;
+  /**
+   * Re-verifies the signed-in user's email and password without changing
+   * anything — the guard step before destructive actions such as deletion.
+   */
+  reauthenticate(
+    user: SessionUser,
+    email: string,
+    password: string,
+  ): Promise<void>;
   /** Deletes the authentication account itself; data cascade runs first via DataService. */
   deleteAccount(user: SessionUser): Promise<void>;
 }

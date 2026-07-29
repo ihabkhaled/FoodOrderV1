@@ -246,5 +246,11 @@
   "noMatchingOrders": "ไม่พบออเดอร์ที่ตรงกันในผลลัพธ์ที่โหลดมา",
   "confirmLogoutTitle": "ออกจากระบบหรือไม่",
   "confirmLogoutMessage": "คุณจะต้องเข้าสู่ระบบอีกครั้งเพื่อเข้าถึงบัคเก็ตและออเดอร์ของคุณ",
-  "loggingOut": "กำลังออกจากระบบ…"
+  "loggingOut": "กำลังออกจากระบบ…",
+  "deleteAccountReauthTitle": "ยืนยันว่าเป็นคุณ",
+  "deleteAccountReauthWarning": "การดำเนินการนี้จะลบบัญชีและทุกอย่างที่คุณเป็นเจ้าของอย่างถาวร กรอกอีเมลและรหัสผ่านอีกครั้งเพื่อดำเนินการต่อ ไม่สามารถย้อนกลับได้",
+  "deleteAccountReauthConfirm": "ลบบัญชีอย่างถาวร",
+  "deletingAccount": "กำลังลบบัญชี…",
+  "deleteAccountWrongCredentials": "อีเมลหรือรหัสผ่านไม่ถูกต้อง",
+  "continueAction": "ดำเนินการต่อ"
 }

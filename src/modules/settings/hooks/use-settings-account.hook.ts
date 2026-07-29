@@ -17,8 +17,12 @@ export interface SettingsAccountViewModel {
   confirmingDelete: boolean;
   requestDelete: () => void;
   cancelDelete: () => void;
+  reauthenticating: boolean;
+  reauthError: string | null;
+  cancelReauthentication: () => void;
   deleting: boolean;
-  deleteAccount: () => Promise<void>;
+  confirmDeleteIntent: () => void;
+  deleteAccount: (email: string, password: string) => Promise<void>;
 }
 
 /** Data export and account deletion for the account subpage. */
@@ -26,6 +30,8 @@ export function useSettingsAccount(): SettingsAccountViewModel {
   const { user, profile, locale, t, showToast } = useApp();
   const [exporting, setExporting] = useState(false);
   const [confirmingDelete, setConfirmingDelete] = useState(false);
+  const [reauthenticating, setReauthenticating] = useState(false);
+  const [reauthError, setReauthError] = useState<string | null>(null);
   const [deleting, setDeleting] = useState(false);
 
   const exportData = async (): Promise<void> => {
@@ -53,13 +59,29 @@ export function useSettingsAccount(): SettingsAccountViewModel {
     }
   };
 
-  const deleteAccount = async (): Promise<void> => {
+  /**
+   * Deletion is two-step: the danger confirmation only opens the credential
+   * dialog. Nothing is destroyed until re-authentication succeeds here.
+   */
+  const deleteAccount = async (
+    email: string,
+    password: string,
+  ): Promise<void> => {
     if (!user) return;
+    setReauthError(null);
+    setDeleting(true);
     try {
-      setDeleting(true);
+      await authService.reauthenticate(user, email, password);
+    } catch {
+      setReauthError(t('deleteAccountWrongCredentials'));
+      setDeleting(false);
+      return;
+    }
+    try {
       await dataService.deleteAllUserData(user);
       await authService.deleteAccount(user);
       showToast(t('accountDeleted'), 'success');
+      setReauthenticating(false);
     } catch (error_) {
       showToast(
         error_ instanceof Error ? error_.message : t('tryAgain'),
@@ -67,7 +89,6 @@ export function useSettingsAccount(): SettingsAccountViewModel {
       );
     } finally {
       setDeleting(false);
-      setConfirmingDelete(false);
     }
   };
 
@@ -83,7 +104,19 @@ export function useSettingsAccount(): SettingsAccountViewModel {
     cancelDelete: () => {
       setConfirmingDelete(false);
     },
+    reauthenticating,
+    reauthError,
+    cancelReauthentication: () => {
+      if (deleting) return;
+      setReauthenticating(false);
+      setReauthError(null);
+    },
     deleting,
+    confirmDeleteIntent: () => {
+      setConfirmingDelete(false);
+      setReauthError(null);
+      setReauthenticating(true);
+    },
     deleteAccount,
   };
 }

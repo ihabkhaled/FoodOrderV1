@@ -1,5 +1,6 @@
 export { BackLink } from './back-link';
 export { ConfirmDialog } from './confirm-dialog';
+export { DangerReauthDialog } from './danger-reauth-dialog';
 export { EmptyState } from './empty-state';
 export { ErrorState } from './error-state';
 export { LanguageSelect } from './language-select';

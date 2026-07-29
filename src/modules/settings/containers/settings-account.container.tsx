@@ -1,7 +1,7 @@
 import '../settings.css';
 
 import { Download, Trash2 } from '@/packages/icons';
-import { BackLink, ConfirmDialog } from '@/shared/ui';
+import { BackLink, ConfirmDialog, DangerReauthDialog } from '@/shared/ui';
 
 import { useSettingsAccount } from '../hooks/use-settings-account.hook';
 import { SETTINGS_PATH } from '../routes/settings-route-paths.constants';
@@ -55,12 +55,30 @@ export function SettingsAccountContainer() {
         open={vm.confirmingDelete}
         title={vm.t('deleteAccount')}
         message={vm.t('confirmDeleteAccount')}
-        confirmLabel={vm.t('deleteAccount')}
+        confirmLabel={vm.t('continueAction')}
         cancelLabel={vm.t('cancel')}
         danger
-        busy={vm.deleting}
-        onConfirm={() => void vm.deleteAccount()}
+        onConfirm={vm.confirmDeleteIntent}
         onCancel={vm.cancelDelete}
+      />
+      <DangerReauthDialog
+        open={vm.reauthenticating}
+        title={vm.t('deleteAccountReauthTitle')}
+        warning={vm.t('deleteAccountReauthWarning')}
+        emailLabel={vm.t('email')}
+        passwordLabel={vm.t('password')}
+        confirmLabel={
+          vm.deleting
+            ? vm.t('deletingAccount')
+            : vm.t('deleteAccountReauthConfirm')
+        }
+        cancelLabel={vm.t('cancel')}
+        showPasswordLabel={vm.t('showPassword')}
+        hidePasswordLabel={vm.t('hidePassword')}
+        errorMessage={vm.reauthError}
+        busy={vm.deleting}
+        onConfirm={(email, password) => void vm.deleteAccount(email, password)}
+        onCancel={vm.cancelReauthentication}
       />
     </div>
   );

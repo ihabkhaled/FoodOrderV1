@@ -246,5 +246,11 @@
   "noMatchingOrders": "Keine passenden Bestellungen in den geladenen Ergebnissen.",
   "confirmLogoutTitle": "Abmelden?",
   "confirmLogoutMessage": "Du musst dich erneut anmelden, um auf deine Listen und Bestellungen zuzugreifen.",
-  "loggingOut": "Abmeldung läuft…"
+  "loggingOut": "Abmeldung läuft…",
+  "deleteAccountReauthTitle": "Bestätige, dass du es bist",
+  "deleteAccountReauthWarning": "Dadurch werden dein Konto und alles, was dir gehört, dauerhaft gelöscht. Gib zum Fortfahren deine E-Mail-Adresse und dein Passwort erneut ein. Das lässt sich nicht rückgängig machen.",
+  "deleteAccountReauthConfirm": "Konto dauerhaft löschen",
+  "deletingAccount": "Konto wird gelöscht…",
+  "deleteAccountWrongCredentials": "E-Mail-Adresse oder Passwort ungültig.",
+  "continueAction": "Weiter"
 }

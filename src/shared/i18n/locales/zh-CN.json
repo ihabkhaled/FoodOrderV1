@@ -246,5 +246,11 @@
   "noMatchingOrders": "已加载的结果中没有匹配订单。",
   "confirmLogoutTitle": "退出登录？",
   "confirmLogoutMessage": "您需要重新登录才能访问您的清单和订单。",
-  "loggingOut": "正在退出登录…"
+  "loggingOut": "正在退出登录…",
+  "deleteAccountReauthTitle": "确认是您本人",
+  "deleteAccountReauthWarning": "此操作将永久删除您的账户及您拥有的全部内容。请重新输入邮箱和密码以继续。此操作无法撤销。",
+  "deleteAccountReauthConfirm": "永久删除账户",
+  "deletingAccount": "正在删除账户…",
+  "deleteAccountWrongCredentials": "邮箱或密码无效。",
+  "continueAction": "继续"
 }

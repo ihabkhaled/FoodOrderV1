@@ -246,5 +246,11 @@
   "noMatchingOrders": "No matching orders in the loaded results.",
   "confirmLogoutTitle": "Log out?",
   "confirmLogoutMessage": "You will need to sign in again to access your buckets and orders.",
-  "loggingOut": "Logging out…"
+  "loggingOut": "Logging out…",
+  "deleteAccountReauthTitle": "Confirm it is you",
+  "deleteAccountReauthWarning": "This permanently deletes your account and everything you own. Re-enter your email and password to continue. This cannot be undone.",
+  "deleteAccountReauthConfirm": "Delete account permanently",
+  "deletingAccount": "Deleting account…",
+  "deleteAccountWrongCredentials": "Invalid email or password.",
+  "continueAction": "Continue"
 }

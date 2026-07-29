@@ -246,5 +246,11 @@
   "noMatchingOrders": "読み込み済みの注文に一致する結果はありません。",
   "confirmLogoutTitle": "ログアウトしますか？",
   "confirmLogoutMessage": "バケットや注文を確認するには再度ログインが必要です。",
-  "loggingOut": "ログアウト中…"
+  "loggingOut": "ログアウト中…",
+  "deleteAccountReauthTitle": "本人確認",
+  "deleteAccountReauthWarning": "この操作でアカウントと所有するすべてが完全に削除されます。続けるにはメールアドレスとパスワードを再入力してください。取り消せません。",
+  "deleteAccountReauthConfirm": "アカウントを完全に削除",
+  "deletingAccount": "アカウントを削除中…",
+  "deleteAccountWrongCredentials": "メールアドレスまたはパスワードが正しくありません。",
+  "continueAction": "続行"
 }

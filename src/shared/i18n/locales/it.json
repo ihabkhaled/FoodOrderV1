@@ -246,5 +246,11 @@
   "noMatchingOrders": "Nessun ordine corrispondente nei risultati caricati.",
   "confirmLogoutTitle": "Uscire?",
   "confirmLogoutMessage": "Dovrai accedere di nuovo per consultare i tuoi bucket e i tuoi ordini.",
-  "loggingOut": "Disconnessione in corso…"
+  "loggingOut": "Disconnessione in corso…",
+  "deleteAccountReauthTitle": "Conferma la tua identità",
+  "deleteAccountReauthWarning": "Questa operazione elimina definitivamente il tuo account e tutto ciò che possiedi. Reinserisci email e password per continuare. Non è reversibile.",
+  "deleteAccountReauthConfirm": "Elimina definitivamente l’account",
+  "deletingAccount": "Eliminazione account…",
+  "deleteAccountWrongCredentials": "Email o password non validi.",
+  "continueAction": "Continua"
 }

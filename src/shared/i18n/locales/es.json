@@ -246,5 +246,11 @@
   "noMatchingOrders": "No hay pedidos coincidentes en los resultados cargados.",
   "confirmLogoutTitle": "¿Cerrar sesión?",
   "confirmLogoutMessage": "Tendrás que iniciar sesión de nuevo para acceder a tus listas y pedidos.",
-  "loggingOut": "Cerrando sesión…"
+  "loggingOut": "Cerrando sesión…",
+  "deleteAccountReauthTitle": "Confirma que eres tú",
+  "deleteAccountReauthWarning": "Esto elimina de forma permanente tu cuenta y todo lo que te pertenece. Vuelve a escribir tu correo y contraseña para continuar. No se puede deshacer.",
+  "deleteAccountReauthConfirm": "Eliminar la cuenta de forma permanente",
+  "deletingAccount": "Eliminando la cuenta…",
+  "deleteAccountWrongCredentials": "Correo o contraseña no válidos.",
+  "continueAction": "Continuar"
 }

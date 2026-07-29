@@ -246,5 +246,11 @@
   "noMatchingOrders": "Aucune commande correspondante dans les résultats chargés.",
   "confirmLogoutTitle": "Se déconnecter ?",
   "confirmLogoutMessage": "Vous devrez vous reconnecter pour accéder à vos paniers et à vos commandes.",
-  "loggingOut": "Déconnexion…"
+  "loggingOut": "Déconnexion…",
+  "deleteAccountReauthTitle": "Confirmez votre identité",
+  "deleteAccountReauthWarning": "Cette action supprime définitivement votre compte et tout ce qui vous appartient. Saisissez à nouveau votre e-mail et votre mot de passe pour continuer. C’est irréversible.",
+  "deleteAccountReauthConfirm": "Supprimer définitivement le compte",
+  "deletingAccount": "Suppression du compte…",
+  "deleteAccountWrongCredentials": "E-mail ou mot de passe invalide.",
+  "continueAction": "Continuer"
 }

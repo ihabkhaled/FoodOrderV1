@@ -95,6 +95,23 @@ export class FirebaseAuthService implements AuthService {
     await signOut(getFirebaseRuntime().auth);
   }
 
+  async reauthenticate(
+    user: SessionUser,
+    email: string,
+    password: string,
+  ): Promise<void> {
+    const current = getFirebaseRuntime().auth.currentUser;
+    if (!current || current.uid !== user.id) {
+      throw new Error('You must be signed in to confirm your credentials.');
+    }
+    const accountEmail = (current.email ?? user.email).toLowerCase();
+    if (email.trim().toLowerCase() !== accountEmail) {
+      throw new Error('Invalid email or password.');
+    }
+    const credential = EmailAuthProvider.credential(accountEmail, password);
+    await reauthenticateWithCredential(current, credential);
+  }
+
   async deleteAccount(user: SessionUser): Promise<void> {
     const current = getFirebaseRuntime().auth.currentUser;
     if (!current || current.uid !== user.id) throw new Error('You must be signed in to delete this account.');

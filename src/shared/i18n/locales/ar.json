@@ -246,5 +246,11 @@
   "noMatchingOrders": "لا توجد طلبات مطابقة في النتائج المحمّلة.",
   "confirmLogoutTitle": "تسجيل الخروج؟",
   "confirmLogoutMessage": "ستحتاج إلى تسجيل الدخول مرة أخرى للوصول إلى القوائم والطلبات.",
-  "loggingOut": "جارٍ تسجيل الخروج…"
+  "loggingOut": "جارٍ تسجيل الخروج…",
+  "deleteAccountReauthTitle": "أكّد هويتك",
+  "deleteAccountReauthWarning": "سيؤدي هذا إلى حذف حسابك وكل ما تملكه نهائيًا. أعد إدخال بريدك الإلكتروني وكلمة المرور للمتابعة. لا يمكن التراجع عن ذلك.",
+  "deleteAccountReauthConfirm": "حذف الحساب نهائيًا",
+  "deletingAccount": "جارٍ حذف الحساب…",
+  "deleteAccountWrongCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة.",
+  "continueAction": "متابعة"
 }

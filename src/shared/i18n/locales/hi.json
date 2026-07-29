@@ -246,5 +246,11 @@
   "noMatchingOrders": "लोड किए गए परिणामों में कोई मिलान वाला ऑर्डर नहीं।",
   "confirmLogoutTitle": "लॉग आउट करें?",
   "confirmLogoutMessage": "अपने बकेट और ऑर्डर देखने के लिए आपको फिर से साइन इन करना होगा।",
-  "loggingOut": "लॉग आउट हो रहा है…"
+  "loggingOut": "लॉग आउट हो रहा है…",
+  "deleteAccountReauthTitle": "पुष्टि करें कि यह आप हैं",
+  "deleteAccountReauthWarning": "इससे आपका खाता और आपकी सारी सामग्री स्थायी रूप से हट जाएगी। जारी रखने के लिए अपना ईमेल और पासवर्ड फिर से दर्ज करें। इसे पूर्ववत नहीं किया जा सकता।",
+  "deleteAccountReauthConfirm": "खाता स्थायी रूप से हटाएँ",
+  "deletingAccount": "खाता हटाया जा रहा है…",
+  "deleteAccountWrongCredentials": "ईमेल या पासवर्ड अमान्य है।",
+  "continueAction": "जारी रखें"
 }

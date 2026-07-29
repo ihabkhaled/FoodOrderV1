@@ -246,5 +246,11 @@
   "noMatchingOrders": "Não há pedidos correspondentes nos resultados carregados.",
   "confirmLogoutTitle": "Sair?",
   "confirmLogoutMessage": "Você precisará entrar novamente para acessar suas listas e pedidos.",
-  "loggingOut": "Saindo…"
+  "loggingOut": "Saindo…",
+  "deleteAccountReauthTitle": "Confirme que é você",
+  "deleteAccountReauthWarning": "Isso exclui permanentemente sua conta e tudo o que pertence a você. Digite novamente seu e-mail e senha para continuar. Não é possível desfazer.",
+  "deleteAccountReauthConfirm": "Excluir conta permanentemente",
+  "deletingAccount": "Excluindo conta…",
+  "deleteAccountWrongCredentials": "E-mail ou senha inválidos.",
+  "continueAction": "Continuar"
 }

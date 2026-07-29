@@ -246,5 +246,11 @@
   "noMatchingOrders": "در نتایج بارگیری‌شده سفارش منطبقی وجود ندارد.",
   "confirmLogoutTitle": "خروج از حساب؟",
   "confirmLogoutMessage": "برای دسترسی به فهرست‌ها و سفارش‌ها باید دوباره وارد شوید.",
-  "loggingOut": "در حال خروج…"
+  "loggingOut": "در حال خروج…",
+  "deleteAccountReauthTitle": "هویت خود را تأیید کنید",
+  "deleteAccountReauthWarning": "این کار حساب شما و همه چیز متعلق به شما را برای همیشه حذف می‌کند. برای ادامه، ایمیل و گذرواژه خود را دوباره وارد کنید. این عمل برگشت‌پذیر نیست.",
+  "deleteAccountReauthConfirm": "حذف دائمی حساب",
+  "deletingAccount": "در حال حذف حساب…",
+  "deleteAccountWrongCredentials": "ایمیل یا گذرواژه نادرست است.",
+  "continueAction": "ادامه"
 }
