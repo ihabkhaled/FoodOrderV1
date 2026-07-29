@@ -18,5 +18,9 @@
   "securitySectionHint": "Atualize a senha usada para entrar.",
   "accountSection": "Dados e conta",
   "accountSectionHint": "Exporte seus dados ou exclua sua conta.",
-  "preferencesSaved": "Preferências salvas."
+  "preferencesSaved": "Preferências salvas.",
+  "diagnosticsSection": "Diagnósticos",
+  "diagnosticsStored": "Diagnósticos armazenados neste dispositivo",
+  "diagnosticsExplanation": "Os eventos de diagnóstico são gravados apenas neste dispositivo, nunca enviados e nunca compartilhados com terceiros. Eles existem para que você veja exatamente o que foi registrado, e você pode apagá-los quando quiser.",
+  "clearDiagnostics": "Limpar diagnósticos"
 }

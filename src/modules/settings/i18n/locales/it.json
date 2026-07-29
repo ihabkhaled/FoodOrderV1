@@ -18,5 +18,9 @@
   "securitySectionHint": "Aggiorna la password con cui accedi.",
   "accountSection": "Dati e account",
   "accountSectionHint": "Esporta i tuoi dati o elimina il tuo account.",
-  "preferencesSaved": "Preferenze salvate."
+  "preferencesSaved": "Preferenze salvate.",
+  "diagnosticsSection": "Diagnostica",
+  "diagnosticsStored": "Diagnostica memorizzata su questo dispositivo",
+  "diagnosticsExplanation": "Gli eventi diagnostici vengono scritti solo su questo dispositivo, mai caricati e mai inviati a terze parti. Esistono perché tu possa vedere esattamente cosa è stato registrato e puoi cancellarli quando vuoi.",
+  "clearDiagnostics": "Cancella la diagnostica"
 }

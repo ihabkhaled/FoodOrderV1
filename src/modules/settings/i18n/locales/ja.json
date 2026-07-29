@@ -18,5 +18,9 @@
   "securitySectionHint": "ログインに使うパスワードを更新します。",
   "accountSection": "データとアカウント",
   "accountSectionHint": "データのエクスポートやアカウントの削除。",
-  "preferencesSaved": "環境設定を保存しました。"
+  "preferencesSaved": "環境設定を保存しました。",
+  "diagnosticsSection": "診断情報",
+  "diagnosticsStored": "この端末に保存されている診断情報",
+  "diagnosticsExplanation": "診断イベントはこの端末にのみ記録され、アップロードされることも第三者に送信されることもありません。何が記録されたかを確認できるようにするためのもので、いつでも消去できます。",
+  "clearDiagnostics": "診断情報を消去"
 }

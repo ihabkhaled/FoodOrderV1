@@ -18,5 +18,9 @@
   "securitySectionHint": "Aktualisiere das Passwort für deine Anmeldung.",
   "accountSection": "Daten und Konto",
   "accountSectionHint": "Exportiere deine Daten oder lösche dein Konto.",
-  "preferencesSaved": "Präferenzen gespeichert."
+  "preferencesSaved": "Präferenzen gespeichert.",
+  "diagnosticsSection": "Diagnosen",
+  "diagnosticsStored": "Auf diesem Gerät gespeicherte Diagnosen",
+  "diagnosticsExplanation": "Diagnoseereignisse werden nur auf dieses Gerät geschrieben, niemals hochgeladen und niemals an Dritte gesendet. Sie existieren, damit du genau sehen kannst, was aufgezeichnet wurde, und du kannst sie jederzeit löschen.",
+  "clearDiagnostics": "Diagnosen löschen"
 }

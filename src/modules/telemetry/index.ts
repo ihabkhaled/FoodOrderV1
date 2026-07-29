@@ -1,9 +1,16 @@
 export {
+  clearTelemetryBuffer,
+  countTelemetryEvents,
+  MAX_BUFFERED_TELEMETRY_EVENTS,
+  readTelemetryBuffer,
+} from './adapters/telemetry-buffer.adapter';
+export {
   DEFAULT_ANALYTICS_CONSENT,
   isAnalyticsConsent,
   loadAnalyticsConsent,
   saveAnalyticsConsent,
 } from './adapters/telemetry-consent.adapter';
+export { telemetryRecorder } from './adapters/telemetry-recorder.adapter';
 export {
   ANALYTICS_EVENT,
   ANALYTICS_EVENT_PURPOSE,

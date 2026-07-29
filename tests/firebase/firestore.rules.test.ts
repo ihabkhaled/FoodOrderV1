@@ -334,3 +334,59 @@ describe('frozen bucket permissions', () => {
     ).resolves.toMatchObject({ code: 'permission-denied' });
   });
 });
+
+const profileDocument = (analyticsConsent?: string) => ({
+  id: OWNER_ID,
+  fullName: 'Owner',
+  email: 'owner@example.com',
+  locale: 'en',
+  theme: 'system',
+  defaultCurrency: 'EGP',
+  ...(analyticsConsent === undefined ? {} : { analyticsConsent }),
+  createdAt: NOW,
+  updatedAt: NOW,
+});
+
+const ownerDatabase = () =>
+  environment
+    .authenticatedContext(OWNER_ID, { email: 'owner@example.com' })
+    .firestore();
+
+describe('profile analytics consent rules', () => {
+  it('accepts a profile without any consent field', async () => {
+    await expect(
+      assertSucceeds(
+        setDoc(doc(ownerDatabase(), 'users', OWNER_ID), profileDocument()),
+      ),
+    ).resolves.toBeUndefined();
+  });
+
+  it('accepts every supported consent value', async () => {
+    for (const consent of [
+      'denied',
+      'operational_only',
+      'product_analytics',
+      'product_and_marketing',
+    ]) {
+      await expect(
+        assertSucceeds(
+          setDoc(
+            doc(ownerDatabase(), 'users', OWNER_ID),
+            profileDocument(consent),
+          ),
+        ),
+      ).resolves.toBeUndefined();
+    }
+  });
+
+  it('rejects an unsupported consent value', async () => {
+    await expect(
+      assertFails(
+        setDoc(
+          doc(ownerDatabase(), 'users', OWNER_ID),
+          profileDocument('track_everything'),
+        ),
+      ),
+    ).resolves.toMatchObject({ code: 'permission-denied' });
+  });
+});

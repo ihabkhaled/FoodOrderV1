@@ -18,5 +18,9 @@
   "securitySectionHint": "更新用于登录的密码。",
   "accountSection": "数据与账户",
   "accountSectionHint": "导出您的数据或删除账户。",
-  "preferencesSaved": "偏好设置已保存。"
+  "preferencesSaved": "偏好设置已保存。",
+  "diagnosticsSection": "诊断信息",
+  "diagnosticsStored": "存储在本设备上的诊断信息",
+  "diagnosticsExplanation": "诊断事件仅写入本设备，绝不会上传，也绝不会发送给任何第三方。它们的存在是为了让您准确了解记录了什么，您可以随时清除。",
+  "clearDiagnostics": "清除诊断信息"
 }

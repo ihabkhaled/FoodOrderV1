@@ -2,6 +2,7 @@ import { useCallback, useState } from 'react';
 
 import type { Bucket, SessionUser } from '@/modules/data-access';
 import { buildDuplicateBucketDraft, dataService } from '@/modules/data-access';
+import { ANALYTICS_EVENT, telemetryRecorder } from '@/modules/telemetry';
 import type { MessageKey } from '@/shared/i18n';
 
 interface BucketMutationOptions {
@@ -41,10 +42,15 @@ export const useBucketMutations = ({
     async (bucket: Bucket): Promise<void> => {
       if (!user) return;
       try {
-        await dataService.createBucket(
+        const created = await dataService.createBucket(
           user,
           buildDuplicateBucketDraft(bucket, t('copySuffix')),
         );
+        telemetryRecorder.record(ANALYTICS_EVENT.firstMenuCreated, {
+          itemCount: created.items.length,
+          participantCount: 0,
+          isFirstValueMoment: false,
+        });
         await refresh();
         showToast(t('bucketSaved'), 'success');
       } catch (error) {

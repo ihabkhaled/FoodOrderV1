@@ -78,6 +78,62 @@ test.describe('settings hub and subpages', () => {
   });
 });
 
+const diagnosticsCount = async (page: Page): Promise<number> =>
+  page.evaluate(() => {
+    const raw = localStorage.getItem('foodorder:v1:diagnostics');
+    if (!raw) return 0;
+    const parsed: unknown = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed.length : 0;
+  });
+
+const createBucket = async (page: Page, title: string): Promise<void> => {
+  await page.goto('/buckets/new');
+  await page.getByLabel('Bucket title').fill(title);
+  await page.getByLabel('Item name').fill('Meal');
+  await page.getByLabel('Unit price').fill('100');
+  await page.getByRole('button', { name: 'Save' }).click();
+  await expect(page).toHaveURL(/\/buckets$/u);
+};
+
+const setConsent = async (page: Page, option: RegExp): Promise<void> => {
+  await page.goto('/settings/privacy');
+  await page.getByRole('radio', { name: option }).check();
+  await page.getByRole('button', { name: 'Save' }).click();
+  await expect(page.getByText('Analytics preference saved.')).toBeVisible();
+};
+
+test.describe('analytics consent has real effect', () => {
+  test('denied consent records nothing while product consent records events', async ({
+    page,
+  }) => {
+    await register(page, 'consent-effect');
+    await createBucket(page, 'Consent menu');
+
+    await setConsent(page, /Do not record analytics/u);
+    await page.evaluate(() => {
+      localStorage.removeItem('foodorder:v1:diagnostics');
+    });
+
+    await page.goto('/buckets');
+    await page
+      .getByRole('button', { name: 'Duplicate — Consent menu', exact: true })
+      .first()
+      .click();
+    await expect(page.getByText('Bucket saved.')).toBeVisible();
+    expect(await diagnosticsCount(page)).toBe(0);
+
+    await setConsent(page, /Operational and product analytics/u);
+    await page.goto('/buckets');
+    await page
+      .getByRole('button', { name: 'Duplicate — Consent menu', exact: true })
+      .first()
+      .click();
+    await expect(page.getByText('Bucket saved.')).toBeVisible();
+
+    await expect.poll(async () => diagnosticsCount(page)).toBeGreaterThan(0);
+  });
+});
+
 test.describe('account deletion requires credentials', () => {
   test('wrong credentials keep the account alive', async ({ page }) => {
     await register(page, 'delete-wrong');

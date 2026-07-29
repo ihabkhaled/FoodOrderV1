@@ -37,7 +37,14 @@ export interface AppContextValue {
   logout: () => Promise<void>;
   saveProfile: (
     changes: Partial<
-      Pick<UserProfile, 'fullName' | 'locale' | 'theme' | 'defaultCurrency'>
+      Pick<
+        UserProfile,
+        | 'fullName'
+        | 'locale'
+        | 'theme'
+        | 'defaultCurrency'
+        | 'analyticsConsent'
+      >
     >,
   ) => Promise<void>;
   /** Runtime language switch that also works before signing in. */

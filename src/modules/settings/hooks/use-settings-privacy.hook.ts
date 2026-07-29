@@ -3,9 +3,12 @@ import { type SyntheticEvent, useEffect, useState } from 'react';
 import { useApp } from '@/modules/session';
 import {
   type AnalyticsConsent,
+  clearTelemetryBuffer,
+  countTelemetryEvents,
   DEFAULT_ANALYTICS_CONSENT,
   loadAnalyticsConsent,
   saveAnalyticsConsent,
+  telemetryRecorder,
 } from '@/modules/telemetry';
 import type { MessageKey } from '@/shared/i18n';
 
@@ -19,45 +22,63 @@ export interface SettingsPrivacyViewModel {
   setAnalyticsConsent: (value: AnalyticsConsent) => void;
   loading: boolean;
   busy: boolean;
+  recordedEventCount: number;
+  clearDiagnostics: () => void;
   submit: (event: SyntheticEvent) => Promise<void>;
 }
 
-/** Analytics consent state for the privacy subpage. */
+/**
+ * Analytics consent for the privacy subpage. The signed-in profile owns the
+ * choice so it roams; the device preference is the offline/pre-login fallback.
+ */
 export function useSettingsPrivacy(): SettingsPrivacyViewModel {
-  const { locale, t, showToast } = useApp();
+  const { locale, profile, t, showToast, saveProfile } = useApp();
   const [analyticsConsent, setAnalyticsConsent] = useState<AnalyticsConsent>(
-    DEFAULT_ANALYTICS_CONSENT,
+    profile?.analyticsConsent ?? DEFAULT_ANALYTICS_CONSENT,
   );
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
+  const [recordedEventCount, setRecordedEventCount] = useState(0);
 
   useEffect(() => {
     let active = true;
 
     void loadAnalyticsConsent()
       .then((storedConsent) => {
-        if (active) setAnalyticsConsent(storedConsent);
+        if (!active) return;
+        setAnalyticsConsent(profile?.analyticsConsent ?? storedConsent);
       })
       .catch(() => {
         if (active) setAnalyticsConsent(DEFAULT_ANALYTICS_CONSENT);
       })
       .finally(() => {
-        if (active) setLoading(false);
+        if (active) {
+          setRecordedEventCount(countTelemetryEvents());
+          setLoading(false);
+        }
       });
 
     return () => {
       active = false;
     };
-  }, []);
+  }, [profile?.analyticsConsent]);
 
   const settingsT = (key: SettingsMessageKey): string =>
     translateSettings(locale, key);
+
+  const clearDiagnostics = (): void => {
+    clearTelemetryBuffer();
+    setRecordedEventCount(0);
+  };
 
   const submit = async (event: SyntheticEvent): Promise<void> => {
     event.preventDefault();
     try {
       setBusy(true);
       await saveAnalyticsConsent(analyticsConsent);
+      telemetryRecorder.setConsent(analyticsConsent);
+      if (profile) await saveProfile({ analyticsConsent });
+      setRecordedEventCount(countTelemetryEvents());
       showToast(settingsT('analyticsConsentSaved'), 'success');
     } catch {
       showToast(t('tryAgain'), 'error');
@@ -73,6 +94,8 @@ export function useSettingsPrivacy(): SettingsPrivacyViewModel {
     setAnalyticsConsent,
     loading,
     busy,
+    recordedEventCount,
+    clearDiagnostics,
     submit,
   };
 }

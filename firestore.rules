@@ -28,7 +28,14 @@ service cloud.firestore {
           && request.resource.data.email == request.auth.token.email
           && request.resource.data.fullName is string
           && request.resource.data.locale in ['en', 'ar', 'it', 'fa', 'fr', 'de', 'es', 'pt-BR', 'hi', 'th', 'zh-CN', 'ja']
-          && request.resource.data.theme in ['system', 'light', 'dark'];
+          && request.resource.data.theme in ['system', 'light', 'dark']
+          && validAnalyticsConsent();
+      }
+
+      // Optional since v1.8.0: profiles written earlier carry no consent field.
+      function validAnalyticsConsent() {
+        return !('analyticsConsent' in request.resource.data)
+          || request.resource.data.analyticsConsent in ['denied', 'operational_only', 'product_analytics', 'product_and_marketing'];
       }
 
       function validPersonalPricingPolicy(pricing) {

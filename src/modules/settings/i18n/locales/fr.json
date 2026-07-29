@@ -18,5 +18,9 @@
   "securitySectionHint": "Mettez à jour le mot de passe de connexion.",
   "accountSection": "Données et compte",
   "accountSectionHint": "Exportez vos données ou supprimez votre compte.",
-  "preferencesSaved": "Préférences enregistrées."
+  "preferencesSaved": "Préférences enregistrées.",
+  "diagnosticsSection": "Diagnostics",
+  "diagnosticsStored": "Diagnostics stockés sur cet appareil",
+  "diagnosticsExplanation": "Les événements de diagnostic sont écrits uniquement sur cet appareil, jamais téléversés et jamais transmis à un tiers. Ils existent pour que vous puissiez voir exactement ce qui a été enregistré, et vous pouvez les effacer à tout moment.",
+  "clearDiagnostics": "Effacer les diagnostics"
 }

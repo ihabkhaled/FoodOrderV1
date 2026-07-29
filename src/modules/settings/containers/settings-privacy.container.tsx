@@ -1,6 +1,6 @@
 import '../settings.css';
 
-import { Save } from '@/packages/icons';
+import { Save, Trash2 } from '@/packages/icons';
 import { BackLink } from '@/shared/ui';
 
 import { AnalyticsConsentSection } from '../components/analytics-consent-section/analytics-consent-section.component';
@@ -30,6 +30,29 @@ export function SettingsPrivacyContainer() {
           options={analyticsConsentOptions}
           onChange={vm.setAnalyticsConsent}
         />
+        <section className="section-card stack">
+          <div className="section-heading">
+            <div>
+              <p className="eyebrow">{vm.settingsT('diagnosticsSection')}</p>
+              <h2>{vm.settingsT('diagnosticsStored')}</h2>
+            </div>
+          </div>
+          <p className="muted">{vm.settingsT('diagnosticsExplanation')}</p>
+          <p>
+            <output aria-label={vm.settingsT('diagnosticsStored')}>
+              {vm.recordedEventCount}
+            </output>
+          </p>
+          <button
+            type="button"
+            className="button secondary"
+            disabled={vm.recordedEventCount === 0}
+            onClick={vm.clearDiagnostics}
+          >
+            <Trash2 />
+            {vm.settingsT('clearDiagnostics')}
+          </button>
+        </section>
         <div className="sticky-actions">
           <button className="button" disabled={vm.busy || vm.loading}>
             <Save />

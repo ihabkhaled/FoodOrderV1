@@ -18,5 +18,9 @@
   "securitySectionHint": "Update the password you sign in with.",
   "accountSection": "Data and account",
   "accountSectionHint": "Export your data or delete your account.",
-  "preferencesSaved": "Preferences saved."
+  "preferencesSaved": "Preferences saved.",
+  "diagnosticsSection": "Diagnostics",
+  "diagnosticsStored": "Diagnostics stored on this device",
+  "diagnosticsExplanation": "Diagnostic events are written only to this device, never uploaded and never sent to any third party. They exist so you can see exactly what was recorded, and you can erase them at any time.",
+  "clearDiagnostics": "Clear diagnostics"
 }

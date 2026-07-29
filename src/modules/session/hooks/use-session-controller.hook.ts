@@ -3,6 +3,12 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { ProfileDefaults, SessionUser, UserProfile } from '@/modules/data-access';
 import { authService, dataService, storageMode } from '@/modules/data-access';
 import {
+  ANALYTICS_EVENT,
+  loadAnalyticsConsent,
+  RELIABILITY_ERROR_CATEGORY,
+  telemetryRecorder,
+} from '@/modules/telemetry';
+import {
   setFirebaseErrorLocale,
   userFacingErrorMessage,
 } from '@/packages/firebase';
@@ -18,8 +24,10 @@ import {
   impact,
   isNativeApplication,
   loadDeviceConfig,
+  runtimePlatformName,
   saveDeviceConfig,
 } from '@/platform/device';
+import { env } from '@/platform/environment';
 import {
   getNetworkStatus,
   isNavigatorOnline,
@@ -90,6 +98,12 @@ export const useSessionController = (initialLocale?: Locale): AppContextValue =>
         }
       })
       .catch((error: unknown) => {
+        telemetryRecorder.record(ANALYTICS_EVENT.gatewayError, {
+          category: RELIABILITY_ERROR_CATEGORY.internal,
+          operation: 'profile_load',
+          errorCode: error instanceof Error ? error.name : 'unknown',
+          retryable: true,
+        });
         setToast({
           message: userFacingErrorMessage(
             error,
@@ -106,6 +120,32 @@ export const useSessionController = (initialLocale?: Locale): AppContextValue =>
     applyDocumentTheme(theme);
     applyDocumentLocale(locale, localeDirection(locale));
   }, [locale, theme]);
+
+  // Diagnostics stay denied until the stored consent resolves, and the profile
+  // copy wins so the choice roams with the account.
+  useEffect(() => {
+    void loadAnalyticsConsent()
+      .then((storedConsent) => {
+        telemetryRecorder.setConsent(profile?.analyticsConsent ?? storedConsent);
+      })
+      .catch(() => {
+        // Leaving consent denied is the safe failure mode.
+      });
+  }, [profile?.analyticsConsent]);
+
+  useEffect(() => {
+    telemetryRecorder.setContext({
+      appVersion: env.appVersion,
+      locale,
+      platform: runtimePlatformName(),
+      storageMode,
+      plan: 'free',
+      correlationId: user?.id ? `u:${user.id.slice(0, 12)}` : 'anonymous',
+      sessionId: null,
+      workspaceId: null,
+      experimentAssignments: null,
+    });
+  }, [locale, user?.id]);
 
   useEffect(() => {
     if (theme !== 'system') return;
@@ -159,11 +199,19 @@ export const useSessionController = (initialLocale?: Locale): AppContextValue =>
         userFacingErrorMessage(error, locale, translate(locale, fallbackKey)),
       login: async (email, password) => {
         await authService.login(email, password);
+        telemetryRecorder.record(ANALYTICS_EVENT.authFlowStarted, {
+          method: 'email_password',
+          returnToInvite: false,
+        });
         await impact();
         showToast(translate(locale, 'signedIn'), 'success');
       },
       register: async (fullName, email, password) => {
         await authService.register(fullName, email, password, defaults);
+        telemetryRecorder.record(ANALYTICS_EVENT.registrationCompleted, {
+          method: 'email_password',
+          returnToInvite: false,
+        });
         await impact();
         showToast(translate(locale, 'accountCreated'), 'success');
       },

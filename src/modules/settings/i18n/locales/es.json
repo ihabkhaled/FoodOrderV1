@@ -18,5 +18,9 @@
   "securitySectionHint": "Actualiza la contraseña con la que inicias sesión.",
   "accountSection": "Datos y cuenta",
   "accountSectionHint": "Exporta tus datos o elimina tu cuenta.",
-  "preferencesSaved": "Preferencias guardadas."
+  "preferencesSaved": "Preferencias guardadas.",
+  "diagnosticsSection": "Diagnósticos",
+  "diagnosticsStored": "Diagnósticos almacenados en este dispositivo",
+  "diagnosticsExplanation": "Los eventos de diagnóstico se escriben solo en este dispositivo, nunca se suben ni se envían a terceros. Existen para que veas exactamente qué se registró, y puedes borrarlos cuando quieras.",
+  "clearDiagnostics": "Borrar diagnósticos"
 }
