@@ -7,8 +7,8 @@
     },
     {
       "path": "tests/bucket-pricing.test.ts",
-      "bytes": 3507,
-      "hash": "29dcee9ae619fc2d53fd17e61e9420a7825753ec9d9f2346b45c96eaabe1814e"
+      "bytes": 3770,
+      "hash": "6ed9ca32099b582f8a79889f94ab37017b42a71b32cb6a2794434c2b99601afa"
     },
     {
       "path": "tests/components/AnalyticsConsentSection.test.tsx",
@@ -47,8 +47,8 @@
     },
     {
       "path": "tests/components/NotificationCenter.test.tsx",
-      "bytes": 1862,
-      "hash": "4018eaf75763a26c43ff7bf5400489f5b15ecf6defb0cb896e54c674f1d96046"
+      "bytes": 1888,
+      "hash": "abdd98ce38ff504c02d9345044268e97a38514a49723f060e360be40ea894e3a"
     },
     {
       "path": "tests/components/NumericField.test.tsx",
@@ -79,6 +79,11 @@
       "path": "tests/components/SettingsLinkRow.test.tsx",
       "bytes": 911,
       "hash": "6755da668fec9e5963ee0374cb4f1cf42bd0c7b5a0a39f9de98234fd338a2630"
+    },
+    {
+      "path": "tests/components/Skeleton.test.tsx",
+      "bytes": 1443,
+      "hash": "c62fdbcd8a3ad515aa17893b30f86eb8a336307ad8453e5a5a377cf7468dcb81"
     },
     {
       "path": "tests/domain/billing-entitlements.test.ts",
@@ -182,8 +187,8 @@
     },
     {
       "path": "tests/e2e/bucket-pricing.spec.ts",
-      "bytes": 5358,
-      "hash": "05a0e658739a9229634879525e7faae0606bfdf07f7b80edacdbe23de1d8db89"
+      "bytes": 5496,
+      "hash": "d9cda13aaa11fa320c6b7a413380e3757cea243c96d0095286b177c03a981f35"
     },
     {
       "path": "tests/e2e/group-order.spec.ts",
@@ -199,6 +204,11 @@
       "path": "tests/e2e/order-lifecycle.spec.ts",
       "bytes": 7646,
       "hash": "0b5f5088d9ff33b821d1eddeebc968288044a62813d3e151a2b6ac4cff8d3d1a"
+    },
+    {
+      "path": "tests/e2e/order-rounds.spec.ts",
+      "bytes": 6918,
+      "hash": "496911ab306fa49a62d80a9b1e0565cfb9a975615758ad856db65bbd0bfdca74"
     },
     {
       "path": "tests/e2e/public-content.spec.ts",
@@ -217,8 +227,8 @@
     },
     {
       "path": "tests/e2e/settings.spec.ts",
-      "bytes": 6589,
-      "hash": "b61d92d3572c360b13b976cb749bb7ad499b5c7893d44fa0e8e627c5c82baf8b"
+      "bytes": 6926,
+      "hash": "cac4e0fbe4bce1f48b97f1ec31eb2fe83f47aaf549b38d2b2b8acb98cf9f6701"
     },
     {
       "path": "tests/e2e/smoke.spec.ts",
@@ -317,8 +327,8 @@
     },
     {
       "path": "tests/services/localOrderSessionService.test.ts",
-      "bytes": 9834,
-      "hash": "b3b49dce84de1933b67d96b938c3b5f5ef88ff70a9f171c84be05bb7676964cc"
+      "bytes": 12003,
+      "hash": "35b9c17d9e4a78b19c46fcc1323809530cda4c56c8bcdbee8b67e66df649cc6d"
     },
     {
       "path": "tests/services/localServices.test.ts",

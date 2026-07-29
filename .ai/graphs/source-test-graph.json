@@ -2386,6 +2386,26 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/shared/ui/skeleton/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/ui/skeleton/skeleton-section.component.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/ui/skeleton/skeleton.component.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/ui/skeleton/skeleton.types.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/shared/ui/ux-polish.css",
       "tests": [],
       "relationship": "inferred"
