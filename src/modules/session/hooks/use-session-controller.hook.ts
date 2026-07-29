@@ -10,6 +10,7 @@ import {
   applyDocumentLocale,
   applyDocumentTheme,
   navigateToBrowserLocale,
+  subscribeToColorSchemeChange,
 } from '@/platform/browser';
 import {
   DEFAULT_DEVICE_CONFIG,
@@ -80,7 +81,14 @@ export const useSessionController = (initialLocale?: Locale): AppContextValue =>
     setProfileLoadedFor(user.id);
     void dataService
       .getProfile(user, defaults)
-      .then(setProfile)
+      .then((nextProfile) => {
+        setProfile(nextProfile);
+        // Roam the saved language on the web: a fresh device boots on the URL
+        // locale, so a differing profile locale redirects once after login.
+        if (!isNativeApplication() && nextProfile.locale !== locale) {
+          navigateToBrowserLocale(nextProfile.locale);
+        }
+      })
       .catch((error: unknown) => {
         setToast({
           message: userFacingErrorMessage(
@@ -98,6 +106,13 @@ export const useSessionController = (initialLocale?: Locale): AppContextValue =>
     applyDocumentTheme(theme);
     applyDocumentLocale(locale, localeDirection(locale));
   }, [locale, theme]);
+
+  useEffect(() => {
+    if (theme !== 'system') return;
+    return subscribeToColorSchemeChange(() => {
+      applyDocumentTheme('system');
+    });
+  }, [theme]);
 
   useEffect(() => {
     const refresh = (): void => {

@@ -16,6 +16,7 @@ export {
   applyDocumentLocale,
   applyDocumentTheme,
   getDocumentLanguage,
+  subscribeToColorSchemeChange,
 } from './document-settings.adapter';
 export type { ThemePreference } from './document-settings.types';
 export { downloadTextFile } from './file-download.adapter';
