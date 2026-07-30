@@ -1,0 +1,97 @@
+- generic [ref=f4e3]:
+  - banner [ref=f4e4]:
+    - link "FO FoodOrder" [ref=f4e5] [cursor=pointer]:
+      - /url: /en/app
+      - generic [ref=f4e6]: FO
+      - generic [ref=f4e7]: FoodOrder
+    - generic [ref=f4e8]:
+      - button "Notifications" [ref=f4e10] [cursor=pointer]
+      - combobox "Language" [ref=f4e14]:
+        - option "English"
+        - option "العربية"
+        - option "Italiano"
+        - option "فارسی"
+        - option "Français"
+        - option "Deutsch"
+        - option "Español"
+        - option "Português"
+        - option "हिन्दी"
+        - option "ไทย"
+        - option "简体中文"
+        - option "日本語"
+      - 'button "Theme: system" [ref=f4e15] [cursor=pointer]'
+      - generic [ref=f4e18]: Online
+      - button "Log out" [ref=f4e24] [cursor=pointer]
+  - main [ref=f4e28]:
+    - generic [ref=f4e135]:
+      - status:
+        - generic: Pull down to refresh
+      - button "Refresh page" [ref=f4e136] [cursor=pointer]
+      - generic [ref=f4e142]:
+        - generic [ref=f4e143]:
+          - generic [ref=f4e144]:
+            - paragraph [ref=f4e145]: My buckets
+            - heading "Buckets" [level=1] [ref=f4e146]
+          - generic [ref=f4e147]:
+            - link "Join with code" [ref=f4e148] [cursor=pointer]:
+              - /url: /en/join
+            - link "Create bucket" [ref=f4e152] [cursor=pointer]:
+              - /url: /en/buckets/new
+        - generic [ref=f4e154]:
+          - textbox "Search buckets" [ref=f4e159]
+          - group "Buckets" [ref=f4e160]:
+            - button "All" [ref=f4e161] [cursor=pointer]
+            - button "My buckets" [ref=f4e162] [cursor=pointer]
+            - button "Shared with me" [ref=f4e163] [cursor=pointer]
+          - region [ref=f4e164]:
+            - heading "My buckets" [level=2] [ref=f4e167]
+            - generic [ref=f4e169]:
+              - article [ref=f4e172]:
+                - generic [ref=f4e181]:
+                  - button "Duplicate — Friday Lunch" [ref=f4e182] [cursor=pointer]
+                  - button "Delete — Friday Lunch" [ref=f4e186] [cursor=pointer]
+                - generic [ref=f4e190]:
+                  - heading "Friday Lunch" [level=2] [ref=f4e191]
+                  - paragraph [ref=f4e192]: 1 Items
+                - generic [ref=f4e193]:
+                  - generic [ref=f4e194]: 1 available
+                  - generic [ref=f4e195]: Jul 30, 2026, 5:17 PM
+                - generic [ref=f4e196]:
+                  - link "Edit" [ref=f4e197] [cursor=pointer]:
+                    - /url: /en/buckets/bucket_16b5b9fe-a8b9-4abe-9a2f-04f451230d0d/edit
+                  - link "Order now" [ref=f4e198] [cursor=pointer]:
+                    - /url: /en/buckets/bucket_16b5b9fe-a8b9-4abe-9a2f-04f451230d0d/order
+                  - link "Sharing — Friday Lunch" [ref=f4e199] [cursor=pointer]:
+                    - /url: /en/buckets/bucket_16b5b9fe-a8b9-4abe-9a2f-04f451230d0d/share
+                  - link "Members — Friday Lunch" [ref=f4e206] [cursor=pointer]:
+                    - /url: /en/buckets/bucket_16b5b9fe-a8b9-4abe-9a2f-04f451230d0d/social-share
+              - generic [ref=f4e210]: All results loaded.
+          - region [ref=f4e212]:
+            - generic [ref=f4e214]:
+              - paragraph [ref=f4e215]: Shared with me
+              - heading "Shared with me" [level=2] [ref=f4e216]
+            - paragraph [ref=f4e217]: Nothing is shared with you yet. Ask for a join code, then add it here.
+        - dialog "Menus are reusable":
+          - generic [ref=f4e219]:
+            - generic [ref=f4e220]:
+              - paragraph [ref=f4e221]: 1 / 2
+              - button "Close" [ref=f4e222] [cursor=pointer]
+            - heading "Menus are reusable" [level=2] [ref=f4e226]
+            - paragraph [ref=f4e227]: A menu is a template. Editing it never touches orders you already placed.
+            - generic [ref=f4e228]:
+              - checkbox "Don't show this again" [ref=f4e229]
+              - text: Don't show this again
+            - generic [ref=f4e230]:
+              - button "Skip" [ref=f4e231] [cursor=pointer]
+              - button "Next" [ref=f4e232] [cursor=pointer]
+  - navigation "Primary navigation" [ref=f4e102]:
+    - link "Dashboard" [ref=f4e103] [cursor=pointer]:
+      - /url: /en/app
+    - link "Buckets" [ref=f4e110] [cursor=pointer]:
+      - /url: /en/buckets
+    - link "Members" [ref=f4e118] [cursor=pointer]:
+      - /url: /en/social
+    - link "Orders" [ref=f4e125] [cursor=pointer]:
+      - /url: /en/orders
+    - link "Settings" [ref=f4e130] [cursor=pointer]:
+      - /url: /en/settings

@@ -1,0 +1,69 @@
+- generic [ref=e38]:
+  - banner [ref=e39]:
+    - link "FO FoodOrder" [ref=e40] [cursor=pointer]:
+      - /url: /en/app
+      - generic [ref=e41]: FO
+      - generic [ref=e42]: FoodOrder
+    - generic [ref=e43]:
+      - button "Notifications" [ref=e45] [cursor=pointer]
+      - combobox "Language" [ref=e49]:
+        - option "English"
+        - option "العربية"
+        - option "Italiano"
+        - option "فارسی"
+        - option "Français"
+        - option "Deutsch"
+        - option "Español"
+        - option "Português"
+        - option "हिन्दी"
+        - option "ไทย"
+        - option "简体中文"
+        - option "日本語"
+      - 'button "Theme: system" [ref=e50] [cursor=pointer]'
+      - generic [ref=e53]: Online
+      - button "Log out" [ref=e59] [cursor=pointer]
+  - main [ref=e63]:
+    - generic [ref=e64]:
+      - status:
+        - generic: Pull down to refresh
+      - button "Refresh page" [ref=e65] [cursor=pointer]
+      - generic [ref=e71]:
+        - generic [ref=e72]:
+          - generic [ref=e73]:
+            - paragraph [ref=e74]: Welcome back
+            - heading "uat-v180" [level=1] [ref=e75]
+            - paragraph [ref=e76]: Build a reusable menu, then place an order in seconds.
+          - link "Create bucket" [ref=e78] [cursor=pointer]:
+            - /url: /en/buckets/new
+        - status "Loading…" [ref=e80]
+        - status "Loading…" [ref=e88]
+        - dialog "Your food at a glance":
+          - generic [ref=e94]:
+            - generic [ref=e95]:
+              - paragraph [ref=e96]: 1 / 2
+              - button "Close" [ref=e97] [cursor=pointer]
+            - heading "Your food at a glance" [level=2] [ref=e101]
+            - paragraph [ref=e102]: These tiles count your menus, orders, and everything still in progress. Tap one to jump straight there.
+            - generic [ref=e103]:
+              - checkbox "Don't show this again" [ref=e104]
+              - text: Don't show this again
+            - generic [ref=e105]:
+              - button "Skip" [ref=e106] [cursor=pointer]
+              - button "Next" [ref=e107] [cursor=pointer]
+  - navigation "Primary navigation" [ref=e108]:
+    - link "Dashboard" [ref=e109] [cursor=pointer]:
+      - /url: /en/app
+    - link "Buckets" [ref=e116] [cursor=pointer]:
+      - /url: /en/buckets
+    - link "Members" [ref=e124] [cursor=pointer]:
+      - /url: /en/social
+    - link "Orders" [ref=e131] [cursor=pointer]:
+      - /url: /en/orders
+    - link "Settings" [ref=e136] [cursor=pointer]:
+      - /url: /en/settings
+  - dialog [ref=e141]:
+    - heading "Turn on notifications?" [level=2] [ref=e142]
+    - paragraph [ref=e143]: Get a notification when someone opens an order round, invites you, or your order changes. You can change this any time in Settings.
+    - generic [ref=e144]:
+      - button "Not now" [active] [ref=e145] [cursor=pointer]
+      - button "Turn on" [ref=e146] [cursor=pointer]

@@ -83,6 +83,18 @@ export const saveNotificationPromptSeen = async (): Promise<void> => {
   await setPreference(NOTIFICATION_PROMPT_KEY, 'true');
 };
 
+/**
+ * Marks that the app has been opened before, and reports whether it had been.
+ * The first run belongs to the guided tours, so the notification explainer
+ * waits for a later visit rather than stacking two dialogs on a new account.
+ */
+const APP_OPENED_KEY = 'ui:app-opened-before';
+export const markAppOpenedAndWasReturning = async (): Promise<boolean> => {
+  const opened = (await getPreference(APP_OPENED_KEY)) === 'true';
+  if (!opened) await setPreference(APP_OPENED_KEY, 'true');
+  return opened;
+};
+
 /** The next theme in a system → light → dark → system cycle. */
 export const nextTheme = (current: Theme): Theme =>
   current === 'system' ? 'light' : current === 'light' ? 'dark' : 'system';

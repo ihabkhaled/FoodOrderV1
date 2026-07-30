@@ -4,6 +4,7 @@ export {
   loadDeviceConfig,
   loadNotificationPromptSeen,
   loadSidebarCollapsed,
+  markAppOpenedAndWasReturning,
   nextTheme,
   saveDeviceConfig,
   saveNotificationPromptSeen,

@@ -9,6 +9,7 @@ import { isDocumentHidden, scrollViewportToTop } from '@/platform/browser';
 import {
   loadNotificationPromptSeen,
   loadSidebarCollapsed,
+  markAppOpenedAndWasReturning,
   queryNotificationPermission,
   requestNotificationPermission,
   saveNotificationPromptSeen,
@@ -18,6 +19,7 @@ import {
 } from '@/platform/device';
 import type { MessageKey } from '@/shared/i18n';
 
+import { HOME_PATH } from '../../router/app-route-paths.constants';
 import { selectNewUnreadNotifications } from '../helpers/notification-mirror.helper';
 
 interface RouteRefreshState {
@@ -152,16 +154,19 @@ export function useAppLayout(): AppLayoutViewModel {
   );
 
   // Offer notifications once per device, and only when the OS can still be
-  // asked. Declining is remembered; Settings keeps the control available.
+  // asked. The ask waits for a later visit so it never lands on top of the
+  // first-run tour, and only on the dashboard so it never interrupts a form.
+  // Declining is remembered; Settings keeps the control available.
   useEffect(() => {
-    if (!user) return;
+    if (!user || location.pathname !== HOME_PATH) return;
     let active = true;
     void Promise.all([
       queryNotificationPermission(),
       loadNotificationPromptSeen(),
+      markAppOpenedAndWasReturning(),
     ])
-      .then(([permission, seen]) => {
-        if (active && permission === 'prompt' && !seen) {
+      .then(([permission, seen, returning]) => {
+        if (active && returning && permission === 'prompt' && !seen) {
           setNotificationPromptOpen(true);
         }
       })
@@ -171,7 +176,7 @@ export function useAppLayout(): AppLayoutViewModel {
     return () => {
       active = false;
     };
-  }, [user]);
+  }, [user, location.pathname]);
 
   const enableNotifications = async (): Promise<void> => {
     setNotificationPromptOpen(false);
