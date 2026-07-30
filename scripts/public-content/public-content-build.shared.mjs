@@ -361,6 +361,24 @@ const structuredData = (catalog, locale, page) => {
   return data;
 };
 
+/**
+ * Google AdSense loader, driven by the same `ADSENSE_PUBLISHER_ID` that writes
+ * `ads.txt`, so the two can never disagree.
+ *
+ * Only indexable production pages carry it: the app shell is noindex and sits
+ * behind a login, and `validate-public-content.mjs` fails the build if the
+ * loader ever leaks into it. Google rotates this file continuously and
+ * publishes no hash, so it intentionally carries no `integrity` attribute —
+ * that is the official snippet.
+ */
+export const adsensePublisherId = (environment = process.env) => {
+  const id = String(environment.ADSENSE_PUBLISHER_ID || '').trim();
+  return /^pub-\d{16}$/u.test(id) ? id : null;
+};
+
+const adsenseScript = (publisherId) =>
+  `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-${publisherId}" crossorigin="anonymous"></script>`;
+
 const renderHead = ({ catalog, locale, page, stylesheetLinks, indexable }) => {
   const copy = pageCopy(page, locale);
   const canonical = canonicalUrl(catalog, localePath(page, locale));
@@ -415,7 +433,8 @@ ${alternates}
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <link rel="alternate" type="application/rss+xml" title="${escapeHtml(`${catalog.site.brandName} — ${locale.label}`)}" href="${escapeHtml(feedUrl)}" />
 ${stylesheetLinks.join('\n')}
-${jsonLd}`;
+${jsonLd}
+${indexable && adsensePublisherId() ? adsenseScript(adsensePublisherId()) : ''}`;
 };
 
 const renderSystemHead = (catalog, locale, routeId, stylesheetLinks) => {

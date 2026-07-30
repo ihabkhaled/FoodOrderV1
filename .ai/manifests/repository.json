@@ -10,8 +10,8 @@
     },
     {
       "path": ".env.example",
-      "bytes": 1458,
-      "hash": "4f432c775e0358bef8070d4fea8f66b7c56832659a10a1a091b259600167f34d"
+      "bytes": 1689,
+      "hash": "5658db965d623127b2f5d4e6ca1b388ced79ac8856b827352f6e11156d474a83"
     },
     {
       "path": ".github/copilot-instructions.md",
@@ -1425,8 +1425,8 @@
     },
     {
       "path": "scripts/public-content/public-content-build.shared.mjs",
-      "bytes": 24950,
-      "hash": "a731798a83c5283c2f1b60362958f47adb7ee2c3405edc3cd736b8d7dc50bdea"
+      "bytes": 25878,
+      "hash": "b3df994cc0c8109875b647de3cf74eea29e742659ca5698393a65f14add11efc"
     },
     {
       "path": "scripts/public-content/validate-public-content.mjs",
