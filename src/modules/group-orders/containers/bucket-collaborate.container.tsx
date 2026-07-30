@@ -77,7 +77,7 @@ export function BucketCollaborateContainer() {
         doneLabel={vm.t('tourDone')}
         skipLabel={vm.t('tourSkip')}
         closeLabel={vm.t('close')}
-        dontShowAgainLabel={vm.t('tourDontShowAgain')}
+        skipAllLabel={vm.t('tourSkipAll')}
       />
     </>
   );

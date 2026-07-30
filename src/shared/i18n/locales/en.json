@@ -264,7 +264,6 @@
   "tourNext": "Next",
   "tourDone": "Got it",
   "tourSkip": "Skip",
-  "tourDontShowAgain": "Don't show this again",
   "replayTutorials": "Replay tutorials",
   "tutorialsReset": "Tutorials will show again on each page.",
   "tourDashboardStatsTitle": "Your food at a glance",
@@ -325,5 +324,6 @@
   "tourJoinTitle": "Join with a code",
   "tourJoinBody": "Paste the code someone shared and the menu appears under \"Shared with me\".",
   "tourSettingsPrivacyTitle": "You decide what is recorded",
-  "tourSettingsPrivacyBody": "Choose a level and the app records only that. Everything stays on this device and you can erase it here."
+  "tourSettingsPrivacyBody": "Choose a level and the app records only that. Everything stays on this device and you can erase it here.",
+  "tourSkipAll": "Skip all"
 }

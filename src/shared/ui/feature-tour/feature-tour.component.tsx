@@ -14,13 +14,12 @@ export function FeatureTourView({
   nextLabel,
   doneLabel,
   skipLabel,
+  skipAllLabel,
   closeLabel,
-  dontShowAgainLabel,
-  dontShowAgain,
   reducedMotion,
   onNext,
   onSkip,
-  onToggleDontShowAgain,
+  onSkipAll,
 }: FeatureTourViewProps) {
   if (!open) return null;
 
@@ -65,17 +64,14 @@ export function FeatureTourView({
         </div>
         <h2>{title}</h2>
         <p>{body}</p>
-        <label className="checkbox-label">
-          <input
-            type="checkbox"
-            checked={dontShowAgain}
-            onChange={(event) => {
-              onToggleDontShowAgain(event.target.checked);
-            }}
-          />
-          {dontShowAgainLabel}
-        </label>
         <div className="feature-tour-actions">
+          <button
+            type="button"
+            className="button ghost feature-tour-skip-all"
+            onClick={onSkipAll}
+          >
+            {skipAllLabel}
+          </button>
           <button type="button" className="button secondary" onClick={onSkip}>
             {skipLabel}
           </button>

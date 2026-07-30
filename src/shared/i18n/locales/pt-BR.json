@@ -264,7 +264,6 @@
   "tourNext": "Avançar",
   "tourDone": "Entendi",
   "tourSkip": "Pular",
-  "tourDontShowAgain": "Não mostrar novamente",
   "replayTutorials": "Rever os tutoriais",
   "tutorialsReset": "Os tutoriais aparecerão novamente em cada página.",
   "tourDashboardStatsTitle": "Sua comida num relance",
@@ -325,5 +324,6 @@
   "tourJoinTitle": "Entre com um código",
   "tourJoinBody": "Cole o código que compartilharam e a lista aparece em “Compartilhadas comigo”.",
   "tourSettingsPrivacyTitle": "Você decide o que é registrado",
-  "tourSettingsPrivacyBody": "Escolha um nível e o app registra só isso. Tudo fica neste aparelho e você pode apagar aqui."
+  "tourSettingsPrivacyBody": "Escolha um nível e o app registra só isso. Tudo fica neste aparelho e você pode apagar aqui.",
+  "tourSkipAll": "Pular tudo"
 }

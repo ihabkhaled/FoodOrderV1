@@ -202,8 +202,8 @@
     },
     {
       "path": "tests/e2e/feature-tour.spec.ts",
-      "bytes": 3151,
-      "hash": "8d779b25d6386a32697b23ede8e3805a3f70c11f4a01bbf6620ea152ae872e31"
+      "bytes": 3762,
+      "hash": "12be16d39ffacafe8a14e70208dcbc65d7b284b43dff5614ad7f635dc0deb070"
     },
     {
       "path": "tests/e2e/group-order.spec.ts",

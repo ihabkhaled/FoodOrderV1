@@ -264,7 +264,6 @@
   "tourNext": "次へ",
   "tourDone": "了解",
   "tourSkip": "スキップ",
-  "tourDontShowAgain": "今後表示しない",
   "replayTutorials": "チュートリアルを再表示",
   "tutorialsReset": "各ページでチュートリアルが再び表示されます。",
   "tourDashboardStatsTitle": "食事をひと目で",
@@ -325,5 +324,6 @@
   "tourJoinTitle": "コードで参加",
   "tourJoinBody": "共有されたコードを貼り付けると、メニューが「自分と共有」に表示されます。",
   "tourSettingsPrivacyTitle": "何を記録するかはあなた次第",
-  "tourSettingsPrivacyBody": "レベルを選ぶと、その範囲だけが記録されます。すべてこの端末に残り、ここで消去できます。"
+  "tourSettingsPrivacyBody": "レベルを選ぶと、その範囲だけが記録されます。すべてこの端末に残り、ここで消去できます。",
+  "tourSkipAll": "すべてスキップ"
 }

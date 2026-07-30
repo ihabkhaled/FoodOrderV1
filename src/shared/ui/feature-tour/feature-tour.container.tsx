@@ -10,16 +10,16 @@ export function FeatureTour({
   nextLabel,
   doneLabel,
   skipLabel,
+  skipAllLabel,
   closeLabel,
-  dontShowAgainLabel,
 }: {
   page: TourPage;
   steps: readonly FeatureTourStep[];
   nextLabel: string;
   doneLabel: string;
   skipLabel: string;
+  skipAllLabel: string;
   closeLabel: string;
-  dontShowAgainLabel: string;
 }) {
   const vm = useFeatureTour(page, steps);
   const step = steps[vm.stepIndex];
@@ -36,13 +36,12 @@ export function FeatureTour({
       nextLabel={nextLabel}
       doneLabel={doneLabel}
       skipLabel={skipLabel}
+      skipAllLabel={skipAllLabel}
       closeLabel={closeLabel}
-      dontShowAgainLabel={dontShowAgainLabel}
-      dontShowAgain={vm.dontShowAgain}
       reducedMotion={vm.reducedMotion}
       onNext={vm.next}
       onSkip={vm.skip}
-      onToggleDontShowAgain={vm.setDontShowAgain}
+      onSkipAll={vm.skipAll}
     />
   );
 }

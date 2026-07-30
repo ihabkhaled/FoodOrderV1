@@ -19,11 +19,10 @@ export interface FeatureTourViewProps {
   readonly nextLabel: string;
   readonly doneLabel: string;
   readonly skipLabel: string;
+  readonly skipAllLabel: string;
   readonly closeLabel: string;
-  readonly dontShowAgainLabel: string;
-  readonly dontShowAgain: boolean;
   readonly reducedMotion: boolean;
   readonly onNext: () => void;
   readonly onSkip: () => void;
-  readonly onToggleDontShowAgain: (value: boolean) => void;
+  readonly onSkipAll: () => void;
 }

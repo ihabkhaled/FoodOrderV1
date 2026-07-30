@@ -264,7 +264,6 @@
   "tourNext": "التالي",
   "tourDone": "فهمت",
   "tourSkip": "تخطٍ",
-  "tourDontShowAgain": "لا تعرض هذا مرة أخرى",
   "replayTutorials": "إعادة عرض الشروحات",
   "tutorialsReset": "ستظهر الشروحات مرة أخرى في كل صفحة.",
   "tourDashboardStatsTitle": "طعامك في لمحة",
@@ -325,5 +324,6 @@
   "tourJoinTitle": "انضم برمز",
   "tourJoinBody": "الصق الرمز الذي شاركه أحدهم لتظهر القائمة ضمن \"مشاركة معي\".",
   "tourSettingsPrivacyTitle": "أنت تقرر ما يُسجَّل",
-  "tourSettingsPrivacyBody": "اختر مستوى ولن يسجل التطبيق سواه. يبقى كل شيء على هذا الجهاز ويمكنك محوه من هنا."
+  "tourSettingsPrivacyBody": "اختر مستوى ولن يسجل التطبيق سواه. يبقى كل شيء على هذا الجهاز ويمكنك محوه من هنا.",
+  "tourSkipAll": "تخطَّ الكل"
 }

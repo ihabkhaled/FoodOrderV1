@@ -52,14 +52,20 @@ Operational telemetry may run only under an explicit operational-or-higher conse
 
 ## Connected vendors (v1.8.0)
 
-Vercel Web Analytics and Speed Insights are mounted in  and are **gated by the same consent value** as the on-device recorder:
+Vercel Web Analytics and Speed Insights are mounted in
+`src/app/providers/vercel-insights.container.tsx` and are **gated by the same
+consent value** as the on-device recorder:
 
 | Vendor | Purpose | Minimum consent |
 | --- | --- | --- |
-| Vercel Speed Insights (Core Web Vitals) | operational |  |
-| Vercel Web Analytics (page views) | product |  |
+| Vercel Speed Insights (Core Web Vitals) | operational | `operational_only` |
+| Vercel Web Analytics (page views) | product | `product_analytics` |
 
- mounts neither component, so no request is made. Both are wrapped by owned facades (, ) per the package-ownership rule, and neither receives event properties from this module — they collect their own anonymous page-level data. Coverage: .
+`denied` mounts neither component, so no request is made. Both are wrapped by
+owned facades (`@/packages/vercel-analytics`,
+`@/packages/vercel-speed-insights`) per the package-ownership rule, and neither
+receives event properties from this module — they collect their own anonymous
+page-level data. Coverage: `tests/components/VercelInsights.test.tsx`.
 
 ## Integration boundary
 

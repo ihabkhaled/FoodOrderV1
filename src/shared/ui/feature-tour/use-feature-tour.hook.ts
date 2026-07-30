@@ -7,7 +7,11 @@ import {
   subscribeToViewportChanges,
 } from '@/platform/browser';
 import type { TourPage } from '@/platform/device';
-import { loadTourDismissed, saveTourDismissed } from '@/platform/device';
+import {
+  loadTourDismissed,
+  saveAllToursDismissed,
+  saveTourDismissed,
+} from '@/platform/device';
 
 import type { FeatureTourStep } from './feature-tour.types';
 
@@ -15,11 +19,10 @@ export interface FeatureTourViewModel {
   open: boolean;
   stepIndex: number;
   spotlight: ElementRect | null;
-  dontShowAgain: boolean;
   reducedMotion: boolean;
   next: () => void;
   skip: () => void;
-  setDontShowAgain: (value: boolean) => void;
+  skipAll: () => void;
 }
 
 const sameRect = (
@@ -36,8 +39,12 @@ const sameRect = (
 };
 
 /**
- * Drives one page's guided tour: opens itself on the first visit, tracks the
- * highlighted element through scroll and resize, and remembers a dismissal.
+ * Drives one page's guided tour.
+ *
+ * The three exits are deliberately different:
+ * - `next` on the final step finishes the tour and silences **this page**.
+ * - `skip` closes the rest of **this visit** only, so the tour returns later.
+ * - `skipAll` silences **every** tour in the app.
  */
 export function useFeatureTour(
   page: TourPage,
@@ -45,7 +52,6 @@ export function useFeatureTour(
 ): FeatureTourViewModel {
   const [open, setOpen] = useState(false);
   const [stepIndex, setStepIndex] = useState(0);
-  const [dontShowAgain, setDontShowAgain] = useState(false);
   const [spotlight, setSpotlight] = useState<ElementRect | null>(null);
   const [reducedMotion, setReducedMotion] = useState(false);
   const stepCount = steps.length;
@@ -84,25 +90,29 @@ export function useFeatureTour(
   const close = useCallback(() => {
     setOpen(false);
     setStepIndex(0);
-    if (dontShowAgain) void saveTourDismissed(page);
-  }, [dontShowAgain, page]);
+  }, []);
 
   const next = useCallback(() => {
     setStepIndex((current) => {
       if (current + 1 < stepCount) return current + 1;
+      void saveTourDismissed(page);
       close();
       return 0;
     });
-  }, [close, stepCount]);
+  }, [close, page, stepCount]);
+
+  const skipAll = useCallback(() => {
+    void saveAllToursDismissed();
+    close();
+  }, [close]);
 
   return {
     open,
     stepIndex,
     spotlight,
-    dontShowAgain,
     reducedMotion,
     next,
     skip: close,
-    setDontShowAgain,
+    skipAll,
   };
 }

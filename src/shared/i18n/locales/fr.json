@@ -264,7 +264,6 @@
   "tourNext": "Suivant",
   "tourDone": "J'ai compris",
   "tourSkip": "Ignorer",
-  "tourDontShowAgain": "Ne plus afficher",
   "replayTutorials": "Revoir les guides",
   "tutorialsReset": "Les guides réapparaîtront sur chaque page.",
   "tourDashboardStatsTitle": "Vos repas en un coup d’œil",
@@ -325,5 +324,6 @@
   "tourJoinTitle": "Rejoignez avec un code",
   "tourJoinBody": "Collez le code partagé et le menu apparaît dans « Partagés avec moi ».",
   "tourSettingsPrivacyTitle": "Vous décidez de ce qui est enregistré",
-  "tourSettingsPrivacyBody": "Choisissez un niveau et l’application n’enregistre que cela. Tout reste sur cet appareil et vous pouvez l’effacer ici."
+  "tourSettingsPrivacyBody": "Choisissez un niveau et l’application n’enregistre que cela. Tout reste sur cet appareil et vous pouvez l’effacer ici.",
+  "tourSkipAll": "Tout ignorer"
 }

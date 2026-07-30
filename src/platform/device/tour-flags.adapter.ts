@@ -35,6 +35,11 @@ export const saveTourDismissed = async (page: TourPage): Promise<void> => {
   await setPreference(tourKey(page), 'true');
 };
 
+/** Silences every tour in the app at once ("skip all"). */
+export const saveAllToursDismissed = async (): Promise<void> => {
+  await Promise.all(TOUR_PAGES.map((page) => setPreference(tourKey(page), 'true')));
+};
+
 /** Clears every dismissal so the tours introduce themselves again. */
 export const clearTourDismissals = async (): Promise<void> => {
   await Promise.all(TOUR_PAGES.map((page) => removePreference(tourKey(page))));

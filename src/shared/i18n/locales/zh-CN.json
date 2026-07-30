@@ -264,7 +264,6 @@
   "tourNext": "下一步",
   "tourDone": "知道了",
   "tourSkip": "跳过",
-  "tourDontShowAgain": "不再显示",
   "replayTutorials": "重新播放教程",
   "tutorialsReset": "各页面将再次显示教程。",
   "tourDashboardStatsTitle": "一眼看清你的餐食",
@@ -325,5 +324,6 @@
   "tourJoinTitle": "用代码加入",
   "tourJoinBody": "粘贴他人分享的代码，清单就会出现在“共享给我”中。",
   "tourSettingsPrivacyTitle": "由你决定记录什么",
-  "tourSettingsPrivacyBody": "选择一个级别，应用只记录该级别的内容。所有数据留在本设备，你可以在此清除。"
+  "tourSettingsPrivacyBody": "选择一个级别，应用只记录该级别的内容。所有数据留在本设备，你可以在此清除。",
+  "tourSkipAll": "全部跳过"
 }

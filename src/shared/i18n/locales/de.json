@@ -264,7 +264,6 @@
   "tourNext": "Weiter",
   "tourDone": "Verstanden",
   "tourSkip": "Überspringen",
-  "tourDontShowAgain": "Nicht mehr anzeigen",
   "replayTutorials": "Touren erneut ansehen",
   "tutorialsReset": "Die Touren erscheinen wieder auf jeder Seite.",
   "tourDashboardStatsTitle": "Dein Essen auf einen Blick",
@@ -325,5 +324,6 @@
   "tourJoinTitle": "Mit einem Code beitreten",
   "tourJoinBody": "Füge den geteilten Code ein, und die Liste erscheint unter „Mit mir geteilt“.",
   "tourSettingsPrivacyTitle": "Du entscheidest, was aufgezeichnet wird",
-  "tourSettingsPrivacyBody": "Wähle eine Stufe, und die App zeichnet nur das auf. Alles bleibt auf diesem Gerät und du kannst es hier löschen."
+  "tourSettingsPrivacyBody": "Wähle eine Stufe, und die App zeichnet nur das auf. Alles bleibt auf diesem Gerät und du kannst es hier löschen.",
+  "tourSkipAll": "Alle überspringen"
 }

@@ -160,7 +160,7 @@ export function OrderSessionDetailsContainer() {
         doneLabel={translate(viewModel.locale, 'tourDone')}
         skipLabel={translate(viewModel.locale, 'tourSkip')}
         closeLabel={translate(viewModel.locale, 'close')}
-        dontShowAgainLabel={translate(viewModel.locale, 'tourDontShowAgain')}
+        skipAllLabel={translate(viewModel.locale, 'tourSkipAll')}
       />
     </div>
   );

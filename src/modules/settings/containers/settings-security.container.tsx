@@ -51,7 +51,7 @@ export function SettingsSecurityContainer() {
         doneLabel={passwordVm.t('tourDone')}
         skipLabel={passwordVm.t('tourSkip')}
         closeLabel={passwordVm.t('close')}
-        dontShowAgainLabel={passwordVm.t('tourDontShowAgain')}
+        skipAllLabel={passwordVm.t('tourSkipAll')}
       />
     </div>
   );

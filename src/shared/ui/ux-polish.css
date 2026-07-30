@@ -988,3 +988,19 @@ select:focus {
     transition: none;
   }
 }
+
+/* Low-emphasis action: present but never competing with the primary step. */
+.button.ghost {
+  border-color: transparent;
+  background: transparent;
+  color: var(--muted);
+}
+
+.button.ghost:hover {
+  color: var(--text);
+  background: var(--soft);
+}
+
+.feature-tour-actions .feature-tour-skip-all {
+  margin-inline-end: auto;
+}

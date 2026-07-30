@@ -28,6 +28,7 @@ export type { TourPage } from './tour-flags.adapter';
 export {
   clearTourDismissals,
   loadTourDismissed,
+  saveAllToursDismissed,
   saveTourDismissed,
   TOUR_PAGES,
 } from './tour-flags.adapter';
