@@ -1,6 +1,7 @@
 export type PublicLocale =
   | 'en'
   | 'ar'
+  | 'ar-Latn'
   | 'it'
   | 'fa'
   | 'fr'

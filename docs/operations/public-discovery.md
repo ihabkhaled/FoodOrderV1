@@ -1,7 +1,7 @@
 # Public discovery and contact operations
 
-FoodOrderV1 publishes ten reviewed marketing/policy pages in twelve complete locales.
-`npm run build:web` creates 120 static localized documents, a sitemap index with one
+FoodOrderV1 publishes ten reviewed marketing/policy pages in thirteen complete locales.
+`npm run build:web` creates 130 static localized documents, a sitemap index with one
 bounded child sitemap per locale, localized RSS feeds at `/{locale}/feed.xml` and
 `/{locale}/feeds/topics.xml`, environment-aware `robots.txt`, and noindex system pages.
 English uses the explicit `/en` segment just like every other locale. Legacy unprefixed
@@ -12,7 +12,7 @@ robots disallow and noindex metadata. Private application, auth, invitation, buc
 session, order, social, and settings routes never enter sitemaps or feeds.
 
 Every reviewed public page has a distinct locale URL and appears in the locale child
-sitemaps (120 URLs total). Production `robots.txt` allows every crawler to fetch public
+sitemaps (130 URLs total). Production `robots.txt` allows every crawler to fetch public
 content and advertises `/sitemap.xml`. Authenticated and shared-user routes stay excluded
 because they can contain private account, order, invitation, and collaboration data.
 The localized Contact Us page is present in both desktop and mobile public navigation.

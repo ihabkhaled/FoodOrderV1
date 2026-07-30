@@ -1171,6 +1171,11 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/public-content/content/locales/ar-Latn.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/public-content/content/locales/de.json",
       "tests": [],
       "relationship": "inferred"

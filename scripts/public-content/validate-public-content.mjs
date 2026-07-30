@@ -87,7 +87,7 @@ if (/<script[^>]*\bsrc="https:\/\/pagead2\.googlesyndication\.com\//iu.test(appS
 const sitemap = await readFile(path.join(outputDirectory, 'sitemap.xml'), 'utf8').catch(
   () => '',
 );
-if ((sitemap.match(/<sitemap>/gu) || []).length !== 12) failures.push('sitemap locale count');
+if ((sitemap.match(/<sitemap>/gu) || []).length !== catalog.locales.length) failures.push('sitemap locale count');
 let sitemapUrlCount = 0;
 const localeSitemaps = [];
 for (const locale of catalog.locales) {
@@ -113,7 +113,8 @@ for (const locale of catalog.locales) {
   expectIncludes(feed, `<language>${locale.htmlLang}</language>`, `RSS language: ${locale.code}`);
   if ((feed.match(/<item>/gu) || []).length > 50) failures.push(`RSS item limit: ${locale.code}`);
 }
-if (sitemapUrlCount !== 120) failures.push('sitemap URL count');
+const expectedSitemapUrls = catalog.locales.length * catalog.pages.length;
+if (sitemapUrlCount !== expectedSitemapUrls) failures.push('sitemap URL count');
 const allLocaleSitemaps = localeSitemaps.join('\n');
 for (const privatePrefix of [
   'app',
@@ -151,4 +152,6 @@ if (failures.length > 0) {
   throw new Error(`Public artifact validation failed:\n${failures.join('\n')}`);
 }
 
-process.stdout.write('Public artifact validation passed for 120 localized pages.\n');
+process.stdout.write(
+  `Public artifact validation passed for ${expectedSitemapUrls} localized pages.\n`,
+);

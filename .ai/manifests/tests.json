@@ -152,8 +152,8 @@
     },
     {
       "path": "tests/domain/public-content.test.ts",
-      "bytes": 3566,
-      "hash": "f3613dc8c22ccd6a6d4c99f6f3388b51a51fc291f1f3747aab7c9847001df7fb"
+      "bytes": 3783,
+      "hash": "f46bf886d3fe677ab497f1c0487905a96c39b6a2ec969a2ffbc0af77609e115d"
     },
     {
       "path": "tests/domain/session-contribution.test.ts",

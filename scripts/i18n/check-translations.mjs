@@ -31,14 +31,11 @@ const SUPPORTED_LOCALES = [
   'ja',
 ];
 /**
- * The public marketing site keeps the twelve formal locales. Arabic Franco is an
- * informal chat register with no standard orthography, so it ships in the app
- * UI only and is intentionally absent from indexable SEO pages (its own union
- * lives in src/modules/public-content/types/public-content.types.ts).
+ * The public marketing site publishes every supported locale, so its own union
+ * in src/modules/public-content/types/public-content.types.ts must stay in sync
+ * with this list.
  */
-const PUBLIC_CONTENT_LOCALES = SUPPORTED_LOCALES.filter(
-  (locale) => locale !== 'ar-Latn',
-);
+const PUBLIC_CONTENT_LOCALES = SUPPORTED_LOCALES;
 const REFERENCE_LOCALE = 'en';
 const UNTRANSLATED_VALUE_RATIO = 0.8;
 const MINIMUM_UNTRANSLATED_CHECK_KEYS = 5;

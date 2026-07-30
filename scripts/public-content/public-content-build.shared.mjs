@@ -120,7 +120,7 @@ export const validateCatalog = (catalog) => {
   if (!String(catalog.site?.canonicalOrigin).startsWith('https://')) {
     failures.push('site.canonicalOrigin must be HTTPS');
   }
-  if (catalog.locales?.length !== 12) failures.push('exactly 12 locales are required');
+  if (catalog.locales?.length !== 13) failures.push('exactly 13 locales are required');
   if (catalog.pages?.length !== 10) failures.push('exactly 10 public pages are required');
 
   const localeCodes = new Set();
