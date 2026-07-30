@@ -2,9 +2,11 @@ import { ErrorState, FeatureTour, Loading } from '@/shared/ui';
 
 import { BucketCollaborateContent } from '../components/bucket-collaborate-content/bucket-collaborate-content.component';
 import { useBucketCollaborate } from '../hooks/use-bucket-collaborate.hook';
+import { useBucketCollaborateTour } from '../hooks/use-bucket-collaborate-tour.hook';
 
 export function BucketCollaborateContainer() {
   const vm = useBucketCollaborate();
+  const { steps: tourSteps } = useBucketCollaborateTour();
 
   if (vm.loading) return <Loading label={vm.t('loading')} />;
   if (!vm.view || !vm.user || vm.error) {
@@ -59,20 +61,7 @@ export function BucketCollaborateContainer() {
     />
       <FeatureTour
         page="collaborate"
-        steps={[
-          {
-            key: 'CollaborateQuantities',
-            title: vm.t('tourCollaborateQuantitiesTitle'),
-            body: vm.t('tourCollaborateQuantitiesBody'),
-            target: null,
-          },
-          {
-            key: 'CollaboratePlace',
-            title: vm.t('tourCollaboratePlaceTitle'),
-            body: vm.t('tourCollaboratePlaceBody'),
-            target: null,
-          },
-        ]}
+        steps={tourSteps}
         nextLabel={vm.t('tourNext')}
         doneLabel={vm.t('tourDone')}
         skipLabel={vm.t('tourSkip')}

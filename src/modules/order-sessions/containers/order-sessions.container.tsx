@@ -5,9 +5,11 @@ import { ErrorState, FeatureTour, Loading } from '@/shared/ui';
 
 import { OrderSessionList } from '../components/order-session-list/order-session-list.component';
 import { useOrderSessions } from '../hooks/use-order-sessions.hook';
+import { useOrderSessionsTour } from '../hooks/use-order-sessions-tour.hook';
 
 export function OrderSessionsContainer() {
   const viewModel = useOrderSessions();
+  const { steps: tourSteps } = useOrderSessionsTour();
 
   if (viewModel.loading) {
     return <Loading label={viewModel.translate(viewModel.locale, 'loadingSession')} />;
@@ -60,14 +62,7 @@ export function OrderSessionsContainer() {
       )}
       <FeatureTour
         page="sessions"
-        steps={[
-          {
-            key: 'Sessions',
-            title: translate(viewModel.locale, 'tourSessionsTitle'),
-            body: translate(viewModel.locale, 'tourSessionsBody'),
-            target: null,
-          },
-        ]}
+        steps={tourSteps}
         nextLabel={translate(viewModel.locale, 'tourNext')}
         doneLabel={translate(viewModel.locale, 'tourDone')}
         skipLabel={translate(viewModel.locale, 'tourSkip')}

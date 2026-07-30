@@ -6,10 +6,12 @@ import { SUPPORTED_CURRENCIES } from '@/platform/device';
 import { BackLink, FeatureTour, LanguageSelect } from '@/shared/ui';
 
 import { useSettingsPreferences } from '../hooks/use-settings-preferences.hook';
+import { useSettingsPreferencesTour } from '../hooks/use-settings-preferences-tour.hook';
 import { SETTINGS_PATH } from '../routes/settings-route-paths.constants';
 
 export function SettingsPreferencesContainer() {
   const vm = useSettingsPreferences();
+  const { steps: tourSteps } = useSettingsPreferencesTour();
 
   return (
     <div className="page narrow stack-lg">
@@ -122,14 +124,7 @@ export function SettingsPreferencesContainer() {
       </form>
       <FeatureTour
         page="settings-preferences"
-        steps={[
-          {
-            key: 'SettingsPreferences',
-            title: vm.t('tourSettingsPreferencesTitle'),
-            body: vm.t('tourSettingsPreferencesBody'),
-            target: null,
-          },
-        ]}
+        steps={tourSteps}
         nextLabel={vm.t('tourNext')}
         doneLabel={vm.t('tourDone')}
         skipLabel={vm.t('tourSkip')}

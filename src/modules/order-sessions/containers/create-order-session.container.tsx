@@ -5,10 +5,12 @@ import { BackLink, ErrorState, FeatureTour, Loading } from '@/shared/ui';
 
 import { CreateOrderSessionForm } from '../components/create-order-session-form/create-order-session-form.component';
 import { useCreateOrderSession } from '../hooks/use-create-order-session.hook';
+import { useCreateOrderSessionTour } from '../hooks/use-create-order-session-tour.hook';
 import { ORDER_SESSIONS_PATH } from '../routes/order-sessions-route-paths.constants';
 
 export function CreateOrderSessionContainer() {
   const viewModel = useCreateOrderSession();
+  const { steps: tourSteps } = useCreateOrderSessionTour();
   const backLabel = viewModel.translate(viewModel.locale, 'backToSessions');
 
   if (viewModel.loading) {
@@ -74,20 +76,7 @@ export function CreateOrderSessionContainer() {
       />
       <FeatureTour
         page="create-session"
-        steps={[
-          {
-            key: 'CreateSessionDeadline',
-            title: translate(viewModel.locale, 'tourCreateSessionDeadlineTitle'),
-            body: translate(viewModel.locale, 'tourCreateSessionDeadlineBody'),
-            target: null,
-          },
-          {
-            key: 'CreateSessionAutoLock',
-            title: translate(viewModel.locale, 'tourCreateSessionAutoLockTitle'),
-            body: translate(viewModel.locale, 'tourCreateSessionAutoLockBody'),
-            target: null,
-          },
-        ]}
+        steps={tourSteps}
         nextLabel={translate(viewModel.locale, 'tourNext')}
         doneLabel={translate(viewModel.locale, 'tourDone')}
         skipLabel={translate(viewModel.locale, 'tourSkip')}

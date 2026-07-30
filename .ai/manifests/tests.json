@@ -202,8 +202,8 @@
     },
     {
       "path": "tests/e2e/feature-tour.spec.ts",
-      "bytes": 3762,
-      "hash": "12be16d39ffacafe8a14e70208dcbc65d7b284b43dff5614ad7f635dc0deb070"
+      "bytes": 4437,
+      "hash": "2c352f6b3bdd3923d63832016e6f9dba0e185586041ffcefd77e84ad46d28a42"
     },
     {
       "path": "tests/e2e/group-order.spec.ts",
@@ -219,6 +219,11 @@
       "path": "tests/e2e/helpers/responsiveScenario.ts",
       "bytes": 7843,
       "hash": "ccd7574c4fcb5e8a375e71667adbf42f96d2c2e5e8c6ffe05c4afb375ced75d2"
+    },
+    {
+      "path": "tests/e2e/locale-switch.spec.ts",
+      "bytes": 2282,
+      "hash": "f4eb1d246ec947ec2f48c35c857f8ba3b1f6faa416cca1337746fd9d846db14b"
     },
     {
       "path": "tests/e2e/notification-mirroring.spec.ts",
@@ -237,8 +242,8 @@
     },
     {
       "path": "tests/e2e/public-content.spec.ts",
-      "bytes": 5197,
-      "hash": "66c1ece71424573560cae1ea5e618e6c04ac32f67918a82a12db4b54ff7024b8"
+      "bytes": 5479,
+      "hash": "2d420589b66ac0540db7e8d9f654f5559f159c684c4faa234a8983a7ee17b78a"
     },
     {
       "path": "tests/e2e/responsive-navigation.spec.ts",

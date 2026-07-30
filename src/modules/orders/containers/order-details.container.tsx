@@ -7,10 +7,12 @@ import { OrderLineSummary } from '../components/order-line-summary/order-line-su
 import { OrderParticipantsSection } from '../components/order-participants-section/order-participants-section.component';
 import { StatusBadge } from '../components/status-badge/status-badge.component';
 import { useOrderDetails } from '../hooks/use-order-details.hook';
+import { useOrderDetailsTour } from '../hooks/use-order-details-tour.hook';
 import { ORDERS_PATH } from '../routes/orders-route-paths.constants';
 
 export function OrderDetailsContainer() {
   const vm = useOrderDetails();
+  const { steps: tourSteps } = useOrderDetailsTour();
 
   if (vm.loading) return <Loading label={vm.t('loading')} />;
   const order = vm.order;
@@ -89,20 +91,7 @@ export function OrderDetailsContainer() {
       />
       <FeatureTour
         page="order-details"
-        steps={[
-          {
-            key: 'OrderDetailsRepeat',
-            title: vm.t('tourOrderDetailsRepeatTitle'),
-            body: vm.t('tourOrderDetailsRepeatBody'),
-            target: null,
-          },
-          {
-            key: 'OrderDetailsStatus',
-            title: vm.t('tourOrderDetailsStatusTitle'),
-            body: vm.t('tourOrderDetailsStatusBody'),
-            target: null,
-          },
-        ]}
+        steps={tourSteps}
         nextLabel={vm.t('tourNext')}
         doneLabel={vm.t('tourDone')}
         skipLabel={vm.t('tourSkip')}

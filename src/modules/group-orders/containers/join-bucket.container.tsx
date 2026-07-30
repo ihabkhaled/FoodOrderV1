@@ -4,6 +4,7 @@ import type { MessageKey } from '@/shared/i18n';
 import { BackLink, FeatureTour } from '@/shared/ui';
 
 import { useJoinBucket } from '../hooks/use-join-bucket.hook';
+import { useJoinBucketTour } from '../hooks/use-join-bucket-tour.hook';
 import { BUCKETS_REDIRECT_PATH } from '../routes/group-orders-route-paths.constants';
 
 const ROLE_LABEL: Record<BucketRole, MessageKey> = {
@@ -15,6 +16,7 @@ const ROLE_LABEL: Record<BucketRole, MessageKey> = {
 
 export function JoinBucketContainer() {
   const vm = useJoinBucket();
+  const { steps: tourSteps } = useJoinBucketTour();
 
   return (
     <div className="page narrow stack-lg">
@@ -77,14 +79,7 @@ export function JoinBucketContainer() {
       ) : null}
       <FeatureTour
         page="join"
-        steps={[
-          {
-            key: 'Join',
-            title: vm.t('tourJoinTitle'),
-            body: vm.t('tourJoinBody'),
-            target: null,
-          },
-        ]}
+        steps={tourSteps}
         nextLabel={vm.t('tourNext')}
         doneLabel={vm.t('tourDone')}
         skipLabel={vm.t('tourSkip')}

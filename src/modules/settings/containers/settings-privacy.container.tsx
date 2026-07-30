@@ -6,10 +6,12 @@ import { BackLink, FeatureTour } from '@/shared/ui';
 import { AnalyticsConsentSection } from '../components/analytics-consent-section/analytics-consent-section.component';
 import { buildAnalyticsConsentOptions } from '../helpers/analytics-consent-options.helper';
 import { useSettingsPrivacy } from '../hooks/use-settings-privacy.hook';
+import { useSettingsPrivacyTour } from '../hooks/use-settings-privacy-tour.hook';
 import { SETTINGS_PATH } from '../routes/settings-route-paths.constants';
 
 export function SettingsPrivacyContainer() {
   const vm = useSettingsPrivacy();
+  const { steps: tourSteps } = useSettingsPrivacyTour();
   const analyticsConsentOptions = buildAnalyticsConsentOptions(vm.settingsT);
 
   return (
@@ -62,14 +64,7 @@ export function SettingsPrivacyContainer() {
       </form>
       <FeatureTour
         page="settings-privacy"
-        steps={[
-          {
-            key: 'SettingsPrivacy',
-            title: vm.t('tourSettingsPrivacyTitle'),
-            body: vm.t('tourSettingsPrivacyBody'),
-            target: null,
-          },
-        ]}
+        steps={tourSteps}
         nextLabel={vm.t('tourNext')}
         doneLabel={vm.t('tourDone')}
         skipLabel={vm.t('tourSkip')}

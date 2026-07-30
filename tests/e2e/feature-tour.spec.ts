@@ -13,31 +13,50 @@ const register = async (page: Page, suffix: string): Promise<void> => {
   await page.waitForURL(/\/app$/u);
 };
 
+/** The dialog is labelled by the current step, so this matches step one. */
 const dashboardTour = (page: Page) =>
-  page.getByRole('dialog', { name: 'Your food at a glance' });
+  page.getByRole('dialog', { name: 'Welcome to your kitchen' });
+
+const DASHBOARD_STEPS = 6;
+
+/**
+ * Clicks through from `fromStep` to the final step, where the primary button
+ * changes from "Next" to "Got it".
+ */
+const advanceToLastStep = async (page: Page, fromStep: number): Promise<void> => {
+  for (let step = fromStep; step < DASHBOARD_STEPS; step += 1) {
+    await page.getByRole('button', { name: 'Next' }).click();
+  }
+  await expect(
+    page.getByText(`${DASHBOARD_STEPS} / ${DASHBOARD_STEPS}`),
+  ).toBeVisible();
+};
 
 const storedFlag = async (page: Page, name: string): Promise<string | null> =>
   page.evaluate((key) => localStorage.getItem(key), tourKey(name));
 
 test.describe('guided page tours', () => {
-  test('introduces itself on a first visit and walks through both steps', async ({
+  test('introduces itself on a first visit and walks every step', async ({
     page,
   }) => {
     await register(page, 'first-visit');
 
     await expect(dashboardTour(page)).toBeVisible();
-    await expect(page.getByText('1 / 2')).toBeVisible();
+    await expect(page.getByText(`1 / ${DASHBOARD_STEPS}`)).toBeVisible();
 
     await page.getByRole('button', { name: 'Next' }).click();
-    await expect(page.getByText('2 / 2')).toBeVisible();
-    await expect(page.getByText('Start here')).toBeVisible();
+    await expect(page.getByText(`2 / ${DASHBOARD_STEPS}`)).toBeVisible();
+    await expect(page.getByText('Your food at a glance')).toBeVisible();
+
+    await advanceToLastStep(page, 2);
+    await expect(page.getByRole('button', { name: 'Got it' })).toBeVisible();
   });
 
   test('"Got it" retires only the tour that was finished', async ({ page }) => {
     await register(page, 'got-it');
 
     await expect(dashboardTour(page)).toBeVisible();
-    await page.getByRole('button', { name: 'Next' }).click();
+    await advanceToLastStep(page, 1);
     await page.getByRole('button', { name: 'Got it' }).click();
     await expect(dashboardTour(page)).toBeHidden();
 

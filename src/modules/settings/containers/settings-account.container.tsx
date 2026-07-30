@@ -4,10 +4,12 @@ import { Download, Trash2 } from '@/packages/icons';
 import { BackLink, ConfirmDialog, DangerReauthDialog, FeatureTour } from '@/shared/ui';
 
 import { useSettingsAccount } from '../hooks/use-settings-account.hook';
+import { useSettingsAccountTour } from '../hooks/use-settings-account-tour.hook';
 import { SETTINGS_PATH } from '../routes/settings-route-paths.constants';
 
 export function SettingsAccountContainer() {
   const vm = useSettingsAccount();
+  const { steps: tourSteps } = useSettingsAccountTour();
 
   return (
     <div className="page narrow stack-lg">
@@ -82,20 +84,7 @@ export function SettingsAccountContainer() {
       />
       <FeatureTour
         page="settings-account"
-        steps={[
-          {
-            key: 'SettingsAccountExport',
-            title: vm.t('tourSettingsAccountExportTitle'),
-            body: vm.t('tourSettingsAccountExportBody'),
-            target: null,
-          },
-          {
-            key: 'SettingsAccountDanger',
-            title: vm.t('tourSettingsAccountDangerTitle'),
-            body: vm.t('tourSettingsAccountDangerBody'),
-            target: null,
-          },
-        ]}
+        steps={tourSteps}
         nextLabel={vm.t('tourNext')}
         doneLabel={vm.t('tourDone')}
         skipLabel={vm.t('tourSkip')}

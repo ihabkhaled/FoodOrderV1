@@ -3,10 +3,12 @@ import { formatMoney } from '@/shared/helpers';
 import { BackLink, FeatureTour, Loading } from '@/shared/ui';
 
 import { useCreateOrder } from '../hooks/use-create-order.hook';
+import { useCreateOrderTour } from '../hooks/use-create-order-tour.hook';
 import { BUCKETS_REDIRECT_PATH } from '../routes/orders-route-paths.constants';
 
 export function CreateOrderContainer() {
   const vm = useCreateOrder();
+  const { steps: tourSteps } = useCreateOrderTour();
 
   if (vm.loading) return <Loading label={vm.t('loading')} />;
   const bucket = vm.bucket;
@@ -152,20 +154,7 @@ export function CreateOrderContainer() {
       </form>
       <FeatureTour
         page="create-order"
-        steps={[
-          {
-            key: 'CreateOrderQuantities',
-            title: vm.t('tourCreateOrderQuantitiesTitle'),
-            body: vm.t('tourCreateOrderQuantitiesBody'),
-            target: null,
-          },
-          {
-            key: 'CreateOrderTotals',
-            title: vm.t('tourCreateOrderTotalsTitle'),
-            body: vm.t('tourCreateOrderTotalsBody'),
-            target: null,
-          },
-        ]}
+        steps={tourSteps}
         nextLabel={vm.t('tourNext')}
         doneLabel={vm.t('tourDone')}
         skipLabel={vm.t('tourSkip')}

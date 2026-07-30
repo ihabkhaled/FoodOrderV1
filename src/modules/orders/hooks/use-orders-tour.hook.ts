@@ -12,8 +12,7 @@ export interface OrdersTourViewModel {
 /** Spotlight targets and copy for the orders tour. */
 export function useOrdersTour(): OrdersTourViewModel {
   const { t } = useApp();
-  const [listElement, setListElement] =
-    useState<HTMLElement | null>(null);
+  const [listElement, setListElement] = useState<HTMLElement | null>(null);
 
   const steps = useMemo<FeatureTourStep[]>(
     () => [
@@ -22,6 +21,36 @@ export function useOrdersTour(): OrdersTourViewModel {
         title: t('tourOrdersListTitle'),
         body: t('tourOrdersListBody'),
         target: listElement,
+      },
+      {
+        key: 'search',
+        title: t('tourOrdersSearchTitle'),
+        body: t('tourOrdersSearchBody'),
+        target: null,
+      },
+      {
+        key: 'status',
+        title: t('tourOrdersStatusTitle'),
+        body: t('tourOrdersStatusBody'),
+        target: null,
+      },
+      {
+        key: 'open',
+        title: t('tourOrdersOpenTitle'),
+        body: t('tourOrdersOpenBody'),
+        target: null,
+      },
+      {
+        key: 'delete',
+        title: t('tourOrdersDeleteTitle'),
+        body: t('tourOrdersDeleteBody'),
+        target: null,
+      },
+      {
+        key: 'empty',
+        title: t('tourOrdersEmptyTitle'),
+        body: t('tourOrdersEmptyBody'),
+        target: null,
       },
     ],
     [t, listElement],

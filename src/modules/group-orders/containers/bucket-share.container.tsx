@@ -7,10 +7,12 @@ import { BucketMemberPermissionsPanel } from '../components/bucket-member-permis
 import { BucketStateBanner } from '../components/bucket-state-banner/bucket-state-banner.component';
 import { BucketStateControls } from '../components/bucket-state-controls/bucket-state-controls.component';
 import { useBucketShare } from '../hooks/use-bucket-share.hook';
+import { useBucketShareTour } from '../hooks/use-bucket-share-tour.hook';
 import { BUCKETS_REDIRECT_PATH } from '../routes/group-orders-route-paths.constants';
 
 export function BucketShareContainer() {
   const vm = useBucketShare();
+  const { steps: tourSteps } = useBucketShareTour();
 
   if (vm.loading) return <Loading label={vm.t('loading')} />;
   if (!vm.view || vm.error) {
@@ -142,20 +144,7 @@ export function BucketShareContainer() {
 
       <FeatureTour
         page="bucket-share"
-        steps={[
-          {
-            key: 'BucketShareCode',
-            title: vm.t('tourBucketShareCodeTitle'),
-            body: vm.t('tourBucketShareCodeBody'),
-            target: null,
-          },
-          {
-            key: 'BucketShareRoles',
-            title: vm.t('tourBucketShareRolesTitle'),
-            body: vm.t('tourBucketShareRolesBody'),
-            target: null,
-          },
-        ]}
+        steps={tourSteps}
         nextLabel={vm.t('tourNext')}
         doneLabel={vm.t('tourDone')}
         skipLabel={vm.t('tourSkip')}

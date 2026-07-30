@@ -7,10 +7,12 @@ import { SUPPORTED_CURRENCIES } from '@/platform/device';
 import { BackLink, FeatureTour, Loading, NumericField } from '@/shared/ui';
 
 import { useBucketEditor } from '../hooks/use-bucket-editor.hook';
+import { useBucketEditorTour } from '../hooks/use-bucket-editor-tour.hook';
 import { BUCKETS_PATH } from '../routes/buckets-route-paths.constants';
 
 export function BucketEditorContainer() {
   const vm = useBucketEditor();
+  const { steps: tourSteps } = useBucketEditorTour();
 
   if (vm.loading) return <Loading label={vm.t('loading')} />;
 
@@ -166,20 +168,7 @@ export function BucketEditorContainer() {
 
       <FeatureTour
         page="bucket-editor"
-        steps={[
-          {
-            key: 'BucketEditorItems',
-            title: vm.t('tourBucketEditorItemsTitle'),
-            body: vm.t('tourBucketEditorItemsBody'),
-            target: null,
-          },
-          {
-            key: 'BucketEditorPricing',
-            title: vm.t('tourBucketEditorPricingTitle'),
-            body: vm.t('tourBucketEditorPricingBody'),
-            target: null,
-          },
-        ]}
+        steps={tourSteps}
         nextLabel={vm.t('tourNext')}
         doneLabel={vm.t('tourDone')}
         skipLabel={vm.t('tourSkip')}

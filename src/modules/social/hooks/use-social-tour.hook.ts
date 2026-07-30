@@ -9,11 +9,10 @@ export interface SocialTourViewModel {
   steps: FeatureTourStep[];
 }
 
-/** Spotlight targets and copy for the social tour. */
+/** Spotlight targets and copy for the friends and groups tour. */
 export function useSocialTour(): SocialTourViewModel {
   const { t } = useApp();
-  const [peopleElement, setPeopleElement] =
-    useState<HTMLElement | null>(null);
+  const [peopleElement, setPeopleElement] = useState<HTMLElement | null>(null);
 
   const steps = useMemo<FeatureTourStep[]>(
     () => [
@@ -22,6 +21,36 @@ export function useSocialTour(): SocialTourViewModel {
         title: t('tourSocialTitle'),
         body: t('tourSocialBody'),
         target: peopleElement,
+      },
+      {
+        key: 'invite',
+        title: t('tourSocialInviteTitle'),
+        body: t('tourSocialInviteBody'),
+        target: null,
+      },
+      {
+        key: 'requests',
+        title: t('tourSocialRequestsTitle'),
+        body: t('tourSocialRequestsBody'),
+        target: null,
+      },
+      {
+        key: 'groups',
+        title: t('tourSocialGroupsTitle'),
+        body: t('tourSocialGroupsBody'),
+        target: null,
+      },
+      {
+        key: 'share',
+        title: t('tourSocialShareBucketsTitle'),
+        body: t('tourSocialShareBucketsBody'),
+        target: null,
+      },
+      {
+        key: 'remove',
+        title: t('tourSocialRemoveTitle'),
+        body: t('tourSocialRemoveBody'),
+        target: null,
       },
     ],
     [t, peopleElement],
