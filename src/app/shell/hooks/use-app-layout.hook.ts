@@ -19,6 +19,7 @@ import {
   showTrayNotification,
   subscribeToPushNotificationTaps,
   subscribeToTrayNotificationTaps,
+  unregisterFromPushNotifications,
 } from '@/platform/device';
 import type { MessageKey } from '@/shared/i18n';
 
@@ -84,6 +85,8 @@ export function useAppLayout(): AppLayoutViewModel {
   /** Null until the first subscription payload establishes the baseline. */
   const mirroredRef = useRef<AppNotification[] | null>(null);
   const trayOpenSequence = useRef(0);
+  /** Token this device registered, so sign-out can stop delivery to it. */
+  const pushTokenRef = useRef<string | null>(null);
   const [notificationPromptOpen, setNotificationPromptOpen] = useState(false);
   const [loggingOut, setLoggingOut] = useState(false);
 
@@ -151,6 +154,7 @@ export function useAppLayout(): AppLayoutViewModel {
     void registerForPushNotifications()
       .then(async (token) => {
         if (!active || !token) return;
+        pushTokenRef.current = token;
         await notificationService.savePushToken(
           user.id,
           token,
@@ -238,6 +242,14 @@ export function useAppLayout(): AppLayoutViewModel {
     if (loggingOut) return;
     setLoggingOut(true);
     try {
+      // Stop push to this device before the session ends, otherwise it would
+      // keep receiving another account's notifications on a shared phone.
+      const token = pushTokenRef.current;
+      if (token && user) {
+        await notificationService.removePushToken(user.id, token).catch(() => {});
+        await unregisterFromPushNotifications();
+        pushTokenRef.current = null;
+      }
       await logout();
     } finally {
       setLoggingOut(false);

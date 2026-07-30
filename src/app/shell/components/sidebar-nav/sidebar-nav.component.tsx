@@ -2,6 +2,7 @@ import type { Locale } from '@/modules/data-access';
 import {
   buildPublicContentPath,
   getPublicPageCopy,
+  toPublicLocale,
 } from '@/modules/public-content';
 import { Home, Mail } from '@/packages/icons';
 import { NavLink } from '@/packages/router';
@@ -17,10 +18,10 @@ interface SidebarNavProps {
 
 /** Primary navigation links inside the desktop sidebar. */
 export function SidebarNav({ t, locale }: SidebarNavProps) {
-  const contactPath = buildPublicContentPath('contact', locale);
-  const contactLabel = getPublicPageCopy('contact', locale).navigationLabel;
-  const welcomePath = buildPublicContentPath('home', locale);
-  const welcomeLabel = getPublicPageCopy('home', locale).navigationLabel;
+  const contactPath = buildPublicContentPath('contact', toPublicLocale(locale));
+  const contactLabel = getPublicPageCopy('contact', toPublicLocale(locale)).navigationLabel;
+  const welcomePath = buildPublicContentPath('home', toPublicLocale(locale));
+  const welcomeLabel = getPublicPageCopy('home', toPublicLocale(locale)).navigationLabel;
   return (
     <nav className="sidebar-nav" aria-label={t('primaryNavigation')}>
       {NAV_ITEMS.map(({ to, icon: Icon, key }) => (

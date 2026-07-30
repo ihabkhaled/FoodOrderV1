@@ -761,6 +761,11 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/group-orders/i18n/locales/ar-Latn.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/group-orders/i18n/locales/ar.json",
       "tests": [],
       "relationship": "inferred"
@@ -947,6 +952,11 @@
     },
     {
       "source": "src/modules/order-sessions/hooks/use-session-lifecycle-confirmation.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/order-sessions/i18n/locales/ar-Latn.json",
       "tests": [],
       "relationship": "inferred"
     },
@@ -1236,6 +1246,11 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/public-content/helpers/public-locale.helper.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/public-content/hooks/use-contact-form.hook.ts",
       "tests": [],
       "relationship": "inferred"
@@ -1302,6 +1317,11 @@
     },
     {
       "source": "src/modules/session-invites/hooks/use-session-invite.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/session-invites/i18n/locales/ar-Latn.json",
       "tests": [],
       "relationship": "inferred"
     },
@@ -1521,6 +1541,11 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/settings/i18n/locales/ar-Latn.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/settings/i18n/locales/ar.json",
       "tests": [],
       "relationship": "inferred"
@@ -1697,6 +1722,11 @@
     },
     {
       "source": "src/modules/social/hooks/use-social.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/social/i18n/locales/ar-Latn.json",
       "tests": [],
       "relationship": "inferred"
     },
@@ -2182,6 +2212,11 @@
     },
     {
       "source": "src/shared/i18n/locale.constants.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/i18n/locales/ar-Latn.json",
       "tests": [],
       "relationship": "inferred"
     },

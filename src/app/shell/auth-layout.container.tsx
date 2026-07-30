@@ -1,6 +1,7 @@
 import {
   buildPublicContentPath,
   getPublicPageCopy,
+  toPublicLocale,
 } from '@/modules/public-content';
 import { useApp } from '@/modules/session';
 import { Home } from '@/packages/icons';
@@ -14,8 +15,8 @@ import { THEME_ICON, THEME_LABEL } from './app-layout.constants';
 export function AuthLayoutContainer() {
   const { t, locale, theme, setDeviceLocale, setDeviceTheme } = useApp();
   const ThemeIcon = THEME_ICON[theme];
-  const welcomePath = buildPublicContentPath('home', locale);
-  const welcomeLabel = getPublicPageCopy('home', locale).navigationLabel;
+  const welcomePath = buildPublicContentPath('home', toPublicLocale(locale));
+  const welcomeLabel = getPublicPageCopy('home', toPublicLocale(locale)).navigationLabel;
 
   return (
     <main className="auth-shell">

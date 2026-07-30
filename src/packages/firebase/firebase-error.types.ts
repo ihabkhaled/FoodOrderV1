@@ -2,6 +2,7 @@
 export type FirebaseErrorLocale =
   | 'en'
   | 'ar'
+  | 'ar-Latn'
   | 'it'
   | 'fa'
   | 'fr'

@@ -15,6 +15,7 @@ export const DEFAULT_LOCALE: Locale = 'en';
 export const SUPPORTED_LOCALES = [
   'en',
   'ar',
+  'ar-Latn',
   'it',
   'fa',
   'fr',
@@ -41,6 +42,13 @@ export const LOCALE_DEFINITIONS = {
     compactName: 'ع',
     direction: 'rtl',
     browserLanguagePrefixes: ['ar'],
+  },
+  'ar-Latn': {
+    code: 'ar-Latn',
+    nativeName: 'Arabic Franco',
+    compactName: 'AF',
+    direction: 'ltr',
+    browserLanguagePrefixes: ['ar-latn'],
   },
   it: {
     code: 'it',

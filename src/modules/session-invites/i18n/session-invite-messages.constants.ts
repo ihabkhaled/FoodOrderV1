@@ -1,4 +1,5 @@
 import arMessages from './locales/ar.json';
+import arLatnMessages from './locales/ar-Latn.json';
 import deMessages from './locales/de.json';
 import enMessages from './locales/en.json';
 import esMessages from './locales/es.json';
@@ -14,6 +15,7 @@ import zhCNMessages from './locales/zh-CN.json';
 export const SESSION_INVITE_MESSAGES = {
   en: enMessages,
   ar: arMessages,
+  'ar-Latn': arLatnMessages,
   it: itMessages,
   fa: faMessages,
   fr: frMessages,

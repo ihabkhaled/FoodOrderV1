@@ -38,7 +38,7 @@
     {
       "path": "tests/components/LanguageSelect.test.tsx",
       "bytes": 2211,
-      "hash": "a45564187dce51b70f86d3ed01c26b56aba38b7ca150e7e91522db15adfcb0e9"
+      "hash": "a647feb238a9e03abe1b140b78d89594ade63480dc4d619597e8ec64acdf3215"
     },
     {
       "path": "tests/components/Loading.test.tsx",
@@ -312,8 +312,8 @@
     },
     {
       "path": "tests/i18n/locale-runtime.test.ts",
-      "bytes": 3052,
-      "hash": "276f5d5dc79e072616ccadea620a088c350da4f1ab734216e880c115a8df63b3"
+      "bytes": 3069,
+      "hash": "e9812cee7ff1ce70ad10b44cb2443c2726f6dd20f23c052ba6786012b51741d7"
     },
     {
       "path": "tests/i18n/message-catalog-validation.test.ts",
