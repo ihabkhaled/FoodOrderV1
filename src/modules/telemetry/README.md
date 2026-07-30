@@ -50,6 +50,17 @@ Telemetry must never include email, telephone, full/display name, address, invit
 
 Operational telemetry may run only under an explicit operational-or-higher consent state. Product and marketing purposes require their corresponding consent. Revoking consent stops future optional events; events are never replayed later.
 
+## Connected vendors (v1.8.0)
+
+Vercel Web Analytics and Speed Insights are mounted in  and are **gated by the same consent value** as the on-device recorder:
+
+| Vendor | Purpose | Minimum consent |
+| --- | --- | --- |
+| Vercel Speed Insights (Core Web Vitals) | operational |  |
+| Vercel Web Analytics (page views) | product |  |
+
+ mounts neither component, so no request is made. Both are wrapped by owned facades (, ) per the package-ownership rule, and neither receives event properties from this module — they collect their own anonymous page-level data. Coverage: .
+
 ## Integration boundary
 
 A production analytics/error/performance vendor requires:

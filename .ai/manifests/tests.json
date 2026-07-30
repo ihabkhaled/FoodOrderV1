@@ -86,6 +86,11 @@
       "hash": "c62fdbcd8a3ad515aa17893b30f86eb8a336307ad8453e5a5a377cf7468dcb81"
     },
     {
+      "path": "tests/components/VercelInsights.test.tsx",
+      "bytes": 1918,
+      "hash": "abc84b970a7ae74703a2fc1a2112425f2d3f2ea781a9c9e868b7daa52d33b6cb"
+    },
+    {
       "path": "tests/domain/billing-entitlements.test.ts",
       "bytes": 10025,
       "hash": "96a5e4a039af651c8def870ebede2a059ab89e9f9f39cd1169b7dc75108d87b5"

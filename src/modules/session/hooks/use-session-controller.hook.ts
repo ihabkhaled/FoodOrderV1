@@ -2,8 +2,10 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import type { ProfileDefaults, SessionUser, UserProfile } from '@/modules/data-access';
 import { authService, dataService, storageMode } from '@/modules/data-access';
+import type { AnalyticsConsent } from '@/modules/telemetry';
 import {
   ANALYTICS_EVENT,
+  DEFAULT_ANALYTICS_CONSENT,
   loadAnalyticsConsent,
   RELIABILITY_ERROR_CATEGORY,
   telemetryRecorder,
@@ -50,6 +52,9 @@ export const useSessionController = (initialLocale?: Locale): AppContextValue =>
   const [online, setOnline] = useState(true);
   const [toast, setToast] = useState<ToastState | null>(null);
   const [device, setDevice] = useState<DeviceConfig>(DEFAULT_DEVICE_CONFIG);
+  const [analyticsConsent, setAnalyticsConsent] = useState<AnalyticsConsent>(
+    DEFAULT_ANALYTICS_CONSENT,
+  );
   const locale = initialLocale ?? profile?.locale ?? device.locale;
   const theme = profile?.theme ?? device.theme;
   const currency = profile?.defaultCurrency ?? device.currency;
@@ -126,7 +131,9 @@ export const useSessionController = (initialLocale?: Locale): AppContextValue =>
   useEffect(() => {
     void loadAnalyticsConsent()
       .then((storedConsent) => {
-        telemetryRecorder.setConsent(profile?.analyticsConsent ?? storedConsent);
+        const resolved = profile?.analyticsConsent ?? storedConsent;
+        setAnalyticsConsent(resolved);
+        telemetryRecorder.setConsent(resolved);
       })
       .catch(() => {
         // Leaving consent denied is the safe failure mode.
@@ -190,6 +197,7 @@ export const useSessionController = (initialLocale?: Locale): AppContextValue =>
       authLoading,
       online,
       storageMode,
+      analyticsConsent,
       locale,
       theme,
       currency,
@@ -291,6 +299,7 @@ export const useSessionController = (initialLocale?: Locale): AppContextValue =>
       profile,
       authLoading,
       online,
+      analyticsConsent,
       locale,
       theme,
       currency,

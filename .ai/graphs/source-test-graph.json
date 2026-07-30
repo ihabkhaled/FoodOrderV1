@@ -16,6 +16,11 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/app/providers/vercel-insights.container.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/app/router/app-route-paths.constants.ts",
       "tests": [],
       "relationship": "inferred"
@@ -1912,6 +1917,16 @@
     },
     {
       "source": "src/packages/router/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/packages/vercel-analytics/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/packages/vercel-speed-insights/index.ts",
       "tests": [],
       "relationship": "inferred"
     },
