@@ -49,6 +49,10 @@ export const packageOwnership = {
     owner: 'src/packages/capacitor-keyboard',
     publicImport: '@/packages/capacitor-keyboard',
   },
+  '@capacitor/local-notifications': {
+    owner: 'src/packages/capacitor-local-notifications',
+    publicImport: '@/packages/capacitor-local-notifications',
+  },
   '@capacitor/network': {
     owner: 'src/packages/capacitor-network',
     publicImport: '@/packages/capacitor-network',

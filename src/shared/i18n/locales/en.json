@@ -252,5 +252,13 @@
   "deletingAccount": "Deleting account…",
   "deleteAccountWrongCredentials": "Invalid email or password.",
   "continueAction": "Continue",
-  "startOrderRound": "Start round"
+  "startOrderRound": "Start round",
+  "notificationPromptTitle": "Turn on notifications?",
+  "notificationPromptMessage": "Get a notification when someone opens an order round, invites you, or your order changes. You can change this any time in Settings.",
+  "notificationPromptEnable": "Turn on",
+  "notificationPromptLater": "Not now",
+  "notificationsLabel": "Notifications",
+  "notificationsEnabled": "On",
+  "notificationsBlocked": "Blocked in your device settings",
+  "enableNotifications": "Enable notifications"
 }

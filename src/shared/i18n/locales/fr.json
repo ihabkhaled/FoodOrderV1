@@ -252,5 +252,13 @@
   "deletingAccount": "Suppression du compte…",
   "deleteAccountWrongCredentials": "E-mail ou mot de passe invalide.",
   "continueAction": "Continuer",
-  "startOrderRound": "Lancer un tour"
+  "startOrderRound": "Lancer un tour",
+  "notificationPromptTitle": "Activer les notifications ?",
+  "notificationPromptMessage": "Recevez une notification lorsqu'une personne lance un tour de commande, vous invite ou que votre commande change. Vous pouvez modifier ce choix à tout moment dans les réglages.",
+  "notificationPromptEnable": "Activer",
+  "notificationPromptLater": "Pas maintenant",
+  "notificationsLabel": "Notifications",
+  "notificationsEnabled": "Activées",
+  "notificationsBlocked": "Bloquées dans les réglages de votre appareil",
+  "enableNotifications": "Activer les notifications"
 }

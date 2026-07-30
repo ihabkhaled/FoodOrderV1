@@ -1,13 +1,24 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import type { AppNotification, Locale, Theme } from '@/modules/data-access';
 import { notificationService } from '@/modules/data-access';
 import type { ToastState } from '@/modules/session';
 import { useApp } from '@/modules/session';
-import { useLocation } from '@/packages/router';
-import { scrollViewportToTop } from '@/platform/browser';
-import { loadSidebarCollapsed, saveSidebarCollapsed } from '@/platform/device';
+import { useLocation, useNavigate } from '@/packages/router';
+import { isDocumentHidden, scrollViewportToTop } from '@/platform/browser';
+import {
+  loadNotificationPromptSeen,
+  loadSidebarCollapsed,
+  queryNotificationPermission,
+  requestNotificationPermission,
+  saveNotificationPromptSeen,
+  saveSidebarCollapsed,
+  showTrayNotification,
+  subscribeToTrayNotificationTaps,
+} from '@/platform/device';
 import type { MessageKey } from '@/shared/i18n';
+
+import { selectNewUnreadNotifications } from '../helpers/notification-mirror.helper';
 
 interface RouteRefreshState {
   readonly notificationOpenSequence?: unknown;
@@ -32,6 +43,9 @@ export interface AppLayoutViewModel {
   toggleCollapsed: () => void;
   notifications: AppNotification[];
   notificationsLoading: boolean;
+  notificationPromptOpen: boolean;
+  enableNotifications: () => Promise<void>;
+  dismissNotificationPrompt: () => void;
   markNotificationsRead: (notificationIds: string[]) => Promise<void>;
 }
 
@@ -61,6 +75,11 @@ export function useAppLayout(): AppLayoutViewModel {
   const [notifications, setNotifications] = useState<AppNotification[]>([]);
   const [notificationsLoading, setNotificationsLoading] = useState(true);
   const [confirmingLogout, setConfirmingLogout] = useState(false);
+  const navigate = useNavigate();
+  /** Null until the first subscription payload establishes the baseline. */
+  const mirroredRef = useRef<AppNotification[] | null>(null);
+  const trayOpenSequence = useRef(0);
+  const [notificationPromptOpen, setNotificationPromptOpen] = useState(false);
   const [loggingOut, setLoggingOut] = useState(false);
 
   useEffect(() => {
@@ -75,16 +94,40 @@ export function useAppLayout(): AppLayoutViewModel {
       });
   }, []);
 
+  /**
+   * Mirrors newly arrived unread notifications into the OS tray. Suppressed
+   * while the app is in front — the in-app centre already shows them there.
+   */
+  const mirrorToTray = async (
+    incoming: AppNotification[],
+  ): Promise<void> => {
+    const fresh = selectNewUnreadNotifications(mirroredRef.current, incoming);
+    mirroredRef.current = incoming;
+    if (fresh.length === 0 || !isDocumentHidden()) return;
+    if ((await queryNotificationPermission()) !== 'granted') return;
+    for (const notification of fresh) {
+      await showTrayNotification({
+        id: notification.id,
+        title: notification.title,
+        body: notification.message,
+        route: notification.route,
+      });
+    }
+  };
+
   useEffect(() => {
     if (!user) {
       setNotifications([]);
       setNotificationsLoading(false);
+      mirroredRef.current = null;
       return;
     }
     setNotificationsLoading(true);
+    mirroredRef.current = null;
     return notificationService.subscribe(
       user.id,
       (incoming) => {
+        void mirrorToTray(incoming);
         setNotifications(incoming);
         setNotificationsLoading(false);
       },
@@ -94,6 +137,52 @@ export function useAppLayout(): AppLayoutViewModel {
       },
     );
   }, [user]);
+
+  // Tapping an OS notification opens its in-app destination. The monotonic
+  // sequence forces a refresh even when the route is already displayed.
+  useEffect(
+    () =>
+      subscribeToTrayNotificationTaps((route) => {
+        trayOpenSequence.current += 1;
+        void navigate(route, {
+          state: { notificationOpenSequence: trayOpenSequence.current },
+        });
+      }),
+    [navigate],
+  );
+
+  // Offer notifications once per device, and only when the OS can still be
+  // asked. Declining is remembered; Settings keeps the control available.
+  useEffect(() => {
+    if (!user) return;
+    let active = true;
+    void Promise.all([
+      queryNotificationPermission(),
+      loadNotificationPromptSeen(),
+    ])
+      .then(([permission, seen]) => {
+        if (active && permission === 'prompt' && !seen) {
+          setNotificationPromptOpen(true);
+        }
+      })
+      .catch(() => {
+        // Never block the shell on a permission query.
+      });
+    return () => {
+      active = false;
+    };
+  }, [user]);
+
+  const enableNotifications = async (): Promise<void> => {
+    setNotificationPromptOpen(false);
+    await saveNotificationPromptSeen();
+    await requestNotificationPermission();
+  };
+
+  const dismissNotificationPrompt = (): void => {
+    setNotificationPromptOpen(false);
+    void saveNotificationPromptSeen();
+  };
 
   const requestLogout = (): void => {
     setConfirmingLogout(true);
@@ -158,6 +247,9 @@ export function useAppLayout(): AppLayoutViewModel {
     toggleCollapsed,
     notifications,
     notificationsLoading,
+    notificationPromptOpen,
+    enableNotifications,
+    dismissNotificationPrompt,
     markNotificationsRead,
   };
 }

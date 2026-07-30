@@ -252,5 +252,13 @@
   "deletingAccount": "Konto wird gelöscht…",
   "deleteAccountWrongCredentials": "E-Mail-Adresse oder Passwort ungültig.",
   "continueAction": "Weiter",
-  "startOrderRound": "Runde starten"
+  "startOrderRound": "Runde starten",
+  "notificationPromptTitle": "Benachrichtigungen aktivieren?",
+  "notificationPromptMessage": "Erhalte eine Benachrichtigung, wenn jemand eine Bestellrunde startet, dich einlädt oder sich deine Bestellung ändert. Du kannst das jederzeit in den Einstellungen ändern.",
+  "notificationPromptEnable": "Aktivieren",
+  "notificationPromptLater": "Nicht jetzt",
+  "notificationsLabel": "Benachrichtigungen",
+  "notificationsEnabled": "Aktiv",
+  "notificationsBlocked": "In deinen Geräteeinstellungen blockiert",
+  "enableNotifications": "Benachrichtigungen aktivieren"
 }

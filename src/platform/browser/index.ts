@@ -19,6 +19,7 @@ export {
   subscribeToColorSchemeChange,
 } from './document-settings.adapter';
 export type { ThemePreference } from './document-settings.types';
+export { isDocumentHidden } from './document-visibility.adapter';
 export { downloadTextFile } from './file-download.adapter';
 export { registerServiceWorker } from './service-worker.adapter';
 export { shareText } from './share.adapter';
@@ -26,3 +27,8 @@ export {
   getViewportScrollTop,
   scrollViewportToTop,
 } from './viewport-scroll.adapter';
+export {
+  queryWebNotificationPermission,
+  requestWebNotificationPermission,
+  showWebNotification,
+} from './web-notification.adapter';

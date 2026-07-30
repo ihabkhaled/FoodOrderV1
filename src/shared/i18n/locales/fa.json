@@ -252,5 +252,13 @@
   "deletingAccount": "در حال حذف حساب…",
   "deleteAccountWrongCredentials": "ایمیل یا گذرواژه نادرست است.",
   "continueAction": "ادامه",
-  "startOrderRound": "شروع دور"
+  "startOrderRound": "شروع دور",
+  "notificationPromptTitle": "اعلان‌ها روشن شود؟",
+  "notificationPromptMessage": "هنگامی که کسی دور سفارش را آغاز می‌کند، شما را دعوت می‌کند یا سفارشتان تغییر می‌کند، اعلان دریافت کنید. هر زمان می‌توانید این را در تنظیمات تغییر دهید.",
+  "notificationPromptEnable": "روشن کن",
+  "notificationPromptLater": "الان نه",
+  "notificationsLabel": "اعلان‌ها",
+  "notificationsEnabled": "روشن",
+  "notificationsBlocked": "در تنظیمات دستگاه شما مسدود است",
+  "enableNotifications": "فعال‌سازی اعلان‌ها"
 }

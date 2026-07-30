@@ -121,6 +121,11 @@
       "hash": "3b63a8112c1d7bed52e4ef3ffd8eece72b8032294b7e8ccc5d58afbe68a133a1"
     },
     {
+      "path": "tests/domain/notification-mirror.test.ts",
+      "bytes": 2023,
+      "hash": "f8fd2cce280c43ce866386e4fa8d0830afad6a7be6ed8e02716857499366cc93"
+    },
+    {
       "path": "tests/domain/order-session.test.ts",
       "bytes": 12868,
       "hash": "6a6f8860edc8b8e499de434131ce1329934ae9b6806ad78187459c906b3cbd0b"
@@ -199,6 +204,11 @@
       "path": "tests/e2e/helpers/responsiveScenario.ts",
       "bytes": 7843,
       "hash": "ccd7574c4fcb5e8a375e71667adbf42f96d2c2e5e8c6ffe05c4afb375ced75d2"
+    },
+    {
+      "path": "tests/e2e/notification-mirroring.spec.ts",
+      "bytes": 5383,
+      "hash": "1cd61fcdbe584a1f518256c759a3af1277d8c32cc0a848af238e32c02f1a5a6a"
     },
     {
       "path": "tests/e2e/order-lifecycle.spec.ts",

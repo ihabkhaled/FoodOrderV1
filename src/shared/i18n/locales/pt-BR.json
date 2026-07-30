@@ -252,5 +252,13 @@
   "deletingAccount": "Excluindo conta…",
   "deleteAccountWrongCredentials": "E-mail ou senha inválidos.",
   "continueAction": "Continuar",
-  "startOrderRound": "Iniciar rodada"
+  "startOrderRound": "Iniciar rodada",
+  "notificationPromptTitle": "Ativar notificações?",
+  "notificationPromptMessage": "Receba uma notificação quando alguém iniciar uma rodada de pedidos, te convidar ou seu pedido mudar. Você pode alterar isso quando quiser nas configurações.",
+  "notificationPromptEnable": "Ativar",
+  "notificationPromptLater": "Agora não",
+  "notificationsLabel": "Notificações",
+  "notificationsEnabled": "Ativadas",
+  "notificationsBlocked": "Bloqueadas nas configurações do seu dispositivo",
+  "enableNotifications": "Habilitar notificações"
 }

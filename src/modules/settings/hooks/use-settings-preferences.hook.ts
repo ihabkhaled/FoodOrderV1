@@ -2,6 +2,11 @@ import { type SyntheticEvent, useEffect, useState } from 'react';
 
 import type { CurrencyCode, Locale, Theme } from '@/modules/data-access';
 import { useApp } from '@/modules/session';
+import type { NotificationPermissionState } from '@/platform/device';
+import {
+  queryNotificationPermission,
+  requestNotificationPermission,
+} from '@/platform/device';
 import type { MessageKey } from '@/shared/i18n';
 
 import type { SettingsMessageKey } from '../i18n/settings-messages.constants';
@@ -22,6 +27,8 @@ export interface SettingsPreferencesViewModel {
   busy: boolean;
   error: string;
   submit: (event: SyntheticEvent) => Promise<void>;
+  notificationPermission: NotificationPermissionState;
+  enableNotifications: () => Promise<void>;
 }
 
 /** Profile identity and runtime preferences, saved together on submit. */
@@ -35,6 +42,22 @@ export function useSettingsPreferences(): SettingsPreferencesViewModel {
   );
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
+  const [notificationPermission, setNotificationPermission] =
+    useState<NotificationPermissionState>('unsupported');
+
+  useEffect(() => {
+    let active = true;
+    void queryNotificationPermission()
+      .then((state) => {
+        if (active) setNotificationPermission(state);
+      })
+      .catch(() => {
+        if (active) setNotificationPermission('unsupported');
+      });
+    return () => {
+      active = false;
+    };
+  }, []);
 
   useEffect(() => {
     if (profile) {
@@ -86,5 +109,10 @@ export function useSettingsPreferences(): SettingsPreferencesViewModel {
     busy,
     error,
     submit,
+    notificationPermission,
+    enableNotifications: async () => {
+      await requestNotificationPermission();
+      setNotificationPermission(await queryNotificationPermission());
+    },
   };
 }

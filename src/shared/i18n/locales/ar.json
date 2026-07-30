@@ -252,5 +252,13 @@
   "deletingAccount": "جارٍ حذف الحساب…",
   "deleteAccountWrongCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة.",
   "continueAction": "متابعة",
-  "startOrderRound": "ابدأ جولة"
+  "startOrderRound": "ابدأ جولة",
+  "notificationPromptTitle": "تشغيل الإشعارات؟",
+  "notificationPromptMessage": "احصل على إشعار عندما يبدأ أحدهم جولة طلبات أو يدعوك أو يتغير طلبك. يمكنك تغيير ذلك في أي وقت من الإعدادات.",
+  "notificationPromptEnable": "تشغيل",
+  "notificationPromptLater": "ليس الآن",
+  "notificationsLabel": "الإشعارات",
+  "notificationsEnabled": "مفعّلة",
+  "notificationsBlocked": "محجوبة في إعدادات جهازك",
+  "enableNotifications": "تمكين الإشعارات"
 }

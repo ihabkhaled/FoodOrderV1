@@ -42,6 +42,9 @@ export function AppLayoutContainer() {
     toggleCollapsed,
     notifications,
     notificationsLoading,
+    notificationPromptOpen,
+    enableNotifications,
+    dismissNotificationPrompt,
     markNotificationsRead,
   } = useAppLayout();
 
@@ -164,6 +167,16 @@ export function AppLayoutContainer() {
         busy={loggingOut}
         onConfirm={() => void confirmLogout()}
         onCancel={cancelLogout}
+      />
+
+      <ConfirmDialog
+        open={notificationPromptOpen}
+        title={t('notificationPromptTitle')}
+        message={t('notificationPromptMessage')}
+        confirmLabel={t('notificationPromptEnable')}
+        cancelLabel={t('notificationPromptLater')}
+        onConfirm={() => void enableNotifications()}
+        onCancel={dismissNotificationPrompt}
       />
     </div>
   );

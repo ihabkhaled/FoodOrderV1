@@ -252,5 +252,13 @@
   "deletingAccount": "Eliminazione account…",
   "deleteAccountWrongCredentials": "Email o password non validi.",
   "continueAction": "Continua",
-  "startOrderRound": "Avvia un giro"
+  "startOrderRound": "Avvia un giro",
+  "notificationPromptTitle": "Attivare le notifiche?",
+  "notificationPromptMessage": "Ricevi una notifica quando qualcuno avvia un giro di ordini, ti invita o il tuo ordine cambia. Puoi modificarlo quando vuoi nelle impostazioni.",
+  "notificationPromptEnable": "Attiva",
+  "notificationPromptLater": "Non ora",
+  "notificationsLabel": "Notifiche",
+  "notificationsEnabled": "Attive",
+  "notificationsBlocked": "Bloccate nelle impostazioni del dispositivo",
+  "enableNotifications": "Abilita le notifiche"
 }

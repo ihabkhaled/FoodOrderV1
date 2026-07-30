@@ -71,6 +71,11 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/app/shell/helpers/notification-mirror.helper.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/app/shell/hooks/use-app-layout.hook.ts",
       "tests": [],
       "relationship": "inferred"
@@ -1811,6 +1816,11 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/packages/capacitor-local-notifications/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/packages/capacitor-network/index.ts",
       "tests": [],
       "relationship": "inferred"
@@ -1936,6 +1946,11 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/platform/browser/document-visibility.adapter.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/platform/browser/file-download.adapter.ts",
       "tests": [],
       "relationship": "inferred"
@@ -1957,6 +1972,11 @@
     },
     {
       "source": "src/platform/browser/viewport-scroll.adapter.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/platform/browser/web-notification.adapter.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -1986,6 +2006,11 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/platform/device/notification-permission.adapter.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/platform/device/platform-init.adapter.ts",
       "tests": [],
       "relationship": "inferred"
@@ -1997,6 +2022,11 @@
     },
     {
       "source": "src/platform/device/status-bar.adapter.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/platform/device/tray-notification.adapter.ts",
       "tests": [],
       "relationship": "inferred"
     },

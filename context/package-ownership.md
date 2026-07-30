@@ -18,6 +18,7 @@ Rule: [../rules/08-package-ownership.md](../rules/08-package-ownership.md).
 | `@capacitor/network`      | `src/packages/capacitor-network`     | `@/packages/capacitor-network`     |                                             |
 | `@capacitor/preferences`  | `src/packages/capacitor-preferences` | `@/packages/capacitor-preferences` |                                             |
 | `@capacitor/status-bar`   | `src/packages/capacitor-status-bar`  | `@/packages/capacitor-status-bar`  |                                             |
+| `@capacitor/local-notifications` | `src/packages/capacitor-local-notifications` | `@/packages/capacitor-local-notifications` | OS tray mirroring (v1.8.0)      |
 
 ## Special cases
 

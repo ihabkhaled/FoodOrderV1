@@ -72,6 +72,17 @@ export const saveSidebarCollapsed = async (collapsed: boolean): Promise<void> =>
   await setPreference(SIDEBAR_KEY, collapsed ? 'true' : 'false');
 };
 
+/**
+ * Whether this device has already seen the notification explainer. The OS
+ * prompt is only ever raised from a deliberate user action, never on load.
+ */
+const NOTIFICATION_PROMPT_KEY = 'ui:notification-prompt-seen';
+export const loadNotificationPromptSeen = async (): Promise<boolean> =>
+  (await getPreference(NOTIFICATION_PROMPT_KEY)) === 'true';
+export const saveNotificationPromptSeen = async (): Promise<void> => {
+  await setPreference(NOTIFICATION_PROMPT_KEY, 'true');
+};
+
 /** The next theme in a system → light → dark → system cycle. */
 export const nextTheme = (current: Theme): Theme =>
   current === 'system' ? 'light' : current === 'light' ? 'dark' : 'system';

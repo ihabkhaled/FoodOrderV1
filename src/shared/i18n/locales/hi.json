@@ -252,5 +252,13 @@
   "deletingAccount": "खाता हटाया जा रहा है…",
   "deleteAccountWrongCredentials": "ईमेल या पासवर्ड अमान्य है।",
   "continueAction": "जारी रखें",
-  "startOrderRound": "राउंड शुरू करें"
+  "startOrderRound": "राउंड शुरू करें",
+  "notificationPromptTitle": "नोटिफ़िकेशन चालू करें?",
+  "notificationPromptMessage": "जब कोई ऑर्डर राउंड शुरू करे, आपको आमंत्रित करे या आपका ऑर्डर बदले, तब नोटिफ़िकेशन पाएँ। आप इसे कभी भी सेटिंग में बदल सकते हैं।",
+  "notificationPromptEnable": "चालू करें",
+  "notificationPromptLater": "अभी नहीं",
+  "notificationsLabel": "नोटिफ़िकेशन",
+  "notificationsEnabled": "चालू",
+  "notificationsBlocked": "आपके डिवाइस की सेटिंग में अवरोधित",
+  "enableNotifications": "नोटिफ़िकेशन सक्षम करें"
 }

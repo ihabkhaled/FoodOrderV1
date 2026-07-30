@@ -252,5 +252,13 @@
   "deletingAccount": "正在删除账户…",
   "deleteAccountWrongCredentials": "邮箱或密码无效。",
   "continueAction": "继续",
-  "startOrderRound": "发起新一轮"
+  "startOrderRound": "发起新一轮",
+  "notificationPromptTitle": "开启通知？",
+  "notificationPromptMessage": "当有人发起订单轮次、邀请您或您的订单发生变化时收到通知。您可以随时在设置中更改。",
+  "notificationPromptEnable": "开启",
+  "notificationPromptLater": "暂不开启",
+  "notificationsLabel": "通知",
+  "notificationsEnabled": "已开启",
+  "notificationsBlocked": "已在设备设置中被阻止",
+  "enableNotifications": "启用通知"
 }

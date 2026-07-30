@@ -252,5 +252,13 @@
   "deletingAccount": "กำลังลบบัญชี…",
   "deleteAccountWrongCredentials": "อีเมลหรือรหัสผ่านไม่ถูกต้อง",
   "continueAction": "ดำเนินการต่อ",
-  "startOrderRound": "เริ่มรอบ"
+  "startOrderRound": "เริ่มรอบ",
+  "notificationPromptTitle": "เปิดการแจ้งเตือนหรือไม่",
+  "notificationPromptMessage": "รับการแจ้งเตือนเมื่อมีคนเริ่มรอบสั่งอาหาร เชิญคุณ หรือออเดอร์ของคุณเปลี่ยนแปลง คุณเปลี่ยนการตั้งค่านี้ได้ทุกเมื่อในหน้าการตั้งค่า",
+  "notificationPromptEnable": "เปิด",
+  "notificationPromptLater": "ไว้ภายหลัง",
+  "notificationsLabel": "การแจ้งเตือน",
+  "notificationsEnabled": "เปิดอยู่",
+  "notificationsBlocked": "ถูกบล็อกในการตั้งค่าอุปกรณ์ของคุณ",
+  "enableNotifications": "เปิดใช้การแจ้งเตือน"
 }

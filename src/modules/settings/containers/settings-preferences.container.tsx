@@ -1,7 +1,7 @@
 import '../settings.css';
 
 import type { CurrencyCode, Theme } from '@/modules/data-access';
-import { Save } from '@/packages/icons';
+import { Bell, Save } from '@/packages/icons';
 import { SUPPORTED_CURRENCIES } from '@/platform/device';
 import { BackLink, LanguageSelect } from '@/shared/ui';
 
@@ -69,6 +69,33 @@ export function SettingsPreferencesContainer() {
             </select>
           </label>
         </section>
+        {vm.notificationPermission === 'unsupported' ? null : (
+          <section className="section-card stack">
+            <div className="section-heading">
+              <div>
+                <p className="eyebrow">{vm.t('notificationsLabel')}</p>
+                <h2>
+                  <Bell size={18} aria-hidden="true" />
+                  {vm.t('notificationsLabel')}
+                </h2>
+              </div>
+            </div>
+            {vm.notificationPermission === 'granted' ? (
+              <p className="muted">{vm.t('notificationsEnabled')}</p>
+            ) : vm.notificationPermission === 'denied' ? (
+              <p className="muted">{vm.t('notificationsBlocked')}</p>
+            ) : (
+              <button
+                type="button"
+                className="button secondary"
+                onClick={() => void vm.enableNotifications()}
+              >
+                <Bell />
+                {vm.t('enableNotifications')}
+              </button>
+            )}
+          </section>
+        )}
         {vm.error ? <p className="form-error">{vm.error}</p> : null}
         <div className="sticky-actions">
           <button className="button" disabled={vm.busy}>

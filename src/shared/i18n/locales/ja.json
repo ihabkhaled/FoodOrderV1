@@ -252,5 +252,13 @@
   "deletingAccount": "アカウントを削除中…",
   "deleteAccountWrongCredentials": "メールアドレスまたはパスワードが正しくありません。",
   "continueAction": "続行",
-  "startOrderRound": "ラウンドを開始"
+  "startOrderRound": "ラウンドを開始",
+  "notificationPromptTitle": "通知をオンにしますか？",
+  "notificationPromptMessage": "誰かが注文ラウンドを開始したとき、招待されたとき、注文が変わったときに通知を受け取れます。設定でいつでも変更できます。",
+  "notificationPromptEnable": "オンにする",
+  "notificationPromptLater": "後で",
+  "notificationsLabel": "通知",
+  "notificationsEnabled": "オン",
+  "notificationsBlocked": "端末の設定でブロックされています",
+  "enableNotifications": "通知を有効にする"
 }
