@@ -127,6 +127,11 @@ service cloud.firestore {
       match /notifications/{notificationId} {
         allow read, write: if false;
       }
+      // Push delivery tokens are written only by trusted callables, exactly
+      // like notifications: a client may never enumerate or forge them.
+      match /pushTokens/{token} {
+        allow read, write: if false;
+      }
       match /groupMemberships/{groupId} {
         allow read: if owns(userId);
         allow write: if false;

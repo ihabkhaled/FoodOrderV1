@@ -21,6 +21,11 @@ export {
 } from './notification-permission.adapter';
 export { initializePlatform } from './platform-init.adapter';
 export {
+  registerForPushNotifications,
+  subscribeToPushNotificationTaps,
+  unregisterFromPushNotifications,
+} from './push-registration.adapter';
+export {
   isNativeApplication,
   runtimePlatformName,
 } from './runtime-platform.adapter';

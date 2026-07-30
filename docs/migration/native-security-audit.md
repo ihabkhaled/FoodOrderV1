@@ -19,7 +19,7 @@ the Android APK on every main merge; iOS remains a documented gap.
 - Local-device mode stores its database in `localStorage` unencrypted by
   design: it is a single-device, no-account mode holding the user's own food
   bucket data (no PHI, no payment data, no third-party PII).
-- Remote push notifications: none (no `@capacitor/push-notifications`, no FCM
+- Remote push notifications: IMPLEMENTED in v1.8.0 via @capacitor/push-notifications; tokens live in users/{uid}/pushTokens (callable-only, closed to clients) and are pruned when FCM reports them unregistered. Requires google-services.json (Android, gitignored) and APNs assets (iOS, unvalidated per EXC-5). Historical note: previously none (no `@capacitor/push-notifications`, no FCM
   registration, no VAPID key, no `google-services.json`); the in-app
   notification center polls Firestore. No deep links are registered
   (no custom URL scheme / intent filters beyond the Capacitor default).

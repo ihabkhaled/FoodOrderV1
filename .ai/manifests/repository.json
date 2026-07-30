@@ -30,8 +30,8 @@
     },
     {
       "path": ".github/workflows/android-apk.yml",
-      "bytes": 4154,
-      "hash": "4492d00c99c08ddf4dcb3eb4e563784e89bdef4f14fd6b26818bc1050110b1fd"
+      "bytes": 4736,
+      "hash": "674a9e55e51dc6649ea8812b2164c39f326c0bc5e32eae43b5d1e717fa9259df"
     },
     {
       "path": ".github/workflows/branch-continuous-release.yml",
@@ -85,8 +85,8 @@
     },
     {
       "path": ".gitignore",
-      "bytes": 429,
-      "hash": "b08e7376848b8ffa4f5a3a183e511b6ee19a09746fd200186844ebc50e45c732"
+      "bytes": 450,
+      "hash": "f48d4c6b59eb2f229d1696323012a74e740487e482f1321d57683c68f952385d"
     },
     {
       "path": ".trivyignore.yaml",
@@ -410,8 +410,8 @@
     },
     {
       "path": "context/capacitor-capability-map.md",
-      "bytes": 3316,
-      "hash": "7961c9ff0aa605bec778ecfe8f4690d9822af51e24e4dfb4739a9086eb03c6cc"
+      "bytes": 3356,
+      "hash": "34eb1dbc663052ac396d3809ee560b28d929251e1392cf1bec6192e1cce958c4"
     },
     {
       "path": "context/common-change-paths.md",
@@ -530,13 +530,13 @@
     },
     {
       "path": "docs/migration/native-security-audit.md",
-      "bytes": 3485,
-      "hash": "c324093c1633dcf0f6f5053f163bae1d5b12253fa749cfe0fbb9cef6b1fdc1cb"
+      "bytes": 3792,
+      "hash": "a439d27ea597045426008d027c51c6f57606868f81d7ec181087d0c99b626267"
     },
     {
       "path": "docs/migration/package-wrapper-status.md",
-      "bytes": 1668,
-      "hash": "ecedd7a3a56c88ff80e442ad603556ed104bbad86d06207d1c5b7648553a5255"
+      "bytes": 1813,
+      "hash": "d5b8cc2eb10ffdea963646ddef895a2cee5528c567e765508193b954109acef8"
     },
     {
       "path": "docs/migration/test-coverage-status.md",
@@ -575,8 +575,8 @@
     },
     {
       "path": "docs/operations/push-notifications.md",
-      "bytes": 5030,
-      "hash": "151013b5804a5c2b7dae0ba6bdff71c5cee18c8c1f278c867851c37d26e43980"
+      "bytes": 7451,
+      "hash": "47760c09c09620c1cc06966e19feb601402aaa223fa75bf41b389e8914302e2b"
     },
     {
       "path": "docs/operations/reference-parity-roadmap.md",
@@ -700,8 +700,8 @@
     },
     {
       "path": "eslint/package-ownership.config.mjs",
-      "bytes": 2779,
-      "hash": "e1768e0140bd5a7ac5194c90e7cd1d5ffef84e1937c2e3e3c1a7319018ea3bec"
+      "bytes": 2938,
+      "hash": "8de7d3132cf18f40984d13f3d1b5fd054e2b4e71f2b28e9bed59c6d2f70e3dde"
     },
     {
       "path": "firebase.json",
@@ -740,8 +740,8 @@
     },
     {
       "path": "functions/lib/functions/src/notificationCore.js",
-      "bytes": 1587,
-      "hash": "cad049536b1fcbf79084f7fcc732f62b9fb0fa2dde26e6757cc51bd751d5ba21"
+      "bytes": 3833,
+      "hash": "bc46e0aa57d649f9f470060dfb7eedb2da12c09b05f5487d7f92ed50e8ab72b2"
     },
     {
       "path": "functions/lib/functions/src/notificationDomain.js",
@@ -750,8 +750,8 @@
     },
     {
       "path": "functions/lib/functions/src/notifications.js",
-      "bytes": 12725,
-      "hash": "fbb0527af742dc46a1f18d84eec8abe9b7cc74fec20ff7ddf07a9dbcd1b99304"
+      "bytes": 14391,
+      "hash": "771ae71a6a8915add1eb17b6a6212949111d05298bd0649b3ff72531ccdbc32e"
     },
     {
       "path": "functions/lib/functions/src/orderDomain.js",
@@ -840,8 +840,8 @@
     },
     {
       "path": "functions/src/notificationCore.ts",
-      "bytes": 2828,
-      "hash": "a90b79e12447d15a8cabd9a8876cc866bb4a5f6a69dc096e40a9365e6bb54498"
+      "bytes": 5083,
+      "hash": "4f4e5e2843cb6c3ca94695401a2da0a8b9b84ca95224bea979d9b57572afbfc0"
     },
     {
       "path": "functions/src/notificationDomain.ts",
@@ -850,8 +850,8 @@
     },
     {
       "path": "functions/src/notifications.ts",
-      "bytes": 14720,
-      "hash": "08b62d23452c8309bb5b31c87f39b64b152e8435457bb0b9f914c9a7de4d2942"
+      "bytes": 16354,
+      "hash": "da13db092b9c7058ade8bdc86d5584a16b04bdf8055d2f68e3829c246be4be2e"
     },
     {
       "path": "functions/src/orderDomain.ts",
@@ -1085,13 +1085,13 @@
     },
     {
       "path": "package-lock.json",
-      "bytes": 690085,
-      "hash": "f69a138b3a78bd245ae23f52ae3cc40c875dc93f35d5616c07857daee1e73b8e"
+      "bytes": 690545,
+      "hash": "1e8cb751a0ba12136456ab238680084967b678cc849402f394888d54ae0fb939"
     },
     {
       "path": "package.json",
-      "bytes": 8047,
-      "hash": "7510b84825d4262309c29ef454bf99d470df38548f29cf8f30d81dad38e91733"
+      "bytes": 8094,
+      "hash": "7bd9524c7dcf29565854f6ec0af386e49c3c41e4ca853e8d4ddff361fa42002b"
     },
     {
       "path": "packages/group-order-engine/src/index.ts",
@@ -1295,8 +1295,8 @@
     },
     {
       "path": "rules/09-capacitor-platform-boundaries.md",
-      "bytes": 2954,
-      "hash": "d113e6fd05dca9723a651fbed610d651bfedd6e12920d93e041d8dfce6589bcf"
+      "bytes": 2974,
+      "hash": "271e1bc8eda05a2594381c9f45705c66f2bb61a9a88445c53a3d1c139ccc3016"
     },
     {
       "path": "rules/10-routing.md",
@@ -1620,8 +1620,8 @@
     },
     {
       "path": "src/app/shell/hooks/use-app-layout.hook.ts",
-      "bytes": 7782,
-      "hash": "8bde7d6fd872ff78cf932580d7a0b2885b48b87c2ecf0067be536e800088d5b5"
+      "bytes": 8774,
+      "hash": "52bae7db9488ee0c1d087a0dc35f0c23337a129ed33c7bc1c5b81a173b1feb90"
     },
     {
       "path": "src/groupOrder.css",
@@ -1885,8 +1885,8 @@
     },
     {
       "path": "src/modules/data-access/contracts/notification-service.interfaces.ts",
-      "bytes": 329,
-      "hash": "59a79bd54cb946c0d4dd5c99427896648a58b6e35988d8e4efc506688ccf3bf3"
+      "bytes": 740,
+      "hash": "ffd7e96fefd905d195d7fc7a6b4b3c1acb9f411ebe7725cec1ebb30cb8e80a1f"
     },
     {
       "path": "src/modules/data-access/contracts/order-lifecycle-service.interfaces.ts",
@@ -1980,8 +1980,8 @@
     },
     {
       "path": "src/modules/data-access/gateways/firestore-notification.gateway.ts",
-      "bytes": 1713,
-      "hash": "56995a047f248b09eb4f39249b109d25c42475d33062521010457bfa456a97ca"
+      "bytes": 2219,
+      "hash": "2e69601dbbfcd682f9c7620bf73ec36ab47aaf500026722d07cef1304e1cfb74"
     },
     {
       "path": "src/modules/data-access/gateways/firestore-pagination.gateway.ts",
@@ -2020,8 +2020,8 @@
     },
     {
       "path": "src/modules/data-access/gateways/local-notification.gateway.ts",
-      "bytes": 3049,
-      "hash": "2b00559f62e625d5bcd5f2be32d92350937c3b27f960d7c17b5dbdd0998641f6"
+      "bytes": 3270,
+      "hash": "b65699db449fe871858c23e5158e782895106a36f0af257f0b075f8ddd1ad03c"
     },
     {
       "path": "src/modules/data-access/gateways/local-order-lifecycle.gateway.ts",
@@ -3399,6 +3399,11 @@
       "hash": "32f049ee1976010bc9587b49d94ef09492865e896d6fa484eb0b505dc8a284e3"
     },
     {
+      "path": "src/packages/capacitor-push-notifications/index.ts",
+      "bytes": 67,
+      "hash": "0650c4efff200b401f678caa3c80479ff651154fcb408872a5b3fb4d707e206b"
+    },
+    {
       "path": "src/packages/capacitor-status-bar/index.ts",
       "bytes": 58,
       "hash": "f53adde8dc177950e8fb8a0eeb383bd83860e47cabdb0ce13e13fd0bd2f354d4"
@@ -3585,8 +3590,8 @@
     },
     {
       "path": "src/platform/device/index.ts",
-      "bytes": 1128,
-      "hash": "225bc3832ea3cf9f0110632a38cf75a65e2228a8d418ec0bacb684770061296e"
+      "bytes": 1277,
+      "hash": "9c3be696fb2e5e2205364e6326b5d5a5efc8c5b42116e502a6a1b3dfac758145"
     },
     {
       "path": "src/platform/device/notification-permission.adapter.ts",
@@ -3597,6 +3602,11 @@
       "path": "src/platform/device/platform-init.adapter.ts",
       "bytes": 268,
       "hash": "e73cf21a4150fa43081359546d1d7cff7b1c3525bae162124a978463ab4f9f7a"
+    },
+    {
+      "path": "src/platform/device/push-registration.adapter.ts",
+      "bytes": 2492,
+      "hash": "7956db3d5a6aea41f5f58866548cb807381db9feff071694e51b8eb385eeb9f5"
     },
     {
       "path": "src/platform/device/runtime-platform.adapter.ts",
@@ -4375,8 +4385,8 @@
     },
     {
       "path": "tests/firebase/firestore.rules.test.ts",
-      "bytes": 10360,
-      "hash": "5783063e53c69e18e49230108c392f66fcf438177e2ce9a09212fe2c85e197c6"
+      "bytes": 10879,
+      "hash": "a8022dcb4b6d1675c943b155366fa2444cdd52f7c6159e9b6ceb95d3f993abd5"
     },
     {
       "path": "tests/firebase/notifications.rules.test.ts",

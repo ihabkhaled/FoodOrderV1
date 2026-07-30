@@ -11,10 +11,13 @@ import {
   loadSidebarCollapsed,
   markAppOpenedAndWasReturning,
   queryNotificationPermission,
+  registerForPushNotifications,
   requestNotificationPermission,
+  runtimePlatformName,
   saveNotificationPromptSeen,
   saveSidebarCollapsed,
   showTrayNotification,
+  subscribeToPushNotificationTaps,
   subscribeToTrayNotificationTaps,
 } from '@/platform/device';
 import type { MessageKey } from '@/shared/i18n';
@@ -140,11 +143,44 @@ export function useAppLayout(): AppLayoutViewModel {
     );
   }, [user]);
 
+  // Register this device for push so a closed app still receives rounds and
+  // invitations. Registration is idempotent and silently no-ops on the web.
+  useEffect(() => {
+    if (!user) return;
+    let active = true;
+    void registerForPushNotifications()
+      .then(async (token) => {
+        if (!active || !token) return;
+        await notificationService.savePushToken(
+          user.id,
+          token,
+          runtimePlatformName(),
+        );
+      })
+      .catch(() => {
+        // A device without push configured simply keeps in-app notifications.
+      });
+    return () => {
+      active = false;
+    };
+  }, [user]);
+
   // Tapping an OS notification opens its in-app destination. The monotonic
   // sequence forces a refresh even when the route is already displayed.
   useEffect(
     () =>
       subscribeToTrayNotificationTaps((route) => {
+        trayOpenSequence.current += 1;
+        void navigate(route, {
+          state: { notificationOpenSequence: trayOpenSequence.current },
+        });
+      }),
+    [navigate],
+  );
+
+  useEffect(
+    () =>
+      subscribeToPushNotificationTaps((route) => {
         trayOpenSequence.current += 1;
         void navigate(route, {
           state: { notificationOpenSequence: trayOpenSequence.current },

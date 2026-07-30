@@ -14,6 +14,7 @@ Registry of record: [`eslint/package-ownership.config.mjs`](../../eslint/package
 | `@capacitor/network` | `src/packages/capacitor-network` | `@/packages/capacitor-network` | pending |
 | `@capacitor/preferences` | `src/packages/capacitor-preferences` | `@/packages/capacitor-preferences` | pending |
 | `@capacitor/status-bar` | `src/packages/capacitor-status-bar` | `@/packages/capacitor-status-bar` | pending |
+| `@capacitor/push-notifications` | `src/packages/capacitor-push-notifications` | `@/packages/capacitor-push-notifications` | wrapped (v1.8.0) |
 | `@capacitor/local-notifications` | `src/packages/capacitor-local-notifications` | `@/packages/capacitor-local-notifications` | wrapped (v1.8.0) |
 | `@capacitor/app`, `@capacitor/keyboard` | registry entries reserved | — | native runtime dependencies only; no web import sites, so no owner module is created (see unresolved-exceptions.md) |
 | `react`, `react-dom/client` | foundational exception | — | documented in the registry |

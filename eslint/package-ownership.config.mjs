@@ -61,6 +61,10 @@ export const packageOwnership = {
     owner: 'src/packages/vercel-speed-insights',
     publicImport: '@/packages/vercel-speed-insights',
   },
+  '@capacitor/push-notifications': {
+    owner: 'src/packages/capacitor-push-notifications',
+    publicImport: '@/packages/capacitor-push-notifications',
+  },
   '@capacitor/network': {
     owner: 'src/packages/capacitor-network',
     publicImport: '@/packages/capacitor-network',

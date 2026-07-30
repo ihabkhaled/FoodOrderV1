@@ -390,3 +390,17 @@ describe('profile analytics consent rules', () => {
     ).resolves.toMatchObject({ code: 'permission-denied' });
   });
 });
+
+describe('push token rules', () => {
+  it('never lets a client read or write its own push tokens', async () => {
+    const database = ownerDatabase();
+    const reference = doc(database, 'users', OWNER_ID, 'pushTokens', 'token-1');
+
+    await expect(
+      assertFails(setDoc(reference, { token: 'token-1', platform: 'android' })),
+    ).resolves.toMatchObject({ code: 'permission-denied' });
+    await expect(assertFails(getDoc(reference))).resolves.toMatchObject({
+      code: 'permission-denied',
+    });
+  });
+});

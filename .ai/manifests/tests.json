@@ -287,8 +287,8 @@
     },
     {
       "path": "tests/firebase/firestore.rules.test.ts",
-      "bytes": 10360,
-      "hash": "5783063e53c69e18e49230108c392f66fcf438177e2ce9a09212fe2c85e197c6"
+      "bytes": 10879,
+      "hash": "a8022dcb4b6d1675c943b155366fa2444cdd52f7c6159e9b6ceb95d3f993abd5"
     },
     {
       "path": "tests/firebase/notifications.rules.test.ts",

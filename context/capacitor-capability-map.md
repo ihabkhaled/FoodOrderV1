@@ -2,9 +2,9 @@
 
 Installed plugin set (deliberately low-permission; audit:
 [../docs/migration/native-security-audit.md](../docs/migration/native-security-audit.md)):
-app, core, haptics, keyboard, local-notifications, network, preferences,
+app, core, haptics, keyboard, local-notifications, network, preferences, push-notifications,
 status-bar — all Capacitor 8.x. No camera, geolocation, filesystem, biometrics,
-remote push (FCM), or deep links. Local on-device notifications were added in
+deep links (remote push via FCM was added in v1.8.0). Local on-device notifications were added in
 v1.8.0 and carry a runtime-prompted `POST_NOTIFICATIONS` permission.
 
 ## Capability → seam

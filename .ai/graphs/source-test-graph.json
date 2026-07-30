@@ -1861,6 +1861,11 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/packages/capacitor-push-notifications/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/packages/capacitor-status-bar/index.ts",
       "tests": [],
       "relationship": "inferred"
@@ -2057,6 +2062,11 @@
     },
     {
       "source": "src/platform/device/platform-init.adapter.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/platform/device/push-registration.adapter.ts",
       "tests": [],
       "relationship": "inferred"
     },

@@ -489,3 +489,55 @@ export const notifyGroupInvitationV150 = onDocumentWritten(
     }
   },
 );
+
+const MAX_TOKEN_LENGTH = 4096;
+const SUPPORTED_PUSH_PLATFORMS = new Set(['android', 'ios', 'web']);
+
+const requiredToken = (value: unknown): string => {
+  if (typeof value !== 'string' || !value || value.length > MAX_TOKEN_LENGTH) {
+    throw new HttpsError('invalid-argument', 'A push token is required.');
+  }
+  return value;
+};
+
+/**
+ * Records this device's push delivery token. Tokens live under the owning user
+ * so a sign-out or account deletion removes them with the rest of the account,
+ * and the document id is the token itself, which makes re-registration
+ * idempotent.
+ */
+export const savePushTokenV180 = onCall({ region: REGION }, async (request) => {
+  const userId = requiredUserId(request.auth);
+  const input = dataOf(request.data);
+  const token = requiredToken(input.token);
+  const platform =
+    typeof input.platform === 'string' &&
+    SUPPORTED_PUSH_PLATFORMS.has(input.platform)
+      ? input.platform
+      : 'unknown';
+
+  await getFirestore()
+    .collection('users')
+    .doc(userId)
+    .collection('pushTokens')
+    .doc(token)
+    .set(
+      { token, platform, userId, updatedAt: new Date().toISOString() },
+      { merge: true },
+    );
+  return { success: true };
+});
+
+/** Stops delivery to one device without touching the user's other devices. */
+export const removePushTokenV180 = onCall({ region: REGION }, async (request) => {
+  const userId = requiredUserId(request.auth);
+  const token = requiredToken(dataOf(request.data).token);
+
+  await getFirestore()
+    .collection('users')
+    .doc(userId)
+    .collection('pushTokens')
+    .doc(token)
+    .delete();
+  return { success: true };
+});

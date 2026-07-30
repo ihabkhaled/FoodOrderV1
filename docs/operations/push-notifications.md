@@ -45,7 +45,51 @@ iOS ships in `Package.swift` but **cannot be validated in this repository** — 
 macOS/Xcode environment exists (EXC-5). Treat iOS notification behaviour as
 unverified until someone runs it on an Apple device.
 
-## What remote push (FCM) would additionally require
+## Remote push (FCM) — implemented in v1.8.0
+
+Native devices now register with FCM and the server pushes to them, so a
+**closed** app still receives order rounds, invitations, and status changes.
+
+| Concern | Implementation |
+| --- | --- |
+| Plugin facade | `src/packages/capacitor-push-notifications/` |
+| Register / unregister / tap routing | `src/platform/device/push-registration.adapter.ts` |
+| Shell wiring | `src/app/shell/hooks/use-app-layout.hook.ts` |
+| Token persistence contract | `NotificationService.savePushToken / removePushToken` |
+| Callables | `savePushTokenV180`, `removePushTokenV180` (`functions/src/notifications.ts`) |
+| Server fan-out | `pushToDevices()` in `functions/src/notificationCore.ts` |
+| Rules | `users/{uid}/pushTokens/{token}` is `allow read, write: if false` |
+
+Design notes:
+
+- Tokens are stored at `users/{uid}/pushTokens/{token}` — the document id *is*
+  the token, so re-registration on every launch is naturally idempotent, and
+  the subcollection is removed with the account by the existing data cascade.
+- Clients can never read or write tokens; only trusted callables do. Covered by
+  `tests/firebase/firestore.rules.test.ts`.
+- `pushToDevices()` sits inside the single chokepoint every notification already
+  passes through, so no producer needed changing.
+- Sends are best-effort: a messaging failure never fails the caller, because
+  the stored in-app notification remains the source of truth.
+- Tokens rejected as unregistered or invalid are pruned automatically from the
+  send response, so dead devices do not accumulate.
+- Web registration is deliberately excluded from this adapter: browser push
+  needs an FCM service worker plus the VAPID exchange. The key is already wired
+  as `env.webPushPublicKey`; the remaining work is the service worker.
+
+### Owner setup still required
+
+1. **Android** — download `google-services.json` for package
+   `com.ihabkhaled.foodorderv1` into `android/app/` (gitignored). For CI, store it
+   base64-encoded as the `GOOGLE_SERVICES_JSON` GitHub secret; the APK workflow
+   restores it and skips push cleanly when it is absent.
+2. **iOS** — APNs auth key uploaded to Firebase, `GoogleService-Info.plist`, the
+   Push Notifications capability, and `UIBackgroundModes: remote-notification`.
+   Requires macOS/Xcode and cannot be validated here (EXC-5).
+3. **Web** — add an FCM service worker before offering browser push.
+
+## Historical: what remote push required before v1.8.0
+
 
 These are **owner actions outside the repository**; none of them can be created
 from source, which is why v1.8.0 stops short of remote push.
