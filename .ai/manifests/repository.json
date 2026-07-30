@@ -1225,8 +1225,8 @@
     },
     {
       "path": "release-notes/v1.8.0.md",
-      "bytes": 7136,
-      "hash": "672cf262014b99511000cb6d8812d758d98772e1217341aad2c54dfd63bcb8bb"
+      "bytes": 7819,
+      "hash": "c1e11844fa5bb2d931065b00c1072c1e45ee8e092d9790b589a3afddc50aa97e"
     },
     {
       "path": "reports/phases/PHASE_00_report.md",
@@ -2860,8 +2860,8 @@
     },
     {
       "path": "src/modules/public-content/public-content.css",
-      "bytes": 14167,
-      "hash": "fededb876b53cfb1be2c1c2c91f42bbcf765b8439cf499e6bdee3cee6aaf0999"
+      "bytes": 16009,
+      "hash": "7d2155683ae0ba35fc831cde66d77806c10056f2f6ead27153349b73ec62742d"
     },
     {
       "path": "src/modules/public-content/routes/public-content-route-registry.helper.ts",
@@ -4450,8 +4450,8 @@
     },
     {
       "path": "tests/e2e/public-content.spec.ts",
-      "bytes": 5479,
-      "hash": "2d420589b66ac0540db7e8d9f654f5559f159c684c4faa234a8983a7ee17b78a"
+      "bytes": 5611,
+      "hash": "69b3cccc788c85e52ada23b505f7a5ae21f377f8334518ef964e93fac1f174df"
     },
     {
       "path": "tests/e2e/responsive-navigation.spec.ts",

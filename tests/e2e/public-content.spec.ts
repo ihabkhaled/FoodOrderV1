@@ -3,7 +3,8 @@ import { expect, test } from '@playwright/test';
 test('public navigation serves unique crawler metadata through real links', async ({
   page,
 }) => {
-  // Pin a desktop viewport so the header links are rendered inline.
+  // The primary links live in the header's collapsible menu at every width a
+  // real reader is likely to use, so open it before following one.
   await page.setViewportSize({ width: 1280, height: 800 });
   await page.goto('/en');
   await expect(
@@ -13,8 +14,9 @@ test('public navigation serves unique crawler metadata through real links', asyn
     }),
   ).toBeVisible();
 
+  await page.locator('.public-mobile-menu > summary').click();
   await page
-    .locator('.public-navigation--desktop')
+    .locator('.public-mobile-menu')
     .getByRole('link', { name: 'About' })
     .click();
   await expect(page).toHaveURL(/\/en\/about$/u);

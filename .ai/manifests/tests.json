@@ -242,8 +242,8 @@
     },
     {
       "path": "tests/e2e/public-content.spec.ts",
-      "bytes": 5479,
-      "hash": "2d420589b66ac0540db7e8d9f654f5559f159c684c4faa234a8983a7ee17b78a"
+      "bytes": 5611,
+      "hash": "69b3cccc788c85e52ada23b505f7a5ae21f377f8334518ef964e93fac1f174df"
     },
     {
       "path": "tests/e2e/responsive-navigation.spec.ts",

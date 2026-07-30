@@ -134,6 +134,18 @@ body:has(.public-site) {
   text-decoration: none;
 }
 
+.public-navigation--desktop a {
+  white-space: nowrap;
+}
+
+/* The full product name is always readable — never shortened to an ellipsis.
+   With the primary links folded into the menu button there is room for it on
+   one line on a laptop, and on a narrow phone it wraps instead of being cut. */
+.public-header .public-brand > span:last-child {
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
 .public-navigation a:hover,
 .public-navigation a[aria-current="page"],
 .public-footer nav a:hover,
@@ -200,6 +212,15 @@ body:has(.public-site) {
   list-style: none;
 }
 
+/* Hide a closed panel explicitly. Relying on the browser to skip rendering a
+   closed <details> is not enough here: the panel is positioned, so it still
+   claimed layout space off the right edge and gave the page a horizontal
+   scrollbar in the locales with the longest labels. */
+.public-language-menu:not([open]) ul,
+.public-mobile-menu:not([open]) nav {
+  display: none;
+}
+
 .public-language-menu a,
 .public-mobile-menu a {
   display: block;
@@ -216,8 +237,20 @@ body:has(.public-site) {
   background: var(--public-accent-soft);
 }
 
-.public-mobile-menu {
+/* The bar itself carries only the brand, the language menu, and the call to
+   action. Every destination lives in this menu, at every width: seven links
+   with translated labels never fit beside them, and a bar that reflows into
+   three rows in half the locales is worse than one tidy row plus a list. */
+.public-navigation--desktop {
   display: none;
+}
+
+.public-mobile-menu {
+  display: block;
+}
+
+.public-mobile-menu[open] nav {
+  display: grid;
 }
 
 .public-button {
@@ -225,6 +258,11 @@ body:has(.public-site) {
   min-height: 2.9rem;
   align-items: center;
   justify-content: center;
+  /* Call-to-action labels are short phrases ("Eftah el app"). Breaking one over
+     several lines turns the button into a tall block, so it keeps its natural
+     width instead of shrinking to fit the row. */
+  flex: none;
+  white-space: nowrap;
   padding: 0.65rem 1.1rem;
   border: 1px solid var(--public-accent);
   border-radius: 0.75rem;
@@ -269,6 +307,7 @@ body:has(.public-site) {
 
 .public-eyebrow {
   margin: 0 0 1rem;
+  overflow-wrap: break-word;
   color: var(--public-green);
   font-size: 0.83rem;
   font-weight: 850;
@@ -280,6 +319,7 @@ body:has(.public-site) {
 .public-system-page h1 {
   max-width: 18ch;
   margin: 0;
+  overflow-wrap: break-word;
   font-size: clamp(2.5rem, 6vw, 5.2rem);
   line-height: 1.02;
   letter-spacing: -0.055em;
@@ -287,6 +327,7 @@ body:has(.public-site) {
 
 .public-hero__introduction {
   max-width: 65ch;
+  overflow-wrap: break-word;
   margin-block: 1.5rem 0;
   color: var(--public-muted);
   font-size: clamp(1rem, 2vw, 1.22rem);
@@ -532,20 +573,6 @@ body:has(.public-site) {
   transform: rotate(4deg);
 }
 
-@media (max-width: 68rem) {
-  .public-navigation--desktop {
-    display: none;
-  }
-
-  .public-mobile-menu {
-    display: block;
-  }
-
-  .public-mobile-menu nav {
-    display: grid;
-  }
-}
-
 @media (max-width: 48rem) {
   .public-header__inner,
   .public-main,
@@ -608,8 +635,14 @@ body:has(.public-site) {
     position: fixed;
     inset-block-start: 4.35rem;
     inset-inline: 0.65rem;
-    display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* Only lay the panel out once it is open. A closed <details> hides its
+     content by not rendering it, and an unconditional `display` cancels that,
+     leaving the panel painted off-screen where it widens the page. */
+  .public-language-menu[open] ul {
+    display: grid;
   }
 
   .public-mobile-menu nav {
@@ -619,7 +652,10 @@ body:has(.public-site) {
   }
 
   .public-hero {
-    grid-template-columns: 1fr;
+    /* minmax(0, 1fr), not 1fr: a plain fr track takes its minimum from the
+       content, so one long compound word ("Gruppenbestellungen") stretched the
+       column past the viewport and gave the page a horizontal scrollbar. */
+    grid-template-columns: minmax(0, 1fr);
     min-height: 0;
   }
 
