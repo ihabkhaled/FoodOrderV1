@@ -1,12 +1,26 @@
 import { getPreference, removePreference, setPreference } from '@/platform/storage';
 
-/** Pages that own a guided tour. */
+/** Every screen that introduces itself with a guided tour. */
 export const TOUR_PAGES = [
   'dashboard',
   'buckets',
+  'bucket-editor',
+  'bucket-share',
+  'collaborate',
+  'social-share',
+  'join',
   'orders',
+  'order-details',
+  'create-order',
+  'sessions',
+  'session-details',
+  'create-session',
   'social',
   'settings',
+  'settings-preferences',
+  'settings-privacy',
+  'settings-security',
+  'settings-account',
 ] as const;
 
 export type TourPage = (typeof TOUR_PAGES)[number];

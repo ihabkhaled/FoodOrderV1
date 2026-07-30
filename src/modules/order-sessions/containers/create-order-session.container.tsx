@@ -1,6 +1,7 @@
 import '../order-sessions.css';
 
-import { BackLink, ErrorState, Loading } from '@/shared/ui';
+import { translate } from '@/shared/i18n';
+import { BackLink, ErrorState, FeatureTour, Loading } from '@/shared/ui';
 
 import { CreateOrderSessionForm } from '../components/create-order-session-form/create-order-session-form.component';
 import { useCreateOrderSession } from '../hooks/use-create-order-session.hook';
@@ -70,6 +71,28 @@ export function CreateOrderSessionContainer() {
         onTimezoneChange={viewModel.setTimezone}
         onAutoLockChange={viewModel.setAutoLock}
         onSubmit={(event) => void viewModel.submit(event)}
+      />
+      <FeatureTour
+        page="create-session"
+        steps={[
+          {
+            key: 'CreateSessionDeadline',
+            title: translate(viewModel.locale, 'tourCreateSessionDeadlineTitle'),
+            body: translate(viewModel.locale, 'tourCreateSessionDeadlineBody'),
+            target: null,
+          },
+          {
+            key: 'CreateSessionAutoLock',
+            title: translate(viewModel.locale, 'tourCreateSessionAutoLockTitle'),
+            body: translate(viewModel.locale, 'tourCreateSessionAutoLockBody'),
+            target: null,
+          },
+        ]}
+        nextLabel={translate(viewModel.locale, 'tourNext')}
+        doneLabel={translate(viewModel.locale, 'tourDone')}
+        skipLabel={translate(viewModel.locale, 'tourSkip')}
+        closeLabel={translate(viewModel.locale, 'close')}
+        dontShowAgainLabel={translate(viewModel.locale, 'tourDontShowAgain')}
       />
     </div>
   );

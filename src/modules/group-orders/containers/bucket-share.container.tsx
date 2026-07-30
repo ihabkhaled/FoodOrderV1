@@ -1,5 +1,5 @@
 import { Share2 } from '@/packages/icons';
-import { BackLink, ConfirmDialog, ErrorState, Loading } from '@/shared/ui';
+import { BackLink, ConfirmDialog, ErrorState, FeatureTour, Loading } from '@/shared/ui';
 
 import { ActivityTimeline } from '../components/activity-timeline/activity-timeline.component';
 import { BucketInvitePanel } from '../components/bucket-invite-panel/bucket-invite-panel.component';
@@ -138,6 +138,29 @@ export function BucketShareContainer() {
         onCancel={() => {
           vm.setConfirmingFreeze(false);
         }}
+      />
+
+      <FeatureTour
+        page="bucket-share"
+        steps={[
+          {
+            key: 'BucketShareCode',
+            title: vm.t('tourBucketShareCodeTitle'),
+            body: vm.t('tourBucketShareCodeBody'),
+            target: null,
+          },
+          {
+            key: 'BucketShareRoles',
+            title: vm.t('tourBucketShareRolesTitle'),
+            body: vm.t('tourBucketShareRolesBody'),
+            target: null,
+          },
+        ]}
+        nextLabel={vm.t('tourNext')}
+        doneLabel={vm.t('tourDone')}
+        skipLabel={vm.t('tourSkip')}
+        closeLabel={vm.t('close')}
+        dontShowAgainLabel={vm.t('tourDontShowAgain')}
       />
     </div>
   );

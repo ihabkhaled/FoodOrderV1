@@ -4,7 +4,7 @@ import { BucketPricingPanel } from '@/modules/group-orders';
 import { GripVertical, Plus, Save, Trash2 } from '@/packages/icons';
 import { Link } from '@/packages/router';
 import { SUPPORTED_CURRENCIES } from '@/platform/device';
-import { BackLink, Loading, NumericField } from '@/shared/ui';
+import { BackLink, FeatureTour, Loading, NumericField } from '@/shared/ui';
 
 import { useBucketEditor } from '../hooks/use-bucket-editor.hook';
 import { BUCKETS_PATH } from '../routes/buckets-route-paths.constants';
@@ -163,6 +163,29 @@ export function BucketEditorContainer() {
           </button>
         </div>
       </form>
+
+      <FeatureTour
+        page="bucket-editor"
+        steps={[
+          {
+            key: 'BucketEditorItems',
+            title: vm.t('tourBucketEditorItemsTitle'),
+            body: vm.t('tourBucketEditorItemsBody'),
+            target: null,
+          },
+          {
+            key: 'BucketEditorPricing',
+            title: vm.t('tourBucketEditorPricingTitle'),
+            body: vm.t('tourBucketEditorPricingBody'),
+            target: null,
+          },
+        ]}
+        nextLabel={vm.t('tourNext')}
+        doneLabel={vm.t('tourDone')}
+        skipLabel={vm.t('tourSkip')}
+        closeLabel={vm.t('close')}
+        dontShowAgainLabel={vm.t('tourDontShowAgain')}
+      />
     </div>
   );
 }

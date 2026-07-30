@@ -1,7 +1,27 @@
 import type { Page } from '@playwright/test';
 
 /** Mirrors the pages listed in `src/platform/device/tour-flags.adapter.ts`. */
-const TOUR_PAGES = ['dashboard', 'buckets', 'orders', 'social', 'settings'];
+const TOUR_PAGES = [
+  'dashboard',
+  'buckets',
+  'bucket-editor',
+  'bucket-share',
+  'collaborate',
+  'social-share',
+  'join',
+  'orders',
+  'order-details',
+  'create-order',
+  'sessions',
+  'session-details',
+  'create-session',
+  'social',
+  'settings',
+  'settings-preferences',
+  'settings-privacy',
+  'settings-security',
+  'settings-account',
+];
 
 /**
  * Marks every guided tour as already dismissed.

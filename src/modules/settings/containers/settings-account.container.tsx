@@ -1,7 +1,7 @@
 import '../settings.css';
 
 import { Download, Trash2 } from '@/packages/icons';
-import { BackLink, ConfirmDialog, DangerReauthDialog } from '@/shared/ui';
+import { BackLink, ConfirmDialog, DangerReauthDialog, FeatureTour } from '@/shared/ui';
 
 import { useSettingsAccount } from '../hooks/use-settings-account.hook';
 import { SETTINGS_PATH } from '../routes/settings-route-paths.constants';
@@ -79,6 +79,28 @@ export function SettingsAccountContainer() {
         busy={vm.deleting}
         onConfirm={(email, password) => void vm.deleteAccount(email, password)}
         onCancel={vm.cancelReauthentication}
+      />
+      <FeatureTour
+        page="settings-account"
+        steps={[
+          {
+            key: 'SettingsAccountExport',
+            title: vm.t('tourSettingsAccountExportTitle'),
+            body: vm.t('tourSettingsAccountExportBody'),
+            target: null,
+          },
+          {
+            key: 'SettingsAccountDanger',
+            title: vm.t('tourSettingsAccountDangerTitle'),
+            body: vm.t('tourSettingsAccountDangerBody'),
+            target: null,
+          },
+        ]}
+        nextLabel={vm.t('tourNext')}
+        doneLabel={vm.t('tourDone')}
+        skipLabel={vm.t('tourSkip')}
+        closeLabel={vm.t('close')}
+        dontShowAgainLabel={vm.t('tourDontShowAgain')}
       />
     </div>
   );

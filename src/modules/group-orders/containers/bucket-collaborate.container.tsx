@@ -1,4 +1,4 @@
-import { ErrorState, Loading } from '@/shared/ui';
+import { ErrorState, FeatureTour, Loading } from '@/shared/ui';
 
 import { BucketCollaborateContent } from '../components/bucket-collaborate-content/bucket-collaborate-content.component';
 import { useBucketCollaborate } from '../hooks/use-bucket-collaborate.hook';
@@ -18,6 +18,7 @@ export function BucketCollaborateContainer() {
   }
 
   return (
+    <>
     <BucketCollaborateContent
       view={vm.view}
       user={vm.user}
@@ -56,5 +57,28 @@ export function BucketCollaborateContainer() {
         vm.setLeaving(false);
       }}
     />
+      <FeatureTour
+        page="collaborate"
+        steps={[
+          {
+            key: 'CollaborateQuantities',
+            title: vm.t('tourCollaborateQuantitiesTitle'),
+            body: vm.t('tourCollaborateQuantitiesBody'),
+            target: null,
+          },
+          {
+            key: 'CollaboratePlace',
+            title: vm.t('tourCollaboratePlaceTitle'),
+            body: vm.t('tourCollaboratePlaceBody'),
+            target: null,
+          },
+        ]}
+        nextLabel={vm.t('tourNext')}
+        doneLabel={vm.t('tourDone')}
+        skipLabel={vm.t('tourSkip')}
+        closeLabel={vm.t('close')}
+        dontShowAgainLabel={vm.t('tourDontShowAgain')}
+      />
+    </>
   );
 }

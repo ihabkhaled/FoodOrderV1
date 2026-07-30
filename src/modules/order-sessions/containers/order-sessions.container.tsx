@@ -1,6 +1,7 @@
 import '../order-sessions.css';
 
-import { ErrorState, Loading } from '@/shared/ui';
+import { translate } from '@/shared/i18n';
+import { ErrorState, FeatureTour, Loading } from '@/shared/ui';
 
 import { OrderSessionList } from '../components/order-session-list/order-session-list.component';
 import { useOrderSessions } from '../hooks/use-order-sessions.hook';
@@ -57,6 +58,22 @@ export function OrderSessionsContainer() {
           translate={viewModel.translate}
         />
       )}
+      <FeatureTour
+        page="sessions"
+        steps={[
+          {
+            key: 'Sessions',
+            title: translate(viewModel.locale, 'tourSessionsTitle'),
+            body: translate(viewModel.locale, 'tourSessionsBody'),
+            target: null,
+          },
+        ]}
+        nextLabel={translate(viewModel.locale, 'tourNext')}
+        doneLabel={translate(viewModel.locale, 'tourDone')}
+        skipLabel={translate(viewModel.locale, 'tourSkip')}
+        closeLabel={translate(viewModel.locale, 'close')}
+        dontShowAgainLabel={translate(viewModel.locale, 'tourDontShowAgain')}
+      />
     </div>
   );
 }

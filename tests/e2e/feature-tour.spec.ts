@@ -75,7 +75,9 @@ test.describe('guided page tours', () => {
     await page.getByRole('button', { name: 'Skip' }).click();
 
     await page.goto('/settings/preferences');
-    // The settings tour is dismissed first so it cannot cover the control.
+    // This page runs its own tour, which must be closed before the control
+    // underneath it can be used.
+    await page.getByRole('button', { name: 'Skip' }).click();
     await page.getByRole('button', { name: 'Replay tutorials' }).click();
     await expect(page.getByText('Tutorials will show again on each page.')).toBeVisible();
 

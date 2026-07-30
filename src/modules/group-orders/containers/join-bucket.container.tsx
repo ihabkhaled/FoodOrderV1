@@ -1,7 +1,7 @@
 import type { BucketRole } from '@/modules/data-access';
 import { KeyRound, UserPlus } from '@/packages/icons';
 import type { MessageKey } from '@/shared/i18n';
-import { BackLink } from '@/shared/ui';
+import { BackLink, FeatureTour } from '@/shared/ui';
 
 import { useJoinBucket } from '../hooks/use-join-bucket.hook';
 import { BUCKETS_REDIRECT_PATH } from '../routes/group-orders-route-paths.constants';
@@ -75,6 +75,22 @@ export function JoinBucketContainer() {
           </button>
         </section>
       ) : null}
+      <FeatureTour
+        page="join"
+        steps={[
+          {
+            key: 'Join',
+            title: vm.t('tourJoinTitle'),
+            body: vm.t('tourJoinBody'),
+            target: null,
+          },
+        ]}
+        nextLabel={vm.t('tourNext')}
+        doneLabel={vm.t('tourDone')}
+        skipLabel={vm.t('tourSkip')}
+        closeLabel={vm.t('close')}
+        dontShowAgainLabel={vm.t('tourDontShowAgain')}
+      />
     </div>
   );
 }

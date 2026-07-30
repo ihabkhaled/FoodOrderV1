@@ -1,7 +1,7 @@
 import '../settings.css';
 
 import { Save, Trash2 } from '@/packages/icons';
-import { BackLink } from '@/shared/ui';
+import { BackLink, FeatureTour } from '@/shared/ui';
 
 import { AnalyticsConsentSection } from '../components/analytics-consent-section/analytics-consent-section.component';
 import { buildAnalyticsConsentOptions } from '../helpers/analytics-consent-options.helper';
@@ -60,6 +60,22 @@ export function SettingsPrivacyContainer() {
           </button>
         </div>
       </form>
+      <FeatureTour
+        page="settings-privacy"
+        steps={[
+          {
+            key: 'SettingsPrivacy',
+            title: vm.t('tourSettingsPrivacyTitle'),
+            body: vm.t('tourSettingsPrivacyBody'),
+            target: null,
+          },
+        ]}
+        nextLabel={vm.t('tourNext')}
+        doneLabel={vm.t('tourDone')}
+        skipLabel={vm.t('tourSkip')}
+        closeLabel={vm.t('close')}
+        dontShowAgainLabel={vm.t('tourDontShowAgain')}
+      />
     </div>
   );
 }

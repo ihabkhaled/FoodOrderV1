@@ -1,6 +1,6 @@
 import '../settings.css';
 
-import { BackLink } from '@/shared/ui';
+import { BackLink, FeatureTour } from '@/shared/ui';
 
 import { ChangePasswordSection } from '../components/change-password-section/change-password-section.component';
 import { useChangePassword } from '../hooks/use-change-password.hook';
@@ -36,6 +36,22 @@ export function SettingsSecurityContainer() {
         onNewPasswordChange={passwordVm.setNewPassword}
         onConfirmPasswordChange={passwordVm.setConfirmPassword}
         onSubmit={(event) => void passwordVm.submit(event)}
+      />
+      <FeatureTour
+        page="settings-security"
+        steps={[
+          {
+            key: 'SettingsSecurity',
+            title: passwordVm.t('tourSettingsSecurityTitle'),
+            body: passwordVm.t('tourSettingsSecurityBody'),
+            target: null,
+          },
+        ]}
+        nextLabel={passwordVm.t('tourNext')}
+        doneLabel={passwordVm.t('tourDone')}
+        skipLabel={passwordVm.t('tourSkip')}
+        closeLabel={passwordVm.t('close')}
+        dontShowAgainLabel={passwordVm.t('tourDontShowAgain')}
       />
     </div>
   );

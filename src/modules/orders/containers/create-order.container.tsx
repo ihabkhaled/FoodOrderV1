@@ -1,6 +1,6 @@
 import { Minus, Plus, ShoppingCart } from '@/packages/icons';
 import { formatMoney } from '@/shared/helpers';
-import { BackLink, Loading } from '@/shared/ui';
+import { BackLink, FeatureTour, Loading } from '@/shared/ui';
 
 import { useCreateOrder } from '../hooks/use-create-order.hook';
 import { BUCKETS_REDIRECT_PATH } from '../routes/orders-route-paths.constants';
@@ -150,6 +150,28 @@ export function CreateOrderContainer() {
           </button>
         </div>
       </form>
+      <FeatureTour
+        page="create-order"
+        steps={[
+          {
+            key: 'CreateOrderQuantities',
+            title: vm.t('tourCreateOrderQuantitiesTitle'),
+            body: vm.t('tourCreateOrderQuantitiesBody'),
+            target: null,
+          },
+          {
+            key: 'CreateOrderTotals',
+            title: vm.t('tourCreateOrderTotalsTitle'),
+            body: vm.t('tourCreateOrderTotalsBody'),
+            target: null,
+          },
+        ]}
+        nextLabel={vm.t('tourNext')}
+        doneLabel={vm.t('tourDone')}
+        skipLabel={vm.t('tourSkip')}
+        closeLabel={vm.t('close')}
+        dontShowAgainLabel={vm.t('tourDontShowAgain')}
+      />
     </div>
   );
 }

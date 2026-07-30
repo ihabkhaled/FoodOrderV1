@@ -8,6 +8,21 @@ The version bump level is decided by prompt density — see [rules/versioning.md
 ## [1.8.0] - 2026-07-29
 
 - Start v1.8.0 development
+- Reused buckets as order templates: "Start round" opens an order session from a
+  shared bucket, seeds its members, and notifies them.
+- Removed the "(copy)" suffix when duplicating a bucket.
+- Rendered zero as a placeholder in money and percentage fields.
+- Confirmed logout with a busy dialog and reset the stale profile guard.
+- Required email and password re-entry before account deletion.
+- Split settings into a hub with preferences, privacy, security, and account.
+- Restored language and theme from the profile on a new device and tracked live
+  system theme changes.
+- Gave analytics consent a real device-local diagnostics sink with a visible
+  count, a clear action, and a roaming profile field.
+- Loaded each screen section by section with per-section placeholders.
+- Mirrored in-app notifications into the OS tray with permission prompts and
+  tap-to-open routing.
+- Introduced guided tours on all nineteen screens with a replay control in preferences.
 
 
 ## [1.7.4] - 2026-07-26

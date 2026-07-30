@@ -3,7 +3,7 @@ import '../settings.css';
 import type { CurrencyCode, Theme } from '@/modules/data-access';
 import { Bell, RefreshCcw, Save } from '@/packages/icons';
 import { SUPPORTED_CURRENCIES } from '@/platform/device';
-import { BackLink, LanguageSelect } from '@/shared/ui';
+import { BackLink, FeatureTour, LanguageSelect } from '@/shared/ui';
 
 import { useSettingsPreferences } from '../hooks/use-settings-preferences.hook';
 import { SETTINGS_PATH } from '../routes/settings-route-paths.constants';
@@ -120,6 +120,22 @@ export function SettingsPreferencesContainer() {
           </button>
         </div>
       </form>
+      <FeatureTour
+        page="settings-preferences"
+        steps={[
+          {
+            key: 'SettingsPreferences',
+            title: vm.t('tourSettingsPreferencesTitle'),
+            body: vm.t('tourSettingsPreferencesBody'),
+            target: null,
+          },
+        ]}
+        nextLabel={vm.t('tourNext')}
+        doneLabel={vm.t('tourDone')}
+        skipLabel={vm.t('tourSkip')}
+        closeLabel={vm.t('close')}
+        dontShowAgainLabel={vm.t('tourDontShowAgain')}
+      />
     </div>
   );
 }

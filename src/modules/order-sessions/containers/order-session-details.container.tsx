@@ -1,6 +1,7 @@
 import '../order-sessions.css';
 
-import { BackLink, ConfirmDialog, ErrorState, Loading } from '@/shared/ui';
+import { translate } from '@/shared/i18n';
+import { BackLink, ConfirmDialog, ErrorState, FeatureTour, Loading } from '@/shared/ui';
 
 import { SessionActionPanel } from '../components/session-action-panel/session-action-panel.component';
 import { SessionMenu } from '../components/session-menu/session-menu.component';
@@ -138,6 +139,28 @@ export function OrderSessionDetailsContainer() {
         danger={confirmation.pendingAction?.danger ?? false}
         onConfirm={() => void confirmation.confirm(viewModel.transition)}
         onCancel={confirmation.cancel}
+      />
+      <FeatureTour
+        page="session-details"
+        steps={[
+          {
+            key: 'SessionDetailsMenu',
+            title: translate(viewModel.locale, 'tourSessionDetailsMenuTitle'),
+            body: translate(viewModel.locale, 'tourSessionDetailsMenuBody'),
+            target: null,
+          },
+          {
+            key: 'SessionDetailsParticipants',
+            title: translate(viewModel.locale, 'tourSessionDetailsParticipantsTitle'),
+            body: translate(viewModel.locale, 'tourSessionDetailsParticipantsBody'),
+            target: null,
+          },
+        ]}
+        nextLabel={translate(viewModel.locale, 'tourNext')}
+        doneLabel={translate(viewModel.locale, 'tourDone')}
+        skipLabel={translate(viewModel.locale, 'tourSkip')}
+        closeLabel={translate(viewModel.locale, 'close')}
+        dontShowAgainLabel={translate(viewModel.locale, 'tourDontShowAgain')}
       />
     </div>
   );

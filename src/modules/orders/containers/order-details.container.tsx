@@ -1,6 +1,6 @@
 import { GroupReceiptSection } from '@/modules/group-orders';
 import { formatDateTime } from '@/shared/helpers';
-import { BackLink, Loading } from '@/shared/ui';
+import { BackLink, FeatureTour, Loading } from '@/shared/ui';
 
 import { OrderActionBar } from '../components/order-action-bar/order-action-bar.component';
 import { OrderLineSummary } from '../components/order-line-summary/order-line-summary.component';
@@ -86,6 +86,28 @@ export function OrderDetailsContainer() {
         onTransition={(status) => {
           void vm.transition(status);
         }}
+      />
+      <FeatureTour
+        page="order-details"
+        steps={[
+          {
+            key: 'OrderDetailsRepeat',
+            title: vm.t('tourOrderDetailsRepeatTitle'),
+            body: vm.t('tourOrderDetailsRepeatBody'),
+            target: null,
+          },
+          {
+            key: 'OrderDetailsStatus',
+            title: vm.t('tourOrderDetailsStatusTitle'),
+            body: vm.t('tourOrderDetailsStatusBody'),
+            target: null,
+          },
+        ]}
+        nextLabel={vm.t('tourNext')}
+        doneLabel={vm.t('tourDone')}
+        skipLabel={vm.t('tourSkip')}
+        closeLabel={vm.t('close')}
+        dontShowAgainLabel={vm.t('tourDontShowAgain')}
       />
     </div>
   );
