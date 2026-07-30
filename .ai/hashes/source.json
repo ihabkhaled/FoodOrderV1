@@ -415,7 +415,7 @@
   "src/platform/device/status-bar.adapter.ts": "164dc8b1005d2c750e6dfea5ed87abfbc1d2d6eaa2706efeacdc0d2710d86bf2",
   "src/platform/device/tour-flags.adapter.ts": "38560b034585537805ee2f4d34506306fb4d6bae0cf56827aaff9a39e354ab0a",
   "src/platform/device/tray-notification.adapter.ts": "23d2689bce1123d5d1869cf6c1ef3186859815657655ebe6ba11597bedd4e162",
-  "src/platform/environment/environment.adapter.ts": "127a151f024d629264123b6c4706d3fb3c07582abfa9358df5049d0332b32ceb",
+  "src/platform/environment/environment.adapter.ts": "234048838d8039af4b1fee48c177d9fef61740f9b456cb5c4ef9f9dd1d277739",
   "src/platform/environment/index.ts": "10aaf18e72267b7a97dd7297f8f014d56be99cda526001eca7647130d5f03855",
   "src/platform/network/contact-submission.adapter.ts": "2ae83f323da006829ec256970c86c496c843e061faafb9a1976b1170912e78dc",
   "src/platform/network/contact-submission.interfaces.ts": "d1810df2098dfd9b0d7c205469bce75d83c70c3e8521536f792a4435f2acbe7f",

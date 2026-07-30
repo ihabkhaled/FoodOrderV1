@@ -10,8 +10,8 @@
     },
     {
       "path": ".env.example",
-      "bytes": 1689,
-      "hash": "5658db965d623127b2f5d4e6ca1b388ced79ac8856b827352f6e11156d474a83"
+      "bytes": 1806,
+      "hash": "44417a8bcb4779f6eb2e7149e7459c9f2bd06fb4e1232be53f2232f4451ce90b"
     },
     {
       "path": ".github/copilot-instructions.md",
@@ -30,8 +30,8 @@
     },
     {
       "path": ".github/workflows/android-apk.yml",
-      "bytes": 4083,
-      "hash": "2fd12c81fcf611f651f132264c97c8248e02de74a58a59b6022b25a2626a6ca7"
+      "bytes": 4154,
+      "hash": "4492d00c99c08ddf4dcb3eb4e563784e89bdef4f14fd6b26818bc1050110b1fd"
     },
     {
       "path": ".github/workflows/branch-continuous-release.yml",
@@ -575,8 +575,8 @@
     },
     {
       "path": "docs/operations/push-notifications.md",
-      "bytes": 4886,
-      "hash": "cec336a7217b563de236984bd2637866bee255c912d1ae3b2f631f1fe84dc8b8"
+      "bytes": 5030,
+      "hash": "151013b5804a5c2b7dae0ba6bdff71c5cee18c8c1f278c867851c37d26e43980"
     },
     {
       "path": "docs/operations/reference-parity-roadmap.md",
@@ -3620,8 +3620,8 @@
     },
     {
       "path": "src/platform/environment/environment.adapter.ts",
-      "bytes": 2144,
-      "hash": "127a151f024d629264123b6c4706d3fb3c07582abfa9358df5049d0332b32ceb"
+      "bytes": 2444,
+      "hash": "234048838d8039af4b1fee48c177d9fef61740f9b456cb5c4ef9f9dd1d277739"
     },
     {
       "path": "src/platform/environment/index.ts",

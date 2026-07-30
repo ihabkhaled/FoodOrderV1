@@ -51,10 +51,13 @@ These are **owner actions outside the repository**; none of them can be created
 from source, which is why v1.8.0 stops short of remote push.
 
 1. **Web (FCM + VAPID)**
-   - Generate a Web Push certificate key pair in the Firebase console
-     (Project settings → Cloud Messaging → Web configuration).
-   - Add `VITE_FIREBASE_VAPID_KEY` to `.env`, `.env.example`, the Vercel project
-     environment, and `.github/workflows/android-apk.yml`'s build env block.
+   - **Done in v1.8.0:** the Web Push certificate key pair exists, and
+     `VITE_FIREBASE_VAPID_KEY` is wired through `.env`, `.env.example`,
+     `src/platform/environment` (`env.webPushPublicKey` /
+     `env.webPushConfigured`), and the Android APK workflow. Set the same
+     repository variable in GitHub and in the Vercel project environment.
+     The stored value is the **public** half; the private key never leaves
+     Firebase.
    - Register `firebase-messaging-sw.js` at the origin root (or add `push` and
      `notificationclick` listeners to the existing `public/sw.js` and bump its
      `CACHE_NAME`). Note `registerServiceWorker` currently only runs in

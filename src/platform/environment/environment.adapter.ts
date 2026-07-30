@@ -33,6 +33,8 @@ const firebase: FirebaseEnvironment = {
 };
 
 const forceLocalMode = get('VITE_FORCE_LOCAL_MODE') === 'true';
+/** Web Push public application key. Safe to ship: the private half stays in Firebase. */
+const webPushPublicKey = get('VITE_FIREBASE_VAPID_KEY');
 const configuredLocale = get('VITE_DEFAULT_LOCALE');
 
 export const env = {
@@ -47,6 +49,9 @@ export const env = {
     : DEFAULT_LOCALE,
   initialCurrency: get('VITE_DEFAULT_CURRENCY') || 'EGP',
   firebase,
+  webPushPublicKey,
+  /** Web push can only be offered when a VAPID key was configured at build time. */
+  webPushConfigured: Boolean(webPushPublicKey),
   firebaseEnabled:
     !forceLocalMode &&
     Boolean(firebase.apiKey && firebase.authDomain && firebase.projectId && firebase.appId),
