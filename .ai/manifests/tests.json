@@ -187,18 +187,28 @@
     },
     {
       "path": "tests/e2e/auth-flows.spec.ts",
-      "bytes": 4258,
-      "hash": "83b62ef7979d846d672a601be72be613bcc80c4d569b75e5b85f5b83f5bf0e3f"
+      "bytes": 4401,
+      "hash": "be4c9972e97ea2df700c0c7ef48c524a761ff050e5100556977b7a78e4fb5d03"
     },
     {
       "path": "tests/e2e/bucket-pricing.spec.ts",
-      "bytes": 5496,
-      "hash": "d9cda13aaa11fa320c6b7a413380e3757cea243c96d0095286b177c03a981f35"
+      "bytes": 5639,
+      "hash": "6e9d10c5b13eeb9e799f059200e1f09d9cb04f9b934af591ce1466aaa8d077c0"
+    },
+    {
+      "path": "tests/e2e/feature-tour.spec.ts",
+      "bytes": 3055,
+      "hash": "e38f3fad2b00b5d55ef927cd7be81d2832500ec89c515a7f624eede353b6c5d7"
     },
     {
       "path": "tests/e2e/group-order.spec.ts",
-      "bytes": 5440,
-      "hash": "c98fbc06dc4d9d65565b65d37056bc0a5a1876180f0cd7b6094bf1b8b9918269"
+      "bytes": 5583,
+      "hash": "663cbb2aaceed3d7cfeec8995d7dffe90f1e309f8b32230616cf6af20237dc5c"
+    },
+    {
+      "path": "tests/e2e/helpers/featureTours.ts",
+      "bytes": 785,
+      "hash": "f74b2ed9935c0c06f75e79711a3925e7e394330793496ef26412bcff9a31cbd0"
     },
     {
       "path": "tests/e2e/helpers/responsiveScenario.ts",
@@ -207,18 +217,18 @@
     },
     {
       "path": "tests/e2e/notification-mirroring.spec.ts",
-      "bytes": 5383,
-      "hash": "1cd61fcdbe584a1f518256c759a3af1277d8c32cc0a848af238e32c02f1a5a6a"
+      "bytes": 5526,
+      "hash": "1a0ccf6485bdb4eeb86fe5044057b06441163b9fcfe5fe752c283425854526a8"
     },
     {
       "path": "tests/e2e/order-lifecycle.spec.ts",
-      "bytes": 7646,
-      "hash": "0b5f5088d9ff33b821d1eddeebc968288044a62813d3e151a2b6ac4cff8d3d1a"
+      "bytes": 7789,
+      "hash": "e86ec4782caab62485858a50ffeefa1dc419788b1ede91ccfb9a3116782c7a10"
     },
     {
       "path": "tests/e2e/order-rounds.spec.ts",
-      "bytes": 6918,
-      "hash": "496911ab306fa49a62d80a9b1e0565cfb9a975615758ad856db65bbd0bfdca74"
+      "bytes": 7061,
+      "hash": "5f48c5ce05f0dbb007b8d34c0ca93aeef3eceb544ec55eefbd70cb661a9d320d"
     },
     {
       "path": "tests/e2e/public-content.spec.ts",
@@ -227,43 +237,43 @@
     },
     {
       "path": "tests/e2e/responsive-navigation.spec.ts",
-      "bytes": 11501,
-      "hash": "8c6e81bb8aa4e6564e2e313ac86956d090492bcb1da3cc5def5fd8d04792b452"
+      "bytes": 11643,
+      "hash": "906cf8f0cb10f6e312ebed9c6a6ad4180c88de22dd024db2fb9df34dedd34bf5"
     },
     {
       "path": "tests/e2e/responsive-overlays.spec.ts",
-      "bytes": 5552,
-      "hash": "ba7c77d07524bb45ec1a78fe2ac788d4b5ebe1692248a0bc252eeabe6d642bcd"
+      "bytes": 5694,
+      "hash": "e1ce9e67a1137a5ae98dc67b2f3dbefba7a9b5fccdeff6b0b942a010f70cd324"
     },
     {
       "path": "tests/e2e/settings.spec.ts",
-      "bytes": 6926,
-      "hash": "cac4e0fbe4bce1f48b97f1ec31eb2fe83f47aaf549b38d2b2b8acb98cf9f6701"
+      "bytes": 7069,
+      "hash": "21e8d1c8211c855e747dd37c599e6cb2ad7b5830f7ee5b6313a2ca7f78c2ff48"
     },
     {
       "path": "tests/e2e/smoke.spec.ts",
-      "bytes": 885,
-      "hash": "a3f6f02607840114a29020d96f57233ac773ef2cc119d7faea6e7827ba706ef3"
+      "bytes": 1028,
+      "hash": "239eb757469b205347bc207b4529913b60efcf9a90e5bb0bc2cacb393c170afb"
     },
     {
       "path": "tests/e2e/social-management.spec.ts",
-      "bytes": 10797,
-      "hash": "243a15330d4d23ba90720da9ff298db44d1a0cf86d78c251ab81f34bc870e61f"
+      "bytes": 10940,
+      "hash": "86017736a0ae2e6026bf5aa44ca0ecadcc7dd9ea1f0c5c62a2d0e1e13ffe669d"
     },
     {
       "path": "tests/e2e/social-sharing.spec.ts",
-      "bytes": 11997,
-      "hash": "7e31afb723a72ffdf9ea32967ba65451d3b3b3c6b19321aea416ab6630c9fc2b"
+      "bytes": 12140,
+      "hash": "657f056661ff43273ce89d4e625d2d0233c29f8350c9c1f8285eed9b89512aa9"
     },
     {
       "path": "tests/e2e/ui.spec.ts",
-      "bytes": 11469,
-      "hash": "d360927bf409a2540603d4b58df663a4f9c704d89143d941113fa5955f05d5c2"
+      "bytes": 11612,
+      "hash": "6c9ab73efd25da5c369cf2628b2805fb1c16fd94d5a68cf1579a41dfc4427221"
     },
     {
       "path": "tests/e2e/ux-polish.spec.ts",
-      "bytes": 4413,
-      "hash": "bbd752519ed77efd367a2fd660b6c67fbec0c0413fd87f897231f845bbbafbf7"
+      "bytes": 4556,
+      "hash": "cc39f8f88a6a928c1a830b424a6c618ddab9b9f5452a5824c137c66681d53baf"
     },
     {
       "path": "tests/eslint/architecture-plugin.test.ts",

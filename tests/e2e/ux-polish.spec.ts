@@ -1,5 +1,11 @@
 import { expect, type Locator, type Page, test } from '@playwright/test';
 
+import { suppressFeatureTours } from './helpers/featureTours';
+
+test.beforeEach(async ({ page }) => {
+  await suppressFeatureTours(page);
+});
+
 interface ViewportCase {
   readonly name: string;
   readonly width: number;

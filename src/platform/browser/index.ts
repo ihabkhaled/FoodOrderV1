@@ -20,6 +20,12 @@ export {
 } from './document-settings.adapter';
 export type { ThemePreference } from './document-settings.types';
 export { isDocumentHidden } from './document-visibility.adapter';
+export type { ElementRect } from './element-rect.adapter';
+export {
+  measureElementRect,
+  prefersReducedMotion,
+  subscribeToViewportChanges,
+} from './element-rect.adapter';
 export { downloadTextFile } from './file-download.adapter';
 export { registerServiceWorker } from './service-worker.adapter';
 export { shareText } from './share.adapter';

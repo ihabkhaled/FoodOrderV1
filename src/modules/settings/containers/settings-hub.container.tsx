@@ -1,10 +1,12 @@
 import '../settings.css';
 
 import { Database, KeyRound, Settings2, ShieldCheck } from '@/packages/icons';
+import { FeatureTour } from '@/shared/ui';
 
 import { SettingsLinkRow } from '../components/settings-link-row/settings-link-row.component';
 import { SettingsMetadata } from '../components/settings-metadata/settings-metadata.component';
 import { useSettingsHub } from '../hooks/use-settings-hub.hook';
+import { useSettingsTour } from '../hooks/use-settings-tour.hook';
 import {
   SETTINGS_ACCOUNT_PATH,
   SETTINGS_PREFERENCES_PATH,
@@ -14,6 +16,7 @@ import {
 
 export function SettingsHubContainer() {
   const vm = useSettingsHub();
+  const { setSectionsElement, steps: tourSteps } = useSettingsTour();
   const rows = [
     {
       to: SETTINGS_PREFERENCES_PATH,
@@ -53,7 +56,7 @@ export function SettingsHubContainer() {
         <strong>{vm.fullName}</strong>
         <span className="muted">{vm.email}</span>
       </section>
-      <nav className="settings-links" aria-label={vm.t('settings')}>
+      <nav ref={setSectionsElement} className="settings-links" aria-label={vm.t('settings')}>
         {rows.map((row) => (
           <SettingsLinkRow
             key={row.to}
@@ -69,6 +72,16 @@ export function SettingsHubContainer() {
           { label: vm.t('connection'), value: vm.connectionValue },
           { label: vm.t('appVersion'), value: vm.appVersionValue },
         ]}
+      />
+
+      <FeatureTour
+        page="settings"
+        steps={tourSteps}
+        nextLabel={vm.t('tourNext')}
+        doneLabel={vm.t('tourDone')}
+        skipLabel={vm.t('tourSkip')}
+        closeLabel={vm.t('close')}
+        dontShowAgainLabel={vm.t('tourDontShowAgain')}
       />
     </div>
   );

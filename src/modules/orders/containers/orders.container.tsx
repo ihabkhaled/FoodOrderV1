@@ -6,16 +6,19 @@ import {
   ConfirmDialog,
   EmptyState,
   ErrorState,
+  FeatureTour,
   SkeletonSection,
   VirtualListFooter,
 } from '@/shared/ui';
 
 import { OrderRow } from '../components/order-row/order-row.component';
 import { ORDER_STATUS_FILTERS, useOrders } from '../hooks/use-orders.hook';
+import { useOrdersTour } from '../hooks/use-orders-tour.hook';
 import { BUCKETS_REDIRECT_PATH } from '../routes/orders-route-paths.constants';
 
 export function OrdersContainer() {
   const vm = useOrders();
+  const { setListElement, steps: tourSteps } = useOrdersTour();
 
   if (vm.error && vm.totalLoaded === 0) {
     return (
@@ -29,7 +32,7 @@ export function OrdersContainer() {
 
   return (
     <div className="page stack-lg">
-      <div className="page-heading">
+      <div className="page-heading" ref={setListElement}>
         <div>
           <p className="eyebrow">{vm.t('myOrders')}</p>
           <h1>{vm.t('orders')}</h1>
@@ -128,6 +131,16 @@ export function OrdersContainer() {
         onCancel={() => {
           vm.setDeleting(null);
         }}
+      />
+
+      <FeatureTour
+        page="orders"
+        steps={tourSteps}
+        nextLabel={vm.t('tourNext')}
+        doneLabel={vm.t('tourDone')}
+        skipLabel={vm.t('tourSkip')}
+        closeLabel={vm.t('close')}
+        dontShowAgainLabel={vm.t('tourDontShowAgain')}
       />
     </div>
   );

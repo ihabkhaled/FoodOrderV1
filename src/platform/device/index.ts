@@ -23,6 +23,13 @@ export {
   isNativeApplication,
   runtimePlatformName,
 } from './runtime-platform.adapter';
+export type { TourPage } from './tour-flags.adapter';
+export {
+  clearTourDismissals,
+  loadTourDismissed,
+  saveTourDismissed,
+  TOUR_PAGES,
+} from './tour-flags.adapter';
 export type { TrayNotificationRequest } from './tray-notification.adapter';
 export {
   showTrayNotification,

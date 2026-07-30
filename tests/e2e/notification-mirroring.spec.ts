@@ -1,5 +1,11 @@
 import { expect, type Page, test } from '@playwright/test';
 
+import { suppressFeatureTours } from './helpers/featureTours';
+
+test.beforeEach(async ({ page }) => {
+  await suppressFeatureTours(page);
+});
+
 const NOTIFICATIONS_KEY = 'foodorder:v1:notifications';
 
 interface TrayCapture {

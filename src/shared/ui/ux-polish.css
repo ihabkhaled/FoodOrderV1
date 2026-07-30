@@ -902,3 +902,89 @@ select:focus {
     animation: none;
   }
 }
+
+/* Guided page tours: a dimmed page with one highlighted target and a card
+   explaining it. Fixed positioning keeps it above the shell (panel is 90). */
+.feature-tour {
+  position: fixed;
+  inset: 0;
+  z-index: 95;
+  display: grid;
+  align-items: end;
+  justify-items: center;
+  padding: 1rem;
+  pointer-events: none;
+}
+
+.feature-tour-scrim,
+.feature-tour-spotlight {
+  position: fixed;
+  pointer-events: auto;
+}
+
+.feature-tour-scrim {
+  inset: 0;
+  background: rgb(20 12 6 / 62%);
+}
+
+.feature-tour-spotlight {
+  border-radius: var(--radius, 0.75rem);
+  box-shadow:
+    0 0 0 100vmax rgb(20 12 6 / 62%),
+    0 0 0 2px var(--primary);
+  transition: all 180ms ease;
+}
+
+.feature-tour-card {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 0.75rem;
+  inline-size: min(28rem, 100%);
+  padding: 1.25rem;
+  border: 1px solid var(--line-strong, var(--border));
+  border-radius: var(--radius-lg, 1rem);
+  background: var(--surface);
+  box-shadow: var(--shadow-lg, 0 18px 40px rgb(0 0 0 / 28%));
+  pointer-events: auto;
+}
+
+.feature-tour-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.feature-tour-card h2 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.feature-tour-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.feature-tour-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+@media (min-width: 720px) {
+  .feature-tour {
+    align-items: center;
+  }
+}
+
+.feature-tour.reduced-motion .feature-tour-spotlight {
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .feature-tour-spotlight {
+    transition: none;
+  }
+}

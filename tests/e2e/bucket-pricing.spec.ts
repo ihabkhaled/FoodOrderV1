@@ -1,5 +1,11 @@
 import { expect, type Page, test } from '@playwright/test';
 
+import { suppressFeatureTours } from './helpers/featureTours';
+
+test.beforeEach(async ({ page }) => {
+  await suppressFeatureTours(page);
+});
+
 const DATABASE_KEY = 'foodorder:v1:database';
 const SESSION_KEY = 'foodorder:v1:session';
 const NOW = '2026-07-15T01:30:00.000Z';

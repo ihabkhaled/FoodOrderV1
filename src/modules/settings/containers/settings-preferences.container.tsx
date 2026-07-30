@@ -1,7 +1,7 @@
 import '../settings.css';
 
 import type { CurrencyCode, Theme } from '@/modules/data-access';
-import { Bell, Save } from '@/packages/icons';
+import { Bell, RefreshCcw, Save } from '@/packages/icons';
 import { SUPPORTED_CURRENCIES } from '@/platform/device';
 import { BackLink, LanguageSelect } from '@/shared/ui';
 
@@ -96,6 +96,22 @@ export function SettingsPreferencesContainer() {
             )}
           </section>
         )}
+        <section className="section-card stack">
+          <div className="section-heading">
+            <div>
+              <p className="eyebrow">{vm.settingsT('preferencesSection')}</p>
+              <h2>{vm.t('replayTutorials')}</h2>
+            </div>
+          </div>
+          <button
+            type="button"
+            className="button secondary"
+            onClick={() => void vm.replayTutorials()}
+          >
+            <RefreshCcw />
+            {vm.t('replayTutorials')}
+          </button>
+        </section>
         {vm.error ? <p className="form-error">{vm.error}</p> : null}
         <div className="sticky-actions">
           <button className="button" disabled={vm.busy}>

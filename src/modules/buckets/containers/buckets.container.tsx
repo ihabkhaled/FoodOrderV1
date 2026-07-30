@@ -1,14 +1,20 @@
 import { JOIN_PATH } from '@/modules/group-orders';
 import { KeyRound, Plus } from '@/packages/icons';
 import { Link } from '@/packages/router';
-import { ConfirmDialog, ErrorState } from '@/shared/ui';
+import { ConfirmDialog, ErrorState, FeatureTour } from '@/shared/ui';
 
 import { BucketResults } from '../components/bucket-results/bucket-results.component';
 import { useBuckets } from '../hooks/use-buckets.hook';
+import { useBucketsTour } from '../hooks/use-buckets-tour.hook';
 import { BUCKET_NEW_PATH } from '../routes/buckets-route-paths.constants';
 
 export function BucketsContainer() {
   const vm = useBuckets();
+  const {
+    setTemplateElement,
+    setRoundElement,
+    steps: tourSteps,
+  } = useBucketsTour();
 
   if (vm.initialError) {
     return (
@@ -28,7 +34,7 @@ export function BucketsContainer() {
           <p className="eyebrow">{vm.t('myBuckets')}</p>
           <h1>{vm.t('buckets')}</h1>
         </div>
-        <div className="row-actions">
+        <div className="row-actions" ref={setRoundElement}>
           <Link className="button secondary" to={JOIN_PATH}>
             <KeyRound />
             {vm.t('joinWithCode')}
@@ -40,6 +46,7 @@ export function BucketsContainer() {
         </div>
       </div>
 
+      <div ref={setTemplateElement}>
       <BucketResults
         totalLoaded={vm.totalLoaded}
         query={vm.query}
@@ -67,6 +74,7 @@ export function BucketsContainer() {
         onDuplicate={(bucket) => void vm.duplicate(bucket)}
         onDelete={vm.setDeleting}
       />
+      </div>
 
       <ConfirmDialog
         open={Boolean(vm.deleting)}
@@ -83,6 +91,16 @@ export function BucketsContainer() {
         onCancel={() => {
           vm.setDeleting(null);
         }}
+      />
+
+      <FeatureTour
+        page="buckets"
+        steps={tourSteps}
+        nextLabel={vm.t('tourNext')}
+        doneLabel={vm.t('tourDone')}
+        skipLabel={vm.t('tourSkip')}
+        closeLabel={vm.t('close')}
+        dontShowAgainLabel={vm.t('tourDontShowAgain')}
       />
     </div>
   );

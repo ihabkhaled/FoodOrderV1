@@ -1,5 +1,11 @@
 import { expect, type Page, test } from '@playwright/test';
 
+import { suppressFeatureTours } from './helpers/featureTours';
+
+test.beforeEach(async ({ page }) => {
+  await suppressFeatureTours(page);
+});
+
 const register = async (page: Page, suffix: string): Promise<string> => {
   const email = `settings-${suffix}-${Date.now()}@example.com`;
   await page.goto('/auth/register');

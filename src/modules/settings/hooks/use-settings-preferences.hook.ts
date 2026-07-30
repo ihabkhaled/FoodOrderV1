@@ -4,6 +4,7 @@ import type { CurrencyCode, Locale, Theme } from '@/modules/data-access';
 import { useApp } from '@/modules/session';
 import type { NotificationPermissionState } from '@/platform/device';
 import {
+  clearTourDismissals,
   queryNotificationPermission,
   requestNotificationPermission,
 } from '@/platform/device';
@@ -29,6 +30,7 @@ export interface SettingsPreferencesViewModel {
   submit: (event: SyntheticEvent) => Promise<void>;
   notificationPermission: NotificationPermissionState;
   enableNotifications: () => Promise<void>;
+  replayTutorials: () => Promise<void>;
 }
 
 /** Profile identity and runtime preferences, saved together on submit. */
@@ -113,6 +115,10 @@ export function useSettingsPreferences(): SettingsPreferencesViewModel {
     enableNotifications: async () => {
       await requestNotificationPermission();
       setNotificationPermission(await queryNotificationPermission());
+    },
+    replayTutorials: async () => {
+      await clearTourDismissals();
+      showToast(t('tutorialsReset'), 'success');
     },
   };
 }

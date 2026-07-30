@@ -251,6 +251,11 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/buckets/hooks/use-buckets-tour.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/buckets/hooks/use-buckets.hook.ts",
       "tests": [],
       "relationship": "inferred"
@@ -287,6 +292,11 @@
     },
     {
       "source": "src/modules/dashboard/containers/dashboard.container.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/dashboard/hooks/use-dashboard-tour.hook.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -1081,6 +1091,11 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/orders/hooks/use-orders-tour.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/orders/hooks/use-orders.hook.ts",
       "tests": [],
       "relationship": "inferred"
@@ -1496,6 +1511,11 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/settings/hooks/use-settings-tour.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/settings/i18n/locales/ar.json",
       "tests": [],
       "relationship": "inferred"
@@ -1662,6 +1682,11 @@
     },
     {
       "source": "src/modules/social/hooks/use-bucket-social-share.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/social/hooks/use-social-tour.hook.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -1951,6 +1976,11 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/platform/browser/element-rect.adapter.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/platform/browser/file-download.adapter.ts",
       "tests": [],
       "relationship": "inferred"
@@ -2022,6 +2052,11 @@
     },
     {
       "source": "src/platform/device/status-bar.adapter.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/platform/device/tour-flags.adapter.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -2292,6 +2327,31 @@
     },
     {
       "source": "src/shared/ui/error-state/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/ui/feature-tour/feature-tour.component.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/ui/feature-tour/feature-tour.container.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/ui/feature-tour/feature-tour.types.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/ui/feature-tour/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/ui/feature-tour/use-feature-tour.hook.ts",
       "tests": [],
       "relationship": "inferred"
     },

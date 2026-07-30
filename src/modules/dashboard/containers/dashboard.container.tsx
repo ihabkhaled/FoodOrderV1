@@ -9,15 +9,18 @@ import {
   Utensils,
 } from '@/packages/icons';
 import { Link } from '@/packages/router';
-import { ErrorState, SkeletonSection } from '@/shared/ui';
+import { ErrorState, FeatureTour, SkeletonSection } from '@/shared/ui';
 
 import type { DashboardStatCard } from '../components/dashboard-stat-grid/dashboard-stat-grid.component';
 import { DashboardStatGrid } from '../components/dashboard-stat-grid/dashboard-stat-grid.component';
 import { RecentOrdersSection } from '../components/recent-orders-section/recent-orders-section.component';
 import { useDashboard } from '../hooks/use-dashboard.hook';
+import { useDashboardTour } from '../hooks/use-dashboard-tour.hook';
 
 export function DashboardContainer() {
   const vm = useDashboard();
+  const { setStatsElement, setCreateElement, steps: tourSteps } =
+    useDashboardTour();
 
   if (vm.error) {
     return (
@@ -80,14 +83,18 @@ export function DashboardContainer() {
           <h1>{vm.profile?.fullName ?? vm.user?.displayName}</h1>
           <p>{vm.t('quickStart')}</p>
         </div>
-        <Link className="button" to={BUCKET_NEW_PATH}>
-          <Plus />
-          {vm.t('createBucket')}
-        </Link>
+        <div ref={setCreateElement}>
+          <Link className="button" to={BUCKET_NEW_PATH}>
+            <Plus />
+            {vm.t('createBucket')}
+          </Link>
+        </div>
       </section>
 
       {summary ? (
-        <DashboardStatGrid cards={cards} ariaLabel={vm.t('dashboard')} />
+        <div ref={setStatsElement}>
+          <DashboardStatGrid cards={cards} ariaLabel={vm.t('dashboard')} />
+        </div>
       ) : (
         <SkeletonSection
           label={vm.t('loading')}
@@ -105,6 +112,16 @@ export function DashboardContainer() {
       ) : (
         <SkeletonSection label={vm.t('loading')} variant="row" count={3} />
       )}
+
+      <FeatureTour
+        page="dashboard"
+        steps={tourSteps}
+        nextLabel={vm.t('tourNext')}
+        doneLabel={vm.t('tourDone')}
+        skipLabel={vm.t('tourSkip')}
+        closeLabel={vm.t('close')}
+        dontShowAgainLabel={vm.t('tourDontShowAgain')}
+      />
     </div>
   );
 }

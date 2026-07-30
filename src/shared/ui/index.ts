@@ -3,6 +3,7 @@ export { ConfirmDialog } from './confirm-dialog';
 export { DangerReauthDialog } from './danger-reauth-dialog';
 export { EmptyState } from './empty-state';
 export { ErrorState } from './error-state';
+export { FeatureTour, type FeatureTourStep } from './feature-tour';
 export { LanguageSelect } from './language-select';
 export { Loading } from './loading';
 export { NumericField } from './numeric-field';

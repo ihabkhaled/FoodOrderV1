@@ -1,4 +1,4 @@
-import { ErrorState, SkeletonSection } from '@/shared/ui';
+import { ErrorState, FeatureTour, SkeletonSection } from '@/shared/ui';
 
 import { BucketInvitations } from '../components/bucket-invitations/bucket-invitations.component';
 import { FriendSearch } from '../components/friend-search/friend-search.component';
@@ -8,9 +8,11 @@ import { GroupsSection } from '../components/groups-section/groups-section.compo
 import { IncomingRequests } from '../components/incoming-requests/incoming-requests.component';
 import { SocialHero } from '../components/social-hero/social-hero.component';
 import { useSocial } from '../hooks/use-social.hook';
+import { useSocialTour } from '../hooks/use-social-tour.hook';
 
 export function SocialContainer() {
   const vm = useSocial();
+  const { setPeopleElement, steps: tourSteps } = useSocialTour();
 
   // Placeholders sit where the real sections will land, so the layout does not
   // jump once the overview resolves.
@@ -53,6 +55,7 @@ export function SocialContainer() {
           void vm.respondBucketInvitation(bucketId, response)
         }
       />
+      <div ref={setPeopleElement}>
       <FriendSearch
         s={vm.s}
         emailLabel={vm.t('email')}
@@ -65,6 +68,7 @@ export function SocialContainer() {
         onSearch={() => void vm.search()}
         onSendRequest={() => void vm.sendRequest()}
       />
+      </div>
       <IncomingRequests
         s={vm.s}
         requests={vm.overview.incomingRequests}
@@ -110,6 +114,16 @@ export function SocialContainer() {
         onRespond={(groupId, response) =>
           void vm.respondGroupInvitation(groupId, response)
         }
+      />
+
+      <FeatureTour
+        page="social"
+        steps={tourSteps}
+        nextLabel={vm.t('tourNext')}
+        doneLabel={vm.t('tourDone')}
+        skipLabel={vm.t('tourSkip')}
+        closeLabel={vm.t('close')}
+        dontShowAgainLabel={vm.t('tourDontShowAgain')}
       />
     </div>
   );

@@ -1,5 +1,6 @@
 import { expect, type Locator, type Page, test } from '@playwright/test';
 
+import { suppressFeatureTours } from './helpers/featureTours';
 import {
   LAST_BUCKET_INDEX,
   LAST_ORDER_INDEX,
@@ -12,6 +13,10 @@ import {
   SHARED_BUCKET_INDEX,
   switchResponsiveUser,
 } from './helpers/responsiveScenario';
+
+test.beforeEach(async ({ page }) => {
+  await suppressFeatureTours(page);
+});
 
 interface ViewportCase {
   readonly name: string;
