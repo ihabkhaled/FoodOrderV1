@@ -2,6 +2,7 @@
   "locale": "th",
   "ui": {
     "brandName": "FoodOrder | รวมออร์เดอร์ของคุณ",
+    "themeToggleLabel": "สลับธีม",
     "primaryNavigationLabel": "เมนูนำทางหน้าสาธารณะ",
     "mobileNavigationLabel": "เปิดเมนูนำทาง",
     "languageLabel": "ภาษา",

@@ -27,6 +27,14 @@ export {
   subscribeToViewportChanges,
 } from './element-rect.adapter';
 export { downloadTextFile } from './file-download.adapter';
+export type { PublicThemeChoice } from './public-theme.adapter';
+export {
+  applyPublicTheme,
+  loadPublicThemeChoice,
+  PUBLIC_THEME_STORAGE_KEY,
+  resolvePublicTheme,
+  savePublicThemeChoice,
+} from './public-theme.adapter';
 export { registerServiceWorker } from './service-worker.adapter';
 export { shareText } from './share.adapter';
 export {

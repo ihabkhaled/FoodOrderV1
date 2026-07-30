@@ -2,6 +2,7 @@
   "locale": "pt-BR",
   "ui": {
     "brandName": "FoodOrder | Junte seu pedido",
+    "themeToggleLabel": "Alternar tema",
     "primaryNavigationLabel": "Navegação pública",
     "mobileNavigationLabel": "Abrir a navegação",
     "languageLabel": "Idioma",

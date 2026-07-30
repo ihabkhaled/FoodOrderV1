@@ -2,6 +2,7 @@
   "locale": "es",
   "ui": {
     "brandName": "FoodOrder | Reúne tu pedido",
+    "themeToggleLabel": "Cambiar tema",
     "primaryNavigationLabel": "Navegación pública",
     "mobileNavigationLabel": "Abrir la navegación",
     "languageLabel": "Idioma",

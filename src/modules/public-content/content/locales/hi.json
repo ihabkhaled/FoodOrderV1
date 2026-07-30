@@ -2,6 +2,7 @@
   "locale": "hi",
   "ui": {
     "brandName": "FoodOrder | अपना ऑर्डर इकट्ठा करें",
+    "themeToggleLabel": "थीम बदलें",
     "primaryNavigationLabel": "सार्वजनिक नेविगेशन",
     "mobileNavigationLabel": "नेविगेशन खोलें",
     "languageLabel": "भाषा",

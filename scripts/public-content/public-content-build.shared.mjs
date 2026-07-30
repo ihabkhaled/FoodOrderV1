@@ -216,6 +216,7 @@ const renderHeader = (catalog, locale, page, systemRouteId) => {
 <nav class="public-navigation public-navigation--desktop" aria-label="${escapeHtml(ui.primaryNavigationLabel)}">${primaryLinks}</nav>
 <div class="public-header__actions">
 <details class="public-language-menu"><summary><span class="public-language-menu__prefix">${escapeHtml(ui.languageLabel)}: </span><span>${escapeHtml(locale.label)}</span></summary><ul>${renderLocaleLinks(catalog, locale, page, systemRouteId)}</ul></details>
+<button class="public-theme-toggle" type="button" data-public-theme-toggle aria-label="${escapeHtml(ui.themeToggleLabel)}" title="${escapeHtml(ui.themeToggleLabel)}" aria-pressed="false"><span class="public-theme-toggle__icon" aria-hidden="true"></span></button>
 <a class="public-button public-button--small" href="${escapeHtml(localizedApplicationPath(catalog, locale))}">${escapeHtml(ui.openApplicationLabel)}</a>
 <details class="public-mobile-menu"><summary><span class="public-mobile-menu__icon" aria-hidden="true">☰</span><span class="public-mobile-menu__label">${escapeHtml(ui.mobileNavigationLabel)}</span></summary><nav aria-label="${escapeHtml(ui.primaryNavigationLabel)}">${primaryLinks}</nav></details>
 </div></div></header>`;
@@ -405,6 +406,7 @@ const renderHead = ({ catalog, locale, page, stylesheetLinks, indexable }) => {
   );
   return `<meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<script>try{var t=localStorage.getItem("foodorder:public:theme");if(t==="dark"||t==="light")document.documentElement.dataset.theme=t}catch(e){}</script>
 <meta name="theme-color" content="#f97316" />
 <meta name="robots" content="${robots}" />
 <meta name="googlebot" content="${robots}" />
@@ -441,6 +443,7 @@ const renderSystemHead = (catalog, locale, routeId, stylesheetLinks) => {
   const copy = systemCopy(catalog, routeId, locale);
   return `<meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<script>try{var t=localStorage.getItem("foodorder:public:theme");if(t==="dark"||t==="light")document.documentElement.dataset.theme=t}catch(e){}</script>
 <meta name="theme-color" content="#f97316" />
 <meta name="robots" content="noindex, nofollow, noarchive" />
 <meta name="googlebot" content="noindex, nofollow, noarchive" />
@@ -473,6 +476,7 @@ ${renderHeader(catalog, locale, page, 'not-found')}
 ${renderPageMain(catalog, locale, page)}
 ${renderFooter(catalog, locale, page)}
 </div></div>
+<script>(function(){var b=document.querySelector("[data-public-theme-toggle]");if(!b)return;var r=document.documentElement;function cur(){var a=r.dataset.theme;return a==="dark"||a==="light"?a:(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}function sync(){b.setAttribute("aria-pressed",String(cur()==="dark"))}sync();b.addEventListener("click",function(){var n=cur()==="dark"?"light":"dark";r.dataset.theme=n;try{localStorage.setItem("foodorder:public:theme",n)}catch(e){}sync()})})()</script>
 </body>
 </html>
 `;
@@ -493,6 +497,7 @@ ${renderHeader(catalog, locale, null, routeId)}
 ${renderSystemMain(catalog, locale, routeId)}
 ${renderFooter(catalog, locale, null)}
 </div></div>
+<script>(function(){var b=document.querySelector("[data-public-theme-toggle]");if(!b)return;var r=document.documentElement;function cur(){var a=r.dataset.theme;return a==="dark"||a==="light"?a:(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}function sync(){b.setAttribute("aria-pressed",String(cur()==="dark"))}sync();b.addEventListener("click",function(){var n=cur()==="dark"?"light":"dark";r.dataset.theme=n;try{localStorage.setItem("foodorder:public:theme",n)}catch(e){}sync()})})()</script>
 </body>
 </html>
 `;

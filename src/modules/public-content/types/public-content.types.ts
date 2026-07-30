@@ -78,6 +78,8 @@ export interface PublicSystemPageCopy {
 export interface PublicUiCopy {
   /** Localized product name shown in the header, footer, and share cards. */
   brandName: string;
+  /** Accessible name for the light/dark switch in the header. */
+  themeToggleLabel: string;
   primaryNavigationLabel: string;
   mobileNavigationLabel: string;
   languageLabel: string;
@@ -201,6 +203,8 @@ export interface PublicContentViewModel {
 
 export interface PublicHeaderProps {
   brandName: string;
+  theme: 'light' | 'dark';
+  onToggleTheme: () => void;
   homePath: string;
   applicationPath: string;
   currentLocaleLabel: string;

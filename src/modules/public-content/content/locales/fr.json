@@ -2,6 +2,7 @@
   "locale": "fr",
   "ui": {
     "brandName": "FoodOrder | Rassemblez votre commande",
+    "themeToggleLabel": "Changer de thème",
     "primaryNavigationLabel": "Navigation publique",
     "mobileNavigationLabel": "Ouvrir la navigation",
     "languageLabel": "Langue",

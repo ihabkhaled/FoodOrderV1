@@ -1316,6 +1316,11 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/public-content/hooks/use-public-theme.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/public-content/index.ts",
       "tests": [],
       "relationship": "inferred"
@@ -2112,6 +2117,11 @@
     },
     {
       "source": "src/platform/browser/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/platform/browser/public-theme.adapter.ts",
       "tests": [],
       "relationship": "inferred"
     },

@@ -2,6 +2,7 @@
   "locale": "de",
   "ui": {
     "brandName": "FoodOrder | Sammle deine Bestellung",
+    "themeToggleLabel": "Design wechseln",
     "primaryNavigationLabel": "Öffentliche Navigation",
     "mobileNavigationLabel": "Navigation öffnen",
     "languageLabel": "Sprache",

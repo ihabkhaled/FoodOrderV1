@@ -2,6 +2,7 @@
   "locale": "it",
   "ui": {
     "brandName": "FoodOrder | Ritira il tuo ordine",
+    "themeToggleLabel": "Cambia tema",
     "primaryNavigationLabel": "Navigazione pubblica",
     "mobileNavigationLabel": "Apri la navigazione",
     "languageLabel": "Lingua",

@@ -128,6 +128,7 @@
   "ui": {
     "en": {
       "brandName": "FoodOrder | Collect Your Order",
+      "themeToggleLabel": "Switch theme",
       "primaryNavigationLabel": "Public navigation",
       "mobileNavigationLabel": "Open navigation",
       "languageLabel": "Language",
@@ -142,6 +143,7 @@
     },
     "ar": {
       "brandName": "FoodOrder | جمع أوردرك",
+      "themeToggleLabel": "تبديل المظهر",
       "primaryNavigationLabel": "التنقل في الصفحات العامة",
       "mobileNavigationLabel": "فتح قائمة التنقل",
       "languageLabel": "اللغة",

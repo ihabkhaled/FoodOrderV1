@@ -246,6 +246,11 @@
       "hash": "69b3cccc788c85e52ada23b505f7a5ae21f377f8334518ef964e93fac1f174df"
     },
     {
+      "path": "tests/e2e/public-theme.spec.ts",
+      "bytes": 1747,
+      "hash": "1c4a09165576a56955719aca5ae68bcf7cdd16b55f4565d84ddbce168a24556a"
+    },
+    {
       "path": "tests/e2e/responsive-navigation.spec.ts",
       "bytes": 11643,
       "hash": "906cf8f0cb10f6e312ebed9c6a6ad4180c88de22dd024db2fb9df34dedd34bf5"

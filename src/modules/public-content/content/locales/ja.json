@@ -2,6 +2,7 @@
   "locale": "ja",
   "ui": {
     "brandName": "FoodOrder | 注文をまとめよう",
+    "themeToggleLabel": "テーマを切り替え",
     "primaryNavigationLabel": "公開ページのナビゲーション",
     "mobileNavigationLabel": "ナビゲーションを開く",
     "languageLabel": "言語",

@@ -2,6 +2,7 @@
   "locale": "zh-CN",
   "ui": {
     "brandName": "FoodOrder | 集齐你的订单",
+    "themeToggleLabel": "切换主题",
     "primaryNavigationLabel": "公共页面导航",
     "mobileNavigationLabel": "打开导航菜单",
     "languageLabel": "语言",
