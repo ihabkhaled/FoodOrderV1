@@ -212,7 +212,7 @@ const renderHeader = (catalog, locale, page, systemRouteId) => {
   const primaryLinks = renderNavigationLinks(catalog, locale, page, true);
   return `<a class="public-skip-link" href="#public-main">${escapeHtml(ui.skipToContentLabel)}</a>
 <header class="public-header"><div class="public-header__inner">
-<a class="public-brand" href="${escapeHtml(home)}"><span class="public-brand__mark" aria-hidden="true">FO</span><span>${escapeHtml(catalog.site.brandName)}</span></a>
+<a class="public-brand" href="${escapeHtml(home)}"><span class="public-brand__mark" aria-hidden="true">FO</span><span>${escapeHtml(uiCopy(catalog, locale).brandName)}</span></a>
 <nav class="public-navigation public-navigation--desktop" aria-label="${escapeHtml(ui.primaryNavigationLabel)}">${primaryLinks}</nav>
 <div class="public-header__actions">
 <details class="public-language-menu"><summary><span class="public-language-menu__prefix">${escapeHtml(ui.languageLabel)}: </span><span>${escapeHtml(locale.label)}</span></summary><ul>${renderLocaleLinks(catalog, locale, page, systemRouteId)}</ul></details>
@@ -241,10 +241,10 @@ const renderFooter = (catalog, locale, currentPage) => {
     .join('');
   const feedPath = `/${[locale.segment, 'feed.xml'].filter(Boolean).join('/')}`;
   return `<footer class="public-footer"><div class="public-footer__inner"><div>
-<a class="public-brand" href="${escapeHtml(localePath(catalog.pages[0], locale))}"><span class="public-brand__mark" aria-hidden="true">FO</span><span>${escapeHtml(catalog.site.brandName)}</span></a>
+<a class="public-brand" href="${escapeHtml(localePath(catalog.pages[0], locale))}"><span class="public-brand__mark" aria-hidden="true">FO</span><span>${escapeHtml(uiCopy(catalog, locale).brandName)}</span></a>
 <p>${escapeHtml(ui.footerTagline)}</p></div>
 <nav aria-label="${escapeHtml(ui.footerNavigationLabel)}">${links}<a href="${escapeHtml(feedPath)}">RSS</a></nav></div>
-<p class="public-footer__legal">© 2026 ${escapeHtml(catalog.site.brandName)}. ${escapeHtml(ui.allRightsReservedLabel)}</p></footer>`;
+<p class="public-footer__legal">© 2026 ${escapeHtml(uiCopy(catalog, locale).brandName)}. ${escapeHtml(ui.allRightsReservedLabel)}</p></footer>`;
 };
 
 const renderSections = (copy) => {
@@ -307,7 +307,7 @@ const structuredData = (catalog, locale, page) => {
     {
       '@context': 'https://schema.org',
       '@type': 'Organization',
-      name: catalog.site.brandName,
+      name: uiCopy(catalog, locale).brandName,
       url: catalog.site.canonicalOrigin,
       logo: canonicalUrl(catalog, '/icon.svg'),
       sameAs: [catalog.site.repositoryUrl],
@@ -318,14 +318,14 @@ const structuredData = (catalog, locale, page) => {
       {
         '@context': 'https://schema.org',
         '@type': 'WebSite',
-        name: catalog.site.brandName,
+        name: uiCopy(catalog, locale).brandName,
         url: catalog.site.canonicalOrigin,
         inLanguage: locale.htmlLang,
       },
       {
         '@context': 'https://schema.org',
         '@type': 'SoftwareApplication',
-        name: catalog.site.brandName,
+        name: uiCopy(catalog, locale).brandName,
         applicationCategory: 'LifestyleApplication',
         operatingSystem: 'Web, Android, iOS',
         description: copy.description,
@@ -413,7 +413,7 @@ const renderHead = ({ catalog, locale, page, stylesheetLinks, indexable }) => {
 <link rel="canonical" href="${escapeHtml(canonical)}" />
 ${alternates}
 <meta property="og:type" content="website" />
-<meta property="og:site_name" content="${escapeHtml(catalog.site.brandName)}" />
+<meta property="og:site_name" content="${escapeHtml(uiCopy(catalog, locale).brandName)}" />
 <meta property="og:locale" content="${escapeHtml(locale.openGraphLocale)}" />
 <meta property="og:title" content="${escapeHtml(copy.seoTitle)}" />
 <meta property="og:description" content="${escapeHtml(copy.description)}" />
@@ -431,7 +431,7 @@ ${alternates}
 <link rel="icon" href="/favicon.ico" sizes="any" />
 <link rel="icon" href="/icon.svg" type="image/svg+xml" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-<link rel="alternate" type="application/rss+xml" title="${escapeHtml(`${catalog.site.brandName} — ${locale.label}`)}" href="${escapeHtml(feedUrl)}" />
+<link rel="alternate" type="application/rss+xml" title="${escapeHtml(`${uiCopy(catalog, locale).brandName} — ${locale.label}`)}" href="${escapeHtml(feedUrl)}" />
 ${stylesheetLinks.join('\n')}
 ${jsonLd}
 ${indexable && adsensePublisherId() ? adsenseScript(adsensePublisherId()) : ''}`;
@@ -468,7 +468,7 @@ export const renderPublicDocument = ({
 ${renderHead({ catalog, locale, page, stylesheetLinks, indexable })}
 </head>
 <body>
-<div id="root" data-public-prerendered="true"><div class="public-site" role="document" aria-label="${escapeHtml(catalog.site.brandName)}" lang="${escapeHtml(locale.htmlLang)}" dir="${locale.direction}" data-ad-eligible="${page.adEligible ? 'true' : 'false'}">
+<div id="root" data-public-prerendered="true"><div class="public-site" role="document" aria-label="${escapeHtml(uiCopy(catalog, locale).brandName)}" lang="${escapeHtml(locale.htmlLang)}" dir="${locale.direction}" data-ad-eligible="${page.adEligible ? 'true' : 'false'}">
 ${renderHeader(catalog, locale, page, 'not-found')}
 ${renderPageMain(catalog, locale, page)}
 ${renderFooter(catalog, locale, page)}
@@ -488,7 +488,7 @@ export const renderSystemDocument = ({
 ${renderSystemHead(catalog, locale, routeId, stylesheetLinks)}
 </head>
 <body>
-<div id="root" data-public-prerendered="true"><div class="public-site" role="document" aria-label="${escapeHtml(catalog.site.brandName)}" lang="${escapeHtml(locale.htmlLang)}" dir="${locale.direction}" data-ad-eligible="false">
+<div id="root" data-public-prerendered="true"><div class="public-site" role="document" aria-label="${escapeHtml(uiCopy(catalog, locale).brandName)}" lang="${escapeHtml(locale.htmlLang)}" dir="${locale.direction}" data-ad-eligible="false">
 ${renderHeader(catalog, locale, null, routeId)}
 ${renderSystemMain(catalog, locale, routeId)}
 ${renderFooter(catalog, locale, null)}
@@ -545,7 +545,7 @@ export const buildRssFeed = (catalog, locale) => {
       return `<item><title>${escapeXml(copy.seoTitle)}</title><description>${escapeXml(copy.description)}</description><link>${escapeXml(url)}</link><guid isPermaLink="true">${escapeXml(url)}</guid><category>${escapeXml(copy.navigationLabel)}</category></item>`;
     })
     .join('');
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>${escapeXml(`${catalog.site.brandName} — ${locale.label}`)}</title><link>${escapeXml(canonicalUrl(catalog, localePath(catalog.pages[0], locale)))}</link><description>${escapeXml(uiCopy(catalog, locale).footerTagline)}</description><language>${escapeXml(locale.htmlLang)}</language><atom:link href="${escapeXml(canonicalUrl(catalog, selfPath))}" rel="self" type="application/rss+xml" />${items}</channel></rss>\n`;
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>${escapeXml(`${uiCopy(catalog, locale).brandName} — ${locale.label}`)}</title><link>${escapeXml(canonicalUrl(catalog, localePath(catalog.pages[0], locale)))}</link><description>${escapeXml(uiCopy(catalog, locale).footerTagline)}</description><language>${escapeXml(locale.htmlLang)}</language><atom:link href="${escapeXml(canonicalUrl(catalog, selfPath))}" rel="self" type="application/rss+xml" />${items}</channel></rss>\n`;
 };
 
 export const buildRobots = (catalog, indexable) => {

@@ -76,6 +76,8 @@ export interface PublicSystemPageCopy {
 }
 
 export interface PublicUiCopy {
+  /** Localized product name shown in the header, footer, and share cards. */
+  brandName: string;
   primaryNavigationLabel: string;
   mobileNavigationLabel: string;
   languageLabel: string;

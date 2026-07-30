@@ -101,14 +101,15 @@ body:has(.public-site) {
   display: inline-flex;
   align-items: center;
   gap: 0.65rem;
+  min-width: 0;
   font-weight: 850;
   letter-spacing: -0.02em;
   text-decoration: none;
-  white-space: nowrap;
 }
 
 .public-brand__mark {
   display: grid;
+  flex: none;
   width: 2.35rem;
   height: 2.35rem;
   place-items: center;

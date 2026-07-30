@@ -335,11 +335,11 @@ describe('frozen bucket permissions', () => {
   });
 });
 
-const profileDocument = (analyticsConsent?: string) => ({
+const profileDocument = (analyticsConsent?: string, locale = 'en') => ({
   id: OWNER_ID,
   fullName: 'Owner',
   email: 'owner@example.com',
-  locale: 'en',
+  locale,
   theme: 'system',
   defaultCurrency: 'EGP',
   ...(analyticsConsent === undefined ? {} : { analyticsConsent }),
@@ -351,6 +351,49 @@ const ownerDatabase = () =>
   environment
     .authenticatedContext(OWNER_ID, { email: 'owner@example.com' })
     .firestore();
+
+describe('profile locale rules', () => {
+  // The app writes the profile locale on every language switch. A locale the
+  // deployed rules reject leaves the stored profile on its previous value, and
+  // the next profile load quietly navigates the reader back to it.
+  it('accepts every locale the application offers', async () => {
+    for (const locale of [
+      'en',
+      'ar',
+      'ar-Latn',
+      'it',
+      'fa',
+      'fr',
+      'de',
+      'es',
+      'pt-BR',
+      'hi',
+      'th',
+      'zh-CN',
+      'ja',
+    ]) {
+      await expect(
+        assertSucceeds(
+          setDoc(
+            doc(ownerDatabase(), 'users', OWNER_ID),
+            profileDocument(undefined, locale),
+          ),
+        ),
+      ).resolves.toBeUndefined();
+    }
+  });
+
+  it('rejects a locale the application does not offer', async () => {
+    await expect(
+      assertFails(
+        setDoc(
+          doc(ownerDatabase(), 'users', OWNER_ID),
+          profileDocument(undefined, 'ar-latn'),
+        ),
+      ),
+    ).resolves.toMatchObject({ code: 'permission-denied' });
+  });
+});
 
 describe('profile analytics consent rules', () => {
   it('accepts a profile without any consent field', async () => {

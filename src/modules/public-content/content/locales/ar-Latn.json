@@ -1,6 +1,7 @@
 {
   "locale": "ar-Latn",
   "ui": {
+    "brandName": "FoodOrder | Gama3 Orderak",
     "primaryNavigationLabel": "El tanaqol el 3am",
     "mobileNavigationLabel": "Eftah el qa2ema",
     "languageLabel": "El logha",

@@ -20,13 +20,13 @@ export function PublicContentContainer({
     <div
       className="public-site"
       role="document"
-      aria-label={viewModel.site.brandName}
+      aria-label={viewModel.ui.brandName}
       lang={viewModel.locale.htmlLang}
       dir={viewModel.locale.direction}
       data-ad-eligible={viewModel.page?.definition.adEligible ? 'true' : 'false'}
     >
       <PublicHeader
-        brandName={viewModel.site.brandName}
+        brandName={viewModel.ui.brandName}
         homePath={viewModel.homePath}
         applicationPath={localizedApplicationPath}
         currentLocaleLabel={viewModel.locale.label}
@@ -51,7 +51,7 @@ export function PublicContentContainer({
         />
       ) : null}
       <PublicFooter
-        brandName={viewModel.site.brandName}
+        brandName={viewModel.ui.brandName}
         homePath={viewModel.homePath}
         items={viewModel.footerItems}
         ui={viewModel.ui}

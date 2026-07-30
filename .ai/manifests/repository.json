@@ -1225,8 +1225,8 @@
     },
     {
       "path": "release-notes/v1.8.0.md",
-      "bytes": 6252,
-      "hash": "4d3be5610fa03cfa533c764d32ef8d2b3c200095186c2e94117864880263d95c"
+      "bytes": 7136,
+      "hash": "672cf262014b99511000cb6d8812d758d98772e1217341aad2c54dfd63bcb8bb"
     },
     {
       "path": "reports/phases/PHASE_00_report.md",
@@ -1425,8 +1425,8 @@
     },
     {
       "path": "scripts/public-content/public-content-build.shared.mjs",
-      "bytes": 25878,
-      "hash": "38ea0649b3597c8f45a98ba6321988ad79a8bb1d137f0de83bb40131da1640a5"
+      "bytes": 25999,
+      "hash": "0a39a570dbc4f40dc31e2bd664f1ffd6eeca11803da570ce7a7578a74ec87b04"
     },
     {
       "path": "scripts/public-content/validate-public-content.mjs",
@@ -2745,8 +2745,8 @@
     },
     {
       "path": "src/modules/public-content/containers/public-content.container.tsx",
-      "bytes": 2129,
-      "hash": "f5e59f5fce7179679580a1a5686352b9b59438bf289183443be1cd796cc72735"
+      "bytes": 2123,
+      "hash": "5c127e2f2b0a69b33f5254f6816769e9067c2755c9cc641859af4a51d8ccfc6f"
     },
     {
       "path": "src/modules/public-content/content/contact-form.locales.json",
@@ -2755,63 +2755,63 @@
     },
     {
       "path": "src/modules/public-content/content/locales/ar-Latn.json",
-      "bytes": 19875,
-      "hash": "bf6a85553ab86e29707e25f66c7365cb9d09aca2cafc64f7649c6bed27ec5fde"
+      "bytes": 19921,
+      "hash": "7b1e6e4f16d99cca3df57ac404464f1710edc728f068e717fb798c29f60a018e"
     },
     {
       "path": "src/modules/public-content/content/locales/de.json",
-      "bytes": 19729,
-      "hash": "ef7c36670fea7bdbc7057761124c617178efca4bfefb7ced2743eac2e6d47142"
+      "bytes": 21989,
+      "hash": "2d313bb87f793857fed8736dede19e820e684cb0ce219df45755b5b6148a05e6"
     },
     {
       "path": "src/modules/public-content/content/locales/es.json",
-      "bytes": 19094,
-      "hash": "e24a572714c804b7221c61eb6cc6abd72fa0ca74e4299b0053afd202f5b87553"
+      "bytes": 21347,
+      "hash": "5de1effd71bb3328b933a473c19be756cd61ad8ab99958ca9e127e89b4cb33df"
     },
     {
       "path": "src/modules/public-content/content/locales/fa.json",
-      "bytes": 26734,
-      "hash": "519b8d9f19b1c3d589c451b586cc21d0e898b74bb72f37796b0d01439a2aa042"
+      "bytes": 29084,
+      "hash": "8b62705b23d4723127c6fd455f696e4c74b46abbbb03f9dd5442dbc316344eb2"
     },
     {
       "path": "src/modules/public-content/content/locales/fr.json",
-      "bytes": 16958,
-      "hash": "ba00511d93d36c9294ca37b6307205fa0d506e44c06ba2defc1947e2b6e6fd0b"
+      "bytes": 19418,
+      "hash": "57d6950de6b2533ac3bf9b7ee823791057c2b316ebc8ca58df3ad70c82f5b959"
     },
     {
       "path": "src/modules/public-content/content/locales/hi.json",
-      "bytes": 38244,
-      "hash": "5821197402a872f34f269205b1f5b1b337d2bec07f2c70e662c56bfb27d08067"
+      "bytes": 38337,
+      "hash": "f4dbbbcad767a4a6fe0f6f4e55a86a66defa06ef4929f9833284e1d057e822f3"
     },
     {
       "path": "src/modules/public-content/content/locales/it.json",
-      "bytes": 16285,
-      "hash": "293e1df725460aa7a03b55b5edde5fbe1059b19d7c50bf660d0478d738cc4f99"
+      "bytes": 18626,
+      "hash": "597a4d7d11069f7baee6523af8f71e6d08482d0be15bd867935aff634e5f1de2"
     },
     {
       "path": "src/modules/public-content/content/locales/ja.json",
-      "bytes": 23509,
-      "hash": "fa1d0de923088bcca25e04e634cdba5f9ac9f1a1ad897722950709062661ccd6"
+      "bytes": 24622,
+      "hash": "20e15348520c2ca34e097384c0bd02ad8fcf2d57a84aedb877e1ce22a9f3ed40"
     },
     {
       "path": "src/modules/public-content/content/locales/pt-BR.json",
-      "bytes": 18599,
-      "hash": "bfc2faa5aa584a96b876cce9662e034d94b9c054789d439ebbe252ab7299c55c"
+      "bytes": 20936,
+      "hash": "c5fa81024a01f56cc0184e2536595bea5cef6db02625fec2657285cdc3f0d0a1"
     },
     {
       "path": "src/modules/public-content/content/locales/th.json",
-      "bytes": 39034,
-      "hash": "ba40f88edf487109714af3559ec10aba2d109844955854f7b499ddf868763234"
+      "bytes": 40177,
+      "hash": "6822fcf668aad978507dbdc66d6ef25e5f8b6dd79fdbadd94bab486f12161792"
     },
     {
       "path": "src/modules/public-content/content/locales/zh-CN.json",
-      "bytes": 15604,
-      "hash": "e0cc62c4e7a8218abc61622e6a0b39e5068f35144feaf58c40e304cd392697f4"
+      "bytes": 17943,
+      "hash": "39e5b81f3e60d7580c4171e960ad361ec78f25c2601f9111dbc2390c37922f91"
     },
     {
       "path": "src/modules/public-content/content/public-content.catalog.json",
-      "bytes": 52262,
-      "hash": "aec24363f5d2f1e939207c56893e334fbac5ec5a179f7fef88092edfe29ffb90"
+      "bytes": 52369,
+      "hash": "252528d48597a04ca85d7c81bf4298922a823aa036097054cbb6f35b8dce8d43"
     },
     {
       "path": "src/modules/public-content/helpers/ad-eligibility.helper.ts",
@@ -2825,8 +2825,8 @@
     },
     {
       "path": "src/modules/public-content/helpers/build-public-metadata.helper.ts",
-      "bytes": 3359,
-      "hash": "edcb4eca2486a089323000842ce3d7436f7b082d473eaa2b4dca3ebe1c60e720"
+      "bytes": 3523,
+      "hash": "53421233719313e5b20e20660f75618c7532837352a2c24e00e6f7c8e3e42b8e"
     },
     {
       "path": "src/modules/public-content/helpers/public-content-catalog.helper.ts",
@@ -2860,8 +2860,8 @@
     },
     {
       "path": "src/modules/public-content/public-content.css",
-      "bytes": 14160,
-      "hash": "369ab0db11ab604c92f968cee85b7fca0ad4d2b5c6d352d6e6335039e43dc305"
+      "bytes": 14167,
+      "hash": "fededb876b53cfb1be2c1c2c91f42bbcf765b8439cf499e6bdee3cee6aaf0999"
     },
     {
       "path": "src/modules/public-content/routes/public-content-route-registry.helper.ts",
@@ -2875,8 +2875,8 @@
     },
     {
       "path": "src/modules/public-content/types/public-content.types.ts",
-      "bytes": 5095,
-      "hash": "1dac2777b9dc1cf4a5e950fbcbed381d795939cb2cac5a4ebce3988e9808b0fe"
+      "bytes": 5194,
+      "hash": "d9fcbd7b1723371f2a9399325afc3354a51962d7da4e12de236da31edc75210b"
     },
     {
       "path": "src/modules/session-invites/components/guest-session-order/guest-session-order.component.tsx",
@@ -3840,8 +3840,8 @@
     },
     {
       "path": "src/shared/i18n/locales/de.json",
-      "bytes": 36254,
-      "hash": "3a9bc72f3f89886c30baa3d4e0c195b45c84214139388cf75c9a5f1cdf445a73"
+      "bytes": 36264,
+      "hash": "5f563b316fe471f759b52a71b1d8977e10dbff1ae7aaf8b0d1f182ef8659ed56"
     },
     {
       "path": "src/shared/i18n/locales/en.json",
@@ -3850,48 +3850,48 @@
     },
     {
       "path": "src/shared/i18n/locales/es.json",
-      "bytes": 34806,
-      "hash": "3a4a6fd1f0ce26c5ca8acc8a938328dcbde331d200511050ae80788557d65f6b"
+      "bytes": 34809,
+      "hash": "02ab649e4feb71ae9179bf8cc9b9086d6a69cb40c04bebd2dad999979a42257f"
     },
     {
       "path": "src/shared/i18n/locales/fa.json",
-      "bytes": 48248,
-      "hash": "f6fec44db7196e1f75a2bc71db2031b2aaceae32690ffad95a18f8c8daf6c877"
+      "bytes": 48264,
+      "hash": "f79dfc02a0a5511774d986b9fcea6184fe4f60dcd2c81ef17284ad3d237a0b4c"
     },
     {
       "path": "src/shared/i18n/locales/fr.json",
-      "bytes": 36853,
-      "hash": "a69aff8ea4bd92749c60900b08557658c45ad75b08fd8bfd5bf50bd23b76e543"
+      "bytes": 36865,
+      "hash": "b8ea43bf6e6ebd0ff83dd140c39c7ac11369cc81d48b08c9ac3d06d81163b0a3"
     },
     {
       "path": "src/shared/i18n/locales/hi.json",
-      "bytes": 62138,
-      "hash": "524b81e9c7ac33c062499532aaa380ab77c96a629ce097720df6dc5dd69cd35e"
+      "bytes": 62185,
+      "hash": "e5e82c4cb0cc5ddd4c62c4241719056ddd3a39e52d0d3d1f374a3ce494b184ce"
     },
     {
       "path": "src/shared/i18n/locales/it.json",
-      "bytes": 34474,
-      "hash": "7168f9c00fdf4057046a0808e493fd7dbf75518ff4c38eb0612c9217003566a6"
+      "bytes": 34481,
+      "hash": "bf62beda1cf3ac187e76eec3b56fce0f2968dce9fb221518d837c42f581cd8eb"
     },
     {
       "path": "src/shared/i18n/locales/ja.json",
-      "bytes": 40100,
-      "hash": "276a2361b6e8713c8ecdccb8f25f497d038ed073129bd39c59fd5a936c8f25a1"
+      "bytes": 40111,
+      "hash": "21f3cc3a1cbb9ebc65e678540ebfa8cc927759c3f65f8618f8b50a55e8e85c18"
     },
     {
       "path": "src/shared/i18n/locales/pt-BR.json",
-      "bytes": 34638,
-      "hash": "8b737bed2e3eb56631a5bb769edcba7bd7c47aa95688ab302ad9e426d5e5ee77"
+      "bytes": 34641,
+      "hash": "6bed229aa7f5e01421c10e6af231d49d92df0d85e0c2f5deb5f66f7461b5b70d"
     },
     {
       "path": "src/shared/i18n/locales/th.json",
-      "bytes": 61332,
-      "hash": "697186610546984655056a66819c041960dd74f43f63146cafe6f4d077f28596"
+      "bytes": 61373,
+      "hash": "34d79338c3b3813649545ed3fe538ba73389c20967a68d48b06667cb366b905f"
     },
     {
       "path": "src/shared/i18n/locales/zh-CN.json",
-      "bytes": 31948,
-      "hash": "10d462b4429307281c0c21a7787afa314df7b361477bdc80487f82054167eff2"
+      "bytes": 31953,
+      "hash": "32b0946eb29807ff5fdcd38530304cf203ad47fd2f35bf4eab98b3873e6ed163"
     },
     {
       "path": "src/shared/i18n/message-catalog-validation.helper.ts",
@@ -4195,8 +4195,8 @@
     },
     {
       "path": "src/styles.css",
-      "bytes": 25478,
-      "hash": "35c95b524972115a4e2a49b017f97f293882f3c95aceee71902a5671905d20c0"
+      "bytes": 25793,
+      "hash": "63e8a5bd177d5c7b90a1080f19bcb037512859955c1fc9f52296c5ab00dbb0f7"
     },
     {
       "path": "src/virtualLists.css",
@@ -4270,8 +4270,8 @@
     },
     {
       "path": "tests/components/PublicContent.test.tsx",
-      "bytes": 2672,
-      "hash": "9cc18f583be52a58baac993e1b309499c5c246b96349e34a08074af16ba4c239"
+      "bytes": 2758,
+      "hash": "ae1d72c3389557f7c06623a1e38221e9a918d6a69251febf41a3468c5cd6657e"
     },
     {
       "path": "tests/components/ResetPasswordRoute.test.tsx",
@@ -4500,8 +4500,8 @@
     },
     {
       "path": "tests/firebase/firestore.rules.test.ts",
-      "bytes": 10879,
-      "hash": "a8022dcb4b6d1675c943b155366fa2444cdd52f7c6159e9b6ceb95d3f993abd5"
+      "bytes": 11973,
+      "hash": "d005744aae0dd09d48c9d700ac455ab53c12d8deac200914085e771fd2d6d07c"
     },
     {
       "path": "tests/firebase/notifications.rules.test.ts",

@@ -62,8 +62,8 @@
     },
     {
       "path": "tests/components/PublicContent.test.tsx",
-      "bytes": 2672,
-      "hash": "9cc18f583be52a58baac993e1b309499c5c246b96349e34a08074af16ba4c239"
+      "bytes": 2758,
+      "hash": "ae1d72c3389557f7c06623a1e38221e9a918d6a69251febf41a3468c5cd6657e"
     },
     {
       "path": "tests/components/ResetPasswordRoute.test.tsx",
@@ -292,8 +292,8 @@
     },
     {
       "path": "tests/firebase/firestore.rules.test.ts",
-      "bytes": 10879,
-      "hash": "a8022dcb4b6d1675c943b155366fa2444cdd52f7c6159e9b6ceb95d3f993abd5"
+      "bytes": 11973,
+      "hash": "d005744aae0dd09d48c9d700ac455ab53c12d8deac200914085e771fd2d6d07c"
     },
     {
       "path": "tests/firebase/notifications.rules.test.ts",
