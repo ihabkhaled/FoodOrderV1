@@ -75,8 +75,8 @@
     },
     {
       "path": ".github/workflows/pull-request-brief.yml",
-      "bytes": 7335,
-      "hash": "57b65d46b0039db5ca9c50c45bca592c0c485258caf57fac689109639a86d887"
+      "bytes": 7869,
+      "hash": "af3101d3956dc5e98343693a3d4f3ca22b922cc8a28298523581587153b769a9"
     },
     {
       "path": ".github/workflows/social-acceptance.yml",
