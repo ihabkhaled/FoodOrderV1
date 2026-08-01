@@ -36,6 +36,8 @@ The version bump level is decided by prompt density — see [rules/versioning.md
   sentence.
 - Delivered remote push through Firebase Cloud Messaging, with device tokens
   removed on sign-out.
+- Gave shared application links a preview card with the title, description, and
+  logo; previously only the marketing pages had one and `/app` shared bare.
 
 
 ## [1.7.4] - 2026-07-26

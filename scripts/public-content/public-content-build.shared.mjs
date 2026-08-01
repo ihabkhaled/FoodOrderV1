@@ -110,6 +110,43 @@ export const systemPath = (routeId, locale) =>
 export const canonicalUrl = (catalog, pathname) =>
   new URL(pathname, catalog.site.canonicalOrigin).toString();
 
+/**
+ * The Open Graph and Twitter tags that turn a pasted link into a titled card
+ * with a description and the logo.
+ *
+ * Chat apps and social networks read these straight from the served HTML and
+ * never run the bundle, so a document without them shares as a bare URL. That
+ * made the application shell the worst offender: `/app` is the link people
+ * actually paste, and it was the one page with no card at all.
+ */
+export const renderSocialCard = ({
+  catalog,
+  locale,
+  title,
+  description,
+  url,
+  imageAlt = title,
+}) => {
+  const image = canonicalUrl(catalog, catalog.site.socialImagePath);
+  return `<meta property="og:type" content="website" />
+<meta property="og:site_name" content="${escapeHtml(uiCopy(catalog, locale).brandName)}" />
+<meta property="og:locale" content="${escapeHtml(locale.openGraphLocale)}" />
+<meta property="og:title" content="${escapeHtml(title)}" />
+<meta property="og:description" content="${escapeHtml(description)}" />
+<meta property="og:url" content="${escapeHtml(url)}" />
+<meta property="og:image" content="${escapeHtml(image)}" />
+<meta property="og:image:secure_url" content="${escapeHtml(image)}" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="${escapeHtml(imageAlt)}" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="${escapeHtml(title)}" />
+<meta name="twitter:description" content="${escapeHtml(description)}" />
+<meta name="twitter:image" content="${escapeHtml(image)}" />
+<meta name="twitter:image:alt" content="${escapeHtml(imageAlt)}" />`;
+};
+
 export const pageCopy = (page, locale) => page.copy[locale.contentSource];
 export const uiCopy = (catalog, locale) => catalog.ui[locale.contentSource];
 export const systemCopy = (catalog, routeId, locale) =>
@@ -399,7 +436,6 @@ const renderHead = ({ catalog, locale, page, stylesheetLinks, indexable }) => {
         `<script type="application/ld+json">${JSON.stringify(entry).replaceAll('<', '\\u003c')}</script>`,
     )
     .join('\n');
-  const image = canonicalUrl(catalog, catalog.site.socialImagePath);
   const feedUrl = canonicalUrl(
     catalog,
     `/${[locale.segment, 'feed.xml'].filter(Boolean).join('/')}`,
@@ -414,21 +450,14 @@ const renderHead = ({ catalog, locale, page, stylesheetLinks, indexable }) => {
 <meta name="description" content="${escapeHtml(copy.description)}" />
 <link rel="canonical" href="${escapeHtml(canonical)}" />
 ${alternates}
-<meta property="og:type" content="website" />
-<meta property="og:site_name" content="${escapeHtml(uiCopy(catalog, locale).brandName)}" />
-<meta property="og:locale" content="${escapeHtml(locale.openGraphLocale)}" />
-<meta property="og:title" content="${escapeHtml(copy.seoTitle)}" />
-<meta property="og:description" content="${escapeHtml(copy.description)}" />
-<meta property="og:url" content="${escapeHtml(canonical)}" />
-<meta property="og:image" content="${escapeHtml(image)}" />
-<meta property="og:image:width" content="1200" />
-<meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content="${escapeHtml(copy.heading)}" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="${escapeHtml(copy.seoTitle)}" />
-<meta name="twitter:description" content="${escapeHtml(copy.description)}" />
-<meta name="twitter:image" content="${escapeHtml(image)}" />
-<meta name="twitter:image:alt" content="${escapeHtml(copy.heading)}" />
+${renderSocialCard({
+    catalog,
+    locale,
+    title: copy.seoTitle,
+    description: copy.description,
+    url: canonical,
+    imageAlt: copy.heading,
+  })}
 <link rel="manifest" href="/manifest.webmanifest" />
 <link rel="icon" href="/favicon.ico" sizes="any" />
 <link rel="icon" href="/icon.svg" type="image/svg+xml" />
@@ -449,8 +478,16 @@ const renderSystemHead = (catalog, locale, routeId, stylesheetLinks) => {
 <meta name="googlebot" content="noindex, nofollow, noarchive" />
 <title>${escapeHtml(copy.seoTitle)}</title>
 <meta name="description" content="${escapeHtml(copy.description)}" />
+${renderSocialCard({
+    catalog,
+    locale,
+    title: copy.seoTitle,
+    description: copy.description,
+    url: canonicalUrl(catalog, systemPath(routeId, locale)),
+  })}
 <link rel="icon" href="/favicon.ico" sizes="any" />
 <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 ${stylesheetLinks.join('\n')}`;
 };
 

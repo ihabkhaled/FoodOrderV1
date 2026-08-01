@@ -105,8 +105,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 5469,
-      "hash": "c2333cd81c0418fa1bc746312688ef83fdb46fa8088e44fd13723d1e62d95e48"
+      "bytes": 5625,
+      "hash": "5f7fbe2738bcc42551ed16f07bdc49a0523dfde6ccd2e5999d2ec8ad3bd202d4"
     },
     {
       "path": "CLAUDE.md",
@@ -940,8 +940,8 @@
     },
     {
       "path": "index.html",
-      "bytes": 1029,
-      "hash": "d557879a339d0a9d5ce59b9468406c928fdb3ad41632067da757a4ee4ee47ce9"
+      "bytes": 2183,
+      "hash": "b518b7043223d773948748f84ab51fe507a966a33a292c7ca91a6d98758913df"
     },
     {
       "path": "knip.json",
@@ -1230,8 +1230,8 @@
     },
     {
       "path": "release-notes/v1.8.0.md",
-      "bytes": 9784,
-      "hash": "f10aac767b80f4be16812e42cc39179271a46258cd7c29cd1e7e2196f4d001ce"
+      "bytes": 10270,
+      "hash": "12e74088fda7cc26668101c4bdf28d857a9a689f522a6e5bf3b349da8354aa8f"
     },
     {
       "path": "reports/phases/PHASE_00_report.md",
@@ -1425,18 +1425,18 @@
     },
     {
       "path": "scripts/public-content/generate-public-content.mjs",
-      "bytes": 3379,
-      "hash": "49477e3baa6792d205bb57411e78986b6094f07d0d1584c4be8c04ac8235806d"
+      "bytes": 4413,
+      "hash": "48318bd96026651f52550f66316e3fab20a97708a6d7d51bcdfa847e60cc7763"
     },
     {
       "path": "scripts/public-content/public-content-build.shared.mjs",
-      "bytes": 27598,
-      "hash": "b8365bb3c6836706a438a75cecbd1ec3ce2b68b1cf0b21fa57c78ef2262bf4d4"
+      "bytes": 28632,
+      "hash": "93910d975a9fea67f49abc774c3b9fe52b3dd358878fec094a6faf8e830ef56e"
     },
     {
       "path": "scripts/public-content/validate-public-content.mjs",
-      "bytes": 6210,
-      "hash": "1f5d2b1524ca34c5818e9b4db1ea8d56fb667aba07e16e5e0deacf19d7ffb5a9"
+      "bytes": 7743,
+      "hash": "dfbdc2fee126388e1a9f9c6975b9c46c6c031e14fb15d31d07ab41b07d3cba21"
     },
     {
       "path": "scripts/serve-dist.mjs",

@@ -8,12 +8,16 @@ import {
   buildLocaleSitemap,
   buildRssFeed,
   buildSitemapIndex,
+  canonicalUrl,
+  escapeHtml,
   extractStylesheetLinks,
   isProductionIndexingEnabled,
   loadPublicCatalog,
   outputPathForPage,
   outputPathForSystemPage,
+  pageCopy,
   renderPublicDocument,
+  renderSocialCard,
   renderSystemDocument,
   validateCatalog,
 } from './public-content-build.shared.mjs';
@@ -40,9 +44,29 @@ if (stylesheetLinks.length === 0) {
   throw new Error('Vite output did not contain the public-content stylesheet.');
 }
 
+// Every application route rewrites to this one file (see vercel.json), so it is
+// the document a crawler sees for any link somebody shares out of the app.
+const applicationLocale = catalog.locales[0];
+const applicationTitle = `${catalog.site.brandName} App`;
+const applicationDescription = pageCopy(catalog.pages[0], applicationLocale).description;
+const applicationCard = renderSocialCard({
+  catalog,
+  locale: applicationLocale,
+  title: applicationTitle,
+  description: applicationDescription,
+  url: canonicalUrl(catalog, catalog.site.applicationPath),
+});
+
 const appShell = viteIndex
   .replace('<div id="root"></div>', '<div id="root" data-app-shell="true"></div>')
-  .replace(/<title>.*?<\/title>/su, '<title>Gama3 Orderak App</title>');
+  .replace(/<title>.*?<\/title>/su, `<title>${escapeHtml(applicationTitle)}</title>`)
+  // The shell is built from index.html, which carries its own card for local
+  // development. Drop it so the catalog stays the single source of truth.
+  .replace(/^[ \t]*<meta\s+(?:property="og:|name="twitter:)[^>]*>\r?\n/gmu, '')
+  .replace(
+    /<meta\s+name="description"[^>]*>/u,
+    `<meta name="description" content="${escapeHtml(applicationDescription)}" />\n${applicationCard}`,
+  );
 await writeOutput(path.join(outputDirectory, 'app.html'), appShell);
 
 let publicPageCount = 0;
