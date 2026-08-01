@@ -100,6 +100,12 @@ node tools/release/pull-request-brief.mjs
   built from the exact head commit. It only rewrites the block between
   `<!-- release-brief:start -->` and `<!-- release-brief:end -->`, so anything a reviewer or
   author types around it survives every later push.
+- That job runs twice per commit. On `pull_request` it publishes the notes straight away, but
+  the prerelease does not exist yet — every branch gate has to pass first, which takes far
+  longer. A `workflow_run` trigger brings it back once `Branch Continuous Release` finishes,
+  and only that second run can link the APK. GitHub fires `workflow_run` only for workflow
+  files present on the default branch, so the link appears from the first pull request opened
+  after this reaches `main`.
 
 ### Cheat sheet
 

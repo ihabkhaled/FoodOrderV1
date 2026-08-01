@@ -4,16 +4,30 @@ name: Pull Request Brief
 # produced from it, without anyone writing the same summary twice. The branch
 # prerelease (see branch-continuous-release.yml) publishes the APK; this job
 # only points at it.
+#
+# It runs twice on purpose. On `pull_request` the notes appear immediately, but
+# the prerelease does not exist yet — every branch gate has to pass first, which
+# takes far longer than this job. The `workflow_run` trigger brings it back once
+# Branch Continuous Release finishes, and only then can the build be linked.
+# Without the second run the build line would always be the fallback.
+#
+# GitHub only fires `workflow_run` for a workflow file that exists on the
+# default branch, so that half starts working once this lands on `main`.
 
 on:
   pull_request:
     types: [opened, reopened, synchronize, ready_for_review]
+  workflow_run:
+    workflows: ['Branch Continuous Release']
+    types: [completed]
 
 permissions:
   contents: read
 
 concurrency:
-  group: pr-brief-${{ github.event.pull_request.number }}
+  group: >-
+    pr-brief-${{ github.event.pull_request.number
+    || github.event.workflow_run.head_branch }}
   cancel-in-progress: true
 
 jobs:
@@ -26,13 +40,49 @@ jobs:
       pull-requests: write
 
     steps:
+      - name: Resolve the pull request and commit under review
+        id: target
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT: ${{ github.event_name }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_SHA: ${{ github.event.pull_request.head.sha }}
+          RUN_BRANCH: ${{ github.event.workflow_run.head_branch }}
+          RUN_SHA: ${{ github.event.workflow_run.head_sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "${EVENT}" == "pull_request" ]]; then
+            number="${PR_NUMBER}"
+            sha="${PR_SHA}"
+          else
+            # A branch build carries no pull request, so find the open one.
+            number="$(gh pr list --repo "${GITHUB_REPOSITORY}" --head "${RUN_BRANCH}" \
+              --state open --json number --jq '.[0].number // empty')"
+            sha="${RUN_SHA}"
+          fi
+          if [[ -z "${number}" ]]; then
+            echo "No open pull request for this branch; nothing to describe."
+            echo "found=false" >> "${GITHUB_OUTPUT}"
+          else
+            echo "found=true" >> "${GITHUB_OUTPUT}"
+            echo "number=${number}" >> "${GITHUB_OUTPUT}"
+            echo "sha=${sha}" >> "${GITHUB_OUTPUT}"
+            echo "Describing pull request #${number} at ${sha::7}."
+          fi
+
       - uses: actions/checkout@v7
+        if: steps.target.outputs.found == 'true'
+        with:
+          ref: ${{ steps.target.outputs.sha }}
 
       - uses: actions/setup-node@v6
+        if: steps.target.outputs.found == 'true'
         with:
           node-version: 26
 
       - name: Require release notes for this version
+        if: steps.target.outputs.found == 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -43,11 +93,12 @@ jobs:
           fi
           echo "Release notes present for v${VERSION}."
 
-      - name: Locate the build produced from this branch
+      - name: Locate the build produced from this commit
         id: artifact
+        if: steps.target.outputs.found == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
-          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          HEAD_SHA: ${{ steps.target.outputs.sha }}
         shell: bash
         run: |
           set -euo pipefail
@@ -67,9 +118,10 @@ jobs:
           fi
 
       - name: Compose and apply the brief
+        if: steps.target.outputs.found == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_NUMBER: ${{ steps.target.outputs.number }}
           ARTIFACT_URL: ${{ steps.artifact.outputs.url }}
           ARTIFACT_VERSION: ${{ steps.artifact.outputs.version }}
         shell: bash
