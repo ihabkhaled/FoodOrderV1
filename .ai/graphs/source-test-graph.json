@@ -766,6 +766,16 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/group-orders/hooks/use-bucket-share-activity-tour.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/group-orders/hooks/use-bucket-share-members-tour.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/group-orders/hooks/use-bucket-share-tour.hook.ts",
       "tests": [],
       "relationship": "inferred"
@@ -1816,6 +1826,21 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/social/hooks/use-social-friends-tour.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/social/hooks/use-social-groups-tour.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/social/hooks/use-social-requests-tour.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/social/hooks/use-social-tour.hook.ts",
       "tests": [],
       "relationship": "inferred"
@@ -2217,6 +2242,11 @@
     },
     {
       "source": "src/platform/device/tour-flags.adapter.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/platform/device/tour-pages.constants.ts",
       "tests": [],
       "relationship": "inferred"
     },

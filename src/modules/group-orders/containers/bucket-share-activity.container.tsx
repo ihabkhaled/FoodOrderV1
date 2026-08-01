@@ -1,12 +1,14 @@
-import { BackLink, ErrorState, Loading } from '@/shared/ui';
+import { BackLink, ErrorState, FeatureTour, Loading } from '@/shared/ui';
 
 import { ActivityTimeline } from '../components/activity-timeline/activity-timeline.component';
 import { useBucketShare } from '../hooks/use-bucket-share.hook';
+import { useBucketShareActivityTour } from '../hooks/use-bucket-share-activity-tour.hook';
 import { buildBucketShareRoute } from '../routes/group-orders-route-paths.constants';
 
 /** The bucket's activity log: joins, orders, and freezes in order. */
 export function BucketShareActivityContainer() {
   const vm = useBucketShare();
+  const { steps: tourSteps } = useBucketShareActivityTour();
 
   if (vm.loading) return <Loading label={vm.t('loading')} />;
   if (!vm.view || vm.error) {
@@ -36,6 +38,16 @@ export function BucketShareActivityContainer() {
       <section className="section-card">
         <ActivityTimeline events={vm.activity} locale={vm.locale} t={vm.t} />
       </section>
+
+      <FeatureTour
+        page="bucket-share-activity"
+        steps={tourSteps}
+        nextLabel={vm.t('tourNext')}
+        doneLabel={vm.t('tourDone')}
+        skipLabel={vm.t('tourSkip')}
+        closeLabel={vm.t('close')}
+        skipAllLabel={vm.t('tourSkipAll')}
+      />
     </div>
   );
 }

@@ -1,13 +1,15 @@
-import { BackLink, ErrorState, SkeletonSection } from '@/shared/ui';
+import { BackLink, ErrorState, FeatureTour, SkeletonSection } from '@/shared/ui';
 
 import { FriendSearch } from '../components/friend-search/friend-search.component';
 import { FriendsList } from '../components/friends-list/friends-list.component';
 import { useSocial } from '../hooks/use-social.hook';
+import { useSocialFriendsTour } from '../hooks/use-social-friends-tour.hook';
 import { SOCIAL_PATH } from '../routes/social-route-paths.constants';
 
 /** Finding people and the list of accepted friends, apart from everything else. */
 export function SocialFriendsContainer() {
   const vm = useSocial();
+  const { steps: tourSteps } = useSocialFriendsTour();
 
   if (vm.loading) {
     return (
@@ -51,6 +53,16 @@ export function SocialFriendsContainer() {
         s={vm.s}
         friends={vm.overview.friends}
         onUnfriend={(friendUserId) => void vm.unfriend(friendUserId)}
+      />
+
+      <FeatureTour
+        page="social-friends"
+        steps={tourSteps}
+        nextLabel={vm.t('tourNext')}
+        doneLabel={vm.t('tourDone')}
+        skipLabel={vm.t('tourSkip')}
+        closeLabel={vm.t('close')}
+        skipAllLabel={vm.t('tourSkipAll')}
       />
     </div>
   );

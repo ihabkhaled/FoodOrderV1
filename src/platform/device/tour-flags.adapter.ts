@@ -1,29 +1,9 @@
 import { getPreference, removePreference, setPreference } from '@/platform/storage';
 
-/** Every screen that introduces itself with a guided tour. */
-export const TOUR_PAGES = [
-  'dashboard',
-  'buckets',
-  'bucket-editor',
-  'bucket-share',
-  'collaborate',
-  'social-share',
-  'join',
-  'orders',
-  'order-details',
-  'create-order',
-  'sessions',
-  'session-details',
-  'create-session',
-  'social',
-  'settings',
-  'settings-preferences',
-  'settings-privacy',
-  'settings-security',
-  'settings-account',
-] as const;
+import type { TourPage } from './tour-pages.constants';
+import { TOUR_PAGES } from './tour-pages.constants';
 
-export type TourPage = (typeof TOUR_PAGES)[number];
+
 
 const tourKey = (page: TourPage): string => `ui:tour:${page}`;
 

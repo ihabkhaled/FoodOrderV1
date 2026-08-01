@@ -1,27 +1,9 @@
 import type { Page } from '@playwright/test';
 
-/** Mirrors the pages listed in `src/platform/device/tour-flags.adapter.ts`. */
-const TOUR_PAGES = [
-  'dashboard',
-  'buckets',
-  'bucket-editor',
-  'bucket-share',
-  'collaborate',
-  'social-share',
-  'join',
-  'orders',
-  'order-details',
-  'create-order',
-  'sessions',
-  'session-details',
-  'create-session',
-  'social',
-  'settings',
-  'settings-preferences',
-  'settings-privacy',
-  'settings-security',
-  'settings-account',
-];
+// Imported from the application, never copied. A hand-kept list silently
+// stopped covering new pages and let their tours cover the interface.
+import { TOUR_PAGES } from '../../../src/platform/device/tour-pages.constants';
+
 
 /**
  * Marks every guided tour as already dismissed.
@@ -37,5 +19,5 @@ export const suppressFeatureTours = async (page: Page): Promise<void> => {
     for (const name of pages) {
       localStorage.setItem(`CapacitorStorage.ui:tour:${name}`, 'true');
     }
-  }, TOUR_PAGES);
+  }, [...TOUR_PAGES]);
 };

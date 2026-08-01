@@ -1,12 +1,14 @@
-import { BackLink, ErrorState, SkeletonSection } from '@/shared/ui';
+import { BackLink, ErrorState, FeatureTour, SkeletonSection } from '@/shared/ui';
 
 import { GroupsSection } from '../components/groups-section/groups-section.component';
 import { useSocial } from '../hooks/use-social.hook';
+import { useSocialGroupsTour } from '../hooks/use-social-groups-tour.hook';
 import { SOCIAL_PATH } from '../routes/social-route-paths.constants';
 
 /** Creating, editing, and inviting into groups, on its own page. */
 export function SocialGroupsContainer() {
   const vm = useSocial();
+  const { steps: tourSteps } = useSocialGroupsTour();
 
   if (vm.loading) {
     return (
@@ -59,6 +61,16 @@ export function SocialGroupsContainer() {
         onSelectFriend={vm.selectFriend}
         onInvite={(group) => void vm.invite(group)}
         availableFriends={vm.availableFriends}
+      />
+
+      <FeatureTour
+        page="social-groups"
+        steps={tourSteps}
+        nextLabel={vm.t('tourNext')}
+        doneLabel={vm.t('tourDone')}
+        skipLabel={vm.t('tourSkip')}
+        closeLabel={vm.t('close')}
+        skipAllLabel={vm.t('tourSkipAll')}
       />
     </div>
   );

@@ -212,8 +212,8 @@
     },
     {
       "path": "tests/e2e/helpers/featureTours.ts",
-      "bytes": 1065,
-      "hash": "dcc97c9fe33016a6e9ad5c0a0b788104fc1717faa9481f9f15b3a73679b49f3e"
+      "bytes": 859,
+      "hash": "823e42c36cde02848cf61f5198f7f83b409cf6fdb9cdd4e82726b1f0a2480ace"
     },
     {
       "path": "tests/e2e/helpers/responsiveScenario.ts",
