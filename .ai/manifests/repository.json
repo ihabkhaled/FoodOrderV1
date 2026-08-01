@@ -105,8 +105,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 4694,
-      "hash": "3e40f28e484674d23d75cd85ee58f2c6e99a1dc69cb9822c149b84dc00ef9da9"
+      "bytes": 5469,
+      "hash": "c2333cd81c0418fa1bc746312688ef83fdb46fa8088e44fd13723d1e62d95e48"
     },
     {
       "path": "CLAUDE.md",
@@ -1230,8 +1230,8 @@
     },
     {
       "path": "release-notes/v1.8.0.md",
-      "bytes": 9065,
-      "hash": "6e8aa0476ae821fb03b6a0201f8a15e85404bf34038b088f2105eb143ce6d4fc"
+      "bytes": 9784,
+      "hash": "f10aac767b80f4be16812e42cc39179271a46258cd7c29cd1e7e2196f4d001ce"
     },
     {
       "path": "reports/phases/PHASE_00_report.md",

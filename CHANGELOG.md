@@ -22,7 +22,20 @@ The version bump level is decided by prompt density — see [rules/versioning.md
 - Loaded each screen section by section with per-section placeholders.
 - Mirrored in-app notifications into the OS tray with permission prompts and
   tap-to-open routing.
-- Introduced guided tours on all nineteen screens with a replay control in preferences.
+- Introduced guided tours on all twenty-four screens (138 steps) with a replay
+  control in preferences.
+- Added Arabic Franco as a thirteenth language across the app and the public site.
+- Split the friends area into a hub with friends, requests, and groups pages, and
+  bucket sharing into members and activity pages.
+- Added a light/dark switch to the public site and reduced its header to one row
+  with the destinations in a collapsible menu.
+- Counted build numbers per version from existing release tags, so a version bump
+  restarts them at zero instead of carrying a repository-wide run number.
+- Published the version's release notes as the body of every release and
+  prerelease, and as the pull request description, instead of a generated
+  sentence.
+- Delivered remote push through Firebase Cloud Messaging, with device tokens
+  removed on sign-out.
 
 
 ## [1.7.4] - 2026-07-26
