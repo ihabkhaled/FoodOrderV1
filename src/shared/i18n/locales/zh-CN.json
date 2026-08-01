@@ -495,5 +495,7 @@
   "tourSettingsAccountIrreversibleTitle": "没有后悔药",
   "tourSettingsAccountIrreversibleBody": "删除会永久移除你的菜单、订单和好友关系。想留副本请先导出。",
   "tourSettingsAccountAlternativeTitle": "只是想歇一阵？",
-  "tourSettingsAccountAlternativeBody": "对多数人来说，退出登录或关掉通知就够了。删除账户只适合彻底离开。"
+  "tourSettingsAccountAlternativeBody": "对多数人来说，退出登录或关掉通知就够了。删除账户只适合彻底离开。",
+  "shareMembersHint": "角色、权限与移除成员。",
+  "shareActivityHint": "谁加入、下单、冻结——按顺序记录。"
 }

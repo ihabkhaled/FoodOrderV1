@@ -3,14 +3,13 @@ import { MemoryRouter } from 'react-router-dom';
 import { describe, expect, it } from 'vitest';
 
 import { Settings2 } from '@/packages/icons';
+import { LinkRow } from '@/shared/ui';
 
-import { SettingsLinkRow } from '../../src/modules/settings/components/settings-link-row/settings-link-row.component';
-
-describe('SettingsLinkRow', () => {
+describe('LinkRow', () => {
   it('renders an accessible link with title and hint', () => {
     render(
       <MemoryRouter>
-        <SettingsLinkRow
+        <LinkRow
           to="/settings/preferences"
           icon={Settings2}
           title="Preferences"

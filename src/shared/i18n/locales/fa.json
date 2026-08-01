@@ -495,5 +495,7 @@
   "tourSettingsAccountIrreversibleTitle": "راه بازگشتی نیست",
   "tourSettingsAccountIrreversibleBody": "حذف، منوها، سفارش‌ها و دوستی‌هایتان را برای همیشه برمی‌دارد. اگر نسخه‌ای می‌خواهید اول برون‌بری کنید.",
   "tourSettingsAccountAlternativeTitle": "فقط کمی استراحت می‌خواهید؟",
-  "tourSettingsAccountAlternativeBody": "برای بیشتر مردم خروج از حساب یا خاموش کردن اعلان‌ها کافی است. حذف فقط برای رفتن همیشگی است."
+  "tourSettingsAccountAlternativeBody": "برای بیشتر مردم خروج از حساب یا خاموش کردن اعلان‌ها کافی است. حذف فقط برای رفتن همیشگی است.",
+  "shareMembersHint": "نقش‌ها، مجوزها و حذف افراد.",
+  "shareActivityHint": "چه کسی پیوست، سفارش داد و قفل کرد — به ترتیب."
 }

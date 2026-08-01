@@ -43,8 +43,11 @@ const pushToDevices = async (userIds, input) => {
             .get()));
         const owners = new Map();
         for (const [index, snapshot] of tokenSnapshots.entries()) {
+            const owner = recipients[index];
+            if (!owner)
+                continue;
             for (const document of snapshot.docs)
-                owners.set(document.id, recipients[index]);
+                owners.set(document.id, owner);
         }
         const tokens = [...owners.keys()];
         if (tokens.length === 0)
@@ -55,8 +58,9 @@ const pushToDevices = async (userIds, input) => {
             data: { route: input.route, kind: input.kind, entityId: input.entityId },
         });
         const stale = response.responses
-            .map((result, index) => ({ result, token: tokens[index] }))
-            .filter(({ result }) => result.error?.code === 'messaging/registration-token-not-registered' ||
+            .map((result, index) => ({ result, token: tokens[index] ?? '' }))
+            .filter(({ result, token }) => token !== '' &&
+            result.error?.code === 'messaging/registration-token-not-registered' ||
             result.error?.code === 'messaging/invalid-registration-token');
         if (stale.length === 0)
             return;

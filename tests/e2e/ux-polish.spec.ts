@@ -87,7 +87,7 @@ for (const viewport of VIEWPORTS) {
       height: viewport.height,
     });
     await register(page, viewport.name.replaceAll(/\s+/gu, '-'));
-    await page.goto('/social');
+    await page.goto('/social/groups');
 
     await page.getByLabel('Group name').fill(GROUP_NAME);
     await page

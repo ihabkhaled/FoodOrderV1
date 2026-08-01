@@ -495,5 +495,7 @@
   "tourSettingsAccountIrreversibleTitle": "元には戻せません",
   "tourSettingsAccountIrreversibleBody": "削除するとメニュー・注文・友だち関係が永久に失われます。控えが要るなら先に書き出してください。",
   "tourSettingsAccountAlternativeTitle": "少し休みたいだけですか",
-  "tourSettingsAccountAlternativeBody": "多くの場合はログアウトか通知オフで十分です。削除は完全に離れるときのためのものです。"
+  "tourSettingsAccountAlternativeBody": "多くの場合はログアウトか通知オフで十分です。削除は完全に離れるときのためのものです。",
+  "shareMembersHint": "役割、権限、メンバーの削除。",
+  "shareActivityHint": "誰が参加し、注文し、締め切ったか — 時系列で。"
 }

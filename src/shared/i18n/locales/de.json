@@ -495,5 +495,7 @@
   "tourSettingsAccountIrreversibleTitle": "Es gibt kein Zurück",
   "tourSettingsAccountIrreversibleBody": "Das Löschen entfernt Menüs, Bestellungen und Freundschaften endgültig. Exportieren Sie vorher, wenn Sie eine Kopie behalten möchten.",
   "tourSettingsAccountAlternativeTitle": "Nur eine Pause?",
-  "tourSettingsAccountAlternativeBody": "Für die meisten genügt das Abmelden oder das Ausschalten der Benachrichtigungen. Löschen ist nur fürs endgültige Gehen."
+  "tourSettingsAccountAlternativeBody": "Für die meisten genügt das Abmelden oder das Ausschalten der Benachrichtigungen. Löschen ist nur fürs endgültige Gehen.",
+  "shareMembersHint": "Rollen, Berechtigungen und das Entfernen von Personen.",
+  "shareActivityHint": "Wer beigetreten ist, bestellt und eingefroren hat — der Reihe nach."
 }

@@ -376,3 +376,22 @@ textarea { resize: vertical; }
 @media (prefers-reduced-motion: reduce) {
   * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
+
+/* Hub navigation rows (settings, friends, sharing). */
+.link-rows { display: grid; gap: 0.75rem; }
+.link-row {
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center;
+  gap: 0.875rem; min-block-size: 3.5rem; padding: 0.875rem 1rem;
+  border: 1px solid var(--border); border-radius: var(--radius-md, 0.875rem);
+  background: var(--surface); color: inherit; text-decoration: none;
+  transition: border-color 160ms ease, background-color 160ms ease;
+}
+.link-row:hover { border-color: var(--primary); }
+.link-row-icon {
+  display: grid; place-items: center; inline-size: 2.25rem; block-size: 2.25rem;
+  border-radius: 50%; background: color-mix(in srgb, var(--primary) 10%, var(--surface));
+  color: var(--primary);
+}
+.link-row-text { display: grid; gap: 0.15rem; }
+[dir='rtl'] .link-row-chevron { transform: scaleX(-1); }
+@media (prefers-reduced-motion: reduce) { .link-row { transition: none; } }

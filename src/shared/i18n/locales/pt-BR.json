@@ -495,5 +495,7 @@
   "tourSettingsAccountIrreversibleTitle": "Não há como desfazer",
   "tourSettingsAccountIrreversibleBody": "Excluir remove para sempre seus cardápios, pedidos e amizades. Exporte antes se quiser guardar uma cópia.",
   "tourSettingsAccountAlternativeTitle": "Só quer uma pausa?",
-  "tourSettingsAccountAlternativeBody": "Sair da conta ou desligar as notificações basta para a maioria. Excluir é só para ir embora de vez."
+  "tourSettingsAccountAlternativeBody": "Sair da conta ou desligar as notificações basta para a maioria. Excluir é só para ir embora de vez.",
+  "shareMembersHint": "Papéis, permissões e remoção de pessoas.",
+  "shareActivityHint": "Quem entrou, pediu e congelou — em ordem."
 }

@@ -495,5 +495,7 @@
   "tourSettingsAccountIrreversibleTitle": "वापसी का रास्ता नहीं",
   "tourSettingsAccountIrreversibleBody": "मिटाने से आपके मेन्यू, ऑर्डर और मित्रताएँ हमेशा के लिए चली जाती हैं। प्रति रखनी हो तो पहले निर्यात कर लें।",
   "tourSettingsAccountAlternativeTitle": "बस थोड़ा विराम चाहिए?",
-  "tourSettingsAccountAlternativeBody": "ज़्यादातर लोगों के लिए लॉगआउट करना या सूचनाएँ बंद करना काफ़ी है। खाता मिटाना केवल हमेशा के लिए जाने पर है।"
+  "tourSettingsAccountAlternativeBody": "ज़्यादातर लोगों के लिए लॉगआउट करना या सूचनाएँ बंद करना काफ़ी है। खाता मिटाना केवल हमेशा के लिए जाने पर है।",
+  "shareMembersHint": "भूमिकाएँ, अनुमतियाँ और सदस्यों को हटाना।",
+  "shareActivityHint": "किसने जुड़ा, ऑर्डर किया और फ़्रीज़ किया — क्रम से।"
 }

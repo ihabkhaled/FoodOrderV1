@@ -88,7 +88,7 @@ describe('targeted bucket invitations', () => {
     expect(notificationsFor(freshRecipient.id)).toEqual([
       expect.objectContaining({
         kind: 'friend_request',
-        route: '/social',
+        route: '/social/requests',
         entityId: owner.id,
         actorId: owner.id,
         actorName: owner.displayName,
@@ -123,7 +123,7 @@ describe('targeted bucket invitations', () => {
     expect(notificationsFor(recipient.id)).toEqual([
       expect.objectContaining({
         kind: 'bucket_invitation',
-        route: '/social',
+        route: '/social/requests',
         entityId: bucket.id,
       }),
     ]);

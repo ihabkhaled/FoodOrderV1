@@ -141,7 +141,7 @@
   "release-notes/v1.7.2.md": "26a20f37b970280b9dc938b31eedcea3a723237f4dec3f6c61b19213d3e2e9c0",
   "release-notes/v1.7.3.md": "2fcdc88640dd552e086be78f90e83c86f334082d55f682b4a2861002b0a00329",
   "release-notes/v1.7.4.md": "7a588f680890f94a65ec075629f93ddf51df1826b6f4853b9e2246907313a188",
-  "release-notes/v1.8.0.md": "ce11b0d83521acae86e498a8a1206fa68d11f8fc998987e27088ff838eb4a83e",
+  "release-notes/v1.8.0.md": "bc31030fef5efe9a8d0358b3646a3aebe5c01ac3047935bee2f4ba049e261281",
   "reports/phases/PHASE_00_report.md": "4a0744d91e12941f14eb4601ac627527a49da0193b13b7688809136cbe84cbd9",
   "reports/phases/PHASE_01_05_reports.md": "bc06d99338f3e8c1ff3b4a216e19c0ccbad8b31ab9e34ae69d5eafb0a3728998",
   "reports/phases/PHASE_06_15_reports.md": "0a0b0b1ecca922aadf38c62f92a9c7fc822721cb321d69e5c9724c6a47ca63f9",
@@ -193,12 +193,12 @@
   "src/modules/billing/README.md": "570a59ea8d05e9cb3d4b70078a8578fbfba83f18601db0f52631d4bd6274ae11",
   "src/modules/buckets/README.md": "04b9979a0d4ffe5417de18467daa518cafcc71ee61e9e07848366e024073501f",
   "src/modules/dashboard/README.md": "06de878a5ca80b2a56c30163a579ff46bee87ae1759daac7a7671c9885ba3a1d",
-  "src/modules/group-orders/README.md": "cb45eaccbb87713e238f40511393fc39b1bd87db47cfa5d4758ab580c9184ea2",
+  "src/modules/group-orders/README.md": "0fa5cba5ee44f5de7b18b19ae4f42937eca9f58918d9a0538aaec8a5b09c01fc",
   "src/modules/notifications/README.md": "f59fa263243cfdf6202a7f9e4afe9fc69df49778dd4d4c0a9f334badc38b051a",
   "src/modules/order-sessions/README.md": "4217c768a7a9cfcdb3613ded61c2824947e803764bf761c8324f6620f3ff2a21",
   "src/modules/orders/README.md": "c302041f0a2f22452d6cb3a74fbab6ce976da5ab3f30ae955981e8041fb99e14",
   "src/modules/public-content/README.md": "6199137365ccc610b3bb2ac2b6897629123b7be7e221280d7a5308ac483c01ab",
   "src/modules/settings/README.md": "58d72d9ec5985a5bb77c5ca6492e797aa7077ecaf7c06119128c95f8d0c1a945",
-  "src/modules/social/README.md": "1187d49ebf166aa1b3a9e9b2d50d61ffccd34f01e05834e76ec754783ba1ad49",
+  "src/modules/social/README.md": "cc531bd053800b111e731b7276536a96facbc7e4d0fcdcaad4fb2df6d291b154",
   "src/modules/telemetry/README.md": "a66d74001f6a5528addf0d4b6848425d551f71b1876f8bc9d7751565bf606603"
 }

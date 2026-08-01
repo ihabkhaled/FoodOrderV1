@@ -41,6 +41,11 @@
       "hash": "a647feb238a9e03abe1b140b78d89594ade63480dc4d619597e8ec64acdf3215"
     },
     {
+      "path": "tests/components/LinkRow.test.tsx",
+      "bytes": 814,
+      "hash": "2e41608b156e3eea2bf6b8707a5ac083de88dffc7acfd9e35c9ac4d88f59fd42"
+    },
+    {
       "path": "tests/components/Loading.test.tsx",
       "bytes": 855,
       "hash": "3d125d0a0e348027dfe7a1c7598ed442fadccfeaa16930d98325f1871f3123c3"
@@ -74,11 +79,6 @@
       "path": "tests/components/SessionInvitePreview.test.tsx",
       "bytes": 2643,
       "hash": "8ab2378a9849de6cbdf36f14f7783ab3a72e7e49647bd51d92c5b43a3c2d5193"
-    },
-    {
-      "path": "tests/components/SettingsLinkRow.test.tsx",
-      "bytes": 911,
-      "hash": "6755da668fec9e5963ee0374cb4f1cf42bd0c7b5a0a39f9de98234fd338a2630"
     },
     {
       "path": "tests/components/Skeleton.test.tsx",
@@ -227,8 +227,8 @@
     },
     {
       "path": "tests/e2e/notification-mirroring.spec.ts",
-      "bytes": 5526,
-      "hash": "1a0ccf6485bdb4eeb86fe5044057b06441163b9fcfe5fe752c283425854526a8"
+      "bytes": 6070,
+      "hash": "d2ac6123fed5a47a80936c0796e2b865bd79af0a4862e496ac50da5b31271286"
     },
     {
       "path": "tests/e2e/order-lifecycle.spec.ts",
@@ -247,18 +247,18 @@
     },
     {
       "path": "tests/e2e/public-theme.spec.ts",
-      "bytes": 1747,
-      "hash": "1c4a09165576a56955719aca5ae68bcf7cdd16b55f4565d84ddbce168a24556a"
+      "bytes": 1748,
+      "hash": "29dd2d3528ba6f13d063979a34fdc77e6495b74b8416cc4b9368e03581a969df"
     },
     {
       "path": "tests/e2e/responsive-navigation.spec.ts",
-      "bytes": 11643,
-      "hash": "906cf8f0cb10f6e312ebed9c6a6ad4180c88de22dd024db2fb9df34dedd34bf5"
+      "bytes": 11705,
+      "hash": "32abad37105f72853e258387b65404ec5b4b59f9cf3ca8b53350a5f429f3c088"
     },
     {
       "path": "tests/e2e/responsive-overlays.spec.ts",
-      "bytes": 5694,
-      "hash": "e1ce9e67a1137a5ae98dc67b2f3dbefba7a9b5fccdeff6b0b942a010f70cd324"
+      "bytes": 5733,
+      "hash": "a59d62b1ba6db71860c9f6dd9dd4af5e4efddca4147d48f5978b1ef64ae15b3a"
     },
     {
       "path": "tests/e2e/settings.spec.ts",
@@ -272,13 +272,13 @@
     },
     {
       "path": "tests/e2e/social-management.spec.ts",
-      "bytes": 10940,
-      "hash": "86017736a0ae2e6026bf5aa44ca0ecadcc7dd9ea1f0c5c62a2d0e1e13ffe669d"
+      "bytes": 11001,
+      "hash": "fbef75fd969b4af12056271916826206f5018a73bde35db93cce49efb12b8c3a"
     },
     {
       "path": "tests/e2e/social-sharing.spec.ts",
-      "bytes": 12140,
-      "hash": "657f056661ff43273ce89d4e625d2d0233c29f8350c9c1f8285eed9b89512aa9"
+      "bytes": 12232,
+      "hash": "d7567d199eb89c4f4c23b617f1268322e351e37518451f777365fe2f1b636e02"
     },
     {
       "path": "tests/e2e/ui.spec.ts",
@@ -287,8 +287,8 @@
     },
     {
       "path": "tests/e2e/ux-polish.spec.ts",
-      "bytes": 4556,
-      "hash": "cc39f8f88a6a928c1a830b424a6c618ddab9b9f5452a5824c137c66681d53baf"
+      "bytes": 4563,
+      "hash": "fa4e4b7cf985d42693d8860e681fa2d08f320a7460c9194aa0469f2ed2a31fea"
     },
     {
       "path": "tests/eslint/architecture-plugin.test.ts",
@@ -382,8 +382,8 @@
     },
     {
       "path": "tests/services/socialInvitations.test.ts",
-      "bytes": 8384,
-      "hash": "d948915cfc32def09229dc7dbf375b4e79e9e0edd07f54d4925c61f62c8ce93d"
+      "bytes": 8402,
+      "hash": "d7099c713919768c72d3d64f2b88d11290c92d3faab5bd00d549365679cd1b35"
     },
     {
       "path": "tests/setup.ts",

@@ -1,9 +1,8 @@
 import '../settings.css';
 
 import { Database, KeyRound, Settings2, ShieldCheck } from '@/packages/icons';
-import { FeatureTour } from '@/shared/ui';
+import { FeatureTour, LinkRow } from '@/shared/ui';
 
-import { SettingsLinkRow } from '../components/settings-link-row/settings-link-row.component';
 import { SettingsMetadata } from '../components/settings-metadata/settings-metadata.component';
 import { useSettingsHub } from '../hooks/use-settings-hub.hook';
 import { useSettingsTour } from '../hooks/use-settings-tour.hook';
@@ -56,9 +55,9 @@ export function SettingsHubContainer() {
         <strong>{vm.fullName}</strong>
         <span className="muted">{vm.email}</span>
       </section>
-      <nav ref={setSectionsElement} className="settings-links" aria-label={vm.t('settings')}>
+      <nav ref={setSectionsElement} className="link-rows" aria-label={vm.t('settings')}>
         {rows.map((row) => (
-          <SettingsLinkRow
+          <LinkRow
             key={row.to}
             to={row.to}
             icon={row.icon}

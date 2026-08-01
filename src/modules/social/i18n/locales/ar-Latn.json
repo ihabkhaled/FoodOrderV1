@@ -63,5 +63,9 @@
   "notifications": "El esh3arat",
   "unreadNotifications": "mesh ma2rooa",
   "markAllRead": "7added el kol ka ma2roo",
-  "noNotifications": "Mafeesh esh3arat lessa."
+  "noNotifications": "Mafeesh esh3arat lessa.",
+  "requestsTitle": "El talabat",
+  "friendsHubHint": "Dawwar bel email, eb3at talabat, w dabbar as7abak.",
+  "requestsHubHint": "Da3wat el as7ab w el groupat w el listat mestannya raddak.",
+  "groupsHubHint": "E3mel groupat w sharek el listat ma3a el kol marra wa7da."
 }

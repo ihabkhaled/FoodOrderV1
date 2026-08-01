@@ -495,5 +495,7 @@
   "tourSettingsAccountIrreversibleTitle": "لا تراجع",
   "tourSettingsAccountIrreversibleBody": "الحذف يزيل قوائمك وطلباتك وصداقاتك نهائيًا. صدّر بياناتك أولًا إن أردت نسخة.",
   "tourSettingsAccountAlternativeTitle": "تريد استراحة فقط؟",
-  "tourSettingsAccountAlternativeBody": "تسجيل الخروج أو إيقاف الإشعارات يكفي أغلب الناس. والحذف للمغادرة النهائية وحدها."
+  "tourSettingsAccountAlternativeBody": "تسجيل الخروج أو إيقاف الإشعارات يكفي أغلب الناس. والحذف للمغادرة النهائية وحدها.",
+  "shareMembersHint": "الأدوار والصلاحيات وإزالة الأعضاء.",
+  "shareActivityHint": "من انضم وطلب وجمّد — بالترتيب."
 }

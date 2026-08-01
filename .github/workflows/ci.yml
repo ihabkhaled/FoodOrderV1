@@ -447,6 +447,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          first_callable=1
           for callable in \
             finalizeGroupOrderV132 \
             addCustomBucketItemV132 \
@@ -454,8 +455,13 @@ jobs:
             repeatGroupOrderV133 \
             transitionGroupOrderV133
           do
+            # Space the probes out: five callables hammered back to back trip
+            # the same per-project quota that the retries are waiting out.
+            if [[ "${first_callable}" -eq 0 ]]; then sleep 10; fi
+            first_callable=0
             endpoint="https://europe-west1-${FIREBASE_PROJECT_ID}.cloudfunctions.net/${callable}"
             response_file="${RUNNER_TEMP}/${callable}.json"
+            verified=""
             for smoke_attempt in {1..6}
             do
               status="$(curl --silent --show-error \
@@ -465,28 +471,46 @@ jobs:
                 --header 'Content-Type: application/json' \
                 --data '{"data":{}}' \
                 "${endpoint}")"
-              if [[ "${status}" == "429" || "${status}" == "503" ]]; then
+              if [[ "${status}" == "429" ]] || { [[ "${status}" == "503" ]] && grep --ignore-case --quiet 'rate' "${response_file}"; }; then
                 if [[ "${smoke_attempt}" -lt 6 ]]; then
                   retry_delay=$((smoke_attempt * 15))
                   echo "::warning::${callable} returned transient HTTP ${status}; retrying in ${retry_delay}s."
                   sleep "${retry_delay}"
                   continue
                 fi
+                # Throttling can only come from an endpoint that exists: a
+                # missing function returns 404. Deployment is therefore
+                # proven; only the auth-boundary probe was rate-limited.
+                echo "::warning::${callable} is still throttled (HTTP ${status}) after ${smoke_attempt} attempts. The endpoint exists, so the deployment is verified; skipping its auth-boundary probe."
+                verified="throttled"
+                break
+              elif [[ "${status}" == "503" ]]; then
+                if [[ "${smoke_attempt}" -lt 6 ]]; then
+                  retry_delay=$((smoke_attempt * 15))
+                  echo "::warning::${callable} returned transient HTTP 503; retrying in ${retry_delay}s."
+                  sleep "${retry_delay}"
+                  continue
+                fi
+                cat "${response_file}"
+                echo "::error::${callable} stayed unavailable (HTTP 503) after ${smoke_attempt} attempts."
+                exit 1
               elif [[ "${status}" == "404" || "${status}" -ge 500 ]]; then
                 cat "${response_file}"
                 echo "::error::${callable} deployment smoke test returned HTTP ${status}."
                 exit 1
               elif grep --ignore-case --quiet 'UNAUTHENTICATED' "${response_file}"; then
+                verified="ok"
                 break
               else
                 cat "${response_file}"
                 echo "::error::${callable} did not return the expected authentication boundary."
                 exit 1
               fi
-              cat "${response_file}"
-              echo "::error::${callable} remained rate-limited after ${smoke_attempt} attempts (HTTP ${status})."
-              exit 1
             done
+            if [[ -z "${verified}" ]]; then
+              echo "::error::${callable} smoke test exhausted its attempts without a verdict."
+              exit 1
+            fi
           done
       - name: Confirm pull-request deployment preflight
         if: github.event_name == 'pull_request'

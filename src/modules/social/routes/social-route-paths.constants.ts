@@ -1,5 +1,8 @@
 /** Absolute navigation targets owned by the social module. */
 export const SOCIAL_PATH = '/social';
+export const SOCIAL_FRIENDS_PATH = '/social/friends';
+export const SOCIAL_REQUESTS_PATH = '/social/requests';
+export const SOCIAL_GROUPS_PATH = '/social/groups';
 
 export const buildBucketSocialShareRoute = (bucketId: string): string =>
   `/buckets/${bucketId}/social-share`;

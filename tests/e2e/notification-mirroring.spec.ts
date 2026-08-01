@@ -151,8 +151,18 @@ test.describe('in-app notifications mirror to the OS tray', () => {
   }) => {
     await captureTrayNotifications(page);
     await register(page, 'hidden');
-    await reportPageHidden(page);
 
+    // The first subscription payload only establishes the mirroring baseline —
+    // it is never mirrored. Deliver a sentinel while visible and wait for the
+    // badge, which proves that baseline payload has been processed; on a slow
+    // runner, backgrounding immediately would fold the real notification into
+    // the baseline and the tray would stay empty.
+    await deliverNotification(page, 'baseline', 'Arrived while visible.');
+    await expect(
+      page.locator('.notification-badge:visible').first(),
+    ).toBeVisible();
+
+    await reportPageHidden(page);
     await deliverNotification(page, 'background-1', 'Owner opened a round.');
 
     await expect

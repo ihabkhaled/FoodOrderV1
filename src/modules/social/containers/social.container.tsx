@@ -1,27 +1,29 @@
-import { ErrorState, FeatureTour, SkeletonSection } from '@/shared/ui';
+import { Mail, UserPlus, Users } from '@/packages/icons';
+import { ErrorState, FeatureTour, LinkRow, SkeletonSection } from '@/shared/ui';
 
-import { BucketInvitations } from '../components/bucket-invitations/bucket-invitations.component';
-import { FriendSearch } from '../components/friend-search/friend-search.component';
-import { FriendsList } from '../components/friends-list/friends-list.component';
-import { GroupInvitations } from '../components/group-invitations/group-invitations.component';
-import { GroupsSection } from '../components/groups-section/groups-section.component';
-import { IncomingRequests } from '../components/incoming-requests/incoming-requests.component';
 import { SocialHero } from '../components/social-hero/social-hero.component';
 import { useSocial } from '../hooks/use-social.hook';
 import { useSocialTour } from '../hooks/use-social-tour.hook';
+import {
+  SOCIAL_FRIENDS_PATH,
+  SOCIAL_GROUPS_PATH,
+  SOCIAL_REQUESTS_PATH,
+} from '../routes/social-route-paths.constants';
 
+/**
+ * The friends area is a hub: counts up top, one row per destination. Search,
+ * pending invitations, and group management each live on their own page so no
+ * single screen carries six sections at once.
+ */
 export function SocialContainer() {
   const vm = useSocial();
   const { setPeopleElement, steps: tourSteps } = useSocialTour();
 
-  // Placeholders sit where the real sections will land, so the layout does not
-  // jump once the overview resolves.
   if (vm.loading) {
     return (
-      <div className="page stack-lg">
+      <div className="page narrow stack-lg">
         <SkeletonSection label={vm.t('loading')} variant="row" count={1} />
-        <SkeletonSection label={vm.t('loading')} variant="card" count={2} />
-        <SkeletonSection label={vm.t('loading')} variant="row" count={4} />
+        <SkeletonSection label={vm.t('loading')} variant="row" count={3} />
       </div>
     );
   }
@@ -35,86 +37,57 @@ export function SocialContainer() {
     );
   }
 
+  const pendingCount =
+    vm.overview.incomingRequests.length +
+    vm.overview.groupInvitations.length +
+    (vm.overview.bucketInvitations?.length ?? 0);
+  const rows = [
+    {
+      to: SOCIAL_FRIENDS_PATH,
+      icon: UserPlus,
+      title: vm.s('friends'),
+      hint: vm.s('friendsHubHint'),
+    },
+    {
+      to: SOCIAL_REQUESTS_PATH,
+      icon: Mail,
+      title:
+        pendingCount > 0
+          ? `${vm.s('requestsTitle')} (${pendingCount})`
+          : vm.s('requestsTitle'),
+      hint: vm.s('requestsHubHint'),
+    },
+    {
+      to: SOCIAL_GROUPS_PATH,
+      icon: Users,
+      title: vm.s('groups'),
+      hint: vm.s('groupsHubHint'),
+    },
+  ];
+
   return (
-    <div className="page stack-lg">
+    <div className="page narrow stack-lg">
       <SocialHero
         s={vm.s}
         friendCount={vm.overview.friends.length}
         activeGroupCount={vm.activeGroupCount}
-        pendingCount={
-          vm.overview.incomingRequests.length +
-          vm.overview.groupInvitations.length +
-          (vm.overview.bucketInvitations?.length ?? 0)
-        }
+        pendingCount={pendingCount}
       />
-      <BucketInvitations
-        s={vm.s}
-        t={vm.t}
-        invitations={vm.overview.bucketInvitations ?? []}
-        onRespond={(bucketId, response) =>
-          void vm.respondBucketInvitation(bucketId, response)
-        }
-      />
-      <div ref={setPeopleElement}>
-      <FriendSearch
-        s={vm.s}
-        emailLabel={vm.t('email')}
-        loadingLabel={vm.t('loading')}
-        email={vm.email}
-        searching={vm.searching}
-        searched={vm.searched}
-        result={vm.result}
-        onEmailChange={vm.setEmail}
-        onSearch={() => void vm.search()}
-        onSendRequest={() => void vm.sendRequest()}
-      />
-      </div>
-      <IncomingRequests
-        s={vm.s}
-        requests={vm.overview.incomingRequests}
-        onRespond={(senderUserId, response) =>
-          void vm.respondFriendRequest(senderUserId, response)
-        }
-      />
-      <FriendsList
-        s={vm.s}
-        friends={vm.overview.friends}
-        onUnfriend={(friendUserId) => void vm.unfriend(friendUserId)}
-      />
-      <GroupsSection
-        s={vm.s}
-        userId={vm.userId}
-        groups={vm.overview.groups}
-        groupName={vm.groupName}
-        groupDescription={vm.groupDescription}
-        onGroupNameChange={vm.setGroupName}
-        onGroupDescriptionChange={vm.setGroupDescription}
-        onCreateGroup={() => void vm.createGroup()}
-        editingGroupId={vm.editingGroupId}
-        editName={vm.editName}
-        editDescription={vm.editDescription}
-        onEditNameChange={vm.setEditName}
-        onEditDescriptionChange={vm.setEditDescription}
-        onStartEditing={vm.startEditing}
-        onCancelEditing={vm.cancelEditing}
-        onSaveGroup={(groupId) => void vm.saveGroup(groupId)}
-        onDeleteGroup={(groupId) => void vm.deleteGroup(groupId)}
-        onLeaveGroup={(groupId) => void vm.leaveGroup(groupId)}
-        onRemoveMember={(groupId, memberId) =>
-          void vm.removeMember(groupId, memberId)
-        }
-        selectedFriends={vm.selectedFriends}
-        onSelectFriend={vm.selectFriend}
-        onInvite={(group) => void vm.invite(group)}
-        availableFriends={vm.availableFriends}
-      />
-      <GroupInvitations
-        s={vm.s}
-        invitations={vm.overview.groupInvitations}
-        onRespond={(groupId, response) =>
-          void vm.respondGroupInvitation(groupId, response)
-        }
-      />
+      <nav
+        ref={setPeopleElement}
+        className="link-rows"
+        aria-label={vm.s('friends')}
+      >
+        {rows.map((row) => (
+          <LinkRow
+            key={row.to}
+            to={row.to}
+            icon={row.icon}
+            title={row.title}
+            hint={row.hint}
+          />
+        ))}
+      </nav>
 
       <FeatureTour
         page="social"

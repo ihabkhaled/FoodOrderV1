@@ -63,5 +63,9 @@
   "notifications": "Benachrichtigungen",
   "unreadNotifications": "ungelesen",
   "markAllRead": "Alle als gelesen markieren",
-  "noNotifications": "Noch keine Benachrichtigungen."
+  "noNotifications": "Noch keine Benachrichtigungen.",
+  "requestsTitle": "Anfragen",
+  "friendsHubHint": "Per E-Mail suchen, Anfragen senden und Freunde verwalten.",
+  "requestsHubHint": "Freundes-, Gruppen- und Menü-Einladungen, die auf Antwort warten.",
+  "groupsHubHint": "Gruppen anlegen und Menüs mit allen auf einmal teilen."
 }

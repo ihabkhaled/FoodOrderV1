@@ -495,5 +495,7 @@
   "tourSettingsAccountIrreversibleTitle": "There is no undo",
   "tourSettingsAccountIrreversibleBody": "Deleting removes your menus, orders, and friendships for good. Export first if you want to keep a copy.",
   "tourSettingsAccountAlternativeTitle": "Just want a break?",
-  "tourSettingsAccountAlternativeBody": "Signing out or turning off notifications is enough for most people. Deletion is only for leaving permanently."
+  "tourSettingsAccountAlternativeBody": "Signing out or turning off notifications is enough for most people. Deletion is only for leaving permanently.",
+  "shareMembersHint": "Roles, permissions, and removing people.",
+  "shareActivityHint": "Who joined, ordered, and froze — in order."
 }

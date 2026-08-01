@@ -467,7 +467,7 @@ export const inviteFriendToBucketV151 = onCall({ region: REGION }, async (reques
             kind: 'bucket_invitation',
             title: 'New bucket invitation',
             message: `${owner.displayName} invited you to ${bucket.title}.`,
-            route: '/social',
+            route: '/social/requests',
             entityType: 'bucket',
             entityId: bucketId,
             actorId: owner.userId,

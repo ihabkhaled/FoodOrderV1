@@ -257,7 +257,7 @@ test.describe('v1.5.0 social management and notifications', () => {
     page,
   }) => {
     await seedSocialManagement(page);
-    await page.goto('/social');
+    await page.goto('/social/groups');
 
     const company = page.getByRole('article', {
       name: 'Group Company A',
@@ -312,7 +312,7 @@ test.describe('v1.5.0 social management and notifications', () => {
     expect(aliceMembership.accessSources).toEqual(['user_alice-1']);
 
     await switchUser(page, 'alice-1');
-    await page.goto('/social');
+    await page.goto('/social/groups');
     await expect(
       page.getByRole('article', { name: 'Group Team Alpha', exact: true }),
     ).toHaveCount(0);
@@ -327,11 +327,12 @@ test.describe('v1.5.0 social management and notifications', () => {
     await expect(
       page.getByRole('article', { name: 'Group Community', exact: true }),
     ).toHaveCount(0);
+    await page.goto('/social/friends');
     await page.getByLabel('Unfriend Company Owner').click();
     await expect(page.getByText('Company Owner')).toHaveCount(0);
 
     await switchUser(page, 'owner-1');
-    await page.goto('/social');
+    await page.goto('/social/groups');
     const notificationButton = page
       .getByRole('button', { name: 'Notifications' })
       .first();

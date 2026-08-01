@@ -5,6 +5,8 @@ export { EmptyState } from './empty-state';
 export { ErrorState } from './error-state';
 export { FeatureTour, type FeatureTourStep } from './feature-tour';
 export { LanguageSelect } from './language-select';
+export type { LinkRowProps } from './link-row/link-row.component';
+export { LinkRow } from './link-row/link-row.component';
 export { Loading } from './loading';
 export { NumericField } from './numeric-field';
 export { PasswordField } from './password-field';

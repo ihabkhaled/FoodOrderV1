@@ -495,5 +495,7 @@
   "tourSettingsAccountIrreversibleTitle": "ไม่มีทางย้อนกลับ",
   "tourSettingsAccountIrreversibleBody": "การลบจะเอาเมนู คำสั่งซื้อ และเพื่อนของคุณออกอย่างถาวร ถ้าอยากเก็บสำเนาให้ส่งออกก่อน",
   "tourSettingsAccountAlternativeTitle": "แค่อยากพักใช่ไหม",
-  "tourSettingsAccountAlternativeBody": "สำหรับคนส่วนใหญ่ แค่ออกจากระบบหรือปิดการแจ้งเตือนก็พอ การลบมีไว้สำหรับการจากไปถาวรเท่านั้น"
+  "tourSettingsAccountAlternativeBody": "สำหรับคนส่วนใหญ่ แค่ออกจากระบบหรือปิดการแจ้งเตือนก็พอ การลบมีไว้สำหรับการจากไปถาวรเท่านั้น",
+  "shareMembersHint": "บทบาท สิทธิ์ และการนำสมาชิกออก",
+  "shareActivityHint": "ใครเข้าร่วม สั่ง และล็อก — ตามลำดับ"
 }

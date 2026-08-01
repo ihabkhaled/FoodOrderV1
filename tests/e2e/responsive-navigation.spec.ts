@@ -224,7 +224,7 @@ for (const viewport of VIEWPORTS) {
       page.locator('.virtual-list-footer').last(),
     );
 
-    await page.goto('/social');
+    await page.goto('/social/groups');
     const group = page.getByRole('article', {
       name: `Group ${LONG_GROUP_NAME}`,
       exact: true,
@@ -244,6 +244,7 @@ for (const viewport of VIEWPORTS) {
       group.locator('.social-person > div'),
     );
 
+    await page.goto('/social/requests');
     await scrollDocumentToBottom(page);
     const invitations = page.locator('section').filter({
       has: page.getByRole('heading', {
@@ -258,9 +259,9 @@ for (const viewport of VIEWPORTS) {
 test('member group controls fit the narrow viewport', async ({ page }) => {
   await page.setViewportSize({ width: 304, height: 760 });
   await seedResponsiveScenario(page);
-  await page.goto('/social');
+  await page.goto('/social/groups');
   await switchResponsiveUser(page, MEMBER_ID);
-  await page.goto('/social');
+  await page.goto('/social/groups');
 
   const memberGroup = page.getByRole('article', {
     name: `Group ${LONG_GROUP_NAME}`,

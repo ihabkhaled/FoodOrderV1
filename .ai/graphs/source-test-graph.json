@@ -736,6 +736,16 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/group-orders/containers/bucket-share-activity.container.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/group-orders/containers/bucket-share-members.container.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/group-orders/containers/bucket-share.container.tsx",
       "tests": [],
       "relationship": "inferred"
@@ -1526,11 +1536,6 @@
       "relationship": "inferred"
     },
     {
-      "source": "src/modules/settings/components/settings-link-row/settings-link-row.component.tsx",
-      "tests": [],
-      "relationship": "inferred"
-    },
-    {
       "source": "src/modules/settings/components/settings-metadata/settings-metadata.component.tsx",
       "tests": [],
       "relationship": "inferred"
@@ -1772,6 +1777,21 @@
     },
     {
       "source": "src/modules/social/containers/bucket-social-share.container.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/social/containers/social-friends.container.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/social/containers/social-groups.container.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/social/containers/social-requests.container.tsx",
       "tests": [],
       "relationship": "inferred"
     },
@@ -2517,6 +2537,11 @@
     },
     {
       "source": "src/shared/ui/language-select/language-select.types.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/ui/link-row/link-row.component.tsx",
       "tests": [],
       "relationship": "inferred"
     },

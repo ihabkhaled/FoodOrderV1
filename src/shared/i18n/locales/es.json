@@ -495,5 +495,7 @@
   "tourSettingsAccountIrreversibleTitle": "No hay vuelta atrás",
   "tourSettingsAccountIrreversibleBody": "Borrar elimina para siempre tus menús, pedidos y amistades. Exporta antes si quieres conservar una copia.",
   "tourSettingsAccountAlternativeTitle": "¿Solo quieres un descanso?",
-  "tourSettingsAccountAlternativeBody": "Cerrar sesión o apagar las notificaciones basta para casi todo el mundo. Borrar es solo para irse del todo."
+  "tourSettingsAccountAlternativeBody": "Cerrar sesión o apagar las notificaciones basta para casi todo el mundo. Borrar es solo para irse del todo.",
+  "shareMembersHint": "Roles, permisos y expulsión de personas.",
+  "shareActivityHint": "Quién se unió, pidió y congeló — en orden."
 }

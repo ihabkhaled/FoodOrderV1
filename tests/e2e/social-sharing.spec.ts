@@ -100,7 +100,7 @@ test.describe('friends, groups, and combined bucket sharing', () => {
     page,
   }) => {
     await seedUsersAndBucket(page);
-    await page.goto('/social');
+    await page.goto('/social/friends');
 
     await page.getByLabel('Email').fill('alice@example.com');
     await page.getByRole('button', { name: 'Search' }).click();
@@ -108,15 +108,16 @@ test.describe('friends, groups, and combined bucket sharing', () => {
     await page.getByRole('button', { name: 'Send friend request' }).click();
 
     await switchUser(page, 'friend-1');
-    await page.goto('/social');
+    await page.goto('/social/requests');
     const incoming = page
       .locator('section')
       .filter({ hasText: 'Incoming requests' });
     await incoming.getByRole('button', { name: 'Accept' }).click();
+    await page.goto('/social/friends');
     await expect(page.getByText('Company Owner')).toBeVisible();
 
     await switchUser(page, 'owner-1');
-    await page.goto('/social');
+    await page.goto('/social/groups');
     await page.getByLabel('Group name').fill('Company A');
     await page.getByLabel('Description').fill('Work lunch group');
     await page.getByRole('button', { name: 'Create group' }).click();
@@ -126,7 +127,7 @@ test.describe('friends, groups, and combined bucket sharing', () => {
     await page.getByRole('button', { name: 'Invite friend' }).click();
 
     await switchUser(page, 'friend-1');
-    await page.goto('/social');
+    await page.goto('/social/requests');
     const invitations = page
       .locator('section')
       .filter({ hasText: 'Group invitations' });
@@ -202,7 +203,7 @@ test.describe('friends, groups, and combined bucket sharing', () => {
     await expect(
       page.getByRole('heading', { name: 'Company Lunch' }),
     ).toHaveCount(0);
-    await page.goto('/social');
+    await page.goto('/social/requests');
     const bucketInvitations = page.locator('#bucket-invitations');
     const bucketInvitation = bucketInvitations
       .locator('.list-row')
@@ -228,7 +229,7 @@ test.describe('friends, groups, and combined bucket sharing', () => {
       'Company Owner invited you to Company Lunch.',
     );
     await invitationNotification.click();
-    await expect(page).toHaveURL(/\/social$/u);
+    await expect(page).toHaveURL(/\/social\/requests$/u);
 
     await bucketInvitation
       .getByRole('button', { name: 'Accept', exact: true })

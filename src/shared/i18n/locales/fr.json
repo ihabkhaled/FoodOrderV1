@@ -495,5 +495,7 @@
   "tourSettingsAccountIrreversibleTitle": "Aucun retour possible",
   "tourSettingsAccountIrreversibleBody": "La suppression retire définitivement vos menus, commandes et amitiés. Exportez d'abord si vous voulez en garder une copie.",
   "tourSettingsAccountAlternativeTitle": "Juste envie d'une pause ?",
-  "tourSettingsAccountAlternativeBody": "Se déconnecter ou couper les notifications suffit à la plupart. La suppression, c'est pour partir pour de bon."
+  "tourSettingsAccountAlternativeBody": "Se déconnecter ou couper les notifications suffit à la plupart. La suppression, c'est pour partir pour de bon.",
+  "shareMembersHint": "Rôles, autorisations et retrait de membres.",
+  "shareActivityHint": "Qui a rejoint, commandé et gelé — dans l’ordre."
 }

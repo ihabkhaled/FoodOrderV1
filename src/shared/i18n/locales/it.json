@@ -495,5 +495,7 @@
   "tourSettingsAccountIrreversibleTitle": "Non si torna indietro",
   "tourSettingsAccountIrreversibleBody": "L'eliminazione rimuove per sempre menu, ordini e amicizie. Esporta prima, se vuoi conservarne una copia.",
   "tourSettingsAccountAlternativeTitle": "Vuoi solo una pausa?",
-  "tourSettingsAccountAlternativeBody": "Per quasi tutti basta disconnettersi o spegnere le notifiche. L'eliminazione serve solo per andarsene davvero."
+  "tourSettingsAccountAlternativeBody": "Per quasi tutti basta disconnettersi o spegnere le notifiche. L'eliminazione serve solo per andarsene davvero.",
+  "shareMembersHint": "Ruoli, permessi e rimozione delle persone.",
+  "shareActivityHint": "Chi è entrato, ha ordinato e ha congelato — in ordine."
 }

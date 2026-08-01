@@ -156,6 +156,7 @@ for (const viewport of VIEWPORTS) {
 
     await notificationTrigger.click();
 
+    await page.goto('/social/groups');
     const group = page.getByRole('article', {
       name: `Group ${LONG_GROUP_NAME}`,
       exact: true,

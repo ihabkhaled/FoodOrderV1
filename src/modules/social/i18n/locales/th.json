@@ -63,5 +63,9 @@
   "notifications": "การแจ้งเตือน",
   "unreadNotifications": "ยังไม่ได้อ่าน",
   "markAllRead": "อ่านแล้วทั้งหมด",
-  "noNotifications": "ยังไม่มีการแจ้งเตือน"
+  "noNotifications": "ยังไม่มีการแจ้งเตือน",
+  "requestsTitle": "คำขอ",
+  "friendsHubHint": "ค้นหาด้วยอีเมล ส่งคำขอ และจัดการเพื่อนของคุณ",
+  "requestsHubHint": "คำเชิญเพื่อน กลุ่ม และเมนูที่รอคำตอบจากคุณ",
+  "groupsHubHint": "สร้างกลุ่มและแชร์เมนูให้ทุกคนในครั้งเดียว"
 }

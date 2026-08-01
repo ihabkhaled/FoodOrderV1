@@ -63,5 +63,9 @@
   "notifications": "通知",
   "unreadNotifications": "未读",
   "markAllRead": "全部标为已读",
-  "noNotifications": "还没有通知。"
+  "noNotifications": "还没有通知。",
+  "requestsTitle": "请求",
+  "friendsHubHint": "按邮箱搜索、发送请求并管理你的好友。",
+  "requestsHubHint": "等待你回应的好友、群组和菜单邀请。",
+  "groupsHubHint": "创建群组，一次把菜单分享给所有人。"
 }
