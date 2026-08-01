@@ -12,6 +12,7 @@ const excludedPaths = [
   '.husky/_',
   '.ai/local',
   '.vercel',
+  '.claude',
   '.worktrees',
   'dist',
   'coverage',

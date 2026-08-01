@@ -30,18 +30,18 @@
     },
     {
       "path": ".github/workflows/android-apk.yml",
-      "bytes": 4736,
-      "hash": "674a9e55e51dc6649ea8812b2164c39f326c0bc5e32eae43b5d1e717fa9259df"
+      "bytes": 5382,
+      "hash": "529c064cbeec7a0be8bc5ef71906017b5745e77005158626b0e38c3255e05be1"
     },
     {
       "path": ".github/workflows/branch-continuous-release.yml",
-      "bytes": 4780,
-      "hash": "f1e93a318cb16926d67ff1453a23df7ee16cdf3ea052896fa6812676928cc30c"
+      "bytes": 6001,
+      "hash": "1576cf7ffc88616b475b35e3d02b4e47e1bd9dbdeafed17d873a3cdde91bd0d5"
     },
     {
       "path": ".github/workflows/ci.yml",
-      "bytes": 20616,
-      "hash": "d30188086e7d70c033166ee08374925ee21dd516db0493708d4d4911446cac72"
+      "bytes": 20647,
+      "hash": "9896a2ae266cc2db73076258e24492b30643b4bb621817a554348cfb7c6d96e2"
     },
     {
       "path": ".github/workflows/cross-browser-e2e.yml",
@@ -74,6 +74,11 @@
       "hash": "d8e6f4a6f6cc36b38805c13982925ab7c2a5fc4b21d82fb322bce477408d07bf"
     },
     {
+      "path": ".github/workflows/pull-request-brief.yml",
+      "bytes": 3430,
+      "hash": "f6e64c5fdeb66528e2af43d415ae3b5b525e676323efe34df5485850bb67238d"
+    },
+    {
       "path": ".github/workflows/social-acceptance.yml",
       "bytes": 1220,
       "hash": "c026da210e32c165cd2b8ce4be62aaede36d1b5c8949ffbb706648fd4773f377"
@@ -85,8 +90,8 @@
     },
     {
       "path": ".gitignore",
-      "bytes": 450,
-      "hash": "f48d4c6b59eb2f229d1696323012a74e740487e482f1321d57683c68f952385d"
+      "bytes": 515,
+      "hash": "d0276891db2a88fda4269d54130fc03d96a24ed16b41787bdd206b5f1f1dc7c7"
     },
     {
       "path": ".trivyignore.yaml",
@@ -590,8 +595,8 @@
     },
     {
       "path": "docs/operations/versioning.md",
-      "bytes": 4663,
-      "hash": "03d2d3e1190c1a560880691f2a2bd64843e392932eb5143c5d5932bc62dc2f6e"
+      "bytes": 6827,
+      "hash": "2ed07d9730fd9b14e4f02d93012229696efc28686b8341c39e6c829c546ed56b"
     },
     {
       "path": "docs/superpowers/plans/2026-07-29-v1.8.0-bucket-templates-ux.md",
@@ -635,8 +640,8 @@
     },
     {
       "path": "eslint.config.js",
-      "bytes": 8175,
-      "hash": "003ce0ca1ef635c602234e2ac31ba7eb70ef17460949da230a36a02f3fdabb58"
+      "bytes": 8192,
+      "hash": "e1a3b8ed840c19e62c4ed582010ad76737108c5565cc5d0f4331f94bdb0bab64"
     },
     {
       "path": "eslint/architecture-plugin/index.mjs",
@@ -1090,8 +1095,8 @@
     },
     {
       "path": "package.json",
-      "bytes": 8094,
-      "hash": "7bd9524c7dcf29565854f6ec0af386e49c3c41e4ca853e8d4ddff361fa42002b"
+      "bytes": 8158,
+      "hash": "1f89755df51bc9d0a937a2798fdd8ba1675ccce46d22e29a16eae20c1b83c5e9"
     },
     {
       "path": "packages/group-order-engine/src/index.ts",
@@ -1350,8 +1355,8 @@
     },
     {
       "path": "rules/20-release-gates.md",
-      "bytes": 6950,
-      "hash": "f8e11e263c793011a839d68f296dd21c4bf84498bd12164b7cf03bef7f7cfec1"
+      "bytes": 8432,
+      "hash": "c252aeeb7e0c04939460fcae2a0f4a80864ffbef43e714b8981bed9df284bdf9"
     },
     {
       "path": "rules/21-review-checklist.md",
@@ -1375,8 +1380,8 @@
     },
     {
       "path": "scripts/check-format.mjs",
-      "bytes": 2444,
-      "hash": "7f32316f7d227b988a0a663be35f8656211a3abe238e55034e3d6cb2f12aca94"
+      "bytes": 2457,
+      "hash": "c852d03696890ee01d658f4b4a3fea62a51170429d638395dcf402a56fda9211"
     },
     {
       "path": "scripts/check-npm-audit.mjs",
@@ -1405,8 +1410,8 @@
     },
     {
       "path": "scripts/knowledge/cli.mjs",
-      "bytes": 9921,
-      "hash": "f0cb90a11b1d6960f17354272fbfb43a3aefe3b30c7c8a6d8fd2f8c77fa34038"
+      "bytes": 9931,
+      "hash": "165526e3955a9197edba94358a8bd316c79f72bc302637249550a1b67a514b8d"
     },
     {
       "path": "scripts/migrate-legacy-data.mjs",
@@ -1445,8 +1450,8 @@
     },
     {
       "path": "skills/README.md",
-      "bytes": 3023,
-      "hash": "f83966bca3aac3c6f381a14f128f08c2a4e57f7d7dbd7b938631c1cfc8af439f"
+      "bytes": 3150,
+      "hash": "a50afcdf53e20efb900251e8c0af7001ec2b1795a19ce0fc436202982023829d"
     },
     {
       "path": "skills/add-capacitor-plugin.md",
@@ -1532,6 +1537,11 @@
       "path": "skills/write-e2e-tests.md",
       "bytes": 3810,
       "hash": "8975d7f9f601fbd3842dff5e13782b0e70ff925e39a0ca855c523b9dc248c18d"
+    },
+    {
+      "path": "skills/write-release-notes.md",
+      "bytes": 3486,
+      "hash": "d4e5b01fc8b5276b7d1848ee84cbbe5a22e351bbb1f15b41b11d6adf8681d531"
     },
     {
       "path": "skills/write-unit-tests.md",
@@ -4634,14 +4644,24 @@
       "hash": "18c74fe95cfe476421e85f7f0ec79ad76c4093ffd16cf600093f38eaad7644ca"
     },
     {
+      "path": "tests/tooling/compose-release-notes.test.mjs",
+      "bytes": 1427,
+      "hash": "7ee92ec44c381cb828189aeb9210d97b3d767df36d3eb4bea7be3f2c2da7a263"
+    },
+    {
       "path": "tests/tooling/firebase-deployment-gate.test.ts",
       "bytes": 669,
       "hash": "335fca77d8f76a01b2979189c5c1e7cb1dfd3ceb17de74282856b29280a4e1d3"
     },
     {
+      "path": "tests/tooling/pull-request-brief.test.mjs",
+      "bytes": 2594,
+      "hash": "159a156fc8de216407f9f639c5c35f221de9d31352b3cf38f8a49d5631238dd1"
+    },
+    {
       "path": "tests/tooling/versioning-core.test.mjs",
-      "bytes": 2719,
-      "hash": "68936a9b7cca6d09ba238ab5fe47f61a45d528188fbbf1f8017cc5460fd3378c"
+      "bytes": 4293,
+      "hash": "4acd6f4ab7dc2d4a7659bfd80a261a5f0763dc4e614dfe858a78a9ad6ebb1745"
     },
     {
       "path": "tools/release/bump-version.mjs",
@@ -4649,14 +4669,29 @@
       "hash": "db0868d119e6392417bead5125d5fb94947f6b536923a7f5365a1ac1e96cc5b8"
     },
     {
+      "path": "tools/release/compose-release-notes.mjs",
+      "bytes": 2650,
+      "hash": "368641ba116372593c33983fbaa83477a946e9655a2b84f9c9b4e6d49beb8ca1"
+    },
+    {
       "path": "tools/release/ensure-branch-version.mjs",
       "bytes": 3890,
       "hash": "5ad776559ffb8b1b93368e25717b1f4097dc8053f0c876d5bc3447951f438055"
     },
     {
+      "path": "tools/release/next-build-number.mjs",
+      "bytes": 1544,
+      "hash": "fd2c4d609a1ab52e43b41c48d31300b2cb622fe5a917ba86bd5fdb3c367b55b7"
+    },
+    {
+      "path": "tools/release/pull-request-brief.mjs",
+      "bytes": 3766,
+      "hash": "78a29e34d9c088a6db089ab5d088978c0e9f7cf67335aa7487441c827d000eda"
+    },
+    {
       "path": "tools/release/versioning-core.mjs",
-      "bytes": 5901,
-      "hash": "15857e25639f31391eebd818affad7175e1c4a4a7a4cfbb9fb4450dbb814842e"
+      "bytes": 7368,
+      "hash": "88a85df38605c6f0a1612b35f6df2207c783885f6b14ca85f5dfa98e67d2001f"
     },
     {
       "path": "tsconfig.app.json",

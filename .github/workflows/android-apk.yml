@@ -57,16 +57,25 @@ jobs:
         shell: bash
         env:
           REQUESTED_BUILD_VERSION: ${{ inputs.build_version }}
+          GH_TOKEN: ${{ github.token }}
         run: |
+          set -euo pipefail
           BASE="$(node -p "require('./package.json').version")"
+          # The build number counts builds of THIS version, read from the tags
+          # that already exist, so bumping the version resets it to 0 on its
+          # own. A repository-wide run number never resets and says nothing
+          # about how many times the version has been built.
+          TAGS="$(gh release list --repo "${GITHUB_REPOSITORY}" --limit 300 --json tagName --jq '.[].tagName' || true)"
           if [[ -n "${REQUESTED_BUILD_VERSION}" ]]; then
             BUILD_VERSION="${REQUESTED_BUILD_VERSION}"
           elif [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
             BUILD_VERSION="${GITHUB_REF_NAME#v}"
           elif [[ "${GITHUB_REF}" == "refs/heads/main" ]]; then
-            BUILD_VERSION="${BASE}-${GITHUB_RUN_NUMBER}"
+            NUMBER="$(node tools/release/next-build-number.mjs --channel=main <<< "${TAGS}")"
+            BUILD_VERSION="${BASE}-${NUMBER}"
           else
-            BUILD_VERSION="${BASE}-dev.${GITHUB_RUN_NUMBER}"
+            NUMBER="$(node tools/release/next-build-number.mjs --channel=dev <<< "${TAGS}")"
+            BUILD_VERSION="${BASE}-dev.${NUMBER}"
           fi
           echo "build_version=${BUILD_VERSION}" >> "$GITHUB_OUTPUT"
           echo "BUILD_VERSION=${BUILD_VERSION}" >> "$GITHUB_ENV"

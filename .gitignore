@@ -24,3 +24,6 @@ ios/App/output/
 ui-shots/
 .playwright-mcp/
 google-services.json
+
+# Agent tooling state, including scratch git worktrees
+.claude/

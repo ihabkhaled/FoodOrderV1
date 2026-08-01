@@ -65,10 +65,18 @@ The mandatory gate set (all must succeed):
 
 ## Automated release streams
 
-- **Push to `main`** auto-releases a build-numbered version `X.Y.Z-<run_number>` (APK +
+- **Push to `main`** auto-releases a build-numbered version `X.Y.Z-<n>` (APK +
   GitHub release) **without changing `package.json`**; the base `X.Y.Z` bumps only via a
   deliberate tool bump. Tag `vX.Y.Z` releases the clean version. See
   [versioning.md](versioning.md) and [../docs/operations/versioning.md](../docs/operations/versioning.md).
+- `<n>` counts builds **of that version** and is derived from existing release tags, so it
+  restarts at `0` whenever the version changes. Never wire a release version to
+  `github.run_number` or any other repository-wide counter: it never resets, so the number
+  says nothing about the version it is attached to.
+- **Every pull request** ships its release notes, an auto-composed description, and a
+  built APK. `quality:release` fails the PR when `release-notes/vX.Y.Z.md` is missing,
+  `branch-continuous-release.yml` publishes the prerelease + APK once all branch gates
+  pass, and `pull-request-brief.yml` writes the description from those same notes.
 
 ## Forbidden
 
@@ -76,6 +84,11 @@ The mandatory gate set (all must succeed):
 - Treating skipped APK/prerelease jobs as fulfilled when their upstream branch gate failed.
 - `--no-verify`, hook bypasses, force-pushes over gate failures.
 - Hand-editing derived versions (gradle versionName/versionCode, docs) — run the tool.
+- Publishing a release or prerelease whose body is a generated sentence rather than the
+  version's release notes. "Automated prerelease from branch X" describes the process, not
+  the build, and leaves a reader no way to know what shipped. Every release body is
+  composed from `release-notes/vX.Y.Z.md` — see
+  [../skills/write-release-notes.md](../skills/write-release-notes.md).
 - Claiming release readiness with unexecuted evidence (e.g. iOS, see EXC-5) or open
   production blockers.
 
@@ -110,6 +123,15 @@ requires a PR, resolved conversations, no force-push/deletion, and applies to
 administrators. Do not merge while the latest commit is still running, even when an
 earlier commit was fully green. See
 [../docs/operations/required-merge-gates.md](../docs/operations/required-merge-gates.md).
+
+## Release body composition
+
+Every release body — prerelease and `main` alike — is composed from the version's release
+notes by `tools/release/compose-release-notes.mjs`, which appends only build provenance
+(version, commit, branch, gate statement). The notes themselves are written once in
+`release-notes/vX.Y.Z.md` per
+[../skills/write-release-notes.md](../skills/write-release-notes.md). The composers are
+covered by `npm run test:tooling`.
 
 ## Post-merge release description gate
 

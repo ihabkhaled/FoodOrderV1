@@ -1,0 +1,93 @@
+name: Pull Request Brief
+
+# Every pull request carries its release notes and a link to the build that was
+# produced from it, without anyone writing the same summary twice. The branch
+# prerelease (see branch-continuous-release.yml) publishes the APK; this job
+# only points at it.
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pr-brief-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  brief:
+    name: Compose Pull Request Brief
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 26
+
+      - name: Require release notes for this version
+        shell: bash
+        run: |
+          set -euo pipefail
+          VERSION="$(node -p "require('./package.json').version")"
+          if [[ ! -f "release-notes/v${VERSION}.md" ]]; then
+            echo "::error::Missing release-notes/v${VERSION}.md. Every pull request ships its release notes."
+            exit 1
+          fi
+          echo "Release notes present for v${VERSION}."
+
+      - name: Locate the build produced from this branch
+        id: artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          # The prerelease tag ends in the short commit SHA, so this only ever
+          # links to a build made from the exact commit under review.
+          SHORT="${HEAD_SHA::7}"
+          TAG="$(gh release list --repo "${GITHUB_REPOSITORY}" --limit 300 \
+            --json tagName --jq '.[].tagName' 2>/dev/null \
+            | grep -- "-${SHORT}$" | head -n 1 || true)"
+          if [[ -n "${TAG}" ]]; then
+            echo "tag=${TAG}" >> "${GITHUB_OUTPUT}"
+            echo "url=https://github.com/${GITHUB_REPOSITORY}/releases/tag/${TAG}" >> "${GITHUB_OUTPUT}"
+            echo "version=${TAG#v}" >> "${GITHUB_OUTPUT}"
+            echo "Found build ${TAG} for ${SHORT}."
+          else
+            echo "No prerelease for ${SHORT} yet; the brief will say so."
+          fi
+
+      - name: Compose and apply the brief
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          ARTIFACT_URL: ${{ steps.artifact.outputs.url }}
+          ARTIFACT_VERSION: ${{ steps.artifact.outputs.version }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          BODY_FILE="${RUNNER_TEMP}/pr-body.md"
+          NEXT_FILE="${RUNNER_TEMP}/pr-body-next.md"
+          gh pr view "${PR_NUMBER}" --repo "${GITHUB_REPOSITORY}" --json body --jq '.body // ""' > "${BODY_FILE}"
+
+          ARGS=(--body-file="${BODY_FILE}" --out="${NEXT_FILE}")
+          if [[ -n "${ARTIFACT_URL:-}" ]]; then
+            ARGS+=(--artifact-url="${ARTIFACT_URL}" --artifact-version="${ARTIFACT_VERSION}")
+          fi
+          node tools/release/pull-request-brief.mjs "${ARGS[@]}"
+
+          if cmp --silent "${BODY_FILE}" "${NEXT_FILE}"; then
+            echo "Brief already current; leaving the description untouched."
+          else
+            gh pr edit "${PR_NUMBER}" --repo "${GITHUB_REPOSITORY}" --body-file "${NEXT_FILE}"
+            echo "Pull request description updated."
+          fi

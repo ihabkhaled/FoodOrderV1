@@ -223,6 +223,7 @@ jobs:
         shell: bash
         run: |
           set -o pipefail
+          npm run test:tooling
           npm run test:coverage 2>&1 | tee coverage.log
       - uses: actions/upload-artifact@v7
         if: always()

@@ -186,3 +186,39 @@ export const synchronizeRepositoryVersion = ({
 
   return { androidVersionCode, iosBuildNumber, notesPath };
 };
+
+/**
+ * Build numbers count builds *of one version*, not builds of the repository.
+ *
+ * They used to come straight from GITHUB_RUN_NUMBER, a repository-wide counter
+ * that never resets, so `1.8.0-347` said nothing about how many times 1.8.0 had
+ * been built. Deriving the number from the tags that already exist makes it
+ * per-version and self-healing: a version nobody has released yet starts at 0,
+ * and bumping the version resets the counter without anyone remembering to.
+ *
+ * `channel` is 'main' for release builds (`v1.8.0-3`) and 'dev' for branch
+ * prereleases (`v1.8.0-dev.3-1a2b3c4`, the short SHA keeping tags unique when
+ * two branches build the same version).
+ */
+export const buildNumberPattern = (baseVersion, channel) => {
+  const escaped = baseVersion.replaceAll('.', String.raw`\.`);
+  return channel === 'dev'
+    ? new RegExp(String.raw`^v${escaped}-dev\.(\d+)(?:-[0-9a-f]{7,40})?$`, 'u')
+    : new RegExp(String.raw`^v${escaped}-(\d+)$`, 'u');
+};
+
+export const resolveNextBuildNumber = ({ baseVersion, channel, tags }) => {
+  parseStableVersion(baseVersion);
+  if (channel !== 'main' && channel !== 'dev') {
+    throw new Error(`Channel must be main or dev. Received: ${channel}`);
+  }
+
+  const pattern = buildNumberPattern(baseVersion, channel);
+  let highest = -1;
+  for (const tag of tags) {
+    const match = pattern.exec(String(tag).trim());
+    if (match) highest = Math.max(highest, Number(match[1]));
+  }
+
+  return highest + 1;
+};

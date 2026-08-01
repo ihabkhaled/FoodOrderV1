@@ -87,3 +87,63 @@ test('synchronizes web, functions, Android, and iOS versions idempotently', (con
     2,
   );
 });
+
+test('build numbers count builds of one version and reset when it changes', async () => {
+  const { resolveNextBuildNumber } = await import(
+    '../../tools/release/versioning-core.mjs'
+  );
+  const tags = [
+    'v1.8.0-dev.253-89c779f',
+    'v1.8.0-dev.249-50d45e1',
+    'v1.8.0-4',
+    'v1.7.4-434',
+    'v1.7.4-dev.227-8a595e1',
+  ];
+
+  assert.equal(
+    resolveNextBuildNumber({ baseVersion: '1.8.0', channel: 'dev', tags }),
+    254,
+  );
+  assert.equal(
+    resolveNextBuildNumber({ baseVersion: '1.8.0', channel: 'main', tags }),
+    5,
+  );
+
+  // The point of the change: a version nobody has built starts at zero, so
+  // bumping the version resets the counter with nothing to remember.
+  assert.equal(
+    resolveNextBuildNumber({ baseVersion: '1.9.0', channel: 'dev', tags }),
+    0,
+  );
+  assert.equal(
+    resolveNextBuildNumber({ baseVersion: '1.9.0', channel: 'main', tags }),
+    0,
+  );
+
+  // A dev tag must never be mistaken for a release tag of the same version.
+  assert.equal(
+    resolveNextBuildNumber({
+      baseVersion: '1.7.4',
+      channel: 'main',
+      tags: ['v1.7.4-dev.9-abc1234'],
+    }),
+    0,
+  );
+
+  // Neighbouring versions must not bleed into each other.
+  assert.equal(
+    resolveNextBuildNumber({
+      baseVersion: '1.8.0',
+      channel: 'main',
+      tags: ['v1.8.01-7', 'v11.8.0-9'],
+    }),
+    0,
+  );
+
+  assert.throws(() =>
+    resolveNextBuildNumber({ baseVersion: '1.8', channel: 'main', tags: [] }),
+  );
+  assert.throws(() =>
+    resolveNextBuildNumber({ baseVersion: '1.8.0', channel: 'beta', tags: [] }),
+  );
+});

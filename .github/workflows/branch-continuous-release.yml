@@ -47,9 +47,16 @@ jobs:
       - name: Resolve immutable development version
         id: version
         shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
+          set -euo pipefail
           BASE="$(node -p "require('./package.json').version")"
-          BUILD_VERSION="${BASE}-dev.${GITHUB_RUN_NUMBER}"
+          # Per-version counter: see tools/release/versioning-core.mjs. A new
+          # version starts at dev.0 without anyone resetting anything.
+          TAGS="$(gh release list --repo "${GITHUB_REPOSITORY}" --limit 300 --json tagName --jq '.[].tagName' || true)"
+          NUMBER="$(node tools/release/next-build-number.mjs --channel=dev <<< "${TAGS}")"
+          BUILD_VERSION="${BASE}-dev.${NUMBER}"
           echo "build_version=${BUILD_VERSION}" >> "$GITHUB_OUTPUT"
           echo "Branch artifact version: ${BUILD_VERSION}"
 
@@ -83,6 +90,7 @@ jobs:
       - name: Validate unit, integration, and coverage gates
         run: |
           npm run test
+          npm run test:tooling
           npm run test:coverage
 
       - name: Validate build and dependency boundaries
@@ -146,10 +154,30 @@ jobs:
       - name: Verify APK checksum
         run: sha256sum --check FoodOrderV1-*-debug.apk.sha256
 
+      - name: Compose release notes for this build
+        id: notes
+        shell: bash
+        env:
+          BUILD_VERSION: ${{ needs.all-gates.outputs.build_version }}
+        run: |
+          set -euo pipefail
+          # Publish the version's real notes. A generated sentence tells a
+          # reader nothing about what the build contains. See
+          # skills/write-release-notes.md and rules/20-release-gates.md.
+          NOTES_FILE="${RUNNER_TEMP}/prerelease-notes.md"
+          node tools/release/compose-release-notes.mjs \
+            --build-version="${BUILD_VERSION}" \
+            --commit="${GITHUB_SHA::7}" \
+            --branch="${GITHUB_REF_NAME}" \
+            --prerelease \
+            --out="${NOTES_FILE}"
+          echo "path=${NOTES_FILE}" >> "${GITHUB_OUTPUT}"
+
       - name: Publish immutable prerelease
         env:
           GH_TOKEN: ${{ github.token }}
           BUILD_VERSION: ${{ needs.all-gates.outputs.build_version }}
+          RELEASE_NOTES: ${{ steps.notes.outputs.path }}
         shell: bash
         run: |
           RELEASE_TAG="v${BUILD_VERSION}-${GITHUB_SHA::7}"
@@ -157,7 +185,7 @@ jobs:
             --repo "${GITHUB_REPOSITORY}" \
             --target "${GITHUB_SHA}" \
             --title "FoodOrderV1 ${BUILD_VERSION}" \
-            --notes "Automated prerelease from branch ${GITHUB_REF_NAME}. Every mandatory branch gate passed for commit ${GITHUB_SHA}." \
+            --notes-file "${RELEASE_NOTES}" \
             --prerelease \
             FoodOrderV1-*-debug.apk \
             FoodOrderV1-*-debug.apk.sha256
