@@ -92,7 +92,12 @@ if (isDirectRun) {
   const root = process.cwd();
   const version =
     argumentValue('version') ?? readJsonFile(join(root, 'package.json')).version;
-  const notesPath = join(root, 'release-notes', `v${version}.md`);
+  // `--notes-file` lets a caller supply notes it fetched itself. The workflow
+  // uses it to read the pull request's notes as data over the API instead of
+  // checking out the branch, which would mean running code from a fork inside
+  // a job that can write to this repository.
+  const notesPath =
+    argumentValue('notes-file') ?? join(root, 'release-notes', `v${version}.md`);
   if (!existsSync(notesPath)) {
     process.stderr.write(
       `Missing release notes: release-notes/v${version}.md\n` +

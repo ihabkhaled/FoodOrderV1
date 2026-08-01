@@ -13,6 +13,12 @@ name: Pull Request Brief
 #
 # GitHub only fires `workflow_run` for a workflow file that exists on the
 # default branch, so that half starts working once this lands on `main`.
+#
+# SECURITY: this job holds `pull-requests: write`, so it must never execute code
+# from the branch under review — a fork could then write to this repository.
+# It checks out the default branch for the tooling and reads the pull request's
+# version and notes as data over the API. CodeQL flags the alternative as
+# actions/untrusted-checkout/high, and it is right to.
 
 on:
   pull_request:
@@ -71,27 +77,46 @@ jobs:
             echo "Describing pull request #${number} at ${sha::7}."
           fi
 
+      # The default branch, never the branch under review: this job can write to
+      # the repository, so the code it runs has to be trusted.
       - uses: actions/checkout@v7
         if: steps.target.outputs.found == 'true'
         with:
-          ref: ${{ steps.target.outputs.sha }}
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
 
       - uses: actions/setup-node@v6
         if: steps.target.outputs.found == 'true'
         with:
           node-version: 26
 
-      - name: Require release notes for this version
+      - name: Read the version and notes from the commit under review
+        id: notes
         if: steps.target.outputs.found == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          HEAD_SHA: ${{ steps.target.outputs.sha }}
         shell: bash
         run: |
           set -euo pipefail
-          VERSION="$(node -p "require('./package.json').version")"
-          if [[ ! -f "release-notes/v${VERSION}.md" ]]; then
-            echo "::error::Missing release-notes/v${VERSION}.md. Every pull request ships its release notes."
+          # Data, not code. Nothing fetched here is ever executed.
+          gh api "repos/${GITHUB_REPOSITORY}/contents/package.json?ref=${HEAD_SHA}" \
+            --jq '.content' | base64 --decode > "${RUNNER_TEMP}/head-package.json"
+          VERSION="$(node -p "require('${RUNNER_TEMP}/head-package.json').version")"
+
+          NOTES_FILE="${RUNNER_TEMP}/head-notes.md"
+          if ! gh api "repos/${GITHUB_REPOSITORY}/contents/release-notes/v${VERSION}.md?ref=${HEAD_SHA}" \
+            --jq '.content' 2>/dev/null | base64 --decode > "${NOTES_FILE}"; then
+            echo "::error::Missing release-notes/v${VERSION}.md on this branch. Every pull request ships its release notes."
             exit 1
           fi
-          echo "Release notes present for v${VERSION}."
+          if [[ ! -s "${NOTES_FILE}" ]]; then
+            echo "::error::release-notes/v${VERSION}.md is empty on this branch."
+            exit 1
+          fi
+          echo "version=${VERSION}" >> "${GITHUB_OUTPUT}"
+          echo "path=${NOTES_FILE}" >> "${GITHUB_OUTPUT}"
+          echo "Read notes for v${VERSION} from ${HEAD_SHA::7}."
 
       - name: Locate the build produced from this commit
         id: artifact
@@ -109,7 +134,6 @@ jobs:
             --json tagName --jq '.[].tagName' 2>/dev/null \
             | grep -- "-${SHORT}$" | head -n 1 || true)"
           if [[ -n "${TAG}" ]]; then
-            echo "tag=${TAG}" >> "${GITHUB_OUTPUT}"
             echo "url=https://github.com/${GITHUB_REPOSITORY}/releases/tag/${TAG}" >> "${GITHUB_OUTPUT}"
             echo "version=${TAG#v}" >> "${GITHUB_OUTPUT}"
             echo "Found build ${TAG} for ${SHORT}."
@@ -122,6 +146,8 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           PR_NUMBER: ${{ steps.target.outputs.number }}
+          VERSION: ${{ steps.notes.outputs.version }}
+          NOTES_FILE: ${{ steps.notes.outputs.path }}
           ARTIFACT_URL: ${{ steps.artifact.outputs.url }}
           ARTIFACT_VERSION: ${{ steps.artifact.outputs.version }}
         shell: bash
@@ -131,7 +157,12 @@ jobs:
           NEXT_FILE="${RUNNER_TEMP}/pr-body-next.md"
           gh pr view "${PR_NUMBER}" --repo "${GITHUB_REPOSITORY}" --json body --jq '.body // ""' > "${BODY_FILE}"
 
-          ARGS=(--body-file="${BODY_FILE}" --out="${NEXT_FILE}")
+          ARGS=(
+            --version="${VERSION}"
+            --notes-file="${NOTES_FILE}"
+            --body-file="${BODY_FILE}"
+            --out="${NEXT_FILE}"
+          )
           if [[ -n "${ARTIFACT_URL:-}" ]]; then
             ARGS+=(--artifact-url="${ARTIFACT_URL}" --artifact-version="${ARTIFACT_VERSION}")
           fi

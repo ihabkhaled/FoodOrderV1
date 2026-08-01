@@ -75,8 +75,8 @@
     },
     {
       "path": ".github/workflows/pull-request-brief.yml",
-      "bytes": 5726,
-      "hash": "26b9fc12a51f10562086ae19ee404a8a46f72e1f27250f9121ff8b8722386ea3"
+      "bytes": 7335,
+      "hash": "57b65d46b0039db5ca9c50c45bca592c0c485258caf57fac689109639a86d887"
     },
     {
       "path": ".github/workflows/social-acceptance.yml",
@@ -595,8 +595,8 @@
     },
     {
       "path": "docs/operations/versioning.md",
-      "bytes": 7321,
-      "hash": "be662b155206fb3964863c7dc006d57dcd08bee2da8f6b1c8e270fb9192886f3"
+      "bytes": 7658,
+      "hash": "936ef93bec6611ea8a1bda8e4520364a945024b164aed1f8a593303493464371"
     },
     {
       "path": "docs/superpowers/plans/2026-07-29-v1.8.0-bucket-templates-ux.md",
@@ -4715,8 +4715,8 @@
     },
     {
       "path": "tools/release/pull-request-brief.mjs",
-      "bytes": 3766,
-      "hash": "78a29e34d9c088a6db089ab5d088978c0e9f7cf67335aa7487441c827d000eda"
+      "bytes": 4083,
+      "hash": "7b1ba3f2fa153800023c46a2cd4ebf5422c0e86917fe273c9c498a89f21fcd79"
     },
     {
       "path": "tools/release/versioning-core.mjs",
