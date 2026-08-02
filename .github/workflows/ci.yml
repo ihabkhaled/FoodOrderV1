@@ -485,15 +485,19 @@ jobs:
                 echo "::warning::${callable} is still throttled (HTTP ${status}) after ${smoke_attempt} attempts. The endpoint exists, so the deployment is verified; skipping its auth-boundary probe."
                 verified="throttled"
                 break
-              elif [[ "${status}" == "503" ]]; then
+              elif [[ "${status}" == "503" ]] || { [[ "${status}" == "500" ]] && grep --ignore-case --quiet 'try again' "${response_file}"; }; then
+                # A 500 whose body says "try again" is Google's frontend failing
+                # to start an instance — regional CPU starvation, the same
+                # transient class as 503. A 500 produced by the function itself
+                # carries a JSON error instead and still fails immediately.
                 if [[ "${smoke_attempt}" -lt 6 ]]; then
                   retry_delay=$((smoke_attempt * 15))
-                  echo "::warning::${callable} returned transient HTTP 503; retrying in ${retry_delay}s."
+                  echo "::warning::${callable} returned transient HTTP ${status}; retrying in ${retry_delay}s."
                   sleep "${retry_delay}"
                   continue
                 fi
                 cat "${response_file}"
-                echo "::error::${callable} stayed unavailable (HTTP 503) after ${smoke_attempt} attempts."
+                echo "::error::${callable} stayed unavailable (HTTP ${status}) after ${smoke_attempt} attempts."
                 exit 1
               elif [[ "${status}" == "404" || "${status}" -ge 500 ]]; then
                 cat "${response_file}"

@@ -19,6 +19,17 @@ import {
 } from './notificationDomain.js';
 
 const REGION = 'europe-west1';
+
+/**
+ * Firestore-trigger fan-outs run with a single instance. Regional CPU quota is
+ * reserved per service as cpu × maxInstances, and v1.8.0's new functions pushed
+ * the project's total reservation back over the ceiling — deploys then fail
+ * container health checks with "Quota exceeded for total allowable CPU".
+ * Background notification writes tolerate queueing, so they are the right
+ * services to give that headroom back. Callables keep the global setting.
+ */
+const TRIGGER_RUNTIME = { region: REGION, maxInstances: 1 };
+
 const MAX_NOTIFICATIONS = 50;
 const SYSTEM_ACTOR = { actorId: 'system', actorName: 'FoodOrder' };
 
@@ -182,7 +193,7 @@ export const markNotificationsReadV150 = onCall(
 );
 
 export const notifyBucketUpdatedV150 = onDocumentUpdated(
-  { document: 'buckets/{bucketId}', region: REGION },
+  { document: 'buckets/{bucketId}', ...TRIGGER_RUNTIME },
   async (event) => {
     const before = dataOf(event.data?.before.data());
     const after = dataOf(event.data?.after.data());
@@ -220,7 +231,7 @@ export const notifyBucketUpdatedV150 = onDocumentUpdated(
 );
 
 export const notifyBucketDeletedV150 = onDocumentDeleted(
-  { document: 'buckets/{bucketId}', region: REGION },
+  { document: 'buckets/{bucketId}', ...TRIGGER_RUNTIME },
   async (event) => {
     const bucket = event.data?.data() as BucketRecord | undefined;
     if (!bucket) return;
@@ -243,7 +254,7 @@ export const notifyBucketDeletedV150 = onDocumentDeleted(
 export const notifyBucketSharedV150 = onDocumentCreated(
   {
     document: 'buckets/{bucketId}/accessGrants/{grantId}',
-    region: REGION,
+    ...TRIGGER_RUNTIME,
   },
   async (event) => {
     const grant = event.data?.data() as BucketGrantRecord | undefined;
@@ -286,7 +297,7 @@ export const notifyBucketSharedV150 = onDocumentCreated(
 );
 
 export const notifyBucketInviteAcceptedV151 = onDocumentUpdated(
-  { document: 'buckets/{bucketId}/invites/{inviteId}', region: REGION },
+  { document: 'buckets/{bucketId}/invites/{inviteId}', ...TRIGGER_RUNTIME },
   async (event) => {
     const before = event.data?.before.data() as
       | JoinCodeBucketInviteRecord
@@ -325,7 +336,7 @@ export const notifyBucketInviteAcceptedV151 = onDocumentUpdated(
 );
 
 export const notifyOrderPlacedV150 = onDocumentCreated(
-  { document: 'users/{userId}/orders/{orderId}', region: REGION },
+  { document: 'users/{userId}/orders/{orderId}', ...TRIGGER_RUNTIME },
   async (event) => {
     const order = event.data?.data() as OrderRecord | undefined;
     if (!order || order.status !== 'placed') return;
@@ -344,7 +355,7 @@ export const notifyOrderPlacedV150 = onDocumentCreated(
 );
 
 export const notifyOrderUpdatedV150 = onDocumentUpdated(
-  { document: 'users/{userId}/orders/{orderId}', region: REGION },
+  { document: 'users/{userId}/orders/{orderId}', ...TRIGGER_RUNTIME },
   async (event) => {
     const before = event.data?.before.data() as OrderRecord | undefined;
     const after = event.data?.after.data() as OrderRecord | undefined;
@@ -373,7 +384,7 @@ export const notifyOrderUpdatedV150 = onDocumentUpdated(
 );
 
 export const notifyOrderDeletedV150 = onDocumentDeleted(
-  { document: 'users/{userId}/orders/{orderId}', region: REGION },
+  { document: 'users/{userId}/orders/{orderId}', ...TRIGGER_RUNTIME },
   async (event) => {
     const order = event.data?.data() as OrderRecord | undefined;
     const orderId = event.params.orderId;
@@ -394,7 +405,7 @@ export const notifyOrderDeletedV150 = onDocumentDeleted(
 export const notifyFriendRequestV150 = onDocumentWritten(
   {
     document: 'users/{userId}/friendRequests/{requestId}',
-    region: REGION,
+    ...TRIGGER_RUNTIME,
   },
   async (event) => {
     const before = event.data?.before.data() as FriendRequestRecord | undefined;
@@ -443,7 +454,7 @@ export const notifyFriendRequestV150 = onDocumentWritten(
 export const notifyGroupInvitationV150 = onDocumentWritten(
   {
     document: 'users/{userId}/groupInvitations/{groupId}',
-    region: REGION,
+    ...TRIGGER_RUNTIME,
   },
   async (event) => {
     const before = event.data?.before.data() as GroupInvitationRecord | undefined;

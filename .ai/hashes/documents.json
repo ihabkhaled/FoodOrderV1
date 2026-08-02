@@ -1,7 +1,7 @@
 {
   ".github/copilot-instructions.md": "9d00d14cbbbb9e66442c140850aa74ab7f1e258e8de699e796ca11abe5693286",
   "AGENTS.md": "af3c57be3b0de7087f285461fdc0b93de6f335ac2a460bb85124482cb3f7cd45",
-  "CHANGELOG.md": "5f7fbe2738bcc42551ed16f07bdc49a0523dfde6ccd2e5999d2ec8ad3bd202d4",
+  "CHANGELOG.md": "6797a5db19c3393defbadecbe3e5b130adb04ed1e35baa171f385af5aa57eced",
   "CLAUDE.md": "7ca3520f91743a335176a9ccac1880ed48131d073d793be096f06af7dfedfa24",
   "CODEX.md": "e6cc40b7fe420dea6f43cd1a4b93fe60347ac27ab987100c4bfe600dd0a90d01",
   "GEMINI.md": "2009ab89ebb965a0e1e524a4e85e250a09caa7e4bfbdbdb52a9e3e396d47f7bd",
@@ -90,7 +90,7 @@
   "docs/operations/push-notifications.md": "47760c09c09620c1cc06966e19feb601402aaa223fa75bf41b389e8914302e2b",
   "docs/operations/reference-parity-roadmap.md": "700adb005d51762aab9fdf569380f0eb113ab21aacb897cb69b3bb3daa347183",
   "docs/operations/required-merge-gates.md": "b32cf5052a53f83601a5bd74abd8be72e4519784b9525371478af6851819b4cf",
-  "docs/operations/versioning.md": "936ef93bec6611ea8a1bda8e4520364a945024b164aed1f8a593303493464371",
+  "docs/operations/versioning.md": "5da4c8b9f3563b52a9b624c03e0b2e527da1ac29a353cd6cf3cd9798a03690b4",
   "docs/superpowers/plans/2026-07-29-v1.8.0-bucket-templates-ux.md": "b1c40d4d2c7b9d87a62bd0491ee82221b8c875785d15067f2a00fd866377e7e2",
   "docs/superpowers/specs/2026-07-29-v1.8.0-design.md": "2224d1246f713a29eff79cf33bc08ab827970e90e13dc75ed54f7c966031c84b",
   "domain/README.md": "5a50ed1c35d2c6044ad297a60b2db8aad849664d9549a0746cf0fe4eea4a54a4",

@@ -4,6 +4,15 @@ import { HttpsError, onCall } from 'firebase-functions/v2/https';
 import { writeNotification, writeNotifications, } from './notificationCore.js';
 import { isAccessOnlyBucketUpdate, isJoinCodeInviteAcceptance, } from './notificationDomain.js';
 const REGION = 'europe-west1';
+/**
+ * Firestore-trigger fan-outs run with a single instance. Regional CPU quota is
+ * reserved per service as cpu × maxInstances, and v1.8.0's new functions pushed
+ * the project's total reservation back over the ceiling — deploys then fail
+ * container health checks with "Quota exceeded for total allowable CPU".
+ * Background notification writes tolerate queueing, so they are the right
+ * services to give that headroom back. Callables keep the global setting.
+ */
+const TRIGGER_RUNTIME = { region: REGION, maxInstances: 1 };
 const MAX_NOTIFICATIONS = 50;
 const SYSTEM_ACTOR = { actorId: 'system', actorName: 'FoodOrder' };
 const dataOf = (value) => typeof value === 'object' && value !== null
@@ -74,7 +83,7 @@ export const markNotificationsReadV150 = onCall({ region: REGION }, async (reque
     await batch.commit();
     return { success: true };
 });
-export const notifyBucketUpdatedV150 = onDocumentUpdated({ document: 'buckets/{bucketId}', region: REGION }, async (event) => {
+export const notifyBucketUpdatedV150 = onDocumentUpdated({ document: 'buckets/{bucketId}', ...TRIGGER_RUNTIME }, async (event) => {
     const before = dataOf(event.data?.before.data());
     const after = dataOf(event.data?.after.data());
     if (!changed(before, after, [
@@ -107,7 +116,7 @@ export const notifyBucketUpdatedV150 = onDocumentUpdated({ document: 'buckets/{b
         ...SYSTEM_ACTOR,
     });
 });
-export const notifyBucketDeletedV150 = onDocumentDeleted({ document: 'buckets/{bucketId}', region: REGION }, async (event) => {
+export const notifyBucketDeletedV150 = onDocumentDeleted({ document: 'buckets/{bucketId}', ...TRIGGER_RUNTIME }, async (event) => {
     const bucket = event.data?.data();
     if (!bucket)
         return;
@@ -127,7 +136,7 @@ export const notifyBucketDeletedV150 = onDocumentDeleted({ document: 'buckets/{b
 });
 export const notifyBucketSharedV150 = onDocumentCreated({
     document: 'buckets/{bucketId}/accessGrants/{grantId}',
-    region: REGION,
+    ...TRIGGER_RUNTIME,
 }, async (event) => {
     const grant = event.data?.data();
     if (!grant)
@@ -169,7 +178,7 @@ export const notifyBucketSharedV150 = onDocumentCreated({
         createdAt: event.time,
     });
 });
-export const notifyBucketInviteAcceptedV151 = onDocumentUpdated({ document: 'buckets/{bucketId}/invites/{inviteId}', region: REGION }, async (event) => {
+export const notifyBucketInviteAcceptedV151 = onDocumentUpdated({ document: 'buckets/{bucketId}/invites/{inviteId}', ...TRIGGER_RUNTIME }, async (event) => {
     const before = event.data?.before.data();
     const after = event.data?.after.data();
     if (!before || !after || !isJoinCodeInviteAcceptance(before, after)) {
@@ -200,14 +209,14 @@ export const notifyBucketInviteAcceptedV151 = onDocumentUpdated({ document: 'buc
         createdAt: event.time,
     });
 });
-export const notifyOrderPlacedV150 = onDocumentCreated({ document: 'users/{userId}/orders/{orderId}', region: REGION }, async (event) => {
+export const notifyOrderPlacedV150 = onDocumentCreated({ document: 'users/{userId}/orders/{orderId}', ...TRIGGER_RUNTIME }, async (event) => {
     const order = event.data?.data();
     if (!order || order.status !== 'placed')
         return;
     const orderId = event.params.orderId;
     await writeNotification(event.params.userId, orderNotification('order_placed', 'Order placed', `${order.bucketTitle ?? 'Your order'} was placed.`, orderId, event.time));
 });
-export const notifyOrderUpdatedV150 = onDocumentUpdated({ document: 'users/{userId}/orders/{orderId}', region: REGION }, async (event) => {
+export const notifyOrderUpdatedV150 = onDocumentUpdated({ document: 'users/{userId}/orders/{orderId}', ...TRIGGER_RUNTIME }, async (event) => {
     const before = event.data?.before.data();
     const after = event.data?.after.data();
     if (!before || !after || JSON.stringify(before) === JSON.stringify(after))
@@ -225,7 +234,7 @@ export const notifyOrderUpdatedV150 = onDocumentUpdated({ document: 'users/{user
     }
     await writeNotification(event.params.userId, orderNotification(kind, title, `${after.bucketTitle ?? 'Your order'} changed to ${after.status ?? 'an updated status'}.`, orderId, event.time));
 });
-export const notifyOrderDeletedV150 = onDocumentDeleted({ document: 'users/{userId}/orders/{orderId}', region: REGION }, async (event) => {
+export const notifyOrderDeletedV150 = onDocumentDeleted({ document: 'users/{userId}/orders/{orderId}', ...TRIGGER_RUNTIME }, async (event) => {
     const order = event.data?.data();
     const orderId = event.params.orderId;
     await writeNotification(event.params.userId, {
@@ -242,7 +251,7 @@ export const notifyOrderDeletedV150 = onDocumentDeleted({ document: 'users/{user
 });
 export const notifyFriendRequestV150 = onDocumentWritten({
     document: 'users/{userId}/friendRequests/{requestId}',
-    region: REGION,
+    ...TRIGGER_RUNTIME,
 }, async (event) => {
     const before = event.data?.before.data();
     const after = event.data?.after.data();
@@ -284,7 +293,7 @@ export const notifyFriendRequestV150 = onDocumentWritten({
 });
 export const notifyGroupInvitationV150 = onDocumentWritten({
     document: 'users/{userId}/groupInvitations/{groupId}',
-    region: REGION,
+    ...TRIGGER_RUNTIME,
 }, async (event) => {
     const before = event.data?.before.data();
     const after = event.data?.after.data();

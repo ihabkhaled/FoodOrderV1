@@ -74,14 +74,30 @@ if (
   baseVersion &&
   parseStableVersion(baseVersion)
 ) {
+  // Feature releases bump the version; hotfixes ship as another build of the
+  // version already on main. A same-version pull request is therefore allowed
+  // from a fix branch — the tag-derived build number still increases, so every
+  // merge stays uniquely identifiable — while a release branch must move the
+  // version forward. Nothing may ever move it backward.
+  const headBranch = process.env.GITHUB_HEAD_REF?.trim() ?? '';
+  const isHotfixBranch = /^(?:fix|hotfix)\//u.test(headBranch);
   const comparison = compareVersions(rootPackage.version, baseVersion);
   if (comparison === null) {
     failures.push(
       `Unable to compare PR versions ${rootPackage.version} and ${baseVersion}.`,
     );
-  } else if (comparison <= 0) {
+  } else if (comparison < 0) {
     failures.push(
-      `Pull requests must increase the stable source version above main: base=${baseVersion}, head=${rootPackage.version}.`,
+      `Pull requests must never lower the stable source version: base=${baseVersion}, head=${rootPackage.version}.`,
+    );
+  } else if (comparison === 0 && !isHotfixBranch) {
+    failures.push(
+      `Pull requests must increase the stable source version above main: base=${baseVersion}, head=${rootPackage.version}. ` +
+        `To ship a hotfix as a new build of ${baseVersion} instead, use a fix/* or hotfix/* branch.`,
+    );
+  } else if (comparison === 0) {
+    console.log(
+      `Hotfix branch ${headBranch} keeps version ${baseVersion}; it ships as a new build number.`,
     );
   }
 }
@@ -105,5 +121,5 @@ if (failures.length > 0) {
 }
 
 console.log(
-  `Release version integrity verified: ${rootPackage.version}${baseVersion ? ` > ${baseVersion}` : ''}`,
+  `Release version integrity verified: ${rootPackage.version}${baseVersion && baseVersion !== rootPackage.version ? ` > ${baseVersion}` : ''}`,
 );

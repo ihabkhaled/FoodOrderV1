@@ -66,7 +66,13 @@ git commit -am "chore(release): bump to 1.7.0"
 ```
 
 The `release-integrity` CI job resolves `BASE_VERSION` from `main` and `npm run quality:release`
-**fails the PR** until `package.json` `version` is strictly greater than main's. New feature
+**fails the PR** until `package.json` `version` is strictly greater than main's.
+
+**Hotfix exception:** a PR from a `fix/*` or `hotfix/*` branch may keep the same version as
+`main` — it ships as another build of the current version, and the tag-derived build number
+(`1.8.0-2` → `1.8.0-3`) keeps every merge uniquely identifiable. No branch may ever *lower*
+the version. Direct pushes to `main` are not version-gated at all (the check only runs on
+`pull_request` events); their build number increments automatically from release tags. New feature
 branches bump MINOR by default; use `release:patch`/`release:major` per the density table when
 that fits better. On merge to `main`, the build-number stream above takes over for day-to-day
 builds until the next branch bumps the base again.

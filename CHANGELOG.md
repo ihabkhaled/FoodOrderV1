@@ -38,6 +38,11 @@ The version bump level is decided by prompt density — see [rules/versioning.md
   removed on sign-out.
 - Gave shared application links a preview card with the title, description, and
   logo; previously only the marketing pages had one and `/app` shared bare.
+- Allowed same-version hotfix PRs from `fix/*`/`hotfix/*` branches; they ship as
+  a new build number of the current version instead of demanding a bump.
+- Ran the nine Firestore notification triggers with a single instance to bring
+  reserved regional CPU back under quota; deploys were failing container health
+  checks. Treated quota-starved HTTP 500 like 503 in the callable smoke test.
 
 
 ## [1.7.4] - 2026-07-26
