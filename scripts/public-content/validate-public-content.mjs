@@ -28,6 +28,12 @@ const failures = [];
 const titlesByLocale = new Map();
 const descriptionsByLocale = new Map();
 
+// Deliberately not global: a second copy would survive the single replacement
+// below and be reported as an unsanctioned client script, which is what a
+// duplicated loader deserves.
+const ADSENSE_LOADER =
+  /<script async src="https:\/\/pagead2\.googlesyndication\.com\/pagead\/js\/adsbygoogle\.js\?client=ca-pub-\d{16}" crossorigin="anonymous"><\/script>/u;
+
 const expectIncludes = (html, value, label) => {
   if (!html.includes(value)) failures.push(label);
 };
@@ -57,7 +63,17 @@ for (const page of catalog.pages) {
     expectIncludes(html, 'property="og:image:height" content="630"', `OG height: ${page.id}/${key}`);
     expectIncludes(html, 'name="twitter:card" content="summary_large_image"', `Twitter card: ${page.id}/${key}`);
     expectIncludes(html, 'data-public-prerendered="true"', `prerender marker: ${page.id}/${key}`);
-    if (/<script\b[^>]*\bsrc=/iu.test(html)) failures.push(`client script: ${page.id}/${key}`);
+    // No third-party JavaScript on the public site, with exactly one sanctioned
+    // exception: the AdSense loader, which only an indexable production build
+    // emits. Removing it before the test keeps every other external script
+    // banned instead of loosening the pattern.
+    const withoutSanctionedScripts = html.replace(ADSENSE_LOADER, '');
+    if (/<script\b[^>]*\bsrc=/iu.test(withoutSanctionedScripts)) {
+      failures.push(`client script: ${page.id}/${key}`);
+    }
+    if (!indexable && ADSENSE_LOADER.test(html)) {
+      failures.push(`ad loader outside production: ${page.id}/${key}`);
+    }
     if ((html.match(/<h1\b/giu) || []).length !== 1) failures.push(`H1 count: ${page.id}/${key}`);
     if ((html.match(/hreflang=/giu) || []).length < 25) failures.push(`hreflang set: ${page.id}/${key}`);
     const expectedRobots = indexable ? 'index, follow' : 'noindex, nofollow';

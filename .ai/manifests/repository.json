@@ -1435,8 +1435,8 @@
     },
     {
       "path": "scripts/public-content/validate-public-content.mjs",
-      "bytes": 7743,
-      "hash": "dfbdc2fee126388e1a9f9c6975b9c46c6c031e14fb15d31d07ab41b07d3cba21"
+      "bytes": 8624,
+      "hash": "88aeddfd08af8ecade5dd0b7650af94bfe120734769510780a78c047f3f444f2"
     },
     {
       "path": "scripts/serve-dist.mjs",
