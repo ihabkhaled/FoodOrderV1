@@ -92,7 +92,7 @@
     "@capacitor/status-bar": "^8.0.3",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
-    "firebase": "^12.16.0",
+    "firebase": "^12.17.0",
     "lucide-react": "^1.24.0",
     "nodemailer": "^9.0.3",
     "react": "^19.2.8",
