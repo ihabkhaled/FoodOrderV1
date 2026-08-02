@@ -3,10 +3,12 @@ import {
   buildBucketCollaborateRoute,
   buildBucketShareRoute,
 } from '@/modules/group-orders';
+import { buildOrderSessionCreateRoute } from '@/modules/order-sessions';
 import { buildCreateOrderRoute } from '@/modules/orders';
 import { buildBucketSocialShareRoute } from '@/modules/social';
 import {
   CopyPlus,
+  Repeat,
   Share2,
   ShoppingBasket,
   Trash2,
@@ -91,14 +93,24 @@ export function OwnedBucketCard({
           {t('edit')}
         </Link>
         {bucket.visibility === 'shared' ? (
-          <Link
-            className="button"
-            to={buildBucketCollaborateRoute(bucket.id)}
-            state={BUCKETS_NAVIGATION_STATE}
-          >
-            <Users />
-            {t('collaborate')}
-          </Link>
+          <>
+            <Link
+              className="button"
+              to={buildOrderSessionCreateRoute(bucket.id)}
+              state={BUCKETS_NAVIGATION_STATE}
+            >
+              <Repeat />
+              {t('startOrderRound')}
+            </Link>
+            <Link
+              className="button secondary"
+              to={buildBucketCollaborateRoute(bucket.id)}
+              state={BUCKETS_NAVIGATION_STATE}
+            >
+              <Users />
+              {t('collaborate')}
+            </Link>
+          </>
         ) : (
           <Link
             className="button"

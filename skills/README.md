@@ -12,6 +12,7 @@ playbooks below.
 | Skill                                                        | Use when                                            |
 | ------------------------------------------------------------ | --------------------------------------------------- |
 | [start-version-branch.md](start-version-branch.md)           | Create, checkout, commit, or push a target-version branch |
+| [write-release-notes.md](write-release-notes.md)             | Write the notes every PR, prerelease, and release publishes |
 | [create-feature-module.md](create-feature-module.md)         | A new feature needs its own `src/modules/<name>`    |
 | [create-component.md](create-component.md)                   | New UI-only component                               |
 | [create-container.md](create-container.md)                   | New screen/panel orchestration                      |

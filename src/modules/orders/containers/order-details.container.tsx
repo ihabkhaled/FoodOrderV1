@@ -1,16 +1,18 @@
 import { GroupReceiptSection } from '@/modules/group-orders';
 import { formatDateTime } from '@/shared/helpers';
-import { BackLink, Loading } from '@/shared/ui';
+import { BackLink, FeatureTour, Loading } from '@/shared/ui';
 
 import { OrderActionBar } from '../components/order-action-bar/order-action-bar.component';
 import { OrderLineSummary } from '../components/order-line-summary/order-line-summary.component';
 import { OrderParticipantsSection } from '../components/order-participants-section/order-participants-section.component';
 import { StatusBadge } from '../components/status-badge/status-badge.component';
 import { useOrderDetails } from '../hooks/use-order-details.hook';
+import { useOrderDetailsTour } from '../hooks/use-order-details-tour.hook';
 import { ORDERS_PATH } from '../routes/orders-route-paths.constants';
 
 export function OrderDetailsContainer() {
   const vm = useOrderDetails();
+  const { steps: tourSteps } = useOrderDetailsTour();
 
   if (vm.loading) return <Loading label={vm.t('loading')} />;
   const order = vm.order;
@@ -86,6 +88,15 @@ export function OrderDetailsContainer() {
         onTransition={(status) => {
           void vm.transition(status);
         }}
+      />
+      <FeatureTour
+        page="order-details"
+        steps={tourSteps}
+        nextLabel={vm.t('tourNext')}
+        doneLabel={vm.t('tourDone')}
+        skipLabel={vm.t('tourSkip')}
+        closeLabel={vm.t('close')}
+        skipAllLabel={vm.t('tourSkipAll')}
       />
     </div>
   );

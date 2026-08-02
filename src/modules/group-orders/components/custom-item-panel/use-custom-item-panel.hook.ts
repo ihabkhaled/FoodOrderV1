@@ -11,7 +11,7 @@ const EMPTY_DRAFT: CustomItemDraft = {
   name: '',
   description: '',
   category: '',
-  unitPrice: '0',
+  unitPrice: '',
 };
 
 export interface CustomItemPanelViewModel {

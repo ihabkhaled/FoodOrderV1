@@ -53,4 +53,21 @@ export class FirestoreNotificationService implements NotificationService {
       'markNotificationsReadV150',
     )({ notificationIds });
   }
+
+  async savePushToken(
+    _userId: string,
+    token: string,
+    platform: string,
+  ): Promise<void> {
+    // Token documents are callable-only; clients may never write them directly.
+    await callable<{ token: string; platform: string }, { success: true }>(
+      'savePushTokenV180',
+    )({ token, platform });
+  }
+
+  async removePushToken(_userId: string, token: string): Promise<void> {
+    await callable<{ token: string }, { success: true }>('removePushTokenV180')(
+      { token },
+    );
+  }
 }

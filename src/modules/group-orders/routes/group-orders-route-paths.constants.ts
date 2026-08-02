@@ -7,6 +7,12 @@ export const buildBucketCollaborateRoute = (bucketId: string): string =>
 export const buildBucketShareRoute = (bucketId: string): string =>
   `/buckets/${bucketId}/share`;
 
+export const buildBucketShareMembersRoute = (bucketId: string): string =>
+  `/buckets/${bucketId}/share/members`;
+
+export const buildBucketShareActivityRoute = (bucketId: string): string =>
+  `/buckets/${bucketId}/share/activity`;
+
 /**
  * Cross-module redirect targets. group-orders sits below every other feature
  * module in the dependency graph (buckets and orders both import it), so it

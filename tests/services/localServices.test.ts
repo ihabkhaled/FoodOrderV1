@@ -21,6 +21,14 @@ describe('local integration', () => {
     expect(dashboard.orderCount).toBe(1);
     expect(dashboard.sharedBucketCount).toBe(0);
   });
+  it('reauthenticates only with the exact account email and password', async () => {
+    const auth = new LocalAuthService();
+    const user = await auth.register('Ihab Khaled', 'ihab@example.com', 'Password1', defaults);
+
+    await expect(auth.reauthenticate(user, 'IHAB@example.com', 'Password1')).resolves.toBeUndefined();
+    await expect(auth.reauthenticate(user, 'ihab@example.com', 'WrongPass1')).rejects.toThrow('Invalid email or password.');
+    await expect(auth.reauthenticate(user, 'someone-else@example.com', 'Password1')).rejects.toThrow('Invalid email or password.');
+  });
   it('changes the password after verifying the current one', async () => {
     const auth = new LocalAuthService();
     const user = await auth.register('Ihab Khaled', 'ihab@example.com', 'Password1', defaults);

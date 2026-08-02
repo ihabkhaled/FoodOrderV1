@@ -10,6 +10,7 @@ import type {
 export const PUBLIC_LOCALES = [
   { code: 'en', segment: 'en', htmlLang: 'en', openGraphLocale: 'en_US', direction: 'ltr', label: 'English', contentSource: 'en' },
   { code: 'ar', segment: 'ar', htmlLang: 'ar', openGraphLocale: 'ar_AR', direction: 'rtl', label: 'العربية', contentSource: 'ar' },
+  { code: 'ar-Latn', segment: 'ar-latn', htmlLang: 'ar-Latn', openGraphLocale: 'ar_EG', direction: 'ltr', label: 'Arabic Franco', contentSource: 'ar-Latn' },
   { code: 'it', segment: 'it', htmlLang: 'it', openGraphLocale: 'it_IT', direction: 'ltr', label: 'Italiano', contentSource: 'it' },
   { code: 'fa', segment: 'fa', htmlLang: 'fa', openGraphLocale: 'fa_IR', direction: 'rtl', label: 'فارسی', contentSource: 'fa' },
   { code: 'fr', segment: 'fr', htmlLang: 'fr', openGraphLocale: 'fr_FR', direction: 'ltr', label: 'Français', contentSource: 'fr' },

@@ -5,6 +5,7 @@ import { PublicHeader } from '../components/public-header.component';
 import { PublicPage } from '../components/public-page.component';
 import { PublicSystemPage } from '../components/public-system-page.component';
 import { usePublicContent } from '../hooks/use-public-content.hook';
+import { usePublicTheme } from '../hooks/use-public-theme.hook';
 import { buildLocalizedPath } from '../routes/public-content-route-registry.helper';
 import type { PublicContentContainerProps } from '../types/public-content.types';
 
@@ -12,6 +13,7 @@ export function PublicContentContainer({
   applicationPath,
 }: PublicContentContainerProps) {
   const viewModel = usePublicContent();
+  const { theme, toggleTheme } = usePublicTheme();
   const localizedApplicationPath = buildLocalizedPath(
     applicationPath,
     viewModel.locale.code,
@@ -20,13 +22,15 @@ export function PublicContentContainer({
     <div
       className="public-site"
       role="document"
-      aria-label={viewModel.site.brandName}
+      aria-label={viewModel.ui.brandName}
       lang={viewModel.locale.htmlLang}
       dir={viewModel.locale.direction}
       data-ad-eligible={viewModel.page?.definition.adEligible ? 'true' : 'false'}
     >
       <PublicHeader
-        brandName={viewModel.site.brandName}
+        brandName={viewModel.ui.brandName}
+        theme={theme}
+        onToggleTheme={toggleTheme}
         homePath={viewModel.homePath}
         applicationPath={localizedApplicationPath}
         currentLocaleLabel={viewModel.locale.label}
@@ -51,7 +55,7 @@ export function PublicContentContainer({
         />
       ) : null}
       <PublicFooter
-        brandName={viewModel.site.brandName}
+        brandName={viewModel.ui.brandName}
         homePath={viewModel.homePath}
         items={viewModel.footerItems}
         ui={viewModel.ui}

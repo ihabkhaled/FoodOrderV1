@@ -63,5 +63,9 @@
   "notifications": "通知",
   "unreadNotifications": "件の未読",
   "markAllRead": "すべて既読にする",
-  "noNotifications": "通知はまだありません。"
+  "noNotifications": "通知はまだありません。",
+  "requestsTitle": "リクエスト",
+  "friendsHubHint": "メールで探し、申請を送り、友だちを管理します。",
+  "requestsHubHint": "返事を待っている友だち・グループ・メニューの招待。",
+  "groupsHubHint": "グループを作り、メニューを全員に一度で共有します。"
 }

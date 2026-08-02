@@ -4,6 +4,7 @@ export { buildPublicContentViewModel } from './helpers/build-public-content-view
 export { buildPublicPageMetadata } from './helpers/build-public-metadata.helper';
 export { getPublicContentCatalog } from './helpers/public-content-catalog.helper';
 export { getPublicPageCopy } from './helpers/public-content-catalog.helper';
+export { toPublicLocale } from './helpers/public-locale.helper';
 export { PublicContentRoutes } from './routes/public-content.routes';
 export {
   buildLocalizedPath,

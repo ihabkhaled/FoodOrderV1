@@ -41,6 +41,7 @@ const APP_SHELL_PREFIXES = new Set([
 const LOCALE_PREFIXES = new Set([
   'en',
   'ar',
+  'ar-latn',
   'it',
   'fa',
   'fr',

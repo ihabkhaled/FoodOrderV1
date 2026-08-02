@@ -110,6 +110,43 @@ export const systemPath = (routeId, locale) =>
 export const canonicalUrl = (catalog, pathname) =>
   new URL(pathname, catalog.site.canonicalOrigin).toString();
 
+/**
+ * The Open Graph and Twitter tags that turn a pasted link into a titled card
+ * with a description and the logo.
+ *
+ * Chat apps and social networks read these straight from the served HTML and
+ * never run the bundle, so a document without them shares as a bare URL. That
+ * made the application shell the worst offender: `/app` is the link people
+ * actually paste, and it was the one page with no card at all.
+ */
+export const renderSocialCard = ({
+  catalog,
+  locale,
+  title,
+  description,
+  url,
+  imageAlt = title,
+}) => {
+  const image = canonicalUrl(catalog, catalog.site.socialImagePath);
+  return `<meta property="og:type" content="website" />
+<meta property="og:site_name" content="${escapeHtml(uiCopy(catalog, locale).brandName)}" />
+<meta property="og:locale" content="${escapeHtml(locale.openGraphLocale)}" />
+<meta property="og:title" content="${escapeHtml(title)}" />
+<meta property="og:description" content="${escapeHtml(description)}" />
+<meta property="og:url" content="${escapeHtml(url)}" />
+<meta property="og:image" content="${escapeHtml(image)}" />
+<meta property="og:image:secure_url" content="${escapeHtml(image)}" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="${escapeHtml(imageAlt)}" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="${escapeHtml(title)}" />
+<meta name="twitter:description" content="${escapeHtml(description)}" />
+<meta name="twitter:image" content="${escapeHtml(image)}" />
+<meta name="twitter:image:alt" content="${escapeHtml(imageAlt)}" />`;
+};
+
 export const pageCopy = (page, locale) => page.copy[locale.contentSource];
 export const uiCopy = (catalog, locale) => catalog.ui[locale.contentSource];
 export const systemCopy = (catalog, routeId, locale) =>
@@ -120,7 +157,7 @@ export const validateCatalog = (catalog) => {
   if (!String(catalog.site?.canonicalOrigin).startsWith('https://')) {
     failures.push('site.canonicalOrigin must be HTTPS');
   }
-  if (catalog.locales?.length !== 12) failures.push('exactly 12 locales are required');
+  if (catalog.locales?.length !== 13) failures.push('exactly 13 locales are required');
   if (catalog.pages?.length !== 10) failures.push('exactly 10 public pages are required');
 
   const localeCodes = new Set();
@@ -212,10 +249,11 @@ const renderHeader = (catalog, locale, page, systemRouteId) => {
   const primaryLinks = renderNavigationLinks(catalog, locale, page, true);
   return `<a class="public-skip-link" href="#public-main">${escapeHtml(ui.skipToContentLabel)}</a>
 <header class="public-header"><div class="public-header__inner">
-<a class="public-brand" href="${escapeHtml(home)}"><span class="public-brand__mark" aria-hidden="true">FO</span><span>${escapeHtml(catalog.site.brandName)}</span></a>
+<a class="public-brand" href="${escapeHtml(home)}"><span class="public-brand__mark" aria-hidden="true">FO</span><span>${escapeHtml(uiCopy(catalog, locale).brandName)}</span></a>
 <nav class="public-navigation public-navigation--desktop" aria-label="${escapeHtml(ui.primaryNavigationLabel)}">${primaryLinks}</nav>
 <div class="public-header__actions">
 <details class="public-language-menu"><summary><span class="public-language-menu__prefix">${escapeHtml(ui.languageLabel)}: </span><span>${escapeHtml(locale.label)}</span></summary><ul>${renderLocaleLinks(catalog, locale, page, systemRouteId)}</ul></details>
+<button class="public-theme-toggle" type="button" data-public-theme-toggle aria-label="${escapeHtml(ui.themeToggleLabel)}" title="${escapeHtml(ui.themeToggleLabel)}" aria-pressed="false"><span class="public-theme-toggle__icon" aria-hidden="true"></span></button>
 <a class="public-button public-button--small" href="${escapeHtml(localizedApplicationPath(catalog, locale))}">${escapeHtml(ui.openApplicationLabel)}</a>
 <details class="public-mobile-menu"><summary><span class="public-mobile-menu__icon" aria-hidden="true">☰</span><span class="public-mobile-menu__label">${escapeHtml(ui.mobileNavigationLabel)}</span></summary><nav aria-label="${escapeHtml(ui.primaryNavigationLabel)}">${primaryLinks}</nav></details>
 </div></div></header>`;
@@ -241,10 +279,10 @@ const renderFooter = (catalog, locale, currentPage) => {
     .join('');
   const feedPath = `/${[locale.segment, 'feed.xml'].filter(Boolean).join('/')}`;
   return `<footer class="public-footer"><div class="public-footer__inner"><div>
-<a class="public-brand" href="${escapeHtml(localePath(catalog.pages[0], locale))}"><span class="public-brand__mark" aria-hidden="true">FO</span><span>${escapeHtml(catalog.site.brandName)}</span></a>
+<a class="public-brand" href="${escapeHtml(localePath(catalog.pages[0], locale))}"><span class="public-brand__mark" aria-hidden="true">FO</span><span>${escapeHtml(uiCopy(catalog, locale).brandName)}</span></a>
 <p>${escapeHtml(ui.footerTagline)}</p></div>
 <nav aria-label="${escapeHtml(ui.footerNavigationLabel)}">${links}<a href="${escapeHtml(feedPath)}">RSS</a></nav></div>
-<p class="public-footer__legal">© 2026 ${escapeHtml(catalog.site.brandName)}. ${escapeHtml(ui.allRightsReservedLabel)}</p></footer>`;
+<p class="public-footer__legal">© 2026 ${escapeHtml(uiCopy(catalog, locale).brandName)}. ${escapeHtml(ui.allRightsReservedLabel)}</p></footer>`;
 };
 
 const renderSections = (copy) => {
@@ -307,7 +345,7 @@ const structuredData = (catalog, locale, page) => {
     {
       '@context': 'https://schema.org',
       '@type': 'Organization',
-      name: catalog.site.brandName,
+      name: uiCopy(catalog, locale).brandName,
       url: catalog.site.canonicalOrigin,
       logo: canonicalUrl(catalog, '/icon.svg'),
       sameAs: [catalog.site.repositoryUrl],
@@ -318,14 +356,14 @@ const structuredData = (catalog, locale, page) => {
       {
         '@context': 'https://schema.org',
         '@type': 'WebSite',
-        name: catalog.site.brandName,
+        name: uiCopy(catalog, locale).brandName,
         url: catalog.site.canonicalOrigin,
         inLanguage: locale.htmlLang,
       },
       {
         '@context': 'https://schema.org',
         '@type': 'SoftwareApplication',
-        name: catalog.site.brandName,
+        name: uiCopy(catalog, locale).brandName,
         applicationCategory: 'LifestyleApplication',
         operatingSystem: 'Web, Android, iOS',
         description: copy.description,
@@ -361,6 +399,24 @@ const structuredData = (catalog, locale, page) => {
   return data;
 };
 
+/**
+ * Google AdSense loader, driven by the same `ADSENSE_PUBLISHER_ID` that writes
+ * `ads.txt`, so the two can never disagree.
+ *
+ * Only indexable production pages carry it: the app shell is noindex and sits
+ * behind a login, and `validate-public-content.mjs` fails the build if the
+ * loader ever leaks into it. Google rotates this file continuously and
+ * publishes no hash, so it intentionally carries no `integrity` attribute —
+ * that is the official snippet.
+ */
+export const adsensePublisherId = (environment = process.env) => {
+  const id = String(environment.ADSENSE_PUBLISHER_ID || '').trim();
+  return /^pub-\d{16}$/u.test(id) ? id : null;
+};
+
+const adsenseScript = (publisherId) =>
+  `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-${publisherId}" crossorigin="anonymous"></script>`;
+
 const renderHead = ({ catalog, locale, page, stylesheetLinks, indexable }) => {
   const copy = pageCopy(page, locale);
   const canonical = canonicalUrl(catalog, localePath(page, locale));
@@ -380,13 +436,13 @@ const renderHead = ({ catalog, locale, page, stylesheetLinks, indexable }) => {
         `<script type="application/ld+json">${JSON.stringify(entry).replaceAll('<', '\\u003c')}</script>`,
     )
     .join('\n');
-  const image = canonicalUrl(catalog, catalog.site.socialImagePath);
   const feedUrl = canonicalUrl(
     catalog,
     `/${[locale.segment, 'feed.xml'].filter(Boolean).join('/')}`,
   );
   return `<meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<script>try{var t=localStorage.getItem("foodorder:public:theme");if(t==="dark"||t==="light")document.documentElement.dataset.theme=t}catch(e){}</script>
 <meta name="theme-color" content="#f97316" />
 <meta name="robots" content="${robots}" />
 <meta name="googlebot" content="${robots}" />
@@ -394,41 +450,44 @@ const renderHead = ({ catalog, locale, page, stylesheetLinks, indexable }) => {
 <meta name="description" content="${escapeHtml(copy.description)}" />
 <link rel="canonical" href="${escapeHtml(canonical)}" />
 ${alternates}
-<meta property="og:type" content="website" />
-<meta property="og:site_name" content="${escapeHtml(catalog.site.brandName)}" />
-<meta property="og:locale" content="${escapeHtml(locale.openGraphLocale)}" />
-<meta property="og:title" content="${escapeHtml(copy.seoTitle)}" />
-<meta property="og:description" content="${escapeHtml(copy.description)}" />
-<meta property="og:url" content="${escapeHtml(canonical)}" />
-<meta property="og:image" content="${escapeHtml(image)}" />
-<meta property="og:image:width" content="1200" />
-<meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content="${escapeHtml(copy.heading)}" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="${escapeHtml(copy.seoTitle)}" />
-<meta name="twitter:description" content="${escapeHtml(copy.description)}" />
-<meta name="twitter:image" content="${escapeHtml(image)}" />
-<meta name="twitter:image:alt" content="${escapeHtml(copy.heading)}" />
+${renderSocialCard({
+    catalog,
+    locale,
+    title: copy.seoTitle,
+    description: copy.description,
+    url: canonical,
+    imageAlt: copy.heading,
+  })}
 <link rel="manifest" href="/manifest.webmanifest" />
 <link rel="icon" href="/favicon.ico" sizes="any" />
 <link rel="icon" href="/icon.svg" type="image/svg+xml" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-<link rel="alternate" type="application/rss+xml" title="${escapeHtml(`${catalog.site.brandName} — ${locale.label}`)}" href="${escapeHtml(feedUrl)}" />
+<link rel="alternate" type="application/rss+xml" title="${escapeHtml(`${uiCopy(catalog, locale).brandName} — ${locale.label}`)}" href="${escapeHtml(feedUrl)}" />
 ${stylesheetLinks.join('\n')}
-${jsonLd}`;
+${jsonLd}
+${indexable && adsensePublisherId() ? adsenseScript(adsensePublisherId()) : ''}`;
 };
 
 const renderSystemHead = (catalog, locale, routeId, stylesheetLinks) => {
   const copy = systemCopy(catalog, routeId, locale);
   return `<meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<script>try{var t=localStorage.getItem("foodorder:public:theme");if(t==="dark"||t==="light")document.documentElement.dataset.theme=t}catch(e){}</script>
 <meta name="theme-color" content="#f97316" />
 <meta name="robots" content="noindex, nofollow, noarchive" />
 <meta name="googlebot" content="noindex, nofollow, noarchive" />
 <title>${escapeHtml(copy.seoTitle)}</title>
 <meta name="description" content="${escapeHtml(copy.description)}" />
+${renderSocialCard({
+    catalog,
+    locale,
+    title: copy.seoTitle,
+    description: copy.description,
+    url: canonicalUrl(catalog, systemPath(routeId, locale)),
+  })}
 <link rel="icon" href="/favicon.ico" sizes="any" />
 <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 ${stylesheetLinks.join('\n')}`;
 };
 
@@ -449,11 +508,12 @@ export const renderPublicDocument = ({
 ${renderHead({ catalog, locale, page, stylesheetLinks, indexable })}
 </head>
 <body>
-<div id="root" data-public-prerendered="true"><div class="public-site" role="document" aria-label="${escapeHtml(catalog.site.brandName)}" lang="${escapeHtml(locale.htmlLang)}" dir="${locale.direction}" data-ad-eligible="${page.adEligible ? 'true' : 'false'}">
+<div id="root" data-public-prerendered="true"><div class="public-site" role="document" aria-label="${escapeHtml(uiCopy(catalog, locale).brandName)}" lang="${escapeHtml(locale.htmlLang)}" dir="${locale.direction}" data-ad-eligible="${page.adEligible ? 'true' : 'false'}">
 ${renderHeader(catalog, locale, page, 'not-found')}
 ${renderPageMain(catalog, locale, page)}
 ${renderFooter(catalog, locale, page)}
 </div></div>
+<script>(function(){var b=document.querySelector("[data-public-theme-toggle]");if(!b)return;var r=document.documentElement;function cur(){var a=r.dataset.theme;return a==="dark"||a==="light"?a:(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}function sync(){b.setAttribute("aria-pressed",String(cur()==="dark"))}sync();b.addEventListener("click",function(){var n=cur()==="dark"?"light":"dark";r.dataset.theme=n;try{localStorage.setItem("foodorder:public:theme",n)}catch(e){}sync()})})()</script>
 </body>
 </html>
 `;
@@ -469,11 +529,12 @@ export const renderSystemDocument = ({
 ${renderSystemHead(catalog, locale, routeId, stylesheetLinks)}
 </head>
 <body>
-<div id="root" data-public-prerendered="true"><div class="public-site" role="document" aria-label="${escapeHtml(catalog.site.brandName)}" lang="${escapeHtml(locale.htmlLang)}" dir="${locale.direction}" data-ad-eligible="false">
+<div id="root" data-public-prerendered="true"><div class="public-site" role="document" aria-label="${escapeHtml(uiCopy(catalog, locale).brandName)}" lang="${escapeHtml(locale.htmlLang)}" dir="${locale.direction}" data-ad-eligible="false">
 ${renderHeader(catalog, locale, null, routeId)}
 ${renderSystemMain(catalog, locale, routeId)}
 ${renderFooter(catalog, locale, null)}
 </div></div>
+<script>(function(){var b=document.querySelector("[data-public-theme-toggle]");if(!b)return;var r=document.documentElement;function cur(){var a=r.dataset.theme;return a==="dark"||a==="light"?a:(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}function sync(){b.setAttribute("aria-pressed",String(cur()==="dark"))}sync();b.addEventListener("click",function(){var n=cur()==="dark"?"light":"dark";r.dataset.theme=n;try{localStorage.setItem("foodorder:public:theme",n)}catch(e){}sync()})})()</script>
 </body>
 </html>
 `;
@@ -526,7 +587,7 @@ export const buildRssFeed = (catalog, locale) => {
       return `<item><title>${escapeXml(copy.seoTitle)}</title><description>${escapeXml(copy.description)}</description><link>${escapeXml(url)}</link><guid isPermaLink="true">${escapeXml(url)}</guid><category>${escapeXml(copy.navigationLabel)}</category></item>`;
     })
     .join('');
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>${escapeXml(`${catalog.site.brandName} — ${locale.label}`)}</title><link>${escapeXml(canonicalUrl(catalog, localePath(catalog.pages[0], locale)))}</link><description>${escapeXml(uiCopy(catalog, locale).footerTagline)}</description><language>${escapeXml(locale.htmlLang)}</language><atom:link href="${escapeXml(canonicalUrl(catalog, selfPath))}" rel="self" type="application/rss+xml" />${items}</channel></rss>\n`;
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>${escapeXml(`${uiCopy(catalog, locale).brandName} — ${locale.label}`)}</title><link>${escapeXml(canonicalUrl(catalog, localePath(catalog.pages[0], locale)))}</link><description>${escapeXml(uiCopy(catalog, locale).footerTagline)}</description><language>${escapeXml(locale.htmlLang)}</language><atom:link href="${escapeXml(canonicalUrl(catalog, selfPath))}" rel="self" type="application/rss+xml" />${items}</channel></rss>\n`;
 };
 
 export const buildRobots = (catalog, indexable) => {

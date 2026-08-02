@@ -22,3 +22,8 @@ ios/App/output/
 
 # UI review screenshots (local only)
 ui-shots/
+.playwright-mcp/
+google-services.json
+
+# Agent tooling state, including scratch git worktrees
+.claude/

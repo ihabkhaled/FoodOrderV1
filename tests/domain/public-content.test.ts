@@ -11,18 +11,21 @@ import {
 } from '@/modules/public-content';
 
 describe('public content registry and metadata', () => {
-  it('owns 120 unique canonical public paths', () => {
+  it('owns one unique canonical public path per locale and route', () => {
     const paths = PUBLIC_ROUTE_DEFINITIONS.flatMap((route) =>
       PUBLIC_LOCALES.map((locale) =>
         buildPublicContentPath(route.id, locale.code),
       ),
     );
 
-    expect(paths).toHaveLength(120);
-    expect(new Set(paths).size).toBe(120);
+    const expected = PUBLIC_ROUTE_DEFINITIONS.length * PUBLIC_LOCALES.length;
+    expect(paths).toHaveLength(expected);
+    expect(new Set(paths).size).toBe(expected);
     expect(paths).toContain('/en');
     expect(paths).toContain('/en/about');
     expect(paths).toContain('/ar');
+    expect(paths).toContain('/ar-latn');
+    expect(paths).toContain('/ar-latn/faq');
     expect(paths).toContain('/pt-br/split-bill-and-receipts');
     expect(paths).toContain('/zh-cn/faq');
     expect(paths).not.toContain('/');
@@ -46,7 +49,7 @@ describe('public content registry and metadata', () => {
     expect(metadata.canonical).toBe(
       `https://food-order-v1-peach.vercel.app${buildPublicContentPath('faq', locale.code)}`,
     );
-    expect(metadata.alternates).toHaveLength(13);
+    expect(metadata.alternates).toHaveLength(PUBLIC_LOCALES.length + 1);
     expect(metadata.alternates.at(-1)?.hrefLang).toBe('x-default');
     expect(metadata.socialImage).toBe(
       'https://food-order-v1-peach.vercel.app/social-preview.png',

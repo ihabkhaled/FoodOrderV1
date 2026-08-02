@@ -7,6 +7,7 @@ import {
   orderLifecycleService,
 } from '@/modules/data-access';
 import { useApp } from '@/modules/session';
+import { ANALYTICS_EVENT, telemetryRecorder } from '@/modules/telemetry';
 import { useNavigate, useParams } from '@/packages/router';
 import type { MessageKey } from '@/shared/i18n';
 
@@ -72,6 +73,13 @@ export function useOrderDetails(): OrderDetailsViewModel {
       const created = order.participants
         ? await orderLifecycleService.repeatGroupOrder(user, order.id)
         : await dataService.createOrder(user.id, buildRepeatedOrderDraft(order));
+      telemetryRecorder.record(ANALYTICS_EVENT.repeatSelectionUsed, {
+        status: created.status,
+        participantCount: order.participants?.length ?? 1,
+        itemCount: order.lines.length,
+        isRecurring: false,
+        isGuest: false,
+      });
       showToast(t('draftFromOrder'), 'success');
       await navigate(buildOrderDetailsRoute(created.id));
     } catch (error_) {

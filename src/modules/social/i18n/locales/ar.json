@@ -63,5 +63,9 @@
   "notifications": "الإشعارات",
   "unreadNotifications": "غير مقروء",
   "markAllRead": "تحديد الكل كمقروء",
-  "noNotifications": "لا توجد إشعارات بعد."
+  "noNotifications": "لا توجد إشعارات بعد.",
+  "requestsTitle": "الطلبات",
+  "friendsHubHint": "ابحث بالبريد الإلكتروني وأرسل الطلبات وأدر أصدقاءك.",
+  "requestsHubHint": "دعوات الأصدقاء والمجموعات والقوائم بانتظار ردك.",
+  "groupsHubHint": "أنشئ مجموعات وشارك القوائم مع الجميع دفعة واحدة."
 }

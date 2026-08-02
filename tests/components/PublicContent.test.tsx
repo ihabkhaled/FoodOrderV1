@@ -28,9 +28,9 @@ describe('PublicContentRoutes', () => {
     );
     expect(screen.getByRole('contentinfo')).toBeVisible();
     expect(
-      screen.getByRole('document', { name: 'Gama3 Orderak' }),
+      screen.getByRole('document', { name: 'FoodOrder | Collect Your Order' }),
     ).toHaveAttribute('dir', 'ltr');
-    expect(screen.getByRole('document', { name: 'Gama3 Orderak' })).toHaveAttribute(
+    expect(screen.getByRole('document', { name: 'FoodOrder | Collect Your Order' })).toHaveAttribute(
       'data-ad-eligible',
       'true',
     );
@@ -43,7 +43,7 @@ describe('PublicContentRoutes', () => {
       'ما تحتاج إلى معرفته قبل بدء طلب جماعي',
     );
     expect(
-      screen.getByRole('document', { name: 'Gama3 Orderak' }),
+      screen.getByRole('document', { name: 'FoodOrder | جمع أوردرك' }),
     ).toHaveAttribute('dir', 'rtl');
     fireEvent.click(screen.getByText('العربية', { selector: 'summary > span' }));
     for (const language of [
@@ -66,14 +66,14 @@ describe('PublicContentRoutes', () => {
 
   it('marks policy and system pages as advertising-ineligible', () => {
     const { unmount } = renderPublicRoute('/en/privacy');
-    expect(screen.getByRole('document', { name: 'Gama3 Orderak' })).toHaveAttribute(
+    expect(screen.getByRole('document', { name: 'FoodOrder | Collect Your Order' })).toHaveAttribute(
       'data-ad-eligible',
       'false',
     );
     unmount();
 
     renderPublicRoute('/en/does-not-exist');
-    expect(screen.getByRole('document', { name: 'Gama3 Orderak' })).toHaveAttribute(
+    expect(screen.getByRole('document', { name: 'FoodOrder | Collect Your Order' })).toHaveAttribute(
       'data-ad-eligible',
       'false',
     );

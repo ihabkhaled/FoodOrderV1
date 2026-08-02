@@ -42,7 +42,8 @@ export interface BucketsViewModel {
   query: string;
   scope: BucketScope;
   updateSearch: (key: 'q' | 'scope', value: string) => void;
-  loading: boolean;
+  ownedLoading: boolean;
+  sharedLoading: boolean;
   initialError: unknown;
   refresh: () => Promise<void>;
   totalLoaded: number;
@@ -129,7 +130,8 @@ export function useBuckets(): BucketsViewModel {
     query,
     scope,
     updateSearch,
-    loading: owned.loading && shared.loading,
+    ownedLoading: owned.loading,
+    sharedLoading: shared.loading,
     initialError,
     refresh,
     totalLoaded: owned.items.length + shared.items.length,

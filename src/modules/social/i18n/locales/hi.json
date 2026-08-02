@@ -63,5 +63,9 @@
   "notifications": "सूचनाएँ",
   "unreadNotifications": "अपठित",
   "markAllRead": "सभी को पढ़ा हुआ चिह्नित करें",
-  "noNotifications": "अभी कोई सूचना नहीं।"
+  "noNotifications": "अभी कोई सूचना नहीं।",
+  "requestsTitle": "अनुरोध",
+  "friendsHubHint": "ईमेल से खोजें, अनुरोध भेजें और अपने मित्र प्रबंधित करें।",
+  "requestsHubHint": "मित्र, समूह और मेन्यू के न्योते आपके जवाब की प्रतीक्षा में।",
+  "groupsHubHint": "समूह बनाएँ और मेन्यू सबके साथ एक साथ साझा करें।"
 }

@@ -72,6 +72,29 @@ export const saveSidebarCollapsed = async (collapsed: boolean): Promise<void> =>
   await setPreference(SIDEBAR_KEY, collapsed ? 'true' : 'false');
 };
 
+/**
+ * Whether this device has already seen the notification explainer. The OS
+ * prompt is only ever raised from a deliberate user action, never on load.
+ */
+const NOTIFICATION_PROMPT_KEY = 'ui:notification-prompt-seen';
+export const loadNotificationPromptSeen = async (): Promise<boolean> =>
+  (await getPreference(NOTIFICATION_PROMPT_KEY)) === 'true';
+export const saveNotificationPromptSeen = async (): Promise<void> => {
+  await setPreference(NOTIFICATION_PROMPT_KEY, 'true');
+};
+
+/**
+ * Marks that the app has been opened before, and reports whether it had been.
+ * The first run belongs to the guided tours, so the notification explainer
+ * waits for a later visit rather than stacking two dialogs on a new account.
+ */
+const APP_OPENED_KEY = 'ui:app-opened-before';
+export const markAppOpenedAndWasReturning = async (): Promise<boolean> => {
+  const opened = (await getPreference(APP_OPENED_KEY)) === 'true';
+  if (!opened) await setPreference(APP_OPENED_KEY, 'true');
+  return opened;
+};
+
 /** The next theme in a system → light → dark → system cycle. */
 export const nextTheme = (current: Theme): Theme =>
   current === 'system' ? 'light' : current === 'light' ? 'dark' : 'system';

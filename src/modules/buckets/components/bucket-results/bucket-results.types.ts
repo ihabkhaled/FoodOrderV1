@@ -11,6 +11,9 @@ export interface BucketResultsProps {
   readonly t: (key: MessageKey) => string;
   readonly ownedItems: Bucket[];
   readonly sharedItems: Bucket[];
+  /** First page of each collection resolves independently. */
+  readonly ownedLoading: boolean;
+  readonly sharedLoading: boolean;
   readonly ownedLoadingMore: boolean;
   readonly sharedLoadingMore: boolean;
   readonly ownedHasMore: boolean;

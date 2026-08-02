@@ -141,6 +141,19 @@ export class LocalAuthService implements AuthService {
     notifyAuth();
   }
 
+  async reauthenticate(
+    user: SessionUser,
+    email: string,
+    password: string,
+  ): Promise<void> {
+    const record = readDatabase().users[user.id];
+    const matchesEmail =
+      record?.profile.email.toLowerCase() === email.trim().toLowerCase();
+    if (!record || !matchesEmail || !(await matchesRecordPassword(record, password))) {
+      throw new Error('Invalid email or password.');
+    }
+  }
+
   async deleteAccount(_user: SessionUser): Promise<void> {
     // Local credentials live in the user record removed by deleteAllUserData.
     removeWebStorage(SESSION_KEY);

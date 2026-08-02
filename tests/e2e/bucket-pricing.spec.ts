@@ -1,5 +1,11 @@
 import { expect, type Page, test } from '@playwright/test';
 
+import { suppressFeatureTours } from './helpers/featureTours';
+
+test.beforeEach(async ({ page }) => {
+  await suppressFeatureTours(page);
+});
+
 const DATABASE_KEY = 'foodorder:v1:database';
 const SESSION_KEY = 'foodorder:v1:session';
 const NOW = '2026-07-15T01:30:00.000Z';
@@ -111,13 +117,18 @@ test.describe('v1.3.4 bucket-owned pricing', () => {
       })
       .toBe(2);
     const buckets = await readBuckets(page);
-    const original = buckets.find((bucket) => bucket.title === 'Private pricing');
-    const copied = buckets.find(
-      (bucket) => bucket.title === 'Private pricing (copy)',
+    // A bucket is a reusable template: duplicating keeps the exact title.
+    const sameTitle = buckets.filter(
+      (bucket) => bucket.title === 'Private pricing',
     );
-    expect(original).toBeDefined();
-    expect(copied?.pricingPolicy).toEqual(expectedPricing);
-    const originalId = original?.id ?? '';
+    expect(sameTitle).toHaveLength(2);
+    expect(
+      buckets.some((bucket) => bucket.title.includes('(copy)')),
+    ).toBe(false);
+    for (const bucket of sameTitle) {
+      expect(bucket.pricingPolicy).toEqual(expectedPricing);
+    }
+    const originalId = sameTitle[0]?.id ?? '';
     expect(originalId).not.toBe('');
 
     await page.goto(`/buckets/${originalId}/edit`);

@@ -16,6 +16,11 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/app/providers/vercel-insights.container.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/app/router/app-route-paths.constants.ts",
       "tests": [],
       "relationship": "inferred"
@@ -67,6 +72,11 @@
     },
     {
       "source": "src/app/shell/components/toast-viewport/toast-viewport.component.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/app/shell/helpers/notification-mirror.helper.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -236,12 +246,22 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/buckets/hooks/use-bucket-editor-tour.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/buckets/hooks/use-bucket-editor.hook.ts",
       "tests": [],
       "relationship": "inferred"
     },
     {
       "source": "src/modules/buckets/hooks/use-bucket-mutations.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/buckets/hooks/use-buckets-tour.hook.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -282,6 +302,11 @@
     },
     {
       "source": "src/modules/dashboard/containers/dashboard.container.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/dashboard/hooks/use-dashboard-tour.hook.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -711,6 +736,16 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/group-orders/containers/bucket-share-activity.container.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/group-orders/containers/bucket-share-members.container.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/group-orders/containers/bucket-share.container.tsx",
       "tests": [],
       "relationship": "inferred"
@@ -721,12 +756,37 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/group-orders/hooks/use-bucket-collaborate-tour.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/group-orders/hooks/use-bucket-collaborate.hook.ts",
       "tests": [],
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/group-orders/hooks/use-bucket-share-activity-tour.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/group-orders/hooks/use-bucket-share-members-tour.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/group-orders/hooks/use-bucket-share-tour.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/group-orders/hooks/use-bucket-share.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/group-orders/hooks/use-join-bucket-tour.hook.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -737,6 +797,11 @@
     },
     {
       "source": "src/modules/group-orders/i18n/group-order-messages.constants.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/group-orders/i18n/locales/ar-Latn.json",
       "tests": [],
       "relationship": "inferred"
     },
@@ -911,7 +976,22 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/order-sessions/hooks/use-create-order-session-tour.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/order-sessions/hooks/use-create-order-session.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/order-sessions/hooks/use-order-session-details-tour.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/order-sessions/hooks/use-order-sessions-tour.hook.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -927,6 +1007,11 @@
     },
     {
       "source": "src/modules/order-sessions/hooks/use-session-lifecycle-confirmation.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/order-sessions/i18n/locales/ar-Latn.json",
       "tests": [],
       "relationship": "inferred"
     },
@@ -1066,12 +1151,27 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/orders/hooks/use-create-order-tour.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/orders/hooks/use-create-order.hook.ts",
       "tests": [],
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/orders/hooks/use-order-details-tour.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/orders/hooks/use-order-details.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/orders/hooks/use-orders-tour.hook.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -1132,6 +1232,11 @@
     },
     {
       "source": "src/modules/public-content/content/contact-form.locales.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/public-content/content/locales/ar-Latn.json",
       "tests": [],
       "relationship": "inferred"
     },
@@ -1211,6 +1316,11 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/public-content/helpers/public-locale.helper.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/public-content/hooks/use-contact-form.hook.ts",
       "tests": [],
       "relationship": "inferred"
@@ -1222,6 +1332,11 @@
     },
     {
       "source": "src/modules/public-content/hooks/use-public-content.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/public-content/hooks/use-public-theme.hook.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -1277,6 +1392,11 @@
     },
     {
       "source": "src/modules/session-invites/hooks/use-session-invite.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/session-invites/i18n/locales/ar-Latn.json",
       "tests": [],
       "relationship": "inferred"
     },
@@ -1431,7 +1551,27 @@
       "relationship": "inferred"
     },
     {
-      "source": "src/modules/settings/containers/settings.container.tsx",
+      "source": "src/modules/settings/containers/settings-account.container.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/settings/containers/settings-hub.container.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/settings/containers/settings-preferences.container.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/settings/containers/settings-privacy.container.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/settings/containers/settings-security.container.tsx",
       "tests": [],
       "relationship": "inferred"
     },
@@ -1446,7 +1586,52 @@
       "relationship": "inferred"
     },
     {
-      "source": "src/modules/settings/hooks/use-settings.hook.ts",
+      "source": "src/modules/settings/hooks/use-settings-account-tour.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/settings/hooks/use-settings-account.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/settings/hooks/use-settings-hub.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/settings/hooks/use-settings-preferences-tour.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/settings/hooks/use-settings-preferences.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/settings/hooks/use-settings-privacy-tour.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/settings/hooks/use-settings-privacy.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/settings/hooks/use-settings-security-tour.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/settings/hooks/use-settings-tour.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/settings/i18n/locales/ar-Latn.json",
       "tests": [],
       "relationship": "inferred"
     },
@@ -1606,6 +1791,21 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/social/containers/social-friends.container.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/social/containers/social-groups.container.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/social/containers/social-requests.container.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/social/containers/social.container.tsx",
       "tests": [],
       "relationship": "inferred"
@@ -1616,12 +1816,42 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/social/hooks/use-bucket-social-share-tour.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/social/hooks/use-bucket-social-share.hook.ts",
       "tests": [],
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/social/hooks/use-social-friends-tour.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/social/hooks/use-social-groups-tour.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/social/hooks/use-social-requests-tour.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/social/hooks/use-social-tour.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/social/hooks/use-social.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/social/i18n/locales/ar-Latn.json",
       "tests": [],
       "relationship": "inferred"
     },
@@ -1716,7 +1946,17 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/telemetry/adapters/telemetry-buffer.adapter.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/telemetry/adapters/telemetry-consent.adapter.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/telemetry/adapters/telemetry-recorder.adapter.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -1761,12 +2001,22 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/packages/capacitor-local-notifications/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/packages/capacitor-network/index.ts",
       "tests": [],
       "relationship": "inferred"
     },
     {
       "source": "src/packages/capacitor-preferences/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/packages/capacitor-push-notifications/index.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -1831,6 +2081,16 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/packages/vercel-analytics/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/packages/vercel-speed-insights/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/packages/virtuoso/index.ts",
       "tests": [],
       "relationship": "inferred"
@@ -1886,12 +2146,27 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/platform/browser/document-visibility.adapter.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/platform/browser/element-rect.adapter.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/platform/browser/file-download.adapter.ts",
       "tests": [],
       "relationship": "inferred"
     },
     {
       "source": "src/platform/browser/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/platform/browser/public-theme.adapter.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -1907,6 +2182,11 @@
     },
     {
       "source": "src/platform/browser/viewport-scroll.adapter.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/platform/browser/web-notification.adapter.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -1936,7 +2216,17 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/platform/device/notification-permission.adapter.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/platform/device/platform-init.adapter.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/platform/device/push-registration.adapter.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -1947,6 +2237,21 @@
     },
     {
       "source": "src/platform/device/status-bar.adapter.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/platform/device/tour-flags.adapter.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/platform/device/tour-pages.constants.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/platform/device/tray-notification.adapter.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -2042,6 +2347,11 @@
     },
     {
       "source": "src/shared/i18n/locale.constants.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/i18n/locales/ar-Latn.json",
       "tests": [],
       "relationship": "inferred"
     },
@@ -2176,6 +2486,26 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/shared/ui/danger-reauth-dialog/danger-reauth-dialog.component.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/ui/danger-reauth-dialog/danger-reauth-dialog.container.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/ui/danger-reauth-dialog/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/ui/danger-reauth-dialog/use-danger-reauth-dialog.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/shared/ui/empty-state/empty-state.component.tsx",
       "tests": [],
       "relationship": "inferred"
@@ -2192,6 +2522,31 @@
     },
     {
       "source": "src/shared/ui/error-state/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/ui/feature-tour/feature-tour.component.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/ui/feature-tour/feature-tour.container.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/ui/feature-tour/feature-tour.types.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/ui/feature-tour/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/ui/feature-tour/use-feature-tour.hook.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -2216,12 +2571,37 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/shared/ui/link-row/link-row.component.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/shared/ui/loading/index.ts",
       "tests": [],
       "relationship": "inferred"
     },
     {
       "source": "src/shared/ui/loading/loading.component.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/ui/numeric-field/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/ui/numeric-field/numeric-field.component.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/ui/numeric-field/numeric-field.container.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/ui/numeric-field/use-numeric-field.hook.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -2292,6 +2672,26 @@
     },
     {
       "source": "src/shared/ui/shell-alignment.css",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/ui/skeleton/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/ui/skeleton/skeleton-section.component.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/ui/skeleton/skeleton.component.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/ui/skeleton/skeleton.types.ts",
       "tests": [],
       "relationship": "inferred"
     },

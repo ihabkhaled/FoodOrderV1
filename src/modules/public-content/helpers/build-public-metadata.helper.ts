@@ -11,6 +11,7 @@ import {
   getPublicContentCatalog,
   getPublicLocaleDefinition,
   getPublicPageCopy,
+  getPublicUiCopy,
 } from './public-content-catalog.helper';
 
 const absoluteUrl = (path: string): string =>
@@ -21,12 +22,15 @@ const buildStructuredData = (
   locale: PublicLocale,
 ): Record<string, unknown>[] => {
   const { site } = getPublicContentCatalog();
+  // The structured-data name must match the name rendered on the page, and
+  // that name is localized.
+  const brandName = getPublicUiCopy(locale).brandName;
   const copy = getPublicPageCopy(routeId, locale);
   const canonical = absoluteUrl(buildPublicContentPath(routeId, locale));
   const organization = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: site.brandName,
+    name: brandName,
     url: site.canonicalOrigin,
     logo: absoluteUrl('/icon.svg'),
     sameAs: [site.repositoryUrl],
@@ -34,14 +38,14 @@ const buildStructuredData = (
   const website = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: site.brandName,
+    name: brandName,
     url: site.canonicalOrigin,
     inLanguage: getPublicLocaleDefinition(locale).htmlLang,
   };
   const application = {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
-    name: site.brandName,
+    name: brandName,
     applicationCategory: 'LifestyleApplication',
     operatingSystem: 'Web, Android, iOS',
     description: copy.description,

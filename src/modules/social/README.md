@@ -4,8 +4,9 @@ Friends, friend groups, group invitations, and social bucket sharing.
 
 ## Responsibility
 
-- The `/social` screen: friend search, friend requests, friends list, group
-  creation/editing/membership, and group invitations.
+- The `/social` hub and its subpages: `/social/friends` (search and the
+  friends list), `/social/requests` (friend, group, and bucket invitations),
+  and `/social/groups` (group creation/editing/membership).
 - The `/buckets/:bucketId/social-share` screen: owner-only sharing of a bucket
   with friends or groups (role-based access grants).
 - The social message catalog (`SocialMessageKey` + `translateSocial`), also

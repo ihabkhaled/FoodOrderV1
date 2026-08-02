@@ -11,7 +11,7 @@ describe('LanguageSelect', () => {
     );
 
     const select = screen.getByRole('combobox', { name: 'Language' });
-    expect(screen.getAllByRole('option')).toHaveLength(12);
+    expect(screen.getAllByRole('option')).toHaveLength(13);
     expect(select).toHaveValue('en');
     expect(screen.getByRole('option', { name: 'فارسی' })).toHaveAttribute(
       'dir',

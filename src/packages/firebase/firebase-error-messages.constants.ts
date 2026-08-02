@@ -107,6 +107,24 @@ const ar = {
   storageGeneric: 'فشلت عملية الملف السحابي. حاول مرة أخرى.',
 } as const satisfies Record<FirebaseErrorMessageKey, string>;
 
+const arLatn = {
+  invalidCredentials: 'El email aw el password ghalat.',
+  emailAlreadyInUse:
+    'Fee 7esab mosaggel bel email da. Edkhol aw e3ed ta3yeen el password.',
+  signInAgain: 'Le asbab amneya, edkhol tani 2abl ma tekammel el 7aga di.',
+  permissionDeniedData: 'Ma3andaksh sala7eya tewsal lel data di aw te3addelha.',
+  permissionDeniedAction: 'Ma3andaksh sala7eya te3mel el 7aga di.',
+  notFound: 'Mala2enash el sagel aw el malaf el matloob.',
+  conflict: 'El 7aga di bettet3ared ma3a taghyeer a7dath. 7addes w 7awel tani.',
+  invalidRequest: 'Fee ma3lomat mab3oota mesh sa7. Raga3ha w 7awel tani.',
+  serviceUnavailable: 'El khedma mesh mota7a delwa2ti. 7awel kaman shwaya.',
+  fileFailure: 'Ma2darnash nekammel 3amaleyet el malaf. Etakked meno w 7awel tani.',
+  authGeneric: 'Ma2darnash nekammel el dokhool. 7awel tani.',
+  firestoreGeneric: 'Talab 2a3edet el bayanat el sa7abeya feshel. 7awel tani.',
+  functionsGeneric: 'El egraa2 el sa7abi feshel. 7awel tani.',
+  storageGeneric: '3amaleyet el malaf el sa7abi feshelet. 7awel tani.',
+} as const satisfies Record<FirebaseErrorMessageKey, string>;
+
 const it = {
   invalidCredentials: "L'indirizzo email o la password non sono corretti.",
   emailAlreadyInUse: 'Esiste già un account per questo indirizzo email. Accedi o reimposta la password.',
@@ -280,6 +298,7 @@ const ja = {
 export const FIREBASE_ERROR_MESSAGES: FirebaseErrorMessagesByLocale = {
   en,
   ar,
+  'ar-Latn': arLatn,
   it,
   fa,
   fr,

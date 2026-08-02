@@ -8,3 +8,7 @@ export const getPreference = async (key: string): Promise<string | null> => {
   const result = await Preferences.get({ key });
   return result.value;
 };
+
+export const removePreference = async (key: string): Promise<void> => {
+  await Preferences.remove({ key });
+};

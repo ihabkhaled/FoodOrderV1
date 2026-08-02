@@ -1,0 +1,408 @@
+{
+  "locale": "ar-Latn",
+  "ui": {
+    "brandName": "FoodOrder | Gama3 Orderak",
+    "themeToggleLabel": "Ghayyar el shakl",
+    "primaryNavigationLabel": "El tanaqol el 3am",
+    "mobileNavigationLabel": "Eftah el qa2ema",
+    "languageLabel": "El logha",
+    "openApplicationLabel": "Eftah el app",
+    "skipToContentLabel": "Etkhatta lel mo7tawa",
+    "footerNavigationLabel": "Tanaqol el footer",
+    "footerTagline": "Talabat akl gama3eya wad7a, men awel ekhteyar le akher fatoora.",
+    "allRightsReservedLabel": "Kol el 7o2oo2 ma7fooza.",
+    "backHomeLabel": "Ergaa3 lel safha el ra2eeseya",
+    "tryAgainLabel": "7awel tani",
+    "learnMoreLabel": "Shoof howa beyshtaghal ezay"
+  },
+  "pages": {
+    "home": {
+      "navigationLabel": "El safha el ra2eeseya",
+      "seoTitle": "Gama3 Orderak | Talabat akl gama3eya men gheer lakhbata",
+      "description": "E3mel listat akl te2dar te3ed estekhdamha, egma3 ekhtiyarat el kol, e7seb el rosoom, gammed el talab el neha2i, w sharek fawateer wad7a.",
+      "eyebrow": "Talab wa7ed metsharek. W el kol 3arfeen kol 7aga.",
+      "heading": "Egma3 talabat el akl men gheer ma tegri wara el rasayel",
+      "introduction": "Gama3 Orderak beyedi el monazzem makan wa7ed mawthoo2 3ashan ye3mel el menu, w yed3i el nas, w yetabe3 kol ekhteyar, w ye7awwel el egmali le fawateer el group yefhamha.",
+      "sections": [
+        {
+          "heading": "Ebda2 be lista te2dar te3ed estekhdamha",
+          "paragraphs": [
+            "E7faz el asnaf elli el group betetlobha ktir, bel as3ar w 2awa3ed el dareeba w el khedma w el tawseel law 3ayez. W el marra el gaya e3ed estekhdam nafs el lista bedal ma te3mel menu gedeed fel chat."
+          ],
+          "bullets": [
+            "E3mel w e3addel asnaf el menu",
+            "Khalli el talabat el motakarrera thabta",
+            "Ekhtar teshtaghal lewa7dak wala ma3a el group"
+          ]
+        },
+        {
+          "heading": "Ed3i, egma3, w raga3",
+          "paragraphs": [
+            "Sharek da3wa ta7t seytartak, w khalli kol wa7ed yesagel kemeyato be nafso, w shoof el egmali bey7addes ma3a kol mosharka betoosal."
+          ],
+          "bullets": [
+            "Da3wat talab mona7seba lel dyoof",
+            "7alet el mosharka wad7a",
+            "Khatwet el enhaa2 fe eed el monazzem"
+          ]
+        },
+        {
+          "heading": "Ekhlas be egmali el nas te2dar tetakked meno",
+          "paragraphs": [
+            "Gammed el talab 2abl ma yetsagel, e7seb el rosoom bel tare2a nafsaha kol marra, w wazza3 el fatoora 7asab el shakhs aw 7asab el sanf."
+          ],
+          "bullets": [
+            "Kemeyat neha2eya thabta",
+            "Tafseel rosoom shaffaf",
+            "3ard fatoora te2dar tesharko"
+          ]
+        }
+      ]
+    },
+    "about": {
+      "navigationLabel": "3an el app",
+      "seoTitle": "3an Gama3 Orderak | Ma3mool le talabat gama3eya 7a2ee2eya",
+      "description": "E3raf leh Gama3 Orderak be y7awwel rasayel el talabat el metnathera le shoghl gama3i wade7 w mas2ool.",
+      "eyebrow": "Leh el montag da mawgood",
+      "heading": "El talab el gama3i lazem yekoon monazzam, mesh mo3aqqad",
+      "introduction": "Gama3 Orderak etsamem 3ala moshkela kolena 3arfeenha: wa7ed beyegma3 ekhtiyarat ktira betetghayyar 3ala el rasayel, w b3deen lazem yezabbat el egmali ta7t daght el wa2t.",
+      "sections": [
+        {
+          "heading": "Masdar wa7ed lel 7a2ee2a",
+          "paragraphs": [
+            "El app be ygammaa3 el menu w el mosharkeen w el kemeyat w el 7ala w el fatoora el neha2eya fe makan wa7ed. W el monazzem ye2dar yeshoof etghayyar eh men gheer ma yeraga3 el chat kolo."
+          ]
+        },
+        {
+          "heading": "Yenfa3 be aw men gheer khedmat sa7abeya",
+          "paragraphs": [
+            "El montag beyed3am el ta3awon el motasel w kaman wad3 shaghal bel kamel 3ala el gehaz. W el emkanyat el mota7a betban be sara7a 3ashan el nas te3raf talabha ma7foz feen."
+          ]
+        },
+        {
+          "heading": "El khososeya w el melkeya el awel",
+          "paragraphs": [
+            "El sagellat el khasa betefdal le sa7ebha w lel mosharkeen el mad3oween bas. W el montag beyeb3ed 3an ay ed3aa2at 3ama 3an data el talabat el khasa, w bey warri bas el ma3lomat el lazma le kol khatwa."
+          ]
+        }
+      ]
+    },
+    "how-it-works": {
+      "navigationLabel": "Beyshtaghal ezay",
+      "seoTitle": "Gama3 Orderak beyshtaghal ezay | Men el menu lel fatoora",
+      "description": "Etabe3 khatawat el talab el gama3i: gahhez el menu, ed3i el mosharkeen, egma3 el ekhtiyarat, e2fel el talab, w wazza3 el fawateer.",
+      "eyebrow": "Khams khatawat matwaqqa3a",
+      "heading": "Men el menu lel fatoora el neha2eya fe masar wa7ed",
+      "introduction": "Kol marhala leeha mas2ool w 7ala wad7a, 3ashan el group ye3raf emta el ekhtiyarat lessa maftoo7a w emta el talab ba2a gahez.",
+      "sections": [
+        {
+          "heading": "1. Gahhez el menu",
+          "paragraphs": [
+            "E3mel lista te2dar te3ed estekhdamha feeha asami el asnaf w as3arha w seyaset el rosoom el khasa bel talab da."
+          ]
+        },
+        {
+          "heading": "2. Ebda2 gawla gama3eya",
+          "paragraphs": [
+            "Ekhtar el menu, eftah gawlet gam3, w sharek el da3wa ma3a el nas elli hatetlob."
+          ]
+        },
+        {
+          "heading": "3. Egma3 ekhtiyarat kol wa7ed",
+          "paragraphs": [
+            "El mosharkeen bey zawwedo kemeyathom be nafsohom w el monazzem beytabe3 el ta2addom w el talab el megma3."
+          ]
+        },
+        {
+          "heading": "4. E2fel w akked",
+          "paragraphs": [
+            "E2fel el gam3 2abl ma tetlob men el mat3am, 3ashan ay ta3deel b3deen ma yeghayyarsh el kemeyat el neha2eya men gheer ma7ad yakhod balo."
+          ]
+        },
+        {
+          "heading": "5. Sawwi bel fatoora el wad7a",
+          "paragraphs": [
+            "Raga3 el magmoo3 w el rosoom, w b3deen estakhdem 3ard el ashkhas w el asnaf 3ashan tefham kol wa7ed 3aleh kam."
+          ]
+        }
+      ]
+    },
+    "features": {
+      "navigationLabel": "El khasa2es",
+      "seoTitle": "Khasa2es Gama3 Orderak | Menus, gawlat, egmali, fawateer",
+      "description": "Eshoof el listat el mo3ad estekhdamha, w el mosharkat el 7ayya, w 2afl el talab, w 7esab el rosoom, w tawzee3 el fawateer, w el khososeya, w el wad3 el ma7alli.",
+      "eyebrow": "Adawat le kol ra7let el talab",
+      "heading": "El tafaseel elli betkhalli el talab el gama3i mawthoo2",
+      "introduction": "Gama3 Orderak berabt el ta7deer w el ta3awon w el ta2keed w el taswiya ma3a ba3d, bedal ma yekoono sheetat w rasayel motafarre2a.",
+      "sections": [
+        {
+          "heading": "Listat te2ad estekhdamha",
+          "paragraphs": [
+            "E7faz menus motakarrera be asnaf mos3ara, w ta7akkom fel asnaf el mokhassasa, w el zohoor, w seyasat el tas3eer."
+          ]
+        },
+        {
+          "heading": "Mosharkat el afrad",
+          "paragraphs": [
+            "Tabe3 kemeyat kol wa7ed lewa7daha ma3a el mo7afza 3ala egmali maddoot lel monazzem."
+          ]
+        },
+        {
+          "heading": "Ta7akkom fe ra7let el talab",
+          "paragraphs": [
+            "7arrak el talab men el gam3 lel 2afl lel ta2keed lel tawseel lel taswiya be khatawat wad7a."
+          ]
+        },
+        {
+          "heading": "El tas3eer w el fawateer",
+          "paragraphs": [
+            "E7seb el magmoo3 w el dareeba w el khedma w el tawseel, w b3deen boss 3ala tawzee3 el fatoora 7asab el shakhs aw el sanf."
+          ]
+        },
+        {
+          "heading": "Wagha motaga3eb w mota3added el loghat",
+          "paragraphs": [
+            "Estakhdem el app 3ala el mobile w el desktop be da3m lel 3arabi w el englizi w el franco, ma3a el 3ard men el yemeen lel shemal."
+          ]
+        },
+        {
+          "heading": "Takhzeen sa7abi aw 3ala el gehaz",
+          "paragraphs": [
+            "Estakhdem el ta3awon 3an taree2 Firebase law mazboot, aw kammel bel wad3 el ma7alli el shaghal bel kamel 3ala el gehaz."
+          ]
+        }
+      ]
+    },
+    "group-ordering": {
+      "navigationLabel": "El talab el gama3i",
+      "seoTitle": "Talab akl gama3i | Egma3 el ekhtiyarat men gheer lakhbatet chat",
+      "description": "Nazzem talabat el akl el metsharka be da3wat mona7seba, w mosharkat fardeya, w egmali 7ayy, w talab neha2i ma2fool.",
+      "eyebrow": "Ma3mool lel monazzemeen w el mosharkeen",
+      "heading": "Eddi le kol mosharek makan wade7 yekhtar meno",
+      "introduction": "El talab el metsharek beyeshtaghal a7san lama kol wa7ed ye2dar ye3addel ekhteyaro w el monazzem yefdal mesaytar 3ala maw3ed 2afl el gam3.",
+      "sections": [
+        {
+          "heading": "Sharek el mostawa el sa7 men el wosool",
+          "paragraphs": [
+            "Ed3i el mosharkeen lel gawla el mo3ayana men gheer ma tekshef listat aw talabat khasa mesh 3elaqa."
+          ]
+        },
+        {
+          "heading": "Khalli kol mosharka mansooba le sa7ebha",
+          "paragraphs": [
+            "Ekhtiyarat kol wa7ed betefdal wad7a meen 3amalha, w da bey khalli moraga3et el taghyeerat as-hal men sel selet rasayel met3addela."
+          ]
+        },
+        {
+          "heading": "E7mi el talab el neha2i",
+          "paragraphs": [
+            "E2fel el gam3 2abl el ta2keed, w e7faz el egmali el mosaggel, w seeb tareekh lel 7alat yefasser el wad3 el 7ali."
+          ]
+        },
+        {
+          "heading": "Etaa3mel ma3a el dyoof be wa3i",
+          "paragraphs": [
+            "Da3wat el dyoof te2dar tegma3 el ma3lomat el lazma le gawla wa7da bas men gheer ma teddi wosool wase3 lel 7esab."
+          ]
+        }
+      ]
+    },
+    "split-bill-and-receipts": {
+      "navigationLabel": "El 7esab w el fawateer",
+      "seoTitle": "E2sem el 7esab w fasser kol fatoora",
+      "description": "7awwel kemeyat el asnaf w el rosoom le 3ard fatoora shaffaf 7asab el shakhs w 7asab el sanf.",
+      "eyebrow": "Taswiya men gheer takhmeen",
+      "heading": "Khalli el egmali el neha2i sahl enno yetfasser",
+      "introduction": "El fatoora bettebda2 men el talab el metgammed, w bettetta2bel 3aleha 2awa3ed el tas3eer, w betefdal marboota bel kemeyat elli tale3a menha.",
+      "sections": [
+        {
+          "heading": "Ebda2 men 7a2aye2 3ala mostawa el sanf",
+          "paragraphs": [
+            "El 7esab bey estakhdem as3ar el asnaf el mosaggela w el kemeyat el neha2eya, mesh ta2deer manqool men el chat."
+          ]
+        },
+        {
+          "heading": "Warri el rosoom kol wa7ed lewa7do",
+          "paragraphs": [
+            "El dareeba w el khedma w el tawseel betefdal bayna fel tafseel 3ashan el mosharkeen yefhamo el mablagh el neha2i etkawwen ezay."
+          ]
+        },
+        {
+          "heading": "Raga3 7asab el shakhs aw el sanf",
+          "paragraphs": [
+            "3ard el ashkhas beysa3ed fel taswiya, w 3ard el asnaf beysa3ed el monazzem yetakked en el kemeyat w el rosoom motaba2een lel talab."
+          ]
+        },
+        {
+          "heading": "E7faz el noskha el neha2eya",
+          "paragraphs": [
+            "2afl el talab bey mana3 en ta3deelat b3deen teghayyar el fatoora elli el group betetsawwa 3aleha."
+          ]
+        }
+      ]
+    },
+    "faq": {
+      "navigationLabel": "As2ela shay3a",
+      "seoTitle": "As2ela Gama3 Orderak | Talabat, takhzeen, rosoom, dyoof",
+      "description": "Egabat 3an el listat el mo3ad estekhdamha, w el gawlat el gama3eya, w mosharket el dyoof, w el wad3 el ma7alli, w el rosoom, w el fawateer, w 2afl el talab.",
+      "eyebrow": "As2ela betetkarrar",
+      "heading": "Elli lazem te3rafo 2abl ma tebda2 talab gama3i",
+      "introduction": "El egabat di betewsef el solook el 7ali lel app men gheer wa3d be madfoo3at aw rabt bel mata3em aw khosoomat mesh mawgooda.",
+      "sections": [],
+      "faq": [
+        {
+          "question": "Eh ya3ni lista akl?",
+          "answer": "Lista el akl di menu asnaf w as3ar te2dar te3ed estekhdamo fe talab fardi aw gama3i."
+        },
+        {
+          "question": "El nas te2dar tedkhol men gheer ma teshoof talabati el tanya?",
+          "answer": "Aywa. El da3wat ma7soora 3ala el lista aw el gawla el mo3ayana bas, w mabet3melsh ay sagellat khasa tanya 3ama."
+        },
+        {
+          "question": "El app ye2dar ye7seb anhi rosoom?",
+          "answer": "El lista te2dar tetabba2 seyasat dareeba w khedma w tawseel. W el fatoora betsib el mabaligh di bayna."
+        },
+        {
+          "question": "Leh a2fel el talab?",
+          "answer": "El 2afl bey theb-bet el kemeyat el neha2eya 2abl el ta2keed w el taswiya, w bey mana3 ay ta3deel met2akher ma7adsh yakhod balo meno."
+        },
+        {
+          "question": "El app beyeshtaghal men gheer Firebase?",
+          "answer": "Aywa. Lama el edadat el sa7abeya matkoonsh mawgooda, el app bey ekhtar wad3 el takhzeen el ma7alli el shaghal bel kamel."
+        },
+        {
+          "question": "Gama3 Orderak beyakhod flos aw beyetlob men el mat3am otomatik?",
+          "answer": "La2. El montag be yenazzem el ekhtiyarat w el egmali w el 7alat w el fawateer bas; el daf3 w el talab men el mat3am barra el app."
+        }
+      ]
+    },
+    "contact": {
+      "navigationLabel": "Etasel bena",
+      "seoTitle": "Etasel be Gama3 Orderak | Da3m el montag w el mola7zat",
+      "description": "Elqi el qanah el rasmeya lel mashakel w el balaghat w mola7zat el wosool w el omoor el amneya.",
+      "eyebrow": "El da3m w el mola7zat",
+      "heading": "2ollena 7asal eh w kont metwaqqe3 eh",
+      "introduction": "Asra3 tare2a te7sal 3ala mosa3da mofeeda enak teb3at balagh mokhtasar w amen 3ala el mostawda3 el rasmi lel mashroo3.",
+      "sections": [
+        {
+          "heading": "2abl ma teftah balagh",
+          "paragraphs": [
+            "Ektob el shasha w el gehaz aw el motasaffe7 w wad3 el takhzeen w khatawat el tekrar w el nateega elli kont metwaqqe3ha. W matektebsh abadan passwords aw asrar da3wat aw mo7tawa talabat khasa aw bayanat e3temad Firebase."
+          ]
+        },
+        {
+          "heading": "Mola7zat 3an sohoolet el wosool",
+          "paragraphs": [
+            "Ewsef el te2neya el mosa3eda w tare2et el edkhal w 7agm el shasha w el 3a2aba bel zabt. 3oyoob sohoolet el wosool bettetaa3mel zay ay 3eeb fel montag."
+          ]
+        },
+        {
+          "heading": "Masha2el amneya",
+          "paragraphs": [
+            "Matenshorsh tafaseel momken tetestaghel aw bayanat shakhseya fe balagh 3am. Estakhdem qanaht el aman el khasa be sa7eb el mostawda3 law mawgooda."
+          ]
+        }
+      ]
+    },
+    "privacy": {
+      "navigationLabel": "El khososeya",
+      "seoTitle": "Nazra 3ala khososeyet Gama3 Orderak | El data w el takhzeen",
+      "description": "Efham anwa3 el data elli Gama3 Orderak beyestakhdemha, w solook el takhzeen el ma7alli w el sa7abi, w 7odood el mosharka, w ekhtiyaratak.",
+      "eyebrow": "Nazra 3ama 3ala el khososeya",
+      "heading": "Data talabak lazem tefdal gowa el masar elli enta ekhtarto",
+      "introduction": "El nazra di betefasser el solook el fanni el 7ali w mesh badeel 3an estisharaa qanooneya khassa be balad mo3ayan aw esh3ar khososeya neha2i men el moshaghghel.",
+      "sections": [
+        {
+          "heading": "El data elli el app bey estakhdemha",
+          "paragraphs": [
+            "3ala 7asab el masar el mokhtar, el app momken ye3ale2 tafaseel el 7esab w tafdeelat el profile w listat el akl w gawlat el talab w kemeyat el asnaf w el da3wat w el esh3arat w ma3lomat el fatoora."
+          ]
+        },
+        {
+          "heading": "El takhzeen el ma7alli w el sa7abi",
+          "paragraphs": [
+            "Fel wad3 el ma7alli, el sagellat bettetkhzen 3ala el gehaz. W fe wad3 Firebase el mazboot, el dokhool w el sagellat bettestakhdem khedmat Firebase bta3et el mashroo3 3ashan el nas el mad3oowa te2dar teshtaghal ma3ak."
+          ]
+        },
+        {
+          "heading": "El mosharka w el zohoor",
+          "paragraphs": [
+            "El sagellat el khasa maqsooda le sa7ebha w lel mosharkeen el mosarra7 lohom. W lazem tetaa3mel ma3a rawabet el da3wa 3ala enha 7asasa 3ashan momken teddi wosool le masar mo3ayan."
+          ]
+        },
+        {
+          "heading": "El ta7lilat w el e3lanat",
+          "paragraphs": [
+            "El app be y3ard ekhteyar lel mowafa2a 3ala el ta7lilat. W el e3lanat mota3attala bel default 3ala el safahat elli mo7tag feeha dokhool w safahat el egraa2at w el akhtaa2 w el seyasat; w ay taf3eel fel mostaqbal lazem yekoon ma3a el mowafa2a el matlooba w el efsa7 men el moshaghghel."
+          ]
+        },
+        {
+          "heading": "Ekhtiyaratak",
+          "paragraphs": [
+            "El mostakhdemeen ye2daro ye3addelo tafdeelat el gehaz el mad3ooma, w lazem yetasalo bel moshaghghel el mas2ool 3an el noskha el manshoora bekhsoos el wosool aw el tas7ee7 aw el mas7 aw modet el e7tefaz."
+          ]
+        }
+      ]
+    },
+    "terms": {
+      "navigationLabel": "El shoroot",
+      "seoTitle": "Nazra 3ala shoroot Gama3 Orderak | Estekhdam mas2ool",
+      "description": "Raga3 7odood estekhdam el montag lel 7esabat w el da3wat w de2et el talab w el khedmat el kharegeya w el tawaffor w el solook el ma2bool.",
+      "eyebrow": "Nazra 3ama 3ala el shoroot",
+      "heading": "Estakhdem el masar el metsharek be mas2ooleya",
+      "introduction": "El nazra di be logha baseeta betewsef 7odood el montag el maqsooda w mesh badeel 3an shoroot neha2eya betetsdar men moshaghghel el khedma.",
+      "sections": [
+        {
+          "heading": "El 7esabat w el da3wat",
+          "paragraphs": [
+            "Eddi ma3lomat 7esab sa7ee7a, w e7mi bayanat el dokhool w rawabet el da3wa, w estakhdem bas el sagellat elli enta malekha aw mosarra7lak beeha."
+          ]
+        },
+        {
+          "heading": "De2et el talab",
+          "paragraphs": [
+            "El mosharkeen mas2oleen 3an moraga3et ekhtiyarathom. W el monazzem mas2ool 3an moraga3et el egmali el ma2fool w el as3ar w el rosoom w talab el mat3am 2abl ma ye3tamed 3ala el nateega."
+          ]
+        },
+        {
+          "heading": "El khedmat el kharegeya w el tanfeez",
+          "paragraphs": [
+            "El app nafso mabeyakhodsh flos w mabey damensh tawaffor el mat3am w mabeye3melsh el talab 3and el mat3am w mabey te7akkemsh fel tawseel aw gawdet el akl."
+          ]
+        },
+        {
+          "heading": "El tawaffor w el data el ma7alleya",
+          "paragraphs": [
+            "Tawaffor el khedma momken yetghayyar. W mostakhdemeen el wad3 el ma7alli mas2oleen 3an gehazhom w nosakhhom el e7teyateya; w mas7 takhzeen el app momken yesheel el sagellat el ma7fooza 3ala el gehaz."
+          ]
+        },
+        {
+          "heading": "El estekhdam el ma2bool",
+          "paragraphs": [
+            "Matesee2sh estekhdam el da3wat, w mat7awelsh todkhol men gheer tasree7, w matraf3sh mawad mokhalfa lel qanoon, w mate3telsh el khedma, w matestakhdemsh data 7add tani men gheer eznoh."
+          ]
+        }
+      ]
+    }
+  },
+  "systemPages": {
+    "not-found": {
+      "seoTitle": "El safha mesh mawgooda | Gama3 Orderak",
+      "description": "El safha el 3ama el matlooba mala2enahash.",
+      "heading": "El safha di mesh fel menu",
+      "body": "El 3enwan momken yekoon 2adeem aw ghalat. Ergaa3 lel safha el ra2eeseya 3ashan tekammel."
+    },
+    "error": {
+      "seoTitle": "7asal 7aga ghalat | Gama3 Orderak",
+      "description": "Gama3 Orderak ma2darsh yekammel el talab.",
+      "heading": "Mesh 2adreen newarrik el safha di",
+      "body": "7asal khalal mo2aqqat. 7awel tani, w law el moshkela kammelet raga3 lel safha el ra2eeseya."
+    },
+    "offline": {
+      "seoTitle": "Enta offline | Gama3 Orderak",
+      "description": "Mafeesh etesal bel internet delwa2ti.",
+      "heading": "Mafeesh etesal",
+      "body": "Etakked men etesalak bel internet w 7awel tani 3ashan te7ammel el safha di."
+    }
+  }
+}

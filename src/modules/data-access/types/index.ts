@@ -1,4 +1,5 @@
 export type {
+  AnalyticsConsentLevel,
   Bucket,
   BucketActivityEvent,
   BucketActivityType,

@@ -7,6 +7,7 @@ import type {
   Theme,
   UserProfile,
 } from '@/modules/data-access';
+import type { AnalyticsConsent } from '@/modules/telemetry';
 import type { MessageKey } from '@/shared/i18n';
 
 export interface AppProviderProps {
@@ -25,6 +26,8 @@ export interface AppContextValue {
   authLoading: boolean;
   online: boolean;
   storageMode: string;
+  /** Resolved analytics consent: the profile copy wins over the device one. */
+  analyticsConsent: AnalyticsConsent;
   locale: Locale;
   theme: Theme;
   currency: CurrencyCode;
@@ -37,7 +40,14 @@ export interface AppContextValue {
   logout: () => Promise<void>;
   saveProfile: (
     changes: Partial<
-      Pick<UserProfile, 'fullName' | 'locale' | 'theme' | 'defaultCurrency'>
+      Pick<
+        UserProfile,
+        | 'fullName'
+        | 'locale'
+        | 'theme'
+        | 'defaultCurrency'
+        | 'analyticsConsent'
+      >
     >,
   ) => Promise<void>;
   /** Runtime language switch that also works before signing in. */

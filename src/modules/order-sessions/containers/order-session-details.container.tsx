@@ -1,11 +1,13 @@
 import '../order-sessions.css';
 
-import { BackLink, ConfirmDialog, ErrorState, Loading } from '@/shared/ui';
+import { translate } from '@/shared/i18n';
+import { BackLink, ConfirmDialog, ErrorState, FeatureTour, Loading } from '@/shared/ui';
 
 import { SessionActionPanel } from '../components/session-action-panel/session-action-panel.component';
 import { SessionMenu } from '../components/session-menu/session-menu.component';
 import { SessionParticipantList } from '../components/session-participant-list/session-participant-list.component';
 import { SessionSummary } from '../components/session-summary/session-summary.component';
+import { useOrderSessionDetailsTour } from '../hooks/use-order-session-details-tour.hook';
 import { useSessionCommandCenter } from '../hooks/use-session-command-center.hook';
 import { useSessionLifecycleConfirmation } from '../hooks/use-session-lifecycle-confirmation.hook';
 import { ORDER_SESSIONS_PATH } from '../routes/order-sessions-route-paths.constants';
@@ -13,6 +15,7 @@ import { ORDER_SESSIONS_PATH } from '../routes/order-sessions-route-paths.consta
 export function OrderSessionDetailsContainer() {
   const viewModel = useSessionCommandCenter();
   const confirmation = useSessionLifecycleConfirmation();
+  const { steps: tourSteps } = useOrderSessionDetailsTour();
   const backLabel = viewModel.translate(viewModel.locale, 'backToSessions');
 
   if (viewModel.loading) {
@@ -138,6 +141,15 @@ export function OrderSessionDetailsContainer() {
         danger={confirmation.pendingAction?.danger ?? false}
         onConfirm={() => void confirmation.confirm(viewModel.transition)}
         onCancel={confirmation.cancel}
+      />
+      <FeatureTour
+        page="session-details"
+        steps={tourSteps}
+        nextLabel={translate(viewModel.locale, 'tourNext')}
+        doneLabel={translate(viewModel.locale, 'tourDone')}
+        skipLabel={translate(viewModel.locale, 'tourSkip')}
+        closeLabel={translate(viewModel.locale, 'close')}
+        skipAllLabel={translate(viewModel.locale, 'tourSkipAll')}
       />
     </div>
   );

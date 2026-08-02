@@ -1,10 +1,12 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 
 import {
+  type AppNotification,
   type Bucket,
   type BucketDraft,
   DEFAULT_PRICING_POLICY,
   LocalDataService,
+  LocalNotificationService,
   LocalOrderSessionService,
   LocalSharingService,
   ORDER_SESSION_STATUS,
@@ -80,6 +82,72 @@ beforeEach(() => {
 });
 
 describe('LocalOrderSessionService', () => {
+  it('notifies every shared member except the organizer when a round opens', async () => {
+    const bucket = await createSharedBucket();
+    const service = new LocalOrderSessionService();
+    const notifications = new LocalNotificationService();
+
+    const session = await service.createSession(OWNER, {
+      menuTemplateId: bucket.id,
+      timezone: 'Africa/Cairo',
+      deadlineAt: null,
+      autoLock: false,
+    });
+
+    const received: AppNotification[][] = [];
+    const stopContributor = notifications.subscribe(CONTRIBUTOR.id, (items) => {
+      received.push(items);
+    });
+    stopContributor();
+    const contributorInbox = received.at(-1) ?? [];
+
+    expect(contributorInbox).toHaveLength(1);
+    expect(contributorInbox[0]).toMatchObject({
+      kind: 'session_opened',
+      entityType: 'session',
+      entityId: session.id,
+      route: `/sessions/${session.id}`,
+      actorId: OWNER.id,
+    });
+
+    const ownerInbox: AppNotification[][] = [];
+    const stopOwner = notifications.subscribe(OWNER.id, (items) => {
+      ownerInbox.push(items);
+    });
+    stopOwner();
+
+    expect(ownerInbox.at(-1) ?? []).toHaveLength(0);
+  });
+
+  it('reuses one template for repeated rounds without renaming it', async () => {
+    const bucket = await createSharedBucket();
+    const service = new LocalOrderSessionService();
+
+    const first = await service.createSession(OWNER, {
+      menuTemplateId: bucket.id,
+      timezone: 'Africa/Cairo',
+      deadlineAt: null,
+      autoLock: false,
+    });
+    const second = await service.createSession(OWNER, {
+      menuTemplateId: bucket.id,
+      timezone: 'Africa/Cairo',
+      deadlineAt: null,
+      autoLock: false,
+    });
+
+    expect(second.id).not.toBe(first.id);
+    expect(second.menuTemplateId).toBe(bucket.id);
+    expect(second.title).toBe(first.title);
+    expect(second.status).toBe(ORDER_SESSION_STATUS.collecting);
+
+    const dataService = new LocalDataService();
+    const template = await dataService.getBucket(OWNER, bucket.id);
+
+    expect(template?.title).toBe(bucket.title);
+    expect(template?.revision).toBe(bucket.revision);
+  });
+
   it('creates an independent collecting session with privacy-minimal participants', async () => {
     const bucket = await createSharedBucket();
     const service = new LocalOrderSessionService();

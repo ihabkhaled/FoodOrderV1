@@ -5,6 +5,41 @@ The version bump level is decided by prompt density — see [rules/versioning.md
 
 <!-- releases -->
 
+## [1.8.0] - 2026-07-29
+
+- Start v1.8.0 development
+- Reused buckets as order templates: "Start round" opens an order session from a
+  shared bucket, seeds its members, and notifies them.
+- Removed the "(copy)" suffix when duplicating a bucket.
+- Rendered zero as a placeholder in money and percentage fields.
+- Confirmed logout with a busy dialog and reset the stale profile guard.
+- Required email and password re-entry before account deletion.
+- Split settings into a hub with preferences, privacy, security, and account.
+- Restored language and theme from the profile on a new device and tracked live
+  system theme changes.
+- Gave analytics consent a real device-local diagnostics sink with a visible
+  count, a clear action, and a roaming profile field.
+- Loaded each screen section by section with per-section placeholders.
+- Mirrored in-app notifications into the OS tray with permission prompts and
+  tap-to-open routing.
+- Introduced guided tours on all twenty-four screens (138 steps) with a replay
+  control in preferences.
+- Added Arabic Franco as a thirteenth language across the app and the public site.
+- Split the friends area into a hub with friends, requests, and groups pages, and
+  bucket sharing into members and activity pages.
+- Added a light/dark switch to the public site and reduced its header to one row
+  with the destinations in a collapsible menu.
+- Counted build numbers per version from existing release tags, so a version bump
+  restarts them at zero instead of carrying a repository-wide run number.
+- Published the version's release notes as the body of every release and
+  prerelease, and as the pull request description, instead of a generated
+  sentence.
+- Delivered remote push through Firebase Cloud Messaging, with device tokens
+  removed on sign-out.
+- Gave shared application links a preview card with the title, description, and
+  logo; previously only the marketing pages had one and `/app` shared bare.
+
+
 ## [1.7.4] - 2026-07-26
 
 - Start v1.7.4 development

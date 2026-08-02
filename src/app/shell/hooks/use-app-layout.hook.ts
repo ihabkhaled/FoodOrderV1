@@ -1,13 +1,30 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import type { AppNotification, Locale, Theme } from '@/modules/data-access';
 import { notificationService } from '@/modules/data-access';
 import type { ToastState } from '@/modules/session';
 import { useApp } from '@/modules/session';
-import { useLocation } from '@/packages/router';
-import { scrollViewportToTop } from '@/platform/browser';
-import { loadSidebarCollapsed, saveSidebarCollapsed } from '@/platform/device';
+import { useLocation, useNavigate } from '@/packages/router';
+import { isDocumentHidden, scrollViewportToTop } from '@/platform/browser';
+import {
+  loadNotificationPromptSeen,
+  loadSidebarCollapsed,
+  markAppOpenedAndWasReturning,
+  queryNotificationPermission,
+  registerForPushNotifications,
+  requestNotificationPermission,
+  runtimePlatformName,
+  saveNotificationPromptSeen,
+  saveSidebarCollapsed,
+  showTrayNotification,
+  subscribeToPushNotificationTaps,
+  subscribeToTrayNotificationTaps,
+  unregisterFromPushNotifications,
+} from '@/platform/device';
 import type { MessageKey } from '@/shared/i18n';
+
+import { HOME_PATH } from '../../router/app-route-paths.constants';
+import { selectNewUnreadNotifications } from '../helpers/notification-mirror.helper';
 
 interface RouteRefreshState {
   readonly notificationOpenSequence?: unknown;
@@ -16,7 +33,11 @@ interface RouteRefreshState {
 export interface AppLayoutViewModel {
   t: (key: MessageKey) => string;
   userDisplayName: string | undefined;
-  logout: () => Promise<void>;
+  confirmingLogout: boolean;
+  loggingOut: boolean;
+  requestLogout: () => void;
+  cancelLogout: () => void;
+  confirmLogout: () => Promise<void>;
   online: boolean;
   toast: ToastState | null;
   locale: Locale;
@@ -27,6 +48,10 @@ export interface AppLayoutViewModel {
   collapsed: boolean;
   toggleCollapsed: () => void;
   notifications: AppNotification[];
+  notificationsLoading: boolean;
+  notificationPromptOpen: boolean;
+  enableNotifications: () => Promise<void>;
+  dismissNotificationPrompt: () => void;
   markNotificationsRead: (notificationIds: string[]) => Promise<void>;
 }
 
@@ -54,6 +79,16 @@ export function useAppLayout(): AppLayoutViewModel {
       : null;
   const [collapsed, setCollapsed] = useState(false);
   const [notifications, setNotifications] = useState<AppNotification[]>([]);
+  const [notificationsLoading, setNotificationsLoading] = useState(true);
+  const [confirmingLogout, setConfirmingLogout] = useState(false);
+  const navigate = useNavigate();
+  /** Null until the first subscription payload establishes the baseline. */
+  const mirroredRef = useRef<AppNotification[] | null>(null);
+  const trayOpenSequence = useRef(0);
+  /** Token this device registered, so sign-out can stop delivery to it. */
+  const pushTokenRef = useRef<string | null>(null);
+  const [notificationPromptOpen, setNotificationPromptOpen] = useState(false);
+  const [loggingOut, setLoggingOut] = useState(false);
 
   useEffect(() => {
     scrollViewportToTop();
@@ -67,15 +102,160 @@ export function useAppLayout(): AppLayoutViewModel {
       });
   }, []);
 
+  /**
+   * Mirrors newly arrived unread notifications into the OS tray. Suppressed
+   * while the app is in front — the in-app centre already shows them there.
+   */
+  const mirrorToTray = async (
+    incoming: AppNotification[],
+  ): Promise<void> => {
+    const fresh = selectNewUnreadNotifications(mirroredRef.current, incoming);
+    mirroredRef.current = incoming;
+    if (fresh.length === 0 || !isDocumentHidden()) return;
+    if ((await queryNotificationPermission()) !== 'granted') return;
+    for (const notification of fresh) {
+      await showTrayNotification({
+        id: notification.id,
+        title: notification.title,
+        body: notification.message,
+        route: notification.route,
+      });
+    }
+  };
+
   useEffect(() => {
     if (!user) {
       setNotifications([]);
+      setNotificationsLoading(false);
+      mirroredRef.current = null;
       return;
     }
-    return notificationService.subscribe(user.id, setNotifications, () => {
-      setNotifications([]);
-    });
+    setNotificationsLoading(true);
+    mirroredRef.current = null;
+    return notificationService.subscribe(
+      user.id,
+      (incoming) => {
+        void mirrorToTray(incoming);
+        setNotifications(incoming);
+        setNotificationsLoading(false);
+      },
+      () => {
+        setNotifications([]);
+        setNotificationsLoading(false);
+      },
+    );
   }, [user]);
+
+  // Register this device for push so a closed app still receives rounds and
+  // invitations. Registration is idempotent and silently no-ops on the web.
+  useEffect(() => {
+    if (!user) return;
+    let active = true;
+    void registerForPushNotifications()
+      .then(async (token) => {
+        if (!active || !token) return;
+        pushTokenRef.current = token;
+        await notificationService.savePushToken(
+          user.id,
+          token,
+          runtimePlatformName(),
+        );
+      })
+      .catch(() => {
+        // A device without push configured simply keeps in-app notifications.
+      });
+    return () => {
+      active = false;
+    };
+  }, [user]);
+
+  // Tapping an OS notification opens its in-app destination. The monotonic
+  // sequence forces a refresh even when the route is already displayed.
+  useEffect(
+    () =>
+      subscribeToTrayNotificationTaps((route) => {
+        trayOpenSequence.current += 1;
+        void navigate(route, {
+          state: { notificationOpenSequence: trayOpenSequence.current },
+        });
+      }),
+    [navigate],
+  );
+
+  useEffect(
+    () =>
+      subscribeToPushNotificationTaps((route) => {
+        trayOpenSequence.current += 1;
+        void navigate(route, {
+          state: { notificationOpenSequence: trayOpenSequence.current },
+        });
+      }),
+    [navigate],
+  );
+
+  // Offer notifications once per device, and only when the OS can still be
+  // asked. The ask waits for a later visit so it never lands on top of the
+  // first-run tour, and only on the dashboard so it never interrupts a form.
+  // Declining is remembered; Settings keeps the control available.
+  useEffect(() => {
+    if (!user || location.pathname !== HOME_PATH) return;
+    let active = true;
+    void Promise.all([
+      queryNotificationPermission(),
+      loadNotificationPromptSeen(),
+      markAppOpenedAndWasReturning(),
+    ])
+      .then(([permission, seen, returning]) => {
+        if (active && returning && permission === 'prompt' && !seen) {
+          setNotificationPromptOpen(true);
+        }
+      })
+      .catch(() => {
+        // Never block the shell on a permission query.
+      });
+    return () => {
+      active = false;
+    };
+  }, [user, location.pathname]);
+
+  const enableNotifications = async (): Promise<void> => {
+    setNotificationPromptOpen(false);
+    await saveNotificationPromptSeen();
+    await requestNotificationPermission();
+  };
+
+  const dismissNotificationPrompt = (): void => {
+    setNotificationPromptOpen(false);
+    void saveNotificationPromptSeen();
+  };
+
+  const requestLogout = (): void => {
+    setConfirmingLogout(true);
+  };
+
+  const cancelLogout = (): void => {
+    if (loggingOut) return;
+    setConfirmingLogout(false);
+  };
+
+  const confirmLogout = async (): Promise<void> => {
+    if (loggingOut) return;
+    setLoggingOut(true);
+    try {
+      // Stop push to this device before the session ends, otherwise it would
+      // keep receiving another account's notifications on a shared phone.
+      const token = pushTokenRef.current;
+      if (token && user) {
+        await notificationService.removePushToken(user.id, token).catch(() => {});
+        await unregisterFromPushNotifications();
+        pushTokenRef.current = null;
+      }
+      await logout();
+    } finally {
+      setLoggingOut(false);
+      setConfirmingLogout(false);
+    }
+  };
 
   const toggleCollapsed = (): void => {
     setCollapsed((current) => {
@@ -104,7 +284,11 @@ export function useAppLayout(): AppLayoutViewModel {
   return {
     t,
     userDisplayName: user?.displayName,
-    logout,
+    confirmingLogout,
+    loggingOut,
+    requestLogout,
+    cancelLogout,
+    confirmLogout,
     online,
     toast,
     locale,
@@ -115,6 +299,10 @@ export function useAppLayout(): AppLayoutViewModel {
     collapsed,
     toggleCollapsed,
     notifications,
+    notificationsLoading,
+    notificationPromptOpen,
+    enableNotifications,
+    dismissNotificationPrompt,
     markNotificationsRead,
   };
 }

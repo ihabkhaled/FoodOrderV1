@@ -25,8 +25,10 @@ native security audit has one place to look
   keyboard behavior) with web no-op fallbacks.
 - `src/platform/network`: online/offline status (`@capacitor/network` + browser events).
 - `src/platform/storage`: persistent key-value storage backing local-device mode.
-- Installed plugin set (low-permission by audit): app, core, haptics, keyboard, network,
-  preferences, status-bar. Adding one follows
+- Installed plugin set (audited): app, core, haptics, keyboard, local-notifications,
+  network, preferences, push-notifications, status-bar. `local-notifications` merges
+  `POST_NOTIFICATIONS`/`RECEIVE_BOOT_COMPLETED`/`WAKE_LOCK` into the Android
+  manifest and is runtime-prompted from an explicit user action only. Adding one follows
   [../skills/add-capacitor-plugin.md](../skills/add-capacitor-plugin.md).
 - After web changes that affect native shells: `npm run cap:sync`.
 

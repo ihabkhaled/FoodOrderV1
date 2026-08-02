@@ -7,8 +7,20 @@
   "analyticsProduct": "Operational and product analytics",
   "analyticsProductAndMarketing": "Operational, product, and upgrade analytics",
   "analyticsDeniedDescription": "No optional analytics events are recorded. Ordering continues normally.",
-  "analyticsOperationalDescription": "Records privacy-safe reliability failures and performance diagnostics.",
-  "analyticsProductDescription": "Also records privacy-safe acquisition, activation, and feature usage events.",
+  "analyticsOperationalDescription": "Records privacy-safe reliability failures on this device and sends anonymous page-speed measurements to Vercel Speed Insights.",
+  "analyticsProductDescription": "Also records privacy-safe feature usage and sends anonymous page views to Vercel Web Analytics.",
   "analyticsMarketingDescription": "Also records privacy-safe upgrade prompts and subscription funnel events.",
-  "analyticsConsentSaved": "Analytics preference saved."
+  "analyticsConsentSaved": "Analytics preference saved.",
+  "preferencesSection": "Preferences",
+  "preferencesSectionHint": "Name, language, theme, and currency.",
+  "privacySectionHint": "Control which anonymous diagnostics are recorded.",
+  "securitySection": "Password and security",
+  "securitySectionHint": "Update the password you sign in with.",
+  "accountSection": "Data and account",
+  "accountSectionHint": "Export your data or delete your account.",
+  "preferencesSaved": "Preferences saved.",
+  "diagnosticsSection": "Diagnostics",
+  "diagnosticsStored": "Diagnostics stored on this device",
+  "diagnosticsExplanation": "Diagnostic events are written only to this device, never uploaded and never sent to any third party. They exist so you can see exactly what was recorded, and you can erase them at any time.",
+  "clearDiagnostics": "Clear diagnostics"
 }

@@ -5,6 +5,7 @@ import { NotificationCenterView } from './notification-center.component';
 
 interface NotificationCenterProps {
   notifications: AppNotification[];
+  loading: boolean;
   locale: Locale;
   placement: 'topbar' | 'sidebar';
   onMarkRead: (notificationIds: string[]) => Promise<void>;
@@ -12,6 +13,7 @@ interface NotificationCenterProps {
 
 export function NotificationCenter({
   notifications,
+  loading,
   locale,
   placement,
   onMarkRead,
@@ -21,6 +23,7 @@ export function NotificationCenter({
   return (
     <NotificationCenterView
       notifications={notifications}
+      loading={loading}
       locale={locale}
       placement={placement}
       open={vm.open}

@@ -63,5 +63,9 @@
   "notifications": "Notifications",
   "unreadNotifications": "non lues",
   "markAllRead": "Tout marquer comme lu",
-  "noNotifications": "Aucune notification pour le moment."
+  "noNotifications": "Aucune notification pour le moment.",
+  "requestsTitle": "Demandes",
+  "friendsHubHint": "Cherchez par e-mail, envoyez des demandes et gérez vos amis.",
+  "requestsHubHint": "Invitations d’amis, de groupes et de menus en attente de réponse.",
+  "groupsHubHint": "Créez des groupes et partagez un menu avec tous d’un coup."
 }

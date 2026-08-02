@@ -334,3 +334,116 @@ describe('frozen bucket permissions', () => {
     ).resolves.toMatchObject({ code: 'permission-denied' });
   });
 });
+
+const profileDocument = (analyticsConsent?: string, locale = 'en') => ({
+  id: OWNER_ID,
+  fullName: 'Owner',
+  email: 'owner@example.com',
+  locale,
+  theme: 'system',
+  defaultCurrency: 'EGP',
+  ...(analyticsConsent === undefined ? {} : { analyticsConsent }),
+  createdAt: NOW,
+  updatedAt: NOW,
+});
+
+const ownerDatabase = () =>
+  environment
+    .authenticatedContext(OWNER_ID, { email: 'owner@example.com' })
+    .firestore();
+
+describe('profile locale rules', () => {
+  // The app writes the profile locale on every language switch. A locale the
+  // deployed rules reject leaves the stored profile on its previous value, and
+  // the next profile load quietly navigates the reader back to it.
+  it('accepts every locale the application offers', async () => {
+    for (const locale of [
+      'en',
+      'ar',
+      'ar-Latn',
+      'it',
+      'fa',
+      'fr',
+      'de',
+      'es',
+      'pt-BR',
+      'hi',
+      'th',
+      'zh-CN',
+      'ja',
+    ]) {
+      await expect(
+        assertSucceeds(
+          setDoc(
+            doc(ownerDatabase(), 'users', OWNER_ID),
+            profileDocument(undefined, locale),
+          ),
+        ),
+      ).resolves.toBeUndefined();
+    }
+  });
+
+  it('rejects a locale the application does not offer', async () => {
+    await expect(
+      assertFails(
+        setDoc(
+          doc(ownerDatabase(), 'users', OWNER_ID),
+          profileDocument(undefined, 'ar-latn'),
+        ),
+      ),
+    ).resolves.toMatchObject({ code: 'permission-denied' });
+  });
+});
+
+describe('profile analytics consent rules', () => {
+  it('accepts a profile without any consent field', async () => {
+    await expect(
+      assertSucceeds(
+        setDoc(doc(ownerDatabase(), 'users', OWNER_ID), profileDocument()),
+      ),
+    ).resolves.toBeUndefined();
+  });
+
+  it('accepts every supported consent value', async () => {
+    for (const consent of [
+      'denied',
+      'operational_only',
+      'product_analytics',
+      'product_and_marketing',
+    ]) {
+      await expect(
+        assertSucceeds(
+          setDoc(
+            doc(ownerDatabase(), 'users', OWNER_ID),
+            profileDocument(consent),
+          ),
+        ),
+      ).resolves.toBeUndefined();
+    }
+  });
+
+  it('rejects an unsupported consent value', async () => {
+    await expect(
+      assertFails(
+        setDoc(
+          doc(ownerDatabase(), 'users', OWNER_ID),
+          profileDocument('track_everything'),
+        ),
+      ),
+    ).resolves.toMatchObject({ code: 'permission-denied' });
+  });
+});
+
+describe('push token rules', () => {
+  it('never lets a client read or write its own push tokens', async () => {
+    const database = ownerDatabase();
+    const reference = doc(database, 'users', OWNER_ID, 'pushTokens', 'token-1');
+
+    await expect(
+      assertFails(setDoc(reference, { token: 'token-1', platform: 'android' })),
+    ).resolves.toMatchObject({ code: 'permission-denied' });
+    await expect(assertFails(getDoc(reference))).resolves.toMatchObject({
+      code: 'permission-denied',
+    });
+  });
+});

@@ -1,0 +1,185 @@
+name: Pull Request Brief
+
+# Every pull request carries its release notes and a link to the build that was
+# produced from it, without anyone writing the same summary twice. The branch
+# prerelease (see branch-continuous-release.yml) publishes the APK; this job
+# only points at it.
+#
+# It runs twice on purpose. On `pull_request` the notes appear immediately, but
+# the prerelease does not exist yet — every branch gate has to pass first, which
+# takes far longer than this job. The `workflow_run` trigger brings it back once
+# Branch Continuous Release finishes, and only then can the build be linked.
+# Without the second run the build line would always be the fallback.
+#
+# GitHub only fires `workflow_run` for a workflow file that exists on the
+# default branch, so that half starts working once this lands on `main`.
+#
+# SECURITY: this job holds `pull-requests: write`, so it must never execute code
+# from the branch under review — a fork could then write to this repository.
+# It checks out the default branch for the tooling and reads the pull request's
+# version and notes as data over the API. CodeQL flags the alternative as
+# actions/untrusted-checkout/high, and it is right to.
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review]
+  workflow_run:
+    workflows: ['Branch Continuous Release']
+    types: [completed]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: >-
+    pr-brief-${{ github.event.pull_request.number
+    || github.event.workflow_run.head_branch }}
+  cancel-in-progress: true
+
+jobs:
+  brief:
+    name: Compose Pull Request Brief
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Resolve the pull request and commit under review
+        id: target
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT: ${{ github.event_name }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_SHA: ${{ github.event.pull_request.head.sha }}
+          RUN_BRANCH: ${{ github.event.workflow_run.head_branch }}
+          RUN_SHA: ${{ github.event.workflow_run.head_sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "${EVENT}" == "pull_request" ]]; then
+            number="${PR_NUMBER}"
+            sha="${PR_SHA}"
+          else
+            # A branch build carries no pull request, so find the open one.
+            number="$(gh pr list --repo "${GITHUB_REPOSITORY}" --head "${RUN_BRANCH}" \
+              --state open --json number --jq '.[0].number // empty')"
+            sha="${RUN_SHA}"
+          fi
+          if [[ -z "${number}" ]]; then
+            echo "No open pull request for this branch; nothing to describe."
+            echo "found=false" >> "${GITHUB_OUTPUT}"
+          else
+            echo "found=true" >> "${GITHUB_OUTPUT}"
+            echo "number=${number}" >> "${GITHUB_OUTPUT}"
+            echo "sha=${sha}" >> "${GITHUB_OUTPUT}"
+            echo "Describing pull request #${number} at ${sha::7}."
+          fi
+
+      # The default branch, never the branch under review: this job can write to
+      # the repository, so the code it runs has to be trusted.
+      - uses: actions/checkout@v7
+        if: steps.target.outputs.found == 'true'
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
+
+      - uses: actions/setup-node@v6
+        if: steps.target.outputs.found == 'true'
+        with:
+          node-version: 26
+
+      - name: Read the version and notes from the commit under review
+        id: notes
+        if: steps.target.outputs.found == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          HEAD_SHA: ${{ steps.target.outputs.sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Data, not code. Nothing fetched here is ever executed.
+          gh api "repos/${GITHUB_REPOSITORY}/contents/package.json?ref=${HEAD_SHA}" \
+            --jq '.content' | base64 --decode > "${RUNNER_TEMP}/head-package.json"
+          VERSION="$(node -p "require('${RUNNER_TEMP}/head-package.json').version")"
+
+          NOTES_FILE="${RUNNER_TEMP}/head-notes.md"
+          if ! gh api "repos/${GITHUB_REPOSITORY}/contents/release-notes/v${VERSION}.md?ref=${HEAD_SHA}" \
+            --jq '.content' 2>/dev/null | base64 --decode > "${NOTES_FILE}"; then
+            echo "::error::Missing release-notes/v${VERSION}.md on this branch. Every pull request ships its release notes."
+            exit 1
+          fi
+          if [[ ! -s "${NOTES_FILE}" ]]; then
+            echo "::error::release-notes/v${VERSION}.md is empty on this branch."
+            exit 1
+          fi
+          echo "version=${VERSION}" >> "${GITHUB_OUTPUT}"
+          echo "path=${NOTES_FILE}" >> "${GITHUB_OUTPUT}"
+          echo "Read notes for v${VERSION} from ${HEAD_SHA::7}."
+
+      - name: Locate the build produced from this commit
+        id: artifact
+        if: steps.target.outputs.found == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          HEAD_SHA: ${{ steps.target.outputs.sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          # The prerelease tag ends in the short commit SHA, so this only ever
+          # links to a build made from the exact commit under review.
+          SHORT="${HEAD_SHA::7}"
+          TAG="$(gh release list --repo "${GITHUB_REPOSITORY}" --limit 300 \
+            --json tagName --jq '.[].tagName' 2>/dev/null \
+            | grep -- "-${SHORT}$" | head -n 1 || true)"
+          if [[ -n "${TAG}" ]]; then
+            echo "url=https://github.com/${GITHUB_REPOSITORY}/releases/tag/${TAG}" >> "${GITHUB_OUTPUT}"
+            echo "version=${TAG#v}" >> "${GITHUB_OUTPUT}"
+            echo "Found build ${TAG} for ${SHORT}."
+          else
+            echo "No prerelease for ${SHORT} yet; the brief will say so."
+          fi
+
+      - name: Compose and apply the brief
+        if: steps.target.outputs.found == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ steps.target.outputs.number }}
+          VERSION: ${{ steps.notes.outputs.version }}
+          NOTES_FILE: ${{ steps.notes.outputs.path }}
+          ARTIFACT_URL: ${{ steps.artifact.outputs.url }}
+          ARTIFACT_VERSION: ${{ steps.artifact.outputs.version }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          # The tooling comes from the default branch, never the branch under
+          # review, so a pull request that introduces this workflow runs before
+          # the script it calls exists on `main`. Skip rather than fail: the
+          # brief starts working by itself once this merges.
+          if [[ ! -f tools/release/pull-request-brief.mjs ]]; then
+            echo "::notice::tools/release/pull-request-brief.mjs is not on the default branch yet; skipping the brief until this merges."
+            exit 0
+          fi
+
+          BODY_FILE="${RUNNER_TEMP}/pr-body.md"
+          NEXT_FILE="${RUNNER_TEMP}/pr-body-next.md"
+          gh pr view "${PR_NUMBER}" --repo "${GITHUB_REPOSITORY}" --json body --jq '.body // ""' > "${BODY_FILE}"
+
+          ARGS=(
+            --version="${VERSION}"
+            --notes-file="${NOTES_FILE}"
+            --body-file="${BODY_FILE}"
+            --out="${NEXT_FILE}"
+          )
+          if [[ -n "${ARTIFACT_URL:-}" ]]; then
+            ARGS+=(--artifact-url="${ARTIFACT_URL}" --artifact-version="${ARTIFACT_VERSION}")
+          fi
+          node tools/release/pull-request-brief.mjs "${ARGS[@]}"
+
+          if cmp --silent "${BODY_FILE}" "${NEXT_FILE}"; then
+            echo "Brief already current; leaving the description untouched."
+          else
+            gh pr edit "${PR_NUMBER}" --repo "${GITHUB_REPOSITORY}" --body-file "${NEXT_FILE}"
+            echo "Pull request description updated."
+          fi

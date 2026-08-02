@@ -80,6 +80,15 @@ export class LocalNotificationService implements NotificationService {
     };
   }
 
+  /** Local mode has no server to push from, so tokens are simply not kept. */
+  savePushToken(): Promise<void> {
+    return Promise.resolve();
+  }
+
+  removePushToken(): Promise<void> {
+    return Promise.resolve();
+  }
+
   markRead(userId: string, notificationIds: string[]): Promise<void> {
     if (notificationIds.length === 0) return Promise.resolve();
     const database = readLocalDatabase();

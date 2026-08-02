@@ -69,12 +69,21 @@ describe('bucket-owned pricing', () => {
 
   it('copies the complete pricing policy when duplicating a bucket', () => {
     const bucket = privateBucket();
-    const duplicate = buildDuplicateBucketDraft(bucket, 'copy');
+    const duplicate = buildDuplicateBucketDraft(bucket);
 
     expect(duplicate.pricingPolicy).toEqual(pricingPolicy);
     expect(duplicate.pricingPolicy).not.toBe(bucket.pricingPolicy);
     expect(duplicate.customItemMode).toBe(bucket.customItemMode);
     expect(duplicate.items).toHaveLength(bucket.items.length);
+  });
+
+  it('keeps the exact template title when duplicating a bucket', () => {
+    const bucket = privateBucket();
+
+    const duplicate = buildDuplicateBucketDraft(bucket);
+
+    expect(duplicate.title).toBe(bucket.title);
+    expect(duplicate.title).not.toContain('(');
   });
 
   it('applies private bucket charges to a single-person order snapshot', () => {

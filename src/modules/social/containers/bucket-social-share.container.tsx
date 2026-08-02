@@ -1,11 +1,13 @@
-import { BackLink, ErrorState, Loading } from '@/shared/ui';
+import { BackLink, ErrorState, FeatureTour, Loading } from '@/shared/ui';
 
 import { BucketSocialSharePanel } from '../components/bucket-social-share-panel/bucket-social-share-panel.container';
 import { useBucketSocialShare } from '../hooks/use-bucket-social-share.hook';
+import { useBucketSocialShareTour } from '../hooks/use-bucket-social-share-tour.hook';
 import { BUCKETS_REDIRECT_PATH } from '../routes/social-route-paths.constants';
 
 export function BucketSocialShareContainer() {
   const vm = useBucketSocialShare();
+  const { steps: tourSteps } = useBucketSocialShareTour();
 
   if (vm.loading) return <Loading label={vm.t('loading')} />;
   if (!vm.bucket || vm.error) {
@@ -33,6 +35,15 @@ export function BucketSocialShareContainer() {
         disabled={(vm.bucket.orderState ?? 'open') !== 'open'}
         onSuccess={vm.handleSuccess}
         onError={vm.handleError}
+      />
+      <FeatureTour
+        page="social-share"
+        steps={tourSteps}
+        nextLabel={vm.t('tourNext')}
+        doneLabel={vm.t('tourDone')}
+        skipLabel={vm.t('tourSkip')}
+        closeLabel={vm.t('close')}
+        skipAllLabel={vm.t('tourSkipAll')}
       />
     </div>
   );

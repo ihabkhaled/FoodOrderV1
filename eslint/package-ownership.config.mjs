@@ -49,6 +49,22 @@ export const packageOwnership = {
     owner: 'src/packages/capacitor-keyboard',
     publicImport: '@/packages/capacitor-keyboard',
   },
+  '@capacitor/local-notifications': {
+    owner: 'src/packages/capacitor-local-notifications',
+    publicImport: '@/packages/capacitor-local-notifications',
+  },
+  '@vercel/analytics': {
+    owner: 'src/packages/vercel-analytics',
+    publicImport: '@/packages/vercel-analytics',
+  },
+  '@vercel/speed-insights': {
+    owner: 'src/packages/vercel-speed-insights',
+    publicImport: '@/packages/vercel-speed-insights',
+  },
+  '@capacitor/push-notifications': {
+    owner: 'src/packages/capacitor-push-notifications',
+    publicImport: '@/packages/capacitor-push-notifications',
+  },
   '@capacitor/network': {
     owner: 'src/packages/capacitor-network',
     publicImport: '@/packages/capacitor-network',

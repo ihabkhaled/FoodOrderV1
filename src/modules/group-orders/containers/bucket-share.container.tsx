@@ -1,16 +1,27 @@
-import { Share2 } from '@/packages/icons';
-import { BackLink, ConfirmDialog, ErrorState, Loading } from '@/shared/ui';
+import { History, Share2, Users } from '@/packages/icons';
+import {
+  BackLink,
+  ConfirmDialog,
+  ErrorState,
+  FeatureTour,
+  LinkRow,
+  Loading,
+} from '@/shared/ui';
 
-import { ActivityTimeline } from '../components/activity-timeline/activity-timeline.component';
 import { BucketInvitePanel } from '../components/bucket-invite-panel/bucket-invite-panel.component';
-import { BucketMemberPermissionsPanel } from '../components/bucket-member-permissions-panel/bucket-member-permissions-panel.component';
 import { BucketStateBanner } from '../components/bucket-state-banner/bucket-state-banner.component';
 import { BucketStateControls } from '../components/bucket-state-controls/bucket-state-controls.component';
 import { useBucketShare } from '../hooks/use-bucket-share.hook';
-import { BUCKETS_REDIRECT_PATH } from '../routes/group-orders-route-paths.constants';
+import { useBucketShareTour } from '../hooks/use-bucket-share-tour.hook';
+import {
+  BUCKETS_REDIRECT_PATH,
+  buildBucketShareActivityRoute,
+  buildBucketShareMembersRoute,
+} from '../routes/group-orders-route-paths.constants';
 
 export function BucketShareContainer() {
   const vm = useBucketShare();
+  const { steps: tourSteps } = useBucketShareTour();
 
   if (vm.loading) return <Loading label={vm.t('loading')} />;
   if (!vm.view || vm.error) {
@@ -69,32 +80,20 @@ export function BucketShareContainer() {
               void vm.revokeInvite(inviteId);
             }}
           />
-          <BucketMemberPermissionsPanel
-            members={members}
-            currentUserId={vm.user?.id ?? bucket.ownerId}
-            locale={vm.locale}
-            translate={vm.t}
-            onRoleChange={(member, role) => {
-              void vm.changeRole(member, role);
-            }}
-            onPermissionChange={(member, patch) => {
-              void vm.changeCustomPermissions(member, patch);
-            }}
-            onRemove={vm.setRemoving}
-          />
-          <section className="section-card">
-            <div className="section-heading">
-              <div>
-                <p className="eyebrow">{vm.t('activity')}</p>
-                <h2>{vm.t('activity')}</h2>
-              </div>
-            </div>
-            <ActivityTimeline
-              events={vm.activity}
-              locale={vm.locale}
-              t={vm.t}
+          <nav className="link-rows" aria-label={vm.t('sharing')}>
+            <LinkRow
+              to={buildBucketShareMembersRoute(bucket.id)}
+              icon={Users}
+              title={`${vm.t('members')} (${members.length})`}
+              hint={vm.t('shareMembersHint')}
             />
-          </section>
+            <LinkRow
+              to={buildBucketShareActivityRoute(bucket.id)}
+              icon={History}
+              title={vm.t('activity')}
+              hint={vm.t('shareActivityHint')}
+            />
+          </nav>
         </>
       ) : (
         <section className="section-card stack">
@@ -113,20 +112,6 @@ export function BucketShareContainer() {
       )}
 
       <ConfirmDialog
-        open={Boolean(vm.removing)}
-        title={vm.t('removeMember')}
-        message={vm.t('confirmRemoveMember')}
-        confirmLabel={vm.t('removeMember')}
-        cancelLabel={vm.t('cancel')}
-        danger
-        onConfirm={() => {
-          void vm.removeMember();
-        }}
-        onCancel={() => {
-          vm.setRemoving(null);
-        }}
-      />
-      <ConfirmDialog
         open={vm.confirmingFreeze}
         title={vm.gt('freezeBucket')}
         message={vm.gt('confirmFreeze')}
@@ -138,6 +123,16 @@ export function BucketShareContainer() {
         onCancel={() => {
           vm.setConfirmingFreeze(false);
         }}
+      />
+
+      <FeatureTour
+        page="bucket-share"
+        steps={tourSteps}
+        nextLabel={vm.t('tourNext')}
+        doneLabel={vm.t('tourDone')}
+        skipLabel={vm.t('tourSkip')}
+        closeLabel={vm.t('close')}
+        skipAllLabel={vm.t('tourSkipAll')}
       />
     </div>
   );

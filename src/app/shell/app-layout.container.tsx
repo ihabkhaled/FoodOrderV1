@@ -8,7 +8,11 @@ import {
 } from '@/packages/icons';
 import { NavLink, Outlet } from '@/packages/router';
 import { nextTheme } from '@/platform/device';
-import { LanguageSelect, RefreshableViewport } from '@/shared/ui';
+import {
+  ConfirmDialog,
+  LanguageSelect,
+  RefreshableViewport,
+} from '@/shared/ui';
 
 import { HOME_PATH } from '../router/app-route-paths.constants';
 import { THEME_ICON, THEME_LABEL } from './app-layout.constants';
@@ -22,7 +26,11 @@ export function AppLayoutContainer() {
   const {
     t,
     userDisplayName,
-    logout,
+    confirmingLogout,
+    loggingOut,
+    requestLogout,
+    cancelLogout,
+    confirmLogout,
     online,
     toast,
     locale,
@@ -33,6 +41,10 @@ export function AppLayoutContainer() {
     collapsed,
     toggleCollapsed,
     notifications,
+    notificationsLoading,
+    notificationPromptOpen,
+    enableNotifications,
+    dismissNotificationPrompt,
     markNotificationsRead,
   } = useAppLayout();
 
@@ -67,7 +79,7 @@ export function AppLayoutContainer() {
   const logoutButton = (
     <button
       className="icon-button"
-      onClick={() => void logout()}
+      onClick={requestLogout}
       title={t('logout')}
       aria-label={t('logout')}
     >
@@ -98,6 +110,7 @@ export function AppLayoutContainer() {
           <div className="sidebar-controls">
             <NotificationCenter
               notifications={notifications}
+              loading={notificationsLoading}
               locale={locale}
               placement="sidebar"
               onMarkRead={markNotificationsRead}
@@ -123,6 +136,7 @@ export function AppLayoutContainer() {
         <div className="topbar-meta">
           <NotificationCenter
             notifications={notifications}
+            loading={notificationsLoading}
             locale={locale}
             placement="topbar"
             onMarkRead={markNotificationsRead}
@@ -143,6 +157,27 @@ export function AppLayoutContainer() {
       <BottomNav t={t} />
 
       <ToastViewport toast={toast} />
+
+      <ConfirmDialog
+        open={confirmingLogout}
+        title={t('confirmLogoutTitle')}
+        message={t('confirmLogoutMessage')}
+        confirmLabel={loggingOut ? t('loggingOut') : t('logout')}
+        cancelLabel={t('cancel')}
+        busy={loggingOut}
+        onConfirm={() => void confirmLogout()}
+        onCancel={cancelLogout}
+      />
+
+      <ConfirmDialog
+        open={notificationPromptOpen}
+        title={t('notificationPromptTitle')}
+        message={t('notificationPromptMessage')}
+        confirmLabel={t('notificationPromptEnable')}
+        cancelLabel={t('notificationPromptLater')}
+        onConfirm={() => void enableNotifications()}
+        onCancel={dismissNotificationPrompt}
+      />
     </div>
   );
 }

@@ -2,8 +2,10 @@
 
 Installed plugin set (deliberately low-permission; audit:
 [../docs/migration/native-security-audit.md](../docs/migration/native-security-audit.md)):
-app, core, haptics, keyboard, network, preferences, status-bar — all Capacitor 8.x.
-No camera, geolocation, filesystem, biometrics, push notifications, or deep links.
+app, core, haptics, keyboard, local-notifications, network, preferences, push-notifications,
+status-bar — all Capacitor 8.x. No camera, geolocation, filesystem, biometrics,
+deep links (remote push via FCM was added in v1.8.0). Local on-device notifications were added in
+v1.8.0 and carry a runtime-prompted `POST_NOTIFICATIONS` permission.
 
 ## Capability → seam
 
@@ -16,6 +18,7 @@ No camera, geolocation, filesystem, biometrics, push notifications, or deep link
 | App lifecycle            | `@capacitor/app`         | reserved (EXC-2)                   | —                      | n/a (no web import sites)            |
 | Network status           | `@capacitor/network`     | `@/packages/capacitor-network`     | `src/platform/network` | browser online/offline events        |
 | Persistent preferences   | `@capacitor/preferences` | `@/packages/capacitor-preferences` | `src/platform/storage` | web storage                          |
+| OS tray notifications    | `@capacitor/local-notifications` | `@/packages/capacitor-local-notifications` | `src/platform/device`  | browser Notification API, else no-op |
 | Clipboard / share        | (Web APIs)               | —                                  | `src/platform/browser` | navigator.clipboard/share + fallback |
 
 Legacy seam being migrated: `src/services/platform.ts` (single file) becomes the

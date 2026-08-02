@@ -27,6 +27,7 @@ export default tseslint.config(
       'ios',
       'functions/lib',
       '.ai/local',
+      '.claude',
       '.vercel',
       '.worktrees',
       'playwright-report',

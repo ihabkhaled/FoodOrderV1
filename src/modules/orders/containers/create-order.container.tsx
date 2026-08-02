@@ -1,12 +1,14 @@
 import { Minus, Plus, ShoppingCart } from '@/packages/icons';
 import { formatMoney } from '@/shared/helpers';
-import { BackLink, Loading } from '@/shared/ui';
+import { BackLink, FeatureTour, Loading } from '@/shared/ui';
 
 import { useCreateOrder } from '../hooks/use-create-order.hook';
+import { useCreateOrderTour } from '../hooks/use-create-order-tour.hook';
 import { BUCKETS_REDIRECT_PATH } from '../routes/orders-route-paths.constants';
 
 export function CreateOrderContainer() {
   const vm = useCreateOrder();
+  const { steps: tourSteps } = useCreateOrderTour();
 
   if (vm.loading) return <Loading label={vm.t('loading')} />;
   const bucket = vm.bucket;
@@ -150,6 +152,15 @@ export function CreateOrderContainer() {
           </button>
         </div>
       </form>
+      <FeatureTour
+        page="create-order"
+        steps={tourSteps}
+        nextLabel={vm.t('tourNext')}
+        doneLabel={vm.t('tourDone')}
+        skipLabel={vm.t('tourSkip')}
+        closeLabel={vm.t('close')}
+        skipAllLabel={vm.t('tourSkipAll')}
+      />
     </div>
   );
 }

@@ -1,10 +1,15 @@
 import { expect, type Locator, type Page, test } from '@playwright/test';
 
+import { suppressFeatureTours } from './helpers/featureTours';
 import {
   LONG_GROUP_NAME,
   OWNER_ID,
   seedResponsiveScenario,
 } from './helpers/responsiveScenario';
+
+test.beforeEach(async ({ page }) => {
+  await suppressFeatureTours(page);
+});
 
 const NOTIFICATIONS_KEY = 'foodorder:v1:notifications';
 const LONG_NOTIFICATION_TITLE =
@@ -151,6 +156,7 @@ for (const viewport of VIEWPORTS) {
 
     await notificationTrigger.click();
 
+    await page.goto('/social/groups');
     const group = page.getByRole('article', {
       name: `Group ${LONG_GROUP_NAME}`,
       exact: true,

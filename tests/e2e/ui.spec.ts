@@ -1,5 +1,11 @@
 import { expect, type Locator, type Page, test } from '@playwright/test';
 
+import { suppressFeatureTours } from './helpers/featureTours';
+
+test.beforeEach(async ({ page }) => {
+  await suppressFeatureTours(page);
+});
+
 // UI/layout gate: proves the responsive shell places components correctly and
 // nothing overflows horizontally. Runs against the deterministic local-device
 // mode configured by playwright.config.ts.

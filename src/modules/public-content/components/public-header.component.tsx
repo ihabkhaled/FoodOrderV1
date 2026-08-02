@@ -22,6 +22,8 @@ export function PublicHeader({
   navigationItems,
   localeLinks,
   ui,
+  theme,
+  onToggleTheme,
 }: PublicHeaderProps) {
   return (
     <>
@@ -64,6 +66,16 @@ export function PublicHeader({
                 ))}
               </ul>
             </details>
+            <button
+              className="public-theme-toggle"
+              type="button"
+              aria-label={ui.themeToggleLabel}
+              title={ui.themeToggleLabel}
+              aria-pressed={theme === 'dark'}
+              onClick={onToggleTheme}
+            >
+              <span className="public-theme-toggle__icon" aria-hidden="true" />
+            </button>
             <a className="public-button public-button--small" href={applicationPath}>
               {ui.openApplicationLabel}
             </a>

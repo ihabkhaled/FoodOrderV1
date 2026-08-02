@@ -26,6 +26,15 @@
       "contentSource": "ar"
     },
     {
+      "code": "ar-Latn",
+      "segment": "ar-latn",
+      "htmlLang": "ar-Latn",
+      "openGraphLocale": "ar_EG",
+      "direction": "ltr",
+      "label": "Arabic Franco",
+      "contentSource": "ar-Latn"
+    },
+    {
       "code": "it",
       "segment": "it",
       "htmlLang": "it",
@@ -118,6 +127,8 @@
   ],
   "ui": {
     "en": {
+      "brandName": "FoodOrder | Collect Your Order",
+      "themeToggleLabel": "Switch theme",
       "primaryNavigationLabel": "Public navigation",
       "mobileNavigationLabel": "Open navigation",
       "languageLabel": "Language",
@@ -131,6 +142,8 @@
       "learnMoreLabel": "See how it works"
     },
     "ar": {
+      "brandName": "FoodOrder | جمع أوردرك",
+      "themeToggleLabel": "تبديل المظهر",
       "primaryNavigationLabel": "التنقل في الصفحات العامة",
       "mobileNavigationLabel": "فتح قائمة التنقل",
       "languageLabel": "اللغة",

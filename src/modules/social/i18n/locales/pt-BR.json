@@ -63,5 +63,9 @@
   "notifications": "Notificações",
   "unreadNotifications": "não lidas",
   "markAllRead": "Marcar tudo como lido",
-  "noNotifications": "Ainda não há notificações."
+  "noNotifications": "Ainda não há notificações.",
+  "requestsTitle": "Solicitações",
+  "friendsHubHint": "Busque por e-mail, envie solicitações e gerencie seus amigos.",
+  "requestsHubHint": "Convites de amigos, grupos e cardápios aguardando sua resposta.",
+  "groupsHubHint": "Crie grupos e compartilhe cardápios com todos de uma vez."
 }

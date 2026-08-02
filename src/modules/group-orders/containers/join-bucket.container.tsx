@@ -1,9 +1,10 @@
 import type { BucketRole } from '@/modules/data-access';
 import { KeyRound, UserPlus } from '@/packages/icons';
 import type { MessageKey } from '@/shared/i18n';
-import { BackLink } from '@/shared/ui';
+import { BackLink, FeatureTour } from '@/shared/ui';
 
 import { useJoinBucket } from '../hooks/use-join-bucket.hook';
+import { useJoinBucketTour } from '../hooks/use-join-bucket-tour.hook';
 import { BUCKETS_REDIRECT_PATH } from '../routes/group-orders-route-paths.constants';
 
 const ROLE_LABEL: Record<BucketRole, MessageKey> = {
@@ -15,6 +16,7 @@ const ROLE_LABEL: Record<BucketRole, MessageKey> = {
 
 export function JoinBucketContainer() {
   const vm = useJoinBucket();
+  const { steps: tourSteps } = useJoinBucketTour();
 
   return (
     <div className="page narrow stack-lg">
@@ -75,6 +77,15 @@ export function JoinBucketContainer() {
           </button>
         </section>
       ) : null}
+      <FeatureTour
+        page="join"
+        steps={tourSteps}
+        nextLabel={vm.t('tourNext')}
+        doneLabel={vm.t('tourDone')}
+        skipLabel={vm.t('tourSkip')}
+        closeLabel={vm.t('close')}
+        skipAllLabel={vm.t('tourSkipAll')}
+      />
     </div>
   );
 }

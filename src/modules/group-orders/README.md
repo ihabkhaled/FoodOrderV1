@@ -8,7 +8,7 @@ custom items, pricing policy, invites/permissions, and joining by code.
 - The `/buckets/:bucketId/collaborate` screen: debounced quantity
   contributions, drift detection/repair, custom item proposal and approval,
   placing the group order, and leaving the bucket.
-- The `/buckets/:bucketId/share` screen: owner-only invite creation and
+- The `/buckets/:bucketId/share` (plus its `/members` and `/activity` subpages) screen: owner-only invite creation and
   revocation, member roles and custom-item permissions, freeze/reopen.
 - The `/join` screen: preview and accept a join code.
 - The group-order message catalog (`GroupOrderMessageKey` +

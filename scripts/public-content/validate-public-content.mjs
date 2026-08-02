@@ -80,6 +80,46 @@ const appShell = await readFile(path.join(outputDirectory, 'app.html'), 'utf8').
   () => '',
 );
 expectIncludes(appShell, 'noindex, nofollow, noarchive', 'app shell noindex');
+
+// The application shell is what a crawler fetches for every shared app link, so
+// its preview card is a release gate rather than a nicety.
+const socialImageUrl = canonicalUrl(catalog, catalog.site.socialImagePath);
+for (const [tag, value] of [
+  ['og:title', `${catalog.site.brandName} App`],
+  ['og:description', pageCopy(catalog.pages[0], catalog.locales[0]).description],
+  ['og:url', canonicalUrl(catalog, catalog.site.applicationPath)],
+  ['og:image', socialImageUrl],
+  ['twitter:card', 'summary_large_image'],
+  ['twitter:image', socialImageUrl],
+]) {
+  const attribute = tag.startsWith('og:') ? 'property' : 'name';
+  expectIncludes(
+    appShell,
+    `<meta ${attribute}="${tag}" content="${escapeHtml(value)}" />`,
+    `app shell ${tag}`,
+  );
+}
+// A duplicate card is as broken as a missing one: crawlers pick one at random.
+for (const tag of ['og:title', 'og:image', 'twitter:card']) {
+  const attribute = tag.startsWith('og:') ? 'property' : 'name';
+  const occurrences = (
+    appShell.match(new RegExp(`<meta ${attribute}="${tag}"`, 'gu')) || []
+  ).length;
+  if (occurrences !== 1) failures.push(`app shell duplicate ${tag}: ${occurrences}`);
+}
+
+for (const page of catalog.pages) {
+  for (const locale of catalog.locales) {
+    const html = await readFile(outputPathForPage(outputDirectory, page, locale), 'utf8').catch(
+      () => '',
+    );
+    expectIncludes(
+      html,
+      `<meta property="og:image" content="${escapeHtml(socialImageUrl)}" />`,
+      `card image: ${page.id}/${locale.code}`,
+    );
+  }
+}
 if (/<script[^>]*\bsrc="https:\/\/pagead2\.googlesyndication\.com\//iu.test(appShell)) {
   failures.push('app shell contains AdSense loader');
 }
@@ -87,7 +127,7 @@ if (/<script[^>]*\bsrc="https:\/\/pagead2\.googlesyndication\.com\//iu.test(appS
 const sitemap = await readFile(path.join(outputDirectory, 'sitemap.xml'), 'utf8').catch(
   () => '',
 );
-if ((sitemap.match(/<sitemap>/gu) || []).length !== 12) failures.push('sitemap locale count');
+if ((sitemap.match(/<sitemap>/gu) || []).length !== catalog.locales.length) failures.push('sitemap locale count');
 let sitemapUrlCount = 0;
 const localeSitemaps = [];
 for (const locale of catalog.locales) {
@@ -113,7 +153,8 @@ for (const locale of catalog.locales) {
   expectIncludes(feed, `<language>${locale.htmlLang}</language>`, `RSS language: ${locale.code}`);
   if ((feed.match(/<item>/gu) || []).length > 50) failures.push(`RSS item limit: ${locale.code}`);
 }
-if (sitemapUrlCount !== 120) failures.push('sitemap URL count');
+const expectedSitemapUrls = catalog.locales.length * catalog.pages.length;
+if (sitemapUrlCount !== expectedSitemapUrls) failures.push('sitemap URL count');
 const allLocaleSitemaps = localeSitemaps.join('\n');
 for (const privatePrefix of [
   'app',
@@ -151,4 +192,6 @@ if (failures.length > 0) {
   throw new Error(`Public artifact validation failed:\n${failures.join('\n')}`);
 }
 
-process.stdout.write('Public artifact validation passed for 120 localized pages.\n');
+process.stdout.write(
+  `Public artifact validation passed for ${expectedSitemapUrls} localized pages.\n`,
+);

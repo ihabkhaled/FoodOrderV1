@@ -29,6 +29,26 @@ describe('ConfirmDialog', () => {
     expect(onConfirm).toHaveBeenCalledOnce();
   });
 
+  it('disables both actions and marks the confirm button busy while working', () => {
+    render(
+      <ConfirmDialog
+        open
+        busy
+        title="Log out?"
+        message="You will need to sign in again."
+        confirmLabel="Logging out…"
+        cancelLabel="Cancel"
+        onConfirm={vi.fn()}
+        onCancel={vi.fn()}
+      />,
+    );
+
+    const confirm = screen.getByRole('button', { name: 'Logging out…' });
+    expect(confirm).toBeDisabled();
+    expect(confirm).toHaveAttribute('aria-busy', 'true');
+    expect(screen.getByRole('button', { name: 'Cancel' })).toBeDisabled();
+  });
+
   it('renders a destructive action and invokes cancellation', async () => {
     const user = userEvent.setup();
     const onCancel = vi.fn();

@@ -9,6 +9,16 @@ export type ContributionOperation = 'set' | 'increment';
 export type BucketOrderState = 'open' | 'frozen' | 'ordering' | 'ordered';
 export type CustomItemMode = 'disabled' | 'proposal' | 'direct';
 export type ChargeAllocationStrategy = 'equal' | 'proportional';
+/**
+ * Mirrors `AnalyticsConsent` in `@/modules/telemetry`. Persisted layers may not
+ * depend on a feature module, so the union is restated here; the two are kept
+ * identical by `tests/domain/telemetry.test.ts`.
+ */
+export type AnalyticsConsentLevel =
+  | 'denied'
+  | 'operational_only'
+  | 'product_analytics'
+  | 'product_and_marketing';
 
 export interface SessionUser {
   id: string;
@@ -30,6 +40,8 @@ export interface UserProfile {
   locale: Locale;
   theme: Theme;
   defaultCurrency: CurrencyCode;
+  /** Absent on profiles written before v1.8.0; treated as the device value. */
+  analyticsConsent?: AnalyticsConsentLevel;
   createdAt: string;
   updatedAt: string;
 }

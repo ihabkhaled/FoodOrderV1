@@ -40,6 +40,7 @@ import {
   readDatabase,
   writeDatabase,
 } from './local-database.helper';
+import { pushLocalNotification } from './local-notification.gateway';
 
 const MUTATION_HISTORY_LIMIT = 1_000;
 
@@ -179,6 +180,23 @@ export class LocalOrderSessionService implements OrderSessionService {
     database.orderSessions.contributions[collecting.id] = [];
     database.orderSessions.mutations[collecting.id] = [];
     writeDatabase(database);
+
+    // Everyone who shares the template learns a new round opened; the
+    // organizer already knows and is not notified.
+    for (const participant of participantDrafts) {
+      if (participant.userId === user.id) continue;
+      pushLocalNotification(participant.userId, {
+        kind: 'session_opened',
+        title: 'New order round',
+        message: `${user.displayName} opened "${collecting.title}" for orders.`,
+        route: `/sessions/${collecting.id}`,
+        entityType: 'session',
+        entityId: collecting.id,
+        actorId: user.id,
+        actorName: user.displayName,
+      });
+    }
+
     return structuredClone(collecting);
   }
 

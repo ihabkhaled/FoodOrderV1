@@ -17,6 +17,7 @@ describe('locale runtime definitions', () => {
     expect(SUPPORTED_LOCALES).toEqual([
       'en',
       'ar',
+      'ar-Latn',
       'it',
       'fa',
       'fr',

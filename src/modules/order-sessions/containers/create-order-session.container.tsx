@@ -1,13 +1,16 @@
 import '../order-sessions.css';
 
-import { BackLink, ErrorState, Loading } from '@/shared/ui';
+import { translate } from '@/shared/i18n';
+import { BackLink, ErrorState, FeatureTour, Loading } from '@/shared/ui';
 
 import { CreateOrderSessionForm } from '../components/create-order-session-form/create-order-session-form.component';
 import { useCreateOrderSession } from '../hooks/use-create-order-session.hook';
+import { useCreateOrderSessionTour } from '../hooks/use-create-order-session-tour.hook';
 import { ORDER_SESSIONS_PATH } from '../routes/order-sessions-route-paths.constants';
 
 export function CreateOrderSessionContainer() {
   const viewModel = useCreateOrderSession();
+  const { steps: tourSteps } = useCreateOrderSessionTour();
   const backLabel = viewModel.translate(viewModel.locale, 'backToSessions');
 
   if (viewModel.loading) {
@@ -70,6 +73,15 @@ export function CreateOrderSessionContainer() {
         onTimezoneChange={viewModel.setTimezone}
         onAutoLockChange={viewModel.setAutoLock}
         onSubmit={(event) => void viewModel.submit(event)}
+      />
+      <FeatureTour
+        page="create-session"
+        steps={tourSteps}
+        nextLabel={translate(viewModel.locale, 'tourNext')}
+        doneLabel={translate(viewModel.locale, 'tourDone')}
+        skipLabel={translate(viewModel.locale, 'tourSkip')}
+        closeLabel={translate(viewModel.locale, 'close')}
+        skipAllLabel={translate(viewModel.locale, 'tourSkipAll')}
       />
     </div>
   );

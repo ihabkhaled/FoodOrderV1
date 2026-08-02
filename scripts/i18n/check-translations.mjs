@@ -18,6 +18,7 @@ const ROOT = process.cwd();
 const SUPPORTED_LOCALES = [
   'en',
   'ar',
+  'ar-Latn',
   'it',
   'fa',
   'fr',
@@ -29,6 +30,12 @@ const SUPPORTED_LOCALES = [
   'zh-CN',
   'ja',
 ];
+/**
+ * The public marketing site publishes every supported locale, so its own union
+ * in src/modules/public-content/types/public-content.types.ts must stay in sync
+ * with this list.
+ */
+const PUBLIC_CONTENT_LOCALES = SUPPORTED_LOCALES;
 const REFERENCE_LOCALE = 'en';
 const UNTRANSLATED_VALUE_RATIO = 0.8;
 const MINIMUM_UNTRANSLATED_CHECK_KEYS = 5;
@@ -201,7 +208,7 @@ const checkPublicContent = () => {
   const systemIds = Object.keys(base.systemPages);
   const embeddedLocales = new Set(['en', 'ar']);
 
-  for (const locale of SUPPORTED_LOCALES) {
+  for (const locale of PUBLIC_CONTENT_LOCALES) {
     if (localeFilter && locale !== localeFilter) continue;
     if (embeddedLocales.has(locale)) continue;
     const filePath = path.join(contentDirectory, 'locales', `${locale}.json`);

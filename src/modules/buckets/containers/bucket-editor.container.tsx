@@ -4,13 +4,15 @@ import { BucketPricingPanel } from '@/modules/group-orders';
 import { GripVertical, Plus, Save, Trash2 } from '@/packages/icons';
 import { Link } from '@/packages/router';
 import { SUPPORTED_CURRENCIES } from '@/platform/device';
-import { BackLink, Loading } from '@/shared/ui';
+import { BackLink, FeatureTour, Loading, NumericField } from '@/shared/ui';
 
 import { useBucketEditor } from '../hooks/use-bucket-editor.hook';
+import { useBucketEditorTour } from '../hooks/use-bucket-editor-tour.hook';
 import { BUCKETS_PATH } from '../routes/buckets-route-paths.constants';
 
 export function BucketEditorContainer() {
   const vm = useBucketEditor();
+  const { steps: tourSteps } = useBucketEditorTour();
 
   if (vm.loading) return <Loading label={vm.t('loading')} />;
 
@@ -113,22 +115,14 @@ export function BucketEditorContainer() {
                       maxLength={40}
                     />
                   </label>
-                  <label>
-                    {vm.t('unitPrice')}
-                    <input
-                      type="number"
-                      min="0"
-                      step="0.01"
-                      value={item.unitPrice}
-                      onChange={(event) => {
-                        vm.updateItem(
-                          item.id,
-                          'unitPrice',
-                          Number(event.target.value),
-                        );
-                      }}
-                    />
-                  </label>
+                  <NumericField
+                    id={`bucket-item-price-${item.id}`}
+                    label={vm.t('unitPrice')}
+                    value={item.unitPrice}
+                    onValueChange={(next) => {
+                      vm.updateItem(item.id, 'unitPrice', next);
+                    }}
+                  />
                   <label className="checkbox-label">
                     <input
                       type="checkbox"
@@ -171,6 +165,16 @@ export function BucketEditorContainer() {
           </button>
         </div>
       </form>
+
+      <FeatureTour
+        page="bucket-editor"
+        steps={tourSteps}
+        nextLabel={vm.t('tourNext')}
+        doneLabel={vm.t('tourDone')}
+        skipLabel={vm.t('tourSkip')}
+        closeLabel={vm.t('close')}
+        skipAllLabel={vm.t('tourSkipAll')}
+      />
     </div>
   );
 }

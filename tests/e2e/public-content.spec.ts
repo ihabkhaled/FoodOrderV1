@@ -3,7 +3,8 @@ import { expect, test } from '@playwright/test';
 test('public navigation serves unique crawler metadata through real links', async ({
   page,
 }) => {
-  // Pin a desktop viewport so the header links are rendered inline.
+  // The primary links live in the header's collapsible menu at every width a
+  // real reader is likely to use, so open it before following one.
   await page.setViewportSize({ width: 1280, height: 800 });
   await page.goto('/en');
   await expect(
@@ -13,8 +14,9 @@ test('public navigation serves unique crawler metadata through real links', asyn
     }),
   ).toBeVisible();
 
+  await page.locator('.public-mobile-menu > summary').click();
   await page
-    .locator('.public-navigation--desktop')
+    .locator('.public-mobile-menu')
     .getByRole('link', { name: 'About' })
     .click();
   await expect(page).toHaveURL(/\/en\/about$/u);
@@ -23,7 +25,14 @@ test('public navigation serves unique crawler metadata through real links', asyn
     'href',
     'https://food-order-v1-peach.vercel.app/en/about',
   );
-  await expect(page.locator('link[rel="alternate"][hreflang]')).toHaveCount(13);
+  // Thirteen published locales plus x-default.
+  await expect(page.locator('link[rel="alternate"][hreflang]')).toHaveCount(14);
+  await expect(
+    page.locator('link[rel="alternate"][hreflang="ar-Latn"]'),
+  ).toHaveAttribute(
+    'href',
+    'https://food-order-v1-peach.vercel.app/ar-latn/about',
+  );
 });
 
 test('the mobile menu exposes the public navigation on narrow viewports', async ({
@@ -129,8 +138,9 @@ test('public discovery exposes a locale sitemap index and bounded RSS', async ({
   const sitemap = await request.get('/sitemap.xml');
   expect(sitemap.ok()).toBe(true);
   const sitemapXml = await sitemap.text();
-  expect((sitemapXml.match(/<sitemap>/gu) ?? [])).toHaveLength(12);
+  expect((sitemapXml.match(/<sitemap>/gu) ?? [])).toHaveLength(13);
   expect(sitemapXml).toContain('/sitemaps/ja.xml');
+  expect(sitemapXml).toContain('/sitemaps/ar-latn.xml');
 
   const feed = await request.get('/ja/feed.xml');
   expect(feed.ok()).toBe(true);

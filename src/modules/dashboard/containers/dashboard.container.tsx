@@ -9,15 +9,18 @@ import {
   Utensils,
 } from '@/packages/icons';
 import { Link } from '@/packages/router';
-import { ErrorState, Loading } from '@/shared/ui';
+import { ErrorState, FeatureTour, SkeletonSection } from '@/shared/ui';
 
 import type { DashboardStatCard } from '../components/dashboard-stat-grid/dashboard-stat-grid.component';
 import { DashboardStatGrid } from '../components/dashboard-stat-grid/dashboard-stat-grid.component';
 import { RecentOrdersSection } from '../components/recent-orders-section/recent-orders-section.component';
 import { useDashboard } from '../hooks/use-dashboard.hook';
+import { useDashboardTour } from '../hooks/use-dashboard-tour.hook';
 
 export function DashboardContainer() {
   const vm = useDashboard();
+  const { setStatsElement, setCreateElement, steps: tourSteps } =
+    useDashboardTour();
 
   if (vm.error) {
     return (
@@ -29,9 +32,8 @@ export function DashboardContainer() {
     );
   }
   const summary = vm.summary;
-  if (!summary) return <Loading label={vm.t('loading')} />;
-
-  const cards: DashboardStatCard[] = [
+  const cards: DashboardStatCard[] = summary
+    ? [
     {
       label: vm.t('bucketCount'),
       value: summary.bucketCount,
@@ -62,14 +64,17 @@ export function DashboardContainer() {
       icon: CheckCircle2,
       to: `${ORDERS_PATH}?status=placed`,
     },
-    {
-      label: vm.t('completedOrders'),
-      value: summary.completedOrderCount,
-      icon: CheckCircle2,
-      to: `${ORDERS_PATH}?status=completed`,
-    },
-  ];
+        {
+          label: vm.t('completedOrders'),
+          value: summary.completedOrderCount,
+          icon: CheckCircle2,
+          to: `${ORDERS_PATH}?status=completed`,
+        },
+      ]
+    : [];
 
+  // The greeting needs no data, so it paints immediately while each section
+  // below shows its own placeholder until the summary resolves.
   return (
     <div className="page stack-lg">
       <section className="hero-card">
@@ -78,18 +83,44 @@ export function DashboardContainer() {
           <h1>{vm.profile?.fullName ?? vm.user?.displayName}</h1>
           <p>{vm.t('quickStart')}</p>
         </div>
-        <Link className="button" to={BUCKET_NEW_PATH}>
-          <Plus />
-          {vm.t('createBucket')}
-        </Link>
+        <div ref={setCreateElement}>
+          <Link className="button" to={BUCKET_NEW_PATH}>
+            <Plus />
+            {vm.t('createBucket')}
+          </Link>
+        </div>
       </section>
 
-      <DashboardStatGrid cards={cards} ariaLabel={vm.t('dashboard')} />
+      {summary ? (
+        <div ref={setStatsElement}>
+          <DashboardStatGrid cards={cards} ariaLabel={vm.t('dashboard')} />
+        </div>
+      ) : (
+        <SkeletonSection
+          label={vm.t('loading')}
+          variant="stat"
+          count={6}
+        />
+      )}
 
-      <RecentOrdersSection
-        recentOrders={summary.recentOrders}
-        locale={vm.locale}
-        t={vm.t}
+      {summary ? (
+        <RecentOrdersSection
+          recentOrders={summary.recentOrders}
+          locale={vm.locale}
+          t={vm.t}
+        />
+      ) : (
+        <SkeletonSection label={vm.t('loading')} variant="row" count={3} />
+      )}
+
+      <FeatureTour
+        page="dashboard"
+        steps={tourSteps}
+        nextLabel={vm.t('tourNext')}
+        doneLabel={vm.t('tourDone')}
+        skipLabel={vm.t('tourSkip')}
+        closeLabel={vm.t('close')}
+        skipAllLabel={vm.t('tourSkipAll')}
       />
     </div>
   );
