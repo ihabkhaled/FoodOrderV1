@@ -5,6 +5,13 @@ The version bump level is decided by prompt density — see [rules/versioning.md
 
 <!-- releases -->
 
+## [1.8.1] - 2026-08-08
+
+- Upgraded Firebase, Firebase Tools, Playwright, jsdom, Node.js types, fast-uri,
+  ip-address, Undici, and the setup-node, setup-java, download-artifact, and
+  setup-android GitHub Actions without dependency downgrades.
+
+
 ## [1.8.0] - 2026-07-29
 
 - Start v1.8.0 development
