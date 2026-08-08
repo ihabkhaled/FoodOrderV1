@@ -7,8 +7,9 @@ route-constants files) — one route table per module, composed by `src/app`'s r
 absolute path literals in `to=`, `href=`, or `navigate()` are forbidden outside route-owner
 files. Router APIs come only from `@/packages/router`.
 
-On the web, every user-facing public and application URL has a canonical locale prefix
-(`/:locale/...`, including English `/en/...`). Module route constants remain
+On the web, user-facing public and application URLs have a canonical locale prefix
+(`/:locale/...`, including English `/en/...`), except that the English public homepage is
+also served at `/` without redirecting. Module route constants remain
 locale-independent (`/auth/forgot`, `/app`, and so on); the top-level browser router owns
 the active locale basename. Language changes persist the preference, replace the locale
 prefix, and reload the same screen. Capacitor routes remain unprefixed.

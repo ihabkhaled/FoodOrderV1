@@ -11,6 +11,7 @@ import { nextTheme } from '@/platform/device';
 import {
   ConfirmDialog,
   LanguageSelect,
+  Loading,
   RefreshableViewport,
 } from '@/shared/ui';
 
@@ -34,6 +35,7 @@ export function AppLayoutContainer() {
     online,
     toast,
     locale,
+    localeNavigationPending,
     theme,
     setDeviceLocale,
     setDeviceTheme,
@@ -47,6 +49,8 @@ export function AppLayoutContainer() {
     dismissNotificationPrompt,
     markNotificationsRead,
   } = useAppLayout();
+
+  if (localeNavigationPending) return <Loading label={t('loading')} />;
 
   const ThemeIcon = THEME_ICON[theme];
   const connection = (

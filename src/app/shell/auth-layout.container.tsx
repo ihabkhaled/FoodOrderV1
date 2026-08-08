@@ -7,16 +7,25 @@ import { useApp } from '@/modules/session';
 import { Home } from '@/packages/icons';
 import { Outlet } from '@/packages/router';
 import { nextTheme } from '@/platform/device';
-import { LanguageSelect } from '@/shared/ui';
+import { LanguageSelect, Loading } from '@/shared/ui';
 
 import { THEME_ICON, THEME_LABEL } from './app-layout.constants';
 
 /** Signed-out shell: compact preferences, hero branding, and the auth card. */
 export function AuthLayoutContainer() {
-  const { t, locale, theme, setDeviceLocale, setDeviceTheme } = useApp();
+  const {
+    t,
+    locale,
+    localeNavigationPending,
+    theme,
+    setDeviceLocale,
+    setDeviceTheme,
+  } = useApp();
   const ThemeIcon = THEME_ICON[theme];
   const welcomePath = buildPublicContentPath('home', toPublicLocale(locale));
   const welcomeLabel = getPublicPageCopy('home', toPublicLocale(locale)).navigationLabel;
+
+  if (localeNavigationPending) return <Loading label={t('loading')} />;
 
   return (
     <main className="auth-shell">

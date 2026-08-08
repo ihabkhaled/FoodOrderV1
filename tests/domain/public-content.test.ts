@@ -4,6 +4,7 @@ import {
   buildPublicContentPath,
   buildPublicContentViewModel,
   buildPublicPageMetadata,
+  buildPublicRuntimePath,
   isPublicAdvertisingEligible,
   matchPublicContentPath,
   PUBLIC_LOCALES,
@@ -39,6 +40,13 @@ describe('public content registry and metadata', () => {
     });
     expect(matchPublicContentPath('/app')).toBeNull();
     expect(matchPublicContentPath('/auth/login')).toBeNull();
+  });
+
+  it('keeps the English root unprefixed without changing localized routes', () => {
+    expect(buildPublicRuntimePath('/')).toBe('/');
+    expect(buildPublicRuntimePath('/en')).toBe('/en');
+    expect(buildPublicRuntimePath('/ar')).toBe('/ar');
+    expect(buildPublicRuntimePath('/about')).toBe('/en/about');
   });
 
   it.each(PUBLIC_LOCALES)('builds complete SEO metadata for $code', (locale) => {

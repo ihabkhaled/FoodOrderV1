@@ -5,9 +5,9 @@ localized metadata, hook-free presentation, contact form, sitemap/RSS generation
 and advertising eligibility. The Vite application renders the same catalog during local
 development; `npm run public:generate` prerenders crawler-readable production documents.
 
-The supported locale set is the product's existing twelve-locale contract. Every locale,
-including English, has an explicit canonical segment (`/en`, `/ar`, `/pt-br`, and so on).
-Legacy unprefixed English public paths redirect to `/en/...`. Do not copy another
+The supported locale set is the product's existing locale contract. English home content
+is available at both `/` (without a redirect) and `/en`; other localized homes use `/ar`,
+`/pt-br`, and so on. Legacy unprefixed English public subpaths redirect to `/en/...`. Do not copy another
 project's locale inventory or create a second SEO/content registry.
 
 Public discovery is static and bounded: the sitemap index links to one child sitemap per

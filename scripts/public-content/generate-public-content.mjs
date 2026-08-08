@@ -72,10 +72,20 @@ await writeOutput(path.join(outputDirectory, 'app.html'), appShell);
 let publicPageCount = 0;
 for (const page of catalog.pages) {
   for (const locale of catalog.locales) {
+    const document = renderPublicDocument({
+      catalog,
+      locale,
+      page,
+      stylesheetLinks,
+      indexable,
+    });
     await writeOutput(
       outputPathForPage(outputDirectory, page, locale),
-      renderPublicDocument({ catalog, locale, page, stylesheetLinks, indexable }),
+      document,
     );
+    if (page.id === 'home' && locale.code === 'en') {
+      await writeOutput(path.join(outputDirectory, 'index.html'), document);
+    }
     publicPageCount += 1;
   }
 }

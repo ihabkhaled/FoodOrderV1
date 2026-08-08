@@ -2,8 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
 import {
-  buildPublicContentPath,
-  buildPublicSystemPath,
+  buildPublicRuntimePath,
   getPublicContentCatalog,
   inferPublicLocale,
   matchPublicContentPath,
@@ -38,10 +37,7 @@ const bootstrap = async (): Promise<void> => {
   }
 
   if (!nativeApplication && publicMatch) {
-    const localizedPath =
-      publicMatch.kind === 'page'
-        ? buildPublicContentPath(publicMatch.routeId, publicMatch.locale)
-        : buildPublicSystemPath(publicMatch.routeId, publicMatch.locale);
+    const localizedPath = buildPublicRuntimePath(pathname);
     if (localizedPath !== pathname) replaceBrowserPath(localizedPath);
     createRoot(context.root).render(
       <StrictMode>

@@ -29,6 +29,7 @@ export interface AppContextValue {
   /** Resolved analytics consent: the profile copy wins over the device one. */
   analyticsConsent: AnalyticsConsent;
   locale: Locale;
+  localeNavigationPending: boolean;
   theme: Theme;
   currency: CurrencyCode;
   toast: ToastState | null;

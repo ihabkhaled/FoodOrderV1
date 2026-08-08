@@ -50,6 +50,7 @@ export const useSessionController = (initialLocale?: Locale): AppContextValue =>
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [authLoading, setAuthLoading] = useState(true);
   const [online, setOnline] = useState(true);
+  const [localeNavigationPending, setLocaleNavigationPending] = useState(false);
   const [toast, setToast] = useState<ToastState | null>(null);
   const [device, setDevice] = useState<DeviceConfig>(DEFAULT_DEVICE_CONFIG);
   const [analyticsConsent, setAnalyticsConsent] = useState<AnalyticsConsent>(
@@ -199,6 +200,7 @@ export const useSessionController = (initialLocale?: Locale): AppContextValue =>
       storageMode,
       analyticsConsent,
       locale,
+      localeNavigationPending,
       theme,
       currency,
       toast,
@@ -247,6 +249,7 @@ export const useSessionController = (initialLocale?: Locale): AppContextValue =>
         showToast(translate(saved.locale, 'settingsSaved'), 'success');
       },
       setDeviceLocale: async (nextLocale) => {
+        setLocaleNavigationPending(true);
         // Switch the visible locale immediately; persistence follows and its
         // failure is surfaced without reverting or blocking the switch.
         setDevice((current) => ({ ...current, locale: nextLocale }));
@@ -270,7 +273,11 @@ export const useSessionController = (initialLocale?: Locale): AppContextValue =>
             'error',
           );
         } finally {
-          if (!isNativeApplication()) navigateToBrowserLocale(nextLocale);
+          if (isNativeApplication()) {
+            setLocaleNavigationPending(false);
+          } else {
+            navigateToBrowserLocale(nextLocale);
+          }
         }
       },
       setDeviceTheme: async (nextTheme) => {
@@ -301,6 +308,7 @@ export const useSessionController = (initialLocale?: Locale): AppContextValue =>
       online,
       analyticsConsent,
       locale,
+      localeNavigationPending,
       theme,
       currency,
       toast,

@@ -41,6 +41,7 @@ export interface AppLayoutViewModel {
   online: boolean;
   toast: ToastState | null;
   locale: Locale;
+  localeNavigationPending: boolean;
   theme: Theme;
   setDeviceLocale: (locale: Locale) => Promise<void>;
   setDeviceTheme: (theme: Theme) => Promise<void>;
@@ -67,6 +68,7 @@ export function useAppLayout(): AppLayoutViewModel {
     online,
     toast,
     locale,
+    localeNavigationPending,
     theme,
     setDeviceLocale,
     setDeviceTheme,
@@ -292,6 +294,7 @@ export function useAppLayout(): AppLayoutViewModel {
     online,
     toast,
     locale,
+    localeNavigationPending,
     theme,
     setDeviceLocale,
     setDeviceTheme,

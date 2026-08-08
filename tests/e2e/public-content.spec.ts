@@ -1,5 +1,22 @@
 import { expect, test } from '@playwright/test';
 
+test('the root serves the English homepage without redirecting to /en', async ({
+  page,
+}) => {
+  const response = await page.goto('/');
+
+  expect(response?.status()).toBe(200);
+  expect(response?.request().redirectedFrom()).toBeNull();
+  expect(new URL(page.url()).pathname).toBe('/');
+  await expect(
+    page.getByRole('heading', {
+      level: 1,
+      name: 'Collect group food orders without chasing messages',
+    }),
+  ).toBeVisible();
+  await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+});
+
 test('public navigation serves unique crawler metadata through real links', async ({
   page,
 }) => {

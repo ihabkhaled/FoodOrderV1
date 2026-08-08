@@ -141,3 +141,13 @@ export const matchPublicContentPath = (
     routeId: systemEntry[0] as PublicSystemRouteId,
   };
 };
+
+export const buildPublicRuntimePath = (pathname: string): string => {
+  if (pathname === '/') return pathname;
+
+  const match = matchPublicContentPath(pathname);
+  if (!match) return pathname;
+  return match.kind === 'page'
+    ? buildPublicContentPath(match.routeId, match.locale)
+    : buildPublicSystemPath(match.routeId, match.locale);
+};

@@ -9,6 +9,7 @@ export { PublicContentRoutes } from './routes/public-content.routes';
 export {
   buildLocalizedPath,
   buildPublicContentPath,
+  buildPublicRuntimePath,
   buildPublicSystemPath,
   inferPublicLocale,
   matchPublicContentPath,

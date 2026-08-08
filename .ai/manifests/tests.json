@@ -152,8 +152,8 @@
     },
     {
       "path": "tests/domain/public-content.test.ts",
-      "bytes": 3783,
-      "hash": "f46bf886d3fe677ab497f1c0487905a96c39b6a2ec969a2ffbc0af77609e115d"
+      "bytes": 4125,
+      "hash": "5efc7fadee48abea15ef592e158155dc5926b59536d959509be254f3cfe08a01"
     },
     {
       "path": "tests/domain/session-contribution.test.ts",
@@ -242,8 +242,8 @@
     },
     {
       "path": "tests/e2e/public-content.spec.ts",
-      "bytes": 5611,
-      "hash": "69b3cccc788c85e52ada23b505f7a5ae21f377f8334518ef964e93fac1f174df"
+      "bytes": 6129,
+      "hash": "6df08d66cf018bc601a50d74a0b8e754795cf4b930824178a80ca13b76023785"
     },
     {
       "path": "tests/e2e/public-theme.spec.ts",

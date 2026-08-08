@@ -159,7 +159,7 @@
   "rules/07-types-interfaces-enums-constants.md": "5df7c60f3481c0627902d22c175e90d93152161e70cfe6216f11280f01637769",
   "rules/08-package-ownership.md": "98f7308616f643938a584bb8e57d6000d45878302238d20d117ca92e31ae3476",
   "rules/09-capacitor-platform-boundaries.md": "271e1bc8eda05a2594381c9f45705c66f2bb61a9a88445c53a3d1c139ccc3016",
-  "rules/10-routing.md": "af874798d2cdc9e1afd3f7176ccd682240c3c7321dff25bb3b6abd199d38b357",
+  "rules/10-routing.md": "5bbd7bf309b0f0d488e36aab0830f121b2591c185e0d7883c515e63ea40d6664",
   "rules/11-state-management.md": "fd9c88a2cfb067cb5b017bb3f73e32abe375d3a130216f079a6b4fc6cc89e024",
   "rules/12-error-handling.md": "4b63d40d5a96307eb841156d78d3ef5903b6c8b11ab9a4559ca8a2e3c0634dd6",
   "rules/13-security.md": "9354f819be5d686dced3278d15267de3dfc4c8802505a2d5a6dc198b9d00c79b",
@@ -201,7 +201,7 @@
   "src/modules/notifications/README.md": "f59fa263243cfdf6202a7f9e4afe9fc69df49778dd4d4c0a9f334badc38b051a",
   "src/modules/order-sessions/README.md": "4217c768a7a9cfcdb3613ded61c2824947e803764bf761c8324f6620f3ff2a21",
   "src/modules/orders/README.md": "c302041f0a2f22452d6cb3a74fbab6ce976da5ab3f30ae955981e8041fb99e14",
-  "src/modules/public-content/README.md": "6199137365ccc610b3bb2ac2b6897629123b7be7e221280d7a5308ac483c01ab",
+  "src/modules/public-content/README.md": "1ec4a0c382a03778edff6e3d54c9b58ac6ff7dcbb0a34e6fff37fa606b61d84b",
   "src/modules/settings/README.md": "58d72d9ec5985a5bb77c5ca6492e797aa7077ecaf7c06119128c95f8d0c1a945",
   "src/modules/social/README.md": "cc531bd053800b111e731b7276536a96facbc7e4d0fcdcaad4fb2df6d291b154",
   "src/modules/telemetry/README.md": "a66d74001f6a5528addf0d4b6848425d551f71b1876f8bc9d7751565bf606603"
