@@ -25,38 +25,38 @@
     },
     {
       "path": ".github/workflows/_firebase-emulator.yml",
-      "bytes": 924,
-      "hash": "3756612d7baa7e147c6a80bf5d10f812c8266a795e399beb821c7a6bf34de983"
+      "bytes": 928,
+      "hash": "46b9f1252cdbc9fc13e6f0ad9a038dd0fed3364ba668a50e389da1ab866436b5"
     },
     {
       "path": ".github/workflows/android-apk.yml",
-      "bytes": 5382,
-      "hash": "529c064cbeec7a0be8bc5ef71906017b5745e77005158626b0e38c3255e05be1"
+      "bytes": 5386,
+      "hash": "c901421f226a8e642e63086e1b226287befc31be3486b21f25dabe51e00e8d6c"
     },
     {
       "path": ".github/workflows/branch-continuous-release.yml",
-      "bytes": 6001,
-      "hash": "5938326e552ed36847a1bfbaf0acdab6f0f0b17eae85bde8921593e1f92edb3e"
+      "bytes": 6005,
+      "hash": "76d684d92b1398d6b8fcf4935bdc756da7635f24199e3f5d41ee6a7ea7851e7b"
     },
     {
       "path": ".github/workflows/ci.yml",
       "bytes": 21069,
-      "hash": "a00f1aa84a1b088600330b519f9063ad6d02e57bbc653052ba821124a08e72b9"
+      "hash": "0054c3d30bbeb66c9b2e982b1e1cb46f0e6fcf0be51f6270e2fd4d6988b0104e"
     },
     {
       "path": ".github/workflows/cross-browser-e2e.yml",
       "bytes": 2032,
-      "hash": "33aa13e5acafe2e11ed8e0407ded5aa0d4f3be994e0b6a662a9d9837cb084874"
+      "hash": "4229ffd76b7797a64d10652869b0504a6d71f51f2294bf523c0120afadd8dd14"
     },
     {
       "path": ".github/workflows/diagnostics.yml",
       "bytes": 3640,
-      "hash": "4c79bb431705f5440bf999777bc0e1925221c2651102b069eeb089f538bdd7e8"
+      "hash": "f18e73f344f6c54f49c23a446c35f4123585555e0cd723b6aa23458277ad8ce2"
     },
     {
       "path": ".github/workflows/firebase-artifact-cleanup.yml",
       "bytes": 1606,
-      "hash": "05cffb1dafcc98121f55e95f6fb747a49ad47c161c3e9fa8544a5f3936efe816"
+      "hash": "26160bdea25c700b8a3dd42679d9b27479a2fe57ad82ee2b4efbd316debb95db"
     },
     {
       "path": ".github/workflows/firebase-eventarc-iam.yml",
@@ -66,27 +66,27 @@
     {
       "path": ".github/workflows/functions-diagnostics.yml",
       "bytes": 1110,
-      "hash": "85568cf95cb606f15041113b2ddc4974d08b5b2b4cae19ddcfc2b752c6e0a953"
+      "hash": "08f574e848f1fdb143af8d18898eef4456db9c264d01ca4449102ddb29fe9709"
     },
     {
       "path": ".github/workflows/lint-diagnostics.yml",
       "bytes": 1206,
-      "hash": "d8e6f4a6f6cc36b38805c13982925ab7c2a5fc4b21d82fb322bce477408d07bf"
+      "hash": "c8a41d5c54fde68e088a2dcd53ee9e9664317fadccdbf7307aef58a923d99496"
     },
     {
       "path": ".github/workflows/pull-request-brief.yml",
       "bytes": 7869,
-      "hash": "af3101d3956dc5e98343693a3d4f3ca22b922cc8a28298523581587153b769a9"
+      "hash": "a832d611a5f1cfdd42f07f9ec23db2d03db872ad171d90a32ceab4e1c8b9488c"
     },
     {
       "path": ".github/workflows/social-acceptance.yml",
       "bytes": 1220,
-      "hash": "c026da210e32c165cd2b8ce4be62aaede36d1b5c8949ffbb706648fd4773f377"
+      "hash": "3818091e4b9950ad8be327e370f27e31cf1ae6fe53132dc59d99f0de0d1733ac"
     },
     {
       "path": ".github/workflows/v170-order-session-gates.yml",
       "bytes": 3854,
-      "hash": "55228e61c2cd3dee34e5f189832b9c20439f2a6df70bd02b4983a9744d20a065"
+      "hash": "657cb6ec6ce4a9ffd18071c05c1a1d0c7eccba3301fa97875139f98aa9686045"
     },
     {
       "path": ".gitignore",
@@ -105,8 +105,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 6016,
-      "hash": "6797a5db19c3393defbadecbe3e5b130adb04ed1e35baa171f385af5aa57eced"
+      "bytes": 6263,
+      "hash": "23a79b8360b86de17477181759c5a528aaac85fe9e7adc468f96daf222cd4f76"
     },
     {
       "path": "CLAUDE.md",
@@ -816,12 +816,12 @@
     {
       "path": "functions/package-lock.json",
       "bytes": 112755,
-      "hash": "857c86fed4d906f5897d70789ec5cce5ff616f9d5327922c744fada2bc09790c"
+      "hash": "4faedff5962019432bbc1f1c5e6ecbc6538ff7d41f687ff6addb43a7f3c22640"
     },
     {
       "path": "functions/package.json",
       "bytes": 533,
-      "hash": "c043997185a042500a30f4a86db4993358c51aee7e297046b68e5c0805ee886d"
+      "hash": "7326a191915d2684a72804213d5e0d26e7ee906cc8e4b279c915e3d34d64a7d3"
     },
     {
       "path": "functions/src/entry.ts",
@@ -1095,13 +1095,13 @@
     },
     {
       "path": "package-lock.json",
-      "bytes": 690545,
-      "hash": "1e8cb751a0ba12136456ab238680084967b678cc849402f394888d54ae0fb939"
+      "bytes": 693239,
+      "hash": "3c448817297179d12af1baaeaddfa6a28acabc261cf090fd0391de77429ee6dd"
     },
     {
       "path": "package.json",
       "bytes": 8158,
-      "hash": "1f89755df51bc9d0a937a2798fdd8ba1675ccce46d22e29a16eae20c1b83c5e9"
+      "hash": "78d14ce6072ec0313da6519febf8ed762498ff1b65232e65dd3e6126dd237bf8"
     },
     {
       "path": "packages/group-order-engine/src/index.ts",
@@ -1237,6 +1237,11 @@
       "path": "release-notes/v1.8.0.md",
       "bytes": 10270,
       "hash": "12e74088fda7cc26668101c4bdf28d857a9a689f522a6e5bf3b349da8354aa8f"
+    },
+    {
+      "path": "release-notes/v1.8.1.md",
+      "bytes": 675,
+      "hash": "77a631b00fbd00c18a8874af2fa80d5abd6485e089e27c6050bdeffb3e2fcb60"
     },
     {
       "path": "reports/phases/PHASE_00_report.md",
