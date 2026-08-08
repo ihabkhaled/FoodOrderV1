@@ -36,12 +36,12 @@
     {
       "path": ".github/workflows/branch-continuous-release.yml",
       "bytes": 6001,
-      "hash": "1576cf7ffc88616b475b35e3d02b4e47e1bd9dbdeafed17d873a3cdde91bd0d5"
+      "hash": "5938326e552ed36847a1bfbaf0acdab6f0f0b17eae85bde8921593e1f92edb3e"
     },
     {
       "path": ".github/workflows/ci.yml",
       "bytes": 21069,
-      "hash": "5affa310b232882b9d4e34adce96a11a3a52c60465385ec36c9832e0e5b63af7"
+      "hash": "a00f1aa84a1b088600330b519f9063ad6d02e57bbc653052ba821124a08e72b9"
     },
     {
       "path": ".github/workflows/cross-browser-e2e.yml",
