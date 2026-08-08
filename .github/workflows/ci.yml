@@ -29,6 +29,10 @@ jobs:
       - run: npm ci
       - run: npm run knowledge:build
       - run: npm run knowledge:validate
+      # Fails when a module stops being routable or a domain points at a path
+      # that no longer exists — the drift that silently degraded task routing
+      # after the module migration.
+      - run: npm run ai:doctor
       - run: npm run knowledge:benchmark
       - uses: actions/upload-artifact@v7
         if: always()

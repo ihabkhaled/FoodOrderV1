@@ -40,8 +40,8 @@
     },
     {
       "path": ".github/workflows/ci.yml",
-      "bytes": 21069,
-      "hash": "0054c3d30bbeb66c9b2e982b1e1cb46f0e6fcf0be51f6270e2fd4d6988b0104e"
+      "bytes": 21294,
+      "hash": "c5c3c452a675a42def77f8f86b542371fdf6915746a7e662304613882f957943"
     },
     {
       "path": ".github/workflows/cross-browser-e2e.yml",
@@ -90,8 +90,8 @@
     },
     {
       "path": ".gitignore",
-      "bytes": 515,
-      "hash": "d0276891db2a88fda4269d54130fc03d96a24ed16b41787bdd206b5f1f1dc7c7"
+      "bytes": 603,
+      "hash": "3c1fe06bc7767e8b06af64fb592ac279840b5ea053f97cd33e353010fd994a11"
     },
     {
       "path": ".trivyignore.yaml",
@@ -105,13 +105,13 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 6263,
-      "hash": "23a79b8360b86de17477181759c5a528aaac85fe9e7adc468f96daf222cd4f76"
+      "bytes": 7009,
+      "hash": "48a696f04af4d52813e3d1fc8faea8f723ff6100663f854de840d79f770ecfe0"
     },
     {
       "path": "CLAUDE.md",
-      "bytes": 2607,
-      "hash": "7ca3520f91743a335176a9ccac1880ed48131d073d793be096f06af7dfedfa24"
+      "bytes": 3337,
+      "hash": "6a122ab33277d2929dd6cdfac0c9d99dd1e127a60315d1043a1cf12299b4317f"
     },
     {
       "path": "CODEX.md",
@@ -552,6 +552,11 @@
       "path": "docs/migration/unresolved-exceptions.md",
       "bytes": 2794,
       "hash": "f85c66e0c8d7e92770896787dee314e4a6096a1a1b766ad44f0e4a1042ea5a01"
+    },
+    {
+      "path": "docs/operations/ai-context.md",
+      "bytes": 2584,
+      "hash": "440ee505e960b7f41d3c6f4518a7a4fd05b25eb1cf4b374f69e537ee55257cb3"
     },
     {
       "path": "docs/operations/functions-deploy-blockers.md",
@@ -1100,8 +1105,8 @@
     },
     {
       "path": "package.json",
-      "bytes": 8158,
-      "hash": "78d14ce6072ec0313da6519febf8ed762498ff1b65232e65dd3e6126dd237bf8"
+      "bytes": 8449,
+      "hash": "ce6c20a3c76c17ba1ef7b3595a956d171b109f8af13f68d8672c3bc707d1b3f6"
     },
     {
       "path": "packages/group-order-engine/src/index.ts",
@@ -1240,8 +1245,8 @@
     },
     {
       "path": "release-notes/v1.8.1.md",
-      "bytes": 675,
-      "hash": "77a631b00fbd00c18a8874af2fa80d5abd6485e089e27c6050bdeffb3e2fcb60"
+      "bytes": 2154,
+      "hash": "e94b6db7b226f03f6e1762145ba46964b862df6c3d7aa7e44288e78c61677801"
     },
     {
       "path": "reports/phases/PHASE_00_report.md",
@@ -1384,6 +1389,11 @@
       "hash": "967be838453bb22583a16f9e1aaecb4081082c4a16a85a6e271234bdd6ef7f75"
     },
     {
+      "path": "scripts/ai.mjs",
+      "bytes": 6137,
+      "hash": "f5982c12fa6a14b20c0a348e89877b3e8fbd5eb17d2c48c6495721309d754ceb"
+    },
+    {
       "path": "scripts/check-agent-docs.mjs",
       "bytes": 1885,
       "hash": "fc6e869582e86efafb3fdf79052236b20626be126c71c0f275889550f9061e56"
@@ -1420,8 +1430,18 @@
     },
     {
       "path": "scripts/knowledge/cli.mjs",
-      "bytes": 9931,
-      "hash": "165526e3955a9197edba94358a8bd316c79f72bc302637249550a1b67a514b8d"
+      "bytes": 13700,
+      "hash": "b8bce360e18eb5c2d0e6fb1cd153707263dbdcff2895ba4e65a388425141dde4"
+    },
+    {
+      "path": "scripts/knowledge/compile-context.mjs",
+      "bytes": 3120,
+      "hash": "e0eee821e557d6a41a00b93f1f87431d0e9fcca7b0cca36d9cd151f99cdfec01"
+    },
+    {
+      "path": "scripts/knowledge/routing.mjs",
+      "bytes": 9949,
+      "hash": "b19f90f5c742a679a8e102162075c81ab46ac9a0ec65c2390a18ea12d74a14db"
     },
     {
       "path": "scripts/migrate-legacy-data.mjs",
@@ -4692,6 +4712,11 @@
       "path": "tests/tooling/firebase-deployment-gate.test.ts",
       "bytes": 669,
       "hash": "335fca77d8f76a01b2979189c5c1e7cb1dfd3ceb17de74282856b29280a4e1d3"
+    },
+    {
+      "path": "tests/tooling/knowledge-routing.test.mjs",
+      "bytes": 3934,
+      "hash": "8b6ec1f3f58a93b5a4c1bf05f127d494dd6be33b7d052c9b5a11f46b270a0627"
     },
     {
       "path": "tests/tooling/pull-request-brief.test.mjs",

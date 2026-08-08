@@ -401,6 +401,11 @@
       "hash": "335fca77d8f76a01b2979189c5c1e7cb1dfd3ceb17de74282856b29280a4e1d3"
     },
     {
+      "path": "tests/tooling/knowledge-routing.test.mjs",
+      "bytes": 3934,
+      "hash": "8b6ec1f3f58a93b5a4c1bf05f127d494dd6be33b7d052c9b5a11f46b270a0627"
+    },
+    {
       "path": "tests/tooling/pull-request-brief.test.mjs",
       "bytes": 2594,
       "hash": "159a156fc8de216407f9f639c5c35f221de9d31352b3cf38f8a49d5631238dd1"

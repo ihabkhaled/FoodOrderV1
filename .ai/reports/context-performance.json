@@ -1,36 +1,71 @@
 {
-  "p50Ms": 29.69,
-  "p95Ms": 35.37,
+  "p50Ms": 37,
+  "p95Ms": 38.44,
+  "medianReductionPercent": 96,
   "results": [
     {
       "task": "fix bucket title validation",
-      "ms": 35.37,
-      "artifacts": 15,
-      "tokens": 6607
+      "ms": 37,
+      "domains": [
+        "buckets"
+      ],
+      "sources": 14,
+      "bundleTokens": 247,
+      "rawTokens": 5503,
+      "reductionPercent": 96,
+      "unmatched": false
     },
     {
       "task": "add order status filter",
-      "ms": 29.69,
-      "artifacts": 15,
-      "tokens": 6607
+      "ms": 31.97,
+      "domains": [
+        "orders"
+      ],
+      "sources": 14,
+      "bundleTokens": 255,
+      "rawTokens": 5752,
+      "reductionPercent": 96,
+      "unmatched": false
     },
     {
       "task": "change Firestore ownership rules",
-      "ms": 29.28,
-      "artifacts": 12,
-      "tokens": 7808
+      "ms": 38.44,
+      "domains": [
+        "data-access",
+        "firestore-rules"
+      ],
+      "sources": 14,
+      "bundleTokens": 341,
+      "rawTokens": 4671,
+      "reductionPercent": 93,
+      "unmatched": false
     },
     {
       "task": "add Capacitor haptic feedback",
-      "ms": 28.02,
-      "artifacts": 14,
-      "tokens": 9539
+      "ms": 37.42,
+      "domains": [
+        "platform",
+        "public-prerender",
+        "ci-workflows"
+      ],
+      "sources": 14,
+      "bundleTokens": 284,
+      "rawTokens": 8875,
+      "reductionPercent": 97,
+      "unmatched": false
     },
     {
-      "task": "upgrade React dependency",
-      "ms": 33.43,
-      "artifacts": 1,
-      "tokens": 760
+      "task": "add a new locale to the public site",
+      "ms": 33.16,
+      "domains": [
+        "public-prerender",
+        "public-content"
+      ],
+      "sources": 14,
+      "bundleTokens": 286,
+      "rawTokens": 9070,
+      "reductionPercent": 97,
+      "unmatched": false
     }
   ]
 }

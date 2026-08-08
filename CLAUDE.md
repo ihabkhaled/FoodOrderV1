@@ -2,11 +2,21 @@
 
 Governance-Version: 1
 
-1. Read `AGENTS.md`, then `.ai/BOOTSTRAP.md`.
-2. Run `npm run knowledge:context -- --task="<exact task>"` and optionally add `--files`, `--symbols`, or `--diff`.
+1. Run `npm run ai:context -- --task="<exact task>"`, then read `.ai/context/current.md`.
+   That bundle compiles the mandatory rule obligations, the owning module's
+   exported symbols, the covering tests, and the validation lane for the task's
+   risk. It replaces reading `AGENTS.md` and the rule set up front; read
+   `AGENTS.md` in full only for architecture, governance, or layering changes,
+   or when the bundle reports `CONFIDENCE` below 0.6 or `unresolved`.
+2. Expand scope only on evidence: a missing dependency, a cross-module effect, a
+   failing test, or a security, data, or API-contract impact. Add `--files=` to
+   pin known paths.
 3. Read the exact owner source, direct tests, selected canonical rules/contracts, and matching `skills/` playbook.
 4. Plan from verified implementation, not documentation alone.
 5. Implement the smallest coherent safe change; run targeted validation, then risk-appropriate gates.
+   Use `npm run test:ai`, `lint:ai`, `typecheck:ai`, `build:ai` while iterating —
+   they print a single line on success and only the failing lines otherwise,
+   keeping the full log on disk. Run the unwrapped commands for release evidence.
 6. Update affected canonical architecture, rules, skills, context, memory, migration, module, product, and operations documentation.
 7. Run `npm run knowledge:build:incremental`; never edit generated `.ai/` files manually.
 8. Never weaken authentication, ownership isolation, Firestore/Storage rules, privacy, type safety, accessibility, localization, tests, rollback readiness, or release evidence.

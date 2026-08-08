@@ -10,6 +10,16 @@ The version bump level is decided by prompt density — see [rules/versioning.md
 - Upgraded Firebase, Firebase Tools, Playwright, jsdom, Node.js types, fast-uri,
   ip-address, Undici, and the setup-node, setup-java, download-artifact, and
   setup-android GitHub Actions without dependency downgrades.
+- Repaired agent task routing, whose path table still described the pre-v1.6.0
+  layout: seven of twelve paths matched nothing, so most tasks fell back to a
+  generic scope. Domains are now derived from `src/modules/*`, and `ai:doctor`
+  plus a tooling test fail when one stops resolving.
+- Replaced the context command's list of files to read with a compiled bundle
+  (`.ai/context/current.md`) carrying rule obligations, exported symbols,
+  covering tests, and a risk-scaled validation lane — a measured 93–97% fewer
+  tokens than reading the same sources, cached against the tree state.
+- Added `test:ai`, `lint:ai`, `typecheck:ai`, and `build:ai`, which print one
+  line on success and only the failing lines otherwise, plus `.aiignore`.
 
 
 ## [1.8.0] - 2026-07-29

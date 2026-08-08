@@ -1,40 +1,239 @@
 {
+  "generatedFrom": [
+    "scripts/knowledge/routing.mjs"
+  ],
   "modules": [
     {
-      "id": "domain",
+      "id": "auth",
       "paths": [
-        "src/lib",
-        "src/types"
+        "src/modules/auth"
       ],
+      "risk": "standard",
       "tests": [
-        "tests/domain"
+        "tests/components/DangerReauthDialog.test.tsx",
+        "tests/domain/post-auth-redirect.test.ts",
+        "tests/e2e/auth-flows.spec.ts"
       ]
     },
     {
-      "id": "presentation",
+      "id": "billing",
       "paths": [
-        "src/pages",
-        "src/components"
+        "src/modules/billing"
       ],
+      "risk": "standard",
       "tests": [
-        "tests/e2e"
+        "tests/domain/billing-entitlements.test.ts"
       ]
     },
     {
-      "id": "persistence",
+      "id": "buckets",
       "paths": [
-        "src/services"
+        "src/modules/buckets"
       ],
+      "risk": "standard",
+      "tests": []
+    },
+    {
+      "id": "dashboard",
+      "paths": [
+        "src/modules/dashboard"
+      ],
+      "risk": "standard",
+      "tests": []
+    },
+    {
+      "id": "data-access",
+      "paths": [
+        "src/modules/data-access"
+      ],
+      "risk": "standard",
+      "tests": []
+    },
+    {
+      "id": "group-orders",
+      "paths": [
+        "src/modules/group-orders"
+      ],
+      "risk": "standard",
       "tests": [
-        "tests/services"
+        "tests/services/groupOrderServices.test.ts"
       ]
+    },
+    {
+      "id": "notifications",
+      "paths": [
+        "src/modules/notifications"
+      ],
+      "risk": "standard",
+      "tests": [
+        "tests/firebase/notifications.rules.test.ts",
+        "tests/services/localNotificationService.test.ts"
+      ]
+    },
+    {
+      "id": "order-sessions",
+      "paths": [
+        "src/modules/order-sessions"
+      ],
+      "risk": "standard",
+      "tests": [
+        "tests/services/localOrderSessionService.test.ts"
+      ]
+    },
+    {
+      "id": "orders",
+      "paths": [
+        "src/modules/orders"
+      ],
+      "risk": "standard",
+      "tests": [
+        "tests/services/groupOrderServices.test.ts",
+        "tests/services/localOrderSessionReplay.test.ts",
+        "tests/services/localOrderSessionService.test.ts"
+      ]
+    },
+    {
+      "id": "public-content",
+      "paths": [
+        "src/modules/public-content"
+      ],
+      "risk": "standard",
+      "tests": [
+        "tests/components/PublicContent.test.tsx",
+        "tests/domain/public-content.test.ts",
+        "tests/e2e/public-content.spec.ts"
+      ]
+    },
+    {
+      "id": "session",
+      "paths": [
+        "src/modules/session"
+      ],
+      "risk": "standard",
+      "tests": [
+        "tests/components/SessionInvitePreview.test.tsx",
+        "tests/domain/order-session.test.ts",
+        "tests/domain/session-contribution.test.ts",
+        "tests/domain/session-invite.test.ts",
+        "tests/firebase/order-session.rules.test.ts",
+        "tests/services/localOrderSessionReplay.test.ts",
+        "tests/services/localOrderSessionService.test.ts"
+      ]
+    },
+    {
+      "id": "session-invites",
+      "paths": [
+        "src/modules/session-invites"
+      ],
+      "risk": "standard",
+      "tests": []
+    },
+    {
+      "id": "settings",
+      "paths": [
+        "src/modules/settings"
+      ],
+      "risk": "standard",
+      "tests": [
+        "tests/e2e/settings.spec.ts"
+      ]
+    },
+    {
+      "id": "social",
+      "paths": [
+        "src/modules/social"
+      ],
+      "risk": "standard",
+      "tests": [
+        "tests/e2e/social-management.spec.ts",
+        "tests/e2e/social-sharing.spec.ts",
+        "tests/firebase/social.rules.test.ts",
+        "tests/services/socialInvitations.test.ts"
+      ]
+    },
+    {
+      "id": "telemetry",
+      "paths": [
+        "src/modules/telemetry"
+      ],
+      "risk": "standard",
+      "tests": [
+        "tests/domain/telemetry-recorder.test.ts",
+        "tests/domain/telemetry.test.ts"
+      ]
+    },
+    {
+      "id": "firestore-rules",
+      "paths": [
+        "firestore.rules"
+      ],
+      "risk": "critical",
+      "tests": []
+    },
+    {
+      "id": "release-tooling",
+      "paths": [
+        "tools/release",
+        "scripts/check-release-version.mjs"
+      ],
+      "risk": "standard",
+      "tests": []
+    },
+    {
+      "id": "ci-workflows",
+      "paths": [
+        ".github/workflows"
+      ],
+      "risk": "standard",
+      "tests": []
+    },
+    {
+      "id": "firebase-functions",
+      "paths": [
+        "functions/src"
+      ],
+      "risk": "critical",
+      "tests": []
     },
     {
       "id": "platform",
       "paths": [
-        "src/services/platform.ts",
-        "capacitor.config.ts"
-      ]
+        "src/platform"
+      ],
+      "risk": "standard",
+      "tests": []
+    },
+    {
+      "id": "shared-ui",
+      "paths": [
+        "src/shared"
+      ],
+      "risk": "standard",
+      "tests": []
+    },
+    {
+      "id": "packages",
+      "paths": [
+        "src/packages"
+      ],
+      "risk": "standard",
+      "tests": []
+    },
+    {
+      "id": "app-shell",
+      "paths": [
+        "src/app"
+      ],
+      "risk": "standard",
+      "tests": []
+    },
+    {
+      "id": "public-prerender",
+      "paths": [
+        "scripts/public-content"
+      ],
+      "risk": "standard",
+      "tests": []
     }
   ]
 }

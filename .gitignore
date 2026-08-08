@@ -18,6 +18,8 @@ ios/App/Pods/
 ios/App/App/public/
 ios/App/output/
 .ai/local/*
+# Compiled per-task context: derived from the tree, regenerated on demand.
+.ai/context/
 !.ai/local/.gitkeep
 
 # UI review screenshots (local only)

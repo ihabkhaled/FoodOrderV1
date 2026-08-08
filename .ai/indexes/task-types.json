@@ -1,124 +1,377 @@
 {
+  "generatedFrom": [
+    "scripts/knowledge/routing.mjs"
+  ],
   "taskTypes": [
     {
-      "id": "security-change",
-      "risk": "critical",
+      "id": "auth",
+      "risk": "standard",
       "keys": [
         "auth",
-        "permission",
-        "security",
-        "firestore rule",
-        "secret",
-        "privacy",
-        "delete account"
+        "auth",
+        "login",
+        "sign in",
+        "sign up",
+        "signin",
+        "signup",
+        "password",
+        "account",
+        "register"
       ],
       "paths": [
-        "security",
-        "privacy",
-        "firestore.rules",
-        "src/services"
-      ],
-      "tests": [
-        "tests/services"
+        "src/modules/auth"
       ]
     },
     {
-      "id": "database-change",
+      "id": "billing",
       "risk": "standard",
       "keys": [
-        "firebase",
+        "billing",
+        "billing",
+        "payment",
+        "subscription",
+        "invoice"
+      ],
+      "paths": [
+        "src/modules/billing"
+      ]
+    },
+    {
+      "id": "buckets",
+      "risk": "standard",
+      "keys": [
+        "buckets",
+        "buckets",
+        "bucket",
+        "item",
+        "items",
+        "template",
+        "price",
+        "pricing",
+        "vat"
+      ],
+      "paths": [
+        "src/modules/buckets"
+      ]
+    },
+    {
+      "id": "dashboard",
+      "risk": "standard",
+      "keys": [
+        "dashboard",
+        "dashboard",
+        "home",
+        "overview"
+      ],
+      "paths": [
+        "src/modules/dashboard"
+      ]
+    },
+    {
+      "id": "data-access",
+      "risk": "standard",
+      "keys": [
+        "data-access",
+        "data access",
+        "repository",
         "firestore",
-        "database",
-        "migration",
+        "query",
         "persistence"
       ],
       "paths": [
-        "src/services",
-        "contracts/data",
-        "firestore.rules"
-      ],
-      "tests": [
-        "tests/services"
+        "src/modules/data-access"
       ]
     },
     {
-      "id": "mobile-feature",
+      "id": "group-orders",
+      "risk": "standard",
+      "keys": [
+        "group-orders",
+        "group orders",
+        "share",
+        "sharing",
+        "bucket share",
+        "member",
+        "members",
+        "round"
+      ],
+      "paths": [
+        "src/modules/group-orders"
+      ]
+    },
+    {
+      "id": "notifications",
+      "risk": "standard",
+      "keys": [
+        "notifications",
+        "notifications",
+        "notification",
+        "push",
+        "tray",
+        "fcm",
+        "badge"
+      ],
+      "paths": [
+        "src/modules/notifications"
+      ]
+    },
+    {
+      "id": "order-sessions",
+      "risk": "standard",
+      "keys": [
+        "order-sessions",
+        "order sessions",
+        "session",
+        "round",
+        "organizer"
+      ],
+      "paths": [
+        "src/modules/order-sessions"
+      ]
+    },
+    {
+      "id": "orders",
+      "risk": "standard",
+      "keys": [
+        "orders",
+        "orders",
+        "order",
+        "receipt",
+        "total",
+        "checkout"
+      ],
+      "paths": [
+        "src/modules/orders"
+      ]
+    },
+    {
+      "id": "public-content",
+      "risk": "standard",
+      "keys": [
+        "public-content",
+        "public content",
+        "landing",
+        "marketing",
+        "seo",
+        "locale",
+        "language",
+        "translation",
+        "og",
+        "open graph",
+        "preview card",
+        "sitemap"
+      ],
+      "paths": [
+        "src/modules/public-content"
+      ]
+    },
+    {
+      "id": "session",
+      "risk": "standard",
+      "keys": [
+        "session",
+        "session",
+        "session"
+      ],
+      "paths": [
+        "src/modules/session"
+      ]
+    },
+    {
+      "id": "session-invites",
+      "risk": "standard",
+      "keys": [
+        "session-invites",
+        "session invites",
+        "invite",
+        "join code"
+      ],
+      "paths": [
+        "src/modules/session-invites"
+      ]
+    },
+    {
+      "id": "settings",
+      "risk": "standard",
+      "keys": [
+        "settings",
+        "settings",
+        "setting",
+        "preference",
+        "privacy",
+        "theme",
+        "dark mode",
+        "consent"
+      ],
+      "paths": [
+        "src/modules/settings"
+      ]
+    },
+    {
+      "id": "social",
+      "risk": "standard",
+      "keys": [
+        "social",
+        "social",
+        "friend",
+        "friends",
+        "request",
+        "invite",
+        "invitation",
+        "group"
+      ],
+      "paths": [
+        "src/modules/social"
+      ]
+    },
+    {
+      "id": "telemetry",
+      "risk": "standard",
+      "keys": [
+        "telemetry",
+        "telemetry",
+        "analytics",
+        "diagnostics",
+        "tracking",
+        "insight"
+      ],
+      "paths": [
+        "src/modules/telemetry"
+      ]
+    },
+    {
+      "id": "firestore-rules",
+      "risk": "critical",
+      "keys": [
+        "firestore rule",
+        "security rule",
+        "permission",
+        "ownership",
+        "access control"
+      ],
+      "paths": [
+        "firestore.rules"
+      ]
+    },
+    {
+      "id": "release-tooling",
+      "risk": "standard",
+      "keys": [
+        "release",
+        "version",
+        "bump",
+        "changelog",
+        "apk",
+        "build number",
+        "tag",
+        "prerelease"
+      ],
+      "paths": [
+        "tools/release",
+        "scripts/check-release-version.mjs"
+      ]
+    },
+    {
+      "id": "ci-workflows",
+      "risk": "standard",
+      "keys": [
+        "ci",
+        "workflow",
+        "github action",
+        "gate",
+        "pipeline",
+        "deploy"
+      ],
+      "paths": [
+        ".github/workflows"
+      ]
+    },
+    {
+      "id": "firebase-functions",
+      "risk": "critical",
+      "keys": [
+        "cloud function",
+        "callable",
+        "trigger",
+        "firebase function",
+        "quota"
+      ],
+      "paths": [
+        "functions/src"
+      ]
+    },
+    {
+      "id": "platform",
       "risk": "standard",
       "keys": [
         "capacitor",
         "android",
         "ios",
         "native",
-        "haptic",
-        "status bar"
+        "device",
+        "storage adapter",
+        "browser"
       ],
       "paths": [
-        "src/services/platform.ts",
-        "capacitor.config.ts",
-        "architecture/mobile-architecture.md"
-      ],
-      "tests": [
-        "tests/e2e"
+        "src/platform"
       ]
     },
     {
-      "id": "domain-change",
+      "id": "shared-ui",
       "risk": "standard",
       "keys": [
-        "bucket",
-        "order",
-        "price",
-        "quantity",
-        "status",
-        "total"
+        "shared component",
+        "design system",
+        "button",
+        "layout",
+        "accessibility"
       ],
       "paths": [
-        "src/lib",
-        "src/types/domain.ts",
-        "domain"
-      ],
-      "tests": [
-        "tests/domain"
+        "src/shared"
       ]
     },
     {
-      "id": "frontend-feature",
+      "id": "packages",
       "risk": "standard",
       "keys": [
-        "screen",
-        "page",
-        "ui",
-        "form",
-        "accessibility",
-        "rtl",
-        "language",
-        "theme"
-      ],
-      "paths": [
-        "src/pages",
-        "src/components",
-        "src/state",
-        "src/i18n"
-      ],
-      "tests": [
-        "tests/e2e"
-      ]
-    },
-    {
-      "id": "dependency-change",
-      "risk": "standard",
-      "keys": [
+        "package facade",
+        "library wrapper",
         "dependency",
-        "package",
-        "upgrade",
-        "vite",
-        "react"
+        "upgrade"
       ],
       "paths": [
-        "package.json",
-        "rules/dependency-governance.md"
+        "src/packages"
+      ]
+    },
+    {
+      "id": "app-shell",
+      "risk": "standard",
+      "keys": [
+        "route",
+        "routing",
+        "navigation",
+        "shell",
+        "sidebar",
+        "provider"
       ],
-      "tests": []
+      "paths": [
+        "src/app"
+      ]
+    },
+    {
+      "id": "public-prerender",
+      "risk": "standard",
+      "keys": [
+        "prerender",
+        "public site",
+        "static site",
+        "meta tag",
+        "robots",
+        "feed"
+      ],
+      "paths": [
+        "scripts/public-content"
+      ]
     }
   ]
 }
