@@ -36,8 +36,13 @@ Creating or checking out a target-version branch is a versioning operation. Supp
 - The branch target and stable committed source version must agree before implementation commits are accepted.
 - Use `npm run release:start` to synchronize the branch target and `npm run release:branch-check` to verify it.
 - Checkout, pre-commit, pre-push, CI, and `quality:release` independently enforce the target.
-- Every pull request must raise the stable source version strictly above `main`; new feature branches use a minor bump by default unless prompt density requires patch or major.
-- CI supplies `BASE_VERSION` to the release-integrity gate; the gate fails until the branch version is greater than the base.
+- Feature and release pull requests must raise the stable source version strictly above
+  `main`; new feature branches use a minor bump by default unless prompt density requires
+  patch or major. Maintenance branches named `fix/*`, `hotfix/*`, or `dependabot/*` may
+  keep the current stable version because the main build stream still assigns a unique
+  build number. No pull request may lower the stable source version.
+- CI supplies `BASE_VERSION` and the head branch to the release-integrity gate; the gate
+  requires a greater version except for the explicitly named maintenance branches above.
 
 ## Automated build streams
 

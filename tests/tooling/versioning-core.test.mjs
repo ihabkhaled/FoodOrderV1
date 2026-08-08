@@ -10,13 +10,37 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import test from 'node:test';
 
-import { synchronizeRepositoryVersion } from '../../tools/release/versioning-core.mjs';
+import {
+  isSameVersionMaintenanceBranch,
+  synchronizeRepositoryVersion,
+} from '../../tools/release/versioning-core.mjs';
 
 const writeJson = (path, version) =>
   writeFileSync(
     path,
     `${JSON.stringify({ version, packages: { '': { version } } }, null, 2)}\n`,
   );
+
+test('classifies same-version maintenance branches without admitting features', () => {
+  for (const branch of [
+    'fix/adsense-loader',
+    'hotfix/firebase-capacity',
+    'dependabot/npm_and_yarn/firebase-12.17.0',
+    'dependabot/github_actions/actions/setup-node-7',
+  ]) {
+    assert.equal(isSameVersionMaintenanceBranch(branch), true, branch);
+  }
+
+  for (const branch of [
+    'feature/dependency-dashboard',
+    'release/1.9.0/dependencies',
+    'dependabot',
+    'feature/dependabot/npm-update',
+    '',
+  ]) {
+    assert.equal(isSameVersionMaintenanceBranch(branch), false, branch);
+  }
+});
 
 test('synchronizes web, functions, Android, and iOS versions idempotently', (context) => {
   const rootDirectory = mkdtempSync(join(tmpdir(), 'food-order-versioning-'));

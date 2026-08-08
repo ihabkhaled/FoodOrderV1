@@ -2,6 +2,8 @@ import { existsSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
 import process from 'node:process';
 
+import { isSameVersionMaintenanceBranch } from '../tools/release/versioning-core.mjs';
+
 const readJson = async (path) =>
   JSON.parse(await readFile(new URL(path, import.meta.url), 'utf8'));
 
@@ -80,7 +82,7 @@ if (
   // merge stays uniquely identifiable — while a release branch must move the
   // version forward. Nothing may ever move it backward.
   const headBranch = process.env.GITHUB_HEAD_REF?.trim() ?? '';
-  const isHotfixBranch = /^(?:fix|hotfix)\//u.test(headBranch);
+  const isMaintenanceBranch = isSameVersionMaintenanceBranch(headBranch);
   const comparison = compareVersions(rootPackage.version, baseVersion);
   if (comparison === null) {
     failures.push(
@@ -90,14 +92,14 @@ if (
     failures.push(
       `Pull requests must never lower the stable source version: base=${baseVersion}, head=${rootPackage.version}.`,
     );
-  } else if (comparison === 0 && !isHotfixBranch) {
+  } else if (comparison === 0 && !isMaintenanceBranch) {
     failures.push(
       `Pull requests must increase the stable source version above main: base=${baseVersion}, head=${rootPackage.version}. ` +
-        `To ship a hotfix as a new build of ${baseVersion} instead, use a fix/* or hotfix/* branch.`,
+        `To ship same-version maintenance as a new build of ${baseVersion}, use a fix/*, hotfix/*, or Dependabot branch.`,
     );
   } else if (comparison === 0) {
     console.log(
-      `Hotfix branch ${headBranch} keeps version ${baseVersion}; it ships as a new build number.`,
+      `Maintenance branch ${headBranch} keeps version ${baseVersion}; it ships as a new build number.`,
     );
   }
 }
