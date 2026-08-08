@@ -604,6 +604,11 @@
       "hash": "b1c40d4d2c7b9d87a62bd0491ee82221b8c875785d15067f2a00fd866377e7e2"
     },
     {
+      "path": "docs/superpowers/plans/2026-08-08-dependabot-upgrades.md",
+      "bytes": 3759,
+      "hash": "4da112c08b5dccef8d60554950a272a634b34f42a022ade9983f861eccb110d9"
+    },
+    {
       "path": "docs/superpowers/specs/2026-07-29-v1.8.0-design.md",
       "bytes": 26126,
       "hash": "2224d1246f713a29eff79cf33bc08ab827970e90e13dc75ed54f7c966031c84b"
@@ -1370,8 +1375,8 @@
     },
     {
       "path": "rules/versioning.md",
-      "bytes": 5095,
-      "hash": "935f71438528e5360b49c255e2c1a6a85deb67c4d8284af93c84895594535efb"
+      "bytes": 5392,
+      "hash": "967be838453bb22583a16f9e1aaecb4081082c4a16a85a6e271234bdd6ef7f75"
     },
     {
       "path": "scripts/check-agent-docs.mjs",
@@ -1390,8 +1395,8 @@
     },
     {
       "path": "scripts/check-release-version.mjs",
-      "bytes": 4608,
-      "hash": "393e5d2592e8763c96d6b6304ad3fbe858344897be2460f91f2fbd448490fba4"
+      "bytes": 4737,
+      "hash": "bdd1c52f857ba8be2b872494dcfb2de78c5f343d59559ecfe014a03af300a3e2"
     },
     {
       "path": "scripts/deploy-functions-batched.mjs",
@@ -4690,8 +4695,8 @@
     },
     {
       "path": "tests/tooling/versioning-core.test.mjs",
-      "bytes": 4293,
-      "hash": "4acd6f4ab7dc2d4a7659bfd80a261a5f0763dc4e614dfe858a78a9ad6ebb1745"
+      "bytes": 4934,
+      "hash": "af6d679c349636c2eb0702e64720509ae08db3c88ef8c6ece42f2fb8bba8a4d4"
     },
     {
       "path": "tools/release/bump-version.mjs",
@@ -4720,8 +4725,8 @@
     },
     {
       "path": "tools/release/versioning-core.mjs",
-      "bytes": 7368,
-      "hash": "88a85df38605c6f0a1612b35f6df2207c783885f6b14ca85f5dfa98e67d2001f"
+      "bytes": 7491,
+      "hash": "3ec751b5777eee6ee898d04b5996dfce08f525d74e8201395357fbad73d64732"
     },
     {
       "path": "tsconfig.app.json",

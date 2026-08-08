@@ -407,8 +407,8 @@
     },
     {
       "path": "tests/tooling/versioning-core.test.mjs",
-      "bytes": 4293,
-      "hash": "4acd6f4ab7dc2d4a7659bfd80a261a5f0763dc4e614dfe858a78a9ad6ebb1745"
+      "bytes": 4934,
+      "hash": "af6d679c349636c2eb0702e64720509ae08db3c88ef8c6ece42f2fb8bba8a4d4"
     }
   ]
 }

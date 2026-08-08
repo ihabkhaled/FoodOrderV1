@@ -39,6 +39,9 @@ export const compareStableVersions = (leftVersion, rightVersion) => {
   return 0;
 };
 
+export const isSameVersionMaintenanceBranch = (branchName) =>
+  /^(?:fix|hotfix|dependabot)\//u.test(String(branchName));
+
 export const resolveNextVersion = (currentVersion, requestedVersion) => {
   const current = parseStableVersion(currentVersion);
 
