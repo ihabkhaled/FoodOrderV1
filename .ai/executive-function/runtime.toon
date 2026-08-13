@@ -1,0 +1,8 @@
+# GENERATED: scripts/knowledge/build-executive-function.mjs
+v=1 goal=lock done=finite scope=guard
+wip=1 nest=3 retry=3 critic=2
+replan=2 delegate=2 stalled=4
+classify=BLOCKER|REQUIRED|OPTIONAL|UNRELATED
+evidence=required verify=smallest-sufficient-proof
+recover=return-to-objective communicate=short-direct-concrete-visible
+stop=when-done-is-proven
