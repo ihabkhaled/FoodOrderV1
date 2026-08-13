@@ -1,4 +1,5 @@
 import contactFormData from '../content/contact-form.locales.json';
+import englishHomeCopy from '../content/english-home-copy.json';
 import catalogData from '../content/public-content.catalog.json';
 import {
   PUBLIC_LOCALES,
@@ -34,6 +35,8 @@ const catalog: PublicContentCatalog = {
     offline: { ...baseCatalog.systemPages.offline },
   },
 };
+
+catalog.pages[0].copy.en = englishHomeCopy as PublicPageCopy;
 
 for (const localized of localizedCatalogs) {
   catalog.ui[localized.locale] = localized.ui;
