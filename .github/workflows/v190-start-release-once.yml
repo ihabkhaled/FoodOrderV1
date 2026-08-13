@@ -1,0 +1,47 @@
+name: Start v1.9.0 once
+
+on:
+  push:
+    branches:
+      - release/1.9.0
+
+permissions:
+  contents: write
+
+jobs:
+  synchronize-release-version:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout release branch
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Synchronize repository to v1.9.0
+        run: node tools/release/ensure-branch-version.mjs --apply
+
+      - name: Commit synchronized release files and remove one-shot workflow
+        shell: bash
+        run: |
+          rm -- .github/workflows/v190-start-release-once.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- \
+            package.json \
+            package-lock.json \
+            functions/package.json \
+            functions/package-lock.json \
+            android/app/build.gradle \
+            ios/App/App.xcodeproj/project.pbxproj \
+            CHANGELOG.md \
+            release-notes/v1.9.0.md \
+            .github/workflows/v190-start-release-once.yml
+          git commit -m "chore(release): start v1.9.0"
+          git push origin HEAD:release/1.9.0
