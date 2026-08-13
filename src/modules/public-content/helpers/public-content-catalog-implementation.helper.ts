@@ -41,7 +41,7 @@ const catalog: PublicContentCatalog = {
 
 const homePage = catalog.pages.find((page) => page.id === 'home');
 if (!homePage) throw new Error('Missing public page: home');
-homePage.copy.en = englishHomeCopy as PublicPageCopy;
+homePage.copy.en = englishHomeCopy;
 
 for (const localized of localizedCatalogs) {
   catalog.ui[localized.locale] = localized.ui;

@@ -4,4 +4,4 @@ export {
   getPublicPageCopy,
   getPublicSystemPageCopy,
   getPublicUiCopy,
-} from './public-content-catalog.impl';
+} from './public-content-catalog-implementation.helper';
