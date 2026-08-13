@@ -5,6 +5,11 @@ The version bump level is decided by prompt density — see [rules/versioning.md
 
 <!-- releases -->
 
+## [1.9.0] - 2026-08-13
+
+- Start v1.9.0 development
+
+
 ## [1.8.1] - 2026-08-08
 
 - Upgraded Firebase, Firebase Tools, Playwright, jsdom, Node.js types, fast-uri,
