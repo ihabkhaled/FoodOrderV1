@@ -1,0 +1,39 @@
+{
+  "generated": true,
+  "generatedFrom": [
+    "knowledge/executive-function/runtime-policy.json",
+    "knowledge/executive-function/state-machine.json"
+  ],
+  "stateMachine": {
+    "id": "foodorderv1-ai-executive-state-machine",
+    "version": 1,
+    "initial": "boot",
+    "terminal": [
+      "complete",
+      "halted"
+    ],
+    "transitions": [
+      ["boot", "goal-lock"],
+      ["goal-lock", "context-route"],
+      ["context-route", "bounded-plan"],
+      ["bounded-plan", "execute"],
+      ["execute", "verify"],
+      ["verify", "progress-check"],
+      ["progress-check", "execute"],
+      ["progress-check", "complete"],
+      ["execute", "attention-reset"],
+      ["verify", "attention-reset"],
+      ["attention-reset", "execute"],
+      ["attention-reset", "strategy-reset"],
+      ["strategy-reset", "bounded-investigation"],
+      ["bounded-investigation", "execute"],
+      ["bounded-investigation", "halted"]
+    ],
+    "conditions": {
+      "complete": "Definition of Done and required proof are satisfied.",
+      "attention-reset": "Goal, scope, context, retry, critic, or verification drift detected.",
+      "strategy-reset": "Same strategy failed three times or progress stalled for four cycles.",
+      "halted": "An external condition prevents the next required deliverable."
+    }
+  }
+}
