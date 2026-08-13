@@ -25,6 +25,9 @@ export function PublicHeader({
   theme,
   onToggleTheme,
 }: PublicHeaderProps) {
+  const primaryNavigationItems = navigationItems.slice(0, 4);
+  const secondaryNavigationItems = navigationItems.slice(4);
+
   return (
     <>
       <a className="public-skip-link" href="#public-main">
@@ -42,7 +45,15 @@ export function PublicHeader({
             className="public-navigation public-navigation--desktop"
             aria-label={ui.primaryNavigationLabel}
           >
-            {navigationLinks(navigationItems)}
+            {navigationLinks(primaryNavigationItems)}
+            {secondaryNavigationItems.length > 0 && (
+              <details className="public-more-menu">
+                <summary aria-label={ui.mobileNavigationLabel}>
+                  <span aria-hidden="true">•••</span>
+                </summary>
+                <div>{navigationLinks(secondaryNavigationItems)}</div>
+              </details>
+            )}
           </nav>
           <div className="public-header__actions">
             <details className="public-language-menu">
