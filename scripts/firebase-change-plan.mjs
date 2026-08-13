@@ -10,17 +10,9 @@ const FULL_DEPLOY_REASONS = new Set([
   'unreliable-diff',
 ]);
 
-const FUNCTION_PATH_PREFIXES = [
-  'functions/',
-  'scripts/deploy-functions-batched.mjs',
-  'scripts/firebase-change-plan.mjs',
-];
+const FUNCTION_PATH_PREFIXES = ['functions/'];
 const FUNCTION_PATHS = new Set(['package.json', 'package-lock.json']);
-const RULE_PATHS = new Set([
-  'firestore.rules',
-  'firestore.indexes.json',
-  'storage.rules',
-]);
+const RULE_PATHS = new Set(['firestore.rules', 'firestore.indexes.json']);
 
 export const normalizeChangedFiles = (files) =>
   [...new Set(files.map((file) => file.trim().replaceAll('\\', '/')).filter(Boolean))].sort();
