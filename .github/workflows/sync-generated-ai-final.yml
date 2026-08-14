@@ -1,0 +1,68 @@
+name: Finalize generated AI manifest sync
+
+on:
+  push:
+    branches:
+      - release/1.9.0
+    paths:
+      - .github/workflows/sync-generated-ai-final.yml
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout release branch
+        uses: actions/checkout@v7
+        with:
+          ref: release/1.9.0
+          fetch-depth: 0
+          token: ${{ github.token }}
+
+      - name: Remove one-shot workflow before generation
+        run: rm .github/workflows/sync-generated-ai-final.yml
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 26
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            functions/package-lock.json
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          (cd functions && npm ci --ignore-scripts)
+
+      - name: Regenerate final repository knowledge
+        run: |
+          set -euo pipefail
+          npm run knowledge:build
+          npm run lint:fix
+          npm run format:check
+          npm run knowledge:validate
+
+      - name: Reject unexpected non-generated changes
+        run: |
+          set -euo pipefail
+          unexpected="$(git diff --name-only -- . ':(exclude).ai/**' ':(exclude).github/workflows/sync-generated-ai-final.yml')"
+          if [ -n "$unexpected" ]; then
+            echo "Unexpected non-generated changes:"
+            echo "$unexpected"
+            exit 1
+          fi
+
+      - name: Commit final deterministic generated state
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A .ai .github/workflows/sync-generated-ai-final.yml
+          git reset -- .ai/reports || true
+          git commit -m "chore(ai): finalize generated repository manifest"
+          git push origin HEAD:release/1.9.0
