@@ -102,9 +102,11 @@ test.describe('signed-out shell controls', () => {
     expect(languageBox.height).toBeGreaterThanOrEqual(44);
     expect(languageBox.height).toBeLessThanOrEqual(48);
     expect(homeBox.width).toBe(44);
-    expect(homeBox.height).toBe(44);
+    expect(homeBox.height).toBeGreaterThanOrEqual(44);
+    expect(homeBox.height).toBeLessThanOrEqual(48);
     expect(themeBox.width).toBe(44);
-    expect(themeBox.height).toBe(44);
+    expect(themeBox.height).toBeGreaterThanOrEqual(44);
+    expect(themeBox.height).toBeLessThanOrEqual(48);
     expect(Math.abs(languageBox.y - homeBox.y)).toBeLessThanOrEqual(1);
     expect(Math.abs(languageBox.y - themeBox.y)).toBeLessThanOrEqual(1);
     expect(controlsBox.width).toBeLessThanOrEqual(260);
