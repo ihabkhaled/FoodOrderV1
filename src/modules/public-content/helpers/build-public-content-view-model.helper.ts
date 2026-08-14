@@ -20,7 +20,7 @@ import {
   getPublicPageCopy,
   getPublicSystemPageCopy,
   getPublicUiCopy,
-} from './public-content-catalog.impl';
+} from './public-content-catalog.helper';
 
 const FOOTER_ROUTE_IDS: readonly PublicRouteId[] = [
   'about',
