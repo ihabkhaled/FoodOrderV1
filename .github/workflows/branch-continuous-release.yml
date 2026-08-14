@@ -71,9 +71,15 @@ jobs:
         run: |
           npm run format:check
           npm run lint:fix
-          # knowledge:build regenerates timestamped reports (generatedAt/checkedAt);
-          # exclude them so this diff only catches real lint-autofix drift.
-          git diff --exit-code -- . ':(exclude).ai/reports'
+          # knowledge:build regenerates derived AI indexes/manifests from the
+          # checked-out source. They are validated above, so this diff is only
+          # allowed to fail on real source/autofix drift.
+          git diff --exit-code -- . \
+            ':(exclude).ai/reports' \
+            ':(exclude).ai/manifests' \
+            ':(exclude).ai/hashes' \
+            ':(exclude).ai/graphs' \
+            ':(exclude).ai/executive-function'
           npm run lint
 
       - name: Validate types, functions, and release integrity
