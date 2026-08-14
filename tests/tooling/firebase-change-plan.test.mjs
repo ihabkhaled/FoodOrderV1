@@ -17,6 +17,7 @@ test('skips Firebase for frontend-only changes', () => {
   const plan = planFirebaseChanges(['src/main.tsx', 'docs/ux/audit.md']);
   assert.equal(plan.deployFunctions, false);
   assert.equal(plan.deployRules, false);
+  assert.deepEqual(plan.functionTargets, []);
   assert.equal(plan.reason, 'no-firebase-targets-changed');
 });
 
@@ -26,20 +27,47 @@ test('deploys only rules for a rules-only change', () => {
   assert.equal(plan.deployRules, true);
 });
 
-test('deploys only functions for function source changes', () => {
-  const plan = planFirebaseChanges(['functions/src/index.ts']);
+test('targets only isolated order-session exports', () => {
+  const plan = planFirebaseChanges(['functions/src/orderSessionsV170.ts']);
   assert.equal(plan.deployFunctions, true);
   assert.equal(plan.deployRules, false);
+  assert.deepEqual(plan.functionTargets, [
+    'createOrderSessionV170',
+    'getOrderSessionViewV170',
+    'listOrderSessionsV170',
+    'transitionOrderSessionV170',
+    'updateSessionContributionV170',
+    'updateSessionParticipantResponseV170',
+  ]);
+});
+
+test('combines isolated social targets without redeploying unrelated functions', () => {
+  const plan = planFirebaseChanges([
+    'functions/src/social.ts',
+    'functions/src/socialV150.ts',
+  ]);
+  assert.equal(plan.deployFunctions, true);
+  assert.ok(plan.functionTargets.includes('sendFriendRequest'));
+  assert.ok(plan.functionTargets.includes('updateFriendGroupV150'));
+  assert.ok(!plan.functionTargets.includes('createOrderSessionV170'));
+});
+
+test('shared function source changes safely fall back to every function', () => {
+  const plan = planFirebaseChanges(['functions/src/notificationCore.ts']);
+  assert.equal(plan.deployFunctions, true);
+  assert.equal(plan.functionTargets, null);
 });
 
 test('deploys both targets when firebase.json changes', () => {
   const plan = planFirebaseChanges(['firebase.json']);
   assert.equal(plan.deployFunctions, true);
   assert.equal(plan.deployRules, true);
+  assert.equal(plan.functionTargets, null);
 });
 
 test('uses a full deployment when the diff is unavailable', () => {
   const plan = planFirebaseChanges([], 'unreliable-diff');
   assert.equal(plan.deployFunctions, true);
   assert.equal(plan.deployRules, true);
+  assert.equal(plan.functionTargets, null);
 });

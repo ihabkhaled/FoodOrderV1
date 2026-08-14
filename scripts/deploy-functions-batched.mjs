@@ -3,17 +3,8 @@
  * Change-aware batched Firebase deploy.
  *
  * Frontend/docs-only pushes skip Firebase completely. Rules-only pushes avoid
- * the function build. Function changes still deploy in small sequential batches
- * so concurrent Cloud Run health checks stay below the regional CPU quota.
- *
- * Env:
- *   FIREBASE_PROJECT_ID            required when a target changed
- *   FIREBASE_DEPLOY_TOKEN          optional (CI token; else uses GOOGLE_APPLICATION_CREDENTIALS)
- *   FORCE_FIREBASE_DEPLOY          set to 1 for an explicit full deploy
- *   FIREBASE_CHANGED_FILES         optional comma/newline-separated test override
- *   FUNCTIONS_DEPLOY_BATCH_SIZE    default 4
- *   FUNCTIONS_DEPLOY_PAUSE_MS      default 15000 (settle time between batches)
- *   FUNCTIONS_DEPLOY_RETRIES       default 1 (per batch; absorbs Eventarc propagation)
+ * the function build. Isolated function modules deploy only their exported
+ * endpoints; shared/config changes safely fall back to all functions.
  */
 import { spawnSync } from 'node:child_process';
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -72,9 +63,7 @@ const failedGroups = [];
 const deployWithRetry = (label, args) => {
   let lastOut = '';
   for (let attempt = 0; attempt <= retries; attempt += 1) {
-    if (attempt > 0) {
-      console.log(`::warning::Retry ${attempt}/${retries} for ${label}`);
-    }
+    if (attempt > 0) console.log(`::warning::Retry ${attempt}/${retries} for ${label}`);
     const { ok, out } = firebase(args);
     lastOut = out;
     if (ok) return true;
@@ -92,7 +81,7 @@ process.on('exit', restoreConfig);
 
 let functionNames = [];
 if (changePlan.deployFunctions) {
-  console.log('Building functions once before batched deploy...');
+  console.log('Building functions once before deploy...');
   const build = spawnSync('npm', ['--prefix', 'functions', 'run', 'build'], {
     stdio: 'inherit',
     shell: isWindows,
@@ -112,17 +101,24 @@ if (changePlan.deployFunctions) {
   }
 
   const module = await import(pathToFileURL(ENTRY).href);
-  functionNames = Object.keys(module).sort();
-  console.log(`Discovered ${functionNames.length} functions.`);
+  const allFunctionNames = Object.keys(module).sort();
+  if (Array.isArray(changePlan.functionTargets) && changePlan.functionTargets.length > 0) {
+    const available = new Set(allFunctionNames);
+    const missing = changePlan.functionTargets.filter((name) => !available.has(name));
+    if (missing.length > 0) {
+      console.error(`::error::Planned Firebase targets are not exported: ${missing.join(', ')}`);
+      process.exit(1);
+    }
+    functionNames = [...changePlan.functionTargets];
+    console.log(`Surgical deploy: ${functionNames.length}/${allFunctionNames.length} exported functions changed.`);
+  } else {
+    functionNames = allFunctionNames;
+    console.log(`Safe full-function fallback: ${functionNames.length} exported functions.`);
+  }
 }
 
 if (changePlan.deployRules) {
-  deployWithRetry('firestore:rules', [
-    'deploy',
-    '--only',
-    'firestore:rules',
-    '--force',
-  ]);
+  deployWithRetry('firestore:rules', ['deploy', '--only', 'firestore:rules', '--force']);
 } else {
   console.log('Firestore rules unchanged. Skipping rules deployment.');
 }
@@ -132,9 +128,7 @@ if (changePlan.deployFunctions) {
   for (let index = 0; index < functionNames.length; index += batchSize) {
     batches.push(functionNames.slice(index, index + batchSize));
   }
-  console.log(
-    `Deploying ${functionNames.length} functions in ${batches.length} batches of up to ${batchSize}.`,
-  );
+  console.log(`Deploying ${functionNames.length} functions in ${batches.length} batch(es) of up to ${batchSize}.`);
 
   for (const [index, batch] of batches.entries()) {
     const only = batch.map((name) => `functions:${name}`).join(',');
@@ -156,7 +150,7 @@ originalConfig = null;
 if (failedGroups.length === 0) {
   const deployed = [
     changePlan.deployRules ? 'Firestore rules' : '',
-    changePlan.deployFunctions ? 'Cloud Functions' : '',
+    changePlan.deployFunctions ? `${functionNames.length} Cloud Function(s)` : '',
   ].filter(Boolean);
   console.log(`\nFirebase deployment complete: ${deployed.join(' + ')}.`);
   process.exit(0);
@@ -171,19 +165,12 @@ const quotaOnly = failedGroups.every(
 
 if (quotaOnly) {
   console.log(
-    '::warning::Some functions could not deploy: the project reached the Cloud Run ' +
-      '"total allowable CPU per project per region" quota in europe-west1. Everything that fits ' +
-      'under the quota was deployed. ACTION: raise the quota (GCP Console -> IAM & Admin -> Quotas ' +
-      '-> Cloud Run Admin API -> "Total CPU allocation", europe-west1), then re-run this workflow. ' +
-      'See docs/operations/functions-deploy-blockers.md.',
+    '::warning::Some functions could not deploy because the project reached the Cloud Run CPU quota. ' +
+      'Everything that fit under the quota was deployed; re-run after capacity is available.',
   );
-  console.log(
-    `::warning::Pending (quota-blocked) groups: ${failedGroups.map((group) => group.label).join(' | ')}`,
-  );
+  console.log(`::warning::Pending groups: ${failedGroups.map((group) => group.label).join(' | ')}`);
   process.exit(0);
 }
 
-console.error(
-  `::error::${failedGroups.length} deploy group(s) failed with non-quota errors.`,
-);
+console.error(`::error::${failedGroups.length} deploy group(s) failed with non-quota errors.`);
 process.exit(1);

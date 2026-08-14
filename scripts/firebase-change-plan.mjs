@@ -14,8 +14,70 @@ const FUNCTION_PATH_PREFIXES = ['functions/'];
 const FUNCTION_PATHS = new Set(['package.json', 'package-lock.json']);
 const RULE_PATHS = new Set(['firestore.rules', 'firestore.indexes.json']);
 
+// Files whose public Firebase exports are isolated enough to deploy surgically.
+// Any other Functions source/config change intentionally falls back to all
+// functions so shared-domain changes never leave production partially updated.
+const ISOLATED_FUNCTION_TARGETS = new Map([
+  [
+    'functions/src/orderSessionsV170.ts',
+    [
+      'createOrderSessionV170',
+      'getOrderSessionViewV170',
+      'listOrderSessionsV170',
+      'transitionOrderSessionV170',
+      'updateSessionContributionV170',
+      'updateSessionParticipantResponseV170',
+    ],
+  ],
+  [
+    'functions/src/social.ts',
+    [
+      'createFriendGroup',
+      'getSocialOverview',
+      'inviteFriendToBucketV151',
+      'listBucketAccessGrants',
+      'respondBucketInvitationV151',
+      'respondFriendGroupInvitation',
+      'respondFriendRequest',
+      'searchSocialUserByEmail',
+      'sendFriendRequest',
+      'shareBucketWithFriend',
+      'shareBucketWithFriendGroup',
+    ],
+  ],
+  [
+    'functions/src/socialV150.ts',
+    [
+      'deleteFriendGroupV150',
+      'inviteFriendToGroup',
+      'inviteFriendToGroupV150',
+      'leaveFriendGroupV150',
+      'removeFriendGroupMemberV150',
+      'unfriendV150',
+      'updateFriendGroupV150',
+    ],
+  ],
+]);
+
 export const normalizeChangedFiles = (files) =>
   [...new Set(files.map((file) => file.trim().replaceAll('\\', '/')).filter(Boolean))].sort();
+
+const resolveFunctionTargets = (changedFiles) => {
+  const functionFiles = changedFiles.filter(
+    (file) =>
+      FUNCTION_PATHS.has(file) ||
+      FUNCTION_PATH_PREFIXES.some((prefix) => file.startsWith(prefix)),
+  );
+  if (functionFiles.length === 0) return [];
+
+  const targets = new Set();
+  for (const file of functionFiles) {
+    const isolated = ISOLATED_FUNCTION_TARGETS.get(file);
+    if (!isolated) return null;
+    for (const target of isolated) targets.add(target);
+  }
+  return [...targets].sort();
+};
 
 export const planFirebaseChanges = (files, reason = 'changed-files') => {
   const changedFiles = normalizeChangedFiles(files);
@@ -24,18 +86,14 @@ export const planFirebaseChanges = (files, reason = 'changed-files') => {
       changedFiles,
       deployFunctions: true,
       deployRules: true,
+      functionTargets: null,
       reason,
     };
   }
 
   const firebaseConfigChanged = changedFiles.includes('firebase.json');
-  const deployFunctions =
-    firebaseConfigChanged ||
-    changedFiles.some(
-      (file) =>
-        FUNCTION_PATHS.has(file) ||
-        FUNCTION_PATH_PREFIXES.some((prefix) => file.startsWith(prefix)),
-    );
+  const functionTargets = firebaseConfigChanged ? null : resolveFunctionTargets(changedFiles);
+  const deployFunctions = firebaseConfigChanged || functionTargets === null || functionTargets.length > 0;
   const deployRules =
     firebaseConfigChanged || changedFiles.some((file) => RULE_PATHS.has(file));
 
@@ -43,6 +101,7 @@ export const planFirebaseChanges = (files, reason = 'changed-files') => {
     changedFiles,
     deployFunctions,
     deployRules,
+    functionTargets: deployFunctions ? functionTargets : [],
     reason:
       deployFunctions || deployRules
         ? reason
