@@ -25,9 +25,14 @@ jobs:
         with:
           node-version: 26
           cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            functions/package-lock.json
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          npm ci
+          (cd functions && npm ci --ignore-scripts)
 
       - name: Regenerate and normalize AI artifacts
         run: |
@@ -35,6 +40,7 @@ jobs:
           npm run knowledge:build
           npm run lint:fix
           npm run format:check
+          npm run knowledge:validate
 
       - name: Reject unexpected non-generated changes
         run: |
@@ -60,6 +66,7 @@ jobs:
             .ai/hashes \
             .ai/manifests \
             .github/workflows/sync-generated-ai-once.yml
+          git reset -- .ai/reports || true
           if git diff --cached --quiet; then
             echo "No generated changes to commit."
             exit 1
