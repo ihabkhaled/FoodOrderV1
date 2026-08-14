@@ -44,28 +44,30 @@ const register = async (page: Page, suffix: string): Promise<void> => {
   await page.waitForURL(/\/app$/u);
 };
 
+const expectDocumentLocale = async (
+  page: Page,
+  locale: string,
+  direction: 'ltr' | 'rtl',
+): Promise<void> => {
+  await expect(page.locator('html')).toHaveAttribute('lang', locale);
+  await expect(page.locator('html')).toHaveAttribute('dir', direction);
+};
+
 /**
- * Arabic Franco uses a two-part segment (`/ar-latn`). A prefix matcher that
- * only knew the single-part locales matched `ar`, rejected the `-latn` tail,
- * and silently sent the reader back to English on the next load — so these
- * tests follow the switch all the way through a reload.
+ * Preference save updates runtime/profile state; it does not guarantee a
+ * navigation event. These regressions therefore assert the actual document
+ * locale, then visit the localized route explicitly to prove persistence.
  */
 test.describe('switching the app language', () => {
-  test('keeps Arabic Franco through the redirect and a reload', async ({
-    page,
-  }) => {
+  test('keeps Arabic Franco through a reload', async ({ page }) => {
     await register(page, 'franco');
 
     await selectLanguage(page, 'ar-Latn');
-
-    await page.waitForURL(/\/ar-latn\/(?:app|settings\/preferences)$/u);
-    await expect(page.locator('html')).toHaveAttribute('lang', 'ar-Latn');
-    await expect(page.locator('html')).toHaveAttribute('dir', 'ltr');
+    await expectDocumentLocale(page, 'ar-Latn', 'ltr');
 
     await page.goto('/ar-latn/app');
     await page.reload();
-    await page.waitForURL(/\/ar-latn\/app$/u);
-    await expect(page.locator('html')).toHaveAttribute('lang', 'ar-Latn');
+    await expectDocumentLocale(page, 'ar-Latn', 'ltr');
     await assertSavedLanguage(page, 'ar-Latn');
   });
 
@@ -73,13 +75,14 @@ test.describe('switching the app language', () => {
     await register(page, 'arabic');
 
     await selectLanguage(page, 'ar');
-    await page.waitForURL(/\/ar\/(?:app|settings\/preferences)$/u);
-    await expect(page.locator('html')).toHaveAttribute('lang', 'ar');
-    await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
+    await expectDocumentLocale(page, 'ar', 'rtl');
 
     await page.goto('/ar/app');
     await selectLanguage(page, 'ar-Latn');
-    await page.waitForURL(/\/ar-latn\/(?:app|settings\/preferences)$/u);
-    await expect(page.locator('html')).toHaveAttribute('dir', 'ltr');
+    await expectDocumentLocale(page, 'ar-Latn', 'ltr');
+
+    await page.goto('/ar-latn/app');
+    await page.reload();
+    await expectDocumentLocale(page, 'ar-Latn', 'ltr');
   });
 });

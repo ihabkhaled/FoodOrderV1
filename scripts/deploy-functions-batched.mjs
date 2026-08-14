@@ -164,12 +164,16 @@ const quotaOnly = failedGroups.every(
 );
 
 if (quotaOnly) {
-  console.log(
-    '::warning::Some functions could not deploy because the project reached the Cloud Run CPU quota. ' +
-      'Everything that fit under the quota was deployed; re-run after capacity is available.',
+  console.error(
+    '::error::Firebase deployment is incomplete because Cloud Run CPU quota blocked one or more planned function batches.',
   );
-  console.log(`::warning::Pending groups: ${failedGroups.map((group) => group.label).join(' | ')}`);
-  process.exit(0);
+  console.error(
+    `::error::Pending groups: ${failedGroups.map((group) => group.label).join(' | ')}`,
+  );
+  console.error(
+    'A release cannot be marked green while planned Firebase targets are still pending. Re-run after capacity is available.',
+  );
+  process.exit(1);
 }
 
 console.error(`::error::${failedGroups.length} deploy group(s) failed with non-quota errors.`);

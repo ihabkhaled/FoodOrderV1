@@ -7,6 +7,10 @@ export const SOCIAL_GROUPS_PATH = '/social/groups';
 export const buildBucketSocialShareRoute = (bucketId: string): string =>
   `/buckets/${bucketId}/social-share`;
 
+/** Cross-module continuation target kept local to avoid a social -> orders dependency. */
+export const buildBucketOrderRedirect = (bucketId: string): string =>
+  `/buckets/${bucketId}/order`;
+
 /**
  * Cross-module redirect target. social sits below buckets in the dependency
  * graph (buckets imports `@/modules/social`), so it owns a local copy of the

@@ -4,8 +4,13 @@ import type {
   SocialOverview,
 } from '@/modules/data-access';
 import { Share2, Users } from '@/packages/icons';
+import { Link } from '@/packages/router';
 
 import type { SocialMessageKey } from '../../i18n/social-messages.constants';
+import {
+  SOCIAL_FRIENDS_PATH,
+  SOCIAL_GROUPS_PATH,
+} from '../../routes/social-route-paths.constants';
 
 interface BucketSocialSharePanelViewProps {
   s: (key: SocialMessageKey) => string;
@@ -62,57 +67,75 @@ export function BucketSocialSharePanelView({
         </select>
       </label>
 
-      <div className="row-actions">
-        <select
-          aria-label={s('selectFriend')}
-          value={friendId}
-          disabled={disabled || saving}
-          onChange={(event) => {
-            onFriendIdChange(event.target.value);
-          }}
-        >
-          <option value="">{s('selectFriend')}</option>
-          {overview.friends.map((friend) => (
-            <option key={friend.userId} value={friend.userId}>
-              {friend.displayName}
-            </option>
-          ))}
-        </select>
-        <button
-          className="button secondary"
-          disabled={disabled || saving || !friendId}
-          onClick={onInviteFriend}
-        >
-          <Share2 />
-          {s('inviteToBucket')}
-        </button>
-      </div>
+      {overview.friends.length === 0 ? (
+        <div className="guided-empty-choice">
+          <span>{s('noFriends')}</span>
+          <Link className="button secondary" to={SOCIAL_FRIENDS_PATH}>
+            {s('findFriend')}
+          </Link>
+        </div>
+      ) : (
+        <div className="row-actions">
+          <select
+            aria-label={s('selectFriend')}
+            value={friendId}
+            disabled={disabled || saving}
+            onChange={(event) => {
+              onFriendIdChange(event.target.value);
+            }}
+          >
+            <option value="">{s('selectFriend')}</option>
+            {overview.friends.map((friend) => (
+              <option key={friend.userId} value={friend.userId}>
+                {friend.displayName}
+              </option>
+            ))}
+          </select>
+          <button
+            className="button secondary"
+            disabled={disabled || saving || !friendId}
+            onClick={onInviteFriend}
+          >
+            <Share2 />
+            {s('inviteToBucket')}
+          </button>
+        </div>
+      )}
 
-      <div className="row-actions">
-        <select
-          aria-label={s('selectGroup')}
-          value={groupId}
-          disabled={disabled || saving}
-          onChange={(event) => {
-            onGroupIdChange(event.target.value);
-          }}
-        >
-          <option value="">{s('selectGroup')}</option>
-          {overview.groups.map((group) => (
-            <option key={group.id} value={group.id}>
-              {group.name}
-            </option>
-          ))}
-        </select>
-        <button
-          className="button secondary"
-          disabled={disabled || saving || !groupId}
-          onClick={onShareWithGroup}
-        >
-          <Users />
-          {s('shareWithGroup')}
-        </button>
-      </div>
+      {overview.groups.length === 0 ? (
+        <div className="guided-empty-choice">
+          <span>{s('noGroups')}</span>
+          <Link className="button secondary" to={SOCIAL_GROUPS_PATH}>
+            {s('createGroup')}
+          </Link>
+        </div>
+      ) : (
+        <div className="row-actions">
+          <select
+            aria-label={s('selectGroup')}
+            value={groupId}
+            disabled={disabled || saving}
+            onChange={(event) => {
+              onGroupIdChange(event.target.value);
+            }}
+          >
+            <option value="">{s('selectGroup')}</option>
+            {overview.groups.map((group) => (
+              <option key={group.id} value={group.id}>
+                {group.name}
+              </option>
+            ))}
+          </select>
+          <button
+            className="button secondary"
+            disabled={disabled || saving || !groupId}
+            onClick={onShareWithGroup}
+          >
+            <Users />
+            {s('shareWithGroup')}
+          </button>
+        </div>
+      )}
 
       {grants.length > 0 ? (
         <div className="stack">

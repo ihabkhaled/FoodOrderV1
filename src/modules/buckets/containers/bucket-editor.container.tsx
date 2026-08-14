@@ -94,7 +94,7 @@ export function BucketEditorContainer() {
               <article className="item-editor" key={item.id}>
                 <GripVertical className="drag-hint" aria-hidden="true" />
                 <div className="item-fields">
-                  <label>
+                  <label className="bucket-item-name-field">
                     {vm.t('itemName')}
                     <input
                       value={item.name}
@@ -102,8 +102,33 @@ export function BucketEditorContainer() {
                         vm.updateItem(item.id, 'name', event.target.value);
                       }}
                       maxLength={60}
+                      autoComplete="off"
                       required
                     />
+                    {vm.suggestions.length > 0 ? (
+                      <span className="bucket-item-suggestions" role="listbox">
+                        {vm.suggestions.map((suggestion) => (
+                          <button
+                            key={suggestion.key}
+                            type="button"
+                            className="bucket-item-suggestion"
+                            role="option"
+                            aria-selected={
+                              item.name.trim().toLocaleLowerCase() === suggestion.key
+                            }
+                            onClick={() => {
+                              vm.applySuggestion(item.id, suggestion);
+                            }}
+                          >
+                            <span>{suggestion.name}</span>
+                            <span className="bucket-item-suggestion__meta">
+                              {suggestion.count > 1 ? '🔥 ' : ''}
+                              {suggestion.count}×
+                            </span>
+                          </button>
+                        ))}
+                      </span>
+                    ) : null}
                   </label>
                   <label>
                     {vm.t('category')}
