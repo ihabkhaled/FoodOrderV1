@@ -84,9 +84,9 @@
       "hash": "3818091e4b9950ad8be327e370f27e31cf1ae6fe53132dc59d99f0de0d1733ac"
     },
     {
-      "path": ".github/workflows/sync-generated-ai-once.yml",
-      "bytes": 2188,
-      "hash": "d82e99822bfd037cc281907106a551c00d02da23741c0422cc2cc31e6cd64089"
+      "path": ".github/workflows/sync-generated-ai-final.yml",
+      "bytes": 1999,
+      "hash": "adcb40a2bb41ee7881dcffacff4396ab2d75b2f7bf2840630e2e70c66c75f1e7"
     },
     {
       "path": ".github/workflows/v170-order-session-gates.yml",
