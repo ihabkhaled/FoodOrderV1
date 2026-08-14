@@ -97,8 +97,6 @@ export const useSessionController = (initialLocale?: Locale): AppContextValue =>
       .getProfile(user, defaults)
       .then((nextProfile) => {
         setProfile(nextProfile);
-        // Roam the saved language on the web: a fresh device boots on the URL
-        // locale, so a differing profile locale redirects once after login.
         if (!isNativeApplication() && nextProfile.locale !== locale) {
           navigateToBrowserLocale(nextProfile.locale);
         }
@@ -127,8 +125,6 @@ export const useSessionController = (initialLocale?: Locale): AppContextValue =>
     applyDocumentLocale(locale, localeDirection(locale));
   }, [locale, theme]);
 
-  // Diagnostics stay denied until the stored consent resolves, and the profile
-  // copy wins so the choice roams with the account.
   useEffect(() => {
     void loadAnalyticsConsent()
       .then((storedConsent) => {
@@ -247,11 +243,13 @@ export const useSessionController = (initialLocale?: Locale): AppContextValue =>
           setDevice((current) => ({ ...current, ...deviceChanges }));
         }
         showToast(translate(saved.locale, 'settingsSaved'), 'success');
+        if (changes.locale && !isNativeApplication()) {
+          setLocaleNavigationPending(true);
+          navigateToBrowserLocale(saved.locale);
+        }
       },
       setDeviceLocale: async (nextLocale) => {
         setLocaleNavigationPending(true);
-        // Switch the visible locale immediately; persistence follows and its
-        // failure is surfaced without reverting or blocking the switch.
         setDevice((current) => ({ ...current, locale: nextLocale }));
         if (profile) setProfile({ ...profile, locale: nextLocale });
         try {
