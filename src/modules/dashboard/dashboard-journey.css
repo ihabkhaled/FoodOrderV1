@@ -1,0 +1,26 @@
+.dashboard-journey__step {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  min-height: 82px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  color: var(--text);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.dashboard-journey__step svg {
+  color: var(--primary);
+  font-size: 1.35rem;
+}
+
+@media (max-width: 720px) {
+  .dashboard-journey__step {
+    min-height: 70px;
+  }
+}

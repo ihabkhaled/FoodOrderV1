@@ -1,3 +1,5 @@
+import '../dashboard-journey.css';
+
 import { BUCKET_NEW_PATH, BUCKETS_PATH } from '@/modules/buckets';
 import { ORDERS_PATH } from '@/modules/orders';
 import { SOCIAL_PATH } from '@/modules/social';
@@ -94,10 +96,10 @@ export function DashboardContainer() {
       <ol className="dashboard-journey" aria-label={vm.t('quickStart')}>
         <li>
           <span className="dashboard-journey__number">1</span>
-          <Link to={BUCKET_NEW_PATH}>
+          <div className="dashboard-journey__step">
             <ShoppingBasket />
             <strong>{vm.t('createBucket')}</strong>
-          </Link>
+          </div>
         </li>
         <li>
           <span className="dashboard-journey__number">2</span>
