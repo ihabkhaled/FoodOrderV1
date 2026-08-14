@@ -18,7 +18,7 @@ describe('PublicContentRoutes', () => {
     expect(
       screen.getByRole('heading', {
         level: 1,
-        name: 'Collect group food orders without chasing messages',
+        name: 'The easiest way to collect a group food order',
       }),
     ).toBeVisible();
     expect(screen.getAllByRole('link', { name: 'About' }).length).toBeGreaterThan(0);
