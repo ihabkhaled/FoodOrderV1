@@ -70,10 +70,12 @@ test.describe('switching the app language', () => {
     await saveLanguagePreference(page, 'ar');
 
     await page.goto('/ar/app');
+    await expect(page.locator('html')).toHaveAttribute('lang', 'ar');
     await expectDocumentLocale(page, 'ar', 'rtl');
 
     await saveLanguagePreference(page, 'ar-Latn');
     await page.goto('/ar-latn/app');
+    await expect(page.locator('html')).toHaveAttribute('lang', 'ar-Latn');
     await expectDocumentLocale(page, 'ar-Latn', 'ltr');
     await page.reload();
     await expectDocumentLocale(page, 'ar-Latn', 'ltr');
