@@ -1,0 +1,73 @@
+name: Finalize generated AI manifest sync once
+
+on:
+  push:
+    branches:
+      - release/1.9.0
+    paths:
+      - .github/workflows/sync-generated-ai-once.yml
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout release branch
+        uses: actions/checkout@v7
+        with:
+          ref: release/1.9.0
+          fetch-depth: 0
+
+      - name: Remove one-shot workflow before indexing repository
+        run: rm .github/workflows/sync-generated-ai-once.yml
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 26
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            functions/package-lock.json
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          (cd functions && npm ci --ignore-scripts)
+
+      - name: Regenerate final AI artifacts
+        run: |
+          set -euo pipefail
+          npm run knowledge:build
+          npm run knowledge:validate
+          npm run lint:fix
+          npm run format:check
+
+      - name: Reject unexpected source changes
+        run: |
+          set -euo pipefail
+          unexpected="$(git diff --name-only -- . ':(exclude).ai/**' ':(exclude).github/workflows/sync-generated-ai-once.yml')"
+          if [ -n "$unexpected" ]; then
+            echo "Unexpected non-generated changes:"
+            echo "$unexpected"
+            exit 1
+          fi
+
+      - name: Commit final synchronized state
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- \
+            .ai/CURRENT_STATE.md \
+            .ai/QUICK_ROUTER.md \
+            .ai/executive-function \
+            .ai/graphs \
+            .ai/hashes \
+            .ai/manifests \
+            .github/workflows/sync-generated-ai-once.yml
+          git reset -- .ai/reports || true
+          git commit -m "chore(ai): finalize generated repository manifest"
+          git push origin HEAD:release/1.9.0
