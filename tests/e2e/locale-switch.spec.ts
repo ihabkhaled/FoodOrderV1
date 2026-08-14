@@ -63,6 +63,7 @@ test.describe('switching the app language', () => {
     await register(page, 'franco');
 
     await selectLanguage(page, 'ar-Latn');
+    await expect(page.locator('html')).toHaveAttribute('lang', 'ar-Latn');
     await expectDocumentLocale(page, 'ar-Latn', 'ltr');
 
     await page.goto('/ar-latn/app');
@@ -75,6 +76,7 @@ test.describe('switching the app language', () => {
     await register(page, 'arabic');
 
     await selectLanguage(page, 'ar');
+    await expect(page.locator('html')).toHaveAttribute('lang', 'ar');
     await expectDocumentLocale(page, 'ar', 'rtl');
 
     await page.goto('/ar/app');
