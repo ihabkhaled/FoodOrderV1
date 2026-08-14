@@ -95,7 +95,8 @@ test.describe('v1.3.4 bucket-owned pricing', () => {
     await page.getByLabel('Item name').fill('Meal');
     await page.getByLabel('Unit price').fill('100');
     await page.getByRole('button', { name: 'Save' }).click();
-    await expect(page).toHaveURL(/\/buckets$/u);
+    await expect(page).toHaveURL(/\/buckets\/[^/]+\/social-share$/u);
+    await expect(page.getByRole('link', { name: 'Order now' })).toBeVisible();
 
     await expect
       .poll(async () => {
@@ -106,6 +107,12 @@ test.describe('v1.3.4 bucket-owned pricing', () => {
         return bucket?.pricingPolicy;
       })
       .toEqual(expectedPricing);
+
+    // Guided creation intentionally lands on sharing; expert/manual navigation
+    // remains available through Back, then the rest of this regression covers
+    // duplicate, classic share, and ordering independently.
+    await page.getByRole('link', { name: 'Back' }).click();
+    await expect(page).toHaveURL(/\/buckets$/u);
 
     await page
       .getByRole('button', { name: 'Duplicate — Private pricing' })
