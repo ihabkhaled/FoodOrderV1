@@ -1,0 +1,120 @@
+name: Fix v1.9.0 public content parity once
+
+on:
+  push:
+    branches:
+      - release/1.9.0
+
+permissions:
+  contents: write
+
+jobs:
+  patch-public-content:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout release branch
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+
+      - name: Repair imports and align runtime with prerendered content
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { mkdir, readFile, writeFile } from 'node:fs/promises';
+          import path from 'node:path';
+
+          const replaceExact = async (filePath, before, after) => {
+            const source = await readFile(filePath, 'utf8');
+            if (!source.includes(before)) {
+              throw new Error(`Expected source was not found in ${filePath}`);
+            }
+            await writeFile(filePath, source.replace(before, after), 'utf8');
+          };
+
+          const replaceAllExact = async (filePath, before, after) => {
+            const source = await readFile(filePath, 'utf8');
+            if (!source.includes(before)) {
+              throw new Error(`Expected source was not found in ${filePath}`);
+            }
+            await writeFile(filePath, source.replaceAll(before, after), 'utf8');
+          };
+
+          await replaceExact(
+            'src/modules/public-content/helpers/build-public-content-view-model.helper.ts',
+            "from './public-content-catalog.impl';",
+            "from './public-content-catalog.helper';",
+          );
+          await replaceAllExact(
+            'src/modules/public-content/index.ts',
+            './helpers/public-content-catalog.impl',
+            './helpers/public-content-catalog.helper',
+          );
+
+          const sharedBuilder = 'scripts/public-content/public-content-build.shared.mjs';
+          await replaceExact(
+            sharedBuilder,
+            `const CONTACT_FORM_PATH = path.join(\n  'src',\n  'modules',\n  'public-content',\n  'content',\n  'contact-form.locales.json',\n);`,
+            `const CONTACT_FORM_PATH = path.join(\n  'src',\n  'modules',\n  'public-content',\n  'content',\n  'contact-form.locales.json',\n);\nconst ENGLISH_HOME_COPY_PATH = path.join(\n  'src',\n  'modules',\n  'public-content',\n  'content',\n  'english-home-copy.json',\n);`,
+          );
+          await replaceExact(
+            sharedBuilder,
+            `  baseCatalog.contactForm = JSON.parse(\n    await readFile(path.join(root, CONTACT_FORM_PATH), 'utf8'),\n  );`,
+            `  baseCatalog.contactForm = JSON.parse(\n    await readFile(path.join(root, CONTACT_FORM_PATH), 'utf8'),\n  );\n  const englishHomeCopy = JSON.parse(\n    await readFile(path.join(root, ENGLISH_HOME_COPY_PATH), 'utf8'),\n  );`,
+          );
+          await replaceExact(
+            sharedBuilder,
+            `  };\n  for (const localized of localizedCatalogs) {\n    catalog.ui[localized.locale] = localized.ui;`,
+            `  };\n  const homePage = catalog.pages.find((page) => page.id === 'home');\n  if (!homePage) throw new Error('Missing public page: home');\n  homePage.copy.en = englishHomeCopy;\n  catalog.ui.en = {\n    ...catalog.ui.en,\n    brandName: catalog.site.brandName,\n  };\n  for (const localized of localizedCatalogs) {\n    catalog.ui[localized.locale] = localized.ui;`,
+          );
+
+          await replaceExact(
+            'src/modules/public-content/helpers/public-content-catalog-implementation.helper.ts',
+            `const homePage = catalog.pages.find((page) => page.id === 'home');\nif (!homePage) throw new Error('Missing public page: home');\nhomePage.copy.en = englishHomeCopy;`,
+            `const homePage = catalog.pages.find((page) => page.id === 'home');\nif (!homePage) throw new Error('Missing public page: home');\nhomePage.copy.en = englishHomeCopy;\ncatalog.ui.en = {\n  ...catalog.ui.en,\n  brandName: catalog.site.brandName,\n};`,
+          );
+
+          await replaceAllExact(
+            'tests/components/PublicContent.test.tsx',
+            "name: 'FoodOrder | Collect Your Order'",
+            "name: 'Gama3 Orderak'",
+          );
+
+          const parityTestPath = 'tests/tooling/public-content-parity.test.mjs';
+          await mkdir(path.dirname(parityTestPath), { recursive: true });
+          await writeFile(
+            parityTestPath,
+            `import assert from 'node:assert/strict';\nimport { readFile } from 'node:fs/promises';\nimport path from 'node:path';\nimport test from 'node:test';\n\nimport { loadPublicCatalog } from '../../scripts/public-content/public-content-build.shared.mjs';\n\ntest('static public content matches the runtime English homepage source', async () => {\n  const root = process.cwd();\n  const expected = JSON.parse(\n    await readFile(\n      path.join(\n        root,\n        'src',\n        'modules',\n        'public-content',\n        'content',\n        'english-home-copy.json',\n      ),\n      'utf8',\n    ),\n  );\n  const catalog = await loadPublicCatalog(root);\n  const homePage = catalog.pages.find((page) => page.id === 'home');\n\n  assert.ok(homePage);\n  assert.deepEqual(homePage.copy.en, expected);\n  assert.equal(catalog.ui.en.brandName, catalog.site.brandName);\n});\n`,
+            'utf8',
+          );
+          NODE
+
+      - name: Verify the focused fix
+        run: |
+          node --check scripts/public-content/public-content-build.shared.mjs
+          node --check tests/tooling/public-content-parity.test.mjs
+          node --test tests/tooling/public-content-parity.test.mjs
+          git diff --check
+
+      - name: Commit fix and remove one-shot workflow
+        shell: bash
+        run: |
+          rm -- .github/workflows/v190-fix-public-content-parity-once.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- \
+            src/modules/public-content/helpers/build-public-content-view-model.helper.ts \
+            src/modules/public-content/helpers/public-content-catalog-implementation.helper.ts \
+            src/modules/public-content/index.ts \
+            scripts/public-content/public-content-build.shared.mjs \
+            tests/components/PublicContent.test.tsx \
+            tests/tooling/public-content-parity.test.mjs \
+            .github/workflows/v190-fix-public-content-parity-once.yml
+          git commit -m "fix(marketing): keep prerendered and hydrated content aligned"
+          git push origin HEAD:release/1.9.0
