@@ -13,21 +13,66 @@
       "halted"
     ],
     "transitions": [
-      ["boot", "goal-lock"],
-      ["goal-lock", "context-route"],
-      ["context-route", "bounded-plan"],
-      ["bounded-plan", "execute"],
-      ["execute", "verify"],
-      ["verify", "progress-check"],
-      ["progress-check", "execute"],
-      ["progress-check", "complete"],
-      ["execute", "attention-reset"],
-      ["verify", "attention-reset"],
-      ["attention-reset", "execute"],
-      ["attention-reset", "strategy-reset"],
-      ["strategy-reset", "bounded-investigation"],
-      ["bounded-investigation", "execute"],
-      ["bounded-investigation", "halted"]
+      [
+        "boot",
+        "goal-lock"
+      ],
+      [
+        "goal-lock",
+        "context-route"
+      ],
+      [
+        "context-route",
+        "bounded-plan"
+      ],
+      [
+        "bounded-plan",
+        "execute"
+      ],
+      [
+        "execute",
+        "verify"
+      ],
+      [
+        "verify",
+        "progress-check"
+      ],
+      [
+        "progress-check",
+        "execute"
+      ],
+      [
+        "progress-check",
+        "complete"
+      ],
+      [
+        "execute",
+        "attention-reset"
+      ],
+      [
+        "verify",
+        "attention-reset"
+      ],
+      [
+        "attention-reset",
+        "execute"
+      ],
+      [
+        "attention-reset",
+        "strategy-reset"
+      ],
+      [
+        "strategy-reset",
+        "bounded-investigation"
+      ],
+      [
+        "bounded-investigation",
+        "execute"
+      ],
+      [
+        "bounded-investigation",
+        "halted"
+      ]
     ],
     "conditions": {
       "complete": "Definition of Done and required proof are satisfied.",

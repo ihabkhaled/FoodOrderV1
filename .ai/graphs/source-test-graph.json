@@ -306,6 +306,11 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/dashboard/dashboard-journey.css",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/dashboard/hooks/use-dashboard-tour.hook.ts",
       "tests": [],
       "relationship": "inferred"
@@ -1236,6 +1241,11 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/public-content/content/english-home-copy.json",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/public-content/content/locales/ar-Latn.json",
       "tests": [],
       "relationship": "inferred"
@@ -1307,6 +1317,11 @@
     },
     {
       "source": "src/modules/public-content/helpers/build-public-metadata.helper.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/public-content/helpers/public-content-catalog-implementation.helper.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -2722,6 +2737,16 @@
     },
     {
       "source": "src/styles.css",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/ux-existing-shell.css",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/ux-simplification.css",
       "tests": [],
       "relationship": "inferred"
     },

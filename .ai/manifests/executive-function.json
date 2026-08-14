@@ -1,0 +1,26 @@
+{
+  "generated": true,
+  "generatedFrom": [
+    "knowledge/executive-function/runtime-policy.json",
+    "knowledge/executive-function/state-machine.json"
+  ],
+  "rules": [
+    "rules/22-executive-function-and-delivery.md",
+    "rules/23-context-memory-and-evidence.md",
+    "rules/24-communication-verification-and-completion.md"
+  ],
+  "skills": [
+    "skills/executive-function.md",
+    "skills/bounded-investigation-and-scope-guard.md",
+    "skills/attention-and-loop-recovery.md",
+    "skills/context-compression-and-handoff.md",
+    "skills/verification-controller.md",
+    "skills/communicate-briefly.md"
+  ],
+  "runtime": [
+    ".ai/executive-function/runtime.json",
+    ".ai/executive-function/runtime.toon",
+    ".ai/executive-function/runtime.sjon",
+    ".ai/executive-function/state-machine.json"
+  ]
+}

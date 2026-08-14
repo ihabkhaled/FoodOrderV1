@@ -67,8 +67,8 @@
     },
     {
       "path": "tests/components/PublicContent.test.tsx",
-      "bytes": 2758,
-      "hash": "ae1d72c3389557f7c06623a1e38221e9a918d6a69251febf41a3468c5cd6657e"
+      "bytes": 2685,
+      "hash": "7e5c0e6c5b6c43db772f8808ccb5749b7805b91597cbb0fd9f36f8e6e3a3860e"
     },
     {
       "path": "tests/components/ResetPasswordRoute.test.tsx",
@@ -282,8 +282,8 @@
     },
     {
       "path": "tests/e2e/ui.spec.ts",
-      "bytes": 11612,
-      "hash": "6c9ab73efd25da5c369cf2628b2805fb1c16fd94d5a68cf1579a41dfc4427221"
+      "bytes": 11753,
+      "hash": "e5dc358f715946d8edde85d73ce72083130b8640c1ad3c2ee914b099b4ba2682"
     },
     {
       "path": "tests/e2e/ux-polish.spec.ts",
@@ -391,9 +391,19 @@
       "hash": "18c74fe95cfe476421e85f7f0ec79ad76c4093ffd16cf600093f38eaad7644ca"
     },
     {
+      "path": "tests/tooling/ai-executive-function.test.mjs",
+      "bytes": 1707,
+      "hash": "2277e5ea27f354f7047c891740ce423aacf8a206dcee6f483ebbd2e40f331a11"
+    },
+    {
       "path": "tests/tooling/compose-release-notes.test.mjs",
       "bytes": 1427,
       "hash": "7ee92ec44c381cb828189aeb9210d97b3d767df36d3eb4bea7be3f2c2da7a263"
+    },
+    {
+      "path": "tests/tooling/firebase-change-plan.test.mjs",
+      "bytes": 1498,
+      "hash": "71c709eca63f2b043f2893b04281166b86819bfd2845428840c12672085861a4"
     },
     {
       "path": "tests/tooling/firebase-deployment-gate.test.ts",
@@ -404,6 +414,11 @@
       "path": "tests/tooling/knowledge-routing.test.mjs",
       "bytes": 3934,
       "hash": "8b6ec1f3f58a93b5a4c1bf05f127d494dd6be33b7d052c9b5a11f46b270a0627"
+    },
+    {
+      "path": "tests/tooling/public-content-parity.test.mjs",
+      "bytes": 853,
+      "hash": "333ea883d05c2cc0ba4e1d02ee307ecd400bd814d3b56fd64eee20887c5c7cf7"
     },
     {
       "path": "tests/tooling/pull-request-brief.test.mjs",

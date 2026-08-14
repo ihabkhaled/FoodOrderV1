@@ -1,9 +1,11 @@
 <!-- GENERATED: scripts/knowledge/build-executive-function.mjs; DO NOT EDIT -->
-# Current AI context
+# Current AI execution state
 
-Compile fresh task context with:
+No durable task is active in generated knowledge.
+
+For a new task, compile fresh context with:
 
 `npm run knowledge:context -- --task="<exact objective>"`
 
-Keep temporary task details in generated context. Promote only stable architecture,
-decisions, recurring failure patterns, and enduring preferences to durable memory.
+Temporary task state must remain local/generated. Promote only stable architecture,
+decisions, recurring failures, and enduring preferences to durable memory.

@@ -1,0 +1,171 @@
+{
+  "generated": true,
+  "generatedFrom": [
+    "knowledge/executive-function/runtime-policy.json",
+    "knowledge/executive-function/state-machine.json"
+  ],
+  "policy": {
+    "$schema": "./runtime-policy.schema.json",
+    "id": "foodorderv1-ai-executive-function",
+    "version": 1,
+    "authority": [
+      "AGENTS.md",
+      "rules/00-non-negotiable-rules.md",
+      "rules/22-executive-function-and-delivery.md",
+      "rules/23-context-memory-and-evidence.md",
+      "rules/24-communication-verification-and-completion.md"
+    ],
+    "principles": {
+      "primary": "Activity is not progress; progress is movement toward the requested outcome and Definition of Done.",
+      "communication": "Short. Direct. Concrete. Visible.",
+      "delivery": "Correct, complete, and verified beats theoretically perfect.",
+      "termination": "Stop when the requested outcome is proven complete."
+    },
+    "thresholds": {
+      "maxActiveWorkItems": 1,
+      "maxNestingDepth": 3,
+      "maxSameStrategyAttempts": 3,
+      "maxCriticRounds": 2,
+      "maxFullReplansWithoutNewEvidence": 2,
+      "maxAgentDelegationDepth": 2,
+      "stalledProgressCyclesBeforeReset": 4
+    },
+    "preActionState": [
+      "primaryObjective",
+      "successCondition",
+      "definitionOfDone",
+      "scope",
+      "outOfScope",
+      "activeWorkItem",
+      "nextDeliverable",
+      "blocker",
+      "nestingDepth",
+      "retryCount",
+      "criticRound",
+      "verificationState",
+      "progressState"
+    ],
+    "issueClasses": [
+      "BLOCKER",
+      "REQUIRED",
+      "OPTIONAL",
+      "UNRELATED"
+    ],
+    "alwaysLoaded": [
+      "goal-lock",
+      "definition-of-done",
+      "scope-guard",
+      "evidence-gate",
+      "one-active-work-item",
+      "bounded-retry",
+      "bounded-verification",
+      "progress-check",
+      "defer-distractions",
+      "concise-communication",
+      "stop-when-done"
+    ],
+    "recoverySignals": [
+      "same-error-repeated",
+      "same-strategy-repeated",
+      "same-file-reread",
+      "same-command-repeated",
+      "edit-revert-cycle",
+      "critic-loop",
+      "replan-loop",
+      "context-reload-loop",
+      "strategy-oscillation",
+      "scope-growth-without-requirement-progress",
+      "completion-avoidance"
+    ],
+    "recoveryProtocol": [
+      "stop-current-branch",
+      "restate-objective-and-done",
+      "summarize-completed-and-remaining",
+      "classify-current-branch",
+      "remove-speculative-branches",
+      "reduce-search-space",
+      "choose-materially-different-action",
+      "resume-smallest-deliverable-or-report-blocker"
+    ],
+    "contextPolicy": {
+      "layers": [
+        "boot",
+        "task-route",
+        "domain",
+        "exact-sources",
+        "deep-architecture"
+      ],
+      "searchBeforeBroadRead": true,
+      "sourceOverridesGeneratedContext": true,
+      "refreshKeeps": [
+        "goal",
+        "done",
+        "completed",
+        "remaining",
+        "decisions",
+        "evidence",
+        "blocker",
+        "deferred",
+        "next"
+      ]
+    },
+    "memoryPolicy": {
+      "promote": [
+        "stable",
+        "repeatedly-useful",
+        "architectural",
+        "durable-decision",
+        "enduring-preference",
+        "recurring-failure",
+        "expensive-to-rediscover"
+      ],
+      "exclude": [
+        "temporary-debugging",
+        "one-off-error",
+        "speculation",
+        "raw-tool-output",
+        "active-task-noise",
+        "secrets",
+        "production-records"
+      ]
+    },
+    "verificationPolicy": {
+      "order": [
+        "targeted",
+        "integration",
+        "affected-e2e",
+        "lint-typecheck-build",
+        "repository-gates",
+        "deployment-health"
+      ],
+      "repeatOnlyWhenInvalidated": true
+    },
+    "communicationPolicy": {
+      "defaultLines": "1-5",
+      "required": [
+        "exact-work",
+        "exact-error",
+        "exact-blocker",
+        "proof",
+        "next-action"
+      ],
+      "forbidden": [
+        "filler",
+        "repetition",
+        "vague-status",
+        "unsupported-certainty"
+      ]
+    },
+    "loadConditions": [
+      "always",
+      "task-start",
+      "on-debug",
+      "on-loop",
+      "on-deadlock",
+      "on-context-pressure",
+      "on-review",
+      "on-finalization",
+      "on-memory-update"
+    ]
+  }
+}
