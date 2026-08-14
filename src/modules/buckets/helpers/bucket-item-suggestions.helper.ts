@@ -3,7 +3,7 @@ import type { Bucket } from '@/modules/data-access';
 import type { BucketItemSuggestion } from '../types/bucket-item-suggestion.types';
 
 const normalizeSuggestionKey = (value: string): string =>
-  value.trim().replace(/\s+/gu, ' ').toLocaleLowerCase();
+  value.trim().replaceAll(/\s+/gu, ' ').toLocaleLowerCase();
 
 export const buildBucketItemSuggestions = (
   buckets: readonly Bucket[],
