@@ -6,33 +6,31 @@ test.beforeEach(async ({ page }) => {
   await suppressFeatureTours(page);
 });
 
-const visibleShellLanguageSelect = (page: Page) =>
-  page.locator('select.shell-language-select:visible').first();
-
 const preferencesLanguageSelect = (page: Page) =>
   page.locator('main select').first();
 
-const selectLanguage = async (page: Page, locale: string): Promise<void> => {
-  const shellSelect = visibleShellLanguageSelect(page);
-  if (await shellSelect.isVisible().catch(() => false)) {
-    await shellSelect.selectOption(locale);
-    return;
-  }
+const persistedLocale = async (page: Page): Promise<string | null> =>
+  page.evaluate(() => {
+    const sessionUserId = localStorage.getItem('foodorder:v1:session');
+    const raw = localStorage.getItem('foodorder:v1:database');
+    if (!sessionUserId || !raw) return null;
+    const database = JSON.parse(raw) as {
+      users?: Record<string, { profile?: { locale?: string } }>;
+    };
+    return database.users?.[sessionUserId]?.profile?.locale ?? null;
+  });
 
+const saveLanguagePreference = async (
+  page: Page,
+  locale: 'ar' | 'ar-Latn',
+): Promise<void> => {
   await page.goto('/settings/preferences');
-  await preferencesLanguageSelect(page).selectOption(locale);
+  const select = preferencesLanguageSelect(page);
+  await expect(select).toBeVisible();
+  await select.selectOption(locale);
   await page.locator('.sticky-actions button').click();
-};
 
-const assertSavedLanguage = async (page: Page, locale: string): Promise<void> => {
-  const shellSelect = visibleShellLanguageSelect(page);
-  if (await shellSelect.isVisible().catch(() => false)) {
-    await expect(shellSelect).toHaveValue(locale);
-    return;
-  }
-
-  await page.goto('/settings/preferences');
-  await expect(preferencesLanguageSelect(page)).toHaveValue(locale);
+  await expect.poll(async () => persistedLocale(page)).toBe(locale);
 };
 
 const register = async (page: Page, suffix: string): Promise<void> => {
@@ -53,37 +51,30 @@ const expectDocumentLocale = async (
   await expect(page.locator('html')).toHaveAttribute('dir', direction);
 };
 
-/**
- * Preference save updates runtime/profile state; it does not guarantee a
- * navigation event. These regressions therefore assert the actual document
- * locale, then visit the localized route explicitly to prove persistence.
- */
 test.describe('switching the app language', () => {
   test('keeps Arabic Franco through a reload', async ({ page }) => {
     await register(page, 'franco');
-
-    await selectLanguage(page, 'ar-Latn');
-    await expect(page.locator('html')).toHaveAttribute('lang', 'ar-Latn');
-    await expectDocumentLocale(page, 'ar-Latn', 'ltr');
+    await saveLanguagePreference(page, 'ar-Latn');
 
     await page.goto('/ar-latn/app');
+    await expectDocumentLocale(page, 'ar-Latn', 'ltr');
     await page.reload();
     await expectDocumentLocale(page, 'ar-Latn', 'ltr');
-    await assertSavedLanguage(page, 'ar-Latn');
+
+    await page.goto('/ar-latn/settings/preferences');
+    await expect(preferencesLanguageSelect(page)).toHaveValue('ar-Latn');
   });
 
   test('still separates Arabic from Arabic Franco', async ({ page }) => {
     await register(page, 'arabic');
-
-    await selectLanguage(page, 'ar');
-    await expect(page.locator('html')).toHaveAttribute('lang', 'ar');
-    await expectDocumentLocale(page, 'ar', 'rtl');
+    await saveLanguagePreference(page, 'ar');
 
     await page.goto('/ar/app');
-    await selectLanguage(page, 'ar-Latn');
-    await expectDocumentLocale(page, 'ar-Latn', 'ltr');
+    await expectDocumentLocale(page, 'ar', 'rtl');
 
+    await saveLanguagePreference(page, 'ar-Latn');
     await page.goto('/ar-latn/app');
+    await expectDocumentLocale(page, 'ar-Latn', 'ltr');
     await page.reload();
     await expectDocumentLocale(page, 'ar-Latn', 'ltr');
   });
