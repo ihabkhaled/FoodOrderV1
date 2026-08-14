@@ -6,9 +6,34 @@ test.beforeEach(async ({ page }) => {
   await suppressFeatureTours(page);
 });
 
-/** The shell renders one selector per breakpoint; drive whichever is shown. */
-const languageSelect = (page: Page) =>
+const visibleShellLanguageSelect = (page: Page) =>
   page.locator('select.shell-language-select:visible').first();
+
+const preferencesLanguageSelect = (page: Page) =>
+  page.locator('main select').first();
+
+const selectLanguage = async (page: Page, locale: string): Promise<void> => {
+  const shellSelect = visibleShellLanguageSelect(page);
+  if (await shellSelect.isVisible().catch(() => false)) {
+    await shellSelect.selectOption(locale);
+    return;
+  }
+
+  await page.goto('/settings/preferences');
+  await preferencesLanguageSelect(page).selectOption(locale);
+  await page.locator('.sticky-actions button').click();
+};
+
+const assertSavedLanguage = async (page: Page, locale: string): Promise<void> => {
+  const shellSelect = visibleShellLanguageSelect(page);
+  if (await shellSelect.isVisible().catch(() => false)) {
+    await expect(shellSelect).toHaveValue(locale);
+    return;
+  }
+
+  await page.goto('/settings/preferences');
+  await expect(preferencesLanguageSelect(page)).toHaveValue(locale);
+};
 
 const register = async (page: Page, suffix: string): Promise<void> => {
   await page.goto('/auth/register');
@@ -31,28 +56,30 @@ test.describe('switching the app language', () => {
   }) => {
     await register(page, 'franco');
 
-    await languageSelect(page).selectOption('ar-Latn');
+    await selectLanguage(page, 'ar-Latn');
 
-    await page.waitForURL(/\/ar-latn\/app$/u);
+    await page.waitForURL(/\/ar-latn\/(?:app|settings\/preferences)$/u);
     await expect(page.locator('html')).toHaveAttribute('lang', 'ar-Latn');
     await expect(page.locator('html')).toHaveAttribute('dir', 'ltr');
 
+    await page.goto('/ar-latn/app');
     await page.reload();
     await page.waitForURL(/\/ar-latn\/app$/u);
     await expect(page.locator('html')).toHaveAttribute('lang', 'ar-Latn');
-    await expect(languageSelect(page)).toHaveValue('ar-Latn');
+    await assertSavedLanguage(page, 'ar-Latn');
   });
 
   test('still separates Arabic from Arabic Franco', async ({ page }) => {
     await register(page, 'arabic');
 
-    await languageSelect(page).selectOption('ar');
-    await page.waitForURL(/\/ar\/app$/u);
+    await selectLanguage(page, 'ar');
+    await page.waitForURL(/\/ar\/(?:app|settings\/preferences)$/u);
     await expect(page.locator('html')).toHaveAttribute('lang', 'ar');
     await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
 
-    await languageSelect(page).selectOption('ar-Latn');
-    await page.waitForURL(/\/ar-latn\/app$/u);
+    await page.goto('/ar/app');
+    await selectLanguage(page, 'ar-Latn');
+    await page.waitForURL(/\/ar-latn\/(?:app|settings\/preferences)$/u);
     await expect(page.locator('html')).toHaveAttribute('dir', 'ltr');
   });
 });

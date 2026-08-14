@@ -1,5 +1,7 @@
 import { expect, test } from '@playwright/test';
 
+const ENGLISH_HOME_HEADING = 'The easiest way to collect a group food order';
+
 test('the root serves the English homepage without redirecting to /en', async ({
   page,
 }) => {
@@ -11,7 +13,7 @@ test('the root serves the English homepage without redirecting to /en', async ({
   await expect(
     page.getByRole('heading', {
       level: 1,
-      name: 'Collect group food orders without chasing messages',
+      name: ENGLISH_HOME_HEADING,
     }),
   ).toBeVisible();
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
@@ -27,7 +29,7 @@ test('public navigation serves unique crawler metadata through real links', asyn
   await expect(
     page.getByRole('heading', {
       level: 1,
-      name: 'Collect group food orders without chasing messages',
+      name: ENGLISH_HOME_HEADING,
     }),
   ).toBeVisible();
 
@@ -155,7 +157,7 @@ test('public discovery exposes a locale sitemap index and bounded RSS', async ({
   const sitemap = await request.get('/sitemap.xml');
   expect(sitemap.ok()).toBe(true);
   const sitemapXml = await sitemap.text();
-  expect((sitemapXml.match(/<sitemap>/gu) ?? [])).toHaveLength(13);
+  expect(sitemapXml.match(/<sitemap>/gu) ?? []).toHaveLength(13);
   expect(sitemapXml).toContain('/sitemaps/ja.xml');
   expect(sitemapXml).toContain('/sitemaps/ar-latn.xml');
 
