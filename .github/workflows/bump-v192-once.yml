@@ -1,0 +1,78 @@
+name: Bump v1.9.2 once
+
+on:
+  push:
+    branches:
+      - release/1.9.0
+    paths:
+      - .github/workflows/bump-v192-once.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: bump-v192-once
+  cancel-in-progress: false
+
+jobs:
+  bump:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Checkout release branch
+        uses: actions/checkout@v7
+        with:
+          ref: release/1.9.0
+          fetch-depth: 0
+          token: ${{ github.token }}
+
+      - name: Remove one-shot workflow before generation
+        run: rm -f .github/workflows/bump-v192-once.yml
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            functions/package-lock.json
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          (cd functions && npm ci --ignore-scripts)
+
+      - name: Bump repository to 1.9.2
+        env:
+          BUMP_DATE: '2026-08-16'
+        run: node tools/release/bump-version.mjs 1.9.2 "Active-order spacing polish, pressable dashboard journey, local quantity loading, and participant response navigation."
+
+      - name: Regenerate deterministic files
+        run: |
+          npm run knowledge:build
+          npm run lint:fix
+          npm run format
+
+      - name: Validate release state
+        run: |
+          npm run format:check
+          npm run lint
+          npm run typecheck
+          npm run typecheck:tsc
+          npm run test:tooling
+          npm run quality:release
+          npm run release:branch-check
+          npm run knowledge:validate
+          git diff --check
+
+      - name: Commit synchronized v1.9.2 state
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git reset -- .ai/reports || true
+          HUSKY=0 git commit -m "chore(release): bump to v1.9.2"
+          git push origin HEAD:release/1.9.0
