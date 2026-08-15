@@ -7,7 +7,7 @@ import {
   normalizeChangedFiles,
   planFirebaseChanges,
   selectPreviousProductionTag,
-} from './firebase-change-plan.mjs';
+} from '../../scripts/firebase-change-plan.mjs';
 
 test('normalizes changed files', () => {
   assert.deepEqual(
