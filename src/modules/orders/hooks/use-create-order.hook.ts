@@ -20,6 +20,8 @@ import type { MessageKey } from '@/shared/i18n';
 
 import { buildOrderDetailsRoute } from '../routes/orders-route-paths.constants';
 
+export type OrderStep = 1 | 2 | 3;
+
 export interface CreateOrderViewModel {
   t: (key: MessageKey) => string;
   gt: (key: GroupOrderMessageKey) => string;
@@ -31,6 +33,8 @@ export interface CreateOrderViewModel {
   loading: boolean;
   busy: boolean;
   error: string;
+  step: OrderStep;
+  moveTo: (step: OrderStep) => void;
   selectedLines: Omit<OrderLine, 'lineTotal'>[];
   subtotal: number;
   receipt: GroupOrderReceiptSnapshot | null;
@@ -50,6 +54,7 @@ export function useCreateOrder(): CreateOrderViewModel {
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
+  const [step, setStep] = useState<OrderStep>(1);
 
   useEffect(() => {
     if (!user || !bucketId) return;
@@ -102,6 +107,11 @@ export function useCreateOrder(): CreateOrderViewModel {
     }));
   };
 
+  const moveTo = (nextStep: OrderStep): void => {
+    setStep(nextStep);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const submit = async (status: 'draft' | 'placed'): Promise<void> => {
     if (!user || !bucket) return;
     if (selectedLines.length === 0 || !receipt) {
@@ -144,6 +154,8 @@ export function useCreateOrder(): CreateOrderViewModel {
     loading,
     busy,
     error,
+    step,
+    moveTo,
     selectedLines,
     subtotal,
     receipt,
