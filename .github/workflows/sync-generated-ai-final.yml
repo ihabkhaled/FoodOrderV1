@@ -1,4 +1,4 @@
-name: Finalize generated AI manifest sync
+name: Finalize v1.9.1 release state
 
 on:
   push:
@@ -11,9 +11,9 @@ permissions:
   contents: write
 
 jobs:
-  sync:
+  finalize:
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - name: Checkout release branch
         uses: actions/checkout@v7
@@ -22,7 +22,7 @@ jobs:
           fetch-depth: 0
           token: ${{ github.token }}
 
-      - name: Remove one-shot workflow before generation
+      - name: Remove one-shot workflow
         run: rm .github/workflows/sync-generated-ai-final.yml
 
       - name: Set up Node.js
@@ -39,30 +39,68 @@ jobs:
           npm ci
           (cd functions && npm ci --ignore-scripts)
 
-      - name: Regenerate final repository knowledge
+      - name: Bump and synchronize v1.9.1
+        env:
+          BUMP_DATE: '2026-08-15'
         run: |
-          set -euo pipefail
-          npm run knowledge:build
-          npm run lint:fix
+          node tools/release/bump-version.mjs 1.9.1 "Guided ordering, warmer UI themes, natural Egyptian Franco, recent-item autocomplete, and selective Firebase releases."
+          cat > release-notes/v1.9.1.md <<'EOF'
+          # FoodOrderV1 v1.9.1
+
+          A focused UI/UX and delivery-speed release that makes ordering easier while preserving the advanced collaborative workflows.
+
+          ## Highlights
+
+          - Reworked order creation into a guided three-step flow on one route: choose items, add notes, then review and confirm.
+          - Added visible recent/frequent item autocomplete in bucket creation and editing, with a clear 🔥 indicator and frequency counts.
+          - Refreshed both light and dark themes with warmer food-oriented colors, stronger hierarchy, clearer surfaces, and improved mobile behavior.
+          - Rewrote key Egyptian Franco/Arabizi screens using natural mainstream wording and familiar product terms such as order, menu, group, share, invite, settings, and total.
+          - Improved Firebase release planning so UI/content/i18n-only releases skip Firebase entirely, while Firebase changes still deploy only required targets when safe.
+          - Kept the full release integrity, security, regression, Firebase rules, Functions, E2E, cross-browser, and APK gates.
+
+          ## Android APK
+
+          - versionName 1.9.1
+          - versionCode is incremented automatically by the repository release tooling.
+          - SHA-256 is attached to the generated release artifact.
+
+          ## Validation
+
+          - Release/version integrity must be green across root, lockfiles, Functions, Android, and iOS.
+          - All mandatory GitHub gates must pass on the final release SHA.
+          EOF
+
+      - name: Regenerate deterministic knowledge
+        run: npm run knowledge:build
+
+      - name: Validate release before commit
+        run: |
+          npm run i18n:check
           npm run format:check
+          npm run lint:fix
+          npm run lint
+          npm run typecheck
+          npm run typecheck:tsc
+          npm run test:tooling
+          npm run quality:release
           npm run knowledge:validate
 
-      - name: Reject unexpected non-generated changes
-        run: |
-          set -euo pipefail
-          unexpected="$(git diff --name-only -- . ':(exclude).ai/**' ':(exclude).github/workflows/sync-generated-ai-final.yml')"
-          if [ -n "$unexpected" ]; then
-            echo "Unexpected non-generated changes:"
-            echo "$unexpected"
-            exit 1
-          fi
-
-      - name: Commit final deterministic generated state
+      - name: Commit synchronized v1.9.1 state
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A .ai .github/workflows/sync-generated-ai-final.yml
+          git add -- \
+            package.json \
+            package-lock.json \
+            functions/package.json \
+            functions/package-lock.json \
+            android/app/build.gradle \
+            ios/App/App.xcodeproj/project.pbxproj \
+            CHANGELOG.md \
+            release-notes/v1.9.1.md \
+            .ai \
+            .github/workflows/sync-generated-ai-final.yml
           git reset -- .ai/reports || true
-          git commit -m "chore(ai): finalize generated repository manifest"
+          git commit -m "chore(release): prepare v1.9.1"
           git push origin HEAD:release/1.9.0
