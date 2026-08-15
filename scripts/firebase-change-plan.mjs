@@ -12,6 +12,14 @@ const FULL_DEPLOY_REASONS = new Set([
 const FUNCTION_PATH_PREFIXES = ['functions/'];
 const FUNCTION_PATHS = new Set(['package.json', 'package-lock.json']);
 const RULE_PATHS = new Set(['firestore.rules', 'firestore.indexes.json']);
+const VERSION_METADATA_PATHS = new Set([
+  'package.json',
+  'package-lock.json',
+  'functions/package.json',
+  'functions/package-lock.json',
+]);
+const PRODUCTION_TAG_PATTERN =
+  /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-(0|[1-9]\d*))?$/u;
 
 // Files whose public Firebase exports are isolated enough to deploy surgically.
 // Any other Functions source/config change intentionally falls back to all
@@ -110,6 +118,82 @@ export const planFirebaseChanges = (files, reason = 'changed-files') => {
   };
 };
 
+const parseProductionTag = (tag) => {
+  const match = PRODUCTION_TAG_PATTERN.exec(String(tag).trim());
+  if (!match) return null;
+  return {
+    tag: String(tag).trim(),
+    major: Number(match[1]),
+    minor: Number(match[2]),
+    patch: Number(match[3]),
+    build: match[4] === undefined ? -1 : Number(match[4]),
+  };
+};
+
+const compareProductionTags = (left, right) => {
+  for (const key of ['major', 'minor', 'patch', 'build']) {
+    if (left[key] !== right[key]) return left[key] > right[key] ? 1 : -1;
+  }
+  return 0;
+};
+
+export const selectPreviousProductionTag = (tags, currentTag) => {
+  const current = parseProductionTag(currentTag);
+  if (!current) return null;
+  return (
+    tags
+      .map(parseProductionTag)
+      .filter((candidate) => candidate && compareProductionTags(candidate, current) < 0)
+      .toSorted((left, right) => compareProductionTags(right, left))[0]?.tag ?? null
+  );
+};
+
+const normalizedVersionFile = (file, content) => {
+  const parsed = JSON.parse(content);
+  delete parsed.version;
+  if (file.endsWith('package-lock.json') && parsed.packages?.['']) {
+    delete parsed.packages[''].version;
+  }
+  return parsed;
+};
+
+export const isVersionOnlyPackageMetadataChange = (
+  file,
+  beforeContent,
+  afterContent,
+) => {
+  if (!VERSION_METADATA_PATHS.has(file)) return false;
+  try {
+    return (
+      JSON.stringify(normalizedVersionFile(file, beforeContent)) ===
+      JSON.stringify(normalizedVersionFile(file, afterContent))
+    );
+  } catch {
+    return false;
+  }
+};
+
+export const filterVersionOnlyReleaseFiles = (
+  files,
+  beforeRef,
+  afterRef,
+  readAtRef,
+) =>
+  normalizeChangedFiles(files).filter((file) => {
+    if (!VERSION_METADATA_PATHS.has(file)) return true;
+    try {
+      return !isVersionOnlyPackageMetadataChange(
+        file,
+        readAtRef(beforeRef, file),
+        readAtRef(afterRef, file),
+      );
+    } catch {
+      // Missing/unreadable files are real changes. Keep them so deployment
+      // safely falls back instead of hiding a dependency or package mutation.
+      return true;
+    }
+  });
+
 const readEvent = () => {
   const eventPath = process.env.GITHUB_EVENT_PATH;
   if (!eventPath || !existsSync(eventPath)) return {};
@@ -126,6 +210,8 @@ const git = (args) =>
     maxBuffer: 16 * 1024 * 1024,
     stdio: ['ignore', 'pipe', 'pipe'],
   }).trim();
+
+const gitFile = (ref, file) => git(['show', `${ref}:${file}`]);
 
 const diffFiles = (before, after) => {
   try {
@@ -149,18 +235,48 @@ const diffFiles = (before, after) => {
   }
 };
 
-const releaseTagDiffFiles = (after) => {
+const remoteProductionTags = () =>
+  git(['ls-remote', '--tags', '--refs', 'origin'])
+    .split('\n')
+    .map((line) => line.match(/refs\/tags\/(.+)$/u)?.[1] ?? '')
+    .filter(Boolean);
+
+const fetchTag = (tag) => {
+  execFileSync(
+    'git',
+    ['fetch', '--no-tags', '--depth=1', 'origin', `refs/tags/${tag}:refs/tags/${tag}`],
+    { stdio: 'ignore' },
+  );
+};
+
+const releaseTagDiffFiles = (after, currentTag) => {
   try {
-    // Compare a release tag with the closest earlier reachable tag so a release
-    // containing several commits still deploys every Firebase change in that
-    // release, while UI/docs/i18n-only releases skip Firebase completely.
-    const previousTag = git(['describe', '--tags', '--abbrev=0', `${after}^`]);
-    if (previousTag) return diffFiles(previousTag, after);
+    // Branch prerelease tags must never become the baseline for production.
+    // Resolve the previous production build directly from remote tags, fetch
+    // only that tag, then compare its complete tree with this release.
+    const previousTag = selectPreviousProductionTag(
+      remoteProductionTags(),
+      currentTag,
+    );
+    if (previousTag) {
+      fetchTag(previousTag);
+      return filterVersionOnlyReleaseFiles(
+        diffFiles(previousTag, after),
+        previousTag,
+        after,
+        gitFile,
+      );
+    }
   } catch {
-    // First release or shallow checkout. Fall through to the direct parent;
-    // if that is also unavailable the caller safely chooses a full deploy.
+    // First release or unavailable remote tags. Fall through to the direct
+    // parent; if that is also unavailable the caller safely chooses full deploy.
   }
-  return diffFiles(`${after}^1`, after);
+  return filterVersionOnlyReleaseFiles(
+    diffFiles(`${after}^1`, after),
+    `${after}^1`,
+    after,
+    gitFile,
+  );
 };
 
 export const resolveFirebaseChangePlan = () => {
@@ -186,10 +302,12 @@ export const resolveFirebaseChangePlan = () => {
       : process.env.GITHUB_SHA || 'HEAD';
 
   if (ref.startsWith('refs/tags/')) {
-    const files = releaseTagDiffFiles(after);
+    const currentTag =
+      process.env.GITHUB_REF_NAME || ref.slice('refs/tags/'.length);
+    const files = releaseTagDiffFiles(after, currentTag);
     return files.length > 0
       ? planFirebaseChanges(files, 'release-diff')
-      : planFirebaseChanges([], 'unreliable-diff');
+      : planFirebaseChanges([], 'no-firebase-targets-changed');
   }
 
   const before = typeof event.before === 'string' ? event.before : '';
@@ -198,10 +316,15 @@ export const resolveFirebaseChangePlan = () => {
     return planFirebaseChanges([], 'unreliable-diff');
   }
 
-  const files = diffFiles(before, after);
+  const files = filterVersionOnlyReleaseFiles(
+    diffFiles(before, after),
+    before,
+    after,
+    gitFile,
+  );
   return files.length > 0
     ? planFirebaseChanges(files)
-    : planFirebaseChanges([], 'unreliable-diff');
+    : planFirebaseChanges([], 'no-firebase-targets-changed');
 };
 
 const invokedDirectly =
