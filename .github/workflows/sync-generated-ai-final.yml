@@ -99,9 +99,10 @@ jobs:
             ios/App/App.xcodeproj/project.pbxproj \
             CHANGELOG.md \
             release-notes/v1.9.1.md \
-            src/modules/orders/containers/create-order.container.tsx \
             .ai \
             .github/workflows/sync-generated-ai-final.yml
           git reset -- .ai/reports || true
-          HUSKY=0 git commit -m "chore(release): prepare v1.9.1"
+          # Keep both local release hooks active. Patch-line compatibility is
+          # enforced by tools/release/ensure-branch-version.mjs.
+          git commit -m "chore(release): prepare v1.9.1"
           git push origin HEAD:release/1.9.0

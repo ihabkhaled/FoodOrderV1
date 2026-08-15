@@ -92,7 +92,12 @@ export function CreateOrderContainer() {
         ))}
       </ol>
 
-      <form className="stack-lg" onSubmit={(event) => event.preventDefault()}>
+      <form
+        className="stack-lg"
+        onSubmit={(event) => {
+          event.preventDefault();
+        }}
+      >
         {vm.step === 1 ? (
           <div className="stack-lg order-step-panel">
             <section className="section-card order-picker">
@@ -111,7 +116,9 @@ export function CreateOrderContainer() {
                       <button
                         type="button"
                         className="icon-button"
-                        onClick={() => vm.adjust(item.id, -1)}
+                        onClick={() => {
+                          vm.adjust(item.id, -1);
+                        }}
                         aria-label={`${vm.t('decrease')} ${item.name}`}
                       >
                         <Minus />
@@ -120,7 +127,9 @@ export function CreateOrderContainer() {
                       <button
                         type="button"
                         className="icon-button"
-                        onClick={() => vm.adjust(item.id, 1)}
+                        onClick={() => {
+                          vm.adjust(item.id, 1);
+                        }}
                         aria-label={`${vm.t('increase')} ${item.name}`}
                       >
                         <Plus />
@@ -141,7 +150,9 @@ export function CreateOrderContainer() {
                 rows={5}
                 maxLength={500}
                 value={vm.notes}
-                onChange={(event) => vm.setNotes(event.target.value)}
+                onChange={(event) => {
+                  vm.setNotes(event.target.value);
+                }}
                 placeholder={vm.t('orderNotesPlaceholder')}
               />
             </label>
@@ -176,7 +187,9 @@ export function CreateOrderContainer() {
               type="button"
               className="button secondary"
               disabled={vm.busy}
-              onClick={() => vm.moveTo((vm.step - 1) as OrderStep)}
+              onClick={() => {
+                vm.moveTo((vm.step - 1) as OrderStep);
+              }}
             >
               {vm.t('back')}
             </button>
@@ -186,7 +199,9 @@ export function CreateOrderContainer() {
               type="button"
               className="button"
               disabled={vm.busy || vm.selectedLines.length === 0}
-              onClick={() => vm.moveTo((vm.step + 1) as OrderStep)}
+              onClick={() => {
+                vm.moveTo((vm.step + 1) as OrderStep);
+              }}
             >
               {vm.t('tourNext')}
             </button>

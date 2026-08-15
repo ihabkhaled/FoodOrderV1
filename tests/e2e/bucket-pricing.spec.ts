@@ -156,7 +156,18 @@ test.describe('v1.3.4 bucket-owned pricing', () => {
     await expect(previewTotals.getByText('EGP 25.00')).toBeVisible();
     await expect(previewTotals.getByText('EGP 151.00')).toBeVisible();
 
+    await page.getByRole('button', { name: 'Next', exact: true }).click();
+    await expect(page.getByLabel('Notes')).toBeVisible();
+    await page.getByRole('button', { name: 'Next', exact: true }).click();
+
+    const reviewTotals = page.locator('.totals');
+    await expect(reviewTotals.getByText('EGP 100.00')).toBeVisible();
+    await expect(reviewTotals.getByText('EGP 14.00')).toBeVisible();
+    await expect(reviewTotals.getByText('EGP 12.00')).toBeVisible();
+    await expect(reviewTotals.getByText('EGP 25.00')).toBeVisible();
+    await expect(reviewTotals.getByText('EGP 151.00')).toBeVisible();
     await page.getByRole('button', { name: 'Place order' }).click();
+
     await expect(page).toHaveURL(/\/orders\/.+/u);
     const orderTotals = page.locator('.totals');
     await expect(orderTotals.getByText('EGP 100.00')).toBeVisible();

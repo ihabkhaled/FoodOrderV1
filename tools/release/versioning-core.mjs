@@ -39,6 +39,25 @@ export const compareStableVersions = (leftVersion, rightVersion) => {
   return 0;
 };
 
+/**
+ * A release branch owns a major/minor patch line, not only its first patch.
+ * `release/1.9.0` can therefore ship 1.9.1, 1.9.2, and later 1.9.x fixes on
+ * the same branch, but it must never admit a lower patch or another line.
+ */
+export const isReleaseBranchVersionCompatible = (
+  branchVersion,
+  repositoryVersion,
+) => {
+  const branch = parseStableVersion(branchVersion);
+  const repository = parseStableVersion(repositoryVersion);
+
+  return (
+    repository.major === branch.major &&
+    repository.minor === branch.minor &&
+    repository.patch >= branch.patch
+  );
+};
+
 export const isSameVersionMaintenanceBranch = (branchName) =>
   /^(?:fix|hotfix|dependabot)\//u.test(String(branchName));
 
