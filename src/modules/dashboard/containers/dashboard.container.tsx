@@ -101,7 +101,7 @@ export function DashboardContainer() {
             type="button"
             className="dashboard-journey__step"
             onClick={() => {
-              navigate(BUCKET_NEW_PATH);
+              void navigate(BUCKET_NEW_PATH);
             }}
           >
             <ShoppingBasket />

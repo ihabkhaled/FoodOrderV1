@@ -26,8 +26,10 @@ jobs:
           fetch-depth: 0
           token: ${{ github.token }}
 
-      - name: Remove one-shot workflow before generation
-        run: rm -f .github/workflows/bump-v192-once.yml
+      - name: Remove one-shot workflows before generation
+        run: |
+          rm -f .github/workflows/bump-v192-once.yml
+          rm -f .github/workflows/repair-v191-all-green.yml
 
       - name: Set up Node.js
         uses: actions/setup-node@v7

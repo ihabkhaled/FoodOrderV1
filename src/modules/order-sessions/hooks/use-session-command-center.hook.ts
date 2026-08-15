@@ -259,7 +259,7 @@ export function useSessionCommandCenter(): SessionCommandCenterViewModel {
       | typeof PARTICIPANT_RESPONSE.skipped,
   ) => {
     if (await updateResponse(response)) {
-      navigate(ORDER_SESSIONS_PATH);
+      await navigate(ORDER_SESSIONS_PATH);
     }
   };
 
