@@ -89,89 +89,105 @@ export function BucketEditorContainer() {
               {vm.t('addItem')}
             </button>
           </div>
+          {vm.suggestions.length > 0 ? (
+            <div className="recent-item-banner" aria-hidden="true">
+              <span className="recent-item-banner__fire">🔥</span>
+              <span>{vm.suggestions.slice(0, 4).map((item) => item.name).join(' · ')}</span>
+            </div>
+          ) : null}
           <div className="item-editor-list">
-            {vm.items.map((item, index) => (
-              <article className="item-editor" key={item.id}>
-                <GripVertical className="drag-hint" aria-hidden="true" />
-                <div className="item-fields">
-                  <label className="bucket-item-name-field">
-                    {vm.t('itemName')}
-                    <input
-                      value={item.name}
-                      onChange={(event) => {
-                        vm.updateItem(item.id, 'name', event.target.value);
+            {vm.items.map((item, index) => {
+              const query = item.name.trim().toLocaleLowerCase();
+              const matchingSuggestions = vm.suggestions
+                .filter(
+                  (suggestion) =>
+                    !query ||
+                    suggestion.name.toLocaleLowerCase().includes(query),
+                )
+                .slice(0, 5);
+              return (
+                <article className="item-editor" key={item.id}>
+                  <GripVertical className="drag-hint" aria-hidden="true" />
+                  <div className="item-fields">
+                    <label className="bucket-item-name-field">
+                      {vm.t('itemName')}
+                      <input
+                        value={item.name}
+                        onChange={(event) => {
+                          vm.updateItem(item.id, 'name', event.target.value);
+                        }}
+                        maxLength={60}
+                        autoComplete="off"
+                        required
+                      />
+                      {matchingSuggestions.length > 0 ? (
+                        <span className="bucket-item-suggestions" role="listbox">
+                          {matchingSuggestions.map((suggestion) => (
+                            <button
+                              key={suggestion.key}
+                              type="button"
+                              className="bucket-item-suggestion"
+                              role="option"
+                              aria-selected={query === suggestion.key}
+                              onClick={() => {
+                                vm.applySuggestion(item.id, suggestion);
+                              }}
+                            >
+                              <span className="bucket-item-suggestion__name">
+                                <span aria-hidden="true">🔥</span>
+                                {suggestion.name}
+                              </span>
+                              <span className="bucket-item-suggestion__meta">
+                                {suggestion.count}×
+                              </span>
+                            </button>
+                          ))}
+                        </span>
+                      ) : null}
+                    </label>
+                    <label>
+                      {vm.t('category')}
+                      <input
+                        value={item.category}
+                        onChange={(event) => {
+                          vm.updateItem(item.id, 'category', event.target.value);
+                        }}
+                        maxLength={40}
+                      />
+                    </label>
+                    <NumericField
+                      id={`bucket-item-price-${item.id}`}
+                      label={vm.t('unitPrice')}
+                      value={item.unitPrice}
+                      onValueChange={(next) => {
+                        vm.updateItem(item.id, 'unitPrice', next);
                       }}
-                      maxLength={60}
-                      autoComplete="off"
-                      required
                     />
-                    {vm.suggestions.length > 0 ? (
-                      <span className="bucket-item-suggestions" role="listbox">
-                        {vm.suggestions.map((suggestion) => (
-                          <button
-                            key={suggestion.key}
-                            type="button"
-                            className="bucket-item-suggestion"
-                            role="option"
-                            aria-selected={
-                              item.name.trim().toLocaleLowerCase() === suggestion.key
-                            }
-                            onClick={() => {
-                              vm.applySuggestion(item.id, suggestion);
-                            }}
-                          >
-                            <span>{suggestion.name}</span>
-                            <span className="bucket-item-suggestion__meta">
-                              {suggestion.count > 1 ? '🔥 ' : ''}
-                              {suggestion.count}×
-                            </span>
-                          </button>
-                        ))}
-                      </span>
-                    ) : null}
-                  </label>
-                  <label>
-                    {vm.t('category')}
-                    <input
-                      value={item.category}
-                      onChange={(event) => {
-                        vm.updateItem(item.id, 'category', event.target.value);
-                      }}
-                      maxLength={40}
-                    />
-                  </label>
-                  <NumericField
-                    id={`bucket-item-price-${item.id}`}
-                    label={vm.t('unitPrice')}
-                    value={item.unitPrice}
-                    onValueChange={(next) => {
-                      vm.updateItem(item.id, 'unitPrice', next);
+                    <label className="checkbox-label">
+                      <input
+                        type="checkbox"
+                        checked={item.active}
+                        onChange={(event) => {
+                          vm.updateItem(item.id, 'active', event.target.checked);
+                        }}
+                      />
+                      {vm.t('active')}
+                    </label>
+                  </div>
+                  <button
+                    type="button"
+                    className="icon-button danger-ghost"
+                    disabled={vm.items.length === 1}
+                    onClick={() => {
+                      vm.removeItem(item.id);
                     }}
-                  />
-                  <label className="checkbox-label">
-                    <input
-                      type="checkbox"
-                      checked={item.active}
-                      onChange={(event) => {
-                        vm.updateItem(item.id, 'active', event.target.checked);
-                      }}
-                    />
-                    {vm.t('active')}
-                  </label>
-                </div>
-                <button
-                  type="button"
-                  className="icon-button danger-ghost"
-                  disabled={vm.items.length === 1}
-                  onClick={() => {
-                    vm.removeItem(item.id);
-                  }}
-                  aria-label={`${vm.t('delete')} ${index + 1}`}
-                >
-                  <Trash2 />
-                </button>
-              </article>
-            ))}
+                    aria-label={`${vm.t('delete')} ${index + 1}`}
+                  >
+                    <Trash2 />
+                  </button>
+                </article>
+              );
+            })}
           </div>
         </section>
 

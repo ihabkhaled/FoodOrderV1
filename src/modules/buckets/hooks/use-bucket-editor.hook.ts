@@ -96,7 +96,7 @@ export function useBucketEditor(): BucketEditorViewModel {
   }, [defaultCurrency, isEditing]);
 
   useEffect(() => {
-    if (!user || isEditing) return;
+    if (!user) return;
     let active = true;
     void dataService
       .listBuckets(user)
@@ -109,7 +109,7 @@ export function useBucketEditor(): BucketEditorViewModel {
     return () => {
       active = false;
     };
-  }, [isEditing, user]);
+  }, [user]);
 
   useEffect(() => {
     if (!user || !bucketId) return;
