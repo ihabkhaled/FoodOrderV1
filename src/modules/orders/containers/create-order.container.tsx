@@ -2,10 +2,67 @@ import { Minus, Plus, ShoppingCart } from '@/packages/icons';
 import { formatMoney } from '@/shared/helpers';
 import { BackLink, FeatureTour, Loading } from '@/shared/ui';
 
-import type { OrderStep } from '../hooks/use-create-order.hook';
+import type {
+  CreateOrderViewModel,
+  OrderStep,
+} from '../hooks/use-create-order.hook';
 import { useCreateOrder } from '../hooks/use-create-order.hook';
 import { useCreateOrderTour } from '../hooks/use-create-order-tour.hook';
 import { BUCKETS_REDIRECT_PATH } from '../routes/orders-route-paths.constants';
+
+function OrderFlowActions({ vm }: { vm: CreateOrderViewModel }) {
+  const selectionDisabled = vm.busy || vm.selectedLines.length === 0;
+  return (
+    <div className="sticky-actions order-flow-actions">
+      {vm.step > 1 ? (
+        <button
+          type="button"
+          className="button secondary"
+          disabled={vm.busy}
+          onClick={() => {
+            vm.moveTo((vm.step - 1) as OrderStep);
+          }}
+        >
+          {vm.t('back')}
+        </button>
+      ) : null}
+      {vm.step < 3 ? (
+        <button
+          type="button"
+          className="button"
+          disabled={selectionDisabled}
+          onClick={() => {
+            vm.moveTo((vm.step + 1) as OrderStep);
+          }}
+        >
+          {vm.t('tourNext')}
+        </button>
+      ) : (
+        <>
+          {vm.canOpenForFriends ? (
+            <button
+              type="button"
+              className="button secondary"
+              disabled={selectionDisabled}
+              onClick={() => void vm.openForFriends()}
+            >
+              {vm.busy ? vm.t('loading') : vm.openForFriendsLabel}
+            </button>
+          ) : null}
+          <button
+            type="button"
+            className="button"
+            disabled={selectionDisabled}
+            onClick={() => void vm.submit('placed')}
+          >
+            <ShoppingCart />
+            {vm.busy ? vm.t('loading') : vm.t('placeOrder')}
+          </button>
+        </>
+      )}
+    </div>
+  );
+}
 
 export function CreateOrderContainer() {
   const vm = useCreateOrder();
@@ -181,54 +238,7 @@ export function CreateOrderContainer() {
         ) : null}
 
         {vm.error ? <p className="form-error">{vm.error}</p> : null}
-        <div className="sticky-actions order-flow-actions">
-          {vm.step > 1 ? (
-            <button
-              type="button"
-              className="button secondary"
-              disabled={vm.busy}
-              onClick={() => {
-                vm.moveTo((vm.step - 1) as OrderStep);
-              }}
-            >
-              {vm.t('back')}
-            </button>
-          ) : null}
-          {vm.step < 3 ? (
-            <button
-              type="button"
-              className="button"
-              disabled={vm.busy || vm.selectedLines.length === 0}
-              onClick={() => {
-                vm.moveTo((vm.step + 1) as OrderStep);
-              }}
-            >
-              {vm.t('tourNext')}
-            </button>
-          ) : (
-            <>
-              {vm.canOpenForFriends ? (
-                <button
-                  type="button"
-                  className="button secondary"
-                  disabled={vm.busy || vm.selectedLines.length === 0}
-                  onClick={() => void vm.openForFriends()}
-                >
-                  {vm.busy ? vm.t('loading') : vm.openForFriendsLabel}
-                </button>
-              ) : null}
-              <button
-                type="button"
-                className="button"
-                disabled={vm.busy || vm.selectedLines.length === 0}
-                onClick={() => void vm.submit('placed')}
-              >
-                <ShoppingCart />
-                {vm.busy ? vm.t('loading') : vm.t('placeOrder')}
-              </button>
-            </>
-          )}
-        </div>
+        <OrderFlowActions vm={vm} />
       </form>
       <FeatureTour
         page="create-order"

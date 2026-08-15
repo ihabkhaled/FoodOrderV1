@@ -16,8 +16,10 @@ import {
 } from '@/modules/data-access';
 import type { GroupOrderMessageKey } from '@/modules/group-orders';
 import { translateGroupOrder } from '@/modules/group-orders';
-import { buildOrderSessionDetailsRoute } from '@/modules/order-sessions';
-import { translateOrderSession } from '@/modules/order-sessions/i18n/translate-order-session.helper';
+import {
+  buildOrderSessionDetailsRoute,
+  translateOrderSession,
+} from '@/modules/order-sessions';
 import { useApp } from '@/modules/session';
 import { useNavigate, useParams } from '@/packages/router';
 import { createId } from '@/shared/helpers';
@@ -29,6 +31,22 @@ export type OrderStep = 1 | 2 | 3;
 
 const defaultTimezone = (): string =>
   Intl.DateTimeFormat().resolvedOptions().timeZone || 'Africa/Cairo';
+
+const OPEN_FOR_FRIENDS_LABELS: Readonly<Record<Locale, string>> = {
+  en: 'Open for friends',
+  ar: 'افتح للأصحاب',
+  'ar-Latn': 'Eftah lel so7ab',
+  it: 'Apri agli amici',
+  fa: 'برای دوستان باز کن',
+  fr: 'Ouvrir aux amis',
+  de: 'Für Freunde öffnen',
+  es: 'Abrir para amigos',
+  'pt-BR': 'Abrir para amigos',
+  hi: 'दोस्तों के लिए खोलें',
+  th: 'เปิดให้เพื่อน',
+  'zh-CN': '向朋友开放',
+  ja: '友だちに公開',
+};
 
 export interface CreateOrderViewModel {
   t: (key: MessageKey) => string;
@@ -177,7 +195,7 @@ export function useCreateOrder(): CreateOrderViewModel {
         await orderSessionService.updateContribution(user, {
           sessionId: session.id,
           expectedSessionRevision: view.session.revision,
-          itemId: line.bucketItemId ?? line.id,
+          itemId: line.bucketItemId,
           operation: 'set',
           value: line.quantity,
           mutationId: createId('session-mutation'),
@@ -221,7 +239,7 @@ export function useCreateOrder(): CreateOrderViewModel {
     receipt,
     total,
     canOpenForFriends: Boolean(user && bucket && bucket.ownerId === user.id),
-    openForFriendsLabel: translateOrderSession(locale, 'openSession'),
+    openForFriendsLabel: OPEN_FOR_FRIENDS_LABELS[locale],
     adjust,
     submit,
     openForFriends,

@@ -10,6 +10,15 @@ import { useBucketEditor } from '../hooks/use-bucket-editor.hook';
 import { useBucketEditorTour } from '../hooks/use-bucket-editor-tour.hook';
 import { BUCKETS_PATH } from '../routes/buckets-route-paths.constants';
 
+const focusBucketItemPrice = (itemId: string): void => {
+  window.requestAnimationFrame(() => {
+    const priceInput = document.getElementById(`bucket-item-price-${itemId}`);
+    if (!(priceInput instanceof HTMLInputElement)) return;
+    priceInput.focus();
+    priceInput.select();
+  });
+};
+
 export function BucketEditorContainer() {
   const vm = useBucketEditor();
   const { steps: tourSteps } = useBucketEditorTour();
@@ -125,15 +134,7 @@ export function BucketEditorContainer() {
                               aria-selected={query === suggestion.key}
                               onClick={() => {
                                 vm.applySuggestion(item.id, suggestion);
-                                window.requestAnimationFrame(() => {
-                                  const priceInput = document.getElementById(
-                                    `bucket-item-price-${item.id}`,
-                                  );
-                                  if (priceInput instanceof HTMLInputElement) {
-                                    priceInput.focus();
-                                    priceInput.select();
-                                  }
-                                });
+                                focusBucketItemPrice(item.id);
                               }}
                             >
                               <span className="bucket-item-suggestion__name">
