@@ -207,14 +207,16 @@ export function CreateOrderContainer() {
             </button>
           ) : (
             <>
-              <button
-                type="button"
-                className="button secondary"
-                disabled={vm.busy || vm.selectedLines.length === 0}
-                onClick={() => void vm.submit('draft')}
-              >
-                {vm.t('saveDraft')}
-              </button>
+              {vm.canOpenForFriends ? (
+                <button
+                  type="button"
+                  className="button secondary"
+                  disabled={vm.busy || vm.selectedLines.length === 0}
+                  onClick={() => void vm.openForFriends()}
+                >
+                  {vm.busy ? vm.t('loading') : vm.openForFriendsLabel}
+                </button>
+              ) : null}
               <button
                 type="button"
                 className="button"
