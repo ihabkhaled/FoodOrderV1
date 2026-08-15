@@ -3,7 +3,7 @@
   "activeOrdersDescription": "Respond to group orders, track deadlines, and manage collection from one place.",
   "noActiveOrders": "No active group orders",
   "noActiveOrdersDescription": "Open a reusable menu and start a live order session when your group is ready.",
-  "openSession": "Open order session",
+  "openSession": "Open for friends",
   "createSession": "Create order session",
   "createSessionDescription": "Create an independent live order from this reusable menu. Later menu edits will not change this session.",
   "sessionTitle": "Session title",
