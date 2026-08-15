@@ -5,7 +5,6 @@ import process from 'node:process';
 
 const FULL_DEPLOY_REASONS = new Set([
   'manual-dispatch',
-  'release-tag',
   'forced',
   'unreliable-diff',
 ]);
@@ -150,6 +149,20 @@ const diffFiles = (before, after) => {
   }
 };
 
+const releaseTagDiffFiles = (after) => {
+  try {
+    // Compare a release tag with the closest earlier reachable tag so a release
+    // containing several commits still deploys every Firebase change in that
+    // release, while UI/docs/i18n-only releases skip Firebase completely.
+    const previousTag = git(['describe', '--tags', '--abbrev=0', `${after}^`]);
+    if (previousTag) return diffFiles(previousTag, after);
+  } catch {
+    // First release or shallow checkout. Fall through to the direct parent;
+    // if that is also unavailable the caller safely chooses a full deploy.
+  }
+  return diffFiles(`${after}^1`, after);
+};
+
 export const resolveFirebaseChangePlan = () => {
   if (process.env.FORCE_FIREBASE_DEPLOY === '1') {
     return planFirebaseChanges([], 'forced');
@@ -165,16 +178,21 @@ export const resolveFirebaseChangePlan = () => {
   if (eventName === 'workflow_dispatch') {
     return planFirebaseChanges([], 'manual-dispatch');
   }
-  if (ref.startsWith('refs/tags/')) {
-    return planFirebaseChanges([], 'release-tag');
-  }
 
   const event = readEvent();
-  const before = typeof event.before === 'string' ? event.before : '';
   const after =
     typeof event.after === 'string'
       ? event.after
       : process.env.GITHUB_SHA || 'HEAD';
+
+  if (ref.startsWith('refs/tags/')) {
+    const files = releaseTagDiffFiles(after);
+    return files.length > 0
+      ? planFirebaseChanges(files, 'release-diff')
+      : planFirebaseChanges([], 'unreliable-diff');
+  }
+
+  const before = typeof event.before === 'string' ? event.before : '';
   const invalidBefore = !before || /^0+$/u.test(before);
   if (eventName !== 'push' || invalidBefore) {
     return planFirebaseChanges([], 'unreliable-diff');

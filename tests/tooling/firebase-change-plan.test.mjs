@@ -21,6 +21,26 @@ test('skips Firebase for frontend-only changes', () => {
   assert.equal(plan.reason, 'no-firebase-targets-changed');
 });
 
+test('release diffs do not force Firebase for UI-only releases', () => {
+  const plan = planFirebaseChanges(
+    ['src/v1-9-1.css', 'src/shared/i18n/locales/ar-Latn.json'],
+    'release-diff',
+  );
+  assert.equal(plan.deployFunctions, false);
+  assert.equal(plan.deployRules, false);
+  assert.deepEqual(plan.functionTargets, []);
+});
+
+test('release diffs still deploy changed Firebase targets', () => {
+  const plan = planFirebaseChanges(
+    ['src/main.tsx', 'functions/src/social.ts', 'firestore.rules'],
+    'release-diff',
+  );
+  assert.equal(plan.deployFunctions, true);
+  assert.equal(plan.deployRules, true);
+  assert.ok(plan.functionTargets.includes('sendFriendRequest'));
+});
+
 test('deploys only rules for a rules-only change', () => {
   const plan = planFirebaseChanges(['firestore.rules']);
   assert.equal(plan.deployFunctions, false);
