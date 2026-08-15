@@ -89,12 +89,6 @@ export function BucketEditorContainer() {
               {vm.t('addItem')}
             </button>
           </div>
-          {vm.suggestions.length > 0 ? (
-            <div className="recent-item-banner" aria-hidden="true">
-              <span className="recent-item-banner__fire">🔥</span>
-              <span>{vm.suggestions.slice(0, 4).map((item) => item.name).join(' · ')}</span>
-            </div>
-          ) : null}
           <div className="item-editor-list">
             {vm.items.map((item, index) => {
               const query = item.name.trim().toLocaleLowerCase();
@@ -131,6 +125,15 @@ export function BucketEditorContainer() {
                               aria-selected={query === suggestion.key}
                               onClick={() => {
                                 vm.applySuggestion(item.id, suggestion);
+                                window.requestAnimationFrame(() => {
+                                  const priceInput = document.getElementById(
+                                    `bucket-item-price-${item.id}`,
+                                  );
+                                  if (priceInput instanceof HTMLInputElement) {
+                                    priceInput.focus();
+                                    priceInput.select();
+                                  }
+                                });
                               }}
                             >
                               <span className="bucket-item-suggestion__name">
