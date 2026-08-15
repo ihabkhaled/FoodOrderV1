@@ -1,6 +1,6 @@
 {
   "name": "food-order-v1",
-  "version": "1.9.1",
+  "version": "1.9.2",
   "private": true,
   "type": "module",
   "description": "A mobile-first group food ordering app for shared menus, collaborative choices, and fair receipt splitting.",

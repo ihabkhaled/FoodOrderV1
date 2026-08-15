@@ -272,8 +272,8 @@
     },
     {
       "path": "tests/e2e/smoke.spec.ts",
-      "bytes": 1415,
-      "hash": "8e0f2cbcdd98ac58b3141215e3ad8b526d35b3a26535648df8b0fac5bb86de8c"
+      "bytes": 3703,
+      "hash": "3e51ae83fb402adbcd09bad52b4dafdf49cb56838ac2e8b8cec5c5201d417316"
     },
     {
       "path": "tests/e2e/social-management.spec.ts",
@@ -406,9 +406,14 @@
       "hash": "7ee92ec44c381cb828189aeb9210d97b3d767df36d3eb4bea7be3f2c2da7a263"
     },
     {
+      "path": "tests/tooling/dependency-security.test.mjs",
+      "bytes": 2996,
+      "hash": "0d2b0759a5ca2f8aa7eba06237d894ea38a72f02b17b4c1a18763236431a3d8f"
+    },
+    {
       "path": "tests/tooling/firebase-change-plan.test.mjs",
-      "bytes": 3279,
-      "hash": "cf7dcf4224d5c0e1bb57bb604e06f6a971fb8ccdcbbb92f6ac984c7c9c6aa318"
+      "bytes": 6781,
+      "hash": "d18a585b124b0ceaa60337fda73656d24c3634166c4347653bed55fd048b8ecb"
     },
     {
       "path": "tests/tooling/firebase-deployment-gate.test.ts",
