@@ -11,16 +11,24 @@ import {
   calculateOrderTotal,
   dataService,
   MAX_ORDER_QUANTITY,
+  orderSessionService,
+  PARTICIPANT_RESPONSE,
 } from '@/modules/data-access';
 import type { GroupOrderMessageKey } from '@/modules/group-orders';
 import { translateGroupOrder } from '@/modules/group-orders';
+import { buildOrderSessionDetailsRoute } from '@/modules/order-sessions';
+import { translateOrderSession } from '@/modules/order-sessions/i18n/translate-order-session.helper';
 import { useApp } from '@/modules/session';
 import { useNavigate, useParams } from '@/packages/router';
+import { createId } from '@/shared/helpers';
 import type { MessageKey } from '@/shared/i18n';
 
 import { buildOrderDetailsRoute } from '../routes/orders-route-paths.constants';
 
 export type OrderStep = 1 | 2 | 3;
+
+const defaultTimezone = (): string =>
+  Intl.DateTimeFormat().resolvedOptions().timeZone || 'Africa/Cairo';
 
 export interface CreateOrderViewModel {
   t: (key: MessageKey) => string;
@@ -39,8 +47,11 @@ export interface CreateOrderViewModel {
   subtotal: number;
   receipt: GroupOrderReceiptSnapshot | null;
   total: number;
+  canOpenForFriends: boolean;
+  openForFriendsLabel: string;
   adjust: (id: string, delta: number) => void;
   submit: (status: 'draft' | 'placed') => Promise<void>;
+  openForFriends: () => Promise<void>;
 }
 
 export function useCreateOrder(): CreateOrderViewModel {
@@ -143,6 +154,55 @@ export function useCreateOrder(): CreateOrderViewModel {
     }
   };
 
+  const openForFriends = async (): Promise<void> => {
+    if (!user || !bucket) return;
+    if (selectedLines.length === 0 || !receipt) {
+      setError(t('noItemsSelected'));
+      return;
+    }
+    try {
+      setBusy(true);
+      setError('');
+      const session = await orderSessionService.createSession(user, {
+        menuTemplateId: bucket.id,
+        title: bucket.title,
+        timezone: defaultTimezone(),
+        deadlineAt: null,
+        autoLock: false,
+      });
+
+      for (const line of selectedLines) {
+        const view = await orderSessionService.getSessionView(user, session.id);
+        if (!view) throw new Error('Order session was not found.');
+        await orderSessionService.updateContribution(user, {
+          sessionId: session.id,
+          expectedSessionRevision: view.session.revision,
+          itemId: line.bucketItemId ?? line.id,
+          operation: 'set',
+          value: line.quantity,
+          mutationId: createId('session-mutation'),
+        });
+      }
+
+      const readyView = await orderSessionService.getSessionView(user, session.id);
+      if (readyView?.currentParticipant) {
+        await orderSessionService.updateParticipantResponse(user, {
+          sessionId: session.id,
+          expectedSessionRevision: readyView.session.revision,
+          expectedParticipantRevision: readyView.currentParticipant.revision,
+          response: PARTICIPANT_RESPONSE.done,
+        });
+      }
+
+      showToast(translateOrderSession(locale, 'sessionCreated'), 'success');
+      await navigate(buildOrderSessionDetailsRoute(session.id));
+    } catch (error_) {
+      setError(error_ instanceof Error ? error_.message : t('tryAgain'));
+    } finally {
+      setBusy(false);
+    }
+  };
+
   return {
     t,
     gt,
@@ -160,7 +220,10 @@ export function useCreateOrder(): CreateOrderViewModel {
     subtotal,
     receipt,
     total,
+    canOpenForFriends: Boolean(user && bucket && bucket.ownerId === user.id),
+    openForFriendsLabel: translateOrderSession(locale, 'openSession'),
     adjust,
     submit,
+    openForFriends,
   };
 }
