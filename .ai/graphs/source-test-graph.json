@@ -86,6 +86,11 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/bucket-guidance.css",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/groupOrder.css",
       "tests": [],
       "relationship": "inferred"
@@ -246,6 +251,11 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/buckets/helpers/bucket-item-suggestions.helper.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/buckets/hooks/use-bucket-editor-tour.hook.ts",
       "tests": [],
       "relationship": "inferred"
@@ -282,6 +292,11 @@
     },
     {
       "source": "src/modules/buckets/routes/buckets.routes.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/buckets/types/bucket-item-suggestion.types.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -2747,6 +2762,11 @@
     },
     {
       "source": "src/ux-simplification.css",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/v1-9-1.css",
       "tests": [],
       "relationship": "inferred"
     },

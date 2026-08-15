@@ -1,7 +1,7 @@
 {
   ".github/copilot-instructions.md": "9d00d14cbbbb9e66442c140850aa74ab7f1e258e8de699e796ca11abe5693286",
   "AGENTS.md": "af3c57be3b0de7087f285461fdc0b93de6f335ac2a460bb85124482cb3f7cd45",
-  "CHANGELOG.md": "3e5cae54465216f362bdbd2e6ca1f12bdf0928657217009cc9173488cd89bb83",
+  "CHANGELOG.md": "8f27924fdff843d5158896927f9d1dbc88350c57d9f75ff00b197166a57084a8",
   "CLAUDE.md": "6a122ab33277d2929dd6cdfac0c9d99dd1e127a60315d1043a1cf12299b4317f",
   "CODEX.md": "e6cc40b7fe420dea6f43cd1a4b93fe60347ac27ab987100c4bfe600dd0a90d01",
   "GEMINI.md": "2009ab89ebb965a0e1e524a4e85e250a09caa7e4bfbdbdb52a9e3e396d47f7bd",
@@ -152,6 +152,7 @@
   "release-notes/v1.8.0.md": "12e74088fda7cc26668101c4bdf28d857a9a689f522a6e5bf3b349da8354aa8f",
   "release-notes/v1.8.1.md": "e94b6db7b226f03f6e1762145ba46964b862df6c3d7aa7e44288e78c61677801",
   "release-notes/v1.9.0.md": "c02e701f88f8b6c36449d737029a676373dd9ce714a3cdc812b4dc0967b411a2",
+  "release-notes/v1.9.1.md": "87394c85c4e6eecccd59698a6d431230995cb4924c6718ab81dc5427e3ed651e",
   "reports/phases/PHASE_00_report.md": "4a0744d91e12941f14eb4601ac627527a49da0193b13b7688809136cbe84cbd9",
   "reports/phases/PHASE_01_05_reports.md": "bc06d99338f3e8c1ff3b4a216e19c0ccbad8b31ab9e34ae69d5eafb0a3728998",
   "reports/phases/PHASE_06_15_reports.md": "0a0b0b1ecca922aadf38c62f92a9c7fc822721cb321d69e5c9724c6a47ca63f9",

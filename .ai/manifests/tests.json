@@ -6,6 +6,11 @@
       "hash": "12911fdcfd53b8e606766521bd70a7e0eb2261cf81e6d6d13ab4f8c48c396164"
     },
     {
+      "path": "tests/bucket-item-suggestions.test.ts",
+      "bytes": 1683,
+      "hash": "e68d55493ebfb6d134e9b5991232e70f1a9641816105e9e633f86b7c0fa68415"
+    },
+    {
       "path": "tests/bucket-pricing.test.ts",
       "bytes": 3770,
       "hash": "6ed9ca32099b582f8a79889f94ab37017b42a71b32cb6a2794434c2b99601afa"
@@ -197,8 +202,8 @@
     },
     {
       "path": "tests/e2e/bucket-pricing.spec.ts",
-      "bytes": 5639,
-      "hash": "6e9d10c5b13eeb9e799f059200e1f09d9cb04f9b934af591ce1466aaa8d077c0"
+      "bytes": 6676,
+      "hash": "837c0ef39f79f56161d2e65ae533edc865a266c79d31a39d67c2c00dd12f9861"
     },
     {
       "path": "tests/e2e/feature-tour.spec.ts",
@@ -222,8 +227,8 @@
     },
     {
       "path": "tests/e2e/locale-switch.spec.ts",
-      "bytes": 2282,
-      "hash": "f4eb1d246ec947ec2f48c35c857f8ba3b1f6faa416cca1337746fd9d846db14b"
+      "bytes": 2984,
+      "hash": "2e6ed74a495181d13a1cfdd0b7865e045cd33a79f52c739db144950ecd6df605"
     },
     {
       "path": "tests/e2e/notification-mirroring.spec.ts",
@@ -242,8 +247,8 @@
     },
     {
       "path": "tests/e2e/public-content.spec.ts",
-      "bytes": 6129,
-      "hash": "6df08d66cf018bc601a50d74a0b8e754795cf4b930824178a80ca13b76023785"
+      "bytes": 6142,
+      "hash": "9cdbd9ce46f5e0fb99bbb7713bec1808d375df6388f6886dcc013b244f542e5b"
     },
     {
       "path": "tests/e2e/public-theme.spec.ts",
@@ -262,13 +267,13 @@
     },
     {
       "path": "tests/e2e/settings.spec.ts",
-      "bytes": 7069,
-      "hash": "21e8d1c8211c855e747dd37c599e6cb2ad7b5830f7ee5b6313a2ca7f78c2ff48"
+      "bytes": 7090,
+      "hash": "77f77a0ceff492362bece7bb048b971426a40eabd343ca150ea147eef5c22394"
     },
     {
       "path": "tests/e2e/smoke.spec.ts",
-      "bytes": 1028,
-      "hash": "239eb757469b205347bc207b4529913b60efcf9a90e5bb0bc2cacb393c170afb"
+      "bytes": 1415,
+      "hash": "8e0f2cbcdd98ac58b3141215e3ad8b526d35b3a26535648df8b0fac5bb86de8c"
     },
     {
       "path": "tests/e2e/social-management.spec.ts",
@@ -402,8 +407,8 @@
     },
     {
       "path": "tests/tooling/firebase-change-plan.test.mjs",
-      "bytes": 1498,
-      "hash": "71c709eca63f2b043f2893b04281166b86819bfd2845428840c12672085861a4"
+      "bytes": 3279,
+      "hash": "cf7dcf4224d5c0e1bb57bb604e06f6a971fb8ccdcbbb92f6ac984c7c9c6aa318"
     },
     {
       "path": "tests/tooling/firebase-deployment-gate.test.ts",
@@ -427,8 +432,8 @@
     },
     {
       "path": "tests/tooling/versioning-core.test.mjs",
-      "bytes": 4934,
-      "hash": "af6d679c349636c2eb0702e64720509ae08db3c88ef8c6ece42f2fb8bba8a4d4"
+      "bytes": 5550,
+      "hash": "3340da2560694c3ae4d9274e0e7146e4520b6ff39128c29eba846d1f80c18645"
     }
   ]
 }
