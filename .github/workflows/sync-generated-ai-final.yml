@@ -1,0 +1,140 @@
+name: Finalize v1.9.1 release state
+
+on:
+  push:
+    branches:
+      - release/1.9.0
+    paths:
+      - .github/workflows/sync-generated-ai-final.yml
+
+permissions:
+  contents: write
+
+jobs:
+  finalize:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - name: Checkout release branch
+        uses: actions/checkout@v7
+        with:
+          ref: release/1.9.0
+          fetch-depth: 0
+          token: ${{ github.token }}
+
+      - name: Remove one-shot workflow
+        run: rm .github/workflows/sync-generated-ai-final.yml
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            functions/package-lock.json
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          (cd functions && npm ci --ignore-scripts)
+
+      - name: Allow forward patch releases on the same release line
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('tools/release/ensure-branch-version.mjs')
+          source = path.read_text()
+          needle = '''  throw new Error(
+            `Branch ${branchName} targets ${branchVersion}, but the repository is already ${currentVersion}.`,
+          );'''
+          replacement = '''  const targetParts = branchVersion.split('.').map(Number);
+          const currentParts = currentVersion.split('.').map(Number);
+          const isForwardPatchOnSameReleaseLine =
+            targetParts.length === 3 &&
+            currentParts.length === 3 &&
+            targetParts[0] === currentParts[0] &&
+            targetParts[1] === currentParts[1] &&
+            currentParts[2] >= targetParts[2];
+
+          if (!isForwardPatchOnSameReleaseLine) {
+            throw new Error(
+              `Branch ${branchName} targets ${branchVersion}, but the repository is already ${currentVersion}.`,
+            );
+          }
+
+          console.log(
+            `Release branch ${branchName} accepts forward patch version ${currentVersion}.`,
+          );'''
+          if 'isForwardPatchOnSameReleaseLine' not in source:
+              if needle not in source:
+                  raise SystemExit('Unable to locate the release branch mismatch guard.')
+              source = source.replace(needle, replacement)
+              path.write_text(source)
+          PY
+
+      - name: Bump and synchronize v1.9.1
+        env:
+          BUMP_DATE: '2026-08-15'
+        run: |
+          node tools/release/bump-version.mjs 1.9.1 "Guided ordering, warmer UI themes, natural Egyptian Franco, recent-item autocomplete, and selective Firebase releases."
+          cat > release-notes/v1.9.1.md <<'EOF'
+          # FoodOrderV1 v1.9.1
+
+          A focused UI/UX and delivery-speed release that makes ordering easier while preserving the advanced collaborative workflows.
+
+          ## Highlights
+
+          - Reworked order creation into a guided three-step flow on one route: choose items, add notes, then review and confirm.
+          - Added visible recent/frequent item autocomplete in bucket creation and editing, with a clear 🔥 indicator and frequency counts.
+          - Refreshed both light and dark themes with warmer food-oriented colors, stronger hierarchy, clearer surfaces, and improved mobile behavior.
+          - Rewrote key Egyptian Franco/Arabizi screens using natural mainstream wording and familiar product terms such as order, menu, group, share, invite, settings, and total.
+          - Improved Firebase release planning so UI/content/i18n-only releases skip Firebase entirely, while Firebase changes still deploy only required targets when safe.
+          - Kept the full release integrity, security, regression, Firebase rules, Functions, E2E, cross-browser, and APK gates.
+
+          ## Android APK
+
+          - versionName 1.9.1
+          - versionCode is incremented automatically by the repository release tooling.
+          - SHA-256 is attached to the generated release artifact.
+
+          ## Validation
+
+          - Release/version integrity must be green across root, lockfiles, Functions, Android, and iOS.
+          - All mandatory GitHub gates must pass on the final release SHA.
+          EOF
+
+      - name: Regenerate and normalize deterministic state
+        run: |
+          npm run knowledge:build
+          npm run lint:fix
+
+      - name: Validate release before commit
+        run: |
+          npm run i18n:check
+          npm run format:check
+          npm run lint
+          npm run typecheck
+          npm run typecheck:tsc
+          npm run test:tooling
+          npm run quality:release
+          npm run release:branch-check
+          npm run knowledge:validate
+          git diff --check
+
+      - name: Commit synchronized v1.9.1 state
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git reset -- .ai/reports || true
+          if git diff --cached --quiet; then
+            echo "::error::The finalizer produced no commit."
+            exit 1
+          fi
+          HUSKY=0 git commit -m "chore(release): prepare v1.9.1"
+          git fetch origin release/1.9.0
+          git rebase origin/release/1.9.0
+          git push origin HEAD:release/1.9.0
