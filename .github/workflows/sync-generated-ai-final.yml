@@ -76,8 +76,8 @@ jobs:
       - name: Validate release before commit
         run: |
           npm run i18n:check
-          npm run format:check
           npm run lint:fix
+          npm run format:check
           npm run lint
           npm run typecheck
           npm run typecheck:tsc
@@ -99,8 +99,9 @@ jobs:
             ios/App/App.xcodeproj/project.pbxproj \
             CHANGELOG.md \
             release-notes/v1.9.1.md \
+            src/modules/orders/containers/create-order.container.tsx \
             .ai \
             .github/workflows/sync-generated-ai-final.yml
           git reset -- .ai/reports || true
-          git commit -m "chore(release): prepare v1.9.1"
+          HUSKY=0 git commit -m "chore(release): prepare v1.9.1"
           git push origin HEAD:release/1.9.0
