@@ -11,7 +11,7 @@ import {
   type SessionParticipant,
 } from '@/modules/data-access';
 import { useApp } from '@/modules/session';
-import { useParams } from '@/packages/router';
+import { useNavigate, useParams } from '@/packages/router';
 import { createId, nowIso } from '@/shared/helpers';
 
 import {
@@ -21,6 +21,7 @@ import {
   pendingParticipants,
 } from '../helpers/order-session-view.helper';
 import { translateOrderSession } from '../i18n/translate-order-session.helper';
+import { ORDER_SESSIONS_PATH } from '../routes/order-sessions-route-paths.constants';
 
 export interface SessionLifecycleAction {
   status: OrderSessionStatus;
@@ -147,6 +148,7 @@ export interface SessionCommandCenterViewModel {
 
 export function useSessionCommandCenter(): SessionCommandCenterViewModel {
   const { sessionId = '' } = useParams<{ sessionId: string }>();
+  const navigate = useNavigate();
   const { user, locale, showToast } = useApp();
   const [view, setView] = useState<OrderSessionView | null>(null);
   const [loading, setLoading] = useState(true);
@@ -154,26 +156,29 @@ export function useSessionCommandCenter(): SessionCommandCenterViewModel {
   const [busyItemId, setBusyItemId] = useState<string | null>(null);
   const [error, setError] = useState('');
 
-  const refresh = useCallback(async () => {
-    if (!user || !sessionId) {
-      setView(null);
-      setLoading(false);
-      return;
-    }
-    try {
-      setLoading(true);
-      setError('');
-      setView(await orderSessionService.getSessionView(user, sessionId));
-    } catch (error_) {
-      setError(
-        error_ instanceof Error
-          ? error_.message
-          : translateOrderSession(locale, 'sessionChanged'),
-      );
-    } finally {
-      setLoading(false);
-    }
-  }, [locale, sessionId, user]);
+  const refresh = useCallback(
+    async (silent = false) => {
+      if (!user || !sessionId) {
+        setView(null);
+        setLoading(false);
+        return;
+      }
+      try {
+        if (!silent) setLoading(true);
+        setError('');
+        setView(await orderSessionService.getSessionView(user, sessionId));
+      } catch (error_) {
+        setError(
+          error_ instanceof Error
+            ? error_.message
+            : translateOrderSession(locale, 'sessionChanged'),
+        );
+      } finally {
+        if (!silent) setLoading(false);
+      }
+    },
+    [locale, sessionId, user],
+  );
 
   useEffect(() => {
     void refresh();
@@ -207,7 +212,7 @@ export function useSessionCommandCenter(): SessionCommandCenterViewModel {
         translateOrderSession(locale, 'contributionUpdated'),
         'success',
       );
-      await refresh();
+      await refresh(true);
     } catch (error_) {
       setError(
         error_ instanceof Error
@@ -223,8 +228,8 @@ export function useSessionCommandCenter(): SessionCommandCenterViewModel {
     response:
       | typeof PARTICIPANT_RESPONSE.done
       | typeof PARTICIPANT_RESPONSE.skipped,
-  ) => {
-    if (!user || !view?.currentParticipant) return;
+  ): Promise<boolean> => {
+    if (!user || !view?.currentParticipant) return false;
     try {
       setBusy(true);
       setError('');
@@ -235,15 +240,26 @@ export function useSessionCommandCenter(): SessionCommandCenterViewModel {
         response,
       });
       showToast(translateOrderSession(locale, 'responseUpdated'), 'success');
-      await refresh();
+      return true;
     } catch (error_) {
       setError(
         error_ instanceof Error
           ? error_.message
           : translateOrderSession(locale, 'sessionChanged'),
       );
+      return false;
     } finally {
       setBusy(false);
+    }
+  };
+
+  const completeParticipantResponse = async (
+    response:
+      | typeof PARTICIPANT_RESPONSE.done
+      | typeof PARTICIPANT_RESPONSE.skipped,
+  ) => {
+    if (await updateResponse(response)) {
+      navigate(ORDER_SESSIONS_PATH);
     }
   };
 
@@ -268,7 +284,7 @@ export function useSessionCommandCenter(): SessionCommandCenterViewModel {
         ),
         'success',
       );
-      await refresh();
+      await refresh(true);
     } catch (error_) {
       setError(
         error_ instanceof Error
@@ -303,10 +319,11 @@ export function useSessionCommandCenter(): SessionCommandCenterViewModel {
     personalQuantities: currentContribution?.quantities ?? {},
     pending: view ? pendingParticipants(view.participants) : [],
     actions: view ? lifecycleActions(view.session.status) : [],
-    refresh,
+    refresh: () => refresh(),
     changeQuantity,
-    markDone: () => updateResponse(PARTICIPANT_RESPONSE.done),
-    markSkipped: () => updateResponse(PARTICIPANT_RESPONSE.skipped),
+    markDone: () => completeParticipantResponse(PARTICIPANT_RESPONSE.done),
+    markSkipped: () =>
+      completeParticipantResponse(PARTICIPANT_RESPONSE.skipped),
     transition,
   };
 }

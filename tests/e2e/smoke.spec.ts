@@ -36,6 +36,18 @@ test('register, create bucket and complete the guided order flow', async ({
   await expect(page.getByText('Order details')).toBeVisible();
 });
 
+test('dashboard journey create bucket step is pressable', async ({ page }) => {
+  await register(page);
+
+  await page
+    .locator('.dashboard-journey')
+    .getByRole('button', { name: 'Create bucket' })
+    .click();
+
+  await expect(page).toHaveURL(/\/buckets\/new$/u);
+  await expect(page.getByLabel('Bucket title')).toBeVisible();
+});
+
 test('recent item suggestion fills the item and moves focus to price', async ({
   page,
 }) => {
@@ -58,7 +70,9 @@ test('recent item suggestion fills the item and moves focus to price', async ({
   await expect(page.getByLabel('Unit price')).toHaveValue('15');
 });
 
-test('review can open a collecting order session for friends', async ({ page }) => {
+test('review can open a collecting order session and done returns to active orders', async ({
+  page,
+}) => {
   await register(page);
 
   await page.getByRole('link', { name: 'Create bucket' }).click();
@@ -75,4 +89,6 @@ test('review can open a collecting order session for friends', async ({ page }) 
 
   await expect(page).toHaveURL(/\/sessions\/session_[\w-]+$/u);
   await expect(page.getByText('Collecting')).toBeVisible();
+  await page.getByRole('button', { name: 'I am done' }).click();
+  await expect(page).toHaveURL(/\/sessions$/u);
 });

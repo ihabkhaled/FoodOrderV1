@@ -11,7 +11,7 @@ import {
   Users,
   Utensils,
 } from '@/packages/icons';
-import { Link } from '@/packages/router';
+import { Link, useNavigate } from '@/packages/router';
 import { ErrorState, FeatureTour, SkeletonSection } from '@/shared/ui';
 
 import type { DashboardStatCard } from '../components/dashboard-stat-grid/dashboard-stat-grid.component';
@@ -21,6 +21,7 @@ import { useDashboard } from '../hooks/use-dashboard.hook';
 import { useDashboardTour } from '../hooks/use-dashboard-tour.hook';
 
 export function DashboardContainer() {
+  const navigate = useNavigate();
   const vm = useDashboard();
   const { setStatsElement, setCreateElement, steps: tourSteps } =
     useDashboardTour();
@@ -96,10 +97,16 @@ export function DashboardContainer() {
       <ol className="dashboard-journey" aria-label={vm.t('quickStart')}>
         <li>
           <span className="dashboard-journey__number">1</span>
-          <div className="dashboard-journey__step">
+          <button
+            type="button"
+            className="dashboard-journey__step"
+            onClick={() => {
+              navigate(BUCKET_NEW_PATH);
+            }}
+          >
             <ShoppingBasket />
             <strong>{vm.t('createBucket')}</strong>
-          </div>
+          </button>
         </li>
         <li>
           <span className="dashboard-journey__number">2</span>
