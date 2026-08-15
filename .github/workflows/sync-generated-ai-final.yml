@@ -48,8 +48,10 @@ jobs:
           pkg.overrides = {
             ...pkg.overrides,
             'js-yaml': '4.3.1',
-            postcss: '8.5.18',
+            postcss: '8.5.23',
             hono: '4.13.2',
+            nanoid: '3.3.18',
+            tar: '7.5.21',
             xcode: {
               ...(pkg.overrides?.xcode ?? {}),
               uuid: '11.1.1',
@@ -65,7 +67,7 @@ jobs:
           let notes = fs.readFileSync(path, 'utf8');
           const heading = '## Security hardening';
           if (!notes.includes(heading)) {
-            const block = `${heading}\n\n- Closed the active js-yaml, uuid, PostCSS, and Hono Dependabot advisories by enforcing patched dependency floors and adding a permanent lockfile regression test.\n\n`;
+            const block = `${heading}\n\n- Closed the active js-yaml, uuid, PostCSS, Hono, brace-expansion, nanoid, and node-tar advisories by enforcing patched dependency floors, applying safe lockfile updates, and adding a permanent regression test.\n\n`;
             notes = notes.replace('## Validation', `${block}## Validation`);
             fs.writeFileSync(path, notes);
           }
@@ -111,7 +113,7 @@ jobs:
 
             assertEveryResolvedVersionIsSafe(
               'postcss',
-              (version) => compare(version, '8.5.18') >= 0,
+              (version) => compare(version, '8.5.23') >= 0,
             );
             assertEveryResolvedVersionIsSafe(
               'hono',
@@ -125,23 +127,45 @@ jobs:
               if (major === 13) return compare(version, '13.0.1') >= 0;
               return major >= 14;
             });
+            assertEveryResolvedVersionIsSafe('brace-expansion', (version) => {
+              const major = Number(version.split('.')[0]);
+              if (major === 1) return compare(version, '1.1.18') >= 0;
+              if (major === 2) return compare(version, '2.1.4') >= 0;
+              if (major === 3) return compare(version, '3.0.6') >= 0;
+              if (major === 4) return false;
+              if (major === 5) return compare(version, '5.0.9') >= 0;
+              return major > 5;
+            });
+            assertEveryResolvedVersionIsSafe('nanoid', (version) => {
+              const major = Number(version.split('.')[0]);
+              if (major < 3) return false;
+              if (major === 3) return compare(version, '3.3.18') >= 0;
+              if (major === 4) return false;
+              if (major === 5) return compare(version, '5.1.6') >= 0;
+              return major > 5;
+            });
+            assertEveryResolvedVersionIsSafe('tar', (version) => {
+              const major = Number(version.split('.')[0]);
+              if (major === 7) return compare(version, '7.5.21') >= 0;
+              return major > 7;
+            });
           });
           EOF
 
       - name: Regenerate and install the verified lockfile
         env:
-          NPM_CONFIG_AUDIT: 'false'
           NPM_CONFIG_FUND: 'false'
         run: |
           set -euo pipefail
-          npm install --package-lock-only --ignore-scripts
-          npm ci
-          (cd functions && npm ci --ignore-scripts)
+          NPM_CONFIG_AUDIT=false npm install --package-lock-only --ignore-scripts
+          npm audit fix --package-lock-only --ignore-scripts
+          NPM_CONFIG_AUDIT=false npm ci
+          (cd functions && NPM_CONFIG_AUDIT=false npm ci --ignore-scripts)
 
-      - name: Prove dependency resolution and audit state
+      - name: Prove dependency resolution and zero-audit state
         run: |
           set -euo pipefail
-          npm ls js-yaml postcss hono uuid --all
+          npm ls js-yaml postcss hono uuid brace-expansion nanoid tar --all
           npm run test:tooling
           npm audit --audit-level=low
           npm run security:audit
