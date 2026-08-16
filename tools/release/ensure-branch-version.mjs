@@ -7,6 +7,7 @@ import { fileURLToPath } from 'node:url';
 
 import {
   compareStableVersions,
+  isReleaseBranchVersionCompatible,
   readJsonFile,
   STABLE_SEMVER_PATTERN,
   synchronizeRepositoryVersion,
@@ -51,7 +52,7 @@ const readIosVersion = () => {
   return /MARKETING_VERSION = ([^;]+);/u.exec(project)?.[1] ?? null;
 };
 
-const collectMismatches = (targetVersion) => {
+const collectMismatches = (expectedVersion) => {
   const rootVersion = readJsonFile(join(rootDirectory, 'package.json')).version;
   const functionsVersion = readJsonFile(
     join(rootDirectory, 'functions', 'package.json'),
@@ -60,16 +61,16 @@ const collectMismatches = (targetVersion) => {
   const iosVersion = readIosVersion();
   const mismatches = [];
 
-  if (rootVersion !== targetVersion) {
+  if (rootVersion !== expectedVersion) {
     mismatches.push(`package.json=${rootVersion}`);
   }
-  if (functionsVersion !== targetVersion) {
+  if (functionsVersion !== expectedVersion) {
     mismatches.push(`functions/package.json=${functionsVersion}`);
   }
-  if (androidVersion !== targetVersion) {
+  if (androidVersion !== expectedVersion) {
     mismatches.push(`android versionName=${androidVersion}`);
   }
-  if (iosVersion !== targetVersion) {
+  if (iosVersion !== expectedVersion) {
     mismatches.push(`iOS MARKETING_VERSION=${iosVersion}`);
   }
 
@@ -83,25 +84,48 @@ if (!targetVersion) {
   process.exit(0);
 }
 
-const { mismatches, rootVersion } = collectMismatches(targetVersion);
-if (compareStableVersions(rootVersion, targetVersion) > 0) {
+const repositoryVersion = readJsonFile(
+  join(rootDirectory, 'package.json'),
+).version;
+const comparison = compareStableVersions(repositoryVersion, targetVersion);
+const patchLineCompatible = isReleaseBranchVersionCompatible(
+  targetVersion,
+  repositoryVersion,
+);
+
+if (comparison > 0 && !patchLineCompatible) {
   throw new Error(
-    `Branch ${branchName} targets ${targetVersion}, but the repository is already ${rootVersion}.`,
+    `Branch ${branchName} owns the ${targetVersion} patch line, but the repository is ${repositoryVersion}.`,
   );
 }
+
+const expectedVersion = comparison > 0 ? repositoryVersion : targetVersion;
+const { mismatches, rootVersion } = collectMismatches(expectedVersion);
 
 if (mode === 'check') {
   if (mismatches.length > 0) {
     throw new Error(
-      `Branch ${branchName} must be synchronized to ${targetVersion}: ${mismatches.join(', ')}`,
+      `Branch ${branchName} must be synchronized to ${expectedVersion}: ${mismatches.join(', ')}`,
     );
   }
-  console.log(`Branch ${branchName} is synchronized to ${targetVersion}.`);
+  if (comparison > 0) {
+    console.log(
+      `Branch ${branchName} accepts patch release ${rootVersion}; its minimum version is ${targetVersion}.`,
+    );
+  } else {
+    console.log(`Branch ${branchName} is synchronized to ${targetVersion}.`);
+  }
   process.exit(0);
 }
 
 if (mismatches.length === 0) {
-  console.log(`Branch ${branchName} is already synchronized to ${targetVersion}.`);
+  if (comparison > 0) {
+    console.log(
+      `Branch ${branchName} already carries compatible patch release ${rootVersion}.`,
+    );
+  } else {
+    console.log(`Branch ${branchName} is already synchronized to ${targetVersion}.`);
+  }
   process.exit(0);
 }
 
@@ -114,8 +138,11 @@ if (dirtyFiles) {
 
 const result = synchronizeRepositoryVersion({
   rootDirectory,
-  nextVersion: targetVersion,
-  summary: `Start v${targetVersion} development`,
+  nextVersion: expectedVersion,
+  summary:
+    comparison > 0
+      ? `Synchronize v${expectedVersion} patch release`
+      : `Start v${targetVersion} development`,
 });
 
 console.log(
@@ -123,7 +150,7 @@ console.log(
     {
       branch: branchName,
       from: rootVersion,
-      to: targetVersion,
+      to: expectedVersion,
       androidVersionCode: result.androidVersionCode,
       iosBuildNumber: result.iosBuildNumber,
       action: 'Commit the synchronized release files before implementation.',

@@ -48,7 +48,8 @@ export function SessionMenu({
       <ul className="session-menu-list plain">
         {session.menuItems.map((item) => {
           const quantity = quantities[item.id] ?? 0;
-          const disabled = !canContribute || !item.active || busyItemId === item.id;
+          const itemBusy = busyItemId === item.id;
+          const disabled = !canContribute || !item.active || itemBusy;
           return (
             <li className="session-menu-item" key={item.id}>
               <span className="session-menu-copy stack-xs">
@@ -65,7 +66,11 @@ export function SessionMenu({
                 </span>
               </span>
               {item.active ? (
-                <span className="quantity-control" aria-label={item.name}>
+                <span
+                  className={`quantity-control${itemBusy ? ' is-busy' : ''}`}
+                  aria-label={item.name}
+                  aria-busy={itemBusy}
+                >
                   <button
                     type="button"
                     className="icon-button"
@@ -78,7 +83,7 @@ export function SessionMenu({
                     −
                   </button>
                   <output aria-live="polite" aria-label={translate(locale, 'quantity')}>
-                    {quantity}
+                    {itemBusy ? '…' : quantity}
                   </output>
                   <button
                     type="button"

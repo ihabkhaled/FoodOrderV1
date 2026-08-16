@@ -95,7 +95,8 @@ test.describe('v1.3.4 bucket-owned pricing', () => {
     await page.getByLabel('Item name').fill('Meal');
     await page.getByLabel('Unit price').fill('100');
     await page.getByRole('button', { name: 'Save' }).click();
-    await expect(page).toHaveURL(/\/buckets$/u);
+    await expect(page).toHaveURL(/\/buckets\/[^/]+\/social-share$/u);
+    await expect(page.getByRole('link', { name: 'Order now' })).toBeVisible();
 
     await expect
       .poll(async () => {
@@ -106,6 +107,12 @@ test.describe('v1.3.4 bucket-owned pricing', () => {
         return bucket?.pricingPolicy;
       })
       .toEqual(expectedPricing);
+
+    // Guided creation intentionally lands on sharing; expert/manual navigation
+    // remains available through Back, then the rest of this regression covers
+    // duplicate, classic share, and ordering independently.
+    await page.getByRole('link', { name: 'Back' }).click();
+    await expect(page).toHaveURL(/\/buckets$/u);
 
     await page
       .getByRole('button', { name: 'Duplicate — Private pricing' })
@@ -149,7 +156,18 @@ test.describe('v1.3.4 bucket-owned pricing', () => {
     await expect(previewTotals.getByText('EGP 25.00')).toBeVisible();
     await expect(previewTotals.getByText('EGP 151.00')).toBeVisible();
 
+    await page.getByRole('button', { name: 'Next', exact: true }).click();
+    await expect(page.getByLabel('Notes')).toBeVisible();
+    await page.getByRole('button', { name: 'Next', exact: true }).click();
+
+    const reviewTotals = page.locator('.totals');
+    await expect(reviewTotals.getByText('EGP 100.00')).toBeVisible();
+    await expect(reviewTotals.getByText('EGP 14.00')).toBeVisible();
+    await expect(reviewTotals.getByText('EGP 12.00')).toBeVisible();
+    await expect(reviewTotals.getByText('EGP 25.00')).toBeVisible();
+    await expect(reviewTotals.getByText('EGP 151.00')).toBeVisible();
     await page.getByRole('button', { name: 'Place order' }).click();
+
     await expect(page).toHaveURL(/\/orders\/.+/u);
     const orderTotals = page.locator('.totals');
     await expect(orderTotals.getByText('EGP 100.00')).toBeVisible();

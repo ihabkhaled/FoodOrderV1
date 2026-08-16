@@ -11,6 +11,7 @@ import { join } from 'node:path';
 import test from 'node:test';
 
 import {
+  isReleaseBranchVersionCompatible,
   isSameVersionMaintenanceBranch,
   synchronizeRepositoryVersion,
 } from '../../tools/release/versioning-core.mjs';
@@ -40,6 +41,28 @@ test('classifies same-version maintenance branches without admitting features', 
   ]) {
     assert.equal(isSameVersionMaintenanceBranch(branch), false, branch);
   }
+});
+
+test('release branches accept only their current or newer patch versions', () => {
+  for (const repositoryVersion of ['1.9.0', '1.9.1', '1.9.9']) {
+    assert.equal(
+      isReleaseBranchVersionCompatible('1.9.0', repositoryVersion),
+      true,
+      repositoryVersion,
+    );
+  }
+
+  for (const repositoryVersion of ['1.9.0', '1.8.9', '1.10.0', '2.0.0']) {
+    assert.equal(
+      isReleaseBranchVersionCompatible('1.9.1', repositoryVersion),
+      false,
+      repositoryVersion,
+    );
+  }
+
+  assert.throws(() =>
+    isReleaseBranchVersionCompatible('1.9', '1.9.1'),
+  );
 });
 
 test('synchronizes web, functions, Android, and iOS versions idempotently', (context) => {

@@ -1,0 +1,57 @@
+.dashboard-journey__step {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 82px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  color: var(--text);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.dashboard-journey__step:hover,
+.dashboard-journey__step:focus-visible {
+  border-color: var(--primary);
+  box-shadow: 0 0.55rem 1.25rem color-mix(in srgb, var(--primary) 12%, transparent);
+  transform: translateY(-2px);
+}
+
+.dashboard-journey__step:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--primary) 30%, transparent);
+  outline-offset: 2px;
+}
+
+.dashboard-journey__step svg {
+  color: var(--primary);
+  font-size: 1.35rem;
+}
+
+@media (max-width: 720px) {
+  .dashboard-journey__step {
+    min-height: 70px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dashboard-journey__step {
+    transition: none;
+  }
+
+  .dashboard-journey__step:hover,
+  .dashboard-journey__step:focus-visible {
+    transform: none;
+  }
+}

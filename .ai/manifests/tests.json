@@ -6,6 +6,11 @@
       "hash": "12911fdcfd53b8e606766521bd70a7e0eb2261cf81e6d6d13ab4f8c48c396164"
     },
     {
+      "path": "tests/bucket-item-suggestions.test.ts",
+      "bytes": 1683,
+      "hash": "e68d55493ebfb6d134e9b5991232e70f1a9641816105e9e633f86b7c0fa68415"
+    },
+    {
       "path": "tests/bucket-pricing.test.ts",
       "bytes": 3770,
       "hash": "6ed9ca32099b582f8a79889f94ab37017b42a71b32cb6a2794434c2b99601afa"
@@ -67,8 +72,8 @@
     },
     {
       "path": "tests/components/PublicContent.test.tsx",
-      "bytes": 2758,
-      "hash": "ae1d72c3389557f7c06623a1e38221e9a918d6a69251febf41a3468c5cd6657e"
+      "bytes": 2685,
+      "hash": "7e5c0e6c5b6c43db772f8808ccb5749b7805b91597cbb0fd9f36f8e6e3a3860e"
     },
     {
       "path": "tests/components/ResetPasswordRoute.test.tsx",
@@ -197,8 +202,8 @@
     },
     {
       "path": "tests/e2e/bucket-pricing.spec.ts",
-      "bytes": 5639,
-      "hash": "6e9d10c5b13eeb9e799f059200e1f09d9cb04f9b934af591ce1466aaa8d077c0"
+      "bytes": 6676,
+      "hash": "837c0ef39f79f56161d2e65ae533edc865a266c79d31a39d67c2c00dd12f9861"
     },
     {
       "path": "tests/e2e/feature-tour.spec.ts",
@@ -222,8 +227,8 @@
     },
     {
       "path": "tests/e2e/locale-switch.spec.ts",
-      "bytes": 2282,
-      "hash": "f4eb1d246ec947ec2f48c35c857f8ba3b1f6faa416cca1337746fd9d846db14b"
+      "bytes": 2984,
+      "hash": "2e6ed74a495181d13a1cfdd0b7865e045cd33a79f52c739db144950ecd6df605"
     },
     {
       "path": "tests/e2e/notification-mirroring.spec.ts",
@@ -242,8 +247,8 @@
     },
     {
       "path": "tests/e2e/public-content.spec.ts",
-      "bytes": 6129,
-      "hash": "6df08d66cf018bc601a50d74a0b8e754795cf4b930824178a80ca13b76023785"
+      "bytes": 6142,
+      "hash": "9cdbd9ce46f5e0fb99bbb7713bec1808d375df6388f6886dcc013b244f542e5b"
     },
     {
       "path": "tests/e2e/public-theme.spec.ts",
@@ -262,13 +267,13 @@
     },
     {
       "path": "tests/e2e/settings.spec.ts",
-      "bytes": 7069,
-      "hash": "21e8d1c8211c855e747dd37c599e6cb2ad7b5830f7ee5b6313a2ca7f78c2ff48"
+      "bytes": 7090,
+      "hash": "77f77a0ceff492362bece7bb048b971426a40eabd343ca150ea147eef5c22394"
     },
     {
       "path": "tests/e2e/smoke.spec.ts",
-      "bytes": 1028,
-      "hash": "239eb757469b205347bc207b4529913b60efcf9a90e5bb0bc2cacb393c170afb"
+      "bytes": 3703,
+      "hash": "3e51ae83fb402adbcd09bad52b4dafdf49cb56838ac2e8b8cec5c5201d417316"
     },
     {
       "path": "tests/e2e/social-management.spec.ts",
@@ -282,8 +287,8 @@
     },
     {
       "path": "tests/e2e/ui.spec.ts",
-      "bytes": 11612,
-      "hash": "6c9ab73efd25da5c369cf2628b2805fb1c16fd94d5a68cf1579a41dfc4427221"
+      "bytes": 11753,
+      "hash": "e5dc358f715946d8edde85d73ce72083130b8640c1ad3c2ee914b099b4ba2682"
     },
     {
       "path": "tests/e2e/ux-polish.spec.ts",
@@ -391,9 +396,24 @@
       "hash": "18c74fe95cfe476421e85f7f0ec79ad76c4093ffd16cf600093f38eaad7644ca"
     },
     {
+      "path": "tests/tooling/ai-executive-function.test.mjs",
+      "bytes": 1707,
+      "hash": "2277e5ea27f354f7047c891740ce423aacf8a206dcee6f483ebbd2e40f331a11"
+    },
+    {
       "path": "tests/tooling/compose-release-notes.test.mjs",
       "bytes": 1427,
       "hash": "7ee92ec44c381cb828189aeb9210d97b3d767df36d3eb4bea7be3f2c2da7a263"
+    },
+    {
+      "path": "tests/tooling/dependency-security.test.mjs",
+      "bytes": 2996,
+      "hash": "0d2b0759a5ca2f8aa7eba06237d894ea38a72f02b17b4c1a18763236431a3d8f"
+    },
+    {
+      "path": "tests/tooling/firebase-change-plan.test.mjs",
+      "bytes": 6781,
+      "hash": "d18a585b124b0ceaa60337fda73656d24c3634166c4347653bed55fd048b8ecb"
     },
     {
       "path": "tests/tooling/firebase-deployment-gate.test.ts",
@@ -406,14 +426,19 @@
       "hash": "8b6ec1f3f58a93b5a4c1bf05f127d494dd6be33b7d052c9b5a11f46b270a0627"
     },
     {
+      "path": "tests/tooling/public-content-parity.test.mjs",
+      "bytes": 853,
+      "hash": "333ea883d05c2cc0ba4e1d02ee307ecd400bd814d3b56fd64eee20887c5c7cf7"
+    },
+    {
       "path": "tests/tooling/pull-request-brief.test.mjs",
       "bytes": 2594,
       "hash": "159a156fc8de216407f9f639c5c35f221de9d31352b3cf38f8a49d5631238dd1"
     },
     {
       "path": "tests/tooling/versioning-core.test.mjs",
-      "bytes": 4934,
-      "hash": "af6d679c349636c2eb0702e64720509ae08db3c88ef8c6ece42f2fb8bba8a4d4"
+      "bytes": 5550,
+      "hash": "3340da2560694c3ae4d9274e0e7146e4520b6ff39128c29eba846d1f80c18645"
     }
   ]
 }

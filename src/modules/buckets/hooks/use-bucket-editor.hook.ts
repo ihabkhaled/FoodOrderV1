@@ -15,11 +15,14 @@ import {
   MAX_BUCKET_ITEMS,
 } from '@/modules/data-access';
 import { useApp } from '@/modules/session';
+import { buildBucketSocialShareRoute } from '@/modules/social';
 import { useNavigate, useParams } from '@/packages/router';
 import { createId } from '@/shared/helpers';
 import type { MessageKey } from '@/shared/i18n';
 
+import { buildBucketItemSuggestions } from '../helpers/bucket-item-suggestions.helper';
 import { BUCKETS_PATH } from '../routes/buckets-route-paths.constants';
+import type { BucketItemSuggestion } from '../types/bucket-item-suggestion.types';
 
 const emptyItem = (sortOrder: number): BucketItem => ({
   id: createId('item'),
@@ -49,11 +52,13 @@ export interface BucketEditorViewModel {
   pricingPolicy: BucketPricingPolicy;
   setPricingPolicy: (policy: BucketPricingPolicy) => void;
   items: BucketItem[];
+  suggestions: BucketItemSuggestion[];
   updateItem: <K extends keyof BucketItem>(
     id: string,
     key: K,
     value: BucketItem[K],
   ) => void;
+  applySuggestion: (id: string, suggestion: BucketItemSuggestion) => void;
   addItem: () => void;
   removeItem: (id: string) => void;
   loading: boolean;
@@ -81,6 +86,7 @@ export function useBucketEditor(): BucketEditorViewModel {
   const [pricingPolicy, setPricingPolicy] =
     useState<BucketPricingPolicy>(defaultPricingPolicy);
   const [items, setItems] = useState<BucketItem[]>([emptyItem(0)]);
+  const [suggestions, setSuggestions] = useState<BucketItemSuggestion[]>([]);
   const [loading, setLoading] = useState(isEditing);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
@@ -88,6 +94,22 @@ export function useBucketEditor(): BucketEditorViewModel {
   useEffect(() => {
     if (!isEditing) setCurrency(defaultCurrency);
   }, [defaultCurrency, isEditing]);
+
+  useEffect(() => {
+    if (!user) return;
+    let active = true;
+    void dataService
+      .listBuckets(user)
+      .then((buckets) => {
+        if (active) setSuggestions(buildBucketItemSuggestions(buckets));
+      })
+      .catch(() => {
+        if (active) setSuggestions([]);
+      });
+    return () => {
+      active = false;
+    };
+  }, [user]);
 
   useEffect(() => {
     if (!user || !bucketId) return;
@@ -134,6 +156,24 @@ export function useBucketEditor(): BucketEditorViewModel {
     );
   };
 
+  const applySuggestion = (
+    id: string,
+    suggestion: BucketItemSuggestion,
+  ): void => {
+    setItems((current) =>
+      current.map((item) =>
+        item.id === id
+          ? {
+              ...item,
+              name: suggestion.name,
+              category: suggestion.category,
+              unitPrice: suggestion.unitPrice,
+            }
+          : item,
+      ),
+    );
+  };
+
   const addItem = (): void => {
     if (items.length >= MAX_BUCKET_ITEMS) {
       showToast(t('maxItemsReached'), 'error');
@@ -168,11 +208,13 @@ export function useBucketEditor(): BucketEditorViewModel {
     try {
       setBusy(true);
       setError('');
-      await (bucketId
-        ? dataService.updateBucket(user, bucketId, draft)
-        : dataService.createBucket(user, draft));
+      const saved = bucketId
+        ? await dataService.updateBucket(user, bucketId, draft)
+        : await dataService.createBucket(user, draft);
       showToast(t('bucketSaved'), 'success');
-      await navigate(BUCKETS_PATH);
+      await navigate(
+        bucketId ? BUCKETS_PATH : buildBucketSocialShareRoute(saved.id),
+      );
     } catch (error_) {
       setError(error_ instanceof Error ? error_.message : t('tryAgain'));
     } finally {
@@ -194,7 +236,9 @@ export function useBucketEditor(): BucketEditorViewModel {
     pricingPolicy,
     setPricingPolicy,
     items,
+    suggestions,
     updateItem,
+    applySuggestion,
     addItem,
     removeItem,
     loading,

@@ -1,0 +1,25 @@
+{
+  "navigationLabel": "Home",
+  "seoTitle": "Gama3 Orderak | Easy Group Food Ordering",
+  "description": "Share one menu, collect everyone's choices, finalize one food order, and split the receipt fairly with Gama3 Orderak.",
+  "eyebrow": "One link. Everyone orders. No chat chaos.",
+  "heading": "The easiest way to collect a group food order",
+  "introduction": "Create a shared menu, invite friends or coworkers, let each person choose, then finalize one clear order with totals everyone can verify.",
+  "sections": [
+    {
+      "heading": "Create or reuse a menu",
+      "paragraphs": ["Add restaurant items once, including prices and optional delivery, service, and tax rules. Reuse the menu for the next order."],
+      "bullets": ["Fast item entry", "Reusable menus", "Clear pricing before anyone chooses"]
+    },
+    {
+      "heading": "Invite people and collect choices",
+      "paragraphs": ["Share the order with friends, a saved group, or guests. Everyone records their own quantities while the organizer sees one live total."],
+      "bullets": ["Friend and group sharing", "Guest-friendly invitations", "Live contribution status"]
+    },
+    {
+      "heading": "Finalize once and split fairly",
+      "paragraphs": ["Lock the final quantities, place one order, and produce a transparent receipt by person or item without manual calculations."],
+      "bullets": ["One organizer-controlled final step", "Accurate fees and totals", "Shareable receipt breakdowns"]
+    }
+  ]
+}

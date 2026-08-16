@@ -1,0 +1,162 @@
+/* Guided bucket journey and reusable item suggestions. */
+.bucket-item-name-field {
+  position: static;
+}
+
+.bucket-item-suggestions {
+  display: none;
+  width: 100%;
+  margin-block-start: 8px;
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.bucket-item-name-field:focus-within .bucket-item-suggestions {
+  display: grid;
+  gap: 6px;
+}
+
+.bucket-item-suggestion {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  color: var(--text);
+  background: var(--surface-2);
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+
+.bucket-item-suggestion:hover,
+.bucket-item-suggestion:focus-visible {
+  border-color: color-mix(in srgb, var(--primary) 46%, var(--line));
+  background: color-mix(in srgb, var(--soft) 72%, var(--surface));
+  outline: none;
+}
+
+.bucket-item-suggestion__meta {
+  flex: none;
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.bucket-flow-steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bucket-flow-step {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  color: var(--muted);
+  background: var(--surface);
+}
+
+.bucket-flow-step > span {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  background: var(--surface-2);
+  font-size: 0.8rem;
+  font-weight: 900;
+}
+
+.bucket-flow-step strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bucket-flow-step--done,
+.bucket-flow-step--active {
+  color: var(--text);
+}
+
+.bucket-flow-step--done > span,
+.bucket-flow-step--active > span {
+  color: var(--primary-ink);
+  background: var(--primary);
+}
+
+.bucket-flow-step--active {
+  border-color: color-mix(in srgb, var(--primary) 55%, var(--line));
+  box-shadow: var(--shadow-sm);
+}
+
+.guided-empty-choice,
+.guided-next-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.guided-empty-choice {
+  padding: 12px;
+  border: 1px dashed var(--line-strong);
+  border-radius: 14px;
+  background: var(--surface-2);
+}
+
+.guided-next-action {
+  position: sticky;
+  z-index: 20;
+  inset-block-end: 12px;
+  box-shadow: var(--shadow-md);
+}
+
+@media (max-width: 640px) {
+  .bucket-item-suggestions {
+    border-radius: 16px;
+    box-shadow: none;
+  }
+
+  .bucket-flow-steps {
+    gap: 6px;
+  }
+
+  .bucket-flow-step {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    padding: 9px 6px;
+    text-align: center;
+  }
+
+  .bucket-flow-step strong {
+    max-width: 100%;
+    font-size: 0.72rem;
+  }
+
+  .guided-empty-choice,
+  .guided-next-action {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .guided-empty-choice .button,
+  .guided-next-action .button {
+    width: 100%;
+  }
+}

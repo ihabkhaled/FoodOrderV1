@@ -6,9 +6,32 @@ test.beforeEach(async ({ page }) => {
   await suppressFeatureTours(page);
 });
 
-/** The shell renders one selector per breakpoint; drive whichever is shown. */
-const languageSelect = (page: Page) =>
-  page.locator('select.shell-language-select:visible').first();
+const preferencesLanguageSelect = (page: Page) =>
+  page.locator('main select').first();
+
+const persistedLocale = async (page: Page): Promise<string | null> =>
+  page.evaluate(() => {
+    const sessionUserId = localStorage.getItem('foodorder:v1:session');
+    const raw = localStorage.getItem('foodorder:v1:database');
+    if (!sessionUserId || !raw) return null;
+    const database = JSON.parse(raw) as {
+      users?: Record<string, { profile?: { locale?: string } }>;
+    };
+    return database.users?.[sessionUserId]?.profile?.locale ?? null;
+  });
+
+const saveLanguagePreference = async (
+  page: Page,
+  locale: 'ar' | 'ar-Latn',
+): Promise<void> => {
+  await page.goto('/settings/preferences');
+  const select = preferencesLanguageSelect(page);
+  await expect(select).toBeVisible();
+  await select.selectOption(locale);
+  await page.locator('.sticky-actions button').click();
+
+  await expect.poll(async () => persistedLocale(page)).toBe(locale);
+};
 
 const register = async (page: Page, suffix: string): Promise<void> => {
   await page.goto('/auth/register');
@@ -19,40 +42,42 @@ const register = async (page: Page, suffix: string): Promise<void> => {
   await page.waitForURL(/\/app$/u);
 };
 
-/**
- * Arabic Franco uses a two-part segment (`/ar-latn`). A prefix matcher that
- * only knew the single-part locales matched `ar`, rejected the `-latn` tail,
- * and silently sent the reader back to English on the next load — so these
- * tests follow the switch all the way through a reload.
- */
+const expectDocumentLocale = async (
+  page: Page,
+  locale: string,
+  direction: 'ltr' | 'rtl',
+): Promise<void> => {
+  await expect(page.locator('html')).toHaveAttribute('lang', locale);
+  await expect(page.locator('html')).toHaveAttribute('dir', direction);
+};
+
 test.describe('switching the app language', () => {
-  test('keeps Arabic Franco through the redirect and a reload', async ({
-    page,
-  }) => {
+  test('keeps Arabic Franco through a reload', async ({ page }) => {
     await register(page, 'franco');
+    await saveLanguagePreference(page, 'ar-Latn');
 
-    await languageSelect(page).selectOption('ar-Latn');
-
-    await page.waitForURL(/\/ar-latn\/app$/u);
-    await expect(page.locator('html')).toHaveAttribute('lang', 'ar-Latn');
-    await expect(page.locator('html')).toHaveAttribute('dir', 'ltr');
-
+    await page.goto('/ar-latn/app');
+    await expectDocumentLocale(page, 'ar-Latn', 'ltr');
     await page.reload();
-    await page.waitForURL(/\/ar-latn\/app$/u);
-    await expect(page.locator('html')).toHaveAttribute('lang', 'ar-Latn');
-    await expect(languageSelect(page)).toHaveValue('ar-Latn');
+    await expectDocumentLocale(page, 'ar-Latn', 'ltr');
+
+    await page.goto('/ar-latn/settings/preferences');
+    await expect(preferencesLanguageSelect(page)).toHaveValue('ar-Latn');
   });
 
   test('still separates Arabic from Arabic Franco', async ({ page }) => {
     await register(page, 'arabic');
+    await saveLanguagePreference(page, 'ar');
 
-    await languageSelect(page).selectOption('ar');
-    await page.waitForURL(/\/ar\/app$/u);
+    await page.goto('/ar/app');
     await expect(page.locator('html')).toHaveAttribute('lang', 'ar');
-    await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
+    await expectDocumentLocale(page, 'ar', 'rtl');
 
-    await languageSelect(page).selectOption('ar-Latn');
-    await page.waitForURL(/\/ar-latn\/app$/u);
-    await expect(page.locator('html')).toHaveAttribute('dir', 'ltr');
+    await saveLanguagePreference(page, 'ar-Latn');
+    await page.goto('/ar-latn/app');
+    await expect(page.locator('html')).toHaveAttribute('lang', 'ar-Latn');
+    await expectDocumentLocale(page, 'ar-Latn', 'ltr');
+    await page.reload();
+    await expectDocumentLocale(page, 'ar-Latn', 'ltr');
   });
 });

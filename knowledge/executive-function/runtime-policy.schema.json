@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://food-order-v1-peach.vercel.app/schemas/ai-executive-function-v1.json",
+  "title": "FoodOrderV1 AI Executive Function Policy",
+  "type": "object",
+  "required": [
+    "id",
+    "version",
+    "authority",
+    "principles",
+    "thresholds",
+    "preActionState",
+    "issueClasses",
+    "alwaysLoaded",
+    "recoverySignals",
+    "recoveryProtocol",
+    "contextPolicy",
+    "memoryPolicy",
+    "verificationPolicy",
+    "communicationPolicy",
+    "loadConditions"
+  ],
+  "properties": {
+    "id": { "const": "foodorderv1-ai-executive-function" },
+    "version": { "type": "integer", "minimum": 1 },
+    "authority": {
+      "type": "array",
+      "minItems": 3,
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    },
+    "thresholds": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "maxActiveWorkItems",
+        "maxNestingDepth",
+        "maxSameStrategyAttempts",
+        "maxCriticRounds",
+        "maxFullReplansWithoutNewEvidence",
+        "maxAgentDelegationDepth",
+        "stalledProgressCyclesBeforeReset"
+      ],
+      "properties": {
+        "maxActiveWorkItems": { "type": "integer", "minimum": 1, "maximum": 2 },
+        "maxNestingDepth": { "type": "integer", "minimum": 2, "maximum": 4 },
+        "maxSameStrategyAttempts": { "type": "integer", "minimum": 1, "maximum": 3 },
+        "maxCriticRounds": { "type": "integer", "minimum": 1, "maximum": 3 },
+        "maxFullReplansWithoutNewEvidence": { "type": "integer", "minimum": 1, "maximum": 2 },
+        "maxAgentDelegationDepth": { "type": "integer", "minimum": 1, "maximum": 2 },
+        "stalledProgressCyclesBeforeReset": { "type": "integer", "minimum": 2, "maximum": 5 }
+      }
+    },
+    "issueClasses": {
+      "type": "array",
+      "const": ["BLOCKER", "REQUIRED", "OPTIONAL", "UNRELATED"]
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,4 +1,11 @@
-<!-- GENERATED: scripts/knowledge/cli.mjs; DO NOT EDIT -->
-# Current State
+<!-- GENERATED: scripts/knowledge/build-executive-function.mjs; DO NOT EDIT -->
+# Current AI execution state
 
-React + TypeScript + Vite wrapped by Capacitor. Firestore is primary when configured; local-device storage is the functional fallback. Authentication, bucket CRUD, ordering, status history, repeat orders, settings, tests, and CI are implemented. Production Firebase, retention, and app-store signing remain deployment decisions.
+No durable task is active in generated knowledge.
+
+For a new task, compile fresh context with:
+
+`npm run knowledge:context -- --task="<exact objective>"`
+
+Temporary task state must remain local/generated. Promote only stable architecture,
+decisions, recurring failures, and enduring preferences to durable memory.

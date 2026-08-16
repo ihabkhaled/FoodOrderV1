@@ -15,6 +15,13 @@ const CONTACT_FORM_PATH = path.join(
   'content',
   'contact-form.locales.json',
 );
+const ENGLISH_HOME_COPY_PATH = path.join(
+  'src',
+  'modules',
+  'public-content',
+  'content',
+  'english-home-copy.json',
+);
 
 export const loadPublicCatalog = async (root = process.cwd()) => {
   const baseCatalog = JSON.parse(
@@ -22,6 +29,9 @@ export const loadPublicCatalog = async (root = process.cwd()) => {
   );
   baseCatalog.contactForm = JSON.parse(
     await readFile(path.join(root, CONTACT_FORM_PATH), 'utf8'),
+  );
+  const englishHomeCopy = JSON.parse(
+    await readFile(path.join(root, ENGLISH_HOME_COPY_PATH), 'utf8'),
   );
   const localeDirectory = path.join(
     root,
@@ -55,6 +65,13 @@ export const loadPublicCatalog = async (root = process.cwd()) => {
         { ...copy },
       ]),
     ),
+  };
+  const homePage = catalog.pages.find((page) => page.id === 'home');
+  if (!homePage) throw new Error('Missing public page: home');
+  homePage.copy.en = englishHomeCopy;
+  catalog.ui.en = {
+    ...catalog.ui.en,
+    brandName: catalog.site.brandName,
   };
   for (const localized of localizedCatalogs) {
     catalog.ui[localized.locale] = localized.ui;

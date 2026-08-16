@@ -4,6 +4,7 @@ import '@/virtualLists.css';
 import '@/socialNotifications.css';
 import '@/shared/ui/ux-polish.css';
 import '@/shared/ui/shell-alignment.css';
+import '@/v1-9-1.css';
 
 import { AppProvider } from '@/modules/session';
 import { BrowserRouter } from '@/packages/router';

@@ -117,7 +117,7 @@ const createBucket = async (page: Page, title: string): Promise<void> => {
   await page.getByLabel('Item name').fill('Meal');
   await page.getByLabel('Unit price').fill('100');
   await page.getByRole('button', { name: 'Save' }).click();
-  await expect(page).toHaveURL(/\/buckets$/u);
+  await expect(page).toHaveURL(/\/buckets\/[^/]+\/social-share$/u);
 };
 
 const setConsent = async (page: Page, option: RegExp): Promise<void> => {

@@ -1,0 +1,199 @@
+/* v1.9.1 UX refresh: warmer palette, stronger hierarchy, guided ordering. */
+:root {
+  --bg: #fffaf5;
+  --surface: #ffffff;
+  --surface-2: #fff5eb;
+  --soft: #ffead6;
+  --text: #24170f;
+  --muted: #715d4e;
+  --line: #ecd9c7;
+  --line-strong: #dfc4ac;
+  --primary: #ea580c;
+  --primary-dark: #9a3412;
+  --primary-ink: #ffffff;
+  --ring: color-mix(in srgb, #f97316 42%, transparent);
+  --shadow-sm: 0 2px 5px rgb(79 45 22 / 6%), 0 10px 28px rgb(79 45 22 / 5%);
+  --shadow-md: 0 18px 44px rgb(95 48 17 / 11%);
+  --shadow-lg: 0 28px 72px rgb(69 31 10 / 17%);
+}
+
+:root[data-theme='dark'] {
+  --bg: #100d0b;
+  --surface: #1b1612;
+  --surface-2: #261e18;
+  --soft: #342419;
+  --text: #fff8f0;
+  --muted: #c9b7a8;
+  --line: #3e3026;
+  --line-strong: #584233;
+  --primary: #fb923c;
+  --primary-dark: #fdba74;
+  --primary-ink: #261306;
+  --ring: color-mix(in srgb, #fb923c 50%, transparent);
+}
+
+.section-card,
+.bucket-card,
+.stat-card {
+  border-color: color-mix(in srgb, var(--line) 84%, var(--primary) 16%);
+}
+
+.button:not(.secondary):not(.danger):not(.success) {
+  box-shadow: 0 8px 20px color-mix(in srgb, var(--primary) 24%, transparent);
+}
+
+.recent-item-banner {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: -2px 0 14px;
+  padding: 10px 12px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--primary) 30%, var(--line));
+  border-radius: 14px;
+  color: var(--muted);
+  background: color-mix(in srgb, var(--soft) 78%, var(--surface));
+  font-size: 0.82rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.recent-item-banner > span:last-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.recent-item-banner__fire {
+  flex: none;
+  font-size: 1.1rem;
+}
+
+.bucket-item-suggestions {
+  gap: 5px;
+}
+
+.bucket-item-suggestion__name {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  font-weight: 750;
+}
+
+.order-create-flow {
+  display: grid;
+  gap: 20px;
+}
+
+.order-create-heading {
+  padding: 4px 2px;
+}
+
+.order-stepper {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.order-step {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+  padding: 11px 12px;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  color: var(--muted);
+  background: var(--surface);
+}
+
+.order-step > span {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 29px;
+  height: 29px;
+  border-radius: 10px;
+  background: var(--surface-2);
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.order-step strong {
+  min-width: 0;
+  overflow: hidden;
+  font-size: 0.82rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.order-step--active {
+  border-color: color-mix(in srgb, var(--primary) 55%, var(--line));
+  color: var(--text);
+  box-shadow: var(--shadow-sm);
+}
+
+.order-step--active > span,
+.order-step--done > span {
+  color: var(--primary-ink);
+  background: var(--primary);
+}
+
+.order-step--done {
+  color: var(--text);
+}
+
+.order-step-panel {
+  animation: order-step-in 160ms ease-out;
+}
+
+.order-review-lines {
+  padding-block: 8px;
+}
+
+.order-flow-actions .button:last-child {
+  min-width: 142px;
+}
+
+@keyframes order-step-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 620px) {
+  .order-step {
+    display: grid;
+    justify-items: center;
+    gap: 5px;
+    padding: 9px 5px;
+    text-align: center;
+  }
+
+  .order-step strong {
+    max-width: 100%;
+    font-size: 0.7rem;
+  }
+
+  .order-flow-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .order-flow-actions .button {
+    width: 100%;
+  }
+
+  .order-flow-actions .button:last-child:nth-child(3) {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .order-step-panel {
+    animation: none;
+  }
+}

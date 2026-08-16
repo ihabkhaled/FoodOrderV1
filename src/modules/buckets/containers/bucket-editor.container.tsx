@@ -10,6 +10,15 @@ import { useBucketEditor } from '../hooks/use-bucket-editor.hook';
 import { useBucketEditorTour } from '../hooks/use-bucket-editor-tour.hook';
 import { BUCKETS_PATH } from '../routes/buckets-route-paths.constants';
 
+const focusBucketItemPrice = (itemId: string): void => {
+  window.requestAnimationFrame(() => {
+    const priceInput = document.getElementById(`bucket-item-price-${itemId}`);
+    if (!(priceInput instanceof HTMLInputElement)) return;
+    priceInput.focus();
+    priceInput.select();
+  });
+};
+
 export function BucketEditorContainer() {
   const vm = useBucketEditor();
   const { steps: tourSteps } = useBucketEditorTour();
@@ -90,63 +99,99 @@ export function BucketEditorContainer() {
             </button>
           </div>
           <div className="item-editor-list">
-            {vm.items.map((item, index) => (
-              <article className="item-editor" key={item.id}>
-                <GripVertical className="drag-hint" aria-hidden="true" />
-                <div className="item-fields">
-                  <label>
-                    {vm.t('itemName')}
-                    <input
-                      value={item.name}
-                      onChange={(event) => {
-                        vm.updateItem(item.id, 'name', event.target.value);
+            {vm.items.map((item, index) => {
+              const query = item.name.trim().toLocaleLowerCase();
+              const matchingSuggestions = vm.suggestions
+                .filter(
+                  (suggestion) =>
+                    !query ||
+                    suggestion.name.toLocaleLowerCase().includes(query),
+                )
+                .slice(0, 5);
+              return (
+                <article className="item-editor" key={item.id}>
+                  <GripVertical className="drag-hint" aria-hidden="true" />
+                  <div className="item-fields">
+                    <label className="bucket-item-name-field">
+                      {vm.t('itemName')}
+                      <input
+                        value={item.name}
+                        onChange={(event) => {
+                          vm.updateItem(item.id, 'name', event.target.value);
+                        }}
+                        maxLength={60}
+                        autoComplete="off"
+                        required
+                      />
+                      {matchingSuggestions.length > 0 ? (
+                        <span className="bucket-item-suggestions" role="listbox">
+                          {matchingSuggestions.map((suggestion) => (
+                            <button
+                              key={suggestion.key}
+                              type="button"
+                              className="bucket-item-suggestion"
+                              role="option"
+                              aria-selected={query === suggestion.key}
+                              onClick={() => {
+                                vm.applySuggestion(item.id, suggestion);
+                                focusBucketItemPrice(item.id);
+                              }}
+                            >
+                              <span className="bucket-item-suggestion__name">
+                                <span aria-hidden="true">🔥</span>
+                                {suggestion.name}
+                              </span>
+                              <span className="bucket-item-suggestion__meta">
+                                {suggestion.count}×
+                              </span>
+                            </button>
+                          ))}
+                        </span>
+                      ) : null}
+                    </label>
+                    <label>
+                      {vm.t('category')}
+                      <input
+                        value={item.category}
+                        onChange={(event) => {
+                          vm.updateItem(item.id, 'category', event.target.value);
+                        }}
+                        maxLength={40}
+                      />
+                    </label>
+                    <NumericField
+                      id={`bucket-item-price-${item.id}`}
+                      label={vm.t('unitPrice')}
+                      value={item.unitPrice}
+                      onValueChange={(next) => {
+                        vm.updateItem(item.id, 'unitPrice', next);
                       }}
-                      maxLength={60}
-                      required
                     />
-                  </label>
-                  <label>
-                    {vm.t('category')}
-                    <input
-                      value={item.category}
-                      onChange={(event) => {
-                        vm.updateItem(item.id, 'category', event.target.value);
-                      }}
-                      maxLength={40}
-                    />
-                  </label>
-                  <NumericField
-                    id={`bucket-item-price-${item.id}`}
-                    label={vm.t('unitPrice')}
-                    value={item.unitPrice}
-                    onValueChange={(next) => {
-                      vm.updateItem(item.id, 'unitPrice', next);
+                    <label className="checkbox-label">
+                      <input
+                        type="checkbox"
+                        checked={item.active}
+                        onChange={(event) => {
+                          vm.updateItem(item.id, 'active', event.target.checked);
+                        }}
+                      />
+                      {vm.t('active')}
+                    </label>
+                  </div>
+                  <button
+                    type="button"
+                    className="icon-button danger-ghost"
+                    disabled={vm.items.length === 1}
+                    onClick={() => {
+                      vm.removeItem(item.id);
                     }}
-                  />
-                  <label className="checkbox-label">
-                    <input
-                      type="checkbox"
-                      checked={item.active}
-                      onChange={(event) => {
-                        vm.updateItem(item.id, 'active', event.target.checked);
-                      }}
-                    />
-                    {vm.t('active')}
-                  </label>
-                </div>
-                <button
-                  type="button"
-                  className="icon-button danger-ghost"
-                  disabled={vm.items.length === 1}
-                  onClick={() => {
-                    vm.removeItem(item.id);
-                  }}
-                  aria-label={`${vm.t('delete')} ${index + 1}`}
-                >
-                  <Trash2 />
-                </button>
-              </article>
-            ))}
+                    aria-label={`${vm.t('delete')} ${index + 1}`}
+                  >
+                    <Trash2 />
+                  </button>
+                </article>
+              );
+            })}
           </div>
         </section>
 

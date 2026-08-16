@@ -1,3 +1,4 @@
+export { translateOrderSession } from './i18n/translate-order-session.helper';
 export { orderSessionsRoutes } from './routes/order-sessions.routes';
 export {
   buildOrderSessionCreateRoute,

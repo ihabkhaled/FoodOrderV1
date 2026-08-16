@@ -1,9 +1,13 @@
+import { Link } from '@/packages/router';
 import { BackLink, ErrorState, FeatureTour, Loading } from '@/shared/ui';
 
 import { BucketSocialSharePanel } from '../components/bucket-social-share-panel/bucket-social-share-panel.container';
 import { useBucketSocialShare } from '../hooks/use-bucket-social-share.hook';
 import { useBucketSocialShareTour } from '../hooks/use-bucket-social-share-tour.hook';
-import { BUCKETS_REDIRECT_PATH } from '../routes/social-route-paths.constants';
+import {
+  BUCKETS_REDIRECT_PATH,
+  buildBucketOrderRedirect,
+} from '../routes/social-route-paths.constants';
 
 export function BucketSocialShareContainer() {
   const vm = useBucketSocialShare();
@@ -29,6 +33,22 @@ export function BucketSocialShareContainer() {
           <h1>{vm.bucket.title}</h1>
         </div>
       </header>
+
+      <ol className="bucket-flow-steps" aria-label={vm.t('createBucket')}>
+        <li className="bucket-flow-step bucket-flow-step--done">
+          <span>1</span>
+          <strong>{vm.t('createBucket')}</strong>
+        </li>
+        <li className="bucket-flow-step bucket-flow-step--active">
+          <span>2</span>
+          <strong>{vm.s('shareWithFriends')}</strong>
+        </li>
+        <li className="bucket-flow-step">
+          <span>3</span>
+          <strong>{vm.t('orderNow')}</strong>
+        </li>
+      </ol>
+
       <BucketSocialSharePanel
         bucketId={vm.bucket.id}
         locale={vm.locale}
@@ -36,6 +56,17 @@ export function BucketSocialShareContainer() {
         onSuccess={vm.handleSuccess}
         onError={vm.handleError}
       />
+
+      <div className="guided-next-action section-card">
+        <div>
+          <p className="eyebrow">3 / 3</p>
+          <strong>{vm.t('orderNow')}</strong>
+        </div>
+        <Link className="button" to={buildBucketOrderRedirect(vm.bucket.id)}>
+          {vm.t('orderNow')}
+        </Link>
+      </div>
+
       <FeatureTour
         page="social-share"
         steps={tourSteps}
