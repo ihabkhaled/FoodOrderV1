@@ -386,7 +386,9 @@
         "static site",
         "meta tag",
         "robots",
-        "feed"
+        "feed",
+        "guide page",
+        "adsense"
       ],
       "paths": [
         "scripts/public-content"

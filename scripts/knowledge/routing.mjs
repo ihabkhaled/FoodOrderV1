@@ -90,7 +90,7 @@ const STATIC_DOMAINS = [
   {
     id: 'public-prerender',
     risk: 'standard',
-    keys: ['prerender', 'public site', 'static site', 'meta tag', 'robots', 'feed'],
+    keys: ['prerender', 'public site', 'static site', 'meta tag', 'robots', 'feed', 'guide page', 'adsense'],
     paths: ['scripts/public-content'],
     rules: ['15-internationalization'],
   },
@@ -129,6 +129,7 @@ const SKILLS_BY_KEYWORD = [
   { keys: ['version branch', 'start branch'], skill: 'start-version-branch' },
   { keys: ['eslint', 'typecheck', 'lint error'], skill: 'fix-eslint-typecheck' },
   { keys: ['invite link', 'share link', 'deep link'], skill: 'add-invite-link-kind' },
+  { keys: ['guide page', 'public page', 'marketing page', 'seo content', 'adsense'], skill: 'add-public-guide-page' },
 ];
 
 /** High-risk words escalate the validation lane no matter which domain matched. */

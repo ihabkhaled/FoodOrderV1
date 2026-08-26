@@ -1640,8 +1640,8 @@
     },
     {
       "path": "scripts/knowledge/routing.mjs",
-      "bytes": 10317,
-      "hash": "85b7f672f77fff7d9d7aa291889e739140d5dd595a697ae481e96b83ab6fbb60"
+      "bytes": 10461,
+      "hash": "1e9a90c58ed5191e212ab8e4cedddd61f3a65cd74fb102480bb394e62dd62372"
     },
     {
       "path": "scripts/migrate-legacy-data.mjs",
@@ -1652,6 +1652,11 @@
       "path": "scripts/migrate-member-privacy.mjs",
       "bytes": 4735,
       "hash": "5653a44525b7bc00e8f6e683b537d201bf15ecb19683e43a2137bc1d7c931241"
+    },
+    {
+      "path": "scripts/public-content/add-guide-page.mjs",
+      "bytes": 4830,
+      "hash": "7271efbbb5e3b213e01637b689992aa80ee52e634468268793ea48cc6935adb2"
     },
     {
       "path": "scripts/public-content/generate-public-content.mjs",
@@ -1697,6 +1702,11 @@
       "path": "skills/add-invite-link-kind.md",
       "bytes": 2951,
       "hash": "594f68c4e8bc4c3468699cf736d887aeb3fff22d0c8bc30a23ca677a38336741"
+    },
+    {
+      "path": "skills/add-public-guide-page.md",
+      "bytes": 2939,
+      "hash": "535943d3a942ecca26101e8d4fc22e8f0cdc2c762468a7d0695570505b53ab68"
     },
     {
       "path": "skills/add-route.md",
