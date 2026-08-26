@@ -668,6 +668,59 @@
           "answer": "O cardapio fica intacto: pertence a quem criou. O acesso concedido pelo grupo termina, entao compartilhe de novo direto ou por outro grupo se ainda for preciso."
         }
       ]
+    },
+    "fees-and-charges": {
+      "navigationLabel": "Taxas e encargos",
+      "seoTitle": "Como configurar impostos, servico e entrega | Gama3 Orderak",
+      "description": "Configure impostos, taxa de servico e entrega uma vez no cardapio. Escolha se a entrega e dividida igualmente ou proporcionalmente e veja como cada parte e calculada.",
+      "eyebrow": "Guia",
+      "heading": "Como configurar impostos, servico e entrega",
+      "introduction": "As taxas sao a parte de um pedido em grupo que gera discussao: alguem paga a entrega, alguem esquece o servico e as contas param de fechar. Configurar uma vez no cardapio faz cada rodada aplicar do mesmo jeito e cada parte ser calculada do mesmo jeito.",
+      "sections": [
+        {
+          "heading": "Onde ficam as taxas",
+          "paragraphs": [
+            "Impostos, servico e entrega ficam no cardapio, nao em cada pedido. Abra o cardapio, edite e preencha os tres valores na parte de precos. Toda rodada iniciada a partir dele herda esses valores.",
+            "Essa posicao e proposital. As taxas pertencem ao restaurante, nao a ocasiao: configurar uma vez da menos trabalho e erra menos do que redigitar toda noite."
+          ]
+        },
+        {
+          "heading": "Impostos e taxa de servico",
+          "paragraphs": [
+            "Impostos e servico sao percentuais aplicados sobre o valor do que cada um pediu. Quem pede o dobro paga o dobro dos dois, que e o que as pessoas esperam e raramente precisa de discussao.",
+            "Coloque a aliquota que o restaurante realmente cobra, nao um numero arredondado. Os totais so servem se baterem com o recibo que voce vai receber, e um ponto percentual de diferenca num pedido grande ja deixa o organizador no prejuizo.",
+            "Zero e um valor valido. Se os precos ja incluem imposto, deixe zero em vez de somar duas vezes: o aplicativo nunca presume uma aliquota por voce."
+          ]
+        },
+        {
+          "heading": "Dividir a entrega",
+          "paragraphs": [
+            "A entrega e um valor fixo, nao um percentual, entao precisa ser dividida de alguma forma. Voce escolhe entre dois criterios: igualmente entre os participantes ou proporcionalmente ao que cada um pediu.",
+            "Igual e mais simples e serve quando os pedidos tem tamanho parecido. Proporcional e mais justo quando uma pessoa pede para a familia toda e outra pede um cafe: quem gerou a maior parte do pedido leva a maior parte da entrega."
+          ]
+        },
+        {
+          "heading": "Ler uma parte",
+          "paragraphs": [
+            "O total de cada pessoa sao os itens dela, mais a parte de impostos e servico, mais a parte da entrega conforme o criterio do cardapio. O detalhamento aparece, nao so o numero final, para quem quiser conferir.",
+            "Assim que a rodada e congelada, as aliquotas ficam travadas com ela. Mudar uma taxa depois vale so para rodadas futuras: um recibo fechado nao se mexe."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "O restaurante cobrou algo inesperado. Da para corrigir uma rodada fechada?",
+          "answer": "Reabra a rodada se ela nao foi concluida, ajuste e congele de novo. Uma rodada concluida fica como estava para os recibos antigos seguirem corretos; nesse caso, acertem a diferenca fora do aplicativo."
+        },
+        {
+          "question": "Qual divisao de entrega escolher?",
+          "answer": "Igual quando os pedidos sao parecidos e o grupo prefere simplicidade. Proporcional quando uma ou duas pessoas concentram a maior parte do pedido, que e quando o igual comeca a parecer injusto."
+        },
+        {
+          "question": "As taxas valem para um pedido so meu?",
+          "answer": "Sim. A mesma politica de precos se aplica, entao um pedido individual a partir de um cardapio compartilhado mostra o que voce vai pagar de fato."
+        }
+      ]
     }
   },
   "systemPages": {

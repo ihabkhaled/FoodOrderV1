@@ -1409,6 +1409,120 @@
       }
     },
     {
+      "id": "fees-and-charges",
+      "slug": "fees-and-charges",
+      "navigation": false,
+      "adEligible": true,
+      "copy": {
+        "en": {
+          "navigationLabel": "Fees and charges",
+          "seoTitle": "How to set VAT, service, and delivery fees | Gama3 Orderak",
+          "description": "Set VAT, service charge, and delivery once on the menu. Choose whether delivery splits equally or in proportion to what each person ordered, and see how each share is calculated.",
+          "eyebrow": "Guide",
+          "heading": "How to set VAT, service, and delivery fees",
+          "introduction": "Fees are the part of a group order that causes arguments: someone pays the delivery, someone forgets the service charge, and the numbers stop matching. Configuring them once on the menu means every round applies them the same way and every share is calculated the same way.",
+          "sections": [
+            {
+              "heading": "Where fees live",
+              "paragraphs": [
+                "VAT, service charge, and delivery are set on the menu, not on each order. Open the menu, edit it, and set the three values under pricing. Every round started from that menu inherits them.",
+                "That placement is deliberate. Fees belong to the restaurant, not to the occasion, so setting them once is both less work and less error-prone than re-entering them on the night."
+              ]
+            },
+            {
+              "heading": "VAT and service charge",
+              "paragraphs": [
+                "VAT and service are percentages applied to the value of what each person ordered. Someone who orders twice as much pays twice as much of both, which is what people expect and rarely need to discuss.",
+                "Enter the rate the restaurant actually charges rather than a rounded figure. The totals are only useful if they match the receipt you will be handed, and a percentage point of drift on a large order is enough to leave the organizer out of pocket.",
+                "A rate of zero is valid. If the prices you entered already include VAT, leave it at zero rather than adding it twice — the app never assumes a rate on your behalf."
+              ]
+            },
+            {
+              "heading": "Splitting delivery",
+              "paragraphs": [
+                "Delivery is a flat amount rather than a percentage, so it has to be divided somehow. You choose between two policies: split it equally between everyone taking part, or in proportion to what each person ordered.",
+                "Equal is simpler and suits a group where orders are roughly the same size. Proportional is fairer when one person orders for a whole family and another orders a coffee — the person who caused most of the order carries most of the delivery."
+              ]
+            },
+            {
+              "heading": "Reading a share",
+              "paragraphs": [
+                "Each person’s total is their items, plus their share of VAT and service, plus their share of delivery under whichever policy the menu uses. The breakdown is shown, not just the final number, so anyone who wants to check can.",
+                "Once a round is frozen the rates are locked with it. Changing a fee on the menu afterwards affects future rounds only, so a settled receipt never moves after the fact."
+              ]
+            }
+          ],
+          "faq": [
+            {
+              "question": "The restaurant added a charge I did not expect. Can I fix a closed round?",
+              "answer": "Reopen the round if it has not been completed, adjust, and freeze it again. A completed round stays as it was so that past receipts remain accurate; for those, settle the difference outside the app."
+            },
+            {
+              "question": "Which delivery split should I choose?",
+              "answer": "Equal when orders are similar in size and the group values simplicity. Proportional when one or two people account for most of the order, which is when equal starts to feel unfair."
+            },
+            {
+              "question": "Do fees apply to a private order with just me?",
+              "answer": "Yes. The same pricing policy applies, so a single-person order from a shared menu still totals what you will actually pay."
+            }
+          ]
+        },
+        "ar": {
+          "navigationLabel": "الرسوم والضرائب",
+          "seoTitle": "كيفية ضبط الضريبة ورسوم الخدمة والتوصيل | جمع أوردرك",
+          "description": "اضبط الضريبة ورسوم الخدمة والتوصيل مرة واحدة على القائمة. واختر تقسيم التوصيل بالتساوي أو بالتناسب مع ما طلبه كل شخص، وشاهد كيف يُحسب نصيب كل فرد.",
+          "eyebrow": "دليل",
+          "heading": "كيفية ضبط الضريبة ورسوم الخدمة والتوصيل",
+          "introduction": "الرسوم هي الجزء الذي يثير الخلاف في الطلب الجماعي: أحدهم يدفع التوصيل، وآخر ينسى رسوم الخدمة، فتختلف الأرقام. وضبطها مرة واحدة على القائمة يعني أن كل جولة تطبّقها بالطريقة نفسها ويُحسب كل نصيب بالطريقة نفسها.",
+          "sections": [
+            {
+              "heading": "أين تُضبط الرسوم",
+              "paragraphs": [
+                "تُضبط الضريبة ورسوم الخدمة والتوصيل على القائمة لا على كل طلب. افتح القائمة وعدّلها واضبط القيم الثلاث ضمن التسعير. وترث كل جولة تبدأ من تلك القائمة هذه القيم.",
+                "وهذا الموضع مقصود. فالرسوم تخص المطعم لا المناسبة، لذا ضبطها مرة واحدة أقل جهدًا وأقل عرضة للخطأ من إعادة إدخالها في كل مرة."
+              ]
+            },
+            {
+              "heading": "الضريبة ورسوم الخدمة",
+              "paragraphs": [
+                "الضريبة والخدمة نسب مئوية تُطبَّق على قيمة ما طلبه كل شخص. فمن يطلب ضعف الكمية يدفع ضعف الاثنين، وهو ما يتوقعه الناس ونادرًا ما يحتاج نقاشًا.",
+                "أدخل النسبة التي يتقاضاها المطعم فعلًا لا رقمًا مقرّبًا. فالإجماليات لا تفيد إلا إذا طابقت الإيصال الذي ستستلمه، وانحراف نقطة مئوية في طلب كبير يكفي ليخسر المنظّم من جيبه.",
+                "والنسبة صفر قيمة صحيحة. فإذا كانت الأسعار التي أدخلتها شاملة الضريبة، اتركها صفرًا بدل إضافتها مرتين، فالتطبيق لا يفترض نسبة نيابة عنك أبدًا."
+              ]
+            },
+            {
+              "heading": "تقسيم التوصيل",
+              "paragraphs": [
+                "التوصيل مبلغ ثابت لا نسبة، لذا لا بد من تقسيمه بطريقة ما. وتختار بين سياستين: تقسيمه بالتساوي بين المشاركين، أو بالتناسب مع ما طلبه كل شخص.",
+                "التساوي أبسط ويناسب مجموعة طلباتها متقاربة الحجم. أما التناسب فأعدل حين يطلب شخص لعائلة كاملة وآخر يطلب قهوة، إذ يتحمّل من تسبّب في معظم الطلب معظم التوصيل."
+              ]
+            },
+            {
+              "heading": "قراءة النصيب",
+              "paragraphs": [
+                "إجمالي كل شخص هو أصنافه، زائد نصيبه من الضريبة والخدمة، زائد نصيبه من التوصيل حسب السياسة المستخدمة في القائمة. ويظهر التفصيل لا الرقم النهائي فقط، فيستطيع من أراد التحقق أن يفعل.",
+                "وبمجرد تجميد الجولة تُثبَّت النسب معها. وتغيير رسم على القائمة بعد ذلك يؤثر في الجولات القادمة فقط، فلا يتحرك إيصال مستقر بأثر رجعي."
+              ]
+            }
+          ],
+          "faq": [
+            {
+              "question": "أضاف المطعم رسمًا لم أتوقعه. هل أصلح جولة مغلقة؟",
+              "answer": "أعد فتح الجولة إن لم تكتمل، وعدّل، ثم جمّدها مجددًا. أما الجولة المكتملة فتبقى كما هي لتظل الإيصالات السابقة دقيقة، وتُسوّى الفروق خارج التطبيق."
+            },
+            {
+              "question": "أي تقسيم للتوصيل أختار؟",
+              "answer": "التساوي حين تتقارب أحجام الطلبات وتفضّل المجموعة البساطة. والتناسب حين يشكّل شخص أو اثنان معظم الطلب، وهي اللحظة التي يبدو فيها التساوي غير عادل."
+            },
+            {
+              "question": "هل تُطبَّق الرسوم على طلب خاص بي وحدي؟",
+              "answer": "نعم. تُطبَّق سياسة التسعير نفسها، فيظل طلب الشخص الواحد من قائمة مشتركة يعطي الإجمالي الذي ستدفعه فعلًا."
+            }
+          ]
+        }
+      }
+    },
+    {
       "id": "privacy",
       "slug": "privacy",
       "navigation": false,

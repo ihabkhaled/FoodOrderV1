@@ -668,6 +668,59 @@
           "answer": "Le menu reste intact : il appartient a son createur. L acces accorde via le groupe cesse ; repartagez-le directement ou via un autre groupe si besoin."
         }
       ]
+    },
+    "fees-and-charges": {
+      "navigationLabel": "Frais et taxes",
+      "seoTitle": "Regler la TVA, le service et la livraison | Gama3 Orderak",
+      "description": "Reglez la TVA, le service et la livraison une seule fois sur le menu. Choisissez un partage egal ou proportionnel de la livraison et voyez comment chaque part est calculee.",
+      "eyebrow": "Guide",
+      "heading": "Regler la TVA, le service et la livraison",
+      "introduction": "Les frais sont la partie d une commande groupee qui provoque des discussions : quelqu un paie la livraison, quelqu un oublie le service, et les chiffres ne tombent plus juste. Les configurer une fois sur le menu garantit que chaque tour les applique de la meme facon et que chaque part est calculee de la meme facon.",
+      "sections": [
+        {
+          "heading": "Ou se reglent les frais",
+          "paragraphs": [
+            "TVA, service et livraison se reglent sur le menu, pas sur chaque commande. Ouvrez le menu, modifiez-le et renseignez les trois valeurs dans la partie tarification. Chaque tour lance depuis ce menu en herite.",
+            "Cet emplacement est voulu. Les frais appartiennent au restaurant, pas a l occasion : les regler une fois demande moins de travail et laisse moins de place a l erreur que de les ressaisir chaque soir."
+          ]
+        },
+        {
+          "heading": "TVA et service",
+          "paragraphs": [
+            "La TVA et le service sont des pourcentages appliques a la valeur de ce que chacun a commande. Qui commande deux fois plus paie deux fois plus des deux, ce a quoi chacun s attend et qui se discute rarement.",
+            "Saisissez le taux reellement applique par le restaurant plutot qu un chiffre arrondi. Les totaux ne servent que s ils correspondent au recu qu on vous remettra, et un point d ecart sur une grosse commande suffit a laisser l organisateur de sa poche.",
+            "Un taux de zero est valide. Si les prix saisis incluent deja la TVA, laissez zero plutot que de l ajouter deux fois : l application ne suppose jamais un taux a votre place."
+          ]
+        },
+        {
+          "heading": "Partager la livraison",
+          "paragraphs": [
+            "La livraison est un montant fixe et non un pourcentage : il faut donc la diviser. Vous choisissez entre deux regles : a parts egales entre les participants, ou proportionnellement a ce que chacun a commande.",
+            "Egal est plus simple et convient quand les commandes ont des tailles voisines. Proportionnel est plus juste quand une personne commande pour toute une famille et une autre un cafe : celle qui a genere l essentiel de la commande porte l essentiel de la livraison."
+          ]
+        },
+        {
+          "heading": "Lire une part",
+          "paragraphs": [
+            "Le total de chacun, ce sont ses articles, plus sa part de TVA et de service, plus sa part de livraison selon la regle du menu. Le detail est affiche, pas seulement le montant final, pour que qui veut verifier le puisse.",
+            "Des qu un tour est fige, les taux sont verrouilles avec lui. Modifier un frais ensuite ne vaut que pour les tours suivants : un recu arrete ne bouge plus."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Le restaurant a ajoute un frais imprevu. Puis-je corriger un tour clos ?",
+          "answer": "Rouvrez le tour s il n est pas termine, corrigez, puis figez a nouveau. Un tour termine reste tel quel pour que les recus passes restent exacts ; pour ceux-la, reglez la difference en dehors de l application."
+        },
+        {
+          "question": "Quel partage de livraison choisir ?",
+          "answer": "Egal quand les commandes se ressemblent et que le groupe prefere la simplicite. Proportionnel quand une ou deux personnes representent l essentiel de la commande, moment ou l egal commence a sembler injuste."
+        },
+        {
+          "question": "Les frais s appliquent-ils a une commande pour moi seul ?",
+          "answer": "Oui. La meme politique tarifaire s applique, donc une commande individuelle depuis un menu partage indique bien ce que vous paierez."
+        }
+      ]
     }
   },
   "systemPages": {

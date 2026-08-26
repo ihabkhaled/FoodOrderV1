@@ -668,6 +668,59 @@
           "answer": "Il menu resta intatto: appartiene a chi lo ha creato. L accesso concesso tramite il gruppo finisce, quindi ricondividilo direttamente o con un altro gruppo se serve ancora."
         }
       ]
+    },
+    "fees-and-charges": {
+      "navigationLabel": "Commissioni",
+      "seoTitle": "Come impostare IVA, servizio e consegna | Gama3 Orderak",
+      "description": "Imposta IVA, servizio e consegna una volta sul menu. Scegli se la consegna si divide in parti uguali o in proporzione, e guarda come si calcola ogni quota.",
+      "eyebrow": "Guida",
+      "heading": "Come impostare IVA, servizio e consegna",
+      "introduction": "Le commissioni sono la parte di un ordine di gruppo che genera discussioni: qualcuno paga la consegna, qualcuno dimentica il servizio e i conti non tornano piu. Configurarle una volta sul menu significa che ogni giro le applica allo stesso modo e ogni quota si calcola allo stesso modo.",
+      "sections": [
+        {
+          "heading": "Dove stanno le commissioni",
+          "paragraphs": [
+            "IVA, servizio e consegna si impostano sul menu, non su ogni ordine. Apri il menu, modificalo e imposta i tre valori nella sezione prezzi. Ogni giro avviato da quel menu li eredita.",
+            "La collocazione e voluta. Le commissioni appartengono al ristorante, non all occasione: impostarle una volta e meno lavoro e meno soggetto a errori che reinserirle ogni sera."
+          ]
+        },
+        {
+          "heading": "IVA e servizio",
+          "paragraphs": [
+            "IVA e servizio sono percentuali applicate al valore di quanto ha ordinato ciascuno. Chi ordina il doppio paga il doppio di entrambe, che e cio che le persone si aspettano e raramente serve discutere.",
+            "Inserisci l aliquota che il ristorante applica davvero, non una cifra arrotondata. I totali servono solo se corrispondono alla ricevuta che ti daranno, e un punto percentuale di scarto su un ordine grande basta a lasciare l organizzatore in perdita.",
+            "Zero e un valore valido. Se i prezzi inseriti includono gia l IVA, lascia zero invece di aggiungerla due volte: l app non presume mai un aliquota al posto tuo."
+          ]
+        },
+        {
+          "heading": "Dividere la consegna",
+          "paragraphs": [
+            "La consegna e un importo fisso, non una percentuale, quindi va divisa in qualche modo. Scegli tra due criteri: in parti uguali tra i partecipanti, oppure in proporzione a quanto ha ordinato ognuno.",
+            "Uguale e piu semplice e va bene quando gli ordini sono di dimensioni simili. Proporzionale e piu equo quando una persona ordina per tutta la famiglia e un altra prende un caffe: chi ha generato la maggior parte dell ordine porta la maggior parte della consegna."
+          ]
+        },
+        {
+          "heading": "Leggere una quota",
+          "paragraphs": [
+            "Il totale di ciascuno e dato dalle sue voci, piu la sua parte di IVA e servizio, piu la sua parte di consegna secondo il criterio del menu. Il dettaglio e mostrato, non solo il numero finale, cosi chi vuole controllare puo farlo.",
+            "Quando un giro e bloccato, le aliquote restano fissate con esso. Modificare una commissione dopo vale solo per i giri futuri: una ricevuta chiusa non si muove piu."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Il ristorante ha aggiunto un costo imprevisto. Posso correggere un giro chiuso?",
+          "answer": "Riapri il giro se non e stato completato, correggi e blocca di nuovo. Un giro completato resta com era perche le ricevute passate restino corrette: per quelle, sistemate la differenza fuori dall app."
+        },
+        {
+          "question": "Quale divisione della consegna scelgo?",
+          "answer": "Uguale quando gli ordini sono simili e il gruppo preferisce la semplicita. Proporzionale quando una o due persone fanno la maggior parte dell ordine, che e quando l uguale inizia a sembrare ingiusto."
+        },
+        {
+          "question": "Le commissioni valgono anche per un ordine solo mio?",
+          "answer": "Si. Si applica la stessa politica di prezzo, quindi un ordine per una sola persona da un menu condiviso indica comunque quanto pagherai davvero."
+        }
+      ]
     }
   },
   "systemPages": {

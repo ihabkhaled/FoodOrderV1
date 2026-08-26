@@ -668,6 +668,59 @@
           "answer": "Das Menu bleibt unberuhrt; es gehort der Person, die es angelegt hat. Der uber die Gruppe gewahrte Zugriff endet — teile es bei Bedarf direkt oder uber eine andere Gruppe erneut."
         }
       ]
+    },
+    "fees-and-charges": {
+      "navigationLabel": "Gebuhren",
+      "seoTitle": "Steuer, Servicegebuhr und Lieferung einstellen | Gama3 Orderak",
+      "description": "Steuer, Servicegebuhr und Lieferung einmal am Menu einstellen. Waehle, ob die Lieferung gleich oder anteilig geteilt wird, und sieh, wie jeder Anteil berechnet wird.",
+      "eyebrow": "Anleitung",
+      "heading": "Steuer, Servicegebuhr und Lieferung einstellen",
+      "introduction": "Gebuhren sind der Teil einer Gruppenbestellung, der Streit ausloest: Einer zahlt die Lieferung, einer vergisst den Service, und die Zahlen passen nicht mehr. Einmal am Menu konfiguriert, wendet jede Runde sie gleich an und jeder Anteil wird gleich berechnet.",
+      "sections": [
+        {
+          "heading": "Wo Gebuhren eingestellt werden",
+          "paragraphs": [
+            "Steuer, Service und Lieferung werden am Menu eingestellt, nicht an jeder Bestellung. Offne das Menu, bearbeite es und trage die drei Werte unter Preisgestaltung ein. Jede daraus gestartete Runde erbt sie.",
+            "Der Ort ist Absicht. Gebuhren gehoren zum Restaurant, nicht zum Anlass: einmal einstellen ist weniger Arbeit und weniger fehleranfaellig, als sie jeden Abend neu einzutippen."
+          ]
+        },
+        {
+          "heading": "Steuer und Servicegebuhr",
+          "paragraphs": [
+            "Steuer und Service sind Prozentsatze auf den Wert dessen, was jede Person bestellt hat. Wer doppelt so viel bestellt, zahlt doppelt so viel von beidem — das erwarten die Leute, und es muss selten diskutiert werden.",
+            "Trage den Satz ein, den das Restaurant wirklich berechnet, nicht eine gerundete Zahl. Summen nutzen nur, wenn sie zum Beleg passen, den du bekommst; ein Prozentpunkt Abweichung bei einer grossen Bestellung reicht, damit der Organisator draufzahlt.",
+            "Null ist ein gultiger Satz. Sind die eingetragenen Preise bereits inklusive Steuer, lass null stehen, statt sie doppelt zu addieren: Die App unterstellt nie einen Satz fur dich."
+          ]
+        },
+        {
+          "heading": "Lieferung aufteilen",
+          "paragraphs": [
+            "Die Lieferung ist ein fester Betrag, kein Prozentsatz, also muss sie irgendwie geteilt werden. Du waehlst zwischen zwei Regeln: zu gleichen Teilen unter den Teilnehmenden oder anteilig nach Bestellwert.",
+            "Gleich ist einfacher und passt, wenn die Bestellungen ahnlich gross sind. Anteilig ist fairer, wenn eine Person fur eine ganze Familie bestellt und eine andere einen Kaffee: Wer den Grossteil verursacht hat, tragt den Grossteil der Lieferung."
+          ]
+        },
+        {
+          "heading": "Einen Anteil lesen",
+          "paragraphs": [
+            "Die Summe jeder Person sind ihre Artikel, plus ihr Anteil an Steuer und Service, plus ihr Anteil an der Lieferung nach der Regel des Menus. Die Aufschlusselung wird gezeigt, nicht nur die Endzahl, damit nachrechnen kann, wer will.",
+            "Sobald eine Runde eingefroren ist, sind die Satze mit ihr fixiert. Eine spatere Anderung am Menu gilt nur fur kunftige Runden: Ein abgeschlossener Beleg verschiebt sich nicht mehr."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Das Restaurant hat unerwartet etwas berechnet. Kann ich eine geschlossene Runde korrigieren?",
+          "answer": "Offne die Runde erneut, sofern sie nicht abgeschlossen ist, korrigiere und friere wieder ein. Eine abgeschlossene Runde bleibt, wie sie war, damit alte Belege korrekt bleiben; die Differenz klart ihr dann ausserhalb der App."
+        },
+        {
+          "question": "Welche Lieferaufteilung soll ich waehlen?",
+          "answer": "Gleich, wenn die Bestellungen ahnlich gross sind und die Gruppe es einfach mag. Anteilig, wenn ein oder zwei Personen den Grossteil ausmachen — genau dann wirkt gleich unfair."
+        },
+        {
+          "question": "Gelten Gebuhren auch fur eine Bestellung nur fur mich?",
+          "answer": "Ja. Dieselbe Preisregel gilt, sodass auch eine Einzelbestellung aus einem geteilten Menu den Betrag zeigt, den du wirklich zahlst."
+        }
+      ]
     }
   },
   "systemPages": {

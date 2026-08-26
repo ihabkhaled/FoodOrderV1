@@ -668,6 +668,59 @@
           "answer": "El menu queda intacto: pertenece a quien lo creo. El acceso concedido por el grupo termina, asi que vuelve a compartirlo directamente o por otro grupo si aun hace falta."
         }
       ]
+    },
+    "fees-and-charges": {
+      "navigationLabel": "Cargos y tasas",
+      "seoTitle": "Como configurar IVA, servicio y envio | Gama3 Orderak",
+      "description": "Configura IVA, servicio y envio una vez en el menu. Elige si el envio se reparte a partes iguales o en proporcion, y mira como se calcula cada parte.",
+      "eyebrow": "Guia",
+      "heading": "Como configurar IVA, servicio y envio",
+      "introduction": "Los cargos son la parte de un pedido en grupo que genera discusiones: alguien paga el envio, alguien olvida el servicio y las cuentas dejan de cuadrar. Configurarlos una vez en el menu hace que cada ronda los aplique igual y cada parte se calcule igual.",
+      "sections": [
+        {
+          "heading": "Donde se configuran",
+          "paragraphs": [
+            "IVA, servicio y envio se configuran en el menu, no en cada pedido. Abre el menu, editalo y pon los tres valores en la seccion de precios. Cada ronda iniciada desde ese menu los hereda.",
+            "La ubicacion es deliberada. Los cargos pertenecen al restaurante, no a la ocasion: configurarlos una vez da menos trabajo y menos margen de error que reescribirlos cada noche."
+          ]
+        },
+        {
+          "heading": "IVA y servicio",
+          "paragraphs": [
+            "IVA y servicio son porcentajes aplicados al valor de lo que pidio cada persona. Quien pide el doble paga el doble de ambos, que es lo que la gente espera y rara vez hay que discutir.",
+            "Introduce el tipo que el restaurante cobra de verdad, no una cifra redondeada. Los totales solo sirven si coinciden con el recibo que te daran, y un punto porcentual de desvio en un pedido grande basta para que el organizador ponga dinero.",
+            "Cero es un valor valido. Si los precios que pusiste ya incluyen IVA, deja cero en vez de sumarla dos veces: la aplicacion nunca supone un tipo por ti."
+          ]
+        },
+        {
+          "heading": "Repartir el envio",
+          "paragraphs": [
+            "El envio es un importe fijo, no un porcentaje, asi que hay que dividirlo de algun modo. Eliges entre dos criterios: a partes iguales entre los participantes, o en proporcion a lo que pidio cada uno.",
+            "Igual es mas simple y va bien cuando los pedidos son de tamano parecido. Proporcional es mas justo cuando una persona pide para toda una familia y otra un cafe: quien genero la mayor parte del pedido carga con la mayor parte del envio."
+          ]
+        },
+        {
+          "heading": "Leer una parte",
+          "paragraphs": [
+            "El total de cada persona son sus articulos, mas su parte de IVA y servicio, mas su parte del envio segun el criterio del menu. Se muestra el desglose, no solo la cifra final, para que quien quiera comprobarlo pueda.",
+            "Una vez congelada la ronda, los tipos quedan fijados con ella. Cambiar un cargo despues solo afecta a rondas futuras: un recibo cerrado ya no se mueve."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "El restaurante anadio un cargo inesperado. Puedo corregir una ronda cerrada?",
+          "answer": "Reabre la ronda si no se ha completado, corrige y vuelve a congelar. Una ronda completada queda como estaba para que los recibos antiguos sigan siendo exactos; en ese caso, ajustad la diferencia fuera de la aplicacion."
+        },
+        {
+          "question": "Que reparto de envio elijo?",
+          "answer": "Igual cuando los pedidos son parecidos y el grupo prefiere la sencillez. Proporcional cuando una o dos personas concentran la mayor parte del pedido, que es cuando el igual empieza a parecer injusto."
+        },
+        {
+          "question": "Se aplican los cargos a un pedido solo mio?",
+          "answer": "Si. Se aplica la misma politica de precios, asi que un pedido individual desde un menu compartido sigue mostrando lo que pagaras de verdad."
+        }
+      ]
     }
   },
   "systemPages": {

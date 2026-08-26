@@ -31,6 +31,7 @@ export type PublicRouteId =
   | 'run-an-order-round'
   | 'invite-friends'
   | 'work-with-groups'
+  | 'fees-and-charges'
   | 'privacy'
   | 'terms';
 

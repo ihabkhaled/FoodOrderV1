@@ -297,6 +297,7 @@ const renderFooter = (catalog, locale, currentPage) => {
     'run-an-order-round',
     'invite-friends',
     'work-with-groups',
+    'fees-and-charges',
     'faq',
     'contact',
     'privacy',

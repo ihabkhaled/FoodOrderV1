@@ -668,6 +668,59 @@
           "answer": "El menu nafsaha mabtetaathersh, heya melk elli 3amalha. Amma el wosool elli etadda 3an tareeq el group fa byentahi, fa sharekha tani 3ala tool aw 3an tareeq group tanya law el nas lessa me7tagaha."
         }
       ]
+    },
+    "fees-and-charges": {
+      "navigationLabel": "El rosoom wel dara2eb",
+      "seoTitle": "Ezay tezabbat el dariba we rasm el khedma wel tawseel | Gama3 Orderak",
+      "description": "Zabbat el dariba we rasm el khedma wel tawseel marra wahda 3ala el menu. Ekhtar el tawseel yetassem bel tasawi walla bel tanasob, we shoof nasib kol wahed betyethesib ezay.",
+      "eyebrow": "Dalil",
+      "heading": "Ezay tezabbat el dariba we rasm el khedma wel tawseel",
+      "introduction": "El rosoom heya el gozaa elli beyekhalli khilaf fel order el gama3i: wahed yedfa3 el tawseel, wel tani yensa rasm el khedma, wel arqam matetlaash. Zabbethom marra wahda 3ala el menu ya3ni en kol round hatetabbaho be nafs el tare2a we kol nasib hayethesib be nafs el tare2a.",
+      "sections": [
+        {
+          "heading": "El rosoom bettezabbat feen",
+          "paragraphs": [
+            "El dariba we rasm el khedma wel tawseel bettezabbat 3ala el menu mesh 3ala kol order. Eftah el menu, 3addelha, we zabbat el talat qeyam gowa el tas3eer. We kol round tebtedi men el menu di betwrath el qeyam di.",
+            "Wel makan da maqsood. El rosoom bet2a khassa bel mat3am mesh bel monasba, fa zabtha marra wahda gohd a2al we ghalat a2al men enak te3eed kotabetha kol marra."
+          ]
+        },
+        {
+          "heading": "El dariba we rasm el khedma",
+          "paragraphs": [
+            "El dariba wel khedma nesab me2aweya bettetabbe2 3ala eemet elli kol wahed talabo. Fa elli yetlob el de3f yedfa3 de3f el etnein, we da elli el nas betetwaqa3o we nader ma yehtag nea2ash.",
+            "Ektob el nesba elli el mat3am byakhodha fe3lan mesh rakam mearrab. El egmali mayenfa3sh gheir law tabaq el fatoora elli hatestelemha, we forouq no2ta wahda fe order kebir tekfi 3ashan el monazzem yekhsar men gebo.",
+            "Wel nesba sefr eema saheeha. Law el as3ar elli katabtaha shamla el dariba khalas, sebha sefr badal ma tetzad marraten. El app 3omro ma beyeftered nesba men 3andoh."
+          ]
+        },
+        {
+          "heading": "Tas2eem el tawseel",
+          "paragraphs": [
+            "El tawseel mablagh thabet mesh nesba, fa lazem yetassem be tare2a. Ekhtar bein siyaseten: tas2eemo bel tasawi bein el moshtarkeen, aw bel tanasob ma3 elli kol wahed talabo.",
+            "El tasawi absat we yenfa3 lel group elli talabatha araib fel hagm. Wel tanasob a3dal lamma had yetlob le 3ela kamla we had tani yetlob ahwa, fa elli sabbeb mo3zam el order yeshil mo3zam el tawseel."
+          ]
+        },
+        {
+          "heading": "Ezay te2ra el nasib",
+          "paragraphs": [
+            "Egmali kol wahed howa asnafo, zayed nasibo men el dariba wel khedma, zayed nasibo men el tawseel hasab el siyasa elli fel menu. Wel tafseel beyebaan mesh bas el rakam el akheer, fa elli 3ayez yeraga3 ye2dar.",
+            "We awel ma el round tetgammed el nesab bettethabbet ma3aha. We taghyeer rasm 3ala el menu ba3dein beyeasar 3ala el rounds el gaya bas, fa el fatoora elli estaqarret mabtetharaksh."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "El mat3am zawwed rasm mesh metwaqa3. A2dar asalla7 round makfoola?",
+          "answer": "Eftah el round tani law makhalsetsh, 3addel, we gammedha tani. Amma el round el khalsana fatefdal zay ma heya 3ashan el fawatir el adima tefdal mazbota, wel far2 yetsawa bara el app."
+        },
+        {
+          "question": "Akhtar anhi tare2a le tas2eem el tawseel?",
+          "answer": "El tasawi lamma el talabat teb2a araib fel hagm wel group yefaddal el basata. Wel tanasob lamma wahed aw etnein yeb2o mo3zam el order, we di el lahza elli el tasawi beyebaan feeha mesh 3adel."
+        },
+        {
+          "question": "El rosoom bettetabbe2 3ala order khass beya lewahdi?",
+          "answer": "Aywa. Nafs siyaset el tas3eer bettetabbe2, fa order le shakhs wahed men menu metsharek bardo beyedeek el egmali elli hatedfa3o fe3lan."
+        }
+      ]
     }
   },
   "systemPages": {
