@@ -479,8 +479,16 @@ body:has(.public-site) {
   font-size: 1.1rem;
 }
 
+/*
+ * An inset card rather than a full-bleed band. Every other surface on the page
+ * is a rounded panel with breathing room; the footer stretching edge to edge
+ * made it read as part of the browser chrome instead of part of the page.
+ */
 .public-footer {
-  border-block-start: 1px solid var(--public-border);
+  margin: clamp(1.5rem, 4vw, 3rem) clamp(0.75rem, 3vw, 1.5rem)
+    clamp(0.75rem, 3vw, 1.5rem);
+  border: 1px solid var(--public-border);
+  border-radius: var(--public-radius);
   background: rgb(255 255 255 / 62%);
 }
 

@@ -50,15 +50,8 @@
   margin: auto;
 }
 
-.loading-copy,
-.loading-skeleton {
-  justify-items: center;
+.loading-copy {
   text-align: center;
-}
-
-.loading-skeleton > span {
-  justify-self: center;
-  width: 100%;
 }
 
 @media (max-width: 719px) {

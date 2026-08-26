@@ -159,6 +159,11 @@
       "hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
     },
     {
+      "path": ".playwright-mcp/page-2026-08-26T10-59-42-088Z.yml",
+      "bytes": 1,
+      "hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
       "path": ".trivyignore.yaml",
       "bytes": 20,
       "hash": "0944c6a1e87ece8c4cd87aa66493cd2991597e526caa656be1de2e38dae52513"
@@ -3270,8 +3275,8 @@
     },
     {
       "path": "src/modules/public-content/public-content.css",
-      "bytes": 18744,
-      "hash": "499ce17b788606ce12b726bf34dddfd8d782b3cd3ebf5c4a51f8521132176871"
+      "bytes": 19107,
+      "hash": "d5ae9a3d06b780bc4a41a74e808a568002527e30b838736a7e342ba0bf499bb7"
     },
     {
       "path": "src/modules/public-content/routes/public-content-route-registry.helper.ts",
@@ -4510,8 +4515,8 @@
     },
     {
       "path": "src/shared/ui/loading/loading.component.tsx",
-      "bytes": 767,
-      "hash": "7a617b01d3a78131e3b0a3201d93365519bb730f52ebbcda0b6c35d689dee761"
+      "bytes": 876,
+      "hash": "0b4be09663cf969e84288f8b24adb957a2a32b78ec46a4f02cee9ab3269d1475"
     },
     {
       "path": "src/shared/ui/numeric-field/index.ts",
@@ -4600,8 +4605,8 @@
     },
     {
       "path": "src/shared/ui/shell-alignment.css",
-      "bytes": 1662,
-      "hash": "0b5e909068aef77124599bd5fc456fa0f64365873287a0fa212e016f4e81c926"
+      "bytes": 1549,
+      "hash": "bcf122962202b5a1a86cf68528fd7941f8cf6141a29f347827635f4ec51cfce5"
     },
     {
       "path": "src/shared/ui/skeleton/index.ts",
@@ -4625,8 +4630,8 @@
     },
     {
       "path": "src/shared/ui/ux-polish.css",
-      "bytes": 21712,
-      "hash": "d6ecf9cfdfdadf8d56948a1243a2980b17e4809e4c6f5e77bb04e46078f3205f"
+      "bytes": 20869,
+      "hash": "f6d986301578bdd3c54026ca057ecf8727d2905aeca9907a5cfd373b6c69b086"
     },
     {
       "path": "src/shared/ui/virtual-list-footer/index.ts",
@@ -4645,8 +4650,8 @@
     },
     {
       "path": "src/socialNotifications.css",
-      "bytes": 7087,
-      "hash": "c170cd3eda853b93495494dc907b63c29d2b0d842ced7753adcb5856d7c7ef31"
+      "bytes": 7384,
+      "hash": "03515bf136c9bcd17e74bae0050a62c8521ce7eb952317c311c9df643e79683d"
     },
     {
       "path": "src/styles.css",
@@ -4670,8 +4675,8 @@
     },
     {
       "path": "src/virtualLists.css",
-      "bytes": 2749,
-      "hash": "aa14f08b15c6c0711177dc6dbf9bf16eb58f6d6974af0c3c76fce6f0f2909922"
+      "bytes": 2986,
+      "hash": "08973a8b2dd32cb0ea2ebb0e85a5354200b7d36810057c5adeef581c95a45554"
     },
     {
       "path": "src/vite-env.d.ts",

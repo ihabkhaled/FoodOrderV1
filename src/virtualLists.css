@@ -83,9 +83,15 @@
   margin-top: 8px;
 }
 
+/*
+ * The search field, these tabs, and the first result sat flush against each
+ * other, so the controls read as one undifferentiated block. Margins here keep
+ * the filter row visibly separate from both.
+ */
 .filter-tabs {
   display: flex;
   gap: 8px;
+  margin-block: 12px 16px;
   overflow-x: auto;
   padding: 4px;
   border: 1px solid var(--line);
