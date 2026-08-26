@@ -26,6 +26,11 @@
       "hash": "83b694b8ea0b84fdb540b39e8237d8efaaadfcf8d02a8a1d37ea05bfa54b1f69"
     },
     {
+      "path": "tests/components/BusyButton.test.tsx",
+      "bytes": 1890,
+      "hash": "60923bf26b9110f90010223a49507fc75c6eae588947a599ea4e1f197307e111"
+    },
+    {
       "path": "tests/components/ConfirmDialog.test.tsx",
       "bytes": 2186,
       "hash": "f3a0c64865c509ccb3019d64042f3e1d256a6509049d2524f68d4b58572465e2"

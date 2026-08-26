@@ -1,15 +1,6 @@
 import { BROWSER_LOCALE_PREFIX_PATTERN } from './browser-locale-path.constants';
 
 /**
- * The origin the app is being served from.
- *
- * Invite links are built against this rather than a compiled-in constant, so a
- * link shared from a preview deployment or an installed PWA points back at the
- * host the sharer is actually using.
- */
-export const getCurrentOrigin = (): string => globalThis.location.origin;
-
-/**
  * Origin plus the locale segment the app is currently mounted under.
  *
  * The web build gives its router a `/{locale}` basename, so a shared link that

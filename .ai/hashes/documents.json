@@ -187,6 +187,7 @@
   "rules/23-context-memory-and-evidence.md": "bf584e797f3486bf067707e69937232b1af1919f60ac66561abc0f41b6a3bd57",
   "rules/24-communication-verification-and-completion.md": "1061c93647bce62161b0d4f5a03d100fa2d16de2fe367224a82eb23973b95ce8",
   "rules/25-shareable-links-and-deep-linking.md": "661e83eeebbcc1a5db5cf7936660728a3f0d1d5199b6defc03377b1107438c4b",
+  "rules/26-mutating-actions-and-busy-state.md": "e51a00662a6e6436cdefdecd54fb3e306437aca19347110319d98a0552501b97",
   "rules/README.md": "4608e9c6fd9be8acbb5b092acd27adfa2b5d91df0e3a8215d257f367b7221986",
   "rules/versioning.md": "967be838453bb22583a16f9e1aaecb4081082c4a16a85a6e271234bdd6ef7f75",
   "skills/README.md": "a50afcdf53e20efb900251e8c0af7001ec2b1795a19ce0fc436202982023829d",

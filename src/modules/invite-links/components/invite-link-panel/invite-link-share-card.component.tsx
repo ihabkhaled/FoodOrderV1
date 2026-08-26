@@ -2,6 +2,7 @@ import type { CreatedInviteLink, Locale } from '@/modules/data-access';
 import { Check, Copy, Share2 } from '@/packages/icons';
 import { formatDateTime } from '@/shared/helpers';
 import type { MessageKey } from '@/shared/i18n';
+import { BusyButton } from '@/shared/ui';
 
 export interface InviteLinkShareCardProps {
   locale: Locale;
@@ -46,32 +47,28 @@ export function InviteLinkShareCard({
         </div>
       </div>
       <p className="muted">{description}</p>
-      <button
-        type="button"
-        className="button"
+      <BusyButton
+        busy={creating}
+        busyLabel={t('loading')}
         onClick={onCreate}
-        disabled={creating}
-        aria-busy={creating}
+        icon={<Share2 />}
       >
-        <Share2 />
-        {creating ? t('loading') : actionLabel}
-      </button>
+        {actionLabel}
+      </BusyButton>
       {link ? (
         <div className="join-code-box" role="status">
           <p className="muted">
             {t('inviteLinkExpires')} {formatDateTime(link.expiresAt, locale)}
           </p>
           <code className="join-code">{link.url}</code>
-          <button
-            type="button"
+          <BusyButton
+            busy={sharing}
             className="button secondary"
             onClick={onShare}
-            disabled={sharing}
-            aria-busy={sharing}
+            icon={copied ? <Check /> : <Copy />}
           >
-            {copied ? <Check /> : <Copy />}
             {t('inviteLinkShareAction')}
-          </button>
+          </BusyButton>
         </div>
       ) : null}
     </section>

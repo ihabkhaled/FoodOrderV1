@@ -1,5 +1,6 @@
 import type { InviteLinkPreview } from '@/modules/data-access';
 import type { MessageKey } from '@/shared/i18n';
+import { BusyButton } from '@/shared/ui';
 
 export interface InviteLinkPreviewCardProps {
   preview: InviteLinkPreview;
@@ -50,15 +51,14 @@ export function InviteLinkPreviewCard({
           {t('inviteLinkRole')}: {t(ROLE_LABEL_KEYS[preview.role])}
         </p>
       ) : null}
-      <button
-        type="button"
+      <BusyButton
+        busy={redeeming}
+        busyLabel={t('loading')}
         className="primary"
         onClick={onAccept}
-        disabled={redeeming}
-        aria-busy={redeeming}
       >
-        {redeeming ? t('loading') : t(actionKey(preview.kind))}
-      </button>
+        {t(actionKey(preview.kind))}
+      </BusyButton>
     </section>
   );
 }

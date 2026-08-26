@@ -1569,6 +1569,11 @@
       "hash": "661e83eeebbcc1a5db5cf7936660728a3f0d1d5199b6defc03377b1107438c4b"
     },
     {
+      "path": "rules/26-mutating-actions-and-busy-state.md",
+      "bytes": 2223,
+      "hash": "e51a00662a6e6436cdefdecd54fb3e306437aca19347110319d98a0552501b97"
+    },
+    {
       "path": "rules/README.md",
       "bytes": 3954,
       "hash": "4608e9c6fd9be8acbb5b092acd27adfa2b5d91df0e3a8215d257f367b7221986"
@@ -2761,12 +2766,12 @@
     {
       "path": "src/modules/invite-links/components/invite-link-panel/invite-link-preview.component.tsx",
       "bytes": 1853,
-      "hash": "cb4f782a838a86f070560a03fbc32c312a0a2af8b9acbed00c6c59e5165d0474"
+      "hash": "1c4d8da00d304367590296854cb3ae3b1e2585dc874feef25251f226dcd4e92c"
     },
     {
       "path": "src/modules/invite-links/components/invite-link-panel/invite-link-share-card.component.tsx",
-      "bytes": 2104,
-      "hash": "b8f14655e9a235a214d4d9a4abb70e5625607e3efbec48ea22c592ed21df2fbf"
+      "bytes": 2037,
+      "hash": "83cbf780ec235c67c0b917e51e1eae678100bd4991988f60cfb1e926f4a84ed6"
     },
     {
       "path": "src/modules/invite-links/containers/bucket-invite-link.container.tsx",
@@ -2800,13 +2805,13 @@
     },
     {
       "path": "src/modules/invite-links/index.ts",
-      "bytes": 406,
-      "hash": "e016711a9f6ba321737b0616842c1e3a60a5a3c8d570013c139742fa6edbe2d9"
+      "bytes": 323,
+      "hash": "27013e530665a5a91f78d003a6b5fe6b28e9bf72c4d28783b9c50eae95595375"
     },
     {
       "path": "src/modules/invite-links/routes/invite-link-route-paths.constants.ts",
-      "bytes": 157,
-      "hash": "62fac3dc94f603f6a988fb00a17f60cb485aaa2a86ae64f8d3d10c39bcde363c"
+      "bytes": 53,
+      "hash": "bfc098d54aa541854ff29c052a2af8829c0e493f0a9759f1c54b4ee0d126439a"
     },
     {
       "path": "src/modules/invite-links/routes/invite-link.routes.tsx",
@@ -4100,13 +4105,13 @@
     },
     {
       "path": "src/platform/browser/index.ts",
-      "bytes": 1793,
-      "hash": "21b9a37aa1563fcb1d2f0a85717349c98629b54439961297b6c131e8c89143eb"
+      "bytes": 1775,
+      "hash": "631ce2fa2ee918dfff63090890c2f70e218a383e353cb2dd3ef641b9392dc3c9"
     },
     {
       "path": "src/platform/browser/location-origin.adapter.ts",
-      "bytes": 1061,
-      "hash": "d4cab84eac10ca4a2b4532722d1211c79b759f853a250c97da85a0bf11db1873"
+      "bytes": 733,
+      "hash": "4297c2245cac63a4ebcebcca945beaac15d9d12254f6aff2596bd38309f1d8b3"
     },
     {
       "path": "src/platform/browser/public-theme.adapter.ts",
@@ -4409,6 +4414,11 @@
       "hash": "fbe615b69310a361485bd3941cc1a9bfa455165eacadb4fd96758941260e6ca1"
     },
     {
+      "path": "src/shared/ui/busy-button/busy-button.component.tsx",
+      "bytes": 1550,
+      "hash": "1c75e42e36dbff3ba122746e53c495eddc8427dcaec6ee64727d84c8dbd1bde0"
+    },
+    {
       "path": "src/shared/ui/confirm-dialog/confirm-dialog.component.tsx",
       "bytes": 1167,
       "hash": "cd86a8b855492b229a2aa03c7dfcb9dbb69fe66cb104ce0e584c3fd18710632d"
@@ -4495,8 +4505,8 @@
     },
     {
       "path": "src/shared/ui/index.ts",
-      "bytes": 798,
-      "hash": "b5b4e1762d443087d2cfc9ee0e5b7386443f4570bfe5712750688d1b07f9cc8d"
+      "bytes": 886,
+      "hash": "9d1cfe26daa7fe77b7ed8363c804ce23e61204e74a59521ebd6414fcdd6e5c7a"
     },
     {
       "path": "src/shared/ui/language-select/index.ts",
@@ -4717,6 +4727,11 @@
       "path": "tests/components/BackLink.test.tsx",
       "bytes": 1478,
       "hash": "83b694b8ea0b84fdb540b39e8237d8efaaadfcf8d02a8a1d37ea05bfa54b1f69"
+    },
+    {
+      "path": "tests/components/BusyButton.test.tsx",
+      "bytes": 1890,
+      "hash": "60923bf26b9110f90010223a49507fc75c6eae588947a599ea4e1f197307e111"
     },
     {
       "path": "tests/components/ConfirmDialog.test.tsx",

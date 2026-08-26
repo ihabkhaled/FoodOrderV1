@@ -2586,6 +2586,11 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/shared/ui/busy-button/busy-button.component.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/shared/ui/confirm-dialog/confirm-dialog.component.tsx",
       "tests": [],
       "relationship": "inferred"
