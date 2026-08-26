@@ -385,6 +385,59 @@
           ]
         }
       ]
+    },
+    "create-a-menu": {
+      "navigationLabel": "Creer un menu",
+      "seoTitle": "Comment creer un menu reutilisable | Gama3 Orderak",
+      "description": "Guide pas a pas pour creer un menu reutilisable : ajoutez les articles et les prix, reglez les frais une seule fois et reutilisez le meme menu a chaque commande.",
+      "eyebrow": "Guide",
+      "heading": "Comment creer un menu reutilisable",
+      "introduction": "Un menu — appele bucket dans l application — est la liste des articles que votre groupe commande. Vous le creez une fois, et chaque commande suivante part de la plutot que d une page vide. Ce guide explique comment le creer, le tarifer correctement et le preparer au partage.",
+      "sections": [
+        {
+          "heading": "1. Creez le menu",
+          "paragraphs": [
+            "Ouvrez Buckets depuis la navigation et choisissez Creer un bucket. Donnez-lui le nom que les gens reconnaissent, en general le restaurant ou l occasion, comme « Chawarma du vendredi » ou « Dejeuner du bureau ».",
+            "Le menu vous appartient. Personne d autre ne le voit tant que vous ne le partagez pas, et le partage est une etape distincte et volontaire, expliquee dans le guide suivant."
+          ]
+        },
+        {
+          "heading": "2. Ajoutez les articles et les prix",
+          "paragraphs": [
+            "Ajoutez chaque article avec son prix unitaire. Les prix utilisent la devise choisie dans les Reglages et sont a l unite : l application multiplie par la quantite au moment de commander.",
+            "Gardez des noms courts et precis. « Chawarma poulet — grand » se choisit plus facilement a six sur un telephone que « Sandwich option 2 ». Si le restaurant change un prix, modifiez l article et chaque commande suivante utilisera le nouveau montant.",
+            "Vous pouvez laisser un prix a zero pendant la construction du menu. Le zero apparait comme un espace reserve et non comme un montant reel, si bien qu un article incomplet se voit au lieu de sembler gratuit."
+          ]
+        },
+        {
+          "heading": "3. Reglez les frais une seule fois",
+          "paragraphs": [
+            "La TVA, le service et la livraison se configurent sur le menu, pas sur chaque commande. Reglez-les une fois et chaque tour cree a partir de ce menu les appliquera de la meme facon.",
+            "La livraison peut etre partagee a parts egales ou proportionnellement a ce que chacun a commande. Choisissez le proportionnel quand une personne commande beaucoup plus que les autres, et l egal quand le groupe prefere la simplicite."
+          ]
+        },
+        {
+          "heading": "4. Reutilisez-le",
+          "paragraphs": [
+            "Une fois le menu cree, recommander revient a lancer un nouveau tour a partir de lui. Les articles, les prix et la politique de frais suivent, et les personnes avec qui vous l avez partage restent rattachees.",
+            "S il vous faut une variante — une seconde adresse avec d autres prix, par exemple — dupliquez le menu et modifiez la copie. L original reste intact."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Dois-je refaire le menu a chaque commande ?",
+          "answer": "Non. C est tout l interet d un menu reutilisable. Vous le creez une fois et lancez chaque tour a partir de lui : articles, prix et frais suivent."
+        },
+        {
+          "question": "Puis-je changer un prix apres que les gens ont commande ?",
+          "answer": "Modifier un article vaut pour les tours suivants. Un tour deja fige conserve les prix avec lesquels il a ete fige, donc un total arrete ne bouge pas."
+        },
+        {
+          "question": "Qui peut voir un menu que je cree ?",
+          "answer": "Vous seul, jusqu au partage. Le partage est explicite — lien, code, ami ou groupe — et vous pouvez revoquer l acces a tout moment."
+        }
+      ]
     }
   },
   "systemPages": {

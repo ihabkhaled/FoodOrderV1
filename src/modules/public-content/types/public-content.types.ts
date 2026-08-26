@@ -24,6 +24,9 @@ export type PublicRouteId =
   | 'split-bill-and-receipts'
   | 'faq'
   | 'contact'
+  // Step-by-step guides. They carry the depth a reader (and an ad
+  // reviewer) expects, which the original ten pages did not.
+  | 'create-a-menu'
   | 'privacy'
   | 'terms';
 

@@ -385,6 +385,59 @@
           ]
         }
       ]
+    },
+    "create-a-menu": {
+      "navigationLabel": "Menu erstellen",
+      "seoTitle": "Ein wiederverwendbares Menu erstellen | Gama3 Orderak",
+      "description": "Schritt-fur-Schritt-Anleitung fur ein wiederverwendbares Menu: Artikel und Preise anlegen, Gebuhren einmal einstellen und dasselbe Menu fur jede Runde nutzen.",
+      "eyebrow": "Anleitung",
+      "heading": "Ein wiederverwendbares Menu erstellen",
+      "introduction": "Ein Menu — in der App Bucket genannt — ist die Liste der Artikel, aus der deine Gruppe bestellt. Du legst sie einmal an, und jede weitere Runde startet damit statt mit einer leeren Seite. Diese Anleitung zeigt, wie du es anlegst, richtig bepreist und fur das Teilen vorbereitest.",
+      "sections": [
+        {
+          "heading": "1. Menu anlegen",
+          "paragraphs": [
+            "Offne Buckets in der Navigation und wahle Bucket erstellen. Gib ihm den Namen, den alle wiedererkennen, meist das Restaurant oder den Anlass, etwa \"Freitags-Schawarma\" oder \"Buro-Mittagessen\".",
+            "Das Menu gehort dir. Niemand sonst sieht es, bevor du es teilst, und Teilen ist ein eigener bewusster Schritt, den die nachste Anleitung erklart."
+          ]
+        },
+        {
+          "heading": "2. Artikel und Preise anlegen",
+          "paragraphs": [
+            "Lege jeden Artikel mit Einzelpreis an. Preise nutzen die in den Einstellungen gewahlte Wahrung und gelten pro Stuck: Die App multipliziert beim Bestellen mit der Menge.",
+            "Halte Namen kurz und eindeutig. \"Hahnchen-Schawarma — gross\" wahlt sich zu sechst am Handy leichter als \"Sandwich Option 2\". Andert das Restaurant einen Preis, bearbeite den Artikel, und jede weitere Runde nutzt den neuen Betrag.",
+            "Du kannst einen Preis wahrend des Aufbaus auf null lassen. Die Null erscheint als Platzhalter und nicht als echter Betrag, sodass ein unfertiger Artikel auffallt statt gratis zu wirken."
+          ]
+        },
+        {
+          "heading": "3. Gebuhren einmal einstellen",
+          "paragraphs": [
+            "Mehrwertsteuer, Servicegebuhr und Lieferung werden am Menu eingestellt, nicht an jeder Bestellung. Einmal gesetzt, wendet jede daraus erstellte Runde sie gleich an.",
+            "Die Lieferung lasst sich zu gleichen Teilen oder anteilig nach Bestellwert aufteilen. Wahle anteilig, wenn eine Person deutlich mehr bestellt, und gleich, wenn die Gruppe es einfach mag."
+          ]
+        },
+        {
+          "heading": "4. Wiederverwenden",
+          "paragraphs": [
+            "Steht das Menu, heisst erneut bestellen einfach: neue Runde daraus starten. Artikel, Preise und Gebuhrenregel kommen mit, und die Personen, mit denen du geteilt hast, bleiben verbunden.",
+            "Brauchst du eine Variante — etwa eine zweite Filiale mit anderen Preisen — dupliziere das Menu und bearbeite die Kopie. Das Original bleibt unberuhrt."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Muss ich das Menu fur jede Bestellung neu anlegen?",
+          "answer": "Nein. Genau dafur ist ein wiederverwendbares Menu da. Du legst es einmal an und startest jede neue Runde daraus; Artikel, Preise und Gebuhren bleiben."
+        },
+        {
+          "question": "Kann ich einen Preis andern, nachdem bestellt wurde?",
+          "answer": "Eine Anderung gilt fur kunftige Runden. Eine bereits eingefrorene Runde behalt ihre Preise, damit eine abgeschlossene Summe sich nicht mehr verschiebt."
+        },
+        {
+          "question": "Wer sieht ein Menu, das ich anlege?",
+          "answer": "Nur du, bis du es teilst. Teilen ist ausdrucklich — per Link, Code, Freund oder Gruppe — und du kannst den Zugriff jederzeit entziehen."
+        }
+      ]
     }
   },
   "systemPages": {

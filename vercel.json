@@ -4,7 +4,7 @@
   "trailingSlash": false,
   "redirects": [
     {
-      "source": "/:path(about|how-it-works|features|group-ordering|split-bill-and-receipts|faq|contact|privacy|terms|error|offline|404.html)",
+      "source": "/:path(about|how-it-works|features|group-ordering|split-bill-and-receipts|faq|contact|privacy|terms|create-a-menu|error|offline|404.html)",
       "destination": "/en/:path",
       "permanent": true
     },

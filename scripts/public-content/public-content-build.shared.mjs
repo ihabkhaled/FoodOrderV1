@@ -175,7 +175,9 @@ export const validateCatalog = (catalog) => {
     failures.push('site.canonicalOrigin must be HTTPS');
   }
   if (catalog.locales?.length !== 13) failures.push('exactly 13 locales are required');
-  if (catalog.pages?.length !== 10) failures.push('exactly 10 public pages are required');
+  // A minimum, not a fixed count: guides are added over time. The floor still
+  // catches a catalogue that lost pages.
+  if ((catalog.pages?.length ?? 0) < 10) failures.push('at least 10 public pages are required');
 
   const localeCodes = new Set();
   for (const locale of catalog.locales || []) {
@@ -407,7 +409,10 @@ const structuredData = (catalog, locale, page) => {
       ],
     });
   }
-  if (page.id === 'faq' && copy.faq) {
+  // Any page carrying question-and-answer pairs earns FAQ structured data,
+  // not just the FAQ page: the guides answer real questions and should be
+  // eligible for the same rich result.
+  if (copy.faq?.length) {
     data.push({
       '@context': 'https://schema.org',
       '@type': 'FAQPage',

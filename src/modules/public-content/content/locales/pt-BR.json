@@ -385,6 +385,59 @@
           ]
         }
       ]
+    },
+    "create-a-menu": {
+      "navigationLabel": "Criar um cardapio",
+      "seoTitle": "Como criar um cardapio reutilizavel | Gama3 Orderak",
+      "description": "Guia passo a passo para criar um cardapio reutilizavel: adicione itens e precos, configure as taxas uma vez e reuse o mesmo cardapio em cada rodada.",
+      "eyebrow": "Guia",
+      "heading": "Como criar um cardapio reutilizavel",
+      "introduction": "Um cardapio — chamado de bucket no aplicativo — e a lista de itens que seu grupo pede. Voce cria uma vez e cada pedido seguinte parte dali em vez de uma pagina em branco. Este guia mostra como criar, precificar e preparar para compartilhar.",
+      "sections": [
+        {
+          "heading": "1. Crie o cardapio",
+          "paragraphs": [
+            "Abra Buckets na navegacao e escolha Criar bucket. De o nome que as pessoas reconhecem, normalmente o restaurante ou a ocasiao, como \"Shawarma de sexta\" ou \"Almoco do escritorio\".",
+            "O cardapio e seu. Ninguem mais ve ate voce compartilhar, e compartilhar e um passo separado e proposital, explicado no proximo guia."
+          ]
+        },
+        {
+          "heading": "2. Adicione itens e precos",
+          "paragraphs": [
+            "Adicione cada item com o preco unitario. Os precos usam a moeda escolhida em Configuracoes e sao por unidade: o aplicativo multiplica pela quantidade no pedido.",
+            "Use nomes curtos e especificos. \"Shawarma de frango — grande\" e mais facil de escolher no celular entre seis pessoas do que \"Sanduiche opcao 2\". Se o restaurante mudar um preco, edite o item e cada rodada seguinte usara o valor novo.",
+            "Voce pode deixar um preco em zero enquanto monta o cardapio. O zero aparece como espaco reservado e nao como valor real, entao um item incompleto fica visivel em vez de parecer gratis."
+          ]
+        },
+        {
+          "heading": "3. Configure as taxas uma vez",
+          "paragraphs": [
+            "Impostos, taxa de servico e entrega sao configurados no cardapio, nao em cada pedido. Configure uma vez e cada rodada criada a partir dele aplicara do mesmo jeito.",
+            "A entrega pode ser dividida igualmente ou proporcionalmente ao que cada um pediu. Escolha proporcional quando alguem pede muito mais que os outros e igual quando o grupo prefere simplicidade."
+          ]
+        },
+        {
+          "heading": "4. Reuse",
+          "paragraphs": [
+            "Com o cardapio pronto, pedir de novo e so iniciar uma rodada a partir dele. Itens, precos e regras de taxa vao junto, e as pessoas com quem voce compartilhou continuam ligadas.",
+            "Se precisar de uma variacao — outra unidade com precos diferentes, por exemplo — duplique o cardapio e edite a copia. O original fica intacto."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Preciso refazer o cardapio a cada pedido?",
+          "answer": "Nao. E exatamente para isso que serve um cardapio reutilizavel. Voce cria uma vez e comeca cada rodada a partir dele: itens, precos e taxas seguem junto."
+        },
+        {
+          "question": "Posso mudar um preco depois que as pessoas pediram?",
+          "answer": "Editar um item vale para rodadas futuras. Uma rodada ja congelada mantem os precos do congelamento, entao um total fechado nao muda."
+        },
+        {
+          "question": "Quem ve um cardapio que eu crio?",
+          "answer": "So voce, ate compartilhar. O compartilhamento e explicito — link, codigo, amigo ou grupo — e voce pode revogar o acesso quando quiser."
+        }
+      ]
     }
   },
   "systemPages": {

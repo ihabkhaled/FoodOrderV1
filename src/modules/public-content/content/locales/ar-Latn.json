@@ -385,6 +385,59 @@
           ]
         }
       ]
+    },
+    "create-a-menu": {
+      "navigationLabel": "E3mel menu",
+      "seoTitle": "Ezay te3mel menu tenfa3 kol marra | Gama3 Orderak",
+      "description": "Dalil khatwa be khatwa 3ashan te3mel menu tenfa3 kol marra: deef el asnaf wel as3ar, zabbat el rosoom marra wahda, we este3mel nafs el menu fe kol order.",
+      "eyebrow": "Dalil",
+      "heading": "Ezay te3mel menu tenfa3 kol marra",
+      "introduction": "El menu — esmo fel app \"salla\" — howa list el asnaf elli el group betetlob menha. Bete3melo marra wahda, we kol order gay yebtedi meno mesh men safha fadya. El dalil da beyshra7 ezay te3melo, tesa33aro sa7, we tegahhezo lel mosharka.",
+      "sections": [
+        {
+          "heading": "1. E3mel el menu",
+          "paragraphs": [
+            "Eftah \"El salal\" men el navigation we ekhtar \"E3mel salla\". Sammiha bel esm elli el nas hatearafo, ghaleban esm el mat3am aw el monasba zay \"Shawerma el gom3a\" aw \"Ghada el maktab\".",
+            "El menu melkak enta. Mahadesh yeshofo gheirak lehad ma tesharko, wel mosharka khatwa lewa7daha maqsooda hayeshra7ha el dalil elli gay."
+          ]
+        },
+        {
+          "heading": "2. Deef el asnaf wel as3ar",
+          "paragraphs": [
+            "Deef kol sanf be se3r el wahda. El as3ar bettetsagel bel 3omla elli ekhtartaha fel settings, we heya lel wahda, el app beydrabha fel kammeya lamma had yetlob.",
+            "Khalli asami el asnaf oshayara we wad7a. \"Shawerma frakh — kebir\" as-hal 3ala setta nas men el mobile men \"Sandwich khyar 2\". We law el mat3am ghayyar se3r, 3addel el sanf we kol order gay hayestakhdem el rakam el gedid.",
+            "Tedar tesib el se3r sefr wenta lessa bete3mel el menu. El sefr beybaan ka makan fady mesh ka mablagh haqiqi, fa yebaan en el sanf mesh khalas mesh en-no bebalash."
+          ]
+        },
+        {
+          "heading": "3. Zabbat el rosoom marra wahda",
+          "paragraphs": [
+            "El dariba we rasm el khedma wel tawseel bettezabbat 3ala el menu nafso mesh 3ala kol order. Zabbathom marra wahda we kol order men el menu da hayetabbaho be nafs el tare2a.",
+            "El tawseel momken yetassem bel tasawi 3ala el kol aw bel tanasob ma3 elli kol wahed talabo. Ekhtar el tanasob lamma had yetlob aktar men el baa2i be keteer, wel tasawi lamma el group yefaddal el basata."
+          ]
+        },
+        {
+          "heading": "4. Este3melo tani",
+          "paragraphs": [
+            "Ba3d ma el menu yeb2a mawgood, el talab tani ba2a mogarrad enak tebtedi order gedid meno. El asnaf wel as3ar we siyaset el rosoom betigi ma3ah, wel nas elli sharkthom lessa marbooteen beh.",
+            "We law 3ayez nosha mokhtalfa — far3 tani be as3ar mokhtalfa masalan — karrar el menu we 3addel fel copy. El asleya hatefdal zay ma heya."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Lazem a3mel el menu men el awel kol marra?",
+          "answer": "La. Da bel zabt el hadaf men menu tenfa3 kol marra. Bete3melo marra we tebtedi kol order gedid meno, wel asnaf wel as3ar wel rosoom betigi ma3ah."
+        },
+        {
+          "question": "A2dar aghayyar se3r ba3d ma el nas tetlob?",
+          "answer": "Ta3deel el sanf beyghayyaro lel orders el gaya. Amma el order elli etgammad fa beyeftekher bel as3ar elli etgammad beeha, fa el egmali elli estaqar mabyetghayyarsh."
+        },
+        {
+          "question": "Meen yeshoof el menu elli 3ameltoh?",
+          "answer": "Enta bas, lehad ma tesharko. El mosharka wad7a — be link aw code aw ma3 sa7bak aw group — we tedar telghi el wosool fe ay wa2t."
+        }
+      ]
     }
   },
   "systemPages": {

@@ -1660,8 +1660,8 @@
     },
     {
       "path": "scripts/public-content/public-content-build.shared.mjs",
-      "bytes": 29810,
-      "hash": "769b22013603dba4557401843a8c7b3f776b24ffd5b371fdedd5b7b4ba7b35bd"
+      "bytes": 30115,
+      "hash": "c4c52f6421f3a6992885bdd38beeb67a63c27bed77bee5ec2a7f603b456ce950"
     },
     {
       "path": "scripts/public-content/validate-public-content.mjs",
@@ -3160,63 +3160,63 @@
     },
     {
       "path": "src/modules/public-content/content/locales/ar-Latn.json",
-      "bytes": 20029,
-      "hash": "7bf22c8b21d84fe3d4dc8b862f0ae262c72fff796f96b11bceac77aad554effe"
+      "bytes": 23648,
+      "hash": "b77639fe23db5035529f8e6cc3c3a0099d70901c04e099580732a86440c0374d"
     },
     {
       "path": "src/modules/public-content/content/locales/de.json",
-      "bytes": 22097,
-      "hash": "55402c3d50db0785430614525e73a9f6572c85f5735b1655d88a494379319b1d"
+      "bytes": 25847,
+      "hash": "5cd1282bcd7404c279d21677800149e63877d6520be68053ec0c50a121995542"
     },
     {
       "path": "src/modules/public-content/content/locales/es.json",
-      "bytes": 21447,
-      "hash": "da3e2c7db2542aaebca0a5baa44133cd4926ec2a18af587980d4d3aba054da6f"
+      "bytes": 25077,
+      "hash": "265c06ff308f7d60982d03ec44bafca143978f8fb518bc4260a1d32589c7e51d"
     },
     {
       "path": "src/modules/public-content/content/locales/fa.json",
-      "bytes": 29198,
-      "hash": "6fcb7de7a19a889ae82b36d609db55e13870bf70382cf5c8a0335c86e1bb225e"
+      "bytes": 34739,
+      "hash": "586ed41f80a2f639e3deb07960d00db7d448f10970cb49b9d1474c842c47d3e7"
     },
     {
       "path": "src/modules/public-content/content/locales/fr.json",
-      "bytes": 19513,
-      "hash": "dd5d3e3960d1c1ea76de6a3e145b52bf075e8b290d1db59128f74f9b0a13cc86"
+      "bytes": 23431,
+      "hash": "4d2abc65c7759223cc07322ab4818b0ead4a46a6525273cd3ab94246a0b68052"
     },
     {
       "path": "src/modules/public-content/content/locales/hi.json",
-      "bytes": 38471,
-      "hash": "ff1a3928b2b574b44b4729cff04a009704a5adee49694e596b2e3c02975ee83f"
+      "bytes": 45761,
+      "hash": "1c624a7fa0296988403fb2dffd87e4a0ba83adf6edf0f1b402f081d3040ab177"
     },
     {
       "path": "src/modules/public-content/content/locales/it.json",
-      "bytes": 18725,
-      "hash": "68dbdfb7b550ffeee8faa22694b41a1140abd6bcbb84a2e52ff09c60bc799b31"
+      "bytes": 22484,
+      "hash": "4bcce375115c5ed94de62b7518bb931269f549d7684ab308613807e6142e3281"
     },
     {
       "path": "src/modules/public-content/content/locales/ja.json",
-      "bytes": 24744,
-      "hash": "aa580af30eafe5e146dc956b5027e4259191421fa0a091e2e57e4aee46a4fa5d"
+      "bytes": 28921,
+      "hash": "253e787d125e5f86ebe27edb9bd843f8b104791020dc605a2c3fa8b075860bf7"
     },
     {
       "path": "src/modules/public-content/content/locales/pt-BR.json",
-      "bytes": 21036,
-      "hash": "1c00988a3bf68691149b6dfe183ae62de3dd62f9d3e6d400c9da1c2d00083f57"
+      "bytes": 24646,
+      "hash": "774bd42fe4f336783f305c5771577fa2ed7d9d5287c59ce4286e3b39381f9626"
     },
     {
       "path": "src/modules/public-content/content/locales/th.json",
-      "bytes": 40320,
-      "hash": "8844e6501c8400a797f43a6a415cef71179b7648893e15e6ea3c057603f01597"
+      "bytes": 47075,
+      "hash": "7da4046cfbeaef6cba47396ab1418a2cc91cde5dd22f476bd005f2a35b95e512"
     },
     {
       "path": "src/modules/public-content/content/locales/zh-CN.json",
-      "bytes": 18041,
-      "hash": "8f8313bf4de23132e13f64b5607faba848be98ca79397d0bac532a2b01dac35d"
+      "bytes": 21470,
+      "hash": "b38bdaaa37fc22b0f5f91aa45eb123c357092009c9781290b9494a7fe8d75704"
     },
     {
       "path": "src/modules/public-content/content/public-content.catalog.json",
-      "bytes": 52615,
-      "hash": "d0bd88fff61daaa674312d52f6ee4362a91ff9d5574d8633cf523075df1675bf"
+      "bytes": 61857,
+      "hash": "10def60d043c9ed1c5a60c14520467b4fa165d40b9262bbd551d8d0c7aaa8c6e"
     },
     {
       "path": "src/modules/public-content/helpers/ad-eligibility.helper.ts",
@@ -3280,8 +3280,8 @@
     },
     {
       "path": "src/modules/public-content/routes/public-content-route-registry.helper.ts",
-      "bytes": 6736,
-      "hash": "a2c580c6b5653ee19a80b5ef514223642bc5734ae1dc0505d15cd2747775ccc8"
+      "bytes": 6823,
+      "hash": "6fa57fd4b6977cef744c0074cee9d9b0fa87bc9efae5d5aa9f187350447e4014"
     },
     {
       "path": "src/modules/public-content/routes/public-content.routes.tsx",
@@ -3290,8 +3290,8 @@
     },
     {
       "path": "src/modules/public-content/types/public-content.types.ts",
-      "bytes": 5390,
-      "hash": "e38ee6c64c7f0e1ac81e8a2c5b04883d214300dc5c8fbfd91687df704eac06c6"
+      "bytes": 5539,
+      "hash": "d0783723af48d5c1313e47ec73423fd833aa3f6cb44acc128cf34ba5fb4f3d08"
     },
     {
       "path": "src/modules/session-invites/components/guest-session-order/guest-session-order.component.tsx",
@@ -5185,8 +5185,8 @@
     },
     {
       "path": "vercel.json",
-      "bytes": 3026,
-      "hash": "928318c7b9e4846e5f41117b2b1349fe4b7f7c9ef5d9ada43c57898532e22cea"
+      "bytes": 3040,
+      "hash": "af98fbc3624068f3169a233021bcc3869da319eab73225f1064336a09baf8dbe"
     },
     {
       "path": "vite.config.ts",

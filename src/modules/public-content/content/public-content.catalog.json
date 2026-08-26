@@ -803,6 +803,120 @@
       }
     },
     {
+      "id": "create-a-menu",
+      "slug": "create-a-menu",
+      "navigation": false,
+      "adEligible": true,
+      "copy": {
+        "en": {
+          "navigationLabel": "Create a menu",
+          "seoTitle": "How to create a reusable food menu | Gama3 Orderak",
+          "description": "Step-by-step guide to building a reusable food menu: add items and prices, set fees once, and reuse the same menu for every order round.",
+          "eyebrow": "Guide",
+          "heading": "How to create a reusable food menu",
+          "introduction": "A menu — called a bucket in the app — is the list of items your group orders from. You build it once, and every future order round starts from it instead of from a blank page. This guide walks through creating one, pricing it correctly, and preparing it for sharing.",
+          "sections": [
+            {
+              "heading": "1. Create the menu",
+              "paragraphs": [
+                "Open Buckets from the navigation and choose Create bucket. Give it the name people will recognise — usually the restaurant or the occasion, such as \"Friday shawarma\" or \"Office lunch\".",
+                "A menu belongs to you. Nobody else can see it until you share it, and sharing is a separate deliberate step covered in the next guide."
+              ]
+            },
+            {
+              "heading": "2. Add items and prices",
+              "paragraphs": [
+                "Add each item with its unit price. Prices are stored in the currency you selected in Settings, and they are per unit — the app multiplies by quantity when people order.",
+                "Keep item names short and specific. \"Chicken shawarma — large\" is easier for six people to pick from a phone than \"Sandwich option 2\". If the restaurant changes a price, edit the item and every future round uses the new figure.",
+                "You can leave a price at zero while you are still building the menu. Zero shows as a placeholder rather than a real amount, so an unfinished item is obvious rather than silently free."
+              ]
+            },
+            {
+              "heading": "3. Set fees once",
+              "paragraphs": [
+                "VAT, service charge, and delivery are configured on the menu itself, not on each order. Set them once and every round built from this menu applies them the same way.",
+                "Delivery can be split equally between everyone or in proportion to what each person ordered. Choose proportional when one person orders far more than the rest and equal when the group prefers simplicity."
+              ]
+            },
+            {
+              "heading": "4. Reuse it",
+              "paragraphs": [
+                "Once the menu exists, ordering again is a matter of starting a new round from it. The items, prices, and fee policy come along, and the people you shared it with are still attached.",
+                "If you need a variant — a second branch with different prices, say — duplicate the menu and edit the copy. The original is untouched."
+              ]
+            }
+          ],
+          "faq": [
+            {
+              "question": "Do I have to rebuild the menu for every order?",
+              "answer": "No. That is the point of a reusable menu. You build it once and start each new round from it; items, prices, and fees carry over."
+            },
+            {
+              "question": "Can I change a price after people have ordered?",
+              "answer": "Editing an item changes it for future rounds. A round that has already been frozen keeps the prices it was frozen with, so a settled total never moves under you."
+            },
+            {
+              "question": "Who can see a menu I create?",
+              "answer": "Only you, until you share it. Sharing is explicit — by link, by join code, with a friend, or with a group — and you can revoke access at any time."
+            }
+          ]
+        },
+        "ar": {
+          "navigationLabel": "إنشاء قائمة",
+          "seoTitle": "كيفية إنشاء قائمة طعام قابلة لإعادة الاستخدام | جمع أوردرك",
+          "description": "دليل خطوة بخطوة لإنشاء قائمة طعام قابلة لإعادة الاستخدام: أضف الأصناف والأسعار، واضبط الرسوم مرة واحدة، وأعد استخدام القائمة نفسها في كل جولة طلب.",
+          "eyebrow": "دليل",
+          "heading": "كيفية إنشاء قائمة طعام قابلة لإعادة الاستخدام",
+          "introduction": "القائمة — واسمها في التطبيق «سلة» — هي قائمة الأصناف التي تطلب منها مجموعتك. تبنيها مرة واحدة، ثم تبدأ كل جولة طلب لاحقة منها بدلًا من صفحة فارغة. يشرح هذا الدليل إنشاءها وتسعيرها بشكل صحيح وتجهيزها للمشاركة.",
+          "sections": [
+            {
+              "heading": "١. أنشئ القائمة",
+              "paragraphs": [
+                "افتح «السلال» من شريط التنقل واختر «إنشاء سلة». امنحها الاسم الذي سيعرفه الناس، وغالبًا اسم المطعم أو المناسبة مثل «شاورما الجمعة» أو «غداء المكتب».",
+                "القائمة ملك لك. لا يراها أحد غيرك حتى تشاركها، والمشاركة خطوة منفصلة ومقصودة يشرحها الدليل التالي."
+              ]
+            },
+            {
+              "heading": "٢. أضف الأصناف والأسعار",
+              "paragraphs": [
+                "أضف كل صنف مع سعر الوحدة. تُحفظ الأسعار بالعملة التي اخترتها في الإعدادات، وهي لكل وحدة، إذ يضربها التطبيق في الكمية عند الطلب.",
+                "اجعل أسماء الأصناف قصيرة ومحددة. «شاورما فراخ — كبير» أسهل على ستة أشخاص من الاختيار عبر الهاتف من «خيار ساندويتش ٢». وإذا غيّر المطعم سعرًا، عدّل الصنف وستستخدم كل جولة قادمة الرقم الجديد.",
+                "يمكنك ترك السعر صفرًا أثناء بناء القائمة. يظهر الصفر كعنصر نائب لا كمبلغ حقيقي، فيتضح أن الصنف غير مكتمل بدل أن يبدو مجانيًا."
+              ]
+            },
+            {
+              "heading": "٣. اضبط الرسوم مرة واحدة",
+              "paragraphs": [
+                "تُضبط ضريبة القيمة المضافة ورسوم الخدمة والتوصيل على القائمة نفسها لا على كل طلب. اضبطها مرة واحدة وستطبّقها كل جولة تُبنى من هذه القائمة بالطريقة ذاتها.",
+                "يمكن تقسيم التوصيل بالتساوي بين الجميع أو بالتناسب مع ما طلبه كل شخص. اختر التناسب حين يطلب شخص أكثر من الباقين بكثير، والتساوي حين تفضّل المجموعة البساطة."
+              ]
+            },
+            {
+              "heading": "٤. أعد استخدامها",
+              "paragraphs": [
+                "بعد وجود القائمة، يصبح الطلب مجددًا مجرد بدء جولة جديدة منها. تأتي معها الأصناف والأسعار وسياسة الرسوم، ويظل الأشخاص الذين شاركتها معهم مرتبطين بها.",
+                "وإذا احتجت نسخة مختلفة — فرع آخر بأسعار مختلفة مثلًا — فكرّر القائمة وعدّل النسخة. تبقى الأصلية كما هي."
+              ]
+            }
+          ],
+          "faq": [
+            {
+              "question": "هل يجب إعادة بناء القائمة في كل طلب؟",
+              "answer": "لا. هذا هو الهدف من القائمة القابلة لإعادة الاستخدام. تبنيها مرة وتبدأ كل جولة جديدة منها، فتنتقل الأصناف والأسعار والرسوم معها."
+            },
+            {
+              "question": "هل أستطيع تغيير سعر بعد أن يطلب الناس؟",
+              "answer": "تعديل الصنف يغيّره للجولات القادمة. أما الجولة المجمّدة فتحتفظ بالأسعار التي جُمّدت بها، فلا يتغير إجمالي مستقر بعد إقراره."
+            },
+            {
+              "question": "من يستطيع رؤية القائمة التي أنشئها؟",
+              "answer": "أنت وحدك، حتى تشاركها. المشاركة صريحة — برابط أو رمز انضمام أو مع صديق أو مجموعة — ويمكنك إلغاء الوصول في أي وقت."
+            }
+          ]
+        }
+      }
+    },
+    {
       "id": "privacy",
       "slug": "privacy",
       "navigation": false,

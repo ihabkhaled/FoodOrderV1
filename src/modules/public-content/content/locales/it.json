@@ -385,6 +385,59 @@
           ]
         }
       ]
+    },
+    "create-a-menu": {
+      "navigationLabel": "Creare un menu",
+      "seoTitle": "Come creare un menu riutilizzabile | Gama3 Orderak",
+      "description": "Guida passo passo per creare un menu riutilizzabile: aggiungi voci e prezzi, imposta le commissioni una volta e riusa lo stesso menu per ogni ordine.",
+      "eyebrow": "Guida",
+      "heading": "Come creare un menu riutilizzabile",
+      "introduction": "Un menu — nell app si chiama bucket — e l elenco di voci da cui ordina il tuo gruppo. Lo costruisci una volta e ogni ordine futuro parte da li invece che da una pagina vuota. Questa guida spiega come crearlo, come impostarne i prezzi e come prepararlo alla condivisione.",
+      "sections": [
+        {
+          "heading": "1. Crea il menu",
+          "paragraphs": [
+            "Apri Bucket dalla navigazione e scegli Crea bucket. Dagli il nome che le persone riconoscono, di solito il ristorante o l occasione, come \"Shawarma del venerdi\" o \"Pranzo in ufficio\".",
+            "Il menu e tuo. Nessun altro lo vede finche non lo condividi, e la condivisione e un passaggio separato e voluto, spiegato nella guida successiva."
+          ]
+        },
+        {
+          "heading": "2. Aggiungi voci e prezzi",
+          "paragraphs": [
+            "Aggiungi ogni voce con il prezzo unitario. I prezzi usano la valuta scelta nelle Impostazioni e sono per unita: l app moltiplica per la quantita quando qualcuno ordina.",
+            "Usa nomi brevi e specifici. \"Shawarma di pollo — grande\" e piu facile da scegliere al telefono per sei persone rispetto a \"Panino opzione 2\". Se il ristorante cambia un prezzo, modifica la voce e ogni ordine successivo usera la cifra nuova.",
+            "Puoi lasciare un prezzo a zero mentre stai ancora costruendo il menu. Lo zero appare come segnaposto e non come importo reale, cosi una voce incompleta si nota invece di sembrare gratuita."
+          ]
+        },
+        {
+          "heading": "3. Imposta le commissioni una volta",
+          "paragraphs": [
+            "IVA, servizio e consegna si configurano sul menu, non su ogni ordine. Impostali una volta e ogni ordine creato da questo menu li applichera allo stesso modo.",
+            "La consegna puo essere divisa in parti uguali oppure in proporzione a quanto ha ordinato ciascuno. Scegli la proporzione quando una persona ordina molto piu delle altre e le parti uguali quando il gruppo preferisce la semplicita."
+          ]
+        },
+        {
+          "heading": "4. Riusalo",
+          "paragraphs": [
+            "Una volta creato il menu, ordinare di nuovo significa solo avviare un nuovo giro da li. Voci, prezzi e regole sulle commissioni arrivano con lui e le persone con cui lo hai condiviso restano collegate.",
+            "Se ti serve una variante — per esempio una seconda sede con prezzi diversi — duplica il menu e modifica la copia. L originale resta intatto."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Devo ricostruire il menu a ogni ordine?",
+          "answer": "No. E proprio questo il senso di un menu riutilizzabile. Lo costruisci una volta e avvii ogni nuovo giro da li: voci, prezzi e commissioni restano."
+        },
+        {
+          "question": "Posso cambiare un prezzo dopo che le persone hanno ordinato?",
+          "answer": "Modificare una voce vale per i giri futuri. Un giro gia bloccato mantiene i prezzi con cui e stato bloccato, quindi un totale gia chiuso non cambia."
+        },
+        {
+          "question": "Chi vede un menu che creo?",
+          "answer": "Solo tu, finche non lo condividi. La condivisione e esplicita — con un link, un codice, un amico o un gruppo — e puoi revocare l accesso quando vuoi."
+        }
+      ]
     }
   },
   "systemPages": {

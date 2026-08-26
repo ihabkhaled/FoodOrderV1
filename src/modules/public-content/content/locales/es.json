@@ -385,6 +385,59 @@
           ]
         }
       ]
+    },
+    "create-a-menu": {
+      "navigationLabel": "Crear un menu",
+      "seoTitle": "Como crear un menu reutilizable | Gama3 Orderak",
+      "description": "Guia paso a paso para crear un menu reutilizable: anade articulos y precios, configura los cargos una vez y reutiliza el mismo menu en cada ronda.",
+      "eyebrow": "Guia",
+      "heading": "Como crear un menu reutilizable",
+      "introduction": "Un menu — llamado bucket en la aplicacion — es la lista de articulos de la que pide tu grupo. Lo creas una vez y cada pedido futuro parte de ahi en lugar de una pagina en blanco. Esta guia explica como crearlo, ponerle precios correctos y prepararlo para compartir.",
+      "sections": [
+        {
+          "heading": "1. Crea el menu",
+          "paragraphs": [
+            "Abre Buckets desde la navegacion y elige Crear bucket. Ponle el nombre que la gente reconoce, normalmente el restaurante o la ocasion, como \"Shawarma del viernes\" o \"Comida de la oficina\".",
+            "El menu es tuyo. Nadie mas lo ve hasta que lo compartes, y compartir es un paso aparte y deliberado que explica la siguiente guia."
+          ]
+        },
+        {
+          "heading": "2. Anade articulos y precios",
+          "paragraphs": [
+            "Anade cada articulo con su precio unitario. Los precios usan la moneda elegida en Ajustes y son por unidad: la aplicacion multiplica por la cantidad al pedir.",
+            "Usa nombres cortos y concretos. \"Shawarma de pollo — grande\" se elige mejor entre seis personas desde el movil que \"Bocadillo opcion 2\". Si el restaurante cambia un precio, edita el articulo y cada ronda posterior usara la cifra nueva.",
+            "Puedes dejar un precio en cero mientras construyes el menu. El cero aparece como marcador y no como importe real, asi un articulo incompleto se nota en vez de parecer gratis."
+          ]
+        },
+        {
+          "heading": "3. Configura los cargos una vez",
+          "paragraphs": [
+            "El IVA, el servicio y el envio se configuran en el menu, no en cada pedido. Configuralos una vez y cada ronda creada desde este menu los aplicara igual.",
+            "El envio puede dividirse a partes iguales o en proporcion a lo que pidio cada persona. Elige proporcional cuando alguien pide mucho mas que el resto e igual cuando el grupo prefiere la sencillez."
+          ]
+        },
+        {
+          "heading": "4. Reutilizalo",
+          "paragraphs": [
+            "Con el menu creado, volver a pedir es solo iniciar una ronda nueva desde el. Articulos, precios y politica de cargos vienen con el, y las personas con las que lo compartiste siguen vinculadas.",
+            "Si necesitas una variante — otra sucursal con precios distintos, por ejemplo — duplica el menu y edita la copia. El original queda intacto."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Tengo que rehacer el menu en cada pedido?",
+          "answer": "No. Ese es el sentido de un menu reutilizable. Lo creas una vez e inicias cada ronda desde el: articulos, precios y cargos se mantienen."
+        },
+        {
+          "question": "Puedo cambiar un precio despues de que la gente pida?",
+          "answer": "Editar un articulo afecta a rondas futuras. Una ronda ya congelada conserva los precios con los que se congelo, de modo que un total cerrado no se mueve."
+        },
+        {
+          "question": "Quien ve un menu que creo?",
+          "answer": "Solo tu, hasta que lo compartas. Compartir es explicito — enlace, codigo, amigo o grupo — y puedes revocar el acceso cuando quieras."
+        }
+      ]
     }
   },
   "systemPages": {
