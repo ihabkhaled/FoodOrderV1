@@ -1,4 +1,4 @@
-import { getCurrentOrigin } from '@/platform/browser';
+import { getApplicationBaseUrl } from '@/platform/browser';
 import { readWebStorage, writeWebStorage } from '@/platform/storage';
 import { nowIso } from '@/shared/helpers';
 
@@ -71,7 +71,7 @@ export class LocalInviteLinkService implements InviteLinkService {
     return Promise.resolve({
       token,
       expiresAt: link.expiresAt,
-      url: buildInviteLinkUrl(getCurrentOrigin(), token),
+      url: buildInviteLinkUrl(getApplicationBaseUrl(), token),
     });
   }
 

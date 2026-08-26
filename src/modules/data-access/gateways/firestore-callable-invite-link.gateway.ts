@@ -1,5 +1,5 @@
 import { getFunctions, httpsCallable } from '@/packages/firebase';
-import { getCurrentOrigin } from '@/platform/browser';
+import { getApplicationBaseUrl } from '@/platform/browser';
 
 import type { InviteLinkService } from '../contracts/invite-link-service.interfaces';
 import { buildInviteLinkUrl } from '../helpers/invite-link.helper';
@@ -22,7 +22,7 @@ const callable = <Request, Response>(name: string) =>
  * origin the sharer is actually using — a preview deployment shares a preview
  * link rather than one that lands on production.
  */
-const shareOrigin = (): string => getCurrentOrigin();
+const shareOrigin = (): string => getApplicationBaseUrl();
 
 export class FirestoreCallableInviteLinkService implements InviteLinkService {
   async createLink(input: CreateInviteLinkInput): Promise<CreatedInviteLink> {

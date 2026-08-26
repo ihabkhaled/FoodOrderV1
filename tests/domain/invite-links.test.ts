@@ -77,4 +77,15 @@ describe('invite link URLs', () => {
       'https://example.app/join/abc123',
     );
   });
+
+  it('keeps the locale segment the app is mounted under', () => {
+    // The web router runs with a `/{locale}` basename, so a shared link that
+    // drops the segment lands outside the router and never reaches the route.
+    expect(buildInviteLinkUrl('https://example.app/en', 'abc123')).toBe(
+      'https://example.app/en/join/abc123',
+    );
+    expect(buildInviteLinkUrl('https://example.app/ar-latn', 'abc123')).toBe(
+      'https://example.app/ar-latn/join/abc123',
+    );
+  });
 });

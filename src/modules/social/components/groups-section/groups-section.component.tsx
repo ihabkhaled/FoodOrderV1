@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+
 import type {
   FriendGroup,
   FriendGroupMember,
@@ -50,6 +52,11 @@ interface GroupsSectionProps {
   onSelectFriend: (groupId: string, friendId: string) => void;
   onInvite: (group: FriendGroup) => void;
   availableFriends: (group: FriendGroup) => SocialUser[];
+  /**
+   * Rendered inside each group an owner controls. A render prop keeps this
+   * component hook-free while the link card it returns needs app state.
+   */
+  renderInviteLink?: (group: FriendGroup) => ReactNode;
 }
 
 export function GroupsSection({
@@ -76,6 +83,7 @@ export function GroupsSection({
   onSelectFriend,
   onInvite,
   availableFriends,
+  renderInviteLink,
 }: GroupsSectionProps) {
   return (
     <section className="section-card stack">
@@ -311,6 +319,7 @@ export function GroupsSection({
                     <p className="muted">{s('noAvailableFriends')}</p>
                   )
                 ) : null}
+                {isOwner ? renderInviteLink?.(group) : null}
               </article>
             );
           })}

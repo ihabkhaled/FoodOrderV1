@@ -936,12 +936,37 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/invite-links/components/invite-link-panel/invite-link-share-card.component.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/invite-links/containers/bucket-invite-link.container.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/invite-links/containers/friend-invite-link.container.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/invite-links/containers/group-invite-link.container.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/invite-links/containers/invite-link.container.tsx",
       "tests": [],
       "relationship": "inferred"
     },
     {
       "source": "src/modules/invite-links/hooks/use-invite-link-redemption.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/invite-links/hooks/use-invite-link-sharing.hook.ts",
       "tests": [],
       "relationship": "inferred"
     },

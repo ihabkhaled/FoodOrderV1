@@ -1,3 +1,4 @@
+import { GroupInviteLinkContainer } from '@/modules/invite-links';
 import { BackLink, ErrorState, FeatureTour, SkeletonSection } from '@/shared/ui';
 
 import { GroupsSection } from '../components/groups-section/groups-section.component';
@@ -60,6 +61,9 @@ export function SocialGroupsContainer() {
         selectedFriends={vm.selectedFriends}
         onSelectFriend={vm.selectFriend}
         onInvite={(group) => void vm.invite(group)}
+        renderInviteLink={(group) => (
+          <GroupInviteLinkContainer groupId={group.id} groupName={group.name} />
+        )}
         availableFriends={vm.availableFriends}
       />
 

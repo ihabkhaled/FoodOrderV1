@@ -127,8 +127,8 @@
     },
     {
       "path": "tests/domain/invite-links.test.ts",
-      "bytes": 3022,
-      "hash": "5bcaead587a1b71bde5f0a692e32e7dd6cb3e6c097daa5dd04d84100b2a321bf"
+      "bytes": 3510,
+      "hash": "f0ea1fc5c685c950ad650fb044c0949ea3b03445d1eaad92988ac22057f6ecda"
     },
     {
       "path": "tests/domain/memberPermissions.test.ts",

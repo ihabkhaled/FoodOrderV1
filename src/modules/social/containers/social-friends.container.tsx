@@ -1,3 +1,4 @@
+import { FriendInviteLinkContainer } from '@/modules/invite-links';
 import { BackLink, ErrorState, FeatureTour, SkeletonSection } from '@/shared/ui';
 
 import { FriendSearch } from '../components/friend-search/friend-search.component';
@@ -37,6 +38,7 @@ export function SocialFriendsContainer() {
           <h1>{vm.s('friends')}</h1>
         </div>
       </div>
+      <FriendInviteLinkContainer />
       <FriendSearch
         s={vm.s}
         emailLabel={vm.t('email')}
