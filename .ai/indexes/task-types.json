@@ -100,6 +100,17 @@
       ]
     },
     {
+      "id": "invite-links",
+      "risk": "standard",
+      "keys": [
+        "invite-links",
+        "invite links"
+      ],
+      "paths": [
+        "src/modules/invite-links"
+      ]
+    },
+    {
       "id": "notifications",
       "risk": "standard",
       "keys": [

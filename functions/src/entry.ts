@@ -1,5 +1,12 @@
 import './globalOptions.js';
 
+export {
+  createInviteLinkV1100,
+  listInviteLinksV1100,
+  previewInviteLinkV1100,
+  redeemInviteLinkV1100,
+  revokeInviteLinkV1100,
+} from './inviteLinks.js';
 export * from './main.js';
 export * from './notifications.js';
 export {

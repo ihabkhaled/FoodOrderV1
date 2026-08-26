@@ -27,6 +27,7 @@ export {
   subscribeToViewportChanges,
 } from './element-rect.adapter';
 export { downloadTextFile } from './file-download.adapter';
+export { getCurrentOrigin } from './location-origin.adapter';
 export type { PublicThemeChoice } from './public-theme.adapter';
 export {
   applyPublicTheme,

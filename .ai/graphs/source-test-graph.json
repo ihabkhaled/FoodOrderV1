@@ -371,6 +371,11 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/data-access/contracts/invite-link-service.interfaces.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/data-access/contracts/notification-service.interfaces.ts",
       "tests": [],
       "relationship": "inferred"
@@ -432,6 +437,11 @@
     },
     {
       "source": "src/modules/data-access/gateways/firestore-callable-group-order.gateway.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/data-access/gateways/firestore-callable-invite-link.gateway.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -506,6 +516,11 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/data-access/gateways/local-invite-link.gateway.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/data-access/gateways/local-notification.gateway.ts",
       "tests": [],
       "relationship": "inferred"
@@ -566,6 +581,11 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/data-access/helpers/invite-link.helper.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/data-access/helpers/member-permissions.helper.ts",
       "tests": [],
       "relationship": "inferred"
@@ -622,6 +642,11 @@
     },
     {
       "source": "src/modules/data-access/types/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/data-access/types/invite-link.types.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -902,6 +927,36 @@
     },
     {
       "source": "src/modules/group-orders/routes/group-orders.routes.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/invite-links/components/invite-link-panel/invite-link-preview.component.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/invite-links/containers/invite-link.container.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/invite-links/hooks/use-invite-link-redemption.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/invite-links/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/invite-links/routes/invite-link-route-paths.constants.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/invite-links/routes/invite-link.routes.tsx",
       "tests": [],
       "relationship": "inferred"
     },
@@ -2192,6 +2247,11 @@
     },
     {
       "source": "src/platform/browser/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/platform/browser/location-origin.adapter.ts",
       "tests": [],
       "relationship": "inferred"
     },

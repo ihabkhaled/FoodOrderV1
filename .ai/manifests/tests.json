@@ -126,6 +126,11 @@
       "hash": "e7cb1bf5d7d335035c086ac2dc594f32900766da12baa63342b4532af05872a6"
     },
     {
+      "path": "tests/domain/invite-links.test.ts",
+      "bytes": 3022,
+      "hash": "5bcaead587a1b71bde5f0a692e32e7dd6cb3e6c097daa5dd04d84100b2a321bf"
+    },
+    {
       "path": "tests/domain/memberPermissions.test.ts",
       "bytes": 1014,
       "hash": "3b63a8112c1d7bed52e4ef3ffd8eece72b8032294b7e8ccc5d58afbe68a133a1"
@@ -304,6 +309,11 @@
       "path": "tests/firebase/firestore.rules.test.ts",
       "bytes": 11973,
       "hash": "d005744aae0dd09d48c9d700ac455ab53c12d8deac200914085e771fd2d6d07c"
+    },
+    {
+      "path": "tests/firebase/invite-links.rules.test.ts",
+      "bytes": 3962,
+      "hash": "9c8d51e72b53bc0146ded5e6664c72011a3cb0425a9b1864e91db9ffca2dfc87"
     },
     {
       "path": "tests/firebase/notifications.rules.test.ts",

@@ -1,4 +1,5 @@
 export type { DataService } from './data-service.interfaces';
+export type { InviteLinkService } from './invite-link-service.interfaces';
 export type {
   CreateOrderSessionInput,
   OrderSessionService,
