@@ -544,6 +544,112 @@
           "answer": "Os participantes veem o pedido consolidado para o grupo conferir antes do envio. Os totais pessoais continuam ligados a cada pessoa."
         }
       ]
+    },
+    "invite-friends": {
+      "navigationLabel": "Convidar amigos",
+      "seoTitle": "Como adicionar amigos e compartilhar seu link de convite | Gama3 Orderak",
+      "description": "Duas formas de montar sua lista de amigos: buscar alguem pelo e-mail exato, ou compartilhar um link de 24 horas que deixa qualquer pessoa adicionar voce.",
+      "eyebrow": "Guia",
+      "heading": "Como adicionar amigos",
+      "introduction": "Uma lista de amigos evita repetir convites. Com alguem na lista voce compartilha um cardapio direto, adiciona a pessoa a um grupo ou inicia uma rodada que a inclui sem enviar nada para resgatar. Ha duas formas de montar, boas para situacoes diferentes.",
+      "sections": [
+        {
+          "heading": "Buscar por e-mail",
+          "paragraphs": [
+            "Abra Membros, depois Amigos, e busque o endereco exato com que a pessoa se cadastrou. Ninguem aparece em uma lista publica e correspondencias parciais nao retornam nada: o endereco e a unica forma de achar alguem aqui.",
+            "Isso e proposital. Um diretorio pesquisavel deixaria qualquer um montar uma lista de quem usa o aplicativo; exigir o endereco exato significa que voce so acha quem ja te deu."
+          ]
+        },
+        {
+          "heading": "Compartilhe seu link de convite",
+          "paragraphs": [
+            "O link de amizade e o caminho rapido quando voce convida varias pessoas de uma vez. Crie na pagina Amigos e mande onde voces ja conversam: uma mensagem, um grupo, qualquer lugar.",
+            "Quem abrir em 24 horas pode adicionar voce com um toque. Voce nao aprova cada pessoa: compartilhar o link e o seu consentimento, e esse e o ponto. O mesmo link serve para quantas pessoas o abrirem.",
+            "Se preferir aprovar cada uma, use a busca por e-mail e deixe que enviem um pedido. Os dois caminhos chegam ao mesmo lugar; muda so quem confirma."
+          ]
+        },
+        {
+          "heading": "Pedidos e o que vem depois",
+          "paragraphs": [
+            "Um pedido enviado pela busca espera na pagina Pedidos ate a outra pessoa responder. Aceitar torna a amizade mutua na hora: voces aparecem na lista um do outro sem repetir o passo.",
+            "As notificacoes avisam quando um pedido chega ou e aceito, entao voce nao fica na duvida se deu certo."
+          ]
+        },
+        {
+          "heading": "Remover um amigo",
+          "paragraphs": [
+            "A remocao e imediata e tira voces das listas um do outro. Nao apaga o historico: um cardapio de que ambos participavam e as rodadas em que voce contribuiu ficam exatamente como estavam.",
+            "Remover um amigo nao revoga o acesso dele aos cardapios que voce compartilhou antes. Revogue isso a parte, pela pagina Membros do cardapio, se for essa a intencao."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Por que nao posso buscar pessoas pelo nome?",
+          "answer": "Porque uma busca por nome transformaria o aplicativo num diretorio de usuarios. A busca por e-mail exato faz com que voce so encontre quem ja compartilhou o endereco com voce."
+        },
+        {
+          "question": "E seguro publicar meu link de convite?",
+          "answer": "Trate como semiprivado. Qualquer um que abrir em 24 horas pode adicionar voce, entao mande onde estiver tudo bem que todos os presentes facam isso."
+        },
+        {
+          "question": "Posso encerrar um link antes do prazo?",
+          "answer": "Sim. Revogar desativa na hora. Quem ja usou continua na sua lista ate voce remover."
+        }
+      ]
+    },
+    "work-with-groups": {
+      "navigationLabel": "Usar grupos",
+      "seoTitle": "Como usar grupos para pedidos recorrentes | Gama3 Orderak",
+      "description": "Crie um grupo uma vez, compartilhe cardapios com todos ao mesmo tempo e adicione ou remova pessoas sem repetir convites. Com links de convite de grupo e papeis.",
+      "eyebrow": "Guia",
+      "heading": "Como usar grupos para pedidos recorrentes",
+      "introduction": "Um grupo e um conjunto nomeado de pessoas com quem voce pede sempre: um time, um andar, uma familia. Compartilhar um cardapio com o grupo compartilha com todos, e quem entra depois herda o que ja foi compartilhado. Este guia cobre criar, preencher e manter em ordem.",
+      "sections": [
+        {
+          "heading": "Crie o grupo",
+          "paragraphs": [
+            "Abra Membros, depois Grupos de amigos, e crie um grupo com um nome reconhecivel: \"Time de design\", \"Terceiro andar\". Uma descricao curta ajuda quando alguem participa de varios.",
+            "O grupo que voce cria e seu. So voce pode renomear, convidar, remover pessoas ou excluir, e essa propriedade nao se transfere ao compartilhar."
+          ]
+        },
+        {
+          "heading": "Adicione pessoas",
+          "paragraphs": [
+            "Convide amigos pelo cartao do grupo. Quem ja esta na sua lista de amigos entra direto: e o caminho comum para um time com quem voce pede toda semana.",
+            "Para quem ainda nao esta na lista, crie um link de convite do grupo e envie. Quem abrir em 24 horas entra direto no grupo: sem pedido de amizade antes e sem aprovacao sua por pessoa.",
+            "Esse link e o jeito mais rapido de preencher um grupo novo. Crie uma vez, cole no chat do time, e quem quiser entrar entra, sem voce administrar uma fila de pedidos."
+          ]
+        },
+        {
+          "heading": "Compartilhe cardapios com o grupo",
+          "paragraphs": [
+            "Compartilhe um cardapio com o grupo e todos podem usar na hora. E o que mais evita repeticao: uma acao em vez de um convite por pessoa.",
+            "Quem for adicionado depois ve os cardapios ja compartilhados com aquele grupo. Um colega que chega em marco nao precisa que os convites de janeiro sejam reenviados."
+          ]
+        },
+        {
+          "heading": "Mantendo atualizado",
+          "paragraphs": [
+            "Remova alguem do grupo e o acesso por esse caminho termina. O acesso concedido individualmente — um cardapio compartilhado direto com a pessoa — e separado e continua ate voce revogar tambem.",
+            "Os membros podem sair sozinhos. Excluir um grupo remove para todos, mas nao apaga os cardapios compartilhados por ele nem rodadas ja concluidas."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Posso pesquisar um grupo e entrar?",
+          "answer": "Pelo nome nao. Entra-se em grupos por um link de convite do dono, entao um grupo nao pode ser achado e acessado por quem nunca foi convidado."
+        },
+        {
+          "question": "Todo mundo no grupo ve os demais?",
+          "answer": "Os membros veem quem mais esta la: e isso que faz um grupo. Eles nao viram amigos automaticamente e os e-mails nao ficam expostos so pela participacao."
+        },
+        {
+          "question": "O que acontece com um cardapio compartilhado se eu excluir o grupo?",
+          "answer": "O cardapio fica intacto: pertence a quem criou. O acesso concedido pelo grupo termina, entao compartilhe de novo direto ou por outro grupo se ainda for preciso."
+        }
+      ]
     }
   },
   "systemPages": {

@@ -29,6 +29,8 @@ export type PublicRouteId =
   | 'create-a-menu'
   | 'share-a-menu'
   | 'run-an-order-round'
+  | 'invite-friends'
+  | 'work-with-groups'
   | 'privacy'
   | 'terms';
 

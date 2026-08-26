@@ -544,6 +544,112 @@
           "answer": "Los participantes ven el pedido conjunto para que el grupo pueda revisarlo antes de enviarlo. Los totales personales siguen ligados a su dueno."
         }
       ]
+    },
+    "invite-friends": {
+      "navigationLabel": "Invitar amigos",
+      "seoTitle": "Como anadir amigos y compartir tu enlace de invitacion | Gama3 Orderak",
+      "description": "Dos formas de construir tu lista de amigos: buscar a alguien por su correo exacto, o compartir un enlace de 24 horas que permite a cualquiera anadirte.",
+      "eyebrow": "Guia",
+      "heading": "Como anadir amigos",
+      "introduction": "Una lista de amigos evita repetir invitaciones. Cuando alguien esta en ella puedes compartirle un menu directamente, anadirlo a un grupo o iniciar una ronda que lo incluya sin enviar nada que canjear. Hay dos formas de construirla y sirven para situaciones distintas.",
+      "sections": [
+        {
+          "heading": "Buscar por correo",
+          "paragraphs": [
+            "Abre Miembros, luego Amigos, y busca la direccion exacta con la que la persona se registro. Nadie aparece en un listado publico y las coincidencias parciales no devuelven nada: la direccion es la unica forma de encontrar a alguien aqui.",
+            "Es deliberado. Un directorio consultable permitiria a cualquiera reunir una lista de quien usa la aplicacion; exigir la direccion exacta significa que solo encuentras a quien ya te la ha dado."
+          ]
+        },
+        {
+          "heading": "Comparte tu enlace de invitacion",
+          "paragraphs": [
+            "El enlace de amistad es la via rapida cuando invitas a varias personas a la vez. Crealo en la pagina Amigos y enviarlo donde ya hablais: un mensaje, un chat de grupo, donde sea.",
+            "Quien lo abra en 24 horas puede anadirte con un toque. No apruebas a cada persona: compartir el enlace es tu consentimiento, y ese es justamente el objetivo. El mismo enlace sirve para tantas personas como lo abran.",
+            "Si prefieres aprobar a cada uno, usa la busqueda por correo y deja que te envien una solicitud. Ambos caminos llegan al mismo sitio; solo cambia quien confirma."
+          ]
+        },
+        {
+          "heading": "Solicitudes y que pasa despues",
+          "paragraphs": [
+            "Una solicitud enviada desde la busqueda espera en la pagina Solicitudes hasta que la otra persona responda. Aceptar hace la amistad reciproca de inmediato: aparecéis en la lista del otro sin repetir el paso.",
+            "Las notificaciones avisan cuando llega o se acepta una solicitud, asi que no te quedas con la duda de si llego."
+          ]
+        },
+        {
+          "heading": "Eliminar un amigo",
+          "paragraphs": [
+            "La eliminacion es inmediata y os quita de las listas del otro. No borra el historial compartido: un menu del que ambos formabais parte y las rondas en las que ya participaste siguen exactamente igual.",
+            "Eliminar a un amigo no revoca su acceso a los menus que le compartiste antes. Revocalo aparte desde la pagina Miembros del menu si es lo que pretendes."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Por que no puedo buscar por nombre?",
+          "answer": "Porque una busqueda por nombre convertiria la aplicacion en un directorio de sus usuarios. Buscar por correo exacto hace que solo encuentres a quien ya te dio su direccion."
+        },
+        {
+          "question": "Es seguro publicar mi enlace de invitacion?",
+          "answer": "Tratalo como semiprivado. Cualquiera que lo abra en 24 horas puede anadirte, asi que enviarlo donde te parezca bien que todos los presentes lo hagan."
+        },
+        {
+          "question": "Puedo detener un enlace antes de tiempo?",
+          "answer": "Si. Revocarlo lo desactiva de inmediato. Quien ya lo uso sigue en tu lista de amigos hasta que lo elimines."
+        }
+      ]
+    },
+    "work-with-groups": {
+      "navigationLabel": "Usar grupos",
+      "seoTitle": "Como usar grupos para pedidos recurrentes | Gama3 Orderak",
+      "description": "Crea un grupo una vez, comparte menus con todos a la vez y anade o quita personas sin repetir invitaciones. Con enlaces de invitacion de grupo y roles.",
+      "eyebrow": "Guia",
+      "heading": "Como usar grupos para pedidos recurrentes",
+      "introduction": "Un grupo es un conjunto con nombre de personas con las que pides a menudo: un equipo, una planta, una familia. Compartir un menu con el grupo lo comparte con todos, y quien entra despues hereda lo ya compartido. Esta guia explica como crearlo, llenarlo y mantenerlo al dia.",
+      "sections": [
+        {
+          "heading": "Crea el grupo",
+          "paragraphs": [
+            "Abre Miembros, luego Grupos de amigos, y crea un grupo con un nombre reconocible: \"Equipo de diseno\", \"Tercera planta\". Una descripcion breve ayuda cuando alguien pertenece a varios.",
+            "El grupo que creas es tuyo. Solo tu puedes renombrarlo, invitar, quitar personas o eliminarlo, y esa propiedad no se transfiere al compartir."
+          ]
+        },
+        {
+          "heading": "Anade personas",
+          "paragraphs": [
+            "Invita amigos al grupo desde su ficha. Quien ya esta en tu lista de amigos puede anadirse directamente: es la via habitual para un equipo con el que pides cada semana.",
+            "Para quienes aun no estan en tu lista, crea un enlace de invitacion de grupo y enviarlo. Quien lo abra en 24 horas entra directamente: sin solicitud de amistad previa y sin aprobacion tuya por cada persona.",
+            "Ese enlace es la forma mas rapida de llenar un grupo nuevo. Crealo una vez, pegalo en el chat del equipo y entra quien quiera entrar, sin que gestiones una cola de solicitudes."
+          ]
+        },
+        {
+          "heading": "Comparte menus con el grupo",
+          "paragraphs": [
+            "Comparte un menu con el grupo y todos pueden usarlo de inmediato. Es lo que mas repeticion ahorra: una accion en lugar de una invitacion por persona.",
+            "Quien se anada despues ve los menus ya compartidos con ese grupo. Un companero que llega en marzo no necesita que se reenvien las invitaciones de enero."
+          ]
+        },
+        {
+          "heading": "Mantenerlo al dia",
+          "paragraphs": [
+            "Quita a alguien del grupo y su acceso por esa via termina. El acceso concedido individualmente — un menu compartido directamente con esa persona — es aparte y sigue hasta que lo revoques tambien.",
+            "Los miembros pueden salir por su cuenta. Eliminar un grupo lo quita para todos, pero no borra los menus compartidos a traves de el ni las rondas ya cerradas."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Puedo buscar un grupo y unirme?",
+          "answer": "Por nombre no. A los grupos se entra con un enlace de invitacion del propietario, asi que nadie a quien no se haya invitado puede encontrarlo y entrar."
+        },
+        {
+          "question": "Todos en un grupo se ven entre si?",
+          "answer": "Los miembros ven quien mas esta: eso es lo que lo hace un grupo. No se hacen amigos automaticamente y sus correos no quedan expuestos solo por pertenecer."
+        },
+        {
+          "question": "Que pasa con un menu compartido si elimino el grupo?",
+          "answer": "El menu queda intacto: pertenece a quien lo creo. El acceso concedido por el grupo termina, asi que vuelve a compartirlo directamente o por otro grupo si aun hace falta."
+        }
+      ]
     }
   },
   "systemPages": {

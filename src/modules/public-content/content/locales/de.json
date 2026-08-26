@@ -544,6 +544,112 @@
           "answer": "Teilnehmende sehen die Gesamtbestellung, damit die Gruppe sie vor dem Aufgeben prufen kann. Personliche Summen bleiben der jeweiligen Person zugeordnet."
         }
       ]
+    },
+    "invite-friends": {
+      "navigationLabel": "Freunde einladen",
+      "seoTitle": "Freunde hinzufugen und den Einladungslink teilen | Gama3 Orderak",
+      "description": "Zwei Wege zur Freundesliste: jemanden uber die exakte E-Mail suchen, oder einen 24-Stunden-Link teilen, mit dem dich jeder ohne Einzelfreigabe hinzufugen kann.",
+      "eyebrow": "Anleitung",
+      "heading": "Freunde hinzufugen",
+      "introduction": "Eine Freundesliste spart wiederholte Einladungen. Steht jemand darauf, kannst du ein Menu direkt teilen, die Person einer Gruppe hinzufugen oder eine Runde starten, die sie einschliesst, ohne etwas zum Einlosen zu senden. Es gibt zwei Wege, und sie passen zu verschiedenen Situationen.",
+      "sections": [
+        {
+          "heading": "Per E-Mail finden",
+          "paragraphs": [
+            "Offne Mitglieder, dann Freunde, und suche die exakte Adresse, mit der sich die Person registriert hat. Niemand steht in einem offentlichen Verzeichnis, und Teiltreffer liefern nichts: Die Adresse ist hier der einzige Weg, jemanden zu finden.",
+            "Das ist Absicht. Ein durchsuchbares Verzeichnis liesse jeden eine Liste der Nutzenden erstellen; die exakte Adresse zu verlangen heisst, dass du nur findest, wer sie dir bereits gegeben hat."
+          ]
+        },
+        {
+          "heading": "Einladungslink teilen",
+          "paragraphs": [
+            "Der Freundschaftslink ist schneller, wenn du mehrere Personen auf einmal einladst. Erstelle ihn auf der Freunde-Seite und schicke ihn dorthin, wo ihr ohnehin schreibt: Nachricht, Gruppenchat, egal.",
+            "Wer ihn binnen 24 Stunden offnet, kann dich mit einem Tippen hinzufugen. Du bestatigst nicht jede Person: Das Teilen des Links ist deine Zustimmung, und genau darum geht es. Derselbe Link gilt fur beliebig viele.",
+            "Willst du lieber jede Person bestatigen, nutze die E-Mail-Suche und lass sie dir eine Anfrage senden. Beide Wege enden gleich; nur wer bestatigt, unterscheidet sich."
+          ]
+        },
+        {
+          "heading": "Anfragen und was danach passiert",
+          "paragraphs": [
+            "Eine uber die Suche gesendete Anfrage wartet auf der Anfragen-Seite, bis die andere Person antwortet. Annehmen macht die Freundschaft sofort gegenseitig: Ihr erscheint in den Listen des anderen, ohne den Schritt zu wiederholen.",
+            "Benachrichtigungen melden, wenn eine Anfrage eintrifft oder angenommen wird, du musst also nicht ratseln, ob sie angekommen ist."
+          ]
+        },
+        {
+          "heading": "Freund entfernen",
+          "paragraphs": [
+            "Das Entfernen wirkt sofort und nimmt euch aus den Listen des jeweils anderen. Es loscht keine gemeinsame Historie: Ein Menu, in dem ihr beide wart, und Runden, zu denen du beigetragen hast, bleiben genau wie sie waren.",
+            "Einen Freund zu entfernen entzieht nicht den Zugriff auf Menus, die du zuvor geteilt hast. Widerrufe das bei Bedarf separat auf der Mitglieder-Seite des Menus."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Warum kann ich nicht nach Namen suchen?",
+          "answer": "Weil eine Namenssuche die App in ein Verzeichnis ihrer Nutzenden verwandeln wurde. Die Suche nach der exakten Adresse heisst, dass du nur findest, wer sie dir schon gegeben hat."
+        },
+        {
+          "question": "Kann ich meinen Einladungslink offentlich posten?",
+          "answer": "Behandle ihn als halb privat. Wer ihn binnen 24 Stunden offnet, kann dich hinzufugen; schicke ihn also dorthin, wo dir das bei allen Anwesenden recht ist."
+        },
+        {
+          "question": "Kann ich einen Link vorzeitig stoppen?",
+          "answer": "Ja. Ein Widerruf deaktiviert ihn sofort. Wer ihn bereits genutzt hat, bleibt in deiner Liste, bis du die Freundschaft beendest."
+        }
+      ]
+    },
+    "work-with-groups": {
+      "navigationLabel": "Gruppen nutzen",
+      "seoTitle": "Gruppen fur wiederkehrende Bestellungen nutzen | Gama3 Orderak",
+      "description": "Eine Gruppe einmal anlegen, Menus mit allen gleichzeitig teilen und Personen hinzufugen oder entfernen, ohne Einladungen zu wiederholen.",
+      "eyebrow": "Anleitung",
+      "heading": "Gruppen fur wiederkehrende Bestellungen nutzen",
+      "introduction": "Eine Gruppe ist eine benannte Menge von Personen, mit denen du regelmassig bestellst: ein Team, eine Etage, eine Familie. Ein Menu mit der Gruppe zu teilen teilt es mit allen, und wer spater dazukommt, erbt das bereits Geteilte. Diese Anleitung zeigt Anlegen, Fullen und Pflegen.",
+      "sections": [
+        {
+          "heading": "Gruppe anlegen",
+          "paragraphs": [
+            "Offne Mitglieder, dann Freundesgruppen, und lege eine Gruppe mit einem wiedererkennbaren Namen an: \"Design-Team\", \"Dritter Stock\". Eine kurze Beschreibung hilft, wenn jemand in mehreren Gruppen ist.",
+            "Die Gruppe, die du anlegst, gehort dir. Nur du kannst sie umbenennen, einladen, Personen entfernen oder sie loschen; diese Eigentumerschaft wird durch Teilen nicht ubertragen."
+          ]
+        },
+        {
+          "heading": "Personen hinzufugen",
+          "paragraphs": [
+            "Lade Freunde uber die Gruppenkarte ein. Wer schon in deiner Freundesliste steht, lasst sich direkt hinzufugen: der ubliche Weg fur ein Team, mit dem du wochentlich bestellst.",
+            "Fur Personen, die noch nicht in deiner Liste stehen, erstelle einen Gruppen-Einladungslink und schicke ihn. Wer ihn binnen 24 Stunden offnet, tritt direkt bei — keine Freundschaftsanfrage vorher, keine Einzelfreigabe durch dich.",
+            "Dieser Link ist der schnellste Weg, eine neue Gruppe zu fullen. Einmal erstellen, in den Teamchat einfugen, und wer rein will, ist drin, ohne dass du eine Warteschlange bearbeitest."
+          ]
+        },
+        {
+          "heading": "Menus mit der Gruppe teilen",
+          "paragraphs": [
+            "Teile ein Menu mit der Gruppe, und alle konnen es sofort nutzen. Das spart die meiste Wiederholung: eine Aktion statt einer Einladung pro Person.",
+            "Wer spater hinzukommt, sieht die bereits mit dieser Gruppe geteilten Menus. Eine neue Kollegin im Marz braucht die Einladungen vom Januar nicht erneut."
+          ]
+        },
+        {
+          "heading": "Aktuell halten",
+          "paragraphs": [
+            "Entferne jemanden aus der Gruppe, und der Zugriff uber die Gruppe endet. Einzeln gewahrter Zugriff — ein direkt geteiltes Menu — ist davon getrennt und bleibt, bis du ihn ebenfalls widerrufst.",
+            "Mitglieder konnen eine Gruppe selbst verlassen. Das Loschen einer Gruppe entfernt sie fur alle, loscht aber weder die daruber geteilten Menus noch bereits abgeschlossene Runden."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Kann ich eine Gruppe suchen und beitreten?",
+          "answer": "Nicht uber den Namen. Gruppen betritt man uber einen Einladungslink der Eigentumerin, sodass niemand eine Gruppe finden und betreten kann, den sie nie eingeladen hat."
+        },
+        {
+          "question": "Sehen alle in einer Gruppe einander?",
+          "answer": "Mitglieder sehen, wer sonst dabei ist — das macht eine Gruppe aus. Sie werden nicht automatisch Freunde, und ihre E-Mail-Adressen werden durch die Mitgliedschaft allein nicht offengelegt."
+        },
+        {
+          "question": "Was passiert mit einem geteilten Menu, wenn ich die Gruppe losche?",
+          "answer": "Das Menu bleibt unberuhrt; es gehort der Person, die es angelegt hat. Der uber die Gruppe gewahrte Zugriff endet — teile es bei Bedarf direkt oder uber eine andere Gruppe erneut."
+        }
+      ]
     }
   },
   "systemPages": {

@@ -544,6 +544,112 @@
           "answer": "Les participants voient la commande consolidee afin que le groupe puisse la verifier avant l envoi. Les totaux personnels restent rattaches a leur auteur."
         }
       ]
+    },
+    "invite-friends": {
+      "navigationLabel": "Inviter des amis",
+      "seoTitle": "Comment ajouter des amis et partager votre lien | Gama3 Orderak",
+      "description": "Deux facons de construire une liste d amis : rechercher quelqu un par son adresse exacte, ou partager un lien de 24 heures qui permet a chacun de vous ajouter.",
+      "eyebrow": "Guide",
+      "heading": "Comment ajouter des amis",
+      "introduction": "Une liste d amis evite de repeter les invitations. Des qu une personne y figure, vous pouvez partager un menu avec elle directement, l ajouter a un groupe ou lancer un tour qui l inclut sans rien envoyer a valider. Deux facons de la construire existent, adaptees a des situations differentes.",
+      "sections": [
+        {
+          "heading": "Rechercher par adresse e-mail",
+          "paragraphs": [
+            "Ouvrez Membres, puis Amis, et recherchez l adresse exacte avec laquelle la personne s est inscrite. Personne n apparait dans un annuaire public et les correspondances partielles ne renvoient rien : l adresse est le seul moyen de trouver quelqu un ici.",
+            "C est deliberе. Un annuaire consultable permettrait a n importe qui de dresser la liste des utilisateurs ; exiger l adresse exacte signifie que vous ne trouvez que ceux qui vous l ont deja donnee."
+          ]
+        },
+        {
+          "heading": "Partager votre lien d invitation",
+          "paragraphs": [
+            "Le lien d amitie est plus rapide quand vous invitez plusieurs personnes a la fois. Creez-le sur la page Amis et envoyez-le la ou vous discutez deja : un message, une conversation de groupe, n importe ou.",
+            "Toute personne qui l ouvre dans les 24 heures peut vous ajouter d une seule pression. Vous n approuvez pas chaque personne : partager le lien est votre consentement, et c est tout son interet. Le meme lien vaut pour autant de personnes qui l ouvrent.",
+            "Si vous preferez approuver chacun, utilisez la recherche par e-mail et laissez-les vous envoyer une demande. Les deux chemins aboutissent au meme resultat ; seule change la personne qui confirme."
+          ]
+        },
+        {
+          "heading": "Demandes et suite",
+          "paragraphs": [
+            "Une demande envoyee via la recherche attend sur la page Demandes jusqu a la reponse. Accepter rend l amitie reciproque immediatement : vous apparaissez dans la liste l un de l autre sans repeter l etape.",
+            "Les notifications vous previennent quand une demande arrive ou est acceptee, vous n etes donc pas laisse a vous demander si elle est passee."
+          ]
+        },
+        {
+          "heading": "Retirer un ami",
+          "paragraphs": [
+            "Le retrait est immediat et vous enleve des listes de l autre. Il n efface pas l historique partage : un menu dont vous faisiez partie tous les deux et les tours auxquels vous avez contribue restent exactement comme ils etaient.",
+            "Retirer un ami ne revoque pas son acces aux menus que vous lui aviez partages. Revoquez-le separement depuis la page Membres du menu si c est votre intention."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Pourquoi ne puis-je pas chercher par nom ?",
+          "answer": "Parce qu une recherche par nom ferait de l application un annuaire de ses utilisateurs. La recherche par adresse exacte fait que vous ne trouvez que ceux qui vous l ont deja communiquee."
+        },
+        {
+          "question": "Puis-je publier mon lien d invitation ?",
+          "answer": "Considerez-le comme semi-prive. Toute personne qui l ouvre dans les 24 heures peut vous ajouter : envoyez-le la ou cela ne vous derange pas que chacun le fasse."
+        },
+        {
+          "question": "Puis-je arreter un lien avant l echeance ?",
+          "answer": "Oui. La revocation le desactive immediatement. Ceux qui s en sont deja servis restent dans votre liste jusqu a ce que vous les retiriez."
+        }
+      ]
+    },
+    "work-with-groups": {
+      "navigationLabel": "Utiliser les groupes",
+      "seoTitle": "Utiliser les groupes pour des commandes recurrentes | Gama3 Orderak",
+      "description": "Creez un groupe une fois, partagez les menus avec tout le monde en meme temps et ajoutez ou retirez des personnes sans repeter les invitations.",
+      "eyebrow": "Guide",
+      "heading": "Utiliser les groupes pour des commandes recurrentes",
+      "introduction": "Un groupe est un ensemble nomme de personnes avec qui vous commandez regulierement : une equipe, un etage, une famille. Partager un menu avec le groupe le partage avec tous, et qui arrive plus tard herite de ce qui a deja ete partage. Ce guide explique comment le creer, le remplir et le tenir a jour.",
+      "sections": [
+        {
+          "heading": "Creez le groupe",
+          "paragraphs": [
+            "Ouvrez Membres, puis Groupes d amis, et creez un groupe avec un nom reconnaissable : « Equipe design », « Troisieme etage ». Une courte description aide quand quelqu un appartient a plusieurs groupes.",
+            "Le groupe que vous creez vous appartient. Vous seul pouvez le renommer, y inviter, en retirer des personnes ou le supprimer, et cette propriete ne se transfere pas par partage."
+          ]
+        },
+        {
+          "heading": "Ajoutez des personnes",
+          "paragraphs": [
+            "Invitez des amis dans le groupe depuis sa fiche. Toute personne deja dans vos amis peut etre ajoutee directement : c est la voie normale pour une equipe avec qui vous commandez chaque semaine.",
+            "Pour ceux qui ne sont pas encore dans vos amis, creez un lien d invitation de groupe et envoyez-le. Qui l ouvre dans les 24 heures rejoint directement : pas de demande d ami au prealable, pas d approbation de votre part pour chacun.",
+            "Ce lien est le moyen le plus rapide de remplir un nouveau groupe. Creez-le une fois, collez-le dans la conversation de l equipe, et chacun qui veut entrer entre, sans que vous gerez une file de demandes."
+          ]
+        },
+        {
+          "heading": "Partagez des menus avec le groupe",
+          "paragraphs": [
+            "Partagez un menu avec le groupe et tout le monde peut s en servir aussitot. C est ce qui evite le plus de repetitions : une action au lieu d une invitation par personne.",
+            "Une personne ajoutee ensuite voit les menus deja partages avec ce groupe. Un collegue arrive en mars n a pas besoin qu on renvoie les invitations de janvier."
+          ]
+        },
+        {
+          "heading": "Le tenir a jour",
+          "paragraphs": [
+            "Retirez quelqu un du groupe et son acces par ce biais cesse. L acces accorde individuellement — un menu partage directement avec lui — est distinct et subsiste tant que vous ne le revoquez pas aussi.",
+            "Les membres peuvent quitter un groupe eux-memes. Supprimer un groupe le retire pour tous, mais n efface ni les menus partages par son intermediaire ni les tours deja termines."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Puis-je rechercher un groupe et le rejoindre ?",
+          "answer": "Pas par nom. On rejoint un groupe via un lien d invitation du proprietaire, de sorte qu un groupe ne peut pas etre trouve puis rejoint par quelqu un qui n a jamais ete invite."
+        },
+        {
+          "question": "Tout le monde dans un groupe voit-il les autres ?",
+          "answer": "Les membres voient qui d autre en fait partie : c est ce qui en fait un groupe. Ils ne deviennent pas amis automatiquement et leurs adresses e-mail ne sont pas exposees par la seule appartenance."
+        },
+        {
+          "question": "Qu advient-il d un menu partage si je supprime le groupe ?",
+          "answer": "Le menu reste intact : il appartient a son createur. L acces accorde via le groupe cesse ; repartagez-le directement ou via un autre groupe si besoin."
+        }
+      ]
     }
   },
   "systemPages": {

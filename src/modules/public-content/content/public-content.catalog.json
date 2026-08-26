@@ -1145,6 +1145,234 @@
       }
     },
     {
+      "id": "invite-friends",
+      "slug": "invite-friends",
+      "navigation": false,
+      "adEligible": true,
+      "copy": {
+        "en": {
+          "navigationLabel": "Invite friends",
+          "seoTitle": "How to add friends and share your invite link | Gama3 Orderak",
+          "description": "Two ways to build a friend list: search someone by their exact email, or share a 24-hour invite link that lets anyone add you without you approving each request.",
+          "eyebrow": "Guide",
+          "heading": "How to add friends",
+          "introduction": "A friend list saves repeating invitations. Once someone is on it you can share a menu with them directly, add them to a group, or start a round that includes them without sending anything to redeem. There are two ways to build it, and they suit different situations.",
+          "sections": [
+            {
+              "heading": "Find someone by email",
+              "paragraphs": [
+                "Open Members, then Friends, and search the exact address the person signed up with. Nobody is listed publicly and partial matches return nothing, so an address is the only way to find a person here.",
+                "That is deliberate. A searchable directory would let anyone assemble a list of who uses the app; requiring the exact address means you can only find someone who has already given it to you."
+              ]
+            },
+            {
+              "heading": "Share your invite link",
+              "paragraphs": [
+                "The friend link is the faster route when you are inviting several people at once. Create it on the Friends page and send it wherever you already talk — a message, a group chat, anywhere.",
+                "Anyone who opens it within 24 hours can add you with a single tap. You do not approve each person: sharing the link is your consent, which is the whole point of it. The same link works for as many people as open it.",
+                "If you would rather approve each person, use the email search instead and let them send you a request. Both routes end in the same place; they differ only in who confirms."
+              ]
+            },
+            {
+              "heading": "Requests and what happens next",
+              "paragraphs": [
+                "A request sent by email search waits on the Requests page until the other person answers. Accepting makes the friendship mutual immediately — you appear on each other’s lists, and neither of you has to repeat the step.",
+                "Notifications tell you when a request arrives or is accepted, so you are not left wondering whether it went through."
+              ]
+            },
+            {
+              "heading": "Removing a friend",
+              "paragraphs": [
+                "Unfriending is immediate and removes you from each other’s lists. It does not delete shared history: a menu you were both part of, and any round you already contributed to, stay exactly as they were.",
+                "Removing a friend does not remove their access to menus you shared with them earlier. Revoke that separately from the menu’s Members page if that is what you intend."
+              ]
+            }
+          ],
+          "faq": [
+            {
+              "question": "Why can’t I search people by name?",
+              "answer": "Because a name search would turn the app into a directory of its users. Exact-email search means you can only find someone who has already shared their address with you."
+            },
+            {
+              "question": "Is my invite link safe to post publicly?",
+              "answer": "Treat it as semi-private. Anyone who opens it within 24 hours can add you as a friend, so send it where you would be comfortable with everyone present adding you."
+            },
+            {
+              "question": "Can I stop an invite link early?",
+              "answer": "Yes. Revoking it stops it working immediately. People who already used it stay on your friend list until you unfriend them."
+            }
+          ]
+        },
+        "ar": {
+          "navigationLabel": "دعوة الأصدقاء",
+          "seoTitle": "كيفية إضافة الأصدقاء ومشاركة رابط الدعوة | جمع أوردرك",
+          "description": "طريقتان لبناء قائمة الأصدقاء: البحث عن شخص ببريده الإلكتروني بالضبط، أو مشاركة رابط دعوة صالح ٢٤ ساعة يتيح لأي شخص إضافتك دون موافقتك على كل طلب.",
+          "eyebrow": "دليل",
+          "heading": "كيفية إضافة الأصدقاء",
+          "introduction": "قائمة الأصدقاء توفّر تكرار الدعوات. فبمجرد وجود شخص فيها يمكنك مشاركة قائمة معه مباشرة أو إضافته إلى مجموعة أو بدء جولة تشمله دون إرسال أي شيء ليستخدمه. وهناك طريقتان لبنائها تناسبان حالتين مختلفتين.",
+          "sections": [
+            {
+              "heading": "ابحث عن شخص بالبريد الإلكتروني",
+              "paragraphs": [
+                "افتح «الأعضاء» ثم «الأصدقاء» وابحث بالعنوان الذي سجّل به الشخص بالضبط. لا أحد مُدرج علنًا ولا تُرجع المطابقات الجزئية شيئًا، فالعنوان هو الطريقة الوحيدة للعثور على شخص هنا.",
+                "وهذا مقصود. فالدليل القابل للبحث يتيح لأي شخص تجميع قائمة بمستخدمي التطبيق، أما اشتراط العنوان الكامل فيعني أنك لا تجد إلا من أعطاك عنوانه بالفعل."
+              ]
+            },
+            {
+              "heading": "شارك رابط الدعوة",
+              "paragraphs": [
+                "رابط الصداقة أسرع حين تدعو عدة أشخاص دفعة واحدة. أنشئه من صفحة «الأصدقاء» وأرسله حيث تتحدث بالفعل: رسالة، أو محادثة جماعية، أو أي مكان.",
+                "أي شخص يفتحه خلال ٢٤ ساعة يستطيع إضافتك بضغطة واحدة. أنت لا توافق على كل شخص: مشاركة الرابط هي موافقتك، وهذا هو الهدف منه. ويعمل الرابط نفسه لأي عدد ممن يفتحونه.",
+                "وإذا كنت تفضّل الموافقة على كل شخص، فاستخدم البحث بالبريد ودعهم يرسلون لك طلبًا. تنتهي الطريقتان إلى الشيء نفسه، ويختلفان فقط في من يؤكد."
+              ]
+            },
+            {
+              "heading": "الطلبات وما يحدث بعدها",
+              "paragraphs": [
+                "الطلب المُرسل عبر البحث بالبريد ينتظر في صفحة «الطلبات» حتى يجيب الطرف الآخر. والقبول يجعل الصداقة متبادلة فورًا، فتظهران في قائمة بعضكما دون أن يعيد أحدكما الخطوة.",
+                "وتخبرك الإشعارات عند وصول طلب أو قبوله، فلا تبقى متسائلًا هل وصل أم لا."
+              ]
+            },
+            {
+              "heading": "إزالة صديق",
+              "paragraphs": [
+                "الإزالة فورية وتحذفكما من قائمتي بعضكما. لكنها لا تمسح التاريخ المشترك: القائمة التي كنتما فيها معًا وأي جولة ساهمت فيها تبقيان كما هما تمامًا.",
+                "وإزالة صديق لا تلغي وصوله إلى القوائم التي شاركتها معه سابقًا. ألغِ ذلك بشكل منفصل من صفحة «الأعضاء» في القائمة إن كان هذا ما تقصده."
+              ]
+            }
+          ],
+          "faq": [
+            {
+              "question": "لماذا لا أستطيع البحث عن الناس بالاسم؟",
+              "answer": "لأن البحث بالاسم يحوّل التطبيق إلى دليل بمستخدميه. والبحث بالبريد الكامل يعني أنك لا تجد إلا من شارك عنوانه معك بالفعل."
+            },
+            {
+              "question": "هل من الآمن نشر رابط الدعوة علنًا؟",
+              "answer": "تعامل معه كشبه خاص. فأي شخص يفتحه خلال ٢٤ ساعة يستطيع إضافتك، فأرسله حيث ترتاح لأن يضيفك كل من هناك."
+            },
+            {
+              "question": "هل أستطيع إيقاف رابط الدعوة مبكرًا؟",
+              "answer": "نعم. الإلغاء يوقفه فورًا. أما من استخدمه بالفعل فيبقى في قائمة أصدقائك حتى تزيله بنفسك."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "work-with-groups",
+      "slug": "work-with-groups",
+      "navigation": false,
+      "adEligible": true,
+      "copy": {
+        "en": {
+          "navigationLabel": "Work with groups",
+          "seoTitle": "How to use groups for recurring team orders | Gama3 Orderak",
+          "description": "Create a group once, share menus with everyone in it at the same time, and add or remove people without repeating invitations. Includes group invite links and roles.",
+          "eyebrow": "Guide",
+          "heading": "How to use groups for recurring orders",
+          "introduction": "A group is a named set of people you order with repeatedly: a team, a floor, a family. Sharing a menu with the group shares it with everyone in it, and anyone added later inherits what has already been shared. This guide covers creating one, filling it, and keeping it tidy.",
+          "sections": [
+            {
+              "heading": "Create the group",
+              "paragraphs": [
+                "Open Members, then Friend groups, and create a group with a name people will recognise — \"Design team\", \"Third floor\". A short description helps when someone belongs to several.",
+                "You own the group you create. Only you can rename it, invite into it, remove people, or delete it, and that ownership never transfers by sharing."
+              ]
+            },
+            {
+              "heading": "Add people",
+              "paragraphs": [
+                "Invite friends into the group from the group card. Anyone already on your friend list can be added directly, which is the usual route for a team you order with every week.",
+                "For people who are not on your friend list yet, create a group invite link and send it. Whoever opens it within 24 hours joins the group directly — no friend request first, no approval from you for each person.",
+                "That link is the fastest way to fill a new group. Create it once, paste it into the team chat, and everyone who wants in is in, without you handling a queue of requests."
+              ]
+            },
+            {
+              "heading": "Share menus with the group",
+              "paragraphs": [
+                "Share a menu with the group and everyone in it can use it immediately. This is the part that saves the most repetition: one action instead of one invitation per person.",
+                "Someone added to the group afterwards sees the menus already shared with that group. A new colleague joining in March does not need the invitations sent in January to be sent again."
+              ]
+            },
+            {
+              "heading": "Keeping it current",
+              "paragraphs": [
+                "Remove someone from the group and their access through it ends. Access you granted them individually — a menu shared with them directly — is separate and stays until you revoke it too.",
+                "Members can leave a group themselves. Deleting a group removes it for everyone, but it does not delete the menus that were shared through it or any round already completed."
+              ]
+            }
+          ],
+          "faq": [
+            {
+              "question": "Can I search for a group and join it?",
+              "answer": "Not by name. Groups are joined through an invite link from the owner, so a group cannot be found and entered by someone the owner never invited."
+            },
+            {
+              "question": "Does everyone in a group see everyone else?",
+              "answer": "Members can see who else is in the group — that is what makes it a group. They do not become friends automatically, and their email addresses are not exposed by membership alone."
+            },
+            {
+              "question": "What happens to a shared menu if I delete the group?",
+              "answer": "The menu itself is untouched; it belongs to whoever created it. Access granted through the group ends, so share it again directly or through another group if people still need it."
+            }
+          ]
+        },
+        "ar": {
+          "navigationLabel": "العمل بالمجموعات",
+          "seoTitle": "كيفية استخدام المجموعات للطلبات المتكررة | جمع أوردرك",
+          "description": "أنشئ مجموعة مرة واحدة، وشارك القوائم مع كل أفرادها في الوقت نفسه، وأضف أو أزل أشخاصًا دون تكرار الدعوات. مع روابط دعوة المجموعة والأدوار.",
+          "eyebrow": "دليل",
+          "heading": "كيفية استخدام المجموعات للطلبات المتكررة",
+          "introduction": "المجموعة مجموعة أشخاص لها اسم تطلب معهم بانتظام: فريق، أو طابق، أو عائلة. ومشاركة قائمة مع المجموعة تشاركها مع كل أفرادها، ومن يُضاف لاحقًا يرث ما شورك بالفعل. يشرح هذا الدليل إنشاءها وملأها والحفاظ على ترتيبها.",
+          "sections": [
+            {
+              "heading": "أنشئ المجموعة",
+              "paragraphs": [
+                "افتح «الأعضاء» ثم «مجموعات الأصدقاء» وأنشئ مجموعة باسم يعرفه الناس مثل «فريق التصميم» أو «الدور الثالث». والوصف القصير يساعد حين ينتمي شخص إلى عدة مجموعات.",
+                "أنت تملك المجموعة التي تنشئها. وحدك من يعيد تسميتها أو يدعو إليها أو يزيل منها أو يحذفها، ولا تنتقل هذه الملكية بالمشاركة."
+              ]
+            },
+            {
+              "heading": "أضف أشخاصًا",
+              "paragraphs": [
+                "ادعُ الأصدقاء إلى المجموعة من بطاقتها. وأي شخص في قائمة أصدقائك يمكن إضافته مباشرة، وهذا هو الطريق المعتاد لفريق تطلب معه كل أسبوع.",
+                "أما من ليسوا في قائمة أصدقائك بعد، فأنشئ رابط دعوة للمجموعة وأرسله. ومن يفتحه خلال ٢٤ ساعة ينضم مباشرة، دون طلب صداقة أولًا ودون موافقة منك على كل شخص.",
+                "وهذا الرابط أسرع وسيلة لملء مجموعة جديدة. أنشئه مرة، والصقه في محادثة الفريق، فينضم كل من يريد دون أن تتعامل مع طابور من الطلبات."
+              ]
+            },
+            {
+              "heading": "شارك القوائم مع المجموعة",
+              "paragraphs": [
+                "شارك قائمة مع المجموعة فيستطيع كل من فيها استخدامها فورًا. وهذا هو الجزء الذي يوفّر أكبر قدر من التكرار: إجراء واحد بدل دعوة لكل شخص.",
+                "ومن يُضاف إلى المجموعة بعد ذلك يرى القوائم المشاركة معها بالفعل. فالزميل الجديد الذي ينضم في مارس لا يحتاج إعادة إرسال دعوات يناير."
+              ]
+            },
+            {
+              "heading": "الحفاظ على تحديثها",
+              "paragraphs": [
+                "إزالة شخص من المجموعة تنهي وصوله عبرها. أما الوصول الذي منحته له فرديًا — قائمة شاركتها معه مباشرة — فهو منفصل ويبقى حتى تلغيه أيضًا.",
+                "ويستطيع الأعضاء مغادرة المجموعة بأنفسهم. وحذف المجموعة يزيلها عن الجميع، لكنه لا يحذف القوائم التي شوركت عبرها ولا أي جولة اكتملت."
+              ]
+            }
+          ],
+          "faq": [
+            {
+              "question": "هل أستطيع البحث عن مجموعة والانضمام إليها؟",
+              "answer": "ليس بالاسم. يتم الانضمام إلى المجموعات عبر رابط دعوة من المالك، فلا يمكن العثور على مجموعة ودخولها من شخص لم يدعُه المالك."
+            },
+            {
+              "question": "هل يرى كل من في المجموعة الآخرين؟",
+              "answer": "يرى الأعضاء من في المجموعة، وهذا ما يجعلها مجموعة. لكنهم لا يصبحون أصدقاء تلقائيًا، ولا تُكشف عناوين بريدهم بمجرد العضوية."
+            },
+            {
+              "question": "ماذا يحدث لقائمة مشتركة إذا حذفت المجموعة؟",
+              "answer": "القائمة نفسها لا تتأثر، فهي ملك من أنشأها. أما الوصول الممنوح عبر المجموعة فينتهي، فشاركها مجددًا مباشرة أو عبر مجموعة أخرى إن كان الناس ما زالوا بحاجة إليها."
+            }
+          ]
+        }
+      }
+    },
+    {
       "id": "privacy",
       "slug": "privacy",
       "navigation": false,

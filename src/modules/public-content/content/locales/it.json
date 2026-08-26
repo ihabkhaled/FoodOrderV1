@@ -544,6 +544,112 @@
           "answer": "I partecipanti vedono l ordine complessivo, cosi il gruppo puo controllarlo prima dell invio. I totali personali restano legati alla persona."
         }
       ]
+    },
+    "invite-friends": {
+      "navigationLabel": "Invitare amici",
+      "seoTitle": "Come aggiungere amici e condividere il link di invito | Gama3 Orderak",
+      "description": "Due modi per costruire la lista amici: cercare qualcuno con l email esatta, o condividere un link di 24 ore che permette a chiunque di aggiungerti senza approvazioni.",
+      "eyebrow": "Guida",
+      "heading": "Come aggiungere amici",
+      "introduction": "Una lista amici evita di ripetere gli inviti. Quando una persona e in lista puoi condividere un menu direttamente, aggiungerla a un gruppo o avviare un giro che la includa senza mandare nulla da riscattare. Ci sono due modi per costruirla, adatti a situazioni diverse.",
+      "sections": [
+        {
+          "heading": "Cerca con l email",
+          "paragraphs": [
+            "Apri Membri, poi Amici, e cerca l indirizzo esatto con cui la persona si e registrata. Nessuno compare in un elenco pubblico e le corrispondenze parziali non restituiscono nulla: l indirizzo e l unico modo per trovare qualcuno qui.",
+            "E una scelta voluta. Un elenco consultabile permetterebbe a chiunque di ricostruire chi usa l app; richiedere l indirizzo esatto significa che puoi trovare solo chi te lo ha gia dato."
+          ]
+        },
+        {
+          "heading": "Condividi il tuo link di invito",
+          "paragraphs": [
+            "Il link amicizia e la via rapida quando inviti piu persone insieme. Crealo nella pagina Amici e mandalo dove gia parlate: un messaggio, una chat di gruppo, ovunque.",
+            "Chiunque lo apra entro 24 ore puo aggiungerti con un tocco. Non approvi ogni persona: condividere il link e il tuo consenso, ed e proprio questo il punto. Lo stesso link vale per quante persone lo aprono.",
+            "Se preferisci approvare ognuno, usa la ricerca per email e lascia che ti mandino una richiesta. Le due strade arrivano allo stesso risultato: cambia solo chi conferma."
+          ]
+        },
+        {
+          "heading": "Richieste e cosa succede dopo",
+          "paragraphs": [
+            "Una richiesta inviata dalla ricerca resta nella pagina Richieste finche l altra persona risponde. Accettare rende l amicizia reciproca subito: comparite nelle liste l uno dell altro senza ripetere il passaggio.",
+            "Le notifiche avvisano quando arriva o viene accettata una richiesta, cosi non resti a chiederti se sia andata a buon fine."
+          ]
+        },
+        {
+          "heading": "Rimuovere un amico",
+          "paragraphs": [
+            "La rimozione e immediata e vi toglie dalle rispettive liste. Non cancella la storia condivisa: un menu di cui facevate parte entrambi e i giri a cui hai gia contribuito restano esattamente com erano.",
+            "Rimuovere un amico non revoca il suo accesso ai menu che gli avevi condiviso prima. Se e questo che vuoi, revocalo separatamente dalla pagina Membri del menu."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Perche non posso cercare le persone per nome?",
+          "answer": "Perche una ricerca per nome trasformerebbe l app in un elenco dei suoi utenti. La ricerca per email esatta fa si che tu possa trovare solo chi ti ha gia dato il proprio indirizzo."
+        },
+        {
+          "question": "Posso pubblicare il link di invito ovunque?",
+          "answer": "Trattalo come semi-privato. Chiunque lo apra entro 24 ore puo aggiungerti, quindi mandalo dove ti va bene che chiunque presente ti aggiunga."
+        },
+        {
+          "question": "Posso fermare un link prima della scadenza?",
+          "answer": "Si. Revocarlo lo disattiva subito. Chi lo ha gia usato resta nella tua lista amici finche non lo rimuovi."
+        }
+      ]
+    },
+    "work-with-groups": {
+      "navigationLabel": "Usare i gruppi",
+      "seoTitle": "Come usare i gruppi per ordini ricorrenti | Gama3 Orderak",
+      "description": "Crea un gruppo una volta, condividi i menu con tutti insieme e aggiungi o togli persone senza ripetere gli inviti. Con link di invito al gruppo e ruoli.",
+      "eyebrow": "Guida",
+      "heading": "Come usare i gruppi per ordini ricorrenti",
+      "introduction": "Un gruppo e un insieme di persone con un nome con cui ordini spesso: un team, un piano, una famiglia. Condividere un menu con il gruppo lo condivide con tutti, e chi entra dopo eredita quanto gia condiviso. Questa guida spiega come crearlo, riempirlo e tenerlo in ordine.",
+      "sections": [
+        {
+          "heading": "Crea il gruppo",
+          "paragraphs": [
+            "Apri Membri, poi Gruppi di amici, e crea un gruppo con un nome riconoscibile: \"Team design\", \"Terzo piano\". Una breve descrizione aiuta quando qualcuno appartiene a piu gruppi.",
+            "Il gruppo che crei e tuo. Solo tu puoi rinominarlo, invitare, rimuovere persone o eliminarlo, e questa proprieta non si trasferisce condividendo."
+          ]
+        },
+        {
+          "heading": "Aggiungi persone",
+          "paragraphs": [
+            "Invita amici nel gruppo dalla scheda del gruppo. Chi e gia tra i tuoi amici puo essere aggiunto direttamente: e la via normale per un team con cui ordini ogni settimana.",
+            "Per chi non e ancora tra i tuoi amici, crea un link di invito al gruppo e mandalo. Chi lo apre entro 24 ore entra direttamente: nessuna richiesta di amicizia prima, nessuna approvazione tua per ogni persona.",
+            "Quel link e il modo piu rapido di riempire un gruppo nuovo. Crealo una volta, incollalo nella chat del team, ed entra chi vuole entrare, senza che tu gestisca una coda di richieste."
+          ]
+        },
+        {
+          "heading": "Condividi i menu con il gruppo",
+          "paragraphs": [
+            "Condividi un menu con il gruppo e tutti possono usarlo subito. E la parte che evita piu ripetizioni: un azione invece di un invito a testa.",
+            "Chi viene aggiunto dopo vede i menu gia condivisi con quel gruppo. Un collega che arriva a marzo non ha bisogno che gli inviti di gennaio vengano rimandati."
+          ]
+        },
+        {
+          "heading": "Tenerlo aggiornato",
+          "paragraphs": [
+            "Rimuovi qualcuno dal gruppo e il suo accesso tramite il gruppo finisce. L accesso concesso individualmente — un menu condiviso direttamente con lui — e separato e resta finche non lo revochi anche quello.",
+            "I membri possono uscire da soli. Eliminare un gruppo lo rimuove per tutti, ma non cancella i menu condivisi tramite esso ne i giri gia conclusi."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Posso cercare un gruppo e unirmi?",
+          "answer": "Non per nome. Ai gruppi si accede tramite un link di invito del proprietario, quindi un gruppo non puo essere trovato ed entrato da chi non e stato invitato."
+        },
+        {
+          "question": "Tutti nel gruppo vedono tutti gli altri?",
+          "answer": "I membri vedono chi altro c e: e cio che rende un gruppo tale. Non diventano amici automaticamente e i loro indirizzi e-mail non sono esposti dalla sola appartenenza."
+        },
+        {
+          "question": "Cosa succede a un menu condiviso se elimino il gruppo?",
+          "answer": "Il menu resta intatto: appartiene a chi lo ha creato. L accesso concesso tramite il gruppo finisce, quindi ricondividilo direttamente o con un altro gruppo se serve ancora."
+        }
+      ]
     }
   },
   "systemPages": {

@@ -544,6 +544,112 @@
           "answer": "El moshtarkeen beyshofo el order el megamma3 3ashan el group yerag3o abl ma yeb3at. Amma el egmali el shakhsi fabyefdal marboot be sahbo."
         }
       ]
+    },
+    "invite-friends": {
+      "navigationLabel": "Ed3i as7abak",
+      "seoTitle": "Ezay tedeef as7ab we tesharek link el da3wa | Gama3 Orderak",
+      "description": "Tare2ten 3ashan tebni list as7abak: dawwar 3ala had bel email betaa3o bel zabt, aw sharek link da3wa 24 sa3a yekhalli ay had yedeefak men gheir ma tewafe2 3ala kol talab.",
+      "eyebrow": "Dalil",
+      "heading": "Ezay tedeef as7ab",
+      "introduction": "List el as7ab bettewaffar tekrar el da3awat. Awel ma had yeb2a feeha tedar tesharek menu ma3ah 3ala tool, aw tedeefo le group, aw tebda round shamlah men gheir ma teb3at haga yesta3melha. Fi tare2ten 3ashan tebniha we kol wahda tenfa3 fe halа mokhtalfa.",
+      "sections": [
+        {
+          "heading": "Dawwar 3ala had bel email",
+          "paragraphs": [
+            "Eftah \"El a3daa\" ba3dein \"El as7ab\" we dawwar bel 3onwan elli el shakhs sagel beh bel zabt. Mahadesh madroog 3alanan wel motabaqat el goz2eya matergaash haga, fa el 3onwan howa el tare2a el wahida 3ashan telaqi had hena.",
+            "We da maqsood. El dalil elli yenfa3 tedawwar feeh yekhalli ay had yegma3 list be mostakhdemeen el app, amma eshterat el 3onwan kamel ya3ni enak matelaqish gheir elli edak 3onwano khalas."
+          ]
+        },
+        {
+          "heading": "Sharek link el da3wa",
+          "paragraphs": [
+            "Link el sadaka asra3 lamma teb2a bted3i kaza wahed marra wahda. E3melo men safhet \"El as7ab\" we eb3ato fe ay makan bettetkallem feeh khalas: resala, group chat, ay haga.",
+            "Ay had yeftaho khilal 24 sa3a yeader yedeefak be daghta wahda. Enta mabtewafe2sh 3ala kol wahed: mosharket el link heya mowafqetak, we da bel zabt el hadaf meno. We nafs el link yeshtaghal le ay 3adad nas yeftahoh.",
+            "We law tefaddal tewafe2 3ala kol wahed, esta3mel el bahs bel email we khalihom yeb3atolak talab. El tare2ten byentahi le nafs el makan, wel far2 bas fe meen elli yeaked."
+          ]
+        },
+        {
+          "heading": "El talabat we elli yehsal ba3dein",
+          "paragraphs": [
+            "El talab el mab3oot bel bahs bel email beyestanna fe safhet \"El talabat\" lehad ma el tarf el tani yeredd. Wel qabool beyekhalli el sadaka motabadla 3ala tool, fa kol wahed yebaan fe list el tani men gheir ma had ye3eed el khatwa.",
+            "Wel esh3arat betaollak lamma talab yewsal aw yetabel, fa mateb2ash mestanni we mesh 3aref wesel walla la."
+          ]
+        },
+        {
+          "heading": "Shail sahb",
+          "paragraphs": [
+            "El shail fawri we beyshilko men list ba3d. Bas mabyemsahsh el tarikh el moshtarak: el menu elli kontu feeha sawa, we ay round sahamt feeha, byefdalo zay ma homma bel zabt.",
+            "We shail el sahb mabyelghish wosoolo lel menus elli sharekthom ma3ah abl keda. Elghi da lewahdo men safhet \"El a3daa\" fel menu law da elli enta asdo."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Leh mesh adar adawwar 3ala el nas bel esm?",
+          "answer": "3ashan el bahs bel esm haykhalli el app dalil be mostakhdemeeno. El bahs bel email kamel ya3ni enak matelaqish gheir elli sharek 3onwano ma3ak khalas."
+        },
+        {
+          "question": "Amen enni anshor link el da3wa 3alanan?",
+          "answer": "E3tebero shebh khass. Ay had yeftaho khilal 24 sa3a yeader yedeefak, fa eb3ato fel makan elli hatertah feeh en kol elli mawgood yedeefak."
+        },
+        {
+          "question": "A2dar awaqqaf link el da3wa badri?",
+          "answer": "Aywa. El elghaa beywaafo 3ala tool. Amma elli esta3melo khalas fabyefdal fe list as7abak lehad ma teshilo."
+        }
+      ]
+    },
+    "work-with-groups": {
+      "navigationLabel": "Esteghel bel groups",
+      "seoTitle": "Ezay testakhdem el groups lel talabat el motekarrera | Gama3 Orderak",
+      "description": "E3mel group marra wahda, sharek el menus ma3 kol elli feeha fe nafs el wa2t, we deef aw sheel nas men gheir ma te3eed el da3awat. Ma3 links da3wet el group wel adwar.",
+      "eyebrow": "Dalil",
+      "heading": "Ezay testakhdem el groups lel talabat el motekarrera",
+      "introduction": "El group heya magmo3et nas leeha esm we betetlob ma3ahom bel marra: team, aw dor, aw 3ela. We mosharket menu ma3 el group betsharkha ma3 kol elli feeha, we elli yetdaf ba3dein beywrath elli etsharek khalas. El dalil da beyghatti ezay te3melha we temlaha we tekhalliha metrattaba.",
+      "sections": [
+        {
+          "heading": "E3mel el group",
+          "paragraphs": [
+            "Eftah \"El a3daa\" ba3dein \"Groups el as7ab\" we e3mel group be esm el nas hate3rafo zay \"Team el design\" aw \"El dor el talet\". Wel wasf el oshayar beyesa3ed lamma had yekoon fe kaza group.",
+            "Enta betemlek el group elli bete3melha. Enta bas elli te2dar teghayyar esmha aw ted3i feeha aw teshil nas aw temsahha, wel melkeya di 3omraha ma betentaqel bel mosharka."
+          ]
+        },
+        {
+          "heading": "Deef nas",
+          "paragraphs": [
+            "Ed3i as7abak lel group men card el group. Ay had fe list as7abak momken yetdaf 3ala tool, we da el tare2 el 3aady le team betetlob ma3ah kol osboo3.",
+            "Amma el nas elli lessa mesh fe list as7abak, e3mel link da3wa lel group we eb3ato. Wel had elli yeftaho khilal 24 sa3a beyedkhol el group 3ala tool, men gheir friend request el awel we men gheir mowafqa mennak 3ala kol wahed.",
+            "Wel link da asra3 tare2a temla group gedida. E3melo marra, elzako fe chat el team, we kol elli 3ayez yedkhol yedkhol, men gheir ma tetsarraf fe tabor talabat."
+          ]
+        },
+        {
+          "heading": "Sharek el menus ma3 el group",
+          "paragraphs": [
+            "Sharek menu ma3 el group we kol elli feeha yeader yesta3melha 3ala tool. We di el gozaa elli bewaffar aktar tekrar: fe3l wahed badal da3wa le kol wahed.",
+            "Wel had elli yetdaf lel group ba3d keda beyshoof el menus elli etsharket ma3aha khalas. Fa zamil gedid yedkhol fe maris mesh me7tag te3eed da3awat yanayer."
+          ]
+        },
+        {
+          "heading": "Khalliha mahdatha",
+          "paragraphs": [
+            "Sheel had men el group we wosoolo 3an tareeq-ha byentahi. Amma el wosool elli eddetoh leeh lewahdo — menu sharkthaha ma3ah 3ala tool — fa da monfasel we beyefdal lehad ma telghih howa kaman.",
+            "Wel a3daa yeadro yesibo el group be nafsohom. We mas7 el group beyshilha men 3and el kol, bas mabyemsahsh el menus elli etsharket 3an tareeq-ha wala ay round khalsana."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "A2dar adawwar 3ala group we adkholoha?",
+          "answer": "Mesh bel esm. El dokhool lel groups be link da3wa men el malek, fa mahadesh yelaqi group we yedkhol feeha we el malek ma da3ahoosh."
+        },
+        {
+          "question": "Kol elli fel group beyshofo ba3d?",
+          "answer": "El a3daa beyshofo meen fel group, we da elli beyekhalliha group. Bas mabyeb2oosh as7ab otomatiki, wel emailat betaathom mabtebansh be mogarrad el 3odweya."
+        },
+        {
+          "question": "El menu el metsharek yehsallo eh law masahet el group?",
+          "answer": "El menu nafsaha mabtetaathersh, heya melk elli 3amalha. Amma el wosool elli etadda 3an tareeq el group fa byentahi, fa sharekha tani 3ala tool aw 3an tareeq group tanya law el nas lessa me7tagaha."
+        }
+      ]
     }
   },
   "systemPages": {
