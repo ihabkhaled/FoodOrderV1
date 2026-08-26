@@ -101,7 +101,7 @@
     "@vercel/speed-insights": "^2.0.0",
     "firebase": "^12.17.1",
     "lucide-react": "^1.24.0",
-    "nodemailer": "^9.0.3",
+    "nodemailer": "^9.0.5",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-router-dom": "7.18.1",
