@@ -59,6 +59,24 @@
             "Teilbare Belegansichten"
           ]
         }
+      ],
+      "faq": [
+        {
+          "question": "Ist Gama3 Orderak kostenlos?",
+          "answer": "Ja. Menus anlegen, teilen, Bestellrunden fuhren und Belege aufteilen ist kostenlos. Du bestellst selbst beim Restaurant: Die App organisiert die Gruppe und wickelt keine Zahlungen ab."
+        },
+        {
+          "question": "Muss jemand etwas installieren, um mitzubestellen?",
+          "answer": "Nein. Es lauft im Browser auf jedem Telefon oder Computer und lasst sich auf Wunsch als App installieren. Alle brauchen ein Konto, dafur genugen E-Mail und Passwort."
+        },
+        {
+          "question": "Wie wird berechnet, wer was schuldet?",
+          "answer": "Die Artikel jeder Person werden aus dem geteilten Menu bepreist, dann kommen Steuer und Service hinzu, und die Lieferung wird gleich oder anteilig verteilt — je nach Einstellung am Menu."
+        },
+        {
+          "question": "Kann ich es auf Arabisch nutzen?",
+          "answer": "Ja, in dreizehn Sprachen, darunter Arabisch und agyptisches Arabisch in lateinischer Schrift. Rechts-nach-links-Layouts werden durchgangig unterstutzt, die Sprache lasst sich jederzeit wechseln."
+        }
       ]
     },
     "about": {

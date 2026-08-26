@@ -59,6 +59,24 @@
             "Viste della ricevuta condivisibili"
           ]
         }
+      ],
+      "faq": [
+        {
+          "question": "Gama3 Orderak e gratuito?",
+          "answer": "Si. Creare menu, condividerli, gestire i giri di ordini e dividere le ricevute e tutto gratuito. Ordini tu dal ristorante: l app organizza il gruppo, non incassa pagamenti."
+        },
+        {
+          "question": "Chi ordina con me deve installare qualcosa?",
+          "answer": "No. Funziona nel browser su qualsiasi telefono o computer e puo essere installato come app se preferisci. Serve un account a testa: bastano un indirizzo e-mail e una password."
+        },
+        {
+          "question": "Come decide chi deve cosa?",
+          "answer": "Le voci di ciascuno sono valorizzate dal menu condiviso, poi si applicano IVA e servizio e la consegna si divide in parti uguali o in proporzione a quanto ha ordinato ognuno, secondo l impostazione del menu."
+        },
+        {
+          "question": "Posso usarlo in arabo?",
+          "answer": "Si, in tredici lingue tra cui arabo e arabo egiziano in caratteri latini. I layout da destra a sinistra sono supportati ovunque e la lingua si cambia quando vuoi."
+        }
       ]
     },
     "about": {

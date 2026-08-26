@@ -209,6 +209,24 @@
                 "Shareable receipt views"
               ]
             }
+          ],
+          "faq": [
+            {
+              "question": "Is Gama3 Orderak free to use?",
+              "answer": "Yes. Creating menus, sharing them, running order rounds, and splitting receipts are all free. You order from the restaurant yourself; the app organises the group, it does not take payment."
+            },
+            {
+              "question": "Do the people I order with need to install anything?",
+              "answer": "No. It runs in a browser on any phone or computer, and can be installed as an app if you prefer. Everyone needs an account, which takes an email address and a password."
+            },
+            {
+              "question": "How does it decide who owes what?",
+              "answer": "Each person’s items are priced from the shared menu, then VAT and service are applied and delivery is split either equally or in proportion to what each person ordered — whichever the menu is set to."
+            },
+            {
+              "question": "Can I use it in Arabic?",
+              "answer": "Yes, in thirteen languages including Arabic and Egyptian Arabic written in Latin script. Right-to-left layouts are supported throughout, and you can change language at any time."
+            }
           ]
         },
         "ar": {
@@ -251,6 +269,24 @@
                 "تفصيل شفاف للرسوم",
                 "عروض إيصال قابلة للمشاركة"
               ]
+            }
+          ],
+          "faq": [
+            {
+              "question": "هل استخدام «جمع أوردرك» مجاني؟",
+              "answer": "نعم. إنشاء القوائم ومشاركتها وإدارة جولات الطلب وتقسيم الإيصالات كلها مجانية. أنت تطلب من المطعم بنفسك، والتطبيق ينظّم المجموعة ولا يتقاضى مدفوعات."
+            },
+            {
+              "question": "هل يحتاج من أطلب معهم إلى تثبيت شيء؟",
+              "answer": "لا. يعمل في المتصفح على أي هاتف أو حاسوب، ويمكن تثبيته كتطبيق إن أردت. ويحتاج الجميع إلى حساب، وهو يتطلب بريدًا إلكترونيًا وكلمة مرور."
+            },
+            {
+              "question": "كيف يحدد من عليه كم؟",
+              "answer": "تُسعَّر أصناف كل شخص من القائمة المشتركة، ثم تُطبَّق الضريبة والخدمة، ويُقسَّم التوصيل بالتساوي أو بالتناسب مع ما طلبه كل شخص، حسب إعداد القائمة."
+            },
+            {
+              "question": "هل يمكنني استخدامه بالعربية؟",
+              "answer": "نعم، بثلاث عشرة لغة منها العربية والعربية المكتوبة بحروف لاتينية. والتخطيطات من اليمين إلى اليسار مدعومة بالكامل، ويمكنك تغيير اللغة في أي وقت."
             }
           ]
         }

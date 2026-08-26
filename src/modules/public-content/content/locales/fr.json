@@ -59,6 +59,24 @@
             "Vues de reçu partageables"
           ]
         }
+      ],
+      "faq": [
+        {
+          "question": "Gama3 Orderak est-il gratuit ?",
+          "answer": "Oui. Creer des menus, les partager, gerer les tours de commande et repartir les recus est gratuit. Vous commandez vous-meme au restaurant : l application organise le groupe, elle n encaisse rien."
+        },
+        {
+          "question": "Les personnes avec qui je commande doivent-elles installer quelque chose ?",
+          "answer": "Non. Cela fonctionne dans un navigateur sur tout telephone ou ordinateur, et peut s installer comme une application si vous preferez. Chacun a besoin d un compte, avec une adresse e-mail et un mot de passe."
+        },
+        {
+          "question": "Comment sait-il qui doit quoi ?",
+          "answer": "Les articles de chacun sont valorises depuis le menu partage, puis la TVA et le service s appliquent et la livraison est repartie a parts egales ou proportionnellement, selon le reglage du menu."
+        },
+        {
+          "question": "Puis-je l utiliser en arabe ?",
+          "answer": "Oui, en treize langues dont l arabe et l arabe egyptien en caracteres latins. Les mises en page de droite a gauche sont prises en charge partout et la langue se change a tout moment."
+        }
       ]
     },
     "about": {

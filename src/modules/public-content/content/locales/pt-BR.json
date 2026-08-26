@@ -59,6 +59,24 @@
             "Visões de recibo fáceis de compartilhar"
           ]
         }
+      ],
+      "faq": [
+        {
+          "question": "O Gama3 Orderak e gratuito?",
+          "answer": "Sim. Criar cardapios, compartilhar, conduzir rodadas e dividir recibos e tudo gratuito. Voce faz o pedido no restaurante: o aplicativo organiza o grupo e nao processa pagamentos."
+        },
+        {
+          "question": "As pessoas que pedem comigo precisam instalar algo?",
+          "answer": "Nao. Funciona no navegador em qualquer celular ou computador e pode ser instalado como aplicativo se preferir. Cada um precisa de uma conta, com e-mail e senha."
+        },
+        {
+          "question": "Como ele decide quem deve o que?",
+          "answer": "Os itens de cada pessoa sao precificados pelo cardapio compartilhado, depois entram impostos e servico, e a entrega e dividida igualmente ou proporcionalmente, conforme a regra do cardapio."
+        },
+        {
+          "question": "Posso usar em arabe?",
+          "answer": "Sim, em treze idiomas, incluindo arabe e arabe egipcio em alfabeto latino. Layouts da direita para a esquerda sao suportados e o idioma muda quando voce quiser."
+        }
       ]
     },
     "about": {

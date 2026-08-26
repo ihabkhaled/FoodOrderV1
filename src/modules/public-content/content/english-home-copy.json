@@ -8,18 +8,54 @@
   "sections": [
     {
       "heading": "Create or reuse a menu",
-      "paragraphs": ["Add restaurant items once, including prices and optional delivery, service, and tax rules. Reuse the menu for the next order."],
-      "bullets": ["Fast item entry", "Reusable menus", "Clear pricing before anyone chooses"]
+      "paragraphs": [
+        "Add restaurant items once, including prices and optional delivery, service, and tax rules. Reuse the menu for the next order."
+      ],
+      "bullets": [
+        "Fast item entry",
+        "Reusable menus",
+        "Clear pricing before anyone chooses"
+      ]
     },
     {
       "heading": "Invite people and collect choices",
-      "paragraphs": ["Share the order with friends, a saved group, or guests. Everyone records their own quantities while the organizer sees one live total."],
-      "bullets": ["Friend and group sharing", "Guest-friendly invitations", "Live contribution status"]
+      "paragraphs": [
+        "Share the order with friends, a saved group, or guests. Everyone records their own quantities while the organizer sees one live total."
+      ],
+      "bullets": [
+        "Friend and group sharing",
+        "Guest-friendly invitations",
+        "Live contribution status"
+      ]
     },
     {
       "heading": "Finalize once and split fairly",
-      "paragraphs": ["Lock the final quantities, place one order, and produce a transparent receipt by person or item without manual calculations."],
-      "bullets": ["One organizer-controlled final step", "Accurate fees and totals", "Shareable receipt breakdowns"]
+      "paragraphs": [
+        "Lock the final quantities, place one order, and produce a transparent receipt by person or item without manual calculations."
+      ],
+      "bullets": [
+        "One organizer-controlled final step",
+        "Accurate fees and totals",
+        "Shareable receipt breakdowns"
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "question": "Is Gama3 Orderak free to use?",
+      "answer": "Yes. Creating menus, sharing them, running order rounds, and splitting receipts are all free. You order from the restaurant yourself; the app organises the group, it does not take payment."
+    },
+    {
+      "question": "Do the people I order with need to install anything?",
+      "answer": "No. It runs in a browser on any phone or computer, and can be installed as an app if you prefer. Everyone needs an account, which takes an email address and a password."
+    },
+    {
+      "question": "How does it decide who owes what?",
+      "answer": "Each person’s items are priced from the shared menu, then VAT and service are applied and delivery is split either equally or in proportion to what each person ordered — whichever the menu is set to."
+    },
+    {
+      "question": "Can I use it in Arabic?",
+      "answer": "Yes, in thirteen languages including Arabic and Egyptian Arabic written in Latin script. Right-to-left layouts are supported throughout, and you can change language at any time."
     }
   ]
 }

@@ -59,6 +59,24 @@
             "3ard fatoora te2dar tesharko"
           ]
         }
+      ],
+      "faq": [
+        {
+          "question": "Gama3 Orderak bebalash?",
+          "answer": "Aywa. E3mel menus we sharekha we shaghal order rounds we assem el fawatir kollo bebalash. Enta betetlob men el mat3am be nafsak, wel app beyenazzem el group we mabyakhodsh flous."
+        },
+        {
+          "question": "El nas elli batlob ma3ahom lazem yenazzelo haga?",
+          "answer": "La. Beyeshtaghal fel browser 3ala ay mobile aw computer, we tedar tenazzelo ka app law 7abbeit. Kol wahed me7tag hesab, we da me7tag email we password bas."
+        },
+        {
+          "question": "Beyehsab ezay meen 3aleh kam?",
+          "answer": "Asnaf kol wahed bettetsa33ar men el menu el metsharek, ba3dein bettetzad el dariba wel khedma, wel tawseel beyetassem bel tasawi aw bel tanasob ma3 elli kol wahed talabo, hasab zabt el menu."
+        },
+        {
+          "question": "A2dar asta3melo bel 3arabi?",
+          "answer": "Aywa, be talattashar logha men demnhom el 3arabi wel 3arabi bel horoof el latini. Wel tasmeem men el yemeen lel shemal madoom, we tedar teghayyar el logha fe ay wa2t."
+        }
       ]
     },
     "about": {

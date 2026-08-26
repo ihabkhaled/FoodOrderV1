@@ -59,6 +59,24 @@
             "Vistas del recibo para compartir"
           ]
         }
+      ],
+      "faq": [
+        {
+          "question": "Es gratis usar Gama3 Orderak?",
+          "answer": "Si. Crear menus, compartirlos, gestionar rondas y repartir recibos es gratuito. Tu haces el pedido al restaurante: la aplicacion organiza al grupo, no cobra pagos."
+        },
+        {
+          "question": "Las personas con las que pido tienen que instalar algo?",
+          "answer": "No. Funciona en el navegador en cualquier movil u ordenador y puede instalarse como aplicacion si lo prefieres. Cada persona necesita una cuenta, con un correo y una contrasena."
+        },
+        {
+          "question": "Como decide quien debe que?",
+          "answer": "Los articulos de cada persona se valoran con el menu compartido, luego se aplican IVA y servicio y el envio se reparte a partes iguales o en proporcion, segun la configuracion del menu."
+        },
+        {
+          "question": "Puedo usarlo en arabe?",
+          "answer": "Si, en trece idiomas, incluidos arabe y arabe egipcio en alfabeto latino. Los disenos de derecha a izquierda estan soportados y el idioma se cambia cuando quieras."
+        }
       ]
     },
     "about": {
