@@ -49,6 +49,7 @@ export function SettingsHubContainer() {
         <div>
           <p className="eyebrow">{vm.t('profile')}</p>
           <h1>{vm.t('settings')}</h1>
+          <p className="page-intro">{vm.t('settingsIntro')}</p>
         </div>
       </div>
       <section className="section-card stack">

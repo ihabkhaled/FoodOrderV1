@@ -415,3 +415,14 @@ textarea { resize: vertical; }
 .link-row-text { display: grid; gap: 0.15rem; }
 [dir='rtl'] .link-row-chevron { transform: scaleX(-1); }
 @media (prefers-reduced-motion: reduce) { .link-row { transition: none; } }
+
+/* One-line purpose statement under a page heading. It teaches the flow, so
+   it needs to be readable rather than decorative: full contrast for muted
+   text and a measure that does not run the width of a desktop screen. */
+.page-intro {
+  max-width: 62ch;
+  margin-block: 6px 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}

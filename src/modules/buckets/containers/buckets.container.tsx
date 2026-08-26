@@ -33,6 +33,7 @@ export function BucketsContainer() {
         <div>
           <p className="eyebrow">{vm.t('myBuckets')}</p>
           <h1>{vm.t('buckets')}</h1>
+          <p className="page-intro">{vm.t('bucketsIntro')}</p>
         </div>
         <div className="row-actions" ref={setRoundElement}>
           <Link className="button secondary" to={JOIN_PATH}>
