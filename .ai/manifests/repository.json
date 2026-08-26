@@ -644,6 +644,11 @@
       "hash": "b572063a86b82267af93a459734e51b7fdeb81ebc1282c9f34cbf734b2697447"
     },
     {
+      "path": "docs/operations/invite-links.md",
+      "bytes": 2579,
+      "hash": "44e6af95e794c93af88fc1895aa02834972b374dff4afbc19a37db5a14746f87"
+    },
+    {
       "path": "docs/operations/password-reset.md",
       "bytes": 4210,
       "hash": "01c61c5997c7802f9312e0709b6b8a1cd5f1aa16be1066d0d34a21f434b9ae0b"
@@ -1544,6 +1549,11 @@
       "hash": "1061c93647bce62161b0d4f5a03d100fa2d16de2fe367224a82eb23973b95ce8"
     },
     {
+      "path": "rules/25-shareable-links-and-deep-linking.md",
+      "bytes": 2753,
+      "hash": "661e83eeebbcc1a5db5cf7936660728a3f0d1d5199b6defc03377b1107438c4b"
+    },
+    {
       "path": "rules/README.md",
       "bytes": 3954,
       "hash": "4608e9c6fd9be8acbb5b092acd27adfa2b5d91df0e3a8215d257f367b7221986"
@@ -1615,8 +1625,8 @@
     },
     {
       "path": "scripts/knowledge/routing.mjs",
-      "bytes": 9949,
-      "hash": "b19f90f5c742a679a8e102162075c81ab46ac9a0ec65c2390a18ea12d74a14db"
+      "bytes": 10317,
+      "hash": "85b7f672f77fff7d9d7aa291889e739140d5dd595a697ae481e96b83ab6fbb60"
     },
     {
       "path": "scripts/migrate-legacy-data.mjs",
@@ -1667,6 +1677,11 @@
       "path": "skills/add-i18n-key.md",
       "bytes": 2681,
       "hash": "0c73f147966b9b38b8fb292f18849106f36da9152630155527aaabf413101e09"
+    },
+    {
+      "path": "skills/add-invite-link-kind.md",
+      "bytes": 2951,
+      "hash": "594f68c4e8bc4c3468699cf736d887aeb3fff22d0c8bc30a23ca677a38336741"
     },
     {
       "path": "skills/add-route.md",
