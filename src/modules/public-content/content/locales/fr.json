@@ -6,14 +6,16 @@
     "primaryNavigationLabel": "Navigation publique",
     "mobileNavigationLabel": "Ouvrir la navigation",
     "languageLabel": "Langue",
-    "openApplicationLabel": "Ouvrir l’application",
+    "openApplicationLabel": "Ouvrir",
     "skipToContentLabel": "Aller au contenu",
     "footerNavigationLabel": "Navigation de pied de page",
     "footerTagline": "Des commandes de groupe claires, du premier choix au reçu final.",
     "allRightsReservedLabel": "Tous droits réservés.",
     "backHomeLabel": "Retour à l’accueil",
     "tryAgainLabel": "Réessayer",
-    "learnMoreLabel": "Voir comment ça marche"
+    "learnMoreLabel": "Voir comment ça marche",
+    "signInLabel": "Connexion",
+    "signUpLabel": "Inscription"
   },
   "pages": {
     "home": {

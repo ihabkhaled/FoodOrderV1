@@ -6,14 +6,16 @@
     "primaryNavigationLabel": "Navegação pública",
     "mobileNavigationLabel": "Abrir a navegação",
     "languageLabel": "Idioma",
-    "openApplicationLabel": "Abrir o app",
+    "openApplicationLabel": "Abrir app",
     "skipToContentLabel": "Pular para o conteúdo",
     "footerNavigationLabel": "Navegação do rodapé",
     "footerTagline": "Pedidos em grupo sem confusão, da primeira escolha ao recibo final.",
     "allRightsReservedLabel": "Todos os direitos reservados.",
     "backHomeLabel": "Voltar à página inicial",
     "tryAgainLabel": "Tentar novamente",
-    "learnMoreLabel": "Veja como funciona"
+    "learnMoreLabel": "Veja como funciona",
+    "signInLabel": "Entrar",
+    "signUpLabel": "Cadastrar"
   },
   "pages": {
     "home": {

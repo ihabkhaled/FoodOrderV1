@@ -6,14 +6,16 @@
     "primaryNavigationLabel": "Navegación pública",
     "mobileNavigationLabel": "Abrir la navegación",
     "languageLabel": "Idioma",
-    "openApplicationLabel": "Abrir la aplicación",
+    "openApplicationLabel": "Abrir app",
     "skipToContentLabel": "Saltar al contenido",
     "footerNavigationLabel": "Navegación del pie de página",
     "footerTagline": "Pedidos de comida en grupo claros, desde la primera elección hasta el recibo final.",
     "allRightsReservedLabel": "Todos los derechos reservados.",
     "backHomeLabel": "Volver a la página de inicio",
     "tryAgainLabel": "Intentar de nuevo",
-    "learnMoreLabel": "Descubre cómo funciona"
+    "learnMoreLabel": "Descubre cómo funciona",
+    "signInLabel": "Iniciar sesion",
+    "signUpLabel": "Registrarse"
   },
   "pages": {
     "home": {

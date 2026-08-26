@@ -6,14 +6,16 @@
     "primaryNavigationLabel": "El tanaqol el 3am",
     "mobileNavigationLabel": "Eftah el qa2ema",
     "languageLabel": "El logha",
-    "openApplicationLabel": "Eftah el app",
+    "openApplicationLabel": "Eftah el App",
     "skipToContentLabel": "Etkhatta lel mo7tawa",
     "footerNavigationLabel": "Tanaqol el footer",
     "footerTagline": "Talabat akl gama3eya wad7a, men awel ekhteyar le akher fatoora.",
     "allRightsReservedLabel": "Kol el 7o2oo2 ma7fooza.",
     "backHomeLabel": "Ergaa3 lel safha el ra2eeseya",
     "tryAgainLabel": "7awel tani",
-    "learnMoreLabel": "Shoof howa beyshtaghal ezay"
+    "learnMoreLabel": "Shoof howa beyshtaghal ezay",
+    "signInLabel": "Dokhool",
+    "signUpLabel": "E3mel hesab"
   },
   "pages": {
     "home": {

@@ -16,6 +16,7 @@ export {
   Download,
   Eye,
   EyeOff,
+  Globe,
   GripVertical,
   History,
   Home,

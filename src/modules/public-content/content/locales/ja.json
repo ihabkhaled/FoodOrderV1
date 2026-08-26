@@ -13,7 +13,9 @@
     "allRightsReservedLabel": "無断転載を禁じます。",
     "backHomeLabel": "ホームページに戻る",
     "tryAgainLabel": "再試行",
-    "learnMoreLabel": "仕組みを見る"
+    "learnMoreLabel": "仕組みを見る",
+    "signInLabel": "ログイン",
+    "signUpLabel": "新規登録"
   },
   "pages": {
     "home": {

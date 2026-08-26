@@ -6,14 +6,16 @@
     "primaryNavigationLabel": "ناوبری صفحات عمومی",
     "mobileNavigationLabel": "باز کردن منوی ناوبری",
     "languageLabel": "زبان",
-    "openApplicationLabel": "باز کردن اپلیکیشن",
+    "openApplicationLabel": "باز کردن برنامه",
     "skipToContentLabel": "پرش به محتوا",
     "footerNavigationLabel": "ناوبری پاصفحه",
     "footerTagline": "سفارش‌های گروهی شفاف، از اولین انتخاب تا رسید نهایی.",
     "allRightsReservedLabel": "تمامی حقوق محفوظ است.",
     "backHomeLabel": "بازگشت به صفحه اصلی",
     "tryAgainLabel": "تلاش دوباره",
-    "learnMoreLabel": "ببینید چطور کار می‌کند"
+    "learnMoreLabel": "ببینید چطور کار می‌کند",
+    "signInLabel": "ورود",
+    "signUpLabel": "ثبت‌نام"
   },
   "pages": {
     "home": {

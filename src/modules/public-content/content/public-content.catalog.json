@@ -132,14 +132,16 @@
       "primaryNavigationLabel": "Public navigation",
       "mobileNavigationLabel": "Open navigation",
       "languageLabel": "Language",
-      "openApplicationLabel": "Open the app",
+      "openApplicationLabel": "Open App",
       "skipToContentLabel": "Skip to content",
       "footerNavigationLabel": "Footer navigation",
       "footerTagline": "Clear group food orders, from the first choice to the final receipt.",
       "allRightsReservedLabel": "All rights reserved.",
       "backHomeLabel": "Return to the homepage",
       "tryAgainLabel": "Try again",
-      "learnMoreLabel": "See how it works"
+      "learnMoreLabel": "See how it works",
+      "signInLabel": "Log in",
+      "signUpLabel": "Sign up"
     },
     "ar": {
       "brandName": "FoodOrder | جمع أوردرك",
@@ -154,7 +156,9 @@
       "allRightsReservedLabel": "جميع الحقوق محفوظة.",
       "backHomeLabel": "العودة إلى الصفحة الرئيسية",
       "tryAgainLabel": "حاول مرة أخرى",
-      "learnMoreLabel": "اعرف كيف يعمل"
+      "learnMoreLabel": "اعرف كيف يعمل",
+      "signInLabel": "تسجيل الدخول",
+      "signUpLabel": "إنشاء حساب"
     }
   },
   "pages": [

@@ -1,3 +1,5 @@
+import { Globe } from '@/packages/icons';
+
 import type {
   PublicHeaderProps,
   PublicNavigationItem,
@@ -27,6 +29,8 @@ export function PublicHeader({
 }: PublicHeaderProps) {
   const primaryNavigationItems = navigationItems.slice(0, 4);
   const secondaryNavigationItems = navigationItems.slice(4);
+
+  const authBasePath = `${applicationPath.replace(/\/app$/u, '')}/auth`;
 
   return (
     <>
@@ -58,6 +62,9 @@ export function PublicHeader({
           <div className="public-header__actions">
             <details className="public-language-menu">
               <summary>
+                <span className="public-language-menu__globe" aria-hidden="true">
+                  <Globe />
+                </span>
                 <span className="public-language-menu__prefix">
                   {ui.languageLabel}:{' '}
                 </span>
@@ -87,6 +94,12 @@ export function PublicHeader({
             >
               <span className="public-theme-toggle__icon" aria-hidden="true" />
             </button>
+            <a className="public-auth-link" href={`${authBasePath}/login`}>
+              {ui.signInLabel}
+            </a>
+            <a className="public-auth-link" href={`${authBasePath}/register`}>
+              {ui.signUpLabel}
+            </a>
             <a className="public-button public-button--small" href={applicationPath}>
               {ui.openApplicationLabel}
             </a>

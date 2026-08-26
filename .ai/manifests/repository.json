@@ -1660,8 +1660,8 @@
     },
     {
       "path": "scripts/public-content/public-content-build.shared.mjs",
-      "bytes": 29128,
-      "hash": "562863dbcbdf5c5c36a87ef678c146fcc7af9b1fbbaf47536d5ef0fb66ec3216"
+      "bytes": 29810,
+      "hash": "769b22013603dba4557401843a8c7b3f776b24ffd5b371fdedd5b7b4ba7b35bd"
     },
     {
       "path": "scripts/public-content/validate-public-content.mjs",
@@ -1845,8 +1845,8 @@
     },
     {
       "path": "src/app/router/guest-route.container.tsx",
-      "bytes": 478,
-      "hash": "aa0b4537232f7ff12e2eeb57fd7f7cd9a64eb35d04d003419c7695504a23d684"
+      "bytes": 1150,
+      "hash": "3aa3b4dbe99a6a947a1b48c039983ad4da9e668949c50b8a22b35f7856df8dc7"
     },
     {
       "path": "src/app/router/not-found.container.tsx",
@@ -3125,8 +3125,8 @@
     },
     {
       "path": "src/modules/public-content/components/public-header.component.tsx",
-      "bytes": 3546,
-      "hash": "00657dc1eb2badceb8c58a12493f6aa7a81889b24144a1a44019274e9fa4d2c0"
+      "bytes": 4048,
+      "hash": "e23f03d3ffd06b1810ca7e5a4b7117b58e2b086d1f8874cc47fb33056b614249"
     },
     {
       "path": "src/modules/public-content/components/public-page.component.tsx",
@@ -3160,63 +3160,63 @@
     },
     {
       "path": "src/modules/public-content/content/locales/ar-Latn.json",
-      "bytes": 19965,
-      "hash": "3f5aee97c84cb8743b127cd9b1c50f7c0618838ad528ceb97f26bee0338308dd"
+      "bytes": 20029,
+      "hash": "7bf22c8b21d84fe3d4dc8b862f0ae262c72fff796f96b11bceac77aad554effe"
     },
     {
       "path": "src/modules/public-content/content/locales/de.json",
-      "bytes": 22032,
-      "hash": "6bdc110e476d8d62fb4f8eb513cc841db27c448fd3fbc6a6f2792e2305de694d"
+      "bytes": 22097,
+      "hash": "55402c3d50db0785430614525e73a9f6572c85f5735b1655d88a494379319b1d"
     },
     {
       "path": "src/modules/public-content/content/locales/es.json",
-      "bytes": 21387,
-      "hash": "6f898b3497efc588414261da2007346073b2cac62f812c3b31e7e063e4619100"
+      "bytes": 21447,
+      "hash": "da3e2c7db2542aaebca0a5baa44133cd4926ec2a18af587980d4d3aba054da6f"
     },
     {
       "path": "src/modules/public-content/content/locales/fa.json",
-      "bytes": 29133,
-      "hash": "535e3cbfacbee6690e1722313803e5bd0d361ec78382d02620fa4f7ebf073c07"
+      "bytes": 29198,
+      "hash": "6fcb7de7a19a889ae82b36d609db55e13870bf70382cf5c8a0335c86e1bb225e"
     },
     {
       "path": "src/modules/public-content/content/locales/fr.json",
-      "bytes": 19463,
-      "hash": "6474be1e561107983b12530a1e453f163def13163676c644f199266766907973"
+      "bytes": 19513,
+      "hash": "dd5d3e3960d1c1ea76de6a3e145b52bf075e8b290d1db59128f74f9b0a13cc86"
     },
     {
       "path": "src/modules/public-content/content/locales/hi.json",
-      "bytes": 38390,
-      "hash": "c28453a400f37d992496fe90cb2dc419200e6c91165e4e1641aa40a62aa35b28"
+      "bytes": 38471,
+      "hash": "ff1a3928b2b574b44b4729cff04a009704a5adee49694e596b2e3c02975ee83f"
     },
     {
       "path": "src/modules/public-content/content/locales/it.json",
-      "bytes": 18665,
-      "hash": "688792b54c0a2f592de5823ba316b281fc08d3392696d8fcc19a4113a9c0aa58"
+      "bytes": 18725,
+      "hash": "68dbdfb7b550ffeee8faa22694b41a1140abd6bcbb84a2e52ff09c60bc799b31"
     },
     {
       "path": "src/modules/public-content/content/locales/ja.json",
-      "bytes": 24674,
-      "hash": "c4006c2f2987cb7cca6fa67b49665fa3cf69579929d715c2376ded880526bc27"
+      "bytes": 24744,
+      "hash": "aa580af30eafe5e146dc956b5027e4259191421fa0a091e2e57e4aee46a4fa5d"
     },
     {
       "path": "src/modules/public-content/content/locales/pt-BR.json",
-      "bytes": 20977,
-      "hash": "c48537152240c95a9a811685effef8414ec912a10b5254079e4e33783e2005e9"
+      "bytes": 21036,
+      "hash": "1c00988a3bf68691149b6dfe183ae62de3dd62f9d3e6d400c9da1c2d00083f57"
     },
     {
       "path": "src/modules/public-content/content/locales/th.json",
-      "bytes": 40226,
-      "hash": "534fdab55ffea714490352a96ea400b124cbe50c6740df70869cdb8be937e047"
+      "bytes": 40320,
+      "hash": "8844e6501c8400a797f43a6a415cef71179b7648893e15e6ea3c057603f01597"
     },
     {
       "path": "src/modules/public-content/content/locales/zh-CN.json",
-      "bytes": 17983,
-      "hash": "5cf5438f73ecacc9496a1bd6e899095261ba68fab87c81c60b08424d1a8c2a41"
+      "bytes": 18041,
+      "hash": "8f8313bf4de23132e13f64b5607faba848be98ca79397d0bac532a2b01dac35d"
     },
     {
       "path": "src/modules/public-content/content/public-content.catalog.json",
-      "bytes": 52464,
-      "hash": "a996719fb0743c097c26b38c16f76337a912444dd8e32c7627f43b06327c6e76"
+      "bytes": 52615,
+      "hash": "d0bd88fff61daaa674312d52f6ee4362a91ff9d5574d8633cf523075df1675bf"
     },
     {
       "path": "src/modules/public-content/helpers/ad-eligibility.helper.ts",
@@ -3275,8 +3275,8 @@
     },
     {
       "path": "src/modules/public-content/public-content.css",
-      "bytes": 19107,
-      "hash": "d5ae9a3d06b780bc4a41a74e808a568002527e30b838736a7e342ba0bf499bb7"
+      "bytes": 20102,
+      "hash": "c161ab5fe06561f0eae633c6fbce4063d13eaa76d335768d4ede23394031771e"
     },
     {
       "path": "src/modules/public-content/routes/public-content-route-registry.helper.ts",
@@ -3290,8 +3290,8 @@
     },
     {
       "path": "src/modules/public-content/types/public-content.types.ts",
-      "bytes": 5344,
-      "hash": "d75ad68f64151cff358d8e5dff8b92d4a724a51fb1863dc4e0ccbf3d21a66710"
+      "bytes": 5390,
+      "hash": "e38ee6c64c7f0e1ac81e8a2c5b04883d214300dc5c8fbfd91687df704eac06c6"
     },
     {
       "path": "src/modules/session-invites/components/guest-session-order/guest-session-order.component.tsx",
@@ -4000,8 +4000,8 @@
     },
     {
       "path": "src/packages/icons/index.ts",
-      "bytes": 748,
-      "hash": "830a790530b666cbf624c3d4653b73f1ce1bd927349af1fd624262624835abc0"
+      "bytes": 757,
+      "hash": "99a53f67b8eb47c99bf63d53208fa23da06322db5ba40e72fc0cf2e830efd9b2"
     },
     {
       "path": "src/packages/router/index.ts",
@@ -4755,8 +4755,8 @@
     },
     {
       "path": "tests/components/PublicContent.test.tsx",
-      "bytes": 2685,
-      "hash": "7e5c0e6c5b6c43db772f8808ccb5749b7805b91597cbb0fd9f36f8e6e3a3860e"
+      "bytes": 2681,
+      "hash": "f86502b8529ea5b564db1f561460c333b7e6834146a4b4337e7ed3e5dbf99418"
     },
     {
       "path": "tests/components/ResetPasswordRoute.test.tsx",

@@ -13,7 +13,9 @@
     "allRightsReservedLabel": "保留所有权利。",
     "backHomeLabel": "返回首页",
     "tryAgainLabel": "重试",
-    "learnMoreLabel": "了解运作方式"
+    "learnMoreLabel": "了解运作方式",
+    "signInLabel": "登录",
+    "signUpLabel": "注册"
   },
   "pages": {
     "home": {

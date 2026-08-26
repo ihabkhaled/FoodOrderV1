@@ -72,8 +72,8 @@
     },
     {
       "path": "tests/components/PublicContent.test.tsx",
-      "bytes": 2685,
-      "hash": "7e5c0e6c5b6c43db772f8808ccb5749b7805b91597cbb0fd9f36f8e6e3a3860e"
+      "bytes": 2681,
+      "hash": "f86502b8529ea5b564db1f561460c333b7e6834146a4b4337e7ed3e5dbf99418"
     },
     {
       "path": "tests/components/ResetPasswordRoute.test.tsx",

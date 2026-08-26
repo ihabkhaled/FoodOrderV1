@@ -6,14 +6,16 @@
     "primaryNavigationLabel": "Öffentliche Navigation",
     "mobileNavigationLabel": "Navigation öffnen",
     "languageLabel": "Sprache",
-    "openApplicationLabel": "App öffnen",
+    "openApplicationLabel": "App offnen",
     "skipToContentLabel": "Zum Inhalt springen",
     "footerNavigationLabel": "Fußzeilennavigation",
     "footerTagline": "Klare Gruppenbestellungen – von der ersten Auswahl bis zum fertigen Beleg.",
     "allRightsReservedLabel": "Alle Rechte vorbehalten.",
     "backHomeLabel": "Zurück zur Startseite",
     "tryAgainLabel": "Erneut versuchen",
-    "learnMoreLabel": "So funktioniert es"
+    "learnMoreLabel": "So funktioniert es",
+    "signInLabel": "Anmelden",
+    "signUpLabel": "Registrieren"
   },
   "pages": {
     "home": {

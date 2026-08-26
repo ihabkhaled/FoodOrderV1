@@ -84,6 +84,8 @@ export interface PublicUiCopy {
   mobileNavigationLabel: string;
   languageLabel: string;
   openApplicationLabel: string;
+  signInLabel: string;
+  signUpLabel: string;
   skipToContentLabel: string;
   footerNavigationLabel: string;
   footerTagline: string;

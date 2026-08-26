@@ -260,6 +260,9 @@ const renderLocaleLinks = (catalog, locale, page, systemRouteId) =>
     })
     .join('');
 
+const GLOBE_ICON =
+  '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18"/></svg>';
+
 const renderHeader = (catalog, locale, page, systemRouteId) => {
   const ui = uiCopy(catalog, locale);
   const home = localePath(catalog.pages[0], locale);
@@ -269,8 +272,10 @@ const renderHeader = (catalog, locale, page, systemRouteId) => {
 <a class="public-brand" href="${escapeHtml(home)}"><span class="public-brand__mark" aria-hidden="true">FO</span><span>${escapeHtml(uiCopy(catalog, locale).brandName)}</span></a>
 <nav class="public-navigation public-navigation--desktop" aria-label="${escapeHtml(ui.primaryNavigationLabel)}">${primaryLinks}</nav>
 <div class="public-header__actions">
-<details class="public-language-menu"><summary><span class="public-language-menu__prefix">${escapeHtml(ui.languageLabel)}: </span><span>${escapeHtml(locale.label)}</span></summary><ul>${renderLocaleLinks(catalog, locale, page, systemRouteId)}</ul></details>
+<details class="public-language-menu"><summary><span class="public-language-menu__globe" aria-hidden="true">${GLOBE_ICON}</span><span class="public-language-menu__prefix">${escapeHtml(ui.languageLabel)}: </span><span>${escapeHtml(locale.label)}</span></summary><ul>${renderLocaleLinks(catalog, locale, page, systemRouteId)}</ul></details>
 <button class="public-theme-toggle" type="button" data-public-theme-toggle aria-label="${escapeHtml(ui.themeToggleLabel)}" title="${escapeHtml(ui.themeToggleLabel)}" aria-pressed="false"><span class="public-theme-toggle__icon" aria-hidden="true"></span></button>
+<a class="public-auth-link" href="${escapeHtml(`${localizedApplicationPath(catalog, locale).replace(/\/app$/u, '')}/auth/login`)}">${escapeHtml(ui.signInLabel)}</a>
+<a class="public-auth-link" href="${escapeHtml(`${localizedApplicationPath(catalog, locale).replace(/\/app$/u, '')}/auth/register`)}">${escapeHtml(ui.signUpLabel)}</a>
 <a class="public-button public-button--small" href="${escapeHtml(localizedApplicationPath(catalog, locale))}">${escapeHtml(ui.openApplicationLabel)}</a>
 <details class="public-mobile-menu"><summary><span class="public-mobile-menu__icon" aria-hidden="true">☰</span><span class="public-mobile-menu__label">${escapeHtml(ui.mobileNavigationLabel)}</span></summary><nav aria-label="${escapeHtml(ui.primaryNavigationLabel)}">${primaryLinks}</nav></details>
 </div></div></header>`;

@@ -13,7 +13,9 @@
     "allRightsReservedLabel": "सर्वाधिकार सुरक्षित।",
     "backHomeLabel": "होमपेज पर लौटें",
     "tryAgainLabel": "फिर से कोशिश करें",
-    "learnMoreLabel": "देखें यह कैसे काम करता है"
+    "learnMoreLabel": "देखें यह कैसे काम करता है",
+    "signInLabel": "लॉग इन",
+    "signUpLabel": "साइन अप"
   },
   "pages": {
     "home": {

@@ -13,7 +13,9 @@
     "allRightsReservedLabel": "สงวนลิขสิทธิ์",
     "backHomeLabel": "กลับสู่หน้าแรก",
     "tryAgainLabel": "ลองอีกครั้ง",
-    "learnMoreLabel": "ดูวิธีการทำงาน"
+    "learnMoreLabel": "ดูวิธีการทำงาน",
+    "signInLabel": "เข้าสู่ระบบ",
+    "signUpLabel": "สมัคร"
   },
   "pages": {
     "home": {
