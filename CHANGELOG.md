@@ -13,9 +13,9 @@ The version bump level is decided by prompt density — see [rules/versioning.md
   opened while signed out resumes afterwards.
 - Put Home, About, and Contact in the mobile bottom bar and made it scroll
   rather than shrink targets below the minimum touch size.
-- Added five step-by-step guides in all thirteen languages, taking the public
-  site from 130 to 195 localized documents and English body content from about
-  1,521 to 5,350 words.
+- Added six step-by-step guides and a home-page FAQ in all thirteen languages,
+  taking the public site from 130 to 208 localized documents and English body
+  content from about 1,521 to 6,417 words.
 - Added sign-in and sign-up links to the public header, a globe on the language
   menu, and a borderless theme toggle.
 - Replaced the boot screen's skeleton bars with a plain rotating loader and

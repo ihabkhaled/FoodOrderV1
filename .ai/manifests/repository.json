@@ -180,8 +180,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 8978,
-      "hash": "bd47a2d61ed0fdde382a8b116dae0e3d51b9b1e9910675ffc7726ebc33fabf0b"
+      "bytes": 8997,
+      "hash": "a97064d74b77f29f0ca94ef0702f26d238cf85ba7f59fda69fa9fa5d0b7e4f7e"
     },
     {
       "path": "CLAUDE.md",
@@ -1345,8 +1345,8 @@
     },
     {
       "path": "release-notes/v1.10.0.md",
-      "bytes": 3322,
-      "hash": "e0d2729077c5670ec5d21e82622d6ece53ee0879eb0a0ca1e355b320522c080c"
+      "bytes": 3446,
+      "hash": "95de171bfd1b2177c275e4a087eaaaddedb249c08c1a63b30a682433a9f99952"
     },
     {
       "path": "release-notes/v1.2.0.md",
