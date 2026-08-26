@@ -149,6 +149,16 @@
       "hash": "6b12fa3dfd635aa478960bd9f5250f0e1de2f7fb5b6ea1c9430d4688f953fcf1"
     },
     {
+      "path": ".playwright-mcp/page-2026-08-26T10-52-53-058Z.yml",
+      "bytes": 1,
+      "hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": ".playwright-mcp/page-2026-08-26T10-53-26-354Z.yml",
+      "bytes": 1,
+      "hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
       "path": ".trivyignore.yaml",
       "bytes": 20,
       "hash": "0944c6a1e87ece8c4cd87aa66493cd2991597e526caa656be1de2e38dae52513"
@@ -1850,8 +1860,8 @@
     },
     {
       "path": "src/app/shell/app-layout.container.tsx",
-      "bytes": 5504,
-      "hash": "ca5f0d106e9b5d0bfb8356f29fdce1ad83a60b2d61442420f6527b557d5fb1c6"
+      "bytes": 5520,
+      "hash": "77c28e0d965e7369d97d81a51353aa6370a41a71ce8aea660b272df7347e3855"
     },
     {
       "path": "src/app/shell/auth-layout.container.tsx",
@@ -1860,13 +1870,13 @@
     },
     {
       "path": "src/app/shell/components/bottom-nav/bottom-nav.component.tsx",
-      "bytes": 803,
-      "hash": "434fd6ed1faf4bf8945f8220776626d125e25f1aa2d4ce6d49cee52eaa530bc4"
+      "bytes": 1916,
+      "hash": "15940e8d3f5da19f944af4308089c680bf14e2c35383c56668476cc7397aba01"
     },
     {
       "path": "src/app/shell/components/sidebar-nav/sidebar-nav.component.tsx",
-      "bytes": 1796,
-      "hash": "aa5836177a6ea4a2129853fa2f198eafd525e2403a55759cbb9e1d04da96fd8c"
+      "bytes": 1713,
+      "hash": "48e3e0008ea52d87f5e791a35c1adaf9c1b4072e7c8ceda4d888274a6cc961fb"
     },
     {
       "path": "src/app/shell/components/toast-viewport/toast-viewport.component.tsx",
@@ -1877,6 +1887,11 @@
       "path": "src/app/shell/helpers/notification-mirror.helper.ts",
       "bytes": 751,
       "hash": "40d047686485df9209b78d9683ab0aaeddd5ed380441b9039545d90492b31f69"
+    },
+    {
+      "path": "src/app/shell/helpers/public-nav-links.helper.ts",
+      "bytes": 1429,
+      "hash": "146de103d487e71de648d050e34fa10b29505592b7e11c150d00e6288efa2b24"
     },
     {
       "path": "src/app/shell/hooks/use-app-layout.hook.ts",
@@ -3980,8 +3995,8 @@
     },
     {
       "path": "src/packages/icons/index.ts",
-      "bytes": 740,
-      "hash": "d9045fec191593e6141d688a931ead339743b12797c3c22cb922fb0786371bb8"
+      "bytes": 748,
+      "hash": "830a790530b666cbf624c3d4653b73f1ce1bd927349af1fd624262624835abc0"
     },
     {
       "path": "src/packages/router/index.ts",
@@ -4635,8 +4650,8 @@
     },
     {
       "path": "src/styles.css",
-      "bytes": 26721,
-      "hash": "adf90a5274ac5db8e6bf1350a72422c9e5821b687fb8b419425b1061f4a76d51"
+      "bytes": 27425,
+      "hash": "ea6286502c3506a4ec01d90f3fca7814d66c2bfe259c86b35d79d87748c81b12"
     },
     {
       "path": "src/ux-existing-shell.css",
@@ -4960,8 +4975,8 @@
     },
     {
       "path": "tests/e2e/ux-polish.spec.ts",
-      "bytes": 4563,
-      "hash": "fa4e4b7cf985d42693d8860e681fa2d08f320a7460c9194aa0469f2ed2a31fea"
+      "bytes": 5051,
+      "hash": "5ffbbc80290eb763f796750be735b08786e20a322c48b70b3a81d0c0abf146e4"
     },
     {
       "path": "tests/eslint/architecture-plugin.test.ts",

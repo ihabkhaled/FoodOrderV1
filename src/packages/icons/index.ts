@@ -19,6 +19,7 @@ export {
   GripVertical,
   History,
   Home,
+  Info,
   KeyRound,
   Languages,
   LayoutDashboard,

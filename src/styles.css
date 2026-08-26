@@ -103,8 +103,28 @@ svg { width: 1.15em; height: 1.15em; flex: none; }
   background: color-mix(in srgb, var(--surface) 92%, transparent);
   backdrop-filter: blur(14px); box-shadow: var(--shadow-lg);
 }
-.bottom-nav a { flex: 1; display: grid; justify-items: center; gap: 3px; padding: 8px 4px; border-radius: 13px; color: var(--muted); font-size: 0.7rem; font-weight: 700; }
-.bottom-nav a.active { color: var(--primary-ink); background: var(--primary); }
+/*
+ * Eight destinations do not fit a phone, so the row scrolls sideways instead
+ * of shrinking every target below the 44px minimum. Snap points stop it
+ * resting mid-item, and the scrollbar is hidden because the row is short
+ * enough to read as swipeable.
+ */
+.bottom-nav {
+  overflow-x: auto; scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch; scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+.bottom-nav::-webkit-scrollbar { display: none; }
+.bottom-nav .bottom-nav-link {
+  flex: 0 0 auto; min-width: 68px; scroll-snap-align: center;
+  display: grid; justify-items: center; gap: 3px; padding: 8px 6px;
+  border-radius: 13px; color: var(--muted); font-size: 0.7rem; font-weight: 700;
+  text-align: center;
+}
+.bottom-nav .bottom-nav-link.active { color: var(--primary-ink); background: var(--primary); }
+.bottom-nav .bottom-nav-link span {
+  max-width: 9ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
 .app-shell > .main-content { padding-bottom: calc(var(--nav-h) + env(safe-area-inset-bottom) + 16px); }
 
 /* ---- Cards, sections ------------------------------------------------------ */
