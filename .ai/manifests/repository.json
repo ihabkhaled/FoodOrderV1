@@ -175,8 +175,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 8122,
-      "hash": "0929a9276582fb87fe64b6a45e187c1f7d93d3052044c0e863d7924eccac4a96"
+      "bytes": 8978,
+      "hash": "bd47a2d61ed0fdde382a8b116dae0e3d51b9b1e9910675ffc7726ebc33fabf0b"
     },
     {
       "path": "CLAUDE.md",
@@ -1340,8 +1340,8 @@
     },
     {
       "path": "release-notes/v1.10.0.md",
-      "bytes": 216,
-      "hash": "5501d07326e95ab7db098bac1df8ac0ce78accdde17f06653d1066d08420b6b5"
+      "bytes": 3322,
+      "hash": "e0d2729077c5670ec5d21e82622d6ece53ee0879eb0a0ca1e355b320522c080c"
     },
     {
       "path": "release-notes/v1.2.0.md",
@@ -1665,8 +1665,8 @@
     },
     {
       "path": "scripts/public-content/public-content-build.shared.mjs",
-      "bytes": 30115,
-      "hash": "c4c52f6421f3a6992885bdd38beeb67a63c27bed77bee5ec2a7f603b456ce950"
+      "bytes": 30440,
+      "hash": "ebb3e4d013b54a1d15ee36f4824a42d64c39424e94c211a66a5c5d52ecef767f"
     },
     {
       "path": "scripts/public-content/validate-public-content.mjs",

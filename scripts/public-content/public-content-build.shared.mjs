@@ -285,10 +285,18 @@ const renderHeader = (catalog, locale, page, systemRouteId) => {
 
 const renderFooter = (catalog, locale, currentPage) => {
   const ui = uiCopy(catalog, locale);
+  // Guides are listed here as well as in the sitemap. A page reachable only
+  // from a sitemap is an orphan: readers never find it and crawlers weigh it
+  // accordingly, which defeats the point of writing it.
   const footerIds = new Set([
     'about',
     'how-it-works',
     'features',
+    'create-a-menu',
+    'share-a-menu',
+    'run-an-order-round',
+    'invite-friends',
+    'work-with-groups',
     'faq',
     'contact',
     'privacy',
