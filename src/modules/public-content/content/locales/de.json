@@ -438,6 +438,112 @@
           "answer": "Nur du, bis du es teilst. Teilen ist ausdrucklich — per Link, Code, Freund oder Gruppe — und du kannst den Zugriff jederzeit entziehen."
         }
       ]
+    },
+    "share-a-menu": {
+      "navigationLabel": "Menu teilen",
+      "seoTitle": "Ein Menu mit der Gruppe teilen | Gama3 Orderak",
+      "description": "Vier Wege ein Menu zu teilen: ein Link, den jeder offnen kann, ein Code, eine direkte Einladung an einen Freund oder eine ganze Gruppe. Mit Rollen und Widerruf.",
+      "eyebrow": "Anleitung",
+      "heading": "Ein Menu mit der Gruppe teilen",
+      "introduction": "Ein Menu bleibt privat, bis du es teilst. Dafur gibt es vier Wege, und die Wahl hangt davon ab, ob die andere Person die App schon nutzt und ob du eine Person oder zwanzig einladst. Diese Anleitung behandelt alle vier, die Rollen und den Widerruf.",
+      "sections": [
+        {
+          "heading": "Per Link teilen",
+          "paragraphs": [
+            "Der Link ist die Wahl, wenn du in einen Gruppenchat einfugst. Offne das Menu, wahle Teilen und erstelle einen Link. Wer ihn offnet, kann beitreten, ohne vorher in deiner Freundesliste zu stehen.",
+            "Der Link gilt sieben Tage und fur beliebig viele Personen. Du kannst ihn jederzeit fruher widerrufen; dann wirkt er sofort nicht mehr fur alle, die noch nicht beigetreten sind."
+          ]
+        },
+        {
+          "heading": "Per Code teilen",
+          "paragraphs": [
+            "Der Code ist eine kurze Zeichenfolge, die man unter Mit Code beitreten eingibt. Praktisch, um ihn laut vorzulesen oder dort zu senden, wo ein langer Link verdachtig wirkt.",
+            "Anders als der Link ist der Code einmalig: Ist er eingelost, ist er verbraucht. Erstelle einen pro Person, wenn du diese Kontrolle willst.",
+            "Link und Code tragen beide die bei der Erstellung gewahlte Rolle, sodass die beitretende Person genau die vorgesehenen Rechte erhalt und keinen Standardwert."
+          ]
+        },
+        {
+          "heading": "Mit Freunden und Gruppen teilen",
+          "paragraphs": [
+            "Steht die Person schon in deiner Freundesliste, kannst du das Menu direkt teilen; sie sieht es, ohne etwas einzulosen. Das ist die sauberste Variante fur regelmassige Mitbesteller.",
+            "Mit einer Gruppe zu teilen erledigt dasselbe fur alle auf einmal. Wer spater dazukommt, sieht die bereits geteilten Menus, sodass die Einladung nicht bei jeder Teamanderung wiederholt werden muss."
+          ]
+        },
+        {
+          "heading": "Rollen und Widerruf",
+          "paragraphs": [
+            "Jede Freigabe tragt eine Rolle. Mitwirkende fugen eigene Auswahlen hinzu, Bearbeitende andern auch das Menu, Betrachtende sehen nur zu. Eigentum wird durch eine Freigabe nie ubertragen.",
+            "Du kannst Rollen jederzeit andern oder Personen auf der Mitglieder-Seite entfernen. Der Entzug loscht nicht, was jemand zu einer abgeschlossenen Runde beigetragen hat, damit alte Belege korrekt bleiben."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Braucht die eingeladene Person ein Konto?",
+          "answer": "Ja. Jede Freigabe offnet sich nach der Anmeldung, die Einladung wird also mit einem echten Konto abgeschlossen. Ohne Konto fuhrt der Weg zuerst zur Registrierung und dann zuruck zur Einladung."
+        },
+        {
+          "question": "Was passiert, wenn ich einen Link widerrufe?",
+          "answer": "Er wirkt sofort nicht mehr fur alle, die ihn noch nicht genutzt haben. Wer bereits beigetreten ist, behalt den Zugriff, bis du ihn auf der Mitglieder-Seite entfernst."
+        },
+        {
+          "question": "Kann ich dasselbe Menu mit mehreren Gruppen teilen?",
+          "answer": "Ja. Ein Menu lasst sich mit beliebig vielen Freunden und Gruppen teilen, und jede Freigabe tragt ihre eigene Rolle."
+        }
+      ]
+    },
+    "run-an-order-round": {
+      "navigationLabel": "Runde starten",
+      "seoTitle": "Eine Gruppenbestellrunde durchfuhren | Gama3 Orderak",
+      "description": "Runde aus einem geteilten Menu offnen, Auswahlen einsammeln, Nachzugler sehen, Bestellung einfrieren und mit verlasslichen Summen aufgeben.",
+      "eyebrow": "Anleitung",
+      "heading": "Eine Gruppenbestellrunde durchfuhren",
+      "introduction": "Eine Runde ist ein einzelner Bestellanlass zu einem Menu: das Mittagessen heute, die Lieferung heute Abend. Das Menu bleibt, Runden kommen und gehen. Diese Anleitung zeigt, wie du eine offnest, Auswahlen ohne Hinterherlaufen einsammelst und sie schliesst, damit die Summen stillstehen.",
+      "sections": [
+        {
+          "heading": "Runde offnen",
+          "paragraphs": [
+            "Wahle in einem geteilten Menu Runde starten. Alle, mit denen das Menu geteilt ist, kommen automatisch hinzu und werden benachrichtigt: Es gibt keine zweite Einladung.",
+            "Die Runde ubernimmt Artikel, Preise und Gebuhrenregel so, wie sie in diesem Moment sind. Spatere Anderungen am Menu greifen nicht in eine laufende Runde zuruck."
+          ]
+        },
+        {
+          "heading": "Auswahlen einsammeln",
+          "paragraphs": [
+            "Jede Person offnet die Runde und tragt Mengen zu den gewunschten Artikeln ein. Sie sieht ihre eigene Summe samt Gebuhrenanteil, sodass niemand nachfragen muss.",
+            "Als Organisator siehst du, wer geantwortet hat und wer nicht. Genau das kostet im Chat sonst die meiste Zeit: Die Antwort steht auf einem Bildschirm statt verstreut in hundert Nachrichten.",
+            "Solange die Runde offen ist, lassen sich Auswahlen andern. Jede Anderung aktualisiert die Summe sofort, die angezeigte Zahl ist also immer aktuell und keine Rechnung von vor zehn Minuten."
+          ]
+        },
+        {
+          "heading": "Einfrieren und bestellen",
+          "paragraphs": [
+            "Wenn alle geantwortet haben, friere die Runde ein. Das verhindert weitere Anderungen und fixiert die Preise, damit die Summe nicht wandert, wahrend du mit dem Restaurant telefonierst.",
+            "Die eingefrorene Ansicht fasst gleiche Artikel zusammen — genau das liest man beim Bestellen vor: acht vom selben Sandwich statt acht einzelner Zeilen."
+          ]
+        },
+        {
+          "heading": "Abrechnen",
+          "paragraphs": [
+            "Nach der Bestellung ist der Anteil jeder Person bereits berechnet, inklusive Steuer, Service und Lieferanteil gemass der Regel am Menu.",
+            "Belege bleiben nach dem Schliessen der Runde verfugbar, sodass eine Frage eine Woche spater eine Antwort hat, die nicht von jemandes Erinnerung abhangt."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Was, wenn jemand nie antwortet?",
+          "answer": "Du kannst die Runde ohne diese Person einfrieren. Sie taucht schlicht nicht in den Summen auf, und die anderen warten nicht wegen einer Person."
+        },
+        {
+          "question": "Kann ich eine eingefrorene Runde wieder offnen?",
+          "answer": "Ja, solange sie nicht abgeschlossen ist. Das Offnen erlaubt wieder Anderungen und rechnet neu; eine abgeschlossene Runde bleibt, wie sie war, damit alte Belege stimmen."
+        },
+        {
+          "question": "Sehen alle, was die anderen bestellt haben?",
+          "answer": "Teilnehmende sehen die Gesamtbestellung, damit die Gruppe sie vor dem Aufgeben prufen kann. Personliche Summen bleiben der jeweiligen Person zugeordnet."
+        }
+      ]
     }
   },
   "systemPages": {

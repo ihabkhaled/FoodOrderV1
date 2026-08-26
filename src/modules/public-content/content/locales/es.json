@@ -438,6 +438,112 @@
           "answer": "Solo tu, hasta que lo compartas. Compartir es explicito — enlace, codigo, amigo o grupo — y puedes revocar el acceso cuando quieras."
         }
       ]
+    },
+    "share-a-menu": {
+      "navigationLabel": "Compartir un menu",
+      "seoTitle": "Como compartir un menu con tu grupo | Gama3 Orderak",
+      "description": "Cuatro formas de compartir un menu: un enlace que cualquiera puede abrir, un codigo, una invitacion directa a un amigo o un grupo entero. Con roles y revocacion.",
+      "eyebrow": "Guia",
+      "heading": "Como compartir un menu con tu grupo",
+      "introduction": "Un menu es privado hasta que lo compartes. Hay cuatro formas de hacerlo, y la eleccion depende de si la otra persona ya usa la aplicacion y de si invitas a una persona o a veinte. Esta guia cubre las cuatro, los roles que puedes conceder y como retirar el acceso.",
+      "sections": [
+        {
+          "heading": "Compartir con enlace",
+          "paragraphs": [
+            "El enlace es la opcion cuando pegas en un chat de grupo. Abre el menu, elige Compartir y crea un enlace. Cualquiera que lo abra puede unirse, sin necesidad de estar antes en tu lista de amigos.",
+            "El enlace dura siete dias y sirve para tantas personas como lo abran. Puedes revocarlo antes en cualquier momento: deja de funcionar de inmediato para quien aun no se ha unido."
+          ]
+        },
+        {
+          "heading": "Compartir con codigo",
+          "paragraphs": [
+            "El codigo es una cadena corta que se escribe en Unirse con codigo. Va bien para leerlo en voz alta o enviarlo donde un enlace largo pareceria sospechoso.",
+            "A diferencia del enlace, el codigo es de un solo uso: una vez canjeado se agota. Crea uno por persona cuando quieras ese control.",
+            "Tanto el enlace como el codigo llevan el rol elegido al crearlos, asi que quien se une recibe exactamente los permisos previstos y no un valor por defecto."
+          ]
+        },
+        {
+          "heading": "Compartir con amigos y grupos",
+          "paragraphs": [
+            "Si la persona ya esta en tu lista de amigos, puedes compartir el menu directamente y lo vera sin canjear nada. Es la opcion mas limpia para quienes piden contigo a menudo.",
+            "Compartir con un grupo hace lo mismo para todos a la vez. Quien entre despues vera los menus ya compartidos con ese grupo, lo que evita repetir la invitacion cada vez que cambia el equipo."
+          ]
+        },
+        {
+          "heading": "Roles y retirar el acceso",
+          "paragraphs": [
+            "Cada uso compartido lleva un rol. Un colaborador anade sus elecciones, un editor tambien puede cambiar el menu y un lector mira sin pedir. La propiedad nunca se transfiere al compartir.",
+            "Puedes cambiar el rol de alguien o quitarlo desde la pagina Miembros cuando quieras. Retirar el acceso no borra lo que ya aporto a una ronda cerrada, de modo que los recibos antiguos siguen siendo exactos."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "La persona invitada necesita una cuenta?",
+          "answer": "Si. Cada uso compartido se abre tras iniciar sesion, de modo que la invitacion se completa con una cuenta real. Quien no tenga una pasa primero por el registro y luego vuelve a la invitacion."
+        },
+        {
+          "question": "Que pasa si revoco un enlace?",
+          "answer": "Deja de funcionar de inmediato para quien no lo haya usado. Quien ya se unio conserva el acceso hasta que lo quites desde la pagina Miembros."
+        },
+        {
+          "question": "Puedo compartir el mismo menu con varios grupos?",
+          "answer": "Si. Un menu puede compartirse con tantos amigos y grupos como quieras, y cada uso compartido lleva su propio rol."
+        }
+      ]
+    },
+    "run-an-order-round": {
+      "navigationLabel": "Hacer una ronda",
+      "seoTitle": "Como gestionar una ronda de pedido en grupo | Gama3 Orderak",
+      "description": "Abre una ronda desde un menu compartido, recoge las elecciones, ve quien falta, congela el pedido y hazlo con totales fiables.",
+      "eyebrow": "Guia",
+      "heading": "Como gestionar una ronda de pedido en grupo",
+      "introduction": "Una ronda es una ocasion concreta de pedir desde un menu: la comida de hoy, el reparto de esta noche. El menu permanece y las rondas van y vienen. Esta guia explica como abrir una, recoger las elecciones sin perseguir a nadie por chat y cerrarla para que los totales dejen de moverse.",
+      "sections": [
+        {
+          "heading": "Abre la ronda",
+          "paragraphs": [
+            "Desde un menu compartido elige Iniciar ronda. Todas las personas con las que esta compartido entran automaticamente y reciben una notificacion: no hay una segunda invitacion que enviar.",
+            "La ronda toma los articulos, precios y politica de cargos tal como estan en ese momento. Los cambios posteriores en el menu no vuelven sobre una ronda ya iniciada."
+          ]
+        },
+        {
+          "heading": "Recoge las elecciones",
+          "paragraphs": [
+            "Cada persona abre la ronda y pone cantidades a lo que quiere. Ve su propio total, incluida su parte de los cargos, asi que nadie tiene que preguntar cuanto debe.",
+            "Como organizador ves quien ha respondido y quien no. Esa es la parte que mas tiempo consume en un chat: la respuesta esta en una pantalla en vez de repartida en cien mensajes.",
+            "Se pueden cambiar las elecciones mientras la ronda este abierta. Cada cambio actualiza el total al instante, asi que la cifra que ves siempre esta al dia y no es un calculo de hace diez minutos."
+          ]
+        },
+        {
+          "heading": "Congela y haz el pedido",
+          "paragraphs": [
+            "Cuando todos han respondido, congela la ronda. Congelar impide mas cambios y fija los precios, de modo que el total no se mueve mientras hablas con el restaurante.",
+            "La vista congelada agrupa los articulos iguales, que es lo que de verdad lees al pedir: ocho del mismo bocadillo en lugar de ocho lineas sueltas."
+          ]
+        },
+        {
+          "heading": "Ajusta cuentas",
+          "paragraphs": [
+            "Hecho el pedido, la parte de cada uno ya esta calculada, con IVA, servicio y su parte del envio segun la politica del menu.",
+            "Los recibos siguen disponibles al cerrar la ronda, asi que una pregunta una semana despues tiene respuesta sin depender de la memoria de nadie."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Que pasa si alguien no responde nunca?",
+          "answer": "Puedes congelar la ronda sin esa persona. Simplemente no entra en los totales, y quienes respondieron no quedan retenidos por una sola."
+        },
+        {
+          "question": "Puedo reabrir una ronda congelada?",
+          "answer": "Si, mientras no se haya completado. Reabrirla permite cambios de nuevo y recalcula los totales; una ronda completada queda como estaba para que los recibos antiguos sigan siendo exactos."
+        },
+        {
+          "question": "Ve todo el mundo lo que pidieron los demas?",
+          "answer": "Los participantes ven el pedido conjunto para que el grupo pueda revisarlo antes de enviarlo. Los totales personales siguen ligados a su dueno."
+        }
+      ]
     }
   },
   "systemPages": {

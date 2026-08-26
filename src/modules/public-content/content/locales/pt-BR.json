@@ -438,6 +438,112 @@
           "answer": "So voce, ate compartilhar. O compartilhamento e explicito — link, codigo, amigo ou grupo — e voce pode revogar o acesso quando quiser."
         }
       ]
+    },
+    "share-a-menu": {
+      "navigationLabel": "Compartilhar cardapio",
+      "seoTitle": "Como compartilhar um cardapio com seu grupo | Gama3 Orderak",
+      "description": "Quatro formas de compartilhar um cardapio: um link que qualquer um abre, um codigo, um convite direto a um amigo ou um grupo inteiro. Com papeis e revogacao.",
+      "eyebrow": "Guia",
+      "heading": "Como compartilhar um cardapio com seu grupo",
+      "introduction": "Um cardapio fica privado ate voce compartilhar. Ha quatro formas de fazer isso, e a escolha depende de a outra pessoa ja usar o aplicativo e de voce convidar uma pessoa ou vinte. Este guia cobre as quatro, os papeis que voce pode conceder e como retirar o acesso.",
+      "sections": [
+        {
+          "heading": "Compartilhar por link",
+          "paragraphs": [
+            "O link e a opcao certa quando voce cola num grupo de conversa. Abra o cardapio, escolha Compartilhar e crie um link. Quem abrir pode entrar, sem precisar estar antes na sua lista de amigos.",
+            "O link vale sete dias e para quantas pessoas o abrirem. Voce pode revogar antes a qualquer momento: ele para de funcionar na hora para quem ainda nao entrou."
+          ]
+        },
+        {
+          "heading": "Compartilhar por codigo",
+          "paragraphs": [
+            "O codigo e um texto curto digitado em Entrar com codigo. Serve para ler em voz alta ou enviar onde um link longo pareceria suspeito.",
+            "Diferente do link, o codigo e de uso unico: depois de resgatado, acabou. Crie um por pessoa quando quiser esse nivel de controle.",
+            "Link e codigo carregam o papel escolhido na criacao, entao quem entra recebe exatamente as permissoes pretendidas e nao um valor padrao."
+          ]
+        },
+        {
+          "heading": "Compartilhar com amigos e grupos",
+          "paragraphs": [
+            "Se a pessoa ja esta na sua lista de amigos, voce pode compartilhar direto e ela vera sem resgatar nada. E a opcao mais limpa para quem pede com voce sempre.",
+            "Compartilhar com um grupo faz o mesmo para todos de uma vez. Quem entrar depois ve os cardapios ja compartilhados com aquele grupo, evitando repetir o convite a cada mudanca de time."
+          ]
+        },
+        {
+          "heading": "Papeis e retirada de acesso",
+          "paragraphs": [
+            "Cada compartilhamento carrega um papel. Um colaborador adiciona as proprias escolhas, um editor tambem altera o cardapio e um leitor apenas observa. A propriedade nunca e transferida por compartilhamento.",
+            "Voce pode mudar o papel de alguem ou remover a pessoa na pagina Membros quando quiser. Retirar o acesso nao apaga o que ela ja contribuiu numa rodada encerrada, entao recibos antigos continuam corretos."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "A pessoa convidada precisa de conta?",
+          "answer": "Sim. Todo compartilhamento abre apos o login, entao o convite se completa com uma conta real. Quem nao tem passa pelo cadastro e volta ao convite."
+        },
+        {
+          "question": "O que acontece se eu revogar um link?",
+          "answer": "Ele para de funcionar na hora para quem ainda nao usou. Quem ja entrou mantem o acesso ate voce remover pela pagina Membros."
+        },
+        {
+          "question": "Posso compartilhar o mesmo cardapio com varios grupos?",
+          "answer": "Sim. Um cardapio pode ser compartilhado com quantos amigos e grupos quiser, e cada compartilhamento tem seu papel."
+        }
+      ]
+    },
+    "run-an-order-round": {
+      "navigationLabel": "Fazer uma rodada",
+      "seoTitle": "Como conduzir uma rodada de pedido em grupo | Gama3 Orderak",
+      "description": "Abra uma rodada a partir de um cardapio compartilhado, recolha as escolhas, veja quem falta, congele o pedido e envie com totais confiaveis.",
+      "eyebrow": "Guia",
+      "heading": "Como conduzir uma rodada de pedido em grupo",
+      "introduction": "Uma rodada e uma ocasiao de pedir a partir de um cardapio: o almoco de hoje, a entrega desta noite. O cardapio fica e as rodadas vao e vem. Este guia mostra como abrir uma, recolher escolhas sem correr atras de ninguem no chat e fecha-la para os totais pararem de mudar.",
+      "sections": [
+        {
+          "heading": "Abra a rodada",
+          "paragraphs": [
+            "Em um cardapio compartilhado escolha Iniciar rodada. Todo mundo com quem ele foi compartilhado entra automaticamente e recebe notificacao: nao ha um segundo convite para enviar.",
+            "A rodada leva itens, precos e regra de taxas como estao naquele momento. Alteracoes posteriores no cardapio nao voltam para uma rodada em andamento."
+          ]
+        },
+        {
+          "heading": "Recolha as escolhas",
+          "paragraphs": [
+            "Cada pessoa abre a rodada e define as quantidades do que quer. Ela ve o proprio total, incluindo a parte das taxas, entao ninguem precisa perguntar quanto deve.",
+            "Como organizador voce ve quem respondeu e quem nao. Essa e a parte que costuma custar mais tempo no chat: a resposta esta em uma tela em vez de espalhada por cem mensagens.",
+            "As escolhas podem mudar enquanto a rodada estiver aberta. Cada mudanca atualiza o total na hora, entao o numero que voce ve esta sempre atual e nao e uma conta de dez minutos atras."
+          ]
+        },
+        {
+          "heading": "Congele e faca o pedido",
+          "paragraphs": [
+            "Quando todos responderem, congele a rodada. Congelar impede novas mudancas e trava os precos, entao o total nao se mexe enquanto voce fala com o restaurante.",
+            "A visao congelada agrupa itens iguais, que e o que voce realmente le ao pedir: oito do mesmo sanduiche em vez de oito linhas separadas."
+          ]
+        },
+        {
+          "heading": "Acerte as contas",
+          "paragraphs": [
+            "Feito o pedido, a parte de cada um ja esta calculada, com impostos, servico e a parcela da entrega conforme a regra do cardapio.",
+            "Os recibos continuam disponiveis depois que a rodada fecha, entao uma pergunta uma semana depois tem resposta sem depender da memoria de ninguem."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "E se alguem nunca responder?",
+          "answer": "Voce pode congelar a rodada sem essa pessoa. Ela simplesmente nao entra nos totais, e quem respondeu nao fica preso por causa de uma."
+        },
+        {
+          "question": "Posso reabrir uma rodada congelada?",
+          "answer": "Sim, enquanto nao estiver concluida. Reabrir permite mudancas de novo e recalcula os totais; uma rodada concluida fica como estava para os recibos antigos seguirem corretos."
+        },
+        {
+          "question": "Todo mundo ve o que os outros pediram?",
+          "answer": "Os participantes veem o pedido consolidado para o grupo conferir antes do envio. Os totais pessoais continuam ligados a cada pessoa."
+        }
+      ]
     }
   },
   "systemPages": {

@@ -27,6 +27,8 @@ export type PublicRouteId =
   // Step-by-step guides. They carry the depth a reader (and an ad
   // reviewer) expects, which the original ten pages did not.
   | 'create-a-menu'
+  | 'share-a-menu'
+  | 'run-an-order-round'
   | 'privacy'
   | 'terms';
 

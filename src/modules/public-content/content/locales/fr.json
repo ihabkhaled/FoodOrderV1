@@ -438,6 +438,112 @@
           "answer": "Vous seul, jusqu au partage. Le partage est explicite — lien, code, ami ou groupe — et vous pouvez revoquer l acces a tout moment."
         }
       ]
+    },
+    "share-a-menu": {
+      "navigationLabel": "Partager un menu",
+      "seoTitle": "Comment partager un menu avec votre groupe | Gama3 Orderak",
+      "description": "Quatre facons de partager un menu : un lien que chacun peut ouvrir, un code, une invitation directe a un ami, ou un groupe entier. Avec les roles et la revocation.",
+      "eyebrow": "Guide",
+      "heading": "Comment partager un menu avec votre groupe",
+      "introduction": "Un menu reste prive tant que vous ne le partagez pas. Il existe quatre facons de le faire, et le choix depend de savoir si la personne utilise deja l application et si vous invitez une personne ou vingt. Ce guide couvre les quatre, les roles que vous pouvez accorder et la maniere de reprendre l acces.",
+      "sections": [
+        {
+          "heading": "Partager par lien",
+          "paragraphs": [
+            "Le lien est l option a choisir quand vous collez dans une conversation de groupe. Ouvrez le menu, choisissez Partager, puis creez un lien. Quiconque l ouvre peut rejoindre, sans devoir figurer d abord dans vos amis.",
+            "Le lien vaut sept jours et pour autant de personnes qu il en faut. Vous pouvez le revoquer plus tot a tout moment : il cesse aussitot de fonctionner pour ceux qui n ont pas encore rejoint."
+          ]
+        },
+        {
+          "heading": "Partager par code",
+          "paragraphs": [
+            "Le code est une courte chaine que l on saisit dans Rejoindre avec un code. Pratique pour le lire a voix haute ou l envoyer la ou un long lien paraitrait suspect.",
+            "Contrairement au lien, le code est a usage unique : une fois utilise, il est consomme. Creez-en un par personne quand vous voulez ce niveau de controle.",
+            "Le lien comme le code portent le role choisi a la creation, de sorte que la personne qui rejoint obtient exactement les permissions prevues et non une valeur par defaut."
+          ]
+        },
+        {
+          "heading": "Partager avec des amis et des groupes",
+          "paragraphs": [
+            "Si la personne fait deja partie de vos amis, vous pouvez partager le menu directement : elle le verra sans rien saisir. C est l option la plus propre pour ceux avec qui vous commandez souvent.",
+            "Partager avec un groupe fait la meme chose pour tous d un coup. Quelqu un ajoute plus tard au groupe voit les menus deja partages avec lui, ce qui evite de repeter l invitation a chaque changement d equipe."
+          ]
+        },
+        {
+          "heading": "Roles et reprise d acces",
+          "paragraphs": [
+            "Chaque partage porte un role. Un contributeur ajoute ses choix, un editeur peut aussi modifier le menu, un lecteur regarde sans commander. La propriete n est jamais transferee par un partage.",
+            "Vous pouvez changer le role d une personne ou la retirer depuis la page Membres a tout moment. Retirer l acces n efface pas ce qu elle a deja ajoute a un tour termine, donc les recus passes restent exacts."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "La personne invitee doit-elle avoir un compte ?",
+          "answer": "Oui. Chaque partage s ouvre apres connexion, donc l invitation se termine avec un compte reel. Sans compte, la personne est guidee vers l inscription puis revient a l invitation."
+        },
+        {
+          "question": "Que se passe-t-il si je revoque un lien ?",
+          "answer": "Il cesse aussitot de fonctionner pour ceux qui ne l ont pas utilise. Ceux qui ont deja rejoint gardent leur acces jusqu a ce que vous les retiriez de la page Membres."
+        },
+        {
+          "question": "Puis-je partager le meme menu avec plusieurs groupes ?",
+          "answer": "Oui. Un menu peut etre partage avec autant d amis et de groupes que vous voulez, chaque partage portant son propre role."
+        }
+      ]
+    },
+    "run-an-order-round": {
+      "navigationLabel": "Lancer un tour",
+      "seoTitle": "Comment gerer un tour de commande groupee | Gama3 Orderak",
+      "description": "Ouvrez un tour depuis un menu partage, recueillez les choix, relancez ceux qui n ont pas repondu, figez la commande et passez-la avec des totaux fiables.",
+      "eyebrow": "Guide",
+      "heading": "Comment gerer un tour de commande groupee",
+      "introduction": "Un tour est une occasion de commander a partir d un menu : le dejeuner d aujourd hui, la livraison de ce soir. Le menu reste, les tours passent. Ce guide explique comment en ouvrir un, recueillir les choix sans courir apres les gens dans une conversation, et le clore pour que les totaux cessent de bouger.",
+      "sections": [
+        {
+          "heading": "Ouvrez le tour",
+          "paragraphs": [
+            "Depuis un menu partage, choisissez Lancer un tour. Toutes les personnes avec qui le menu est partage sont ajoutees automatiquement et recoivent une notification : aucune seconde invitation a envoyer.",
+            "Le tour reprend les articles, les prix et la politique de frais tels qu ils sont a cet instant. Les modifications ulterieures du menu ne reviennent pas sur un tour deja lance."
+          ]
+        },
+        {
+          "heading": "Recueillez les choix",
+          "paragraphs": [
+            "Chacun ouvre le tour et indique les quantites souhaitees. Chacun voit son propre total, part de frais comprise, donc personne n a besoin de demander ce qu il doit.",
+            "En tant qu organisateur, vous voyez qui a repondu et qui non. C est la partie qui coute le plus de temps dans une conversation : la reponse tient sur un ecran au lieu d etre dispersee dans cent messages.",
+            "Les choix restent modifiables tant que le tour est ouvert. Chaque changement met le total a jour immediatement, donc le nombre affiche est toujours actuel et non un calcul d il y a dix minutes."
+          ]
+        },
+        {
+          "heading": "Figez et passez la commande",
+          "paragraphs": [
+            "Quand tout le monde a repondu, figez le tour. Cela empeche de nouvelles modifications et verrouille les prix, si bien que le total ne bouge pas pendant que vous etes au telephone avec le restaurant.",
+            "La vue figee regroupe les articles identiques, ce qui correspond a ce que vous lisez vraiment : huit fois le meme sandwich plutot que huit lignes separees."
+          ]
+        },
+        {
+          "heading": "Reglez",
+          "paragraphs": [
+            "Une fois la commande passee, la part de chacun est deja calculee : TVA, service et part de livraison selon la regle definie sur le menu.",
+            "Les recus restent accessibles apres la cloture du tour, si bien qu une question posee une semaine plus tard a une reponse qui ne depend de la memoire de personne."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Et si quelqu un ne repond jamais ?",
+          "answer": "Vous pouvez figer le tour sans cette personne. Elle ne figure simplement pas dans les totaux, et ceux qui ont repondu ne sont pas bloques par un seul retardataire."
+        },
+        {
+          "question": "Puis-je rouvrir un tour fige ?",
+          "answer": "Oui, tant qu il n est pas termine. La reouverture autorise a nouveau les modifications et recalcule les totaux ; un tour termine reste tel quel pour que les recus passes restent exacts."
+        },
+        {
+          "question": "Tout le monde voit-il ce que les autres ont commande ?",
+          "answer": "Les participants voient la commande consolidee afin que le groupe puisse la verifier avant l envoi. Les totaux personnels restent rattaches a leur auteur."
+        }
+      ]
     }
   },
   "systemPages": {

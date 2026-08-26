@@ -438,6 +438,112 @@
           "answer": "Solo tu, finche non lo condividi. La condivisione e esplicita — con un link, un codice, un amico o un gruppo — e puoi revocare l accesso quando vuoi."
         }
       ]
+    },
+    "share-a-menu": {
+      "navigationLabel": "Condividere un menu",
+      "seoTitle": "Come condividere un menu con il gruppo | Gama3 Orderak",
+      "description": "Quattro modi per condividere un menu: un link che chiunque puo aprire, un codice, un invito diretto a un amico o un intero gruppo. Con ruoli e revoca degli accessi.",
+      "eyebrow": "Guida",
+      "heading": "Come condividere un menu con il gruppo",
+      "introduction": "Un menu resta privato finche non lo condividi. Ci sono quattro modi per farlo, e la scelta dipende dal fatto che l altra persona usi gia l app e dal numero di invitati. Questa guida copre tutti e quattro, i ruoli che puoi assegnare e come revocare l accesso.",
+      "sections": [
+        {
+          "heading": "Condividere con un link",
+          "paragraphs": [
+            "Il link e l opzione giusta quando incolli in una chat di gruppo. Apri il menu, scegli Condividi e crea un link. Chiunque lo apra puo entrare, senza dover essere gia tra i tuoi amici.",
+            "Il link vale sette giorni e per quante persone lo aprono. Puoi revocarlo prima in qualsiasi momento: smette subito di funzionare per chi non e ancora entrato."
+          ]
+        },
+        {
+          "heading": "Condividere con un codice",
+          "paragraphs": [
+            "Il codice e una stringa breve che si digita in Entra con codice. E comodo per leggerlo ad alta voce o inviarlo dove un link lungo sembrerebbe sospetto.",
+            "A differenza del link, il codice e monouso: una volta riscattato e esaurito. Creane uno per persona quando vuoi questo livello di controllo.",
+            "Sia il link sia il codice portano con se il ruolo scelto al momento della creazione, quindi chi entra riceve esattamente i permessi previsti e non un valore predefinito."
+          ]
+        },
+        {
+          "heading": "Condividere con amici e gruppi",
+          "paragraphs": [
+            "Se la persona e gia tra i tuoi amici puoi condividere il menu direttamente: lo vedra senza riscattare nulla. E l opzione piu ordinata per chi ordina con te spesso.",
+            "Condividere con un gruppo fa lo stesso per tutti in una volta. Chi entra nel gruppo piu avanti vede i menu gia condivisi con quel gruppo, evitando di ripetere l invito a ogni cambio di squadra."
+          ]
+        },
+        {
+          "heading": "Ruoli e revoca",
+          "paragraphs": [
+            "Ogni condivisione porta un ruolo. Un collaboratore aggiunge le proprie scelte, un editor puo anche modificare il menu, un osservatore guarda senza ordinare. La proprieta non si trasferisce mai con una condivisione.",
+            "Puoi cambiare il ruolo di una persona o rimuoverla dalla pagina Membri quando vuoi. Rimuovere l accesso non cancella cio che ha gia aggiunto a un giro concluso, quindi le ricevute passate restano corrette."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Chi invito deve avere un account?",
+          "answer": "Si. Ogni condivisione si apre dopo l accesso, quindi l invito si completa con un account reale. Chi non ne ha viene guidato alla registrazione e poi torna all invito."
+        },
+        {
+          "question": "Cosa succede se revoco un link?",
+          "answer": "Smette subito di funzionare per chi non lo ha ancora usato. Chi e gia entrato mantiene l accesso finche non lo rimuovi dalla pagina Membri."
+        },
+        {
+          "question": "Posso condividere lo stesso menu con piu gruppi?",
+          "answer": "Si. Un menu puo essere condiviso con qualsiasi numero di amici e gruppi, e ogni condivisione ha il suo ruolo."
+        }
+      ]
+    },
+    "run-an-order-round": {
+      "navigationLabel": "Gestire un giro",
+      "seoTitle": "Come gestire un giro di ordini di gruppo | Gama3 Orderak",
+      "description": "Apri un giro da un menu condiviso, raccogli le scelte, sollecita chi non ha risposto, blocca l ordine e invialo con totali affidabili.",
+      "eyebrow": "Guida",
+      "heading": "Come gestire un giro di ordini di gruppo",
+      "introduction": "Un giro e una singola occasione di ordine da un menu: il pranzo di oggi, la consegna di stasera. Il menu resta, i giri vanno e vengono. Questa guida spiega come aprirne uno, raccogliere le scelte senza rincorrere nessuno in chat e chiuderlo perche i totali smettano di muoversi.",
+      "sections": [
+        {
+          "heading": "Apri il giro",
+          "paragraphs": [
+            "Da un menu condiviso scegli Avvia giro. Tutti quelli con cui il menu e condiviso entrano automaticamente e ricevono una notifica: non c e un secondo invito da mandare.",
+            "Il giro prende voci, prezzi e regole sulle commissioni cosi come sono in quel momento. Le modifiche successive al menu non tornano indietro su un giro gia avviato."
+          ]
+        },
+        {
+          "heading": "Raccogli le scelte",
+          "paragraphs": [
+            "Ognuno apre il giro e imposta le quantita sulle voci che vuole. Vede il proprio totale, quota delle commissioni compresa, quindi nessuno deve chiedere quanto deve.",
+            "Come organizzatore vedi chi ha risposto e chi no. E la parte che di solito costa piu tempo in una chat: la risposta sta su una schermata invece che sparsa in cento messaggi.",
+            "Le scelte si possono cambiare finche il giro e aperto. Ogni modifica aggiorna subito il totale, quindi il numero che guardi e sempre attuale e non una cifra calcolata dieci minuti fa."
+          ]
+        },
+        {
+          "heading": "Blocca e invia l ordine",
+          "paragraphs": [
+            "Quando tutti hanno risposto, blocca il giro. Il blocco impedisce altre modifiche e fissa i prezzi, cosi il totale non cambia mentre sei al telefono con il ristorante.",
+            "La vista bloccata raggruppa le voci identiche, che e poi quello che leggi davvero al telefono: otto dello stesso panino invece di otto righe separate."
+          ]
+        },
+        {
+          "heading": "Fai i conti",
+          "paragraphs": [
+            "Dopo l invio, la quota di ciascuno e gia calcolata, IVA e servizio inclusi, con la parte di consegna secondo la regola scelta sul menu.",
+            "Le ricevute restano disponibili dopo la chiusura del giro, cosi una domanda dopo una settimana ha una risposta che non dipende dalla memoria di nessuno."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "E se qualcuno non risponde mai?",
+          "answer": "Puoi bloccare il giro senza di lui. Semplicemente non rientra nei totali, e chi ha risposto non resta fermo per una persona."
+        },
+        {
+          "question": "Posso riaprire un giro bloccato?",
+          "answer": "Si, finche non e stato completato. Riaprirlo consente di nuovo le modifiche e ricalcola i totali; un giro completato resta com era, cosi le ricevute passate restano corrette."
+        },
+        {
+          "question": "Tutti vedono cosa hanno ordinato gli altri?",
+          "answer": "I partecipanti vedono l ordine complessivo, cosi il gruppo puo controllarlo prima dell invio. I totali personali restano legati alla persona."
+        }
+      ]
     }
   },
   "systemPages": {

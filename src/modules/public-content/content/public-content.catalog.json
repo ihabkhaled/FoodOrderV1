@@ -917,6 +917,234 @@
       }
     },
     {
+      "id": "share-a-menu",
+      "slug": "share-a-menu",
+      "navigation": false,
+      "adEligible": true,
+      "copy": {
+        "en": {
+          "navigationLabel": "Share a menu",
+          "seoTitle": "How to share a food menu with your group | Gama3 Orderak",
+          "description": "Four ways to share a food menu: a share link anyone can open, a join code, a direct invite to a friend, or a whole group at once. Includes roles and how to revoke access.",
+          "eyebrow": "Guide",
+          "heading": "How to share a menu with your group",
+          "introduction": "A menu is private until you share it. There are four ways to do that, and which one you choose depends on whether the other person already uses the app and whether you are inviting one person or twenty. This guide covers all four, the roles you can grant, and how to take access back.",
+          "sections": [
+            {
+              "heading": "Share by link",
+              "paragraphs": [
+                "A share link is the option to reach for when you are pasting into a group chat. Open the menu, choose Share, and create a share link. Anyone who opens it can join — they do not need to be on your friend list first.",
+                "The link works for seven days and for as many people as open it. You can revoke it earlier at any time, which stops it working immediately for anyone who has not already joined."
+              ]
+            },
+            {
+              "heading": "Share by join code",
+              "paragraphs": [
+                "A join code is a short string that someone types into Join with code. It suits reading a code aloud across a room or sending it in a message where a long link would look suspicious.",
+                "Unlike the link, a join code is single use: once someone redeems it, it is spent. Create one per person when you want that level of control over who joins.",
+                "Both the link and the code carry the role you chose when creating them, so the person joining gets exactly the permissions you intended rather than a default."
+              ]
+            },
+            {
+              "heading": "Share with friends and groups",
+              "paragraphs": [
+                "If the person is already on your friend list, you can share the menu with them directly and they will see it without redeeming anything. This is the tidiest option for people you order with regularly.",
+                "Sharing with a group does the same for everyone in it at once. Add someone to the group later and they see the menus already shared with that group, which saves repeating the invitation every time the team changes."
+              ]
+            },
+            {
+              "heading": "Roles and taking access back",
+              "paragraphs": [
+                "Every share carries a role. A contributor can add their own choices, an editor can also change the menu itself, and a viewer can look without ordering. Ownership is never transferred by a share.",
+                "You can change someone’s role or remove them from the Members page at any time. Removing access does not delete what they already contributed to a finished round, so past receipts stay accurate."
+              ]
+            }
+          ],
+          "faq": [
+            {
+              "question": "Does the person I invite need an account?",
+              "answer": "Yes. Every share resolves behind sign-in, so the invitation is completed by a real account. Someone without one is guided through sign-up first and then lands back on the invitation."
+            },
+            {
+              "question": "What happens if I revoke a share link?",
+              "answer": "It stops working immediately for anyone who has not used it yet. People who already joined keep their access until you remove them from the Members page."
+            },
+            {
+              "question": "Can I share the same menu with several groups?",
+              "answer": "Yes. A menu can be shared with any number of friends and groups at once, and each share carries its own role."
+            }
+          ]
+        },
+        "ar": {
+          "navigationLabel": "مشاركة قائمة",
+          "seoTitle": "كيفية مشاركة قائمة طعام مع مجموعتك | جمع أوردرك",
+          "description": "أربع طرق لمشاركة قائمة طعام: رابط يفتحه أي شخص، أو رمز انضمام، أو دعوة مباشرة لصديق، أو مجموعة كاملة دفعة واحدة. مع شرح الأدوار وكيفية إلغاء الوصول.",
+          "eyebrow": "دليل",
+          "heading": "كيفية مشاركة قائمة مع مجموعتك",
+          "introduction": "تظل القائمة خاصة حتى تشاركها. هناك أربع طرق لذلك، والاختيار بينها يعتمد على ما إذا كان الطرف الآخر يستخدم التطبيق بالفعل، وعلى ما إذا كنت تدعو شخصًا واحدًا أو عشرين. يشرح هذا الدليل الطرق الأربع والأدوار التي يمكنك منحها وكيفية استرجاع الوصول.",
+          "sections": [
+            {
+              "heading": "المشاركة برابط",
+              "paragraphs": [
+                "الرابط هو الخيار المناسب حين تنسخ في محادثة جماعية. افتح القائمة واختر «مشاركة» ثم أنشئ رابط مشاركة. أي شخص يفتحه يستطيع الانضمام، ولا يلزم أن يكون في قائمة أصدقائك أولًا.",
+                "يعمل الرابط لسبعة أيام ولأي عدد من الأشخاص. ويمكنك إلغاؤه قبل ذلك في أي وقت، فيتوقف فورًا لمن لم ينضم بعد."
+              ]
+            },
+            {
+              "heading": "المشاركة برمز انضمام",
+              "paragraphs": [
+                "رمز الانضمام نص قصير يكتبه الشخص في «انضم برمز». يناسب قراءة الرمز بصوت عالٍ في الغرفة أو إرساله في رسالة يبدو فيها الرابط الطويل مريبًا.",
+                "وعلى عكس الرابط، الرمز يُستخدم مرة واحدة: بمجرد استخدامه ينتهي. أنشئ رمزًا لكل شخص حين تريد هذا القدر من التحكم فيمن ينضم.",
+                "يحمل كل من الرابط والرمز الدور الذي اخترته عند الإنشاء، فيحصل المنضم على الصلاحيات التي قصدتها بالضبط لا على دور افتراضي."
+              ]
+            },
+            {
+              "heading": "المشاركة مع الأصدقاء والمجموعات",
+              "paragraphs": [
+                "إذا كان الشخص في قائمة أصدقائك، يمكنك مشاركة القائمة معه مباشرة فيراها دون استخدام أي رمز. وهذا أنظف خيار لمن تطلب معهم بانتظام.",
+                "والمشاركة مع مجموعة تفعل الشيء نفسه لكل أفرادها دفعة واحدة. وإذا أضفت شخصًا إلى المجموعة لاحقًا فسيرى القوائم التي شوركت معها، ما يوفّر تكرار الدعوة كلما تغيّر الفريق."
+              ]
+            },
+            {
+              "heading": "الأدوار واسترجاع الوصول",
+              "paragraphs": [
+                "كل مشاركة تحمل دورًا. المساهم يضيف اختياراته، والمحرر يستطيع أيضًا تعديل القائمة نفسها، والمشاهد ينظر دون أن يطلب. ولا تنتقل الملكية أبدًا عبر المشاركة.",
+                "يمكنك تغيير دور أي شخص أو إزالته من صفحة «الأعضاء» في أي وقت. وإزالة الوصول لا تحذف ما ساهم به في جولة منتهية، فتظل الإيصالات السابقة دقيقة."
+              ]
+            }
+          ],
+          "faq": [
+            {
+              "question": "هل يحتاج من أدعوه إلى حساب؟",
+              "answer": "نعم. كل مشاركة تُفتح بعد تسجيل الدخول، فتكتمل الدعوة بحساب حقيقي. ومن لا يملك حسابًا يُوجَّه إلى التسجيل ثم يعود إلى الدعوة نفسها."
+            },
+            {
+              "question": "ماذا يحدث إذا ألغيت رابط مشاركة؟",
+              "answer": "يتوقف فورًا لمن لم يستخدمه بعد. أما من انضم بالفعل فيحتفظ بوصوله حتى تزيله من صفحة الأعضاء."
+            },
+            {
+              "question": "هل أستطيع مشاركة القائمة نفسها مع عدة مجموعات؟",
+              "answer": "نعم. يمكن مشاركة القائمة مع أي عدد من الأصدقاء والمجموعات، ولكل مشاركة دورها الخاص."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "run-an-order-round",
+      "slug": "run-an-order-round",
+      "navigation": false,
+      "adEligible": true,
+      "copy": {
+        "en": {
+          "navigationLabel": "Run an order round",
+          "seoTitle": "How to run a group order round | Gama3 Orderak",
+          "description": "Open a round from a shared menu, collect everyone’s choices, chase the people who have not answered, freeze the order, and place it with confident totals.",
+          "eyebrow": "Guide",
+          "heading": "How to run a group order round",
+          "introduction": "A round is one occasion of ordering from a menu: today’s lunch, this evening’s delivery. The menu stays put and rounds come and go. This guide covers opening one, collecting choices without chasing people through chat, and closing it so the totals stop moving.",
+          "sections": [
+            {
+              "heading": "Open the round",
+              "paragraphs": [
+                "From a shared menu, choose Start round. Everyone the menu is shared with is added to the round automatically and receives a notification, so there is no second invitation to send.",
+                "The round takes the menu’s items, prices, and fee policy as they are at that moment. Later edits to the menu do not reach back into a round that is already running."
+              ]
+            },
+            {
+              "heading": "Collect choices",
+              "paragraphs": [
+                "Each person opens the round and sets quantities against the items they want. They see their own running total including their share of fees, so nobody has to ask what they owe.",
+                "As organizer you see who has answered and who has not. That is the part that usually costs the most time in a chat thread: the answer is on one screen instead of scattered through a hundred messages.",
+                "People can change their choices while the round is open. Every change updates the aggregate immediately, so the total you are looking at is always current rather than a figure you calculated ten minutes ago."
+              ]
+            },
+            {
+              "heading": "Freeze and place the order",
+              "paragraphs": [
+                "When everyone has answered, freeze the round. Freezing stops further changes and locks the prices, so the total cannot move while you are on the phone to the restaurant.",
+                "The frozen view groups identical items together, which is what you actually read out when ordering: eight of one sandwich rather than eight separate lines."
+              ]
+            },
+            {
+              "heading": "Settle up",
+              "paragraphs": [
+                "After the order is placed, each person’s share is already calculated, including VAT, service, and their part of delivery according to the policy on the menu.",
+                "Receipts stay available after the round closes, so a question a week later has an answer that does not depend on anyone’s memory."
+              ]
+            }
+          ],
+          "faq": [
+            {
+              "question": "What if someone never answers?",
+              "answer": "You can freeze the round without them. They are simply not part of the totals, and the people who did answer are not held up by one person."
+            },
+            {
+              "question": "Can I reopen a frozen round?",
+              "answer": "Yes, while it has not been completed. Reopening allows changes again and recalculates the totals; a completed round stays as it was so past receipts remain accurate."
+            },
+            {
+              "question": "Does everyone see what other people ordered?",
+              "answer": "Participants see the combined order so the group can check it before it is placed. Personal totals stay attached to the person they belong to."
+            }
+          ]
+        },
+        "ar": {
+          "navigationLabel": "إدارة جولة طلب",
+          "seoTitle": "كيفية إدارة جولة طلب جماعي | جمع أوردرك",
+          "description": "افتح جولة من قائمة مشتركة، واجمع اختيارات الجميع، وتابع من لم يجب، ثم جمّد الطلب وأرسله بإجماليات موثوقة.",
+          "eyebrow": "دليل",
+          "heading": "كيفية إدارة جولة طلب جماعي",
+          "introduction": "الجولة هي مناسبة طلب واحدة من قائمة: غداء اليوم، أو توصيل هذا المساء. تبقى القائمة كما هي وتأتي الجولات وتذهب. يشرح هذا الدليل فتح الجولة وجمع الاختيارات دون مطاردة الناس في المحادثات، ثم إغلاقها حتى تتوقف الإجماليات عن التغير.",
+          "sections": [
+            {
+              "heading": "افتح الجولة",
+              "paragraphs": [
+                "من قائمة مشتركة اختر «ابدأ جولة». يُضاف كل من شوركت معهم القائمة إلى الجولة تلقائيًا ويصلهم إشعار، فلا توجد دعوة ثانية ترسلها.",
+                "تأخذ الجولة أصناف القائمة وأسعارها وسياسة رسومها كما هي في تلك اللحظة. والتعديلات اللاحقة على القائمة لا تعود إلى جولة قيد التشغيل."
+              ]
+            },
+            {
+              "heading": "اجمع الاختيارات",
+              "paragraphs": [
+                "يفتح كل شخص الجولة ويحدد الكميات أمام ما يريده. ويرى إجماليه الخاص شاملًا نصيبه من الرسوم، فلا يحتاج أحد أن يسأل كم عليه.",
+                "وبصفتك المنظّم ترى من أجاب ومن لم يجب. وهذا هو الجزء الذي يستهلك أكثر الوقت عادة في المحادثات: الإجابة على شاشة واحدة بدل أن تكون مبعثرة بين مئة رسالة.",
+                "يستطيع الناس تغيير اختياراتهم ما دامت الجولة مفتوحة. وكل تغيير يحدّث الإجمالي فورًا، فالرقم الذي تنظر إليه محدَّث دائمًا لا رقمًا حسبته قبل عشر دقائق."
+              ]
+            },
+            {
+              "heading": "جمّد الطلب وأرسله",
+              "paragraphs": [
+                "حين يجيب الجميع، جمّد الجولة. التجميد يوقف التغييرات ويثبّت الأسعار، فلا يتحرك الإجمالي وأنت على الهاتف مع المطعم.",
+                "ويجمع العرض المجمّد الأصناف المتطابقة معًا، وهو ما تقرؤه فعلًا عند الطلب: ثمانية من ساندويتش واحد بدل ثمانية أسطر منفصلة."
+              ]
+            },
+            {
+              "heading": "التسوية",
+              "paragraphs": [
+                "بعد إرسال الطلب يكون نصيب كل شخص محسوبًا بالفعل، شاملًا الضريبة والخدمة وجزءه من التوصيل حسب السياسة المحددة في القائمة.",
+                "وتبقى الإيصالات متاحة بعد إغلاق الجولة، فسؤال بعد أسبوع تكون له إجابة لا تعتمد على ذاكرة أحد."
+              ]
+            }
+          ],
+          "faq": [
+            {
+              "question": "ماذا لو لم يجب أحدهم أبدًا؟",
+              "answer": "يمكنك تجميد الجولة بدونه. لن يكون ضمن الإجماليات، ولن يتعطل من أجابوا بسبب شخص واحد."
+            },
+            {
+              "question": "هل أستطيع إعادة فتح جولة مجمّدة؟",
+              "answer": "نعم، ما دامت لم تكتمل. إعادة الفتح تسمح بالتغيير وتعيد حساب الإجماليات، أما الجولة المكتملة فتبقى كما هي لتظل الإيصالات السابقة دقيقة."
+            },
+            {
+              "question": "هل يرى الجميع ما طلبه الآخرون؟",
+              "answer": "يرى المشاركون الطلب المجمّع ليتحقق منه الفريق قبل إرساله. أما الإجماليات الشخصية فتبقى مرتبطة بصاحبها."
+            }
+          ]
+        }
+      }
+    },
+    {
       "id": "privacy",
       "slug": "privacy",
       "navigation": false,

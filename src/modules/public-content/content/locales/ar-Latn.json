@@ -438,6 +438,112 @@
           "answer": "Enta bas, lehad ma tesharko. El mosharka wad7a — be link aw code aw ma3 sa7bak aw group — we tedar telghi el wosool fe ay wa2t."
         }
       ]
+    },
+    "share-a-menu": {
+      "navigationLabel": "Sharek menu",
+      "seoTitle": "Ezay tesharek menu ma3 el group betaa3ak | Gama3 Orderak",
+      "description": "Arba3 toroq 3ashan tesharek menu: link ay had yeftaho, aw code, aw da3wa mobashra le sa7bak, aw group kamla marra wahda. Ma3 el adwar we ezay telghi el wosool.",
+      "eyebrow": "Dalil",
+      "heading": "Ezay tesharek menu ma3 el group betaa3ak",
+      "introduction": "El menu betefdal khassa lehad ma tesharkha. Fi arba3 toroq lel mosharka, wel ekhtiyar beyetwaqaf 3ala law el tarf el tani beyestakhdem el app walla la, we law bted3i wahed walla 3eshreen. El dalil da beyghatti el arba3a, wel adwar elli tedar teddeeha, we ezay tergaa3 el wosool.",
+      "sections": [
+        {
+          "heading": "Mosharka be link",
+          "paragraphs": [
+            "El link howa el ekhtiyar el mazboot lamma tekon bete3mel paste fe group chat. Eftah el menu, ekhtar \"Mosharka\", we e3mel share link. Ay had yeftaho yeader yedkhol, mesh lazem yekoon fe list as7abak el awel.",
+            "El link beyeshtaghal sab3 ayam we le ay 3adad nas. Wetedar telghih abl keda fe ay wa2t, fa yewaaf 3ala tool le ay had lessa madakhalsh."
+          ]
+        },
+        {
+          "heading": "Mosharka be code",
+          "paragraphs": [
+            "El code nass oshayar el shakhs beyektebo fe \"Edkhol be code\". Yenfa3 lamma te2ra el code be sot fel oda, aw teb3ato fe resala el link el taweel feeha haykoon shakli.",
+            "We 3aks el link, el code beyetestakhdem marra wahda: awel ma had yesta3melo yekhlas. E3mel code le kol shakhs lamma teb2a 3ayez el tahakkom da fe meen yedkhol.",
+            "El link wel code el etnein shayleen el dor elli ekhtarto wenta bete3melhom, fa elli beyedkhol yakhod bel zabt el salahiyat elli enta asadtaha mesh dor eftiradi."
+          ]
+        },
+        {
+          "heading": "Mosharka ma3 as7ab we groups",
+          "paragraphs": [
+            "Law el shakhs fe list as7abak, tedar tesharek el menu ma3ah 3ala tool we hayshofha men gheir ma yesta3mel ay code. Da anzaf ekhtiyar lel nas elli betetlob ma3ahom bel marra.",
+            "Wel mosharka ma3 group bete3mel nafs el haga le kol el a3daa marra wahda. We law deeft had lel group ba3dein hayshoof el menus elli etsharket ma3aha, fa mesh hate3eed el da3wa kol ma el team yetghayyar."
+          ]
+        },
+        {
+          "heading": "El adwar we ergaa3 el wosool",
+          "paragraphs": [
+            "Kol mosharka shayla dor. El mosahem beydeef ekhtiyarato, wel muharrer kaman yeader yeghayyar el menu nafsaha, wel moshahed beyboss men gheir ma yetlob. Wel melkeya 3omraha ma betentaqel bel mosharka.",
+            "Tedar teghayyar dor ay had aw teshilo men safhet \"El a3daa\" fe ay wa2t. We shail el wosool mabyemsahsh elli sahamo beh fe order khalas, fa el fawatir el adima tefdal mazbota."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Elli bad3eeh lazem yekoon 3ando hesab?",
+          "answer": "Aywa. Kol mosharka betetfateh ba3d tasgeel el dokhool, fa el da3wa betekmel be hesab haqiqi. We elli maandoosh hesab beyetwaggah lel tasgeel we yerga3 lel da3wa."
+        },
+        {
+          "question": "Eh elli yehsal law alghet share link?",
+          "answer": "Yewaaf 3ala tool le ay had lessa mesta3melosh. Wel nas elli dakhalo khalas beyefdalo lehad ma teshilhom men safhet el a3daa."
+        },
+        {
+          "question": "A2dar asharek nafs el menu ma3 kaza group?",
+          "answer": "Aywa. El menu momken tetsharek ma3 ay 3adad as7ab we groups, we kol mosharka shayla dorha."
+        }
+      ]
+    },
+    "run-an-order-round": {
+      "navigationLabel": "Sha8al order round",
+      "seoTitle": "Ezay tedeer order round lel group | Gama3 Orderak",
+      "description": "Eftah round men menu metsharek, egma3 ekhtiyarat el kol, tabe3 elli ma raddesh, gammed el order, we eb3ato be egmali mawthooq.",
+      "eyebrow": "Dalil",
+      "heading": "Ezay tedeer order round lel group",
+      "introduction": "El round heya marra wahda men el talab men menu: ghada el naharda, aw tawseel el leila di. El menu betefdal makanha wel rounds betigi we temshi. El dalil da beyghatti ezay teftah round, tegma3 el ekhtiyarat men gheir ma tegri wara el nas fel chat, we te2felha 3ashan el egmali yewaaf 3an el harka.",
+      "sections": [
+        {
+          "heading": "Eftah el round",
+          "paragraphs": [
+            "Men menu metsharek ekhtar \"Ebda round\". Kol elli sharekt ma3ahom el menu beyetdafo lel round otomatiki we beyoosalhom esh3ar, fa mafish da3wa tanya teb3atha.",
+            "El round betakhod asnaf el menu wel as3ar we siyaset el rosoom zay ma heya fel lahza di. Wel ta3dilat elli teegi ba3dein 3ala el menu maberga3sh le round shaghala."
+          ]
+        },
+        {
+          "heading": "Egma3 el ekhtiyarat",
+          "paragraphs": [
+            "Kol wahed beyeftah el round we yehot el kammeyat odam elli 3ayzo. We beyshoof egmalio bel nesba leh shamel nasibo men el rosoom, fa mahadesh yehtag yes2al howa 3aleh kam.",
+            "We enta ka monazzem beteshoof meen radd we meen la. We di el gozaa elli 3adatan beyakhod aktar wa2t fel chat: el egaba 3ala screen wahda mesh mabathoota bein meet resala.",
+            "El nas te2dar teghayyar ekhtiyaratha tool ma el round maftooha. We kol taghyeer beyeaddel el egmali fe nafs el lahza, fa el rakam elli enta shayfo dayman gedid mesh rakam hasabto men 3ashar da2ayeq."
+          ]
+        },
+        {
+          "heading": "Gammed we eb3at el order",
+          "paragraphs": [
+            "Lamma el kol yeredd, gammed el round. El tagmeed beywaaf el taghyeer we yethabbet el as3ar, fa el egmali mayetharaksh wenta 3ala el telefon ma3 el mat3am.",
+            "Wel 3ard el megammad beyegma3 el asnaf el motashabha ma3 ba3d, we da elli bete2rah fe3lan wenta bettelob: tamanya men nafs el sandwich mesh tamanya sotoor lewahdohom."
+          ]
+        },
+        {
+          "heading": "El taswiya",
+          "paragraphs": [
+            "Ba3d ma el order yeb3at, nasib kol wahed yeb2a mahsoob khalas, shamel el dariba wel khedma we gozo men el tawseel hasab el siyasa elli 3ala el menu.",
+            "Wel fawatir betefdal mawgooda ba3d ma el round te2fel, fa so2al ba3d osboo3 yeb2a leeh egaba mesh me3tamda 3ala zakerat had."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Law had khales maraddesh?",
+          "answer": "Tedar tegammed el round men gheiro. Mesh haykoon gozaa men el egmali, wel nas elli raddo mesh hayet3attalo 3ashan wahed."
+        },
+        {
+          "question": "A2dar aftah round megammada tani?",
+          "answer": "Aywa, tool ma makhalsetsh. Fat-h tani beyesma7 bel taghyeer we beye3eed hesab el egmali, amma el round el khalsana fatefdal zay ma heya 3ashan el fawatir el adima tefdal mazbota."
+        },
+        {
+          "question": "El kol beyshoof el nas talabet eh?",
+          "answer": "El moshtarkeen beyshofo el order el megamma3 3ashan el group yerag3o abl ma yeb3at. Amma el egmali el shakhsi fabyefdal marboot be sahbo."
+        }
+      ]
     }
   },
   "systemPages": {

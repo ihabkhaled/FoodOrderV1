@@ -33,6 +33,8 @@ export const PUBLIC_ROUTE_DEFINITIONS = [
   { id: 'faq', slug: 'faq', navigation: true, adEligible: true },
   { id: 'contact', slug: 'contact', navigation: true, adEligible: false },
   { id: 'create-a-menu', slug: 'create-a-menu', navigation: false, adEligible: true },
+  { id: 'share-a-menu', slug: 'share-a-menu', navigation: false, adEligible: true },
+  { id: 'run-an-order-round', slug: 'run-an-order-round', navigation: false, adEligible: true },
   { id: 'privacy', slug: 'privacy', navigation: false, adEligible: false },
   { id: 'terms', slug: 'terms', navigation: false, adEligible: false },
 ] as const satisfies readonly PublicRouteDefinition[];
