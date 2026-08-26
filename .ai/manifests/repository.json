@@ -100,8 +100,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 8066,
-      "hash": "6b07bc9890e8e9a7c1836b102fa30f0e7982e069bdef87ce5036bcd8b594adc1"
+      "bytes": 8122,
+      "hash": "0929a9276582fb87fe64b6a45e187c1f7d93d3052044c0e863d7924eccac4a96"
     },
     {
       "path": "CLAUDE.md",
@@ -634,6 +634,11 @@
       "hash": "2224d1246f713a29eff79cf33bc08ab827970e90e13dc75ed54f7c966031c84b"
     },
     {
+      "path": "docs/superpowers/specs/2026-08-26-v1.10.0-invite-links-ux-content-design.md",
+      "bytes": 4332,
+      "hash": "a43179b03e60f688877dfbaf9a5620f633daca69859a712da1b384d5889de1f9"
+    },
+    {
       "path": "docs/ux/release-v1.9.0-plan.md",
       "bytes": 155,
       "hash": "d995e2d682d9fc7d5e92d16f05b8b9cdb063ad35159dec9abe9eb3a193756d0c"
@@ -845,13 +850,13 @@
     },
     {
       "path": "functions/package-lock.json",
-      "bytes": 112755,
-      "hash": "9cbc14f14ce7901ce30de2a908c17f6d6a83b91f9dd51704e657a4ed2377eed5"
+      "bytes": 112757,
+      "hash": "072db109f3db66c223c9b15894dd4e1018abef99a112345c062e7384221908ad"
     },
     {
       "path": "functions/package.json",
-      "bytes": 533,
-      "hash": "af113ca4461262d87c045926cd17cbbb06d564fdd002c36d7da7bfae0d67ef78"
+      "bytes": 534,
+      "hash": "9aa204750418da7733df779c8608906b9250f798a5271d633f5b3ea1fc50d6af"
     },
     {
       "path": "functions/src/entry.ts",
@@ -1140,13 +1145,13 @@
     },
     {
       "path": "package-lock.json",
-      "bytes": 696985,
-      "hash": "90425356466a27952ba8b476ab3f58bef82904523552ebcc09bf24c6c5cf23c9"
+      "bytes": 696987,
+      "hash": "00f66845fb29c7ce38e4efa746e55accc9bfa0a3c78055826df9abf1c5f3d5c4"
     },
     {
       "path": "package.json",
-      "bytes": 8952,
-      "hash": "9f61fa8a40643e63e842f2c6b089879f40738fd392838734ec9c5a51704380a8"
+      "bytes": 8953,
+      "hash": "01c2a4f41f444fb0ee2573db3d5f5f0adca233d6b31fa2aaefff7510f46fbe6e"
     },
     {
       "path": "packages/group-order-engine/src/index.ts",
@@ -1227,6 +1232,11 @@
       "path": "release-notes/v1.1.1.md",
       "bytes": 1377,
       "hash": "9f2f48de53fe3b9dd35247e113e53e544b307b6f1748b307ae070bdd7fd48113"
+    },
+    {
+      "path": "release-notes/v1.10.0.md",
+      "bytes": 218,
+      "hash": "ad11d2cc1829fd01374bb04819bf8ed105c4107c23550a6d5be773cea108e544"
     },
     {
       "path": "release-notes/v1.2.0.md",

@@ -5,6 +5,11 @@ The version bump level is decided by prompt density — see [rules/versioning.md
 
 <!-- releases -->
 
+## [1.10.0] - 2026-08-26
+
+- Start v1.10.0 development
+
+
 ## [1.9.2] - 2026-08-16
 
 - Active-order spacing polish, pressable dashboard journey, local quantity loading, and participant response navigation.
