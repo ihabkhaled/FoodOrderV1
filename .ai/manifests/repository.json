@@ -40,8 +40,8 @@
     },
     {
       "path": ".github/workflows/ci.yml",
-      "bytes": 21294,
-      "hash": "c5c3c452a675a42def77f8f86b542371fdf6915746a7e662304613882f957943"
+      "bytes": 21490,
+      "hash": "d60dc7ca271711fcbb4f1ae7f192b331d0749b628c4841be900109b5190fa0b7"
     },
     {
       "path": ".github/workflows/cross-browser-e2e.yml",
@@ -100,8 +100,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 7359,
-      "hash": "b2767eec011fb462a4b0487093e7876b53cd5610235b78dfa17c12365b0d938b"
+      "bytes": 8066,
+      "hash": "6b07bc9890e8e9a7c1836b102fa30f0e7982e069bdef87ce5036bcd8b594adc1"
     },
     {
       "path": "CLAUDE.md",
@@ -575,8 +575,8 @@
     },
     {
       "path": "docs/operations/functions-deploy-blockers.md",
-      "bytes": 3808,
-      "hash": "0d9b1c5e8c148975f504c8bef82043151f9bbef574825a7f87c11157901dd47b"
+      "bytes": 4909,
+      "hash": "3b8e9167ff8c3ca620b54cfc56af686812bdbc4843218444656098e4b510fbef"
     },
     {
       "path": "docs/operations/git-hooks.md",
@@ -760,8 +760,8 @@
     },
     {
       "path": "functions/lib/functions/src/globalOptions.js",
-      "bytes": 954,
-      "hash": "6f7e6134b6e8e2da37dcaf90c280dfe22017d1bacebe5cca78ad34367e7b9c12"
+      "bytes": 1422,
+      "hash": "82db5e7818d3d7c20153cb434aa9c092eb2e5b7c7bc4cde2a668cc5e1d5a8d5b"
     },
     {
       "path": "functions/lib/functions/src/index.js",
@@ -790,8 +790,8 @@
     },
     {
       "path": "functions/lib/functions/src/notifications.js",
-      "bytes": 14994,
-      "hash": "a785583abe7f607e675b897f2364feb1b484c9a6e7c295904724b1aeb0735068"
+      "bytes": 14871,
+      "hash": "af89845cc766e445e1d076383705798de6eaae581e8b8c4e9e50c7cf07c93e6a"
     },
     {
       "path": "functions/lib/functions/src/orderDomain.js",
@@ -860,8 +860,8 @@
     },
     {
       "path": "functions/src/globalOptions.ts",
-      "bytes": 947,
-      "hash": "27a0eff33d0d4a05b143bffe7e402d6fb5476aab0e851490fe90b7eb3fdb214f"
+      "bytes": 1415,
+      "hash": "8cabe06aed756ec18f57ab35cae42fdaa6c5c42642915b3c118eef40c5bf2338"
     },
     {
       "path": "functions/src/index.ts",
@@ -890,8 +890,8 @@
     },
     {
       "path": "functions/src/notifications.ts",
-      "bytes": 16959,
-      "hash": "d2fc08229ddb32fbaf6be072b90c8be9a7b4c390fe29b4b59d4619a92fb68f45"
+      "bytes": 16836,
+      "hash": "e473a83ce3392d207236f61ac12698f84d65f7c08cae048c8cf2c642b64e600e"
     },
     {
       "path": "functions/src/orderDomain.ts",
@@ -1140,13 +1140,13 @@
     },
     {
       "path": "package-lock.json",
-      "bytes": 695706,
-      "hash": "df8879109f8c66086520aa6a76a29b06fea01ccb55ce57cb5b8a1127901b06b1"
+      "bytes": 696985,
+      "hash": "90425356466a27952ba8b476ab3f58bef82904523552ebcc09bf24c6c5cf23c9"
     },
     {
       "path": "package.json",
-      "bytes": 8887,
-      "hash": "04448271aa71acba68bff1f362228655303436a4a4c14e9393a06dffc43250c2"
+      "bytes": 8952,
+      "hash": "9f61fa8a40643e63e842f2c6b089879f40738fd392838734ec9c5a51704380a8"
     },
     {
       "path": "packages/group-order-engine/src/index.ts",
@@ -1300,8 +1300,8 @@
     },
     {
       "path": "release-notes/v1.9.2.md",
-      "bytes": 308,
-      "hash": "03232ad773c649aa6050d4357f8ef587edc0126bae3a1e1dee5ab4629836c4bd"
+      "bytes": 306,
+      "hash": "ec6f5fc44ccc0aff27629bc2572e8431ac83c9315f436d007099ea1f2f1e2905"
     },
     {
       "path": "reports/phases/PHASE_00_report.md",
@@ -1485,13 +1485,13 @@
     },
     {
       "path": "scripts/deploy-functions-batched.mjs",
-      "bytes": 6671,
-      "hash": "63c7da13132a0ce1bee4cf846b85f3c6ad0d8736358e9101ce7077e62f625c48"
+      "bytes": 8149,
+      "hash": "199d0d4ef4fa864e0286818cd0e12d0ea90076b444714b8c63be6c2ff0ac1863"
     },
     {
       "path": "scripts/firebase-change-plan.mjs",
-      "bytes": 9723,
-      "hash": "47c03c0eae8ba2b1477684247560fb9b7e80791bdab1b8cc01b55cf574304a30"
+      "bytes": 10575,
+      "hash": "04d057d90236c46721cbf3e8c214680bcef749e79f7997237c50864d0d31559c"
     },
     {
       "path": "scripts/i18n/check-translations.mjs",
@@ -4880,13 +4880,13 @@
     },
     {
       "path": "tests/tooling/firebase-change-plan.test.mjs",
-      "bytes": 6781,
-      "hash": "d18a585b124b0ceaa60337fda73656d24c3634166c4347653bed55fd048b8ecb"
+      "bytes": 8754,
+      "hash": "3d3b7ec2db9d7c6b46ef85839452a67e781fda79272ac44b57821560de9c24f7"
     },
     {
       "path": "tests/tooling/firebase-deployment-gate.test.ts",
-      "bytes": 669,
-      "hash": "335fca77d8f76a01b2979189c5c1e7cb1dfd3ceb17de74282856b29280a4e1d3"
+      "bytes": 1050,
+      "hash": "ca39e83abff2ce8fcd0c0c958d7108db6f9f0af65e0e2f4981e2e2928693de38"
     },
     {
       "path": "tests/tooling/knowledge-routing.test.mjs",
