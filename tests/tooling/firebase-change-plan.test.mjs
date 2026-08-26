@@ -1,7 +1,10 @@
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import test from 'node:test';
 
 import {
+  ISOLATED_FUNCTION_FILES,
+  exportedFunctionNames,
   filterVersionOnlyReleaseFiles,
   isVersionOnlyPackageMetadataChange,
   normalizeChangedFiles,
@@ -217,4 +220,46 @@ test('uses a full deployment when the diff is unavailable', () => {
   assert.equal(plan.deployFunctions, true);
   assert.equal(plan.deployRules, true);
   assert.equal(plan.functionTargets, null);
+});
+
+test('a real root dependency change no longer redeploys every function', () => {
+  // The regression behind the 35-minute quota-failing release: the root
+  // manifest changes on nearly every release, but functions/src never imports
+  // the root package, so it must not be a function trigger.
+  const plan = planFirebaseChanges(
+    ['package.json', 'package-lock.json', 'src/main.tsx'],
+    'release-diff',
+  );
+  assert.equal(plan.deployFunctions, false);
+  assert.equal(plan.deployRules, false);
+});
+
+test('group-order-engine changes deploy all functions', () => {
+  // The engine is compiled into the functions bundle (functions/tsconfig.json
+  // includes ../packages/group-order-engine/src), so it is shared code.
+  const plan = planFirebaseChanges(['packages/group-order-engine/src/index.ts']);
+  assert.equal(plan.deployFunctions, true);
+  assert.equal(plan.functionTargets, null);
+});
+
+test('shared functions source falls back to a full deploy', () => {
+  const plan = planFirebaseChanges(['functions/src/notifications.ts']);
+  assert.equal(plan.deployFunctions, true);
+  assert.equal(plan.functionTargets, null);
+});
+
+test('surgical targets are read from the file, not a hand-kept list', () => {
+  // The hand-kept list had drifted: it placed inviteFriendToGroup in
+  // socialV150.ts while social.ts exports it, so a surgical social.ts deploy
+  // would have skipped a changed function.
+  const social = exportedFunctionNames(readFileSync('functions/src/social.ts', 'utf8'));
+  assert.ok(social.includes('inviteFriendToGroup'));
+  const plan = planFirebaseChanges(['functions/src/social.ts']);
+  assert.deepEqual(plan.functionTargets, social);
+  for (const file of ISOLATED_FUNCTION_FILES) {
+    assert.ok(
+      exportedFunctionNames(readFileSync(file, 'utf8')).length > 0,
+      `${file} yields no exported functions; surgical deploys would skip it`,
+    );
+  }
 });

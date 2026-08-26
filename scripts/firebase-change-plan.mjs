@@ -9,8 +9,17 @@ const FULL_DEPLOY_REASONS = new Set([
   'unreliable-diff',
 ]);
 
-const FUNCTION_PATH_PREFIXES = ['functions/'];
-const FUNCTION_PATHS = new Set(['package.json', 'package-lock.json']);
+// The deployed artifact is exactly what functions/tsconfig.json compiles:
+// functions/src plus packages/group-order-engine/src. The repo-root
+// package.json and package-lock.json are NOT triggers — functions/src never
+// imports the root package (the file:.. dependency exists only so the local
+// install wires up tooling; root package.json has no main/exports, so it could
+// not be imported at runtime), and treating them as triggers made nearly every
+// release redeploy all functions, since the root manifest changes whenever any
+// frontend dependency or script does. That was a 30-minute full deploy, and a
+// quota failure, for releases that never touched a function.
+const FUNCTION_PATH_PREFIXES = ['functions/', 'packages/group-order-engine/'];
+const FUNCTION_PATHS = new Set([]);
 const RULE_PATHS = new Set(['firestore.rules', 'firestore.indexes.json']);
 const VERSION_METADATA_PATHS = new Set([
   'package.json',
@@ -24,52 +33,39 @@ const PRODUCTION_TAG_PATTERN =
 // Files whose public Firebase exports are isolated enough to deploy surgically.
 // Any other Functions source/config change intentionally falls back to all
 // functions so shared-domain changes never leave production partially updated.
-const ISOLATED_FUNCTION_TARGETS = new Map([
-  [
-    'functions/src/orderSessionsV170.ts',
-    [
-      'createOrderSessionV170',
-      'getOrderSessionViewV170',
-      'listOrderSessionsV170',
-      'transitionOrderSessionV170',
-      'updateSessionContributionV170',
-      'updateSessionParticipantResponseV170',
-    ],
-  ],
-  [
-    'functions/src/social.ts',
-    [
-      'createFriendGroup',
-      'getSocialOverview',
-      'inviteFriendToBucketV151',
-      'listBucketAccessGrants',
-      'respondBucketInvitationV151',
-      'respondFriendGroupInvitation',
-      'respondFriendRequest',
-      'searchSocialUserByEmail',
-      'sendFriendRequest',
-      'shareBucketWithFriend',
-      'shareBucketWithFriendGroup',
-    ],
-  ],
-  [
-    'functions/src/socialV150.ts',
-    [
-      'deleteFriendGroupV150',
-      'inviteFriendToGroup',
-      'inviteFriendToGroupV150',
-      'leaveFriendGroupV150',
-      'removeFriendGroupMemberV150',
-      'unfriendV150',
-      'updateFriendGroupV150',
-    ],
-  ],
-]);
+//
+// The exported names are READ FROM THE FILE, never listed by hand. The previous
+// hand-kept list had already drifted — it placed inviteFriendToGroup in
+// socialV150.ts when social.ts exports it — so a surgical deploy of social.ts
+// would have left one changed function running old code in production.
+export const ISOLATED_FUNCTION_FILES = [
+  'functions/src/orderSessionsV170.ts',
+  'functions/src/social.ts',
+  'functions/src/socialV150.ts',
+];
+
+const EXPORTED_FUNCTION_PATTERN = /^export const ([A-Za-z0-9_]+) = on[A-Z]/gmu;
+
+export const exportedFunctionNames = (source) =>
+  [...String(source).matchAll(EXPORTED_FUNCTION_PATTERN)].map((match) => match[1]).sort();
 
 export const normalizeChangedFiles = (files) =>
   [...new Set(files.map((file) => file.trim().replaceAll('\\', '/')).filter(Boolean))].sort();
 
-const resolveFunctionTargets = (changedFiles) => {
+const readIsolatedExports = (file) => {
+  if (!ISOLATED_FUNCTION_FILES.includes(file)) return null;
+  try {
+    const names = exportedFunctionNames(readFileSync(file, 'utf8'));
+    // A scan that finds nothing means the file changed shape; deploying
+    // nothing for it would silently skip changed code, so fall back to all.
+    return names.length > 0 ? names : null;
+  } catch {
+    // Deleted or unreadable: a full deploy removes/refreshes it safely.
+    return null;
+  }
+};
+
+const resolveFunctionTargets = (changedFiles, readExports = readIsolatedExports) => {
   const functionFiles = changedFiles.filter(
     (file) =>
       FUNCTION_PATHS.has(file) ||
@@ -79,7 +75,7 @@ const resolveFunctionTargets = (changedFiles) => {
 
   const targets = new Set();
   for (const file of functionFiles) {
-    const isolated = ISOLATED_FUNCTION_TARGETS.get(file);
+    const isolated = readExports(file);
     if (!isolated) return null;
     for (const target of isolated) targets.add(target);
   }

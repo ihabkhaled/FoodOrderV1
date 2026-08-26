@@ -6,8 +6,13 @@ const globalOptions = readFileSync('functions/src/globalOptions.ts', 'utf8');
 const ciWorkflow = readFileSync('.github/workflows/ci.yml', 'utf8');
 
 describe('Firebase deployment capacity gate', () => {
-  it('keeps 43 functions below the regional CPU reservation ceiling', () => {
-    expect(globalOptions).toContain('maxInstances: 2');
+  it('keeps the standing CPU reservation well under the regional ceiling', () => {
+    // A rollout reserves CPU for the old and the new revision of every service
+    // in a batch, so the standing reservation must leave headroom, not sit at
+    // the quota. At maxInstances 2 the reservation of 45 functions was the
+    // whole 20,000 milli-vCPU quota and deploys failed container health checks.
+    expect(globalOptions).toContain('maxInstances: 1');
+    expect(globalOptions).not.toContain('maxInstances: 2');
   });
 
   it('retries transient platform throttling before failing callable smoke tests', () => {

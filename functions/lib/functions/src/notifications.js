@@ -5,12 +5,11 @@ import { writeNotification, writeNotifications, } from './notificationCore.js';
 import { isAccessOnlyBucketUpdate, isJoinCodeInviteAcceptance, } from './notificationDomain.js';
 const REGION = 'europe-west1';
 /**
- * Firestore-trigger fan-outs run with a single instance. Regional CPU quota is
- * reserved per service as cpu × maxInstances, and v1.8.0's new functions pushed
- * the project's total reservation back over the ceiling — deploys then fail
- * container health checks with "Quota exceeded for total allowable CPU".
- * Background notification writes tolerate queueing, so they are the right
- * services to give that headroom back. Callables keep the global setting.
+ * Firestore-trigger fan-outs run with a single instance. This now matches the
+ * global default (see globalOptions.ts for the regional CPU quota arithmetic);
+ * it stays explicit here so a future raise of the global ceiling does not
+ * silently multiply the reservation of these background fan-outs, which
+ * tolerate queueing and never need it.
  */
 const TRIGGER_RUNTIME = { region: REGION, maxInstances: 1 };
 const MAX_NOTIFICATIONS = 50;
@@ -150,7 +149,7 @@ export const notifyBucketSharedV150 = onDocumentCreated({
         .doc(grant.bucketId)
         .get();
     const bucketTitle = bucketSnapshot.data()?.title;
-    let recipients = [];
+    let recipients;
     if (grant.subjectType === 'user') {
         recipients = [grant.subjectId];
     }

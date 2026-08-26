@@ -440,11 +440,14 @@ jobs:
         if: github.event_name != 'pull_request'
         shell: bash
         env:
-          # Deploy in small batches so concurrent Cloud Run healthchecks stay
-          # under the regional CPU quota. See scripts/deploy-functions-batched.mjs
+          # Deploy in batches so concurrent Cloud Run healthchecks stay under
+          # the regional CPU quota. With maxInstances 1 the standing
+          # reservation is about half the ceiling, so eight concurrent rollouts
+          # fit comfortably; the batch count (and total deploy time) halves.
+          # See scripts/deploy-functions-batched.mjs
           # and docs/operations/functions-deploy-blockers.md.
-          FUNCTIONS_DEPLOY_BATCH_SIZE: '4'
-          FUNCTIONS_DEPLOY_PAUSE_MS: '20000'
+          FUNCTIONS_DEPLOY_BATCH_SIZE: '8'
+          FUNCTIONS_DEPLOY_PAUSE_MS: '10000'
           FUNCTIONS_DEPLOY_RETRIES: '2'
         run: npm run functions:deploy:batched 2>&1 | tee firebase-deploy.log
       - name: Smoke-test deployed v1.3.3 callables

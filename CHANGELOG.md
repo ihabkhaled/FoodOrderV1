@@ -8,6 +8,16 @@ The version bump level is decided by prompt density — see [rules/versioning.md
 ## [1.9.2] - 2026-08-16
 
 - Active-order spacing polish, pressable dashboard journey, local quantity loading, and participant response navigation.
+- Stopped treating the repo-root `package.json`/`package-lock.json` as function
+  deploy triggers — functions never import the root package, and the root
+  manifest changes on nearly every release, so releases with no function
+  changes were running 30-minute full deploys that failed on CPU quota.
+  `packages/group-order-engine/**` (compiled into the bundle) now triggers
+  correctly instead.
+- Derived surgical deploy targets from the source files; the hand-kept list had
+  drifted and would have skipped `inviteFriendToGroup` on a `social.ts` deploy.
+- Halved standing Cloud Run CPU reservation (`maxInstances: 1`) so rollouts have
+  quota headroom, and raised the deploy batch size to 8 accordingly.
 
 
 ## [1.9.1] - 2026-08-15

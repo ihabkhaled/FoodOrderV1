@@ -59,18 +59,26 @@ const firebase = (args) => {
   return { ok: result.status === 0 || cleanupOnly, out };
 };
 
+const QUOTA_MARK = 'Quota exceeded for total allowable CPU';
+
 const failedGroups = [];
-const deployWithRetry = (label, args) => {
+const attemptDeploy = (label, args) => {
   let lastOut = '';
   for (let attempt = 0; attempt <= retries; attempt += 1) {
     if (attempt > 0) console.log(`::warning::Retry ${attempt}/${retries} for ${label}`);
     const { ok, out } = firebase(args);
     lastOut = out;
-    if (ok) return true;
+    if (ok) return { ok: true, out };
   }
-  console.error(`::error::Deploy failed after retries: ${label}`);
-  failedGroups.push({ label, out: lastOut });
-  return false;
+  return { ok: false, out: lastOut };
+};
+const deployWithRetry = (label, args) => {
+  const { ok, out } = attemptDeploy(label, args);
+  if (!ok) {
+    console.error(`::error::Deploy failed after retries: ${label}`);
+    failedGroups.push({ label, out });
+  }
+  return ok;
 };
 
 let originalConfig = null;
@@ -130,14 +138,42 @@ if (changePlan.deployFunctions) {
   }
   console.log(`Deploying ${functionNames.length} functions in ${batches.length} batch(es) of up to ${batchSize}.`);
 
-  for (const [index, batch] of batches.entries()) {
+  // A batch that fails purely on CPU quota is requeued to the end instead of
+  // being declared dead: every batch that lands lowers the standing
+  // reservation (each rollout replaces the previous revision's configuration),
+  // so by the time the queue drains, the region usually has the headroom the
+  // batch was missing. This is what turns "failed at the end, rerun the whole
+  // 30-minute deploy" into one extra attempt inside the same run.
+  const requeued = [];
+  const deployBatch = (batch, index, total, finalPass) => {
     const only = batch.map((name) => `functions:${name}`).join(',');
-    const label = `batch ${index + 1}/${batches.length} (${batch.join(', ')})`;
+    const label = `batch ${index}/${total} (${batch.join(', ')})`;
     console.log(`\n=== Deploying ${label} ===`);
-    deployWithRetry(label, ['deploy', '--only', only, '--force']);
+    const { ok, out } = attemptDeploy(label, ['deploy', '--only', only, '--force']);
+    if (ok) return;
+    if (!finalPass && out.includes(QUOTA_MARK)) {
+      console.log(`::warning::${label} hit the CPU quota; requeued for after the other batches.`);
+      requeued.push(batch);
+      return;
+    }
+    console.error(`::error::Deploy failed after retries: ${label}`);
+    failedGroups.push({ label, out });
+  };
+
+  for (const [index, batch] of batches.entries()) {
+    deployBatch(batch, index + 1, batches.length, false);
     if (index < batches.length - 1 && pauseMs > 0) {
       console.log(`Pausing ${pauseMs}ms to let Cloud Run CPU free up...`);
       await sleep(pauseMs);
+    }
+  }
+
+  if (requeued.length > 0) {
+    console.log(`\nRetrying ${requeued.length} quota-blocked batch(es) now that earlier rollouts freed reservation...`);
+    await sleep(Math.max(pauseMs, 30000));
+    for (const [index, batch] of requeued.entries()) {
+      deployBatch(batch, index + 1, requeued.length, true);
+      if (index < requeued.length - 1 && pauseMs > 0) await sleep(pauseMs);
     }
   }
 } else {
@@ -156,7 +192,6 @@ if (failedGroups.length === 0) {
   process.exit(0);
 }
 
-const QUOTA_MARK = 'Quota exceeded for total allowable CPU';
 const REAL_ERROR =
   /Permission denied|Eventarc Service Agent role|Build failed|is not a valid|Invalid \w|HTTP Error: 4(01|03|09)|npm ERR!|SyntaxError|Cannot find module/iu;
 const quotaOnly = failedGroups.every(
