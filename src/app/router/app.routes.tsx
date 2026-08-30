@@ -2,6 +2,7 @@ import { AUTH_PATH, authRoutes } from '@/modules/auth';
 import { bucketsRoutes } from '@/modules/buckets';
 import { dashboardRoutes } from '@/modules/dashboard';
 import { groupOrdersRoutes } from '@/modules/group-orders';
+import { inviteLinkRoutes } from '@/modules/invite-links';
 import { orderSessionsRoutes } from '@/modules/order-sessions';
 import { ordersRoutes } from '@/modules/orders';
 import { sessionInviteRoutes } from '@/modules/session-invites';
@@ -40,6 +41,7 @@ export function AppRoutes() {
           {orderSessionsRoutes.map((route) => renderRoute(route))}
           {ordersRoutes.map((route) => renderRoute(route))}
           {groupOrdersRoutes.map((route) => renderRoute(route))}
+          {inviteLinkRoutes.map((route) => renderRoute(route))}
           {socialRoutes.map((route) => renderRoute(route))}
           {settingsRoutes.map((route) => renderRoute(route))}
         </Route>

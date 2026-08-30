@@ -5,6 +5,27 @@ The version bump level is decided by prompt density — see [rules/versioning.md
 
 <!-- releases -->
 
+## [1.10.0] - 2026-08-26
+
+- Added shareable invite links for menus, friendships, and groups: multi-use,
+  revocable, idempotent, and redeemed only by callables holding admin rights.
+- Carried the attempted destination through login and signup, so an invite
+  opened while signed out resumes afterwards.
+- Put Home, About, and Contact in the mobile bottom bar and made it scroll
+  rather than shrink targets below the minimum touch size.
+- Added six step-by-step guides and a home-page FAQ in all thirteen languages,
+  taking the public site from 130 to 208 localized documents and English body
+  content from about 1,521 to 6,417 words.
+- Added sign-in and sign-up links to the public header, a globe on the language
+  menu, and a borderless theme toggle.
+- Replaced the boot screen's skeleton bars with a plain rotating loader and
+  reserved skeletons for lists and cards.
+
+## [1.10.0] - 2026-08-26
+
+- Start v1.10.0 development
+
+
 ## [1.9.2] - 2026-08-16
 
 - Active-order spacing polish, pressable dashboard journey, local quantity loading, and participant response navigation.

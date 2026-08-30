@@ -60,6 +60,17 @@
       ]
     },
     {
+      "id": "invite-links",
+      "paths": [
+        "src/modules/invite-links"
+      ],
+      "risk": "standard",
+      "tests": [
+        "tests/domain/invite-links.test.ts",
+        "tests/firebase/invite-links.rules.test.ts"
+      ]
+    },
+    {
       "id": "notifications",
       "paths": [
         "src/modules/notifications"

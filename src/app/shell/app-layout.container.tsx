@@ -158,7 +158,7 @@ export function AppLayoutContainer() {
         </RefreshableViewport>
       </main>
 
-      <BottomNav t={t} />
+      <BottomNav t={t} locale={locale} />
 
       <ToastViewport toast={toast} />
 

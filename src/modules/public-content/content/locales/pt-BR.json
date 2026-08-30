@@ -6,14 +6,16 @@
     "primaryNavigationLabel": "Navegação pública",
     "mobileNavigationLabel": "Abrir a navegação",
     "languageLabel": "Idioma",
-    "openApplicationLabel": "Abrir o app",
+    "openApplicationLabel": "Abrir app",
     "skipToContentLabel": "Pular para o conteúdo",
     "footerNavigationLabel": "Navegação do rodapé",
     "footerTagline": "Pedidos em grupo sem confusão, da primeira escolha ao recibo final.",
     "allRightsReservedLabel": "Todos os direitos reservados.",
     "backHomeLabel": "Voltar à página inicial",
     "tryAgainLabel": "Tentar novamente",
-    "learnMoreLabel": "Veja como funciona"
+    "learnMoreLabel": "Veja como funciona",
+    "signInLabel": "Entrar",
+    "signUpLabel": "Cadastrar"
   },
   "pages": {
     "home": {
@@ -56,6 +58,24 @@
             "Detalhamento transparente das taxas",
             "Visões de recibo fáceis de compartilhar"
           ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "O Gama3 Orderak e gratuito?",
+          "answer": "Sim. Criar cardapios, compartilhar, conduzir rodadas e dividir recibos e tudo gratuito. Voce faz o pedido no restaurante: o aplicativo organiza o grupo e nao processa pagamentos."
+        },
+        {
+          "question": "As pessoas que pedem comigo precisam instalar algo?",
+          "answer": "Nao. Funciona no navegador em qualquer celular ou computador e pode ser instalado como aplicativo se preferir. Cada um precisa de uma conta, com e-mail e senha."
+        },
+        {
+          "question": "Como ele decide quem deve o que?",
+          "answer": "Os itens de cada pessoa sao precificados pelo cardapio compartilhado, depois entram impostos e servico, e a entrega e dividida igualmente ou proporcionalmente, conforme a regra do cardapio."
+        },
+        {
+          "question": "Posso usar em arabe?",
+          "answer": "Sim, em treze idiomas, incluindo arabe e arabe egipcio em alfabeto latino. Layouts da direita para a esquerda sao suportados e o idioma muda quando voce quiser."
         }
       ]
     },
@@ -381,6 +401,324 @@
           "paragraphs": [
             "Não abuse dos convites, não tente acesso não autorizado, não envie material ilegal, não interfira no serviço e não use dados de outra pessoa sem permissão."
           ]
+        }
+      ]
+    },
+    "create-a-menu": {
+      "navigationLabel": "Criar um cardapio",
+      "seoTitle": "Como criar um cardapio reutilizavel | Gama3 Orderak",
+      "description": "Guia passo a passo para criar um cardapio reutilizavel: adicione itens e precos, configure as taxas uma vez e reuse o mesmo cardapio em cada rodada.",
+      "eyebrow": "Guia",
+      "heading": "Como criar um cardapio reutilizavel",
+      "introduction": "Um cardapio — chamado de bucket no aplicativo — e a lista de itens que seu grupo pede. Voce cria uma vez e cada pedido seguinte parte dali em vez de uma pagina em branco. Este guia mostra como criar, precificar e preparar para compartilhar.",
+      "sections": [
+        {
+          "heading": "1. Crie o cardapio",
+          "paragraphs": [
+            "Abra Buckets na navegacao e escolha Criar bucket. De o nome que as pessoas reconhecem, normalmente o restaurante ou a ocasiao, como \"Shawarma de sexta\" ou \"Almoco do escritorio\".",
+            "O cardapio e seu. Ninguem mais ve ate voce compartilhar, e compartilhar e um passo separado e proposital, explicado no proximo guia."
+          ]
+        },
+        {
+          "heading": "2. Adicione itens e precos",
+          "paragraphs": [
+            "Adicione cada item com o preco unitario. Os precos usam a moeda escolhida em Configuracoes e sao por unidade: o aplicativo multiplica pela quantidade no pedido.",
+            "Use nomes curtos e especificos. \"Shawarma de frango — grande\" e mais facil de escolher no celular entre seis pessoas do que \"Sanduiche opcao 2\". Se o restaurante mudar um preco, edite o item e cada rodada seguinte usara o valor novo.",
+            "Voce pode deixar um preco em zero enquanto monta o cardapio. O zero aparece como espaco reservado e nao como valor real, entao um item incompleto fica visivel em vez de parecer gratis."
+          ]
+        },
+        {
+          "heading": "3. Configure as taxas uma vez",
+          "paragraphs": [
+            "Impostos, taxa de servico e entrega sao configurados no cardapio, nao em cada pedido. Configure uma vez e cada rodada criada a partir dele aplicara do mesmo jeito.",
+            "A entrega pode ser dividida igualmente ou proporcionalmente ao que cada um pediu. Escolha proporcional quando alguem pede muito mais que os outros e igual quando o grupo prefere simplicidade."
+          ]
+        },
+        {
+          "heading": "4. Reuse",
+          "paragraphs": [
+            "Com o cardapio pronto, pedir de novo e so iniciar uma rodada a partir dele. Itens, precos e regras de taxa vao junto, e as pessoas com quem voce compartilhou continuam ligadas.",
+            "Se precisar de uma variacao — outra unidade com precos diferentes, por exemplo — duplique o cardapio e edite a copia. O original fica intacto."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Preciso refazer o cardapio a cada pedido?",
+          "answer": "Nao. E exatamente para isso que serve um cardapio reutilizavel. Voce cria uma vez e comeca cada rodada a partir dele: itens, precos e taxas seguem junto."
+        },
+        {
+          "question": "Posso mudar um preco depois que as pessoas pediram?",
+          "answer": "Editar um item vale para rodadas futuras. Uma rodada ja congelada mantem os precos do congelamento, entao um total fechado nao muda."
+        },
+        {
+          "question": "Quem ve um cardapio que eu crio?",
+          "answer": "So voce, ate compartilhar. O compartilhamento e explicito — link, codigo, amigo ou grupo — e voce pode revogar o acesso quando quiser."
+        }
+      ]
+    },
+    "share-a-menu": {
+      "navigationLabel": "Compartilhar cardapio",
+      "seoTitle": "Como compartilhar um cardapio com seu grupo | Gama3 Orderak",
+      "description": "Quatro formas de compartilhar um cardapio: um link que qualquer um abre, um codigo, um convite direto a um amigo ou um grupo inteiro. Com papeis e revogacao.",
+      "eyebrow": "Guia",
+      "heading": "Como compartilhar um cardapio com seu grupo",
+      "introduction": "Um cardapio fica privado ate voce compartilhar. Ha quatro formas de fazer isso, e a escolha depende de a outra pessoa ja usar o aplicativo e de voce convidar uma pessoa ou vinte. Este guia cobre as quatro, os papeis que voce pode conceder e como retirar o acesso.",
+      "sections": [
+        {
+          "heading": "Compartilhar por link",
+          "paragraphs": [
+            "O link e a opcao certa quando voce cola num grupo de conversa. Abra o cardapio, escolha Compartilhar e crie um link. Quem abrir pode entrar, sem precisar estar antes na sua lista de amigos.",
+            "O link vale sete dias e para quantas pessoas o abrirem. Voce pode revogar antes a qualquer momento: ele para de funcionar na hora para quem ainda nao entrou."
+          ]
+        },
+        {
+          "heading": "Compartilhar por codigo",
+          "paragraphs": [
+            "O codigo e um texto curto digitado em Entrar com codigo. Serve para ler em voz alta ou enviar onde um link longo pareceria suspeito.",
+            "Diferente do link, o codigo e de uso unico: depois de resgatado, acabou. Crie um por pessoa quando quiser esse nivel de controle.",
+            "Link e codigo carregam o papel escolhido na criacao, entao quem entra recebe exatamente as permissoes pretendidas e nao um valor padrao."
+          ]
+        },
+        {
+          "heading": "Compartilhar com amigos e grupos",
+          "paragraphs": [
+            "Se a pessoa ja esta na sua lista de amigos, voce pode compartilhar direto e ela vera sem resgatar nada. E a opcao mais limpa para quem pede com voce sempre.",
+            "Compartilhar com um grupo faz o mesmo para todos de uma vez. Quem entrar depois ve os cardapios ja compartilhados com aquele grupo, evitando repetir o convite a cada mudanca de time."
+          ]
+        },
+        {
+          "heading": "Papeis e retirada de acesso",
+          "paragraphs": [
+            "Cada compartilhamento carrega um papel. Um colaborador adiciona as proprias escolhas, um editor tambem altera o cardapio e um leitor apenas observa. A propriedade nunca e transferida por compartilhamento.",
+            "Voce pode mudar o papel de alguem ou remover a pessoa na pagina Membros quando quiser. Retirar o acesso nao apaga o que ela ja contribuiu numa rodada encerrada, entao recibos antigos continuam corretos."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "A pessoa convidada precisa de conta?",
+          "answer": "Sim. Todo compartilhamento abre apos o login, entao o convite se completa com uma conta real. Quem nao tem passa pelo cadastro e volta ao convite."
+        },
+        {
+          "question": "O que acontece se eu revogar um link?",
+          "answer": "Ele para de funcionar na hora para quem ainda nao usou. Quem ja entrou mantem o acesso ate voce remover pela pagina Membros."
+        },
+        {
+          "question": "Posso compartilhar o mesmo cardapio com varios grupos?",
+          "answer": "Sim. Um cardapio pode ser compartilhado com quantos amigos e grupos quiser, e cada compartilhamento tem seu papel."
+        }
+      ]
+    },
+    "run-an-order-round": {
+      "navigationLabel": "Fazer uma rodada",
+      "seoTitle": "Como conduzir uma rodada de pedido em grupo | Gama3 Orderak",
+      "description": "Abra uma rodada a partir de um cardapio compartilhado, recolha as escolhas, veja quem falta, congele o pedido e envie com totais confiaveis.",
+      "eyebrow": "Guia",
+      "heading": "Como conduzir uma rodada de pedido em grupo",
+      "introduction": "Uma rodada e uma ocasiao de pedir a partir de um cardapio: o almoco de hoje, a entrega desta noite. O cardapio fica e as rodadas vao e vem. Este guia mostra como abrir uma, recolher escolhas sem correr atras de ninguem no chat e fecha-la para os totais pararem de mudar.",
+      "sections": [
+        {
+          "heading": "Abra a rodada",
+          "paragraphs": [
+            "Em um cardapio compartilhado escolha Iniciar rodada. Todo mundo com quem ele foi compartilhado entra automaticamente e recebe notificacao: nao ha um segundo convite para enviar.",
+            "A rodada leva itens, precos e regra de taxas como estao naquele momento. Alteracoes posteriores no cardapio nao voltam para uma rodada em andamento."
+          ]
+        },
+        {
+          "heading": "Recolha as escolhas",
+          "paragraphs": [
+            "Cada pessoa abre a rodada e define as quantidades do que quer. Ela ve o proprio total, incluindo a parte das taxas, entao ninguem precisa perguntar quanto deve.",
+            "Como organizador voce ve quem respondeu e quem nao. Essa e a parte que costuma custar mais tempo no chat: a resposta esta em uma tela em vez de espalhada por cem mensagens.",
+            "As escolhas podem mudar enquanto a rodada estiver aberta. Cada mudanca atualiza o total na hora, entao o numero que voce ve esta sempre atual e nao e uma conta de dez minutos atras."
+          ]
+        },
+        {
+          "heading": "Congele e faca o pedido",
+          "paragraphs": [
+            "Quando todos responderem, congele a rodada. Congelar impede novas mudancas e trava os precos, entao o total nao se mexe enquanto voce fala com o restaurante.",
+            "A visao congelada agrupa itens iguais, que e o que voce realmente le ao pedir: oito do mesmo sanduiche em vez de oito linhas separadas."
+          ]
+        },
+        {
+          "heading": "Acerte as contas",
+          "paragraphs": [
+            "Feito o pedido, a parte de cada um ja esta calculada, com impostos, servico e a parcela da entrega conforme a regra do cardapio.",
+            "Os recibos continuam disponiveis depois que a rodada fecha, entao uma pergunta uma semana depois tem resposta sem depender da memoria de ninguem."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "E se alguem nunca responder?",
+          "answer": "Voce pode congelar a rodada sem essa pessoa. Ela simplesmente nao entra nos totais, e quem respondeu nao fica preso por causa de uma."
+        },
+        {
+          "question": "Posso reabrir uma rodada congelada?",
+          "answer": "Sim, enquanto nao estiver concluida. Reabrir permite mudancas de novo e recalcula os totais; uma rodada concluida fica como estava para os recibos antigos seguirem corretos."
+        },
+        {
+          "question": "Todo mundo ve o que os outros pediram?",
+          "answer": "Os participantes veem o pedido consolidado para o grupo conferir antes do envio. Os totais pessoais continuam ligados a cada pessoa."
+        }
+      ]
+    },
+    "invite-friends": {
+      "navigationLabel": "Convidar amigos",
+      "seoTitle": "Como adicionar amigos e compartilhar seu link de convite | Gama3 Orderak",
+      "description": "Duas formas de montar sua lista de amigos: buscar alguem pelo e-mail exato, ou compartilhar um link de 24 horas que deixa qualquer pessoa adicionar voce.",
+      "eyebrow": "Guia",
+      "heading": "Como adicionar amigos",
+      "introduction": "Uma lista de amigos evita repetir convites. Com alguem na lista voce compartilha um cardapio direto, adiciona a pessoa a um grupo ou inicia uma rodada que a inclui sem enviar nada para resgatar. Ha duas formas de montar, boas para situacoes diferentes.",
+      "sections": [
+        {
+          "heading": "Buscar por e-mail",
+          "paragraphs": [
+            "Abra Membros, depois Amigos, e busque o endereco exato com que a pessoa se cadastrou. Ninguem aparece em uma lista publica e correspondencias parciais nao retornam nada: o endereco e a unica forma de achar alguem aqui.",
+            "Isso e proposital. Um diretorio pesquisavel deixaria qualquer um montar uma lista de quem usa o aplicativo; exigir o endereco exato significa que voce so acha quem ja te deu."
+          ]
+        },
+        {
+          "heading": "Compartilhe seu link de convite",
+          "paragraphs": [
+            "O link de amizade e o caminho rapido quando voce convida varias pessoas de uma vez. Crie na pagina Amigos e mande onde voces ja conversam: uma mensagem, um grupo, qualquer lugar.",
+            "Quem abrir em 24 horas pode adicionar voce com um toque. Voce nao aprova cada pessoa: compartilhar o link e o seu consentimento, e esse e o ponto. O mesmo link serve para quantas pessoas o abrirem.",
+            "Se preferir aprovar cada uma, use a busca por e-mail e deixe que enviem um pedido. Os dois caminhos chegam ao mesmo lugar; muda so quem confirma."
+          ]
+        },
+        {
+          "heading": "Pedidos e o que vem depois",
+          "paragraphs": [
+            "Um pedido enviado pela busca espera na pagina Pedidos ate a outra pessoa responder. Aceitar torna a amizade mutua na hora: voces aparecem na lista um do outro sem repetir o passo.",
+            "As notificacoes avisam quando um pedido chega ou e aceito, entao voce nao fica na duvida se deu certo."
+          ]
+        },
+        {
+          "heading": "Remover um amigo",
+          "paragraphs": [
+            "A remocao e imediata e tira voces das listas um do outro. Nao apaga o historico: um cardapio de que ambos participavam e as rodadas em que voce contribuiu ficam exatamente como estavam.",
+            "Remover um amigo nao revoga o acesso dele aos cardapios que voce compartilhou antes. Revogue isso a parte, pela pagina Membros do cardapio, se for essa a intencao."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Por que nao posso buscar pessoas pelo nome?",
+          "answer": "Porque uma busca por nome transformaria o aplicativo num diretorio de usuarios. A busca por e-mail exato faz com que voce so encontre quem ja compartilhou o endereco com voce."
+        },
+        {
+          "question": "E seguro publicar meu link de convite?",
+          "answer": "Trate como semiprivado. Qualquer um que abrir em 24 horas pode adicionar voce, entao mande onde estiver tudo bem que todos os presentes facam isso."
+        },
+        {
+          "question": "Posso encerrar um link antes do prazo?",
+          "answer": "Sim. Revogar desativa na hora. Quem ja usou continua na sua lista ate voce remover."
+        }
+      ]
+    },
+    "work-with-groups": {
+      "navigationLabel": "Usar grupos",
+      "seoTitle": "Como usar grupos para pedidos recorrentes | Gama3 Orderak",
+      "description": "Crie um grupo uma vez, compartilhe cardapios com todos ao mesmo tempo e adicione ou remova pessoas sem repetir convites. Com links de convite de grupo e papeis.",
+      "eyebrow": "Guia",
+      "heading": "Como usar grupos para pedidos recorrentes",
+      "introduction": "Um grupo e um conjunto nomeado de pessoas com quem voce pede sempre: um time, um andar, uma familia. Compartilhar um cardapio com o grupo compartilha com todos, e quem entra depois herda o que ja foi compartilhado. Este guia cobre criar, preencher e manter em ordem.",
+      "sections": [
+        {
+          "heading": "Crie o grupo",
+          "paragraphs": [
+            "Abra Membros, depois Grupos de amigos, e crie um grupo com um nome reconhecivel: \"Time de design\", \"Terceiro andar\". Uma descricao curta ajuda quando alguem participa de varios.",
+            "O grupo que voce cria e seu. So voce pode renomear, convidar, remover pessoas ou excluir, e essa propriedade nao se transfere ao compartilhar."
+          ]
+        },
+        {
+          "heading": "Adicione pessoas",
+          "paragraphs": [
+            "Convide amigos pelo cartao do grupo. Quem ja esta na sua lista de amigos entra direto: e o caminho comum para um time com quem voce pede toda semana.",
+            "Para quem ainda nao esta na lista, crie um link de convite do grupo e envie. Quem abrir em 24 horas entra direto no grupo: sem pedido de amizade antes e sem aprovacao sua por pessoa.",
+            "Esse link e o jeito mais rapido de preencher um grupo novo. Crie uma vez, cole no chat do time, e quem quiser entrar entra, sem voce administrar uma fila de pedidos."
+          ]
+        },
+        {
+          "heading": "Compartilhe cardapios com o grupo",
+          "paragraphs": [
+            "Compartilhe um cardapio com o grupo e todos podem usar na hora. E o que mais evita repeticao: uma acao em vez de um convite por pessoa.",
+            "Quem for adicionado depois ve os cardapios ja compartilhados com aquele grupo. Um colega que chega em marco nao precisa que os convites de janeiro sejam reenviados."
+          ]
+        },
+        {
+          "heading": "Mantendo atualizado",
+          "paragraphs": [
+            "Remova alguem do grupo e o acesso por esse caminho termina. O acesso concedido individualmente — um cardapio compartilhado direto com a pessoa — e separado e continua ate voce revogar tambem.",
+            "Os membros podem sair sozinhos. Excluir um grupo remove para todos, mas nao apaga os cardapios compartilhados por ele nem rodadas ja concluidas."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Posso pesquisar um grupo e entrar?",
+          "answer": "Pelo nome nao. Entra-se em grupos por um link de convite do dono, entao um grupo nao pode ser achado e acessado por quem nunca foi convidado."
+        },
+        {
+          "question": "Todo mundo no grupo ve os demais?",
+          "answer": "Os membros veem quem mais esta la: e isso que faz um grupo. Eles nao viram amigos automaticamente e os e-mails nao ficam expostos so pela participacao."
+        },
+        {
+          "question": "O que acontece com um cardapio compartilhado se eu excluir o grupo?",
+          "answer": "O cardapio fica intacto: pertence a quem criou. O acesso concedido pelo grupo termina, entao compartilhe de novo direto ou por outro grupo se ainda for preciso."
+        }
+      ]
+    },
+    "fees-and-charges": {
+      "navigationLabel": "Taxas e encargos",
+      "seoTitle": "Como configurar impostos, servico e entrega | Gama3 Orderak",
+      "description": "Configure impostos, taxa de servico e entrega uma vez no cardapio. Escolha se a entrega e dividida igualmente ou proporcionalmente e veja como cada parte e calculada.",
+      "eyebrow": "Guia",
+      "heading": "Como configurar impostos, servico e entrega",
+      "introduction": "As taxas sao a parte de um pedido em grupo que gera discussao: alguem paga a entrega, alguem esquece o servico e as contas param de fechar. Configurar uma vez no cardapio faz cada rodada aplicar do mesmo jeito e cada parte ser calculada do mesmo jeito.",
+      "sections": [
+        {
+          "heading": "Onde ficam as taxas",
+          "paragraphs": [
+            "Impostos, servico e entrega ficam no cardapio, nao em cada pedido. Abra o cardapio, edite e preencha os tres valores na parte de precos. Toda rodada iniciada a partir dele herda esses valores.",
+            "Essa posicao e proposital. As taxas pertencem ao restaurante, nao a ocasiao: configurar uma vez da menos trabalho e erra menos do que redigitar toda noite."
+          ]
+        },
+        {
+          "heading": "Impostos e taxa de servico",
+          "paragraphs": [
+            "Impostos e servico sao percentuais aplicados sobre o valor do que cada um pediu. Quem pede o dobro paga o dobro dos dois, que e o que as pessoas esperam e raramente precisa de discussao.",
+            "Coloque a aliquota que o restaurante realmente cobra, nao um numero arredondado. Os totais so servem se baterem com o recibo que voce vai receber, e um ponto percentual de diferenca num pedido grande ja deixa o organizador no prejuizo.",
+            "Zero e um valor valido. Se os precos ja incluem imposto, deixe zero em vez de somar duas vezes: o aplicativo nunca presume uma aliquota por voce."
+          ]
+        },
+        {
+          "heading": "Dividir a entrega",
+          "paragraphs": [
+            "A entrega e um valor fixo, nao um percentual, entao precisa ser dividida de alguma forma. Voce escolhe entre dois criterios: igualmente entre os participantes ou proporcionalmente ao que cada um pediu.",
+            "Igual e mais simples e serve quando os pedidos tem tamanho parecido. Proporcional e mais justo quando uma pessoa pede para a familia toda e outra pede um cafe: quem gerou a maior parte do pedido leva a maior parte da entrega."
+          ]
+        },
+        {
+          "heading": "Ler uma parte",
+          "paragraphs": [
+            "O total de cada pessoa sao os itens dela, mais a parte de impostos e servico, mais a parte da entrega conforme o criterio do cardapio. O detalhamento aparece, nao so o numero final, para quem quiser conferir.",
+            "Assim que a rodada e congelada, as aliquotas ficam travadas com ela. Mudar uma taxa depois vale so para rodadas futuras: um recibo fechado nao se mexe."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "O restaurante cobrou algo inesperado. Da para corrigir uma rodada fechada?",
+          "answer": "Reabra a rodada se ela nao foi concluida, ajuste e congele de novo. Uma rodada concluida fica como estava para os recibos antigos seguirem corretos; nesse caso, acertem a diferenca fora do aplicativo."
+        },
+        {
+          "question": "Qual divisao de entrega escolher?",
+          "answer": "Igual quando os pedidos sao parecidos e o grupo prefere simplicidade. Proporcional quando uma ou duas pessoas concentram a maior parte do pedido, que e quando o igual comeca a parecer injusto."
+        },
+        {
+          "question": "As taxas valem para um pedido so meu?",
+          "answer": "Sim. A mesma politica de precos se aplica, entao um pedido individual a partir de um cardapio compartilhado mostra o que voce vai pagar de fato."
         }
       ]
     }

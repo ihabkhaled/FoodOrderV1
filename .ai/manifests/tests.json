@@ -26,6 +26,11 @@
       "hash": "83b694b8ea0b84fdb540b39e8237d8efaaadfcf8d02a8a1d37ea05bfa54b1f69"
     },
     {
+      "path": "tests/components/BusyButton.test.tsx",
+      "bytes": 1890,
+      "hash": "60923bf26b9110f90010223a49507fc75c6eae588947a599ea4e1f197307e111"
+    },
+    {
       "path": "tests/components/ConfirmDialog.test.tsx",
       "bytes": 2186,
       "hash": "f3a0c64865c509ccb3019d64042f3e1d256a6509049d2524f68d4b58572465e2"
@@ -72,8 +77,8 @@
     },
     {
       "path": "tests/components/PublicContent.test.tsx",
-      "bytes": 2685,
-      "hash": "7e5c0e6c5b6c43db772f8808ccb5749b7805b91597cbb0fd9f36f8e6e3a3860e"
+      "bytes": 2681,
+      "hash": "f86502b8529ea5b564db1f561460c333b7e6834146a4b4337e7ed3e5dbf99418"
     },
     {
       "path": "tests/components/ResetPasswordRoute.test.tsx",
@@ -124,6 +129,11 @@
       "path": "tests/domain/groupOrder.test.ts",
       "bytes": 6182,
       "hash": "e7cb1bf5d7d335035c086ac2dc594f32900766da12baa63342b4532af05872a6"
+    },
+    {
+      "path": "tests/domain/invite-links.test.ts",
+      "bytes": 3510,
+      "hash": "f0ea1fc5c685c950ad650fb044c0949ea3b03445d1eaad92988ac22057f6ecda"
     },
     {
       "path": "tests/domain/memberPermissions.test.ts",
@@ -292,8 +302,8 @@
     },
     {
       "path": "tests/e2e/ux-polish.spec.ts",
-      "bytes": 4563,
-      "hash": "fa4e4b7cf985d42693d8860e681fa2d08f320a7460c9194aa0469f2ed2a31fea"
+      "bytes": 5051,
+      "hash": "5ffbbc80290eb763f796750be735b08786e20a322c48b70b3a81d0c0abf146e4"
     },
     {
       "path": "tests/eslint/architecture-plugin.test.ts",
@@ -304,6 +314,11 @@
       "path": "tests/firebase/firestore.rules.test.ts",
       "bytes": 11973,
       "hash": "d005744aae0dd09d48c9d700ac455ab53c12d8deac200914085e771fd2d6d07c"
+    },
+    {
+      "path": "tests/firebase/invite-links.rules.test.ts",
+      "bytes": 3962,
+      "hash": "9c8d51e72b53bc0146ded5e6664c72011a3cb0425a9b1864e91db9ffca2dfc87"
     },
     {
       "path": "tests/firebase/notifications.rules.test.ts",

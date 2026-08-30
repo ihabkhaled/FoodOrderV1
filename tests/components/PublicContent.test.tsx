@@ -22,7 +22,7 @@ describe('PublicContentRoutes', () => {
       }),
     ).toBeVisible();
     expect(screen.getAllByRole('link', { name: 'About' }).length).toBeGreaterThan(0);
-    expect(screen.getAllByRole('link', { name: 'Open the app' })[0]).toHaveAttribute(
+    expect(screen.getAllByRole('link', { name: 'Open App' })[0]).toHaveAttribute(
       'href',
       '/en/app',
     );

@@ -6,14 +6,16 @@
     "primaryNavigationLabel": "Navigation publique",
     "mobileNavigationLabel": "Ouvrir la navigation",
     "languageLabel": "Langue",
-    "openApplicationLabel": "Ouvrir l’application",
+    "openApplicationLabel": "Ouvrir",
     "skipToContentLabel": "Aller au contenu",
     "footerNavigationLabel": "Navigation de pied de page",
     "footerTagline": "Des commandes de groupe claires, du premier choix au reçu final.",
     "allRightsReservedLabel": "Tous droits réservés.",
     "backHomeLabel": "Retour à l’accueil",
     "tryAgainLabel": "Réessayer",
-    "learnMoreLabel": "Voir comment ça marche"
+    "learnMoreLabel": "Voir comment ça marche",
+    "signInLabel": "Connexion",
+    "signUpLabel": "Inscription"
   },
   "pages": {
     "home": {
@@ -56,6 +58,24 @@
             "Détail transparent des frais",
             "Vues de reçu partageables"
           ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Gama3 Orderak est-il gratuit ?",
+          "answer": "Oui. Creer des menus, les partager, gerer les tours de commande et repartir les recus est gratuit. Vous commandez vous-meme au restaurant : l application organise le groupe, elle n encaisse rien."
+        },
+        {
+          "question": "Les personnes avec qui je commande doivent-elles installer quelque chose ?",
+          "answer": "Non. Cela fonctionne dans un navigateur sur tout telephone ou ordinateur, et peut s installer comme une application si vous preferez. Chacun a besoin d un compte, avec une adresse e-mail et un mot de passe."
+        },
+        {
+          "question": "Comment sait-il qui doit quoi ?",
+          "answer": "Les articles de chacun sont valorises depuis le menu partage, puis la TVA et le service s appliquent et la livraison est repartie a parts egales ou proportionnellement, selon le reglage du menu."
+        },
+        {
+          "question": "Puis-je l utiliser en arabe ?",
+          "answer": "Oui, en treize langues dont l arabe et l arabe egyptien en caracteres latins. Les mises en page de droite a gauche sont prises en charge partout et la langue se change a tout moment."
         }
       ]
     },
@@ -381,6 +401,324 @@
           "paragraphs": [
             "N’abusez pas des invitations, ne tentez pas d’accès non autorisé, ne chargez rien d’illégal, ne perturbez pas le service et n’utilisez pas les données d’autrui sans autorisation."
           ]
+        }
+      ]
+    },
+    "create-a-menu": {
+      "navigationLabel": "Creer un menu",
+      "seoTitle": "Comment creer un menu reutilisable | Gama3 Orderak",
+      "description": "Guide pas a pas pour creer un menu reutilisable : ajoutez les articles et les prix, reglez les frais une seule fois et reutilisez le meme menu a chaque commande.",
+      "eyebrow": "Guide",
+      "heading": "Comment creer un menu reutilisable",
+      "introduction": "Un menu — appele bucket dans l application — est la liste des articles que votre groupe commande. Vous le creez une fois, et chaque commande suivante part de la plutot que d une page vide. Ce guide explique comment le creer, le tarifer correctement et le preparer au partage.",
+      "sections": [
+        {
+          "heading": "1. Creez le menu",
+          "paragraphs": [
+            "Ouvrez Buckets depuis la navigation et choisissez Creer un bucket. Donnez-lui le nom que les gens reconnaissent, en general le restaurant ou l occasion, comme « Chawarma du vendredi » ou « Dejeuner du bureau ».",
+            "Le menu vous appartient. Personne d autre ne le voit tant que vous ne le partagez pas, et le partage est une etape distincte et volontaire, expliquee dans le guide suivant."
+          ]
+        },
+        {
+          "heading": "2. Ajoutez les articles et les prix",
+          "paragraphs": [
+            "Ajoutez chaque article avec son prix unitaire. Les prix utilisent la devise choisie dans les Reglages et sont a l unite : l application multiplie par la quantite au moment de commander.",
+            "Gardez des noms courts et precis. « Chawarma poulet — grand » se choisit plus facilement a six sur un telephone que « Sandwich option 2 ». Si le restaurant change un prix, modifiez l article et chaque commande suivante utilisera le nouveau montant.",
+            "Vous pouvez laisser un prix a zero pendant la construction du menu. Le zero apparait comme un espace reserve et non comme un montant reel, si bien qu un article incomplet se voit au lieu de sembler gratuit."
+          ]
+        },
+        {
+          "heading": "3. Reglez les frais une seule fois",
+          "paragraphs": [
+            "La TVA, le service et la livraison se configurent sur le menu, pas sur chaque commande. Reglez-les une fois et chaque tour cree a partir de ce menu les appliquera de la meme facon.",
+            "La livraison peut etre partagee a parts egales ou proportionnellement a ce que chacun a commande. Choisissez le proportionnel quand une personne commande beaucoup plus que les autres, et l egal quand le groupe prefere la simplicite."
+          ]
+        },
+        {
+          "heading": "4. Reutilisez-le",
+          "paragraphs": [
+            "Une fois le menu cree, recommander revient a lancer un nouveau tour a partir de lui. Les articles, les prix et la politique de frais suivent, et les personnes avec qui vous l avez partage restent rattachees.",
+            "S il vous faut une variante — une seconde adresse avec d autres prix, par exemple — dupliquez le menu et modifiez la copie. L original reste intact."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Dois-je refaire le menu a chaque commande ?",
+          "answer": "Non. C est tout l interet d un menu reutilisable. Vous le creez une fois et lancez chaque tour a partir de lui : articles, prix et frais suivent."
+        },
+        {
+          "question": "Puis-je changer un prix apres que les gens ont commande ?",
+          "answer": "Modifier un article vaut pour les tours suivants. Un tour deja fige conserve les prix avec lesquels il a ete fige, donc un total arrete ne bouge pas."
+        },
+        {
+          "question": "Qui peut voir un menu que je cree ?",
+          "answer": "Vous seul, jusqu au partage. Le partage est explicite — lien, code, ami ou groupe — et vous pouvez revoquer l acces a tout moment."
+        }
+      ]
+    },
+    "share-a-menu": {
+      "navigationLabel": "Partager un menu",
+      "seoTitle": "Comment partager un menu avec votre groupe | Gama3 Orderak",
+      "description": "Quatre facons de partager un menu : un lien que chacun peut ouvrir, un code, une invitation directe a un ami, ou un groupe entier. Avec les roles et la revocation.",
+      "eyebrow": "Guide",
+      "heading": "Comment partager un menu avec votre groupe",
+      "introduction": "Un menu reste prive tant que vous ne le partagez pas. Il existe quatre facons de le faire, et le choix depend de savoir si la personne utilise deja l application et si vous invitez une personne ou vingt. Ce guide couvre les quatre, les roles que vous pouvez accorder et la maniere de reprendre l acces.",
+      "sections": [
+        {
+          "heading": "Partager par lien",
+          "paragraphs": [
+            "Le lien est l option a choisir quand vous collez dans une conversation de groupe. Ouvrez le menu, choisissez Partager, puis creez un lien. Quiconque l ouvre peut rejoindre, sans devoir figurer d abord dans vos amis.",
+            "Le lien vaut sept jours et pour autant de personnes qu il en faut. Vous pouvez le revoquer plus tot a tout moment : il cesse aussitot de fonctionner pour ceux qui n ont pas encore rejoint."
+          ]
+        },
+        {
+          "heading": "Partager par code",
+          "paragraphs": [
+            "Le code est une courte chaine que l on saisit dans Rejoindre avec un code. Pratique pour le lire a voix haute ou l envoyer la ou un long lien paraitrait suspect.",
+            "Contrairement au lien, le code est a usage unique : une fois utilise, il est consomme. Creez-en un par personne quand vous voulez ce niveau de controle.",
+            "Le lien comme le code portent le role choisi a la creation, de sorte que la personne qui rejoint obtient exactement les permissions prevues et non une valeur par defaut."
+          ]
+        },
+        {
+          "heading": "Partager avec des amis et des groupes",
+          "paragraphs": [
+            "Si la personne fait deja partie de vos amis, vous pouvez partager le menu directement : elle le verra sans rien saisir. C est l option la plus propre pour ceux avec qui vous commandez souvent.",
+            "Partager avec un groupe fait la meme chose pour tous d un coup. Quelqu un ajoute plus tard au groupe voit les menus deja partages avec lui, ce qui evite de repeter l invitation a chaque changement d equipe."
+          ]
+        },
+        {
+          "heading": "Roles et reprise d acces",
+          "paragraphs": [
+            "Chaque partage porte un role. Un contributeur ajoute ses choix, un editeur peut aussi modifier le menu, un lecteur regarde sans commander. La propriete n est jamais transferee par un partage.",
+            "Vous pouvez changer le role d une personne ou la retirer depuis la page Membres a tout moment. Retirer l acces n efface pas ce qu elle a deja ajoute a un tour termine, donc les recus passes restent exacts."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "La personne invitee doit-elle avoir un compte ?",
+          "answer": "Oui. Chaque partage s ouvre apres connexion, donc l invitation se termine avec un compte reel. Sans compte, la personne est guidee vers l inscription puis revient a l invitation."
+        },
+        {
+          "question": "Que se passe-t-il si je revoque un lien ?",
+          "answer": "Il cesse aussitot de fonctionner pour ceux qui ne l ont pas utilise. Ceux qui ont deja rejoint gardent leur acces jusqu a ce que vous les retiriez de la page Membres."
+        },
+        {
+          "question": "Puis-je partager le meme menu avec plusieurs groupes ?",
+          "answer": "Oui. Un menu peut etre partage avec autant d amis et de groupes que vous voulez, chaque partage portant son propre role."
+        }
+      ]
+    },
+    "run-an-order-round": {
+      "navigationLabel": "Lancer un tour",
+      "seoTitle": "Comment gerer un tour de commande groupee | Gama3 Orderak",
+      "description": "Ouvrez un tour depuis un menu partage, recueillez les choix, relancez ceux qui n ont pas repondu, figez la commande et passez-la avec des totaux fiables.",
+      "eyebrow": "Guide",
+      "heading": "Comment gerer un tour de commande groupee",
+      "introduction": "Un tour est une occasion de commander a partir d un menu : le dejeuner d aujourd hui, la livraison de ce soir. Le menu reste, les tours passent. Ce guide explique comment en ouvrir un, recueillir les choix sans courir apres les gens dans une conversation, et le clore pour que les totaux cessent de bouger.",
+      "sections": [
+        {
+          "heading": "Ouvrez le tour",
+          "paragraphs": [
+            "Depuis un menu partage, choisissez Lancer un tour. Toutes les personnes avec qui le menu est partage sont ajoutees automatiquement et recoivent une notification : aucune seconde invitation a envoyer.",
+            "Le tour reprend les articles, les prix et la politique de frais tels qu ils sont a cet instant. Les modifications ulterieures du menu ne reviennent pas sur un tour deja lance."
+          ]
+        },
+        {
+          "heading": "Recueillez les choix",
+          "paragraphs": [
+            "Chacun ouvre le tour et indique les quantites souhaitees. Chacun voit son propre total, part de frais comprise, donc personne n a besoin de demander ce qu il doit.",
+            "En tant qu organisateur, vous voyez qui a repondu et qui non. C est la partie qui coute le plus de temps dans une conversation : la reponse tient sur un ecran au lieu d etre dispersee dans cent messages.",
+            "Les choix restent modifiables tant que le tour est ouvert. Chaque changement met le total a jour immediatement, donc le nombre affiche est toujours actuel et non un calcul d il y a dix minutes."
+          ]
+        },
+        {
+          "heading": "Figez et passez la commande",
+          "paragraphs": [
+            "Quand tout le monde a repondu, figez le tour. Cela empeche de nouvelles modifications et verrouille les prix, si bien que le total ne bouge pas pendant que vous etes au telephone avec le restaurant.",
+            "La vue figee regroupe les articles identiques, ce qui correspond a ce que vous lisez vraiment : huit fois le meme sandwich plutot que huit lignes separees."
+          ]
+        },
+        {
+          "heading": "Reglez",
+          "paragraphs": [
+            "Une fois la commande passee, la part de chacun est deja calculee : TVA, service et part de livraison selon la regle definie sur le menu.",
+            "Les recus restent accessibles apres la cloture du tour, si bien qu une question posee une semaine plus tard a une reponse qui ne depend de la memoire de personne."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Et si quelqu un ne repond jamais ?",
+          "answer": "Vous pouvez figer le tour sans cette personne. Elle ne figure simplement pas dans les totaux, et ceux qui ont repondu ne sont pas bloques par un seul retardataire."
+        },
+        {
+          "question": "Puis-je rouvrir un tour fige ?",
+          "answer": "Oui, tant qu il n est pas termine. La reouverture autorise a nouveau les modifications et recalcule les totaux ; un tour termine reste tel quel pour que les recus passes restent exacts."
+        },
+        {
+          "question": "Tout le monde voit-il ce que les autres ont commande ?",
+          "answer": "Les participants voient la commande consolidee afin que le groupe puisse la verifier avant l envoi. Les totaux personnels restent rattaches a leur auteur."
+        }
+      ]
+    },
+    "invite-friends": {
+      "navigationLabel": "Inviter des amis",
+      "seoTitle": "Comment ajouter des amis et partager votre lien | Gama3 Orderak",
+      "description": "Deux facons de construire une liste d amis : rechercher quelqu un par son adresse exacte, ou partager un lien de 24 heures qui permet a chacun de vous ajouter.",
+      "eyebrow": "Guide",
+      "heading": "Comment ajouter des amis",
+      "introduction": "Une liste d amis evite de repeter les invitations. Des qu une personne y figure, vous pouvez partager un menu avec elle directement, l ajouter a un groupe ou lancer un tour qui l inclut sans rien envoyer a valider. Deux facons de la construire existent, adaptees a des situations differentes.",
+      "sections": [
+        {
+          "heading": "Rechercher par adresse e-mail",
+          "paragraphs": [
+            "Ouvrez Membres, puis Amis, et recherchez l adresse exacte avec laquelle la personne s est inscrite. Personne n apparait dans un annuaire public et les correspondances partielles ne renvoient rien : l adresse est le seul moyen de trouver quelqu un ici.",
+            "C est deliberе. Un annuaire consultable permettrait a n importe qui de dresser la liste des utilisateurs ; exiger l adresse exacte signifie que vous ne trouvez que ceux qui vous l ont deja donnee."
+          ]
+        },
+        {
+          "heading": "Partager votre lien d invitation",
+          "paragraphs": [
+            "Le lien d amitie est plus rapide quand vous invitez plusieurs personnes a la fois. Creez-le sur la page Amis et envoyez-le la ou vous discutez deja : un message, une conversation de groupe, n importe ou.",
+            "Toute personne qui l ouvre dans les 24 heures peut vous ajouter d une seule pression. Vous n approuvez pas chaque personne : partager le lien est votre consentement, et c est tout son interet. Le meme lien vaut pour autant de personnes qui l ouvrent.",
+            "Si vous preferez approuver chacun, utilisez la recherche par e-mail et laissez-les vous envoyer une demande. Les deux chemins aboutissent au meme resultat ; seule change la personne qui confirme."
+          ]
+        },
+        {
+          "heading": "Demandes et suite",
+          "paragraphs": [
+            "Une demande envoyee via la recherche attend sur la page Demandes jusqu a la reponse. Accepter rend l amitie reciproque immediatement : vous apparaissez dans la liste l un de l autre sans repeter l etape.",
+            "Les notifications vous previennent quand une demande arrive ou est acceptee, vous n etes donc pas laisse a vous demander si elle est passee."
+          ]
+        },
+        {
+          "heading": "Retirer un ami",
+          "paragraphs": [
+            "Le retrait est immediat et vous enleve des listes de l autre. Il n efface pas l historique partage : un menu dont vous faisiez partie tous les deux et les tours auxquels vous avez contribue restent exactement comme ils etaient.",
+            "Retirer un ami ne revoque pas son acces aux menus que vous lui aviez partages. Revoquez-le separement depuis la page Membres du menu si c est votre intention."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Pourquoi ne puis-je pas chercher par nom ?",
+          "answer": "Parce qu une recherche par nom ferait de l application un annuaire de ses utilisateurs. La recherche par adresse exacte fait que vous ne trouvez que ceux qui vous l ont deja communiquee."
+        },
+        {
+          "question": "Puis-je publier mon lien d invitation ?",
+          "answer": "Considerez-le comme semi-prive. Toute personne qui l ouvre dans les 24 heures peut vous ajouter : envoyez-le la ou cela ne vous derange pas que chacun le fasse."
+        },
+        {
+          "question": "Puis-je arreter un lien avant l echeance ?",
+          "answer": "Oui. La revocation le desactive immediatement. Ceux qui s en sont deja servis restent dans votre liste jusqu a ce que vous les retiriez."
+        }
+      ]
+    },
+    "work-with-groups": {
+      "navigationLabel": "Utiliser les groupes",
+      "seoTitle": "Utiliser les groupes pour des commandes recurrentes | Gama3 Orderak",
+      "description": "Creez un groupe une fois, partagez les menus avec tout le monde en meme temps et ajoutez ou retirez des personnes sans repeter les invitations.",
+      "eyebrow": "Guide",
+      "heading": "Utiliser les groupes pour des commandes recurrentes",
+      "introduction": "Un groupe est un ensemble nomme de personnes avec qui vous commandez regulierement : une equipe, un etage, une famille. Partager un menu avec le groupe le partage avec tous, et qui arrive plus tard herite de ce qui a deja ete partage. Ce guide explique comment le creer, le remplir et le tenir a jour.",
+      "sections": [
+        {
+          "heading": "Creez le groupe",
+          "paragraphs": [
+            "Ouvrez Membres, puis Groupes d amis, et creez un groupe avec un nom reconnaissable : « Equipe design », « Troisieme etage ». Une courte description aide quand quelqu un appartient a plusieurs groupes.",
+            "Le groupe que vous creez vous appartient. Vous seul pouvez le renommer, y inviter, en retirer des personnes ou le supprimer, et cette propriete ne se transfere pas par partage."
+          ]
+        },
+        {
+          "heading": "Ajoutez des personnes",
+          "paragraphs": [
+            "Invitez des amis dans le groupe depuis sa fiche. Toute personne deja dans vos amis peut etre ajoutee directement : c est la voie normale pour une equipe avec qui vous commandez chaque semaine.",
+            "Pour ceux qui ne sont pas encore dans vos amis, creez un lien d invitation de groupe et envoyez-le. Qui l ouvre dans les 24 heures rejoint directement : pas de demande d ami au prealable, pas d approbation de votre part pour chacun.",
+            "Ce lien est le moyen le plus rapide de remplir un nouveau groupe. Creez-le une fois, collez-le dans la conversation de l equipe, et chacun qui veut entrer entre, sans que vous gerez une file de demandes."
+          ]
+        },
+        {
+          "heading": "Partagez des menus avec le groupe",
+          "paragraphs": [
+            "Partagez un menu avec le groupe et tout le monde peut s en servir aussitot. C est ce qui evite le plus de repetitions : une action au lieu d une invitation par personne.",
+            "Une personne ajoutee ensuite voit les menus deja partages avec ce groupe. Un collegue arrive en mars n a pas besoin qu on renvoie les invitations de janvier."
+          ]
+        },
+        {
+          "heading": "Le tenir a jour",
+          "paragraphs": [
+            "Retirez quelqu un du groupe et son acces par ce biais cesse. L acces accorde individuellement — un menu partage directement avec lui — est distinct et subsiste tant que vous ne le revoquez pas aussi.",
+            "Les membres peuvent quitter un groupe eux-memes. Supprimer un groupe le retire pour tous, mais n efface ni les menus partages par son intermediaire ni les tours deja termines."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Puis-je rechercher un groupe et le rejoindre ?",
+          "answer": "Pas par nom. On rejoint un groupe via un lien d invitation du proprietaire, de sorte qu un groupe ne peut pas etre trouve puis rejoint par quelqu un qui n a jamais ete invite."
+        },
+        {
+          "question": "Tout le monde dans un groupe voit-il les autres ?",
+          "answer": "Les membres voient qui d autre en fait partie : c est ce qui en fait un groupe. Ils ne deviennent pas amis automatiquement et leurs adresses e-mail ne sont pas exposees par la seule appartenance."
+        },
+        {
+          "question": "Qu advient-il d un menu partage si je supprime le groupe ?",
+          "answer": "Le menu reste intact : il appartient a son createur. L acces accorde via le groupe cesse ; repartagez-le directement ou via un autre groupe si besoin."
+        }
+      ]
+    },
+    "fees-and-charges": {
+      "navigationLabel": "Frais et taxes",
+      "seoTitle": "Regler la TVA, le service et la livraison | Gama3 Orderak",
+      "description": "Reglez la TVA, le service et la livraison une seule fois sur le menu. Choisissez un partage egal ou proportionnel de la livraison et voyez comment chaque part est calculee.",
+      "eyebrow": "Guide",
+      "heading": "Regler la TVA, le service et la livraison",
+      "introduction": "Les frais sont la partie d une commande groupee qui provoque des discussions : quelqu un paie la livraison, quelqu un oublie le service, et les chiffres ne tombent plus juste. Les configurer une fois sur le menu garantit que chaque tour les applique de la meme facon et que chaque part est calculee de la meme facon.",
+      "sections": [
+        {
+          "heading": "Ou se reglent les frais",
+          "paragraphs": [
+            "TVA, service et livraison se reglent sur le menu, pas sur chaque commande. Ouvrez le menu, modifiez-le et renseignez les trois valeurs dans la partie tarification. Chaque tour lance depuis ce menu en herite.",
+            "Cet emplacement est voulu. Les frais appartiennent au restaurant, pas a l occasion : les regler une fois demande moins de travail et laisse moins de place a l erreur que de les ressaisir chaque soir."
+          ]
+        },
+        {
+          "heading": "TVA et service",
+          "paragraphs": [
+            "La TVA et le service sont des pourcentages appliques a la valeur de ce que chacun a commande. Qui commande deux fois plus paie deux fois plus des deux, ce a quoi chacun s attend et qui se discute rarement.",
+            "Saisissez le taux reellement applique par le restaurant plutot qu un chiffre arrondi. Les totaux ne servent que s ils correspondent au recu qu on vous remettra, et un point d ecart sur une grosse commande suffit a laisser l organisateur de sa poche.",
+            "Un taux de zero est valide. Si les prix saisis incluent deja la TVA, laissez zero plutot que de l ajouter deux fois : l application ne suppose jamais un taux a votre place."
+          ]
+        },
+        {
+          "heading": "Partager la livraison",
+          "paragraphs": [
+            "La livraison est un montant fixe et non un pourcentage : il faut donc la diviser. Vous choisissez entre deux regles : a parts egales entre les participants, ou proportionnellement a ce que chacun a commande.",
+            "Egal est plus simple et convient quand les commandes ont des tailles voisines. Proportionnel est plus juste quand une personne commande pour toute une famille et une autre un cafe : celle qui a genere l essentiel de la commande porte l essentiel de la livraison."
+          ]
+        },
+        {
+          "heading": "Lire une part",
+          "paragraphs": [
+            "Le total de chacun, ce sont ses articles, plus sa part de TVA et de service, plus sa part de livraison selon la regle du menu. Le detail est affiche, pas seulement le montant final, pour que qui veut verifier le puisse.",
+            "Des qu un tour est fige, les taux sont verrouilles avec lui. Modifier un frais ensuite ne vaut que pour les tours suivants : un recu arrete ne bouge plus."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Le restaurant a ajoute un frais imprevu. Puis-je corriger un tour clos ?",
+          "answer": "Rouvrez le tour s il n est pas termine, corrigez, puis figez a nouveau. Un tour termine reste tel quel pour que les recus passes restent exacts ; pour ceux-la, reglez la difference en dehors de l application."
+        },
+        {
+          "question": "Quel partage de livraison choisir ?",
+          "answer": "Egal quand les commandes se ressemblent et que le groupe prefere la simplicite. Proportionnel quand une ou deux personnes representent l essentiel de la commande, moment ou l egal commence a sembler injuste."
+        },
+        {
+          "question": "Les frais s appliquent-ils a une commande pour moi seul ?",
+          "answer": "Oui. La meme politique tarifaire s applique, donc une commande individuelle depuis un menu partage indique bien ce que vous paierez."
         }
       ]
     }

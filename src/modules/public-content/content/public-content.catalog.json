@@ -132,14 +132,16 @@
       "primaryNavigationLabel": "Public navigation",
       "mobileNavigationLabel": "Open navigation",
       "languageLabel": "Language",
-      "openApplicationLabel": "Open the app",
+      "openApplicationLabel": "Open App",
       "skipToContentLabel": "Skip to content",
       "footerNavigationLabel": "Footer navigation",
       "footerTagline": "Clear group food orders, from the first choice to the final receipt.",
       "allRightsReservedLabel": "All rights reserved.",
       "backHomeLabel": "Return to the homepage",
       "tryAgainLabel": "Try again",
-      "learnMoreLabel": "See how it works"
+      "learnMoreLabel": "See how it works",
+      "signInLabel": "Log in",
+      "signUpLabel": "Sign up"
     },
     "ar": {
       "brandName": "FoodOrder | جمع أوردرك",
@@ -154,7 +156,9 @@
       "allRightsReservedLabel": "جميع الحقوق محفوظة.",
       "backHomeLabel": "العودة إلى الصفحة الرئيسية",
       "tryAgainLabel": "حاول مرة أخرى",
-      "learnMoreLabel": "اعرف كيف يعمل"
+      "learnMoreLabel": "اعرف كيف يعمل",
+      "signInLabel": "تسجيل الدخول",
+      "signUpLabel": "إنشاء حساب"
     }
   },
   "pages": [
@@ -205,6 +209,24 @@
                 "Shareable receipt views"
               ]
             }
+          ],
+          "faq": [
+            {
+              "question": "Is Gama3 Orderak free to use?",
+              "answer": "Yes. Creating menus, sharing them, running order rounds, and splitting receipts are all free. You order from the restaurant yourself; the app organises the group, it does not take payment."
+            },
+            {
+              "question": "Do the people I order with need to install anything?",
+              "answer": "No. It runs in a browser on any phone or computer, and can be installed as an app if you prefer. Everyone needs an account, which takes an email address and a password."
+            },
+            {
+              "question": "How does it decide who owes what?",
+              "answer": "Each person’s items are priced from the shared menu, then VAT and service are applied and delivery is split either equally or in proportion to what each person ordered — whichever the menu is set to."
+            },
+            {
+              "question": "Can I use it in Arabic?",
+              "answer": "Yes, in thirteen languages including Arabic and Egyptian Arabic written in Latin script. Right-to-left layouts are supported throughout, and you can change language at any time."
+            }
           ]
         },
         "ar": {
@@ -247,6 +269,24 @@
                 "تفصيل شفاف للرسوم",
                 "عروض إيصال قابلة للمشاركة"
               ]
+            }
+          ],
+          "faq": [
+            {
+              "question": "هل استخدام «جمع أوردرك» مجاني؟",
+              "answer": "نعم. إنشاء القوائم ومشاركتها وإدارة جولات الطلب وتقسيم الإيصالات كلها مجانية. أنت تطلب من المطعم بنفسك، والتطبيق ينظّم المجموعة ولا يتقاضى مدفوعات."
+            },
+            {
+              "question": "هل يحتاج من أطلب معهم إلى تثبيت شيء؟",
+              "answer": "لا. يعمل في المتصفح على أي هاتف أو حاسوب، ويمكن تثبيته كتطبيق إن أردت. ويحتاج الجميع إلى حساب، وهو يتطلب بريدًا إلكترونيًا وكلمة مرور."
+            },
+            {
+              "question": "كيف يحدد من عليه كم؟",
+              "answer": "تُسعَّر أصناف كل شخص من القائمة المشتركة، ثم تُطبَّق الضريبة والخدمة، ويُقسَّم التوصيل بالتساوي أو بالتناسب مع ما طلبه كل شخص، حسب إعداد القائمة."
+            },
+            {
+              "question": "هل يمكنني استخدامه بالعربية؟",
+              "answer": "نعم، بثلاث عشرة لغة منها العربية والعربية المكتوبة بحروف لاتينية. والتخطيطات من اليمين إلى اليسار مدعومة بالكامل، ويمكنك تغيير اللغة في أي وقت."
             }
           ]
         }
@@ -793,6 +833,690 @@
               "paragraphs": [
                 "لا تنشر تفاصيل قابلة للاستغلال أو بيانات شخصية في بلاغ عام. استخدم قناة الأمان الخاصة بمالك المستودع عندما تكون متاحة."
               ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "create-a-menu",
+      "slug": "create-a-menu",
+      "navigation": false,
+      "adEligible": true,
+      "copy": {
+        "en": {
+          "navigationLabel": "Create a menu",
+          "seoTitle": "How to create a reusable food menu | Gama3 Orderak",
+          "description": "Step-by-step guide to building a reusable food menu: add items and prices, set fees once, and reuse the same menu for every order round.",
+          "eyebrow": "Guide",
+          "heading": "How to create a reusable food menu",
+          "introduction": "A menu — called a bucket in the app — is the list of items your group orders from. You build it once, and every future order round starts from it instead of from a blank page. This guide walks through creating one, pricing it correctly, and preparing it for sharing.",
+          "sections": [
+            {
+              "heading": "1. Create the menu",
+              "paragraphs": [
+                "Open Buckets from the navigation and choose Create bucket. Give it the name people will recognise — usually the restaurant or the occasion, such as \"Friday shawarma\" or \"Office lunch\".",
+                "A menu belongs to you. Nobody else can see it until you share it, and sharing is a separate deliberate step covered in the next guide."
+              ]
+            },
+            {
+              "heading": "2. Add items and prices",
+              "paragraphs": [
+                "Add each item with its unit price. Prices are stored in the currency you selected in Settings, and they are per unit — the app multiplies by quantity when people order.",
+                "Keep item names short and specific. \"Chicken shawarma — large\" is easier for six people to pick from a phone than \"Sandwich option 2\". If the restaurant changes a price, edit the item and every future round uses the new figure.",
+                "You can leave a price at zero while you are still building the menu. Zero shows as a placeholder rather than a real amount, so an unfinished item is obvious rather than silently free."
+              ]
+            },
+            {
+              "heading": "3. Set fees once",
+              "paragraphs": [
+                "VAT, service charge, and delivery are configured on the menu itself, not on each order. Set them once and every round built from this menu applies them the same way.",
+                "Delivery can be split equally between everyone or in proportion to what each person ordered. Choose proportional when one person orders far more than the rest and equal when the group prefers simplicity."
+              ]
+            },
+            {
+              "heading": "4. Reuse it",
+              "paragraphs": [
+                "Once the menu exists, ordering again is a matter of starting a new round from it. The items, prices, and fee policy come along, and the people you shared it with are still attached.",
+                "If you need a variant — a second branch with different prices, say — duplicate the menu and edit the copy. The original is untouched."
+              ]
+            }
+          ],
+          "faq": [
+            {
+              "question": "Do I have to rebuild the menu for every order?",
+              "answer": "No. That is the point of a reusable menu. You build it once and start each new round from it; items, prices, and fees carry over."
+            },
+            {
+              "question": "Can I change a price after people have ordered?",
+              "answer": "Editing an item changes it for future rounds. A round that has already been frozen keeps the prices it was frozen with, so a settled total never moves under you."
+            },
+            {
+              "question": "Who can see a menu I create?",
+              "answer": "Only you, until you share it. Sharing is explicit — by link, by join code, with a friend, or with a group — and you can revoke access at any time."
+            }
+          ]
+        },
+        "ar": {
+          "navigationLabel": "إنشاء قائمة",
+          "seoTitle": "كيفية إنشاء قائمة طعام قابلة لإعادة الاستخدام | جمع أوردرك",
+          "description": "دليل خطوة بخطوة لإنشاء قائمة طعام قابلة لإعادة الاستخدام: أضف الأصناف والأسعار، واضبط الرسوم مرة واحدة، وأعد استخدام القائمة نفسها في كل جولة طلب.",
+          "eyebrow": "دليل",
+          "heading": "كيفية إنشاء قائمة طعام قابلة لإعادة الاستخدام",
+          "introduction": "القائمة — واسمها في التطبيق «سلة» — هي قائمة الأصناف التي تطلب منها مجموعتك. تبنيها مرة واحدة، ثم تبدأ كل جولة طلب لاحقة منها بدلًا من صفحة فارغة. يشرح هذا الدليل إنشاءها وتسعيرها بشكل صحيح وتجهيزها للمشاركة.",
+          "sections": [
+            {
+              "heading": "١. أنشئ القائمة",
+              "paragraphs": [
+                "افتح «السلال» من شريط التنقل واختر «إنشاء سلة». امنحها الاسم الذي سيعرفه الناس، وغالبًا اسم المطعم أو المناسبة مثل «شاورما الجمعة» أو «غداء المكتب».",
+                "القائمة ملك لك. لا يراها أحد غيرك حتى تشاركها، والمشاركة خطوة منفصلة ومقصودة يشرحها الدليل التالي."
+              ]
+            },
+            {
+              "heading": "٢. أضف الأصناف والأسعار",
+              "paragraphs": [
+                "أضف كل صنف مع سعر الوحدة. تُحفظ الأسعار بالعملة التي اخترتها في الإعدادات، وهي لكل وحدة، إذ يضربها التطبيق في الكمية عند الطلب.",
+                "اجعل أسماء الأصناف قصيرة ومحددة. «شاورما فراخ — كبير» أسهل على ستة أشخاص من الاختيار عبر الهاتف من «خيار ساندويتش ٢». وإذا غيّر المطعم سعرًا، عدّل الصنف وستستخدم كل جولة قادمة الرقم الجديد.",
+                "يمكنك ترك السعر صفرًا أثناء بناء القائمة. يظهر الصفر كعنصر نائب لا كمبلغ حقيقي، فيتضح أن الصنف غير مكتمل بدل أن يبدو مجانيًا."
+              ]
+            },
+            {
+              "heading": "٣. اضبط الرسوم مرة واحدة",
+              "paragraphs": [
+                "تُضبط ضريبة القيمة المضافة ورسوم الخدمة والتوصيل على القائمة نفسها لا على كل طلب. اضبطها مرة واحدة وستطبّقها كل جولة تُبنى من هذه القائمة بالطريقة ذاتها.",
+                "يمكن تقسيم التوصيل بالتساوي بين الجميع أو بالتناسب مع ما طلبه كل شخص. اختر التناسب حين يطلب شخص أكثر من الباقين بكثير، والتساوي حين تفضّل المجموعة البساطة."
+              ]
+            },
+            {
+              "heading": "٤. أعد استخدامها",
+              "paragraphs": [
+                "بعد وجود القائمة، يصبح الطلب مجددًا مجرد بدء جولة جديدة منها. تأتي معها الأصناف والأسعار وسياسة الرسوم، ويظل الأشخاص الذين شاركتها معهم مرتبطين بها.",
+                "وإذا احتجت نسخة مختلفة — فرع آخر بأسعار مختلفة مثلًا — فكرّر القائمة وعدّل النسخة. تبقى الأصلية كما هي."
+              ]
+            }
+          ],
+          "faq": [
+            {
+              "question": "هل يجب إعادة بناء القائمة في كل طلب؟",
+              "answer": "لا. هذا هو الهدف من القائمة القابلة لإعادة الاستخدام. تبنيها مرة وتبدأ كل جولة جديدة منها، فتنتقل الأصناف والأسعار والرسوم معها."
+            },
+            {
+              "question": "هل أستطيع تغيير سعر بعد أن يطلب الناس؟",
+              "answer": "تعديل الصنف يغيّره للجولات القادمة. أما الجولة المجمّدة فتحتفظ بالأسعار التي جُمّدت بها، فلا يتغير إجمالي مستقر بعد إقراره."
+            },
+            {
+              "question": "من يستطيع رؤية القائمة التي أنشئها؟",
+              "answer": "أنت وحدك، حتى تشاركها. المشاركة صريحة — برابط أو رمز انضمام أو مع صديق أو مجموعة — ويمكنك إلغاء الوصول في أي وقت."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "share-a-menu",
+      "slug": "share-a-menu",
+      "navigation": false,
+      "adEligible": true,
+      "copy": {
+        "en": {
+          "navigationLabel": "Share a menu",
+          "seoTitle": "How to share a food menu with your group | Gama3 Orderak",
+          "description": "Four ways to share a food menu: a share link anyone can open, a join code, a direct invite to a friend, or a whole group at once. Includes roles and how to revoke access.",
+          "eyebrow": "Guide",
+          "heading": "How to share a menu with your group",
+          "introduction": "A menu is private until you share it. There are four ways to do that, and which one you choose depends on whether the other person already uses the app and whether you are inviting one person or twenty. This guide covers all four, the roles you can grant, and how to take access back.",
+          "sections": [
+            {
+              "heading": "Share by link",
+              "paragraphs": [
+                "A share link is the option to reach for when you are pasting into a group chat. Open the menu, choose Share, and create a share link. Anyone who opens it can join — they do not need to be on your friend list first.",
+                "The link works for seven days and for as many people as open it. You can revoke it earlier at any time, which stops it working immediately for anyone who has not already joined."
+              ]
+            },
+            {
+              "heading": "Share by join code",
+              "paragraphs": [
+                "A join code is a short string that someone types into Join with code. It suits reading a code aloud across a room or sending it in a message where a long link would look suspicious.",
+                "Unlike the link, a join code is single use: once someone redeems it, it is spent. Create one per person when you want that level of control over who joins.",
+                "Both the link and the code carry the role you chose when creating them, so the person joining gets exactly the permissions you intended rather than a default."
+              ]
+            },
+            {
+              "heading": "Share with friends and groups",
+              "paragraphs": [
+                "If the person is already on your friend list, you can share the menu with them directly and they will see it without redeeming anything. This is the tidiest option for people you order with regularly.",
+                "Sharing with a group does the same for everyone in it at once. Add someone to the group later and they see the menus already shared with that group, which saves repeating the invitation every time the team changes."
+              ]
+            },
+            {
+              "heading": "Roles and taking access back",
+              "paragraphs": [
+                "Every share carries a role. A contributor can add their own choices, an editor can also change the menu itself, and a viewer can look without ordering. Ownership is never transferred by a share.",
+                "You can change someone’s role or remove them from the Members page at any time. Removing access does not delete what they already contributed to a finished round, so past receipts stay accurate."
+              ]
+            }
+          ],
+          "faq": [
+            {
+              "question": "Does the person I invite need an account?",
+              "answer": "Yes. Every share resolves behind sign-in, so the invitation is completed by a real account. Someone without one is guided through sign-up first and then lands back on the invitation."
+            },
+            {
+              "question": "What happens if I revoke a share link?",
+              "answer": "It stops working immediately for anyone who has not used it yet. People who already joined keep their access until you remove them from the Members page."
+            },
+            {
+              "question": "Can I share the same menu with several groups?",
+              "answer": "Yes. A menu can be shared with any number of friends and groups at once, and each share carries its own role."
+            }
+          ]
+        },
+        "ar": {
+          "navigationLabel": "مشاركة قائمة",
+          "seoTitle": "كيفية مشاركة قائمة طعام مع مجموعتك | جمع أوردرك",
+          "description": "أربع طرق لمشاركة قائمة طعام: رابط يفتحه أي شخص، أو رمز انضمام، أو دعوة مباشرة لصديق، أو مجموعة كاملة دفعة واحدة. مع شرح الأدوار وكيفية إلغاء الوصول.",
+          "eyebrow": "دليل",
+          "heading": "كيفية مشاركة قائمة مع مجموعتك",
+          "introduction": "تظل القائمة خاصة حتى تشاركها. هناك أربع طرق لذلك، والاختيار بينها يعتمد على ما إذا كان الطرف الآخر يستخدم التطبيق بالفعل، وعلى ما إذا كنت تدعو شخصًا واحدًا أو عشرين. يشرح هذا الدليل الطرق الأربع والأدوار التي يمكنك منحها وكيفية استرجاع الوصول.",
+          "sections": [
+            {
+              "heading": "المشاركة برابط",
+              "paragraphs": [
+                "الرابط هو الخيار المناسب حين تنسخ في محادثة جماعية. افتح القائمة واختر «مشاركة» ثم أنشئ رابط مشاركة. أي شخص يفتحه يستطيع الانضمام، ولا يلزم أن يكون في قائمة أصدقائك أولًا.",
+                "يعمل الرابط لسبعة أيام ولأي عدد من الأشخاص. ويمكنك إلغاؤه قبل ذلك في أي وقت، فيتوقف فورًا لمن لم ينضم بعد."
+              ]
+            },
+            {
+              "heading": "المشاركة برمز انضمام",
+              "paragraphs": [
+                "رمز الانضمام نص قصير يكتبه الشخص في «انضم برمز». يناسب قراءة الرمز بصوت عالٍ في الغرفة أو إرساله في رسالة يبدو فيها الرابط الطويل مريبًا.",
+                "وعلى عكس الرابط، الرمز يُستخدم مرة واحدة: بمجرد استخدامه ينتهي. أنشئ رمزًا لكل شخص حين تريد هذا القدر من التحكم فيمن ينضم.",
+                "يحمل كل من الرابط والرمز الدور الذي اخترته عند الإنشاء، فيحصل المنضم على الصلاحيات التي قصدتها بالضبط لا على دور افتراضي."
+              ]
+            },
+            {
+              "heading": "المشاركة مع الأصدقاء والمجموعات",
+              "paragraphs": [
+                "إذا كان الشخص في قائمة أصدقائك، يمكنك مشاركة القائمة معه مباشرة فيراها دون استخدام أي رمز. وهذا أنظف خيار لمن تطلب معهم بانتظام.",
+                "والمشاركة مع مجموعة تفعل الشيء نفسه لكل أفرادها دفعة واحدة. وإذا أضفت شخصًا إلى المجموعة لاحقًا فسيرى القوائم التي شوركت معها، ما يوفّر تكرار الدعوة كلما تغيّر الفريق."
+              ]
+            },
+            {
+              "heading": "الأدوار واسترجاع الوصول",
+              "paragraphs": [
+                "كل مشاركة تحمل دورًا. المساهم يضيف اختياراته، والمحرر يستطيع أيضًا تعديل القائمة نفسها، والمشاهد ينظر دون أن يطلب. ولا تنتقل الملكية أبدًا عبر المشاركة.",
+                "يمكنك تغيير دور أي شخص أو إزالته من صفحة «الأعضاء» في أي وقت. وإزالة الوصول لا تحذف ما ساهم به في جولة منتهية، فتظل الإيصالات السابقة دقيقة."
+              ]
+            }
+          ],
+          "faq": [
+            {
+              "question": "هل يحتاج من أدعوه إلى حساب؟",
+              "answer": "نعم. كل مشاركة تُفتح بعد تسجيل الدخول، فتكتمل الدعوة بحساب حقيقي. ومن لا يملك حسابًا يُوجَّه إلى التسجيل ثم يعود إلى الدعوة نفسها."
+            },
+            {
+              "question": "ماذا يحدث إذا ألغيت رابط مشاركة؟",
+              "answer": "يتوقف فورًا لمن لم يستخدمه بعد. أما من انضم بالفعل فيحتفظ بوصوله حتى تزيله من صفحة الأعضاء."
+            },
+            {
+              "question": "هل أستطيع مشاركة القائمة نفسها مع عدة مجموعات؟",
+              "answer": "نعم. يمكن مشاركة القائمة مع أي عدد من الأصدقاء والمجموعات، ولكل مشاركة دورها الخاص."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "run-an-order-round",
+      "slug": "run-an-order-round",
+      "navigation": false,
+      "adEligible": true,
+      "copy": {
+        "en": {
+          "navigationLabel": "Run an order round",
+          "seoTitle": "How to run a group order round | Gama3 Orderak",
+          "description": "Open a round from a shared menu, collect everyone’s choices, chase the people who have not answered, freeze the order, and place it with confident totals.",
+          "eyebrow": "Guide",
+          "heading": "How to run a group order round",
+          "introduction": "A round is one occasion of ordering from a menu: today’s lunch, this evening’s delivery. The menu stays put and rounds come and go. This guide covers opening one, collecting choices without chasing people through chat, and closing it so the totals stop moving.",
+          "sections": [
+            {
+              "heading": "Open the round",
+              "paragraphs": [
+                "From a shared menu, choose Start round. Everyone the menu is shared with is added to the round automatically and receives a notification, so there is no second invitation to send.",
+                "The round takes the menu’s items, prices, and fee policy as they are at that moment. Later edits to the menu do not reach back into a round that is already running."
+              ]
+            },
+            {
+              "heading": "Collect choices",
+              "paragraphs": [
+                "Each person opens the round and sets quantities against the items they want. They see their own running total including their share of fees, so nobody has to ask what they owe.",
+                "As organizer you see who has answered and who has not. That is the part that usually costs the most time in a chat thread: the answer is on one screen instead of scattered through a hundred messages.",
+                "People can change their choices while the round is open. Every change updates the aggregate immediately, so the total you are looking at is always current rather than a figure you calculated ten minutes ago."
+              ]
+            },
+            {
+              "heading": "Freeze and place the order",
+              "paragraphs": [
+                "When everyone has answered, freeze the round. Freezing stops further changes and locks the prices, so the total cannot move while you are on the phone to the restaurant.",
+                "The frozen view groups identical items together, which is what you actually read out when ordering: eight of one sandwich rather than eight separate lines."
+              ]
+            },
+            {
+              "heading": "Settle up",
+              "paragraphs": [
+                "After the order is placed, each person’s share is already calculated, including VAT, service, and their part of delivery according to the policy on the menu.",
+                "Receipts stay available after the round closes, so a question a week later has an answer that does not depend on anyone’s memory."
+              ]
+            }
+          ],
+          "faq": [
+            {
+              "question": "What if someone never answers?",
+              "answer": "You can freeze the round without them. They are simply not part of the totals, and the people who did answer are not held up by one person."
+            },
+            {
+              "question": "Can I reopen a frozen round?",
+              "answer": "Yes, while it has not been completed. Reopening allows changes again and recalculates the totals; a completed round stays as it was so past receipts remain accurate."
+            },
+            {
+              "question": "Does everyone see what other people ordered?",
+              "answer": "Participants see the combined order so the group can check it before it is placed. Personal totals stay attached to the person they belong to."
+            }
+          ]
+        },
+        "ar": {
+          "navigationLabel": "إدارة جولة طلب",
+          "seoTitle": "كيفية إدارة جولة طلب جماعي | جمع أوردرك",
+          "description": "افتح جولة من قائمة مشتركة، واجمع اختيارات الجميع، وتابع من لم يجب، ثم جمّد الطلب وأرسله بإجماليات موثوقة.",
+          "eyebrow": "دليل",
+          "heading": "كيفية إدارة جولة طلب جماعي",
+          "introduction": "الجولة هي مناسبة طلب واحدة من قائمة: غداء اليوم، أو توصيل هذا المساء. تبقى القائمة كما هي وتأتي الجولات وتذهب. يشرح هذا الدليل فتح الجولة وجمع الاختيارات دون مطاردة الناس في المحادثات، ثم إغلاقها حتى تتوقف الإجماليات عن التغير.",
+          "sections": [
+            {
+              "heading": "افتح الجولة",
+              "paragraphs": [
+                "من قائمة مشتركة اختر «ابدأ جولة». يُضاف كل من شوركت معهم القائمة إلى الجولة تلقائيًا ويصلهم إشعار، فلا توجد دعوة ثانية ترسلها.",
+                "تأخذ الجولة أصناف القائمة وأسعارها وسياسة رسومها كما هي في تلك اللحظة. والتعديلات اللاحقة على القائمة لا تعود إلى جولة قيد التشغيل."
+              ]
+            },
+            {
+              "heading": "اجمع الاختيارات",
+              "paragraphs": [
+                "يفتح كل شخص الجولة ويحدد الكميات أمام ما يريده. ويرى إجماليه الخاص شاملًا نصيبه من الرسوم، فلا يحتاج أحد أن يسأل كم عليه.",
+                "وبصفتك المنظّم ترى من أجاب ومن لم يجب. وهذا هو الجزء الذي يستهلك أكثر الوقت عادة في المحادثات: الإجابة على شاشة واحدة بدل أن تكون مبعثرة بين مئة رسالة.",
+                "يستطيع الناس تغيير اختياراتهم ما دامت الجولة مفتوحة. وكل تغيير يحدّث الإجمالي فورًا، فالرقم الذي تنظر إليه محدَّث دائمًا لا رقمًا حسبته قبل عشر دقائق."
+              ]
+            },
+            {
+              "heading": "جمّد الطلب وأرسله",
+              "paragraphs": [
+                "حين يجيب الجميع، جمّد الجولة. التجميد يوقف التغييرات ويثبّت الأسعار، فلا يتحرك الإجمالي وأنت على الهاتف مع المطعم.",
+                "ويجمع العرض المجمّد الأصناف المتطابقة معًا، وهو ما تقرؤه فعلًا عند الطلب: ثمانية من ساندويتش واحد بدل ثمانية أسطر منفصلة."
+              ]
+            },
+            {
+              "heading": "التسوية",
+              "paragraphs": [
+                "بعد إرسال الطلب يكون نصيب كل شخص محسوبًا بالفعل، شاملًا الضريبة والخدمة وجزءه من التوصيل حسب السياسة المحددة في القائمة.",
+                "وتبقى الإيصالات متاحة بعد إغلاق الجولة، فسؤال بعد أسبوع تكون له إجابة لا تعتمد على ذاكرة أحد."
+              ]
+            }
+          ],
+          "faq": [
+            {
+              "question": "ماذا لو لم يجب أحدهم أبدًا؟",
+              "answer": "يمكنك تجميد الجولة بدونه. لن يكون ضمن الإجماليات، ولن يتعطل من أجابوا بسبب شخص واحد."
+            },
+            {
+              "question": "هل أستطيع إعادة فتح جولة مجمّدة؟",
+              "answer": "نعم، ما دامت لم تكتمل. إعادة الفتح تسمح بالتغيير وتعيد حساب الإجماليات، أما الجولة المكتملة فتبقى كما هي لتظل الإيصالات السابقة دقيقة."
+            },
+            {
+              "question": "هل يرى الجميع ما طلبه الآخرون؟",
+              "answer": "يرى المشاركون الطلب المجمّع ليتحقق منه الفريق قبل إرساله. أما الإجماليات الشخصية فتبقى مرتبطة بصاحبها."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "invite-friends",
+      "slug": "invite-friends",
+      "navigation": false,
+      "adEligible": true,
+      "copy": {
+        "en": {
+          "navigationLabel": "Invite friends",
+          "seoTitle": "How to add friends and share your invite link | Gama3 Orderak",
+          "description": "Two ways to build a friend list: search someone by their exact email, or share a 24-hour invite link that lets anyone add you without you approving each request.",
+          "eyebrow": "Guide",
+          "heading": "How to add friends",
+          "introduction": "A friend list saves repeating invitations. Once someone is on it you can share a menu with them directly, add them to a group, or start a round that includes them without sending anything to redeem. There are two ways to build it, and they suit different situations.",
+          "sections": [
+            {
+              "heading": "Find someone by email",
+              "paragraphs": [
+                "Open Members, then Friends, and search the exact address the person signed up with. Nobody is listed publicly and partial matches return nothing, so an address is the only way to find a person here.",
+                "That is deliberate. A searchable directory would let anyone assemble a list of who uses the app; requiring the exact address means you can only find someone who has already given it to you."
+              ]
+            },
+            {
+              "heading": "Share your invite link",
+              "paragraphs": [
+                "The friend link is the faster route when you are inviting several people at once. Create it on the Friends page and send it wherever you already talk — a message, a group chat, anywhere.",
+                "Anyone who opens it within 24 hours can add you with a single tap. You do not approve each person: sharing the link is your consent, which is the whole point of it. The same link works for as many people as open it.",
+                "If you would rather approve each person, use the email search instead and let them send you a request. Both routes end in the same place; they differ only in who confirms."
+              ]
+            },
+            {
+              "heading": "Requests and what happens next",
+              "paragraphs": [
+                "A request sent by email search waits on the Requests page until the other person answers. Accepting makes the friendship mutual immediately — you appear on each other’s lists, and neither of you has to repeat the step.",
+                "Notifications tell you when a request arrives or is accepted, so you are not left wondering whether it went through."
+              ]
+            },
+            {
+              "heading": "Removing a friend",
+              "paragraphs": [
+                "Unfriending is immediate and removes you from each other’s lists. It does not delete shared history: a menu you were both part of, and any round you already contributed to, stay exactly as they were.",
+                "Removing a friend does not remove their access to menus you shared with them earlier. Revoke that separately from the menu’s Members page if that is what you intend."
+              ]
+            }
+          ],
+          "faq": [
+            {
+              "question": "Why can’t I search people by name?",
+              "answer": "Because a name search would turn the app into a directory of its users. Exact-email search means you can only find someone who has already shared their address with you."
+            },
+            {
+              "question": "Is my invite link safe to post publicly?",
+              "answer": "Treat it as semi-private. Anyone who opens it within 24 hours can add you as a friend, so send it where you would be comfortable with everyone present adding you."
+            },
+            {
+              "question": "Can I stop an invite link early?",
+              "answer": "Yes. Revoking it stops it working immediately. People who already used it stay on your friend list until you unfriend them."
+            }
+          ]
+        },
+        "ar": {
+          "navigationLabel": "دعوة الأصدقاء",
+          "seoTitle": "كيفية إضافة الأصدقاء ومشاركة رابط الدعوة | جمع أوردرك",
+          "description": "طريقتان لبناء قائمة الأصدقاء: البحث عن شخص ببريده الإلكتروني بالضبط، أو مشاركة رابط دعوة صالح ٢٤ ساعة يتيح لأي شخص إضافتك دون موافقتك على كل طلب.",
+          "eyebrow": "دليل",
+          "heading": "كيفية إضافة الأصدقاء",
+          "introduction": "قائمة الأصدقاء توفّر تكرار الدعوات. فبمجرد وجود شخص فيها يمكنك مشاركة قائمة معه مباشرة أو إضافته إلى مجموعة أو بدء جولة تشمله دون إرسال أي شيء ليستخدمه. وهناك طريقتان لبنائها تناسبان حالتين مختلفتين.",
+          "sections": [
+            {
+              "heading": "ابحث عن شخص بالبريد الإلكتروني",
+              "paragraphs": [
+                "افتح «الأعضاء» ثم «الأصدقاء» وابحث بالعنوان الذي سجّل به الشخص بالضبط. لا أحد مُدرج علنًا ولا تُرجع المطابقات الجزئية شيئًا، فالعنوان هو الطريقة الوحيدة للعثور على شخص هنا.",
+                "وهذا مقصود. فالدليل القابل للبحث يتيح لأي شخص تجميع قائمة بمستخدمي التطبيق، أما اشتراط العنوان الكامل فيعني أنك لا تجد إلا من أعطاك عنوانه بالفعل."
+              ]
+            },
+            {
+              "heading": "شارك رابط الدعوة",
+              "paragraphs": [
+                "رابط الصداقة أسرع حين تدعو عدة أشخاص دفعة واحدة. أنشئه من صفحة «الأصدقاء» وأرسله حيث تتحدث بالفعل: رسالة، أو محادثة جماعية، أو أي مكان.",
+                "أي شخص يفتحه خلال ٢٤ ساعة يستطيع إضافتك بضغطة واحدة. أنت لا توافق على كل شخص: مشاركة الرابط هي موافقتك، وهذا هو الهدف منه. ويعمل الرابط نفسه لأي عدد ممن يفتحونه.",
+                "وإذا كنت تفضّل الموافقة على كل شخص، فاستخدم البحث بالبريد ودعهم يرسلون لك طلبًا. تنتهي الطريقتان إلى الشيء نفسه، ويختلفان فقط في من يؤكد."
+              ]
+            },
+            {
+              "heading": "الطلبات وما يحدث بعدها",
+              "paragraphs": [
+                "الطلب المُرسل عبر البحث بالبريد ينتظر في صفحة «الطلبات» حتى يجيب الطرف الآخر. والقبول يجعل الصداقة متبادلة فورًا، فتظهران في قائمة بعضكما دون أن يعيد أحدكما الخطوة.",
+                "وتخبرك الإشعارات عند وصول طلب أو قبوله، فلا تبقى متسائلًا هل وصل أم لا."
+              ]
+            },
+            {
+              "heading": "إزالة صديق",
+              "paragraphs": [
+                "الإزالة فورية وتحذفكما من قائمتي بعضكما. لكنها لا تمسح التاريخ المشترك: القائمة التي كنتما فيها معًا وأي جولة ساهمت فيها تبقيان كما هما تمامًا.",
+                "وإزالة صديق لا تلغي وصوله إلى القوائم التي شاركتها معه سابقًا. ألغِ ذلك بشكل منفصل من صفحة «الأعضاء» في القائمة إن كان هذا ما تقصده."
+              ]
+            }
+          ],
+          "faq": [
+            {
+              "question": "لماذا لا أستطيع البحث عن الناس بالاسم؟",
+              "answer": "لأن البحث بالاسم يحوّل التطبيق إلى دليل بمستخدميه. والبحث بالبريد الكامل يعني أنك لا تجد إلا من شارك عنوانه معك بالفعل."
+            },
+            {
+              "question": "هل من الآمن نشر رابط الدعوة علنًا؟",
+              "answer": "تعامل معه كشبه خاص. فأي شخص يفتحه خلال ٢٤ ساعة يستطيع إضافتك، فأرسله حيث ترتاح لأن يضيفك كل من هناك."
+            },
+            {
+              "question": "هل أستطيع إيقاف رابط الدعوة مبكرًا؟",
+              "answer": "نعم. الإلغاء يوقفه فورًا. أما من استخدمه بالفعل فيبقى في قائمة أصدقائك حتى تزيله بنفسك."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "work-with-groups",
+      "slug": "work-with-groups",
+      "navigation": false,
+      "adEligible": true,
+      "copy": {
+        "en": {
+          "navigationLabel": "Work with groups",
+          "seoTitle": "How to use groups for recurring team orders | Gama3 Orderak",
+          "description": "Create a group once, share menus with everyone in it at the same time, and add or remove people without repeating invitations. Includes group invite links and roles.",
+          "eyebrow": "Guide",
+          "heading": "How to use groups for recurring orders",
+          "introduction": "A group is a named set of people you order with repeatedly: a team, a floor, a family. Sharing a menu with the group shares it with everyone in it, and anyone added later inherits what has already been shared. This guide covers creating one, filling it, and keeping it tidy.",
+          "sections": [
+            {
+              "heading": "Create the group",
+              "paragraphs": [
+                "Open Members, then Friend groups, and create a group with a name people will recognise — \"Design team\", \"Third floor\". A short description helps when someone belongs to several.",
+                "You own the group you create. Only you can rename it, invite into it, remove people, or delete it, and that ownership never transfers by sharing."
+              ]
+            },
+            {
+              "heading": "Add people",
+              "paragraphs": [
+                "Invite friends into the group from the group card. Anyone already on your friend list can be added directly, which is the usual route for a team you order with every week.",
+                "For people who are not on your friend list yet, create a group invite link and send it. Whoever opens it within 24 hours joins the group directly — no friend request first, no approval from you for each person.",
+                "That link is the fastest way to fill a new group. Create it once, paste it into the team chat, and everyone who wants in is in, without you handling a queue of requests."
+              ]
+            },
+            {
+              "heading": "Share menus with the group",
+              "paragraphs": [
+                "Share a menu with the group and everyone in it can use it immediately. This is the part that saves the most repetition: one action instead of one invitation per person.",
+                "Someone added to the group afterwards sees the menus already shared with that group. A new colleague joining in March does not need the invitations sent in January to be sent again."
+              ]
+            },
+            {
+              "heading": "Keeping it current",
+              "paragraphs": [
+                "Remove someone from the group and their access through it ends. Access you granted them individually — a menu shared with them directly — is separate and stays until you revoke it too.",
+                "Members can leave a group themselves. Deleting a group removes it for everyone, but it does not delete the menus that were shared through it or any round already completed."
+              ]
+            }
+          ],
+          "faq": [
+            {
+              "question": "Can I search for a group and join it?",
+              "answer": "Not by name. Groups are joined through an invite link from the owner, so a group cannot be found and entered by someone the owner never invited."
+            },
+            {
+              "question": "Does everyone in a group see everyone else?",
+              "answer": "Members can see who else is in the group — that is what makes it a group. They do not become friends automatically, and their email addresses are not exposed by membership alone."
+            },
+            {
+              "question": "What happens to a shared menu if I delete the group?",
+              "answer": "The menu itself is untouched; it belongs to whoever created it. Access granted through the group ends, so share it again directly or through another group if people still need it."
+            }
+          ]
+        },
+        "ar": {
+          "navigationLabel": "العمل بالمجموعات",
+          "seoTitle": "كيفية استخدام المجموعات للطلبات المتكررة | جمع أوردرك",
+          "description": "أنشئ مجموعة مرة واحدة، وشارك القوائم مع كل أفرادها في الوقت نفسه، وأضف أو أزل أشخاصًا دون تكرار الدعوات. مع روابط دعوة المجموعة والأدوار.",
+          "eyebrow": "دليل",
+          "heading": "كيفية استخدام المجموعات للطلبات المتكررة",
+          "introduction": "المجموعة مجموعة أشخاص لها اسم تطلب معهم بانتظام: فريق، أو طابق، أو عائلة. ومشاركة قائمة مع المجموعة تشاركها مع كل أفرادها، ومن يُضاف لاحقًا يرث ما شورك بالفعل. يشرح هذا الدليل إنشاءها وملأها والحفاظ على ترتيبها.",
+          "sections": [
+            {
+              "heading": "أنشئ المجموعة",
+              "paragraphs": [
+                "افتح «الأعضاء» ثم «مجموعات الأصدقاء» وأنشئ مجموعة باسم يعرفه الناس مثل «فريق التصميم» أو «الدور الثالث». والوصف القصير يساعد حين ينتمي شخص إلى عدة مجموعات.",
+                "أنت تملك المجموعة التي تنشئها. وحدك من يعيد تسميتها أو يدعو إليها أو يزيل منها أو يحذفها، ولا تنتقل هذه الملكية بالمشاركة."
+              ]
+            },
+            {
+              "heading": "أضف أشخاصًا",
+              "paragraphs": [
+                "ادعُ الأصدقاء إلى المجموعة من بطاقتها. وأي شخص في قائمة أصدقائك يمكن إضافته مباشرة، وهذا هو الطريق المعتاد لفريق تطلب معه كل أسبوع.",
+                "أما من ليسوا في قائمة أصدقائك بعد، فأنشئ رابط دعوة للمجموعة وأرسله. ومن يفتحه خلال ٢٤ ساعة ينضم مباشرة، دون طلب صداقة أولًا ودون موافقة منك على كل شخص.",
+                "وهذا الرابط أسرع وسيلة لملء مجموعة جديدة. أنشئه مرة، والصقه في محادثة الفريق، فينضم كل من يريد دون أن تتعامل مع طابور من الطلبات."
+              ]
+            },
+            {
+              "heading": "شارك القوائم مع المجموعة",
+              "paragraphs": [
+                "شارك قائمة مع المجموعة فيستطيع كل من فيها استخدامها فورًا. وهذا هو الجزء الذي يوفّر أكبر قدر من التكرار: إجراء واحد بدل دعوة لكل شخص.",
+                "ومن يُضاف إلى المجموعة بعد ذلك يرى القوائم المشاركة معها بالفعل. فالزميل الجديد الذي ينضم في مارس لا يحتاج إعادة إرسال دعوات يناير."
+              ]
+            },
+            {
+              "heading": "الحفاظ على تحديثها",
+              "paragraphs": [
+                "إزالة شخص من المجموعة تنهي وصوله عبرها. أما الوصول الذي منحته له فرديًا — قائمة شاركتها معه مباشرة — فهو منفصل ويبقى حتى تلغيه أيضًا.",
+                "ويستطيع الأعضاء مغادرة المجموعة بأنفسهم. وحذف المجموعة يزيلها عن الجميع، لكنه لا يحذف القوائم التي شوركت عبرها ولا أي جولة اكتملت."
+              ]
+            }
+          ],
+          "faq": [
+            {
+              "question": "هل أستطيع البحث عن مجموعة والانضمام إليها؟",
+              "answer": "ليس بالاسم. يتم الانضمام إلى المجموعات عبر رابط دعوة من المالك، فلا يمكن العثور على مجموعة ودخولها من شخص لم يدعُه المالك."
+            },
+            {
+              "question": "هل يرى كل من في المجموعة الآخرين؟",
+              "answer": "يرى الأعضاء من في المجموعة، وهذا ما يجعلها مجموعة. لكنهم لا يصبحون أصدقاء تلقائيًا، ولا تُكشف عناوين بريدهم بمجرد العضوية."
+            },
+            {
+              "question": "ماذا يحدث لقائمة مشتركة إذا حذفت المجموعة؟",
+              "answer": "القائمة نفسها لا تتأثر، فهي ملك من أنشأها. أما الوصول الممنوح عبر المجموعة فينتهي، فشاركها مجددًا مباشرة أو عبر مجموعة أخرى إن كان الناس ما زالوا بحاجة إليها."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "fees-and-charges",
+      "slug": "fees-and-charges",
+      "navigation": false,
+      "adEligible": true,
+      "copy": {
+        "en": {
+          "navigationLabel": "Fees and charges",
+          "seoTitle": "How to set VAT, service, and delivery fees | Gama3 Orderak",
+          "description": "Set VAT, service charge, and delivery once on the menu. Choose whether delivery splits equally or in proportion to what each person ordered, and see how each share is calculated.",
+          "eyebrow": "Guide",
+          "heading": "How to set VAT, service, and delivery fees",
+          "introduction": "Fees are the part of a group order that causes arguments: someone pays the delivery, someone forgets the service charge, and the numbers stop matching. Configuring them once on the menu means every round applies them the same way and every share is calculated the same way.",
+          "sections": [
+            {
+              "heading": "Where fees live",
+              "paragraphs": [
+                "VAT, service charge, and delivery are set on the menu, not on each order. Open the menu, edit it, and set the three values under pricing. Every round started from that menu inherits them.",
+                "That placement is deliberate. Fees belong to the restaurant, not to the occasion, so setting them once is both less work and less error-prone than re-entering them on the night."
+              ]
+            },
+            {
+              "heading": "VAT and service charge",
+              "paragraphs": [
+                "VAT and service are percentages applied to the value of what each person ordered. Someone who orders twice as much pays twice as much of both, which is what people expect and rarely need to discuss.",
+                "Enter the rate the restaurant actually charges rather than a rounded figure. The totals are only useful if they match the receipt you will be handed, and a percentage point of drift on a large order is enough to leave the organizer out of pocket.",
+                "A rate of zero is valid. If the prices you entered already include VAT, leave it at zero rather than adding it twice — the app never assumes a rate on your behalf."
+              ]
+            },
+            {
+              "heading": "Splitting delivery",
+              "paragraphs": [
+                "Delivery is a flat amount rather than a percentage, so it has to be divided somehow. You choose between two policies: split it equally between everyone taking part, or in proportion to what each person ordered.",
+                "Equal is simpler and suits a group where orders are roughly the same size. Proportional is fairer when one person orders for a whole family and another orders a coffee — the person who caused most of the order carries most of the delivery."
+              ]
+            },
+            {
+              "heading": "Reading a share",
+              "paragraphs": [
+                "Each person’s total is their items, plus their share of VAT and service, plus their share of delivery under whichever policy the menu uses. The breakdown is shown, not just the final number, so anyone who wants to check can.",
+                "Once a round is frozen the rates are locked with it. Changing a fee on the menu afterwards affects future rounds only, so a settled receipt never moves after the fact."
+              ]
+            }
+          ],
+          "faq": [
+            {
+              "question": "The restaurant added a charge I did not expect. Can I fix a closed round?",
+              "answer": "Reopen the round if it has not been completed, adjust, and freeze it again. A completed round stays as it was so that past receipts remain accurate; for those, settle the difference outside the app."
+            },
+            {
+              "question": "Which delivery split should I choose?",
+              "answer": "Equal when orders are similar in size and the group values simplicity. Proportional when one or two people account for most of the order, which is when equal starts to feel unfair."
+            },
+            {
+              "question": "Do fees apply to a private order with just me?",
+              "answer": "Yes. The same pricing policy applies, so a single-person order from a shared menu still totals what you will actually pay."
+            }
+          ]
+        },
+        "ar": {
+          "navigationLabel": "الرسوم والضرائب",
+          "seoTitle": "كيفية ضبط الضريبة ورسوم الخدمة والتوصيل | جمع أوردرك",
+          "description": "اضبط الضريبة ورسوم الخدمة والتوصيل مرة واحدة على القائمة. واختر تقسيم التوصيل بالتساوي أو بالتناسب مع ما طلبه كل شخص، وشاهد كيف يُحسب نصيب كل فرد.",
+          "eyebrow": "دليل",
+          "heading": "كيفية ضبط الضريبة ورسوم الخدمة والتوصيل",
+          "introduction": "الرسوم هي الجزء الذي يثير الخلاف في الطلب الجماعي: أحدهم يدفع التوصيل، وآخر ينسى رسوم الخدمة، فتختلف الأرقام. وضبطها مرة واحدة على القائمة يعني أن كل جولة تطبّقها بالطريقة نفسها ويُحسب كل نصيب بالطريقة نفسها.",
+          "sections": [
+            {
+              "heading": "أين تُضبط الرسوم",
+              "paragraphs": [
+                "تُضبط الضريبة ورسوم الخدمة والتوصيل على القائمة لا على كل طلب. افتح القائمة وعدّلها واضبط القيم الثلاث ضمن التسعير. وترث كل جولة تبدأ من تلك القائمة هذه القيم.",
+                "وهذا الموضع مقصود. فالرسوم تخص المطعم لا المناسبة، لذا ضبطها مرة واحدة أقل جهدًا وأقل عرضة للخطأ من إعادة إدخالها في كل مرة."
+              ]
+            },
+            {
+              "heading": "الضريبة ورسوم الخدمة",
+              "paragraphs": [
+                "الضريبة والخدمة نسب مئوية تُطبَّق على قيمة ما طلبه كل شخص. فمن يطلب ضعف الكمية يدفع ضعف الاثنين، وهو ما يتوقعه الناس ونادرًا ما يحتاج نقاشًا.",
+                "أدخل النسبة التي يتقاضاها المطعم فعلًا لا رقمًا مقرّبًا. فالإجماليات لا تفيد إلا إذا طابقت الإيصال الذي ستستلمه، وانحراف نقطة مئوية في طلب كبير يكفي ليخسر المنظّم من جيبه.",
+                "والنسبة صفر قيمة صحيحة. فإذا كانت الأسعار التي أدخلتها شاملة الضريبة، اتركها صفرًا بدل إضافتها مرتين، فالتطبيق لا يفترض نسبة نيابة عنك أبدًا."
+              ]
+            },
+            {
+              "heading": "تقسيم التوصيل",
+              "paragraphs": [
+                "التوصيل مبلغ ثابت لا نسبة، لذا لا بد من تقسيمه بطريقة ما. وتختار بين سياستين: تقسيمه بالتساوي بين المشاركين، أو بالتناسب مع ما طلبه كل شخص.",
+                "التساوي أبسط ويناسب مجموعة طلباتها متقاربة الحجم. أما التناسب فأعدل حين يطلب شخص لعائلة كاملة وآخر يطلب قهوة، إذ يتحمّل من تسبّب في معظم الطلب معظم التوصيل."
+              ]
+            },
+            {
+              "heading": "قراءة النصيب",
+              "paragraphs": [
+                "إجمالي كل شخص هو أصنافه، زائد نصيبه من الضريبة والخدمة، زائد نصيبه من التوصيل حسب السياسة المستخدمة في القائمة. ويظهر التفصيل لا الرقم النهائي فقط، فيستطيع من أراد التحقق أن يفعل.",
+                "وبمجرد تجميد الجولة تُثبَّت النسب معها. وتغيير رسم على القائمة بعد ذلك يؤثر في الجولات القادمة فقط، فلا يتحرك إيصال مستقر بأثر رجعي."
+              ]
+            }
+          ],
+          "faq": [
+            {
+              "question": "أضاف المطعم رسمًا لم أتوقعه. هل أصلح جولة مغلقة؟",
+              "answer": "أعد فتح الجولة إن لم تكتمل، وعدّل، ثم جمّدها مجددًا. أما الجولة المكتملة فتبقى كما هي لتظل الإيصالات السابقة دقيقة، وتُسوّى الفروق خارج التطبيق."
+            },
+            {
+              "question": "أي تقسيم للتوصيل أختار؟",
+              "answer": "التساوي حين تتقارب أحجام الطلبات وتفضّل المجموعة البساطة. والتناسب حين يشكّل شخص أو اثنان معظم الطلب، وهي اللحظة التي يبدو فيها التساوي غير عادل."
+            },
+            {
+              "question": "هل تُطبَّق الرسوم على طلب خاص بي وحدي؟",
+              "answer": "نعم. تُطبَّق سياسة التسعير نفسها، فيظل طلب الشخص الواحد من قائمة مشتركة يعطي الإجمالي الذي ستدفعه فعلًا."
             }
           ]
         }

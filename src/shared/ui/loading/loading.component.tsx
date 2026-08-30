@@ -4,6 +4,15 @@ interface LoadingProps {
   label: string;
 }
 
+/**
+ * A plain rotating loader, used when nothing about the eventual layout is
+ * known yet — boot, a route transition, a gate.
+ *
+ * It deliberately shows no skeleton bars. A skeleton is a promise about the
+ * shape of what is coming, so it belongs only where that shape is known:
+ * lists, cards, and tiles use `SkeletonSection` instead. Bars here promised a
+ * layout that never arrived.
+ */
 export function Loading({ label }: LoadingProps) {
   return (
     <div
@@ -16,19 +25,7 @@ export function Loading({ label }: LoadingProps) {
       <span className="loading-orbit" aria-hidden="true">
         <LoaderCircle className="spin" />
       </span>
-      <span className="loading-copy">
-        <strong>{label}</strong>
-        <span className="loading-pulse" aria-hidden="true">
-          <span />
-          <span />
-          <span />
-        </span>
-      </span>
-      <span className="loading-skeleton" aria-hidden="true">
-        <span />
-        <span />
-        <span />
-      </span>
+      <strong className="loading-copy">{label}</strong>
     </div>
   );
 }

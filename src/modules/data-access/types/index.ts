@@ -25,6 +25,7 @@ export type {
   Theme,
   UserProfile,
 } from './domain.types';
+export * from './invite-link.types';
 export type {
   AppNotification,
   NotificationDraft,

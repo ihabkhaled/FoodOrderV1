@@ -6,14 +6,16 @@
     "primaryNavigationLabel": "Navegación pública",
     "mobileNavigationLabel": "Abrir la navegación",
     "languageLabel": "Idioma",
-    "openApplicationLabel": "Abrir la aplicación",
+    "openApplicationLabel": "Abrir app",
     "skipToContentLabel": "Saltar al contenido",
     "footerNavigationLabel": "Navegación del pie de página",
     "footerTagline": "Pedidos de comida en grupo claros, desde la primera elección hasta el recibo final.",
     "allRightsReservedLabel": "Todos los derechos reservados.",
     "backHomeLabel": "Volver a la página de inicio",
     "tryAgainLabel": "Intentar de nuevo",
-    "learnMoreLabel": "Descubre cómo funciona"
+    "learnMoreLabel": "Descubre cómo funciona",
+    "signInLabel": "Iniciar sesion",
+    "signUpLabel": "Registrarse"
   },
   "pages": {
     "home": {
@@ -56,6 +58,24 @@
             "Desglose transparente de tarifas",
             "Vistas del recibo para compartir"
           ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Es gratis usar Gama3 Orderak?",
+          "answer": "Si. Crear menus, compartirlos, gestionar rondas y repartir recibos es gratuito. Tu haces el pedido al restaurante: la aplicacion organiza al grupo, no cobra pagos."
+        },
+        {
+          "question": "Las personas con las que pido tienen que instalar algo?",
+          "answer": "No. Funciona en el navegador en cualquier movil u ordenador y puede instalarse como aplicacion si lo prefieres. Cada persona necesita una cuenta, con un correo y una contrasena."
+        },
+        {
+          "question": "Como decide quien debe que?",
+          "answer": "Los articulos de cada persona se valoran con el menu compartido, luego se aplican IVA y servicio y el envio se reparte a partes iguales o en proporcion, segun la configuracion del menu."
+        },
+        {
+          "question": "Puedo usarlo en arabe?",
+          "answer": "Si, en trece idiomas, incluidos arabe y arabe egipcio en alfabeto latino. Los disenos de derecha a izquierda estan soportados y el idioma se cambia cuando quieras."
         }
       ]
     },
@@ -381,6 +401,324 @@
           "paragraphs": [
             "No hagas mal uso de las invitaciones, no intentes accesos no autorizados, no subas material ilegal, no interfieras con el servicio y no uses los datos de otra persona sin permiso."
           ]
+        }
+      ]
+    },
+    "create-a-menu": {
+      "navigationLabel": "Crear un menu",
+      "seoTitle": "Como crear un menu reutilizable | Gama3 Orderak",
+      "description": "Guia paso a paso para crear un menu reutilizable: anade articulos y precios, configura los cargos una vez y reutiliza el mismo menu en cada ronda.",
+      "eyebrow": "Guia",
+      "heading": "Como crear un menu reutilizable",
+      "introduction": "Un menu — llamado bucket en la aplicacion — es la lista de articulos de la que pide tu grupo. Lo creas una vez y cada pedido futuro parte de ahi en lugar de una pagina en blanco. Esta guia explica como crearlo, ponerle precios correctos y prepararlo para compartir.",
+      "sections": [
+        {
+          "heading": "1. Crea el menu",
+          "paragraphs": [
+            "Abre Buckets desde la navegacion y elige Crear bucket. Ponle el nombre que la gente reconoce, normalmente el restaurante o la ocasion, como \"Shawarma del viernes\" o \"Comida de la oficina\".",
+            "El menu es tuyo. Nadie mas lo ve hasta que lo compartes, y compartir es un paso aparte y deliberado que explica la siguiente guia."
+          ]
+        },
+        {
+          "heading": "2. Anade articulos y precios",
+          "paragraphs": [
+            "Anade cada articulo con su precio unitario. Los precios usan la moneda elegida en Ajustes y son por unidad: la aplicacion multiplica por la cantidad al pedir.",
+            "Usa nombres cortos y concretos. \"Shawarma de pollo — grande\" se elige mejor entre seis personas desde el movil que \"Bocadillo opcion 2\". Si el restaurante cambia un precio, edita el articulo y cada ronda posterior usara la cifra nueva.",
+            "Puedes dejar un precio en cero mientras construyes el menu. El cero aparece como marcador y no como importe real, asi un articulo incompleto se nota en vez de parecer gratis."
+          ]
+        },
+        {
+          "heading": "3. Configura los cargos una vez",
+          "paragraphs": [
+            "El IVA, el servicio y el envio se configuran en el menu, no en cada pedido. Configuralos una vez y cada ronda creada desde este menu los aplicara igual.",
+            "El envio puede dividirse a partes iguales o en proporcion a lo que pidio cada persona. Elige proporcional cuando alguien pide mucho mas que el resto e igual cuando el grupo prefiere la sencillez."
+          ]
+        },
+        {
+          "heading": "4. Reutilizalo",
+          "paragraphs": [
+            "Con el menu creado, volver a pedir es solo iniciar una ronda nueva desde el. Articulos, precios y politica de cargos vienen con el, y las personas con las que lo compartiste siguen vinculadas.",
+            "Si necesitas una variante — otra sucursal con precios distintos, por ejemplo — duplica el menu y edita la copia. El original queda intacto."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Tengo que rehacer el menu en cada pedido?",
+          "answer": "No. Ese es el sentido de un menu reutilizable. Lo creas una vez e inicias cada ronda desde el: articulos, precios y cargos se mantienen."
+        },
+        {
+          "question": "Puedo cambiar un precio despues de que la gente pida?",
+          "answer": "Editar un articulo afecta a rondas futuras. Una ronda ya congelada conserva los precios con los que se congelo, de modo que un total cerrado no se mueve."
+        },
+        {
+          "question": "Quien ve un menu que creo?",
+          "answer": "Solo tu, hasta que lo compartas. Compartir es explicito — enlace, codigo, amigo o grupo — y puedes revocar el acceso cuando quieras."
+        }
+      ]
+    },
+    "share-a-menu": {
+      "navigationLabel": "Compartir un menu",
+      "seoTitle": "Como compartir un menu con tu grupo | Gama3 Orderak",
+      "description": "Cuatro formas de compartir un menu: un enlace que cualquiera puede abrir, un codigo, una invitacion directa a un amigo o un grupo entero. Con roles y revocacion.",
+      "eyebrow": "Guia",
+      "heading": "Como compartir un menu con tu grupo",
+      "introduction": "Un menu es privado hasta que lo compartes. Hay cuatro formas de hacerlo, y la eleccion depende de si la otra persona ya usa la aplicacion y de si invitas a una persona o a veinte. Esta guia cubre las cuatro, los roles que puedes conceder y como retirar el acceso.",
+      "sections": [
+        {
+          "heading": "Compartir con enlace",
+          "paragraphs": [
+            "El enlace es la opcion cuando pegas en un chat de grupo. Abre el menu, elige Compartir y crea un enlace. Cualquiera que lo abra puede unirse, sin necesidad de estar antes en tu lista de amigos.",
+            "El enlace dura siete dias y sirve para tantas personas como lo abran. Puedes revocarlo antes en cualquier momento: deja de funcionar de inmediato para quien aun no se ha unido."
+          ]
+        },
+        {
+          "heading": "Compartir con codigo",
+          "paragraphs": [
+            "El codigo es una cadena corta que se escribe en Unirse con codigo. Va bien para leerlo en voz alta o enviarlo donde un enlace largo pareceria sospechoso.",
+            "A diferencia del enlace, el codigo es de un solo uso: una vez canjeado se agota. Crea uno por persona cuando quieras ese control.",
+            "Tanto el enlace como el codigo llevan el rol elegido al crearlos, asi que quien se une recibe exactamente los permisos previstos y no un valor por defecto."
+          ]
+        },
+        {
+          "heading": "Compartir con amigos y grupos",
+          "paragraphs": [
+            "Si la persona ya esta en tu lista de amigos, puedes compartir el menu directamente y lo vera sin canjear nada. Es la opcion mas limpia para quienes piden contigo a menudo.",
+            "Compartir con un grupo hace lo mismo para todos a la vez. Quien entre despues vera los menus ya compartidos con ese grupo, lo que evita repetir la invitacion cada vez que cambia el equipo."
+          ]
+        },
+        {
+          "heading": "Roles y retirar el acceso",
+          "paragraphs": [
+            "Cada uso compartido lleva un rol. Un colaborador anade sus elecciones, un editor tambien puede cambiar el menu y un lector mira sin pedir. La propiedad nunca se transfiere al compartir.",
+            "Puedes cambiar el rol de alguien o quitarlo desde la pagina Miembros cuando quieras. Retirar el acceso no borra lo que ya aporto a una ronda cerrada, de modo que los recibos antiguos siguen siendo exactos."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "La persona invitada necesita una cuenta?",
+          "answer": "Si. Cada uso compartido se abre tras iniciar sesion, de modo que la invitacion se completa con una cuenta real. Quien no tenga una pasa primero por el registro y luego vuelve a la invitacion."
+        },
+        {
+          "question": "Que pasa si revoco un enlace?",
+          "answer": "Deja de funcionar de inmediato para quien no lo haya usado. Quien ya se unio conserva el acceso hasta que lo quites desde la pagina Miembros."
+        },
+        {
+          "question": "Puedo compartir el mismo menu con varios grupos?",
+          "answer": "Si. Un menu puede compartirse con tantos amigos y grupos como quieras, y cada uso compartido lleva su propio rol."
+        }
+      ]
+    },
+    "run-an-order-round": {
+      "navigationLabel": "Hacer una ronda",
+      "seoTitle": "Como gestionar una ronda de pedido en grupo | Gama3 Orderak",
+      "description": "Abre una ronda desde un menu compartido, recoge las elecciones, ve quien falta, congela el pedido y hazlo con totales fiables.",
+      "eyebrow": "Guia",
+      "heading": "Como gestionar una ronda de pedido en grupo",
+      "introduction": "Una ronda es una ocasion concreta de pedir desde un menu: la comida de hoy, el reparto de esta noche. El menu permanece y las rondas van y vienen. Esta guia explica como abrir una, recoger las elecciones sin perseguir a nadie por chat y cerrarla para que los totales dejen de moverse.",
+      "sections": [
+        {
+          "heading": "Abre la ronda",
+          "paragraphs": [
+            "Desde un menu compartido elige Iniciar ronda. Todas las personas con las que esta compartido entran automaticamente y reciben una notificacion: no hay una segunda invitacion que enviar.",
+            "La ronda toma los articulos, precios y politica de cargos tal como estan en ese momento. Los cambios posteriores en el menu no vuelven sobre una ronda ya iniciada."
+          ]
+        },
+        {
+          "heading": "Recoge las elecciones",
+          "paragraphs": [
+            "Cada persona abre la ronda y pone cantidades a lo que quiere. Ve su propio total, incluida su parte de los cargos, asi que nadie tiene que preguntar cuanto debe.",
+            "Como organizador ves quien ha respondido y quien no. Esa es la parte que mas tiempo consume en un chat: la respuesta esta en una pantalla en vez de repartida en cien mensajes.",
+            "Se pueden cambiar las elecciones mientras la ronda este abierta. Cada cambio actualiza el total al instante, asi que la cifra que ves siempre esta al dia y no es un calculo de hace diez minutos."
+          ]
+        },
+        {
+          "heading": "Congela y haz el pedido",
+          "paragraphs": [
+            "Cuando todos han respondido, congela la ronda. Congelar impide mas cambios y fija los precios, de modo que el total no se mueve mientras hablas con el restaurante.",
+            "La vista congelada agrupa los articulos iguales, que es lo que de verdad lees al pedir: ocho del mismo bocadillo en lugar de ocho lineas sueltas."
+          ]
+        },
+        {
+          "heading": "Ajusta cuentas",
+          "paragraphs": [
+            "Hecho el pedido, la parte de cada uno ya esta calculada, con IVA, servicio y su parte del envio segun la politica del menu.",
+            "Los recibos siguen disponibles al cerrar la ronda, asi que una pregunta una semana despues tiene respuesta sin depender de la memoria de nadie."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Que pasa si alguien no responde nunca?",
+          "answer": "Puedes congelar la ronda sin esa persona. Simplemente no entra en los totales, y quienes respondieron no quedan retenidos por una sola."
+        },
+        {
+          "question": "Puedo reabrir una ronda congelada?",
+          "answer": "Si, mientras no se haya completado. Reabrirla permite cambios de nuevo y recalcula los totales; una ronda completada queda como estaba para que los recibos antiguos sigan siendo exactos."
+        },
+        {
+          "question": "Ve todo el mundo lo que pidieron los demas?",
+          "answer": "Los participantes ven el pedido conjunto para que el grupo pueda revisarlo antes de enviarlo. Los totales personales siguen ligados a su dueno."
+        }
+      ]
+    },
+    "invite-friends": {
+      "navigationLabel": "Invitar amigos",
+      "seoTitle": "Como anadir amigos y compartir tu enlace de invitacion | Gama3 Orderak",
+      "description": "Dos formas de construir tu lista de amigos: buscar a alguien por su correo exacto, o compartir un enlace de 24 horas que permite a cualquiera anadirte.",
+      "eyebrow": "Guia",
+      "heading": "Como anadir amigos",
+      "introduction": "Una lista de amigos evita repetir invitaciones. Cuando alguien esta en ella puedes compartirle un menu directamente, anadirlo a un grupo o iniciar una ronda que lo incluya sin enviar nada que canjear. Hay dos formas de construirla y sirven para situaciones distintas.",
+      "sections": [
+        {
+          "heading": "Buscar por correo",
+          "paragraphs": [
+            "Abre Miembros, luego Amigos, y busca la direccion exacta con la que la persona se registro. Nadie aparece en un listado publico y las coincidencias parciales no devuelven nada: la direccion es la unica forma de encontrar a alguien aqui.",
+            "Es deliberado. Un directorio consultable permitiria a cualquiera reunir una lista de quien usa la aplicacion; exigir la direccion exacta significa que solo encuentras a quien ya te la ha dado."
+          ]
+        },
+        {
+          "heading": "Comparte tu enlace de invitacion",
+          "paragraphs": [
+            "El enlace de amistad es la via rapida cuando invitas a varias personas a la vez. Crealo en la pagina Amigos y enviarlo donde ya hablais: un mensaje, un chat de grupo, donde sea.",
+            "Quien lo abra en 24 horas puede anadirte con un toque. No apruebas a cada persona: compartir el enlace es tu consentimiento, y ese es justamente el objetivo. El mismo enlace sirve para tantas personas como lo abran.",
+            "Si prefieres aprobar a cada uno, usa la busqueda por correo y deja que te envien una solicitud. Ambos caminos llegan al mismo sitio; solo cambia quien confirma."
+          ]
+        },
+        {
+          "heading": "Solicitudes y que pasa despues",
+          "paragraphs": [
+            "Una solicitud enviada desde la busqueda espera en la pagina Solicitudes hasta que la otra persona responda. Aceptar hace la amistad reciproca de inmediato: aparecéis en la lista del otro sin repetir el paso.",
+            "Las notificaciones avisan cuando llega o se acepta una solicitud, asi que no te quedas con la duda de si llego."
+          ]
+        },
+        {
+          "heading": "Eliminar un amigo",
+          "paragraphs": [
+            "La eliminacion es inmediata y os quita de las listas del otro. No borra el historial compartido: un menu del que ambos formabais parte y las rondas en las que ya participaste siguen exactamente igual.",
+            "Eliminar a un amigo no revoca su acceso a los menus que le compartiste antes. Revocalo aparte desde la pagina Miembros del menu si es lo que pretendes."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Por que no puedo buscar por nombre?",
+          "answer": "Porque una busqueda por nombre convertiria la aplicacion en un directorio de sus usuarios. Buscar por correo exacto hace que solo encuentres a quien ya te dio su direccion."
+        },
+        {
+          "question": "Es seguro publicar mi enlace de invitacion?",
+          "answer": "Tratalo como semiprivado. Cualquiera que lo abra en 24 horas puede anadirte, asi que enviarlo donde te parezca bien que todos los presentes lo hagan."
+        },
+        {
+          "question": "Puedo detener un enlace antes de tiempo?",
+          "answer": "Si. Revocarlo lo desactiva de inmediato. Quien ya lo uso sigue en tu lista de amigos hasta que lo elimines."
+        }
+      ]
+    },
+    "work-with-groups": {
+      "navigationLabel": "Usar grupos",
+      "seoTitle": "Como usar grupos para pedidos recurrentes | Gama3 Orderak",
+      "description": "Crea un grupo una vez, comparte menus con todos a la vez y anade o quita personas sin repetir invitaciones. Con enlaces de invitacion de grupo y roles.",
+      "eyebrow": "Guia",
+      "heading": "Como usar grupos para pedidos recurrentes",
+      "introduction": "Un grupo es un conjunto con nombre de personas con las que pides a menudo: un equipo, una planta, una familia. Compartir un menu con el grupo lo comparte con todos, y quien entra despues hereda lo ya compartido. Esta guia explica como crearlo, llenarlo y mantenerlo al dia.",
+      "sections": [
+        {
+          "heading": "Crea el grupo",
+          "paragraphs": [
+            "Abre Miembros, luego Grupos de amigos, y crea un grupo con un nombre reconocible: \"Equipo de diseno\", \"Tercera planta\". Una descripcion breve ayuda cuando alguien pertenece a varios.",
+            "El grupo que creas es tuyo. Solo tu puedes renombrarlo, invitar, quitar personas o eliminarlo, y esa propiedad no se transfiere al compartir."
+          ]
+        },
+        {
+          "heading": "Anade personas",
+          "paragraphs": [
+            "Invita amigos al grupo desde su ficha. Quien ya esta en tu lista de amigos puede anadirse directamente: es la via habitual para un equipo con el que pides cada semana.",
+            "Para quienes aun no estan en tu lista, crea un enlace de invitacion de grupo y enviarlo. Quien lo abra en 24 horas entra directamente: sin solicitud de amistad previa y sin aprobacion tuya por cada persona.",
+            "Ese enlace es la forma mas rapida de llenar un grupo nuevo. Crealo una vez, pegalo en el chat del equipo y entra quien quiera entrar, sin que gestiones una cola de solicitudes."
+          ]
+        },
+        {
+          "heading": "Comparte menus con el grupo",
+          "paragraphs": [
+            "Comparte un menu con el grupo y todos pueden usarlo de inmediato. Es lo que mas repeticion ahorra: una accion en lugar de una invitacion por persona.",
+            "Quien se anada despues ve los menus ya compartidos con ese grupo. Un companero que llega en marzo no necesita que se reenvien las invitaciones de enero."
+          ]
+        },
+        {
+          "heading": "Mantenerlo al dia",
+          "paragraphs": [
+            "Quita a alguien del grupo y su acceso por esa via termina. El acceso concedido individualmente — un menu compartido directamente con esa persona — es aparte y sigue hasta que lo revoques tambien.",
+            "Los miembros pueden salir por su cuenta. Eliminar un grupo lo quita para todos, pero no borra los menus compartidos a traves de el ni las rondas ya cerradas."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Puedo buscar un grupo y unirme?",
+          "answer": "Por nombre no. A los grupos se entra con un enlace de invitacion del propietario, asi que nadie a quien no se haya invitado puede encontrarlo y entrar."
+        },
+        {
+          "question": "Todos en un grupo se ven entre si?",
+          "answer": "Los miembros ven quien mas esta: eso es lo que lo hace un grupo. No se hacen amigos automaticamente y sus correos no quedan expuestos solo por pertenecer."
+        },
+        {
+          "question": "Que pasa con un menu compartido si elimino el grupo?",
+          "answer": "El menu queda intacto: pertenece a quien lo creo. El acceso concedido por el grupo termina, asi que vuelve a compartirlo directamente o por otro grupo si aun hace falta."
+        }
+      ]
+    },
+    "fees-and-charges": {
+      "navigationLabel": "Cargos y tasas",
+      "seoTitle": "Como configurar IVA, servicio y envio | Gama3 Orderak",
+      "description": "Configura IVA, servicio y envio una vez en el menu. Elige si el envio se reparte a partes iguales o en proporcion, y mira como se calcula cada parte.",
+      "eyebrow": "Guia",
+      "heading": "Como configurar IVA, servicio y envio",
+      "introduction": "Los cargos son la parte de un pedido en grupo que genera discusiones: alguien paga el envio, alguien olvida el servicio y las cuentas dejan de cuadrar. Configurarlos una vez en el menu hace que cada ronda los aplique igual y cada parte se calcule igual.",
+      "sections": [
+        {
+          "heading": "Donde se configuran",
+          "paragraphs": [
+            "IVA, servicio y envio se configuran en el menu, no en cada pedido. Abre el menu, editalo y pon los tres valores en la seccion de precios. Cada ronda iniciada desde ese menu los hereda.",
+            "La ubicacion es deliberada. Los cargos pertenecen al restaurante, no a la ocasion: configurarlos una vez da menos trabajo y menos margen de error que reescribirlos cada noche."
+          ]
+        },
+        {
+          "heading": "IVA y servicio",
+          "paragraphs": [
+            "IVA y servicio son porcentajes aplicados al valor de lo que pidio cada persona. Quien pide el doble paga el doble de ambos, que es lo que la gente espera y rara vez hay que discutir.",
+            "Introduce el tipo que el restaurante cobra de verdad, no una cifra redondeada. Los totales solo sirven si coinciden con el recibo que te daran, y un punto porcentual de desvio en un pedido grande basta para que el organizador ponga dinero.",
+            "Cero es un valor valido. Si los precios que pusiste ya incluyen IVA, deja cero en vez de sumarla dos veces: la aplicacion nunca supone un tipo por ti."
+          ]
+        },
+        {
+          "heading": "Repartir el envio",
+          "paragraphs": [
+            "El envio es un importe fijo, no un porcentaje, asi que hay que dividirlo de algun modo. Eliges entre dos criterios: a partes iguales entre los participantes, o en proporcion a lo que pidio cada uno.",
+            "Igual es mas simple y va bien cuando los pedidos son de tamano parecido. Proporcional es mas justo cuando una persona pide para toda una familia y otra un cafe: quien genero la mayor parte del pedido carga con la mayor parte del envio."
+          ]
+        },
+        {
+          "heading": "Leer una parte",
+          "paragraphs": [
+            "El total de cada persona son sus articulos, mas su parte de IVA y servicio, mas su parte del envio segun el criterio del menu. Se muestra el desglose, no solo la cifra final, para que quien quiera comprobarlo pueda.",
+            "Una vez congelada la ronda, los tipos quedan fijados con ella. Cambiar un cargo despues solo afecta a rondas futuras: un recibo cerrado ya no se mueve."
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "El restaurante anadio un cargo inesperado. Puedo corregir una ronda cerrada?",
+          "answer": "Reabre la ronda si no se ha completado, corrige y vuelve a congelar. Una ronda completada queda como estaba para que los recibos antiguos sigan siendo exactos; en ese caso, ajustad la diferencia fuera de la aplicacion."
+        },
+        {
+          "question": "Que reparto de envio elijo?",
+          "answer": "Igual cuando los pedidos son parecidos y el grupo prefiere la sencillez. Proporcional cuando una o dos personas concentran la mayor parte del pedido, que es cuando el igual empieza a parecer injusto."
+        },
+        {
+          "question": "Se aplican los cargos a un pedido solo mio?",
+          "answer": "Si. Se aplica la misma politica de precios, asi que un pedido individual desde un menu compartido sigue mostrando lo que pagaras de verdad."
         }
       ]
     }

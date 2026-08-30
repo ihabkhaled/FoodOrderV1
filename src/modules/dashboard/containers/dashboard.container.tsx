@@ -84,6 +84,7 @@ export function DashboardContainer() {
         <div>
           <p className="eyebrow">{vm.t('welcome')}</p>
           <h1>{vm.profile?.fullName ?? vm.user?.displayName}</h1>
+          <p className="page-intro">{vm.t('dashboardIntro')}</p>
           <p>{vm.t('quickStart')}</p>
         </div>
         <div ref={setCreateElement}>

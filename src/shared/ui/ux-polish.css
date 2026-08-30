@@ -416,58 +416,11 @@ select:focus {
 }
 
 .loading-copy {
-  display: grid;
-  gap: 4px;
-}
-
-.loading-copy strong {
   color: var(--text);
   font-size: 1rem;
   letter-spacing: -0.015em;
 }
 
-.loading-copy span {
-  font-size: 0.78rem;
-}
-
-.loading-skeleton {
-  display: grid;
-  gap: 9px;
-  width: min(270px, 100%);
-  margin-top: 6px;
-}
-
-.loading-skeleton > span {
-  height: 10px;
-  overflow: hidden;
-  border-radius: 999px;
-  background: var(--soft);
-}
-
-.loading-skeleton > span::after {
-  display: block;
-  width: 45%;
-  height: 100%;
-  border-radius: inherit;
-  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--primary) 28%, white), transparent);
-  animation: loading-shimmer 1.25s ease-in-out infinite;
-  content: '';
-  transform: translateX(-120%);
-}
-
-.loading-skeleton > span:nth-child(2) {
-  width: 82%;
-}
-
-.loading-skeleton > span:nth-child(3) {
-  width: 64%;
-}
-
-@keyframes loading-shimmer {
-  to {
-    transform: translateX(250%);
-  }
-}
 
 .empty-state,
 .error-state,
@@ -749,7 +702,7 @@ select:focus {
     width: calc(100% - 12px);
   }
 
-  .bottom-nav a {
+  .bottom-nav .bottom-nav-link {
     min-width: 0;
     font-size: 0.66rem;
   }
@@ -777,7 +730,7 @@ select:focus {
     padding: 5px;
   }
 
-  .bottom-nav a {
+  .bottom-nav .bottom-nav-link {
     min-height: 46px;
     grid-template-columns: auto auto;
     align-items: center;
@@ -792,9 +745,6 @@ select:focus {
     justify-content: center;
   }
 
-  .loading-skeleton {
-    grid-column: 1 / -1;
-  }
 
   .notification-topbar .notification-panel,
   .notification-sidebar .notification-panel {
@@ -820,14 +770,10 @@ select:focus {
   .group-card,
   .nav-link,
   .notification-item,
-  .bottom-nav a {
+  .bottom-nav .bottom-nav-link {
     transform: none !important;
   }
 
-  .loading-skeleton > span::after {
-    animation: none;
-    transform: none;
-  }
 }
 
 /* Per-section loading placeholders. Each screen composes its own regions so a
@@ -856,6 +802,12 @@ select:focus {
   animation: loading-shimmer 1.25s ease-in-out infinite;
   content: '';
   transform: translateX(-120%);
+}
+
+@keyframes loading-shimmer {
+  to {
+    transform: translateX(250%);
+  }
 }
 
 .skeleton-text .skeleton-block {

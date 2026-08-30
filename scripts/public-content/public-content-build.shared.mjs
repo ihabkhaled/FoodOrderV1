@@ -175,7 +175,9 @@ export const validateCatalog = (catalog) => {
     failures.push('site.canonicalOrigin must be HTTPS');
   }
   if (catalog.locales?.length !== 13) failures.push('exactly 13 locales are required');
-  if (catalog.pages?.length !== 10) failures.push('exactly 10 public pages are required');
+  // A minimum, not a fixed count: guides are added over time. The floor still
+  // catches a catalogue that lost pages.
+  if ((catalog.pages?.length ?? 0) < 10) failures.push('at least 10 public pages are required');
 
   const localeCodes = new Set();
   for (const locale of catalog.locales || []) {
@@ -260,6 +262,9 @@ const renderLocaleLinks = (catalog, locale, page, systemRouteId) =>
     })
     .join('');
 
+const GLOBE_ICON =
+  '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18"/></svg>';
+
 const renderHeader = (catalog, locale, page, systemRouteId) => {
   const ui = uiCopy(catalog, locale);
   const home = localePath(catalog.pages[0], locale);
@@ -269,8 +274,10 @@ const renderHeader = (catalog, locale, page, systemRouteId) => {
 <a class="public-brand" href="${escapeHtml(home)}"><span class="public-brand__mark" aria-hidden="true">FO</span><span>${escapeHtml(uiCopy(catalog, locale).brandName)}</span></a>
 <nav class="public-navigation public-navigation--desktop" aria-label="${escapeHtml(ui.primaryNavigationLabel)}">${primaryLinks}</nav>
 <div class="public-header__actions">
-<details class="public-language-menu"><summary><span class="public-language-menu__prefix">${escapeHtml(ui.languageLabel)}: </span><span>${escapeHtml(locale.label)}</span></summary><ul>${renderLocaleLinks(catalog, locale, page, systemRouteId)}</ul></details>
+<details class="public-language-menu"><summary><span class="public-language-menu__globe" aria-hidden="true">${GLOBE_ICON}</span><span class="public-language-menu__prefix">${escapeHtml(ui.languageLabel)}: </span><span>${escapeHtml(locale.label)}</span></summary><ul>${renderLocaleLinks(catalog, locale, page, systemRouteId)}</ul></details>
 <button class="public-theme-toggle" type="button" data-public-theme-toggle aria-label="${escapeHtml(ui.themeToggleLabel)}" title="${escapeHtml(ui.themeToggleLabel)}" aria-pressed="false"><span class="public-theme-toggle__icon" aria-hidden="true"></span></button>
+<a class="public-auth-link" href="${escapeHtml(`${localizedApplicationPath(catalog, locale).replace(/\/app$/u, '')}/auth/login`)}">${escapeHtml(ui.signInLabel)}</a>
+<a class="public-auth-link" href="${escapeHtml(`${localizedApplicationPath(catalog, locale).replace(/\/app$/u, '')}/auth/register`)}">${escapeHtml(ui.signUpLabel)}</a>
 <a class="public-button public-button--small" href="${escapeHtml(localizedApplicationPath(catalog, locale))}">${escapeHtml(ui.openApplicationLabel)}</a>
 <details class="public-mobile-menu"><summary><span class="public-mobile-menu__icon" aria-hidden="true">☰</span><span class="public-mobile-menu__label">${escapeHtml(ui.mobileNavigationLabel)}</span></summary><nav aria-label="${escapeHtml(ui.primaryNavigationLabel)}">${primaryLinks}</nav></details>
 </div></div></header>`;
@@ -278,10 +285,19 @@ const renderHeader = (catalog, locale, page, systemRouteId) => {
 
 const renderFooter = (catalog, locale, currentPage) => {
   const ui = uiCopy(catalog, locale);
+  // Guides are listed here as well as in the sitemap. A page reachable only
+  // from a sitemap is an orphan: readers never find it and crawlers weigh it
+  // accordingly, which defeats the point of writing it.
   const footerIds = new Set([
     'about',
     'how-it-works',
     'features',
+    'create-a-menu',
+    'share-a-menu',
+    'run-an-order-round',
+    'invite-friends',
+    'work-with-groups',
+    'fees-and-charges',
     'faq',
     'contact',
     'privacy',
@@ -402,7 +418,10 @@ const structuredData = (catalog, locale, page) => {
       ],
     });
   }
-  if (page.id === 'faq' && copy.faq) {
+  // Any page carrying question-and-answer pairs earns FAQ structured data,
+  // not just the FAQ page: the guides answer real questions and should be
+  // eligible for the same rich result.
+  if (copy.faq?.length) {
     data.push({
       '@context': 'https://schema.org',
       '@type': 'FAQPage',

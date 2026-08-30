@@ -22,6 +22,18 @@ service cloud.firestore {
       allow delete: if owns(userId);
     }
 
+    // Shareable invite links. The document id IS the secret token, so a client
+    // that could query this collection could enumerate every live invitation.
+    // Creation, redemption, and revocation therefore run only through trusted
+    // callables (createInviteLinkV1100 and friends), which verify ownership and
+    // expiry. Creators may read their own links to list and revoke them; the
+    // `createdBy` guard keeps that read from becoming a directory of tokens.
+    match /inviteLinks/{token} {
+      allow get: if signedIn() && resource.data.createdBy == request.auth.uid;
+      allow list: if false;
+      allow create, update, delete: if false;
+    }
+
     match /users/{userId} {
       function validProfile() {
         return request.resource.data.id == userId

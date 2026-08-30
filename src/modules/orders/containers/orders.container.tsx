@@ -36,6 +36,7 @@ export function OrdersContainer() {
         <div>
           <p className="eyebrow">{vm.t('myOrders')}</p>
           <h1>{vm.t('orders')}</h1>
+          <p className="page-intro">{vm.t('ordersIntro')}</p>
         </div>
       </div>
 

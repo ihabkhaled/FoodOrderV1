@@ -1,3 +1,4 @@
+import { BucketInviteLinkContainer } from '@/modules/invite-links';
 import { History, Share2, Users } from '@/packages/icons';
 import {
   BackLink,
@@ -79,6 +80,10 @@ export function BucketShareContainer() {
             onRevoke={(inviteId) => {
               void vm.revokeInvite(inviteId);
             }}
+          />
+          <BucketInviteLinkContainer
+            bucketId={bucket.id}
+            bucketTitle={bucket.title}
           />
           <nav className="link-rows" aria-label={vm.t('sharing')}>
             <LinkRow

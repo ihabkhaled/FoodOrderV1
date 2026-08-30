@@ -127,9 +127,18 @@ test('core navigation and actions keep accessible touch targets', async ({ page 
 
   for (const route of ['/app', '/buckets', '/orders', '/social', '/settings']) {
     await page.goto(route);
-    const navigationLinks = page.locator('.bottom-nav a:visible');
-    await expect(navigationLinks).toHaveCount(5);
+    // Five application destinations plus Home, About, and Contact: the bottom
+    // bar carries the marketing links the sidebar has, so a phone has a route
+    // back to the public site.
+    const navigationLinks = page.locator('.bottom-nav a');
+    await expect(navigationLinks).toHaveCount(8);
     await expectMinimumTouchTargets(navigationLinks);
+    // The row no longer fits a phone, so it must scroll rather than shrink its
+    // targets below the minimum or overflow the page.
+    const navigation = page.locator('.bottom-nav');
+    expect(
+      await navigation.evaluate((element) => element.scrollWidth > element.clientWidth),
+    ).toBe(true);
     await expectMinimumTouchTargets(
       page.locator('.button:visible, .icon-button:visible'),
     );

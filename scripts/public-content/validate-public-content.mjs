@@ -180,12 +180,16 @@ for (const privatePrefix of [
   'orders',
   'sessions',
 ]) {
+  // Match the whole path segment. A bare prefix match also flagged public
+  // pages that merely start with the same word - the invite-friends guide is
+  // not the private /invite route - so the boundary is required.
   if (
-    catalog.locales.some((locale) =>
-      allLocaleSitemaps.includes(
-        `<loc>${catalog.site.canonicalOrigin}/${locale.segment}/${privatePrefix}`,
-      ),
-    )
+    catalog.locales.some((locale) => {
+      const base = `<loc>${catalog.site.canonicalOrigin}/${locale.segment}/${privatePrefix}`;
+      return (
+        allLocaleSitemaps.includes(`${base}<`) || allLocaleSitemaps.includes(`${base}/`)
+      );
+    })
   ) {
     failures.push(`private sitemap entry: ${privatePrefix}`);
   }

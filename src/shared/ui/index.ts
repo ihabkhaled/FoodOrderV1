@@ -1,4 +1,5 @@
 export { BackLink } from './back-link';
+export { BusyButton, type BusyButtonProps } from './busy-button/busy-button.component';
 export { ConfirmDialog } from './confirm-dialog';
 export { DangerReauthDialog } from './danger-reauth-dialog';
 export { EmptyState } from './empty-state';

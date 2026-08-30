@@ -3,6 +3,7 @@ import { env } from '@/platform/environment';
 
 import { FirebaseEmailAuthService } from './gateways/firebase-auth-email.gateway';
 import { FirestoreCallableGroupOrderService } from './gateways/firestore-callable-group-order.gateway';
+import { FirestoreCallableInviteLinkService } from './gateways/firestore-callable-invite-link.gateway';
 import { FirestoreCallableOrderLifecycleService } from './gateways/firestore-callable-order-lifecycle.gateway';
 import { FirestoreCallableOrderSessionService } from './gateways/firestore-callable-order-session.gateway';
 import { FirestoreCallableSessionInviteService } from './gateways/firestore-callable-session-invite.gateway';
@@ -13,6 +14,7 @@ import { FirestorePaginationService } from './gateways/firestore-pagination.gate
 import { LocalAuthService } from './gateways/local-auth.gateway';
 import { LocalDataService } from './gateways/local-data.gateway';
 import { LocalGroupOrderService } from './gateways/local-group-order.gateway';
+import { LocalInviteLinkService } from './gateways/local-invite-link.gateway';
 import { LocalNotificationService } from './gateways/local-notification.gateway';
 import { LocalOrderLifecycleService } from './gateways/local-order-lifecycle.gateway';
 import { LocalOrderSessionService } from './gateways/local-order-session.gateway';
@@ -25,6 +27,7 @@ export * from './enums';
 export { LocalAuthService } from './gateways/local-auth.gateway';
 export { LocalDataService } from './gateways/local-data.gateway';
 export { LocalGroupOrderService } from './gateways/local-group-order.gateway';
+export { LocalInviteLinkService } from './gateways/local-invite-link.gateway';
 export {
   LocalNotificationService,
   pushLocalNotification,
@@ -62,6 +65,9 @@ export const paginationService = env.firebaseEnabled
 export const socialService = env.firebaseEnabled
   ? withFirebaseErrorTranslation(new FirestoreCallableSocialService())
   : new LocalSocialManagementService();
+export const inviteLinkService = env.firebaseEnabled
+  ? withFirebaseErrorTranslation(new FirestoreCallableInviteLinkService())
+  : new LocalInviteLinkService();
 export const notificationService = env.firebaseEnabled
   ? new FirestoreNotificationService()
   : new LocalNotificationService();

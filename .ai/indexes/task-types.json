@@ -100,6 +100,25 @@
       ]
     },
     {
+      "id": "invite-links",
+      "risk": "standard",
+      "keys": [
+        "invite-links",
+        "invite links",
+        "share link",
+        "invite link",
+        "deep link",
+        "join link",
+        "universal link",
+        "app link",
+        "redeem",
+        "token"
+      ],
+      "paths": [
+        "src/modules/invite-links"
+      ]
+    },
+    {
       "id": "notifications",
       "risk": "standard",
       "keys": [
@@ -367,7 +386,9 @@
         "static site",
         "meta tag",
         "robots",
-        "feed"
+        "feed",
+        "guide page",
+        "adsense"
       ],
       "paths": [
         "scripts/public-content"

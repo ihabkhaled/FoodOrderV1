@@ -26,6 +26,7 @@ const DOMAIN_ALIASES = {
   'data-access': ['repository', 'firestore', 'query', 'persistence'],
   session: ['session'],
   'session-invites': ['invite', 'join code'],
+  'invite-links': ['share link', 'invite link', 'deep link', 'join link', 'universal link', 'app link', 'redeem', 'token'],
 };
 
 /** Cross-cutting areas that are not feature modules. */
@@ -89,7 +90,7 @@ const STATIC_DOMAINS = [
   {
     id: 'public-prerender',
     risk: 'standard',
-    keys: ['prerender', 'public site', 'static site', 'meta tag', 'robots', 'feed'],
+    keys: ['prerender', 'public site', 'static site', 'meta tag', 'robots', 'feed', 'guide page', 'adsense'],
     paths: ['scripts/public-content'],
     rules: ['15-internationalization'],
   },
@@ -107,6 +108,10 @@ const RULES_BY_KEYWORD = [
   { keys: ['type', 'interface', 'enum', 'constant'], rules: ['07-types-interfaces-enums-constants'] },
   { keys: ['error', 'exception', 'failure'], rules: ['12-error-handling'] },
   { keys: ['security', 'auth', 'permission', 'privacy', 'secret'], rules: ['13-security'] },
+  {
+    keys: ['share link', 'invite link', 'deep link', 'universal link', 'app link', 'returnto'],
+    rules: ['25-shareable-links-and-deep-linking'],
+  },
 ];
 
 const SKILLS_BY_KEYWORD = [
@@ -123,6 +128,8 @@ const SKILLS_BY_KEYWORD = [
   { keys: ['release note'], skill: 'write-release-notes' },
   { keys: ['version branch', 'start branch'], skill: 'start-version-branch' },
   { keys: ['eslint', 'typecheck', 'lint error'], skill: 'fix-eslint-typecheck' },
+  { keys: ['invite link', 'share link', 'deep link'], skill: 'add-invite-link-kind' },
+  { keys: ['guide page', 'public page', 'marketing page', 'seo content', 'adsense'], skill: 'add-public-guide-page' },
 ];
 
 /** High-risk words escalate the validation lane no matter which domain matched. */
