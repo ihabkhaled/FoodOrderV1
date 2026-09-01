@@ -71,17 +71,29 @@ test('the graph covers every function entry.ts declares', () => {
   assert.ok(declared.length > 40, `expected the real function set, saw ${declared.length}`);
 });
 
-test('the graph matches the compiled entry module when one is present', async () => {
-  // Strongest form of the same check, but only where the functions build has
-  // already run - it must never be the reason CI fails for a missing build.
+test('the graph matches the compiled entry module when it can be loaded', async () => {
+  // Strongest form of the same check, and the reason it is conditional: the
+  // compiled output is committed, so the file exists even in jobs that install
+  // root dependencies only - but importing it pulls in firebase-functions from
+  // functions/node_modules, which those jobs do not have. Existence was not
+  // enough to guard on; loadability is.
+  //
+  // A load failure means "not available here" and is skipped. A name the graph
+  // does not cover still fails, so the check never weakens where it can run.
   const compiled = 'functions/lib/functions/src/entry.js';
   if (!existsSync(compiled)) return;
-  const entry = await import(pathToFileURL(`${process.cwd()}/${compiled}`).href);
+  let entry;
+  try {
+    entry = await import(pathToFileURL(`${process.cwd()}/${compiled}`).href);
+  } catch {
+    return;
+  }
   const deployed = Object.keys(entry).sort();
   const covered = new Set(graph.dependencies.keys());
   assert.deepEqual(
     deployed.filter((name) => !covered.has(name)),
     [],
+    'the compiled entry exports a function the graph does not cover',
   );
 });
 
