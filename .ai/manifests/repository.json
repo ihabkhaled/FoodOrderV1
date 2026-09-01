@@ -40,8 +40,8 @@
     },
     {
       "path": ".github/workflows/ci.yml",
-      "bytes": 21490,
-      "hash": "d60dc7ca271711fcbb4f1ae7f192b331d0749b628c4841be900109b5190fa0b7"
+      "bytes": 22136,
+      "hash": "5b189726db9698315f372192248654c4d7231b29fcf99cea45a1790096157a91"
     },
     {
       "path": ".github/workflows/cross-browser-e2e.yml",
@@ -655,8 +655,8 @@
     },
     {
       "path": "docs/operations/functions-deploy-blockers.md",
-      "bytes": 5746,
-      "hash": "9d65a11d90c43d1ee10d35cddaf79b4320ce806df1b42ba2657211dad2e9df2c"
+      "bytes": 6436,
+      "hash": "41c773e9fd6b200d406945f883bf39023c5726083b97020fd3ed8ce242ffe8a8"
     },
     {
       "path": "docs/operations/git-hooks.md",
@@ -1585,8 +1585,8 @@
     },
     {
       "path": "rules/27-firebase-function-runtime-and-deploy-scope.md",
-      "bytes": 3335,
-      "hash": "3ba6f6156a46971113a5c4007632ca9345503ffda6967b0300eda3b251b92741"
+      "bytes": 3599,
+      "hash": "9ad42ef554c2543c1dbf47dbf191a9b4b506c23332eaa40a16a90ae07cde1bb5"
     },
     {
       "path": "rules/README.md",
@@ -1630,8 +1630,8 @@
     },
     {
       "path": "scripts/firebase-change-plan.mjs",
-      "bytes": 9628,
-      "hash": "5861212e6a68c279888c7e8dafa125dd1de5102aa876dd6375b211d22eb80400"
+      "bytes": 10937,
+      "hash": "59495c1913fe5c08abea5a613d44159e4212e571de0bca3e625780d97a8f0ba9"
     },
     {
       "path": "scripts/firebase-function-graph.mjs",
@@ -5155,8 +5155,8 @@
     },
     {
       "path": "tests/tooling/firebase-change-plan.test.mjs",
-      "bytes": 9062,
-      "hash": "4653c867080de53d9235e0227bbf1a3d82702eb8d3cacc99aa48edff6986e030"
+      "bytes": 9803,
+      "hash": "bb432d11c368f05d07a038317d0d1f3f6ecb50b047277224d913dc51e0d1f42a"
     },
     {
       "path": "tests/tooling/firebase-deployment-gate.test.ts",

@@ -84,6 +84,16 @@ skipped function silently leaves production on old code.
 See [rules/27-firebase-function-runtime-and-deploy-scope.md](../../rules/27-firebase-function-runtime-and-deploy-scope.md)
 and [skills/diagnose-firebase-deploy-scope.md](../../skills/diagnose-firebase-deploy-scope.md).
 
+**The deploy baseline is what is live, not the previous push.** A successful
+deploy tags its commit `firebase-deployed-main`, and the next run diffs from
+that tag. Diffing from the previous push loses work: the `cpu` fix in 8170e63
+was skipped because an unrelated job failed, and the following commit - a
+test-only change - correctly resolved to "nothing to deploy", leaving a
+committed fix undeployed with nothing left to notice. If the marker is missing
+(first run after adopting this), the planner falls back to the push diff rather
+than forcing a full deploy forever. To force one deliberately, run the CI
+workflow from the Actions tab: `workflow_dispatch` always deploys everything.
+
 **CI behaviour on quota.** If the *only* remaining failures are the specific `Quota exceeded for total
 allowable CPU` error, the deploy step fails with an explicit list of the pending groups — a release is
 never marked green while planned Firebase targets are still running old code. **Any other error**

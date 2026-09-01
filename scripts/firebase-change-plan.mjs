@@ -165,6 +165,34 @@ export const filterVersionOnlyReleaseFiles = (
     }
   });
 
+/**
+ * The tag recording the last commit whose Firebase deploy actually succeeded.
+ *
+ * Diffing against the previous push is wrong whenever a deploy did not run.
+ * The cpu fix in 8170e63 was skipped because an unrelated job failed, and the
+ * next push - a test-only change - correctly resolved to "nothing to deploy",
+ * so a committed fix sat undeployed with nothing left to notice it. Diffing
+ * from the last *deployed* commit instead means an undeployed change stays in
+ * scope until it is actually on production.
+ */
+export const FIREBASE_DEPLOYED_TAG = 'firebase-deployed-main';
+
+const deployedBaseline = () => {
+  try {
+    execFileSync(
+      'git',
+      ['fetch', '--no-tags', '--depth=1', 'origin',
+       `refs/tags/${FIREBASE_DEPLOYED_TAG}:refs/tags/${FIREBASE_DEPLOYED_TAG}`],
+      { stdio: 'ignore' },
+    );
+    return git(['rev-parse', `${FIREBASE_DEPLOYED_TAG}^{commit}`]);
+  } catch {
+    // No marker yet (first run after adopting this): fall back to the push
+    // diff rather than forcing a full deploy on every build forever.
+    return '';
+  }
+};
+
 const readEvent = () => {
   const eventPath = process.env.GITHUB_EVENT_PATH;
   if (!eventPath || !existsSync(eventPath)) return {};
@@ -281,7 +309,11 @@ export const resolveFirebaseChangePlan = () => {
       : planFirebaseChanges([], 'no-firebase-targets-changed');
   }
 
-  const before = typeof event.before === 'string' ? event.before : '';
+  // Prefer the last successfully deployed commit over the previous push, so a
+  // change whose deploy was skipped or cancelled remains in scope.
+  const deployed = deployedBaseline();
+  const pushBefore = typeof event.before === 'string' ? event.before : '';
+  const before = deployed || pushBefore;
   const invalidBefore = !before || /^0+$/u.test(before);
   if (eventName !== 'push' || invalidBefore) {
     return planFirebaseChanges([], 'unreliable-diff');

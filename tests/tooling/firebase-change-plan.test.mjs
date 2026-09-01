@@ -1,7 +1,9 @@
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import test from 'node:test';
 
 import {
+  FIREBASE_DEPLOYED_TAG,
   filterVersionOnlyReleaseFiles,
   isVersionOnlyPackageMetadataChange,
   normalizeChangedFiles,
@@ -261,4 +263,20 @@ test('surgical targets come from the import graph, not a hand-kept list', () => 
   const plan = planFirebaseChanges(['functions/src/social.ts']);
   assert.ok(plan.functionTargets.includes('sendFriendRequest'));
   assert.ok(!plan.functionTargets.includes('repeatGroupOrderV133'));
+});
+
+test('the deployed marker tag is the documented name', () => {
+  // ci.yml writes this tag after a successful deploy and the planner fetches
+  // it by name; a rename in one place only would silently return the planner
+  // to diffing against the previous push.
+  assert.equal(FIREBASE_DEPLOYED_TAG, 'firebase-deployed-main');
+  const workflow = readFileSync('.github/workflows/ci.yml', 'utf8');
+  assert.ok(
+    workflow.includes(`git tag --force ${FIREBASE_DEPLOYED_TAG}`),
+    'ci.yml must tag the deployed commit',
+  );
+  assert.ok(
+    workflow.includes(`git push --force origin refs/tags/${FIREBASE_DEPLOYED_TAG}`),
+    'ci.yml must publish the deployed tag',
+  );
 });

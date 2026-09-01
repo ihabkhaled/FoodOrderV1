@@ -427,8 +427,8 @@
     },
     {
       "path": "tests/tooling/firebase-change-plan.test.mjs",
-      "bytes": 9062,
-      "hash": "4653c867080de53d9235e0227bbf1a3d82702eb8d3cacc99aa48edff6986e030"
+      "bytes": 9803,
+      "hash": "bb432d11c368f05d07a038317d0d1f3f6ecb50b047277224d913dc51e0d1f42a"
     },
     {
       "path": "tests/tooling/firebase-deployment-gate.test.ts",

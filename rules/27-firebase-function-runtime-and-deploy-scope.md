@@ -35,6 +35,10 @@ arithmetic rather than hope.**
   a module `entry.ts` imports for side effects, a file outside the graph
   (`functions/package.json`, `tsconfig.json`, `packages/group-order-engine/**`),
   or a graph that fails to build.
+- The deploy baseline MUST be the last commit whose deploy succeeded
+  (tag `firebase-deployed-main`), never the previous push. A deploy that was
+  skipped or cancelled leaves committed changes undeployed, and a push diff
+  would drop them from scope permanently.
 - The deploy MUST verify that the graph covers every name `entry.ts` exports
   before trusting a narrow plan, and deploy everything if it does not. A
   skipped function silently leaves production running old code, which is worse

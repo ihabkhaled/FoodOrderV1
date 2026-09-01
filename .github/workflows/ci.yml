@@ -389,6 +389,10 @@ jobs:
     needs: all-gates-green
     runs-on: ubuntu-latest
     timeout-minutes: 45
+    # Writes the firebase-deployed-main tag recording what is live, so the
+    # next run can diff from what was actually deployed.
+    permissions:
+      contents: write
     env:
       FIREBASE_PROJECT_ID: foodorder-c997c
     steps:
@@ -450,6 +454,15 @@ jobs:
           FUNCTIONS_DEPLOY_PAUSE_MS: '10000'
           FUNCTIONS_DEPLOY_RETRIES: '2'
         run: npm run functions:deploy:batched 2>&1 | tee firebase-deploy.log
+      # Records what is actually on production. The next run diffs from here
+      # rather than from the previous push, so a change whose deploy was
+      # skipped or cancelled stays in scope until it really ships.
+      - name: Mark this commit as deployed
+        if: github.event_name != 'pull_request'
+        shell: bash
+        run: |
+          git tag --force firebase-deployed-main "${GITHUB_SHA}"
+          git push --force origin refs/tags/firebase-deployed-main
       - name: Smoke-test deployed v1.3.3 callables
         if: github.event_name != 'pull_request'
         shell: bash
