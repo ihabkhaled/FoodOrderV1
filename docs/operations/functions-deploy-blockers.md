@@ -21,7 +21,7 @@ Google also emits this transiently on the *first* 2nd-gen deploy ("Retry in a fe
 service agent propagates), so after the IAM bootstrap runs, re-running the functions deploy should
 succeed.
 
-## 2. Cloud Run CPU quota — RESOLVED IN CODE via maxInstances
+## 2. Cloud Run CPU quota — RESOLVED IN CODE via an explicit fractional `cpu`
 
 ```
 Could not create or update Cloud Run service notifyfriendrequestv150, Container Healthcheck failed.
@@ -35,42 +35,69 @@ fails). This project's quota is **hard-capped at 20,000 milli vCPU in `europe-we
 self-raised**: the GCP console routes any increase through a **sales/support request** ("contact
 sales"), so raising it is not a viable unblock.
 
-**Resolution (in code).** `functions/src/globalOptions.ts` sets `maxInstances: 1` for every function
-via `setGlobalOptions`. A deploy transiently reserves CPU for the old **and** the new revision of each
-service in the batch, so the standing reservation must sit well under the ceiling, not at it. At
-`maxInstances: 2` the reservation of 45 functions was essentially the whole quota and rollouts kept
-failing on whichever batch the region was tight for (v1.9.2 lost batches 6 and 12 this way, twice
-retried). At 1 the standing reservation is roughly half the quota, and one instance still serves up to
-80 concurrent invocations (`concurrency 80`) — far above this application's traffic.
-**If the CPU quota is ever raised via sales, `maxInstances` can be raised in `globalOptions.ts`.**
+**Resolution (in code).** `functions/src/globalOptions.ts` sets `cpu: 0.167` and
+`maxInstances: 1` explicitly.
 
-**Change-aware deploys (the time fix).** `scripts/firebase-change-plan.mjs` deploys only what changed:
-frontend/docs-only releases skip Firebase entirely, rules-only releases skip the function build, and a
-change to an isolated functions file deploys only its exported endpoints (read from the file itself —
-a hand-kept list had drifted and would have skipped `inviteFriendToGroup`). Only `functions/**` and
-`packages/group-order-engine/**` (compiled into the bundle by `functions/tsconfig.json`) trigger
-function deploys; the repo-root `package.json`/`package-lock.json` do **not** — functions never import
-the root package, and treating the root manifest as a trigger made nearly every release a 30-minute
-full deploy.
+The trap that kept this failing: **`memory` does not buy a fractional CPU.**
+firebase-tools maps every memory tier at or below 1GiB to a full vCPU
+(`memoryToGen2Cpu`), so `memory: '256MiB'` with `cpu` unset reserved **1 vCPU per
+function**. At 50 deployed functions that is 50 vCPU against a 20 vCPU quota —
+which is why deploys failed on whichever batch tipped the region over, and why
+dropping `maxInstances` from 2 to 1 helped without ever being enough.
 
-**Deploy batching (kept).** `scripts/deploy-functions-batched.mjs` (wired into the Firebase Deployment
-Gate) still builds functions once, then deploys `firestore:rules` followed by the functions in
-sequential batches (`FUNCTIONS_DEPLOY_BATCH_SIZE`, now 8 — safe with the halved standing reservation —
-with a pause and per-batch retries) so only a few Cloud Run revisions roll out at a time.
+The peak must satisfy `(DEPLOYED_COUNT + BATCH) × cpu × maxInstances < 20`,
+because a rollout transiently holds the old and new revision of every service in
+the batch. Today: `(50 + 8) × 0.167 × 1 = 9.7 vCPU`, leaving ~10 vCPU of
+headroom. `DEPLOYED_COUNT` is what `functions/src/entry.ts` re-exports (50), not
+what the source tree defines (62) — modules `entry.ts` does not re-export are
+never deployed.
+
+**Tradeoff:** Cloud Run permits concurrency above 1 only at `cpu >= 1`, so
+firebase-tools pins concurrency to 1 whenever `cpu` is fractional. Each function
+serves one caller at a time and simultaneous callers queue. These handlers are
+short Firestore reads and writes, so the queue drains in milliseconds. Raise
+`cpu` and `concurrency` together, and only after the quota is raised.
+
+**Deploy scope is derived from the import graph.**
+`scripts/firebase-function-graph.mjs` reads `entry.ts` for the deployed names —
+including aliases such as `inviteFriendToGroupV150 as inviteFriendToGroup` — then
+closes over local imports, so a change deploys only the functions that actually
+depend on it. It replaced a hand-kept list of three "isolated" files that made a
+full deploy the common case.
+
+Measured scope for representative changes:
+
+| Change | Functions deployed | Batches |
+|---|---|---|
+| Frontend or docs only | 0 | 0 |
+| Firestore rules only | 0 (rules only) | 0 |
+| One leaf module (`inviteLinks.ts`) | 5 | 1 |
+| Shared helper (`notificationCore.ts`) | 37 | 5 |
+| `socialDomain.ts` | 18 | 3 |
+| `globalOptions.ts`, `entry.ts`, deps, `firebase.json` | 50 (full) | 7 |
+
+Narrowing falls back to a full deploy whenever it cannot be proven safe, and
+`scripts/deploy-functions-batched.mjs` re-checks at deploy time that the graph
+covers every exported name — deploying everything if it does not, because a
+skipped function silently leaves production on old code.
+
+See [rules/27-firebase-function-runtime-and-deploy-scope.md](../../rules/27-firebase-function-runtime-and-deploy-scope.md)
+and [skills/diagnose-firebase-deploy-scope.md](../../skills/diagnose-firebase-deploy-scope.md).
 
 **CI behaviour on quota.** If the *only* remaining failures are the specific `Quota exceeded for total
 allowable CPU` error, the deploy step fails with an explicit list of the pending groups — a release is
 never marked green while planned Firebase targets are still running old code. **Any other error**
-(permissions, Eventarc, build, config, rules) also fails the gate hard. With `maxInstances: 1` the
-standing reservation leaves rollout headroom, so quota failures should no longer occur.
+(permissions, Eventarc, build, config, rules) also fails the gate hard. A quota-blocked batch is
+requeued once, after the others have landed and freed reservation. With the explicit `cpu: 0.167` the
+peak reservation is 9.7 of 20 vCPU, so quota failures should no longer occur at all.
 
 ## Sequence to unblock
 
 1. Ensure `secrets.FIREBASE_SERVICE_ACCOUNT*` has (temporarily) `roles/resourcemanager.projectIamAdmin`.
 2. Run **Firebase Eventarc IAM Bootstrap** (push to main or `workflow_dispatch`) — now grants the
    Eventarc service-agent role.
-3. Keep `maxInstances` low enough that `~functions × maxInstances × per-instance CPU` stays **well
-   under** the 20,000 milli vCPU quota — rollouts double-count each deploying service (currently
-   `maxInstances: 1`). Only raise it if the quota is increased.
+3. Keep `(DEPLOYED_COUNT + BATCH) × cpu × maxInstances` well under 20 vCPU — rollouts
+   double-count each deploying service (currently `cpu: 0.167`, `maxInstances: 1`, peak 9.7).
+   Only raise it if the quota is increased.
 4. Push to main (or `workflow_dispatch`) — the Firebase Deployment Gate runs the batched deploy.
 5. Remove the temporary `projectIamAdmin` grant.

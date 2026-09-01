@@ -180,8 +180,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 8997,
-      "hash": "a97064d74b77f29f0ca94ef0702f26d238cf85ba7f59fda69fa9fa5d0b7e4f7e"
+      "bytes": 9815,
+      "hash": "c33026bfef19de5cc60b2e4389946047f58bc32adab90b7f1684c2e173456314"
     },
     {
       "path": "CLAUDE.md",
@@ -655,8 +655,8 @@
     },
     {
       "path": "docs/operations/functions-deploy-blockers.md",
-      "bytes": 4909,
-      "hash": "3b8e9167ff8c3ca620b54cfc56af686812bdbc4843218444656098e4b510fbef"
+      "bytes": 5746,
+      "hash": "9d65a11d90c43d1ee10d35cddaf79b4320ce806df1b42ba2657211dad2e9df2c"
     },
     {
       "path": "docs/operations/git-hooks.md",
@@ -850,8 +850,8 @@
     },
     {
       "path": "functions/lib/functions/src/globalOptions.js",
-      "bytes": 1422,
-      "hash": "82db5e7818d3d7c20153cb434aa9c092eb2e5b7c7bc4cde2a668cc5e1d5a8d5b"
+      "bytes": 2394,
+      "hash": "ff8e80b2ce88239376472499c3a8dd78163b267ddde8d416af092e04b4ca03dc"
     },
     {
       "path": "functions/lib/functions/src/index.js",
@@ -946,12 +946,12 @@
     {
       "path": "functions/package-lock.json",
       "bytes": 112757,
-      "hash": "072db109f3db66c223c9b15894dd4e1018abef99a112345c062e7384221908ad"
+      "hash": "edd62598b790802a7f8aab5c84078e20b7ed3b0b60a4260ad19a0eabcc3a1735"
     },
     {
       "path": "functions/package.json",
       "bytes": 534,
-      "hash": "9aa204750418da7733df779c8608906b9250f798a5271d633f5b3ea1fc50d6af"
+      "hash": "74f88e29f6d92a63d0ad3bd50b2a62461cdb1f90374ccf4f081c094da7c1f438"
     },
     {
       "path": "functions/src/entry.ts",
@@ -960,8 +960,8 @@
     },
     {
       "path": "functions/src/globalOptions.ts",
-      "bytes": 1415,
-      "hash": "8cabe06aed756ec18f57ab35cae42fdaa6c5c42642915b3c118eef40c5bf2338"
+      "bytes": 2387,
+      "hash": "4af5552df2e2c24f832e0d7d1a50b75b50827c3b25d1fc79ccf9074233326348"
     },
     {
       "path": "functions/src/index.ts",
@@ -1255,13 +1255,13 @@
     },
     {
       "path": "package-lock.json",
-      "bytes": 696987,
-      "hash": "00f66845fb29c7ce38e4efa746e55accc9bfa0a3c78055826df9abf1c5f3d5c4"
+      "bytes": 697969,
+      "hash": "f57b535141a3d243c1dcd31e9155eb11bb8e26d03f6a42f5cf48e2d3cdb7af71"
     },
     {
       "path": "package.json",
       "bytes": 8953,
-      "hash": "01c2a4f41f444fb0ee2573db3d5f5f0adca233d6b31fa2aaefff7510f46fbe6e"
+      "hash": "0a18f362894dca08c94ce3fe3a59679cc419dcd412e083e1a1fce757575abc99"
     },
     {
       "path": "packages/group-order-engine/src/index.ts",
@@ -1347,6 +1347,11 @@
       "path": "release-notes/v1.10.0.md",
       "bytes": 3446,
       "hash": "95de171bfd1b2177c275e4a087eaaaddedb249c08c1a63b30a682433a9f99952"
+    },
+    {
+      "path": "release-notes/v1.10.1.md",
+      "bytes": 1464,
+      "hash": "407e8f07743da35ea63b78696de4a9e8978cddc01fbd2de5e8009b7649dcbf06"
     },
     {
       "path": "release-notes/v1.2.0.md",
@@ -1579,9 +1584,14 @@
       "hash": "e51a00662a6e6436cdefdecd54fb3e306437aca19347110319d98a0552501b97"
     },
     {
+      "path": "rules/27-firebase-function-runtime-and-deploy-scope.md",
+      "bytes": 3335,
+      "hash": "3ba6f6156a46971113a5c4007632ca9345503ffda6967b0300eda3b251b92741"
+    },
+    {
       "path": "rules/README.md",
-      "bytes": 3954,
-      "hash": "4608e9c6fd9be8acbb5b092acd27adfa2b5d91df0e3a8215d257f367b7221986"
+      "bytes": 4750,
+      "hash": "36a904b33435edc5306d49fbccb7c7d2318d357afe286d365f093c1b133f4a96"
     },
     {
       "path": "rules/versioning.md",
@@ -1615,13 +1625,18 @@
     },
     {
       "path": "scripts/deploy-functions-batched.mjs",
-      "bytes": 8149,
-      "hash": "199d0d4ef4fa864e0286818cd0e12d0ea90076b444714b8c63be6c2ff0ac1863"
+      "bytes": 8998,
+      "hash": "0a22ea2e6e54bb99ba6f59af2c9a2309eb3e1520e8e966f84beb9fc20e6521c4"
     },
     {
       "path": "scripts/firebase-change-plan.mjs",
-      "bytes": 10575,
-      "hash": "04d057d90236c46721cbf3e8c214680bcef749e79f7997237c50864d0d31559c"
+      "bytes": 9628,
+      "hash": "5861212e6a68c279888c7e8dafa125dd1de5102aa876dd6375b211d22eb80400"
+    },
+    {
+      "path": "scripts/firebase-function-graph.mjs",
+      "bytes": 6574,
+      "hash": "a4d0714af1a1981fba3ff0fed6b1224fe94f1d27c38ab227b72a574b56aca41f"
     },
     {
       "path": "scripts/i18n/check-translations.mjs",
@@ -1695,8 +1710,8 @@
     },
     {
       "path": "skills/README.md",
-      "bytes": 3150,
-      "hash": "a50afcdf53e20efb900251e8c0af7001ec2b1795a19ce0fc436202982023829d"
+      "bytes": 3269,
+      "hash": "924161fbbace4ddd596381d6b8952c780a681e73dcd03b9aeba9aa7edeac05eb"
     },
     {
       "path": "skills/add-capacitor-plugin.md",
@@ -1772,6 +1787,11 @@
       "path": "skills/create-service-or-gateway.md",
       "bytes": 2928,
       "hash": "c7ffb2ceb89e3a5788f7ce322b20b023a2d1652ee5176c4a0d9f8521d952df46"
+    },
+    {
+      "path": "skills/diagnose-firebase-deploy-scope.md",
+      "bytes": 2662,
+      "hash": "386334192f9934864ff67dbad5b70eb2096d049dfc8a12fe81ed207afcf34fbe"
     },
     {
       "path": "skills/document-exception.md",
@@ -5135,13 +5155,18 @@
     },
     {
       "path": "tests/tooling/firebase-change-plan.test.mjs",
-      "bytes": 8754,
-      "hash": "3d3b7ec2db9d7c6b46ef85839452a67e781fda79272ac44b57821560de9c24f7"
+      "bytes": 9062,
+      "hash": "4653c867080de53d9235e0227bbf1a3d82702eb8d3cacc99aa48edff6986e030"
     },
     {
       "path": "tests/tooling/firebase-deployment-gate.test.ts",
       "bytes": 1050,
       "hash": "ca39e83abff2ce8fcd0c0c958d7108db6f9f0af65e0e2f4981e2e2928693de38"
+    },
+    {
+      "path": "tests/tooling/firebase-function-graph.test.mjs",
+      "bytes": 4305,
+      "hash": "2c542eb785c23b333d1d289002db0e4941cea196ffd8cbd0f9ae8964228e2b04"
     },
     {
       "path": "tests/tooling/knowledge-routing.test.mjs",

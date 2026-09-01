@@ -29,6 +29,12 @@ non-negotiables; the rest are per-concern deep dives. Canonical agent entry:
 | 19  | [19-exceptions-policy.md](19-exceptions-policy.md)                                         | Documented deviations              |
 | 20  | [20-release-gates.md](20-release-gates.md)                                                 | CI gates and releases              |
 | 21  | [21-review-checklist.md](21-review-checklist.md)                                           | Mechanical review pass             |
+| 22  | [22-executive-function-and-delivery.md](22-executive-function-and-delivery.md) | AI executive function and delivery |
+| 23  | [23-context-memory-and-evidence.md](23-context-memory-and-evidence.md)     | Context, memory, and evidence      |
+| 24  | [24-communication-verification-and-completion.md](24-communication-verification-and-completion.md) | Communication and completion       |
+| 25  | [25-shareable-links-and-deep-linking.md](25-shareable-links-and-deep-linking.md) | Shareable links and deep linking   |
+| 26  | [26-mutating-actions-and-busy-state.md](26-mutating-actions-and-busy-state.md) | Mutating actions and busy state    |
+| 27  | [27-firebase-function-runtime-and-deploy-scope.md](27-firebase-function-runtime-and-deploy-scope.md) | Function runtime and deploy scope  |
 | —   | [versioning.md](versioning.md)                                                             | Version bump rule (pre-existing)   |
 
 When a rule fails, the code is in the wrong layer. Move or redesign the code. Do not

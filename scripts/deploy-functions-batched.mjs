@@ -117,8 +117,24 @@ if (changePlan.deployFunctions) {
       console.error(`::error::Planned Firebase targets are not exported: ${missing.join(', ')}`);
       process.exit(1);
     }
-    functionNames = [...changePlan.functionTargets];
-    console.log(`Surgical deploy: ${functionNames.length}/${allFunctionNames.length} exported functions changed.`);
+    // The graph is derived from source, so a refactor could in principle stop
+    // covering a deployed export. Skipping a changed function silently leaves
+    // production on old code, so prove coverage before trusting the plan.
+    const { buildFunctionDependencyGraph } = await import('./firebase-function-graph.mjs');
+    const covered = new Set(buildFunctionDependencyGraph().dependencies.keys());
+    const uncovered = allFunctionNames.filter((name) => !covered.has(name));
+    if (uncovered.length > 0) {
+      console.log(
+        `::warning::The dependency graph does not cover ${uncovered.join(', ')}; deploying all functions instead of risking a skip.`,
+      );
+      functionNames = allFunctionNames;
+    } else {
+      functionNames = [...changePlan.functionTargets];
+      const skipped = allFunctionNames.length - functionNames.length;
+      console.log(
+        `Surgical deploy: ${functionNames.length}/${allFunctionNames.length} functions changed; skipping ${skipped} unchanged.`,
+      );
+    }
   } else {
     functionNames = allFunctionNames;
     console.log(`Safe full-function fallback: ${functionNames.length} exported functions.`);

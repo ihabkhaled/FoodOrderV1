@@ -3,6 +3,8 @@ import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
 import process from 'node:process';
 
+import { resolveFunctionTargetsFromGraph } from './firebase-function-graph.mjs';
+
 const FULL_DEPLOY_REASONS = new Set([
   'manual-dispatch',
   'forced',
@@ -30,56 +32,29 @@ const VERSION_METADATA_PATHS = new Set([
 const PRODUCTION_TAG_PATTERN =
   /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-(0|[1-9]\d*))?$/u;
 
-// Files whose public Firebase exports are isolated enough to deploy surgically.
-// Any other Functions source/config change intentionally falls back to all
-// functions so shared-domain changes never leave production partially updated.
-//
-// The exported names are READ FROM THE FILE, never listed by hand. The previous
-// hand-kept list had already drifted — it placed inviteFriendToGroup in
-// socialV150.ts when social.ts exports it — so a surgical deploy of social.ts
-// would have left one changed function running old code in production.
-export const ISOLATED_FUNCTION_FILES = [
-  'functions/src/orderSessionsV170.ts',
-  'functions/src/social.ts',
-  'functions/src/socialV150.ts',
-];
-
-const EXPORTED_FUNCTION_PATTERN = /^export const ([A-Za-z0-9_]+) = on[A-Z]/gmu;
-
-export const exportedFunctionNames = (source) =>
-  [...String(source).matchAll(EXPORTED_FUNCTION_PATTERN)].map((match) => match[1]).sort();
+// Which functions a change requires deploying is derived from the import
+// graph (scripts/firebase-function-graph.mjs), not from a hand-kept list.
+// The previous list named three "isolated" files and fell back to deploying
+// all fifty functions for everything else - including notificationCore.ts,
+// which only four modules import. A full deploy costs thirty-five minutes, so
+// the fallback was the common case.
 
 export const normalizeChangedFiles = (files) =>
   [...new Set(files.map((file) => file.trim().replaceAll('\\', '/')).filter(Boolean))].sort();
 
-const readIsolatedExports = (file) => {
-  if (!ISOLATED_FUNCTION_FILES.includes(file)) return null;
-  try {
-    const names = exportedFunctionNames(readFileSync(file, 'utf8'));
-    // A scan that finds nothing means the file changed shape; deploying
-    // nothing for it would silently skip changed code, so fall back to all.
-    return names.length > 0 ? names : null;
-  } catch {
-    // Deleted or unreadable: a full deploy removes/refreshes it safely.
-    return null;
-  }
-};
-
-const resolveFunctionTargets = (changedFiles, readExports = readIsolatedExports) => {
+const resolveFunctionTargets = (changedFiles, resolveFromGraph = resolveFunctionTargetsFromGraph) => {
   const functionFiles = changedFiles.filter(
     (file) =>
       FUNCTION_PATHS.has(file) ||
       FUNCTION_PATH_PREFIXES.some((prefix) => file.startsWith(prefix)),
   );
   if (functionFiles.length === 0) return [];
-
-  const targets = new Set();
-  for (const file of functionFiles) {
-    const isolated = readExports(file);
-    if (!isolated) return null;
-    for (const target of isolated) targets.add(target);
+  try {
+    return resolveFromGraph(functionFiles);
+  } catch {
+    // A graph that cannot be built is not evidence that the change is narrow.
+    return null;
   }
-  return [...targets].sort();
 };
 
 export const planFirebaseChanges = (files, reason = 'changed-files') => {

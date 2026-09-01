@@ -5,6 +5,20 @@ The version bump level is decided by prompt density — see [rules/versioning.md
 
 <!-- releases -->
 
+## [1.10.1] - 2026-09-01
+
+- Set an explicit fractional `cpu` on Cloud Functions. `memory: '256MiB'` does
+  not buy a fractional CPU - firebase-tools maps every tier at or below 1GiB to
+  a full vCPU - so 50 functions reserved 50 vCPU against a 20 vCPU quota and
+  deploys failed on whichever batch tipped the region over. Peak is now 9.7.
+- Derived deploy scope from the function import graph instead of a hand-kept
+  list of isolated files, so a change deploys only the functions that depend on
+  it: 5 for a leaf module and 0 for a frontend or docs release, against 50
+  before. Aliased re-exports are mapped, and the deploy re-checks graph
+  coverage and falls back to a full deploy rather than risk skipping one.
+- Indexed rules 22 to 27 and the new deploy skill, which had been unreachable
+  from their READMEs.
+
 ## [1.10.0] - 2026-08-26
 
 - Added shareable invite links for menus, friendships, and groups: multi-use,

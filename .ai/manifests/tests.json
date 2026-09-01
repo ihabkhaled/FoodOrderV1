@@ -427,13 +427,18 @@
     },
     {
       "path": "tests/tooling/firebase-change-plan.test.mjs",
-      "bytes": 8754,
-      "hash": "3d3b7ec2db9d7c6b46ef85839452a67e781fda79272ac44b57821560de9c24f7"
+      "bytes": 9062,
+      "hash": "4653c867080de53d9235e0227bbf1a3d82702eb8d3cacc99aa48edff6986e030"
     },
     {
       "path": "tests/tooling/firebase-deployment-gate.test.ts",
       "bytes": 1050,
       "hash": "ca39e83abff2ce8fcd0c0c958d7108db6f9f0af65e0e2f4981e2e2928693de38"
+    },
+    {
+      "path": "tests/tooling/firebase-function-graph.test.mjs",
+      "bytes": 4305,
+      "hash": "2c542eb785c23b333d1d289002db0e4941cea196ffd8cbd0f9ae8964228e2b04"
     },
     {
       "path": "tests/tooling/knowledge-routing.test.mjs",

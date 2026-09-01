@@ -1,10 +1,7 @@
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
 import test from 'node:test';
 
 import {
-  ISOLATED_FUNCTION_FILES,
-  exportedFunctionNames,
   filterVersionOnlyReleaseFiles,
   isVersionOnlyPackageMetadataChange,
   normalizeChangedFiles,
@@ -202,10 +199,15 @@ test('combines isolated social targets without redeploying unrelated functions',
   assert.ok(!plan.functionTargets.includes('createOrderSessionV170'));
 });
 
-test('shared function source changes safely fall back to every function', () => {
+test('a shared helper deploys its dependents, not every function', () => {
+  // This used to fall back to all fifty functions. notificationCore is imported
+  // by four modules and not by the rest, so the graph deploys only what depends
+  // on it - the change that turns a thirty-five minute deploy into minutes.
   const plan = planFirebaseChanges(['functions/src/notificationCore.ts']);
   assert.equal(plan.deployFunctions, true);
-  assert.equal(plan.functionTargets, null);
+  assert.notEqual(plan.functionTargets, null);
+  assert.ok(plan.functionTargets.includes('sendFriendRequest'));
+  assert.ok(!plan.functionTargets.includes('repeatGroupOrderV133'));
 });
 
 test('deploys both targets when firebase.json changes', () => {
@@ -242,24 +244,21 @@ test('group-order-engine changes deploy all functions', () => {
   assert.equal(plan.functionTargets, null);
 });
 
-test('shared functions source falls back to a full deploy', () => {
-  const plan = planFirebaseChanges(['functions/src/notifications.ts']);
+test('runtime options shared by every function still force a full deploy', () => {
+  // Narrowing is only safe when it can be proven. globalOptions sets region,
+  // cpu and maxInstances for all of them, so it must never resolve narrowly.
+  const plan = planFirebaseChanges(['functions/src/globalOptions.ts']);
   assert.equal(plan.deployFunctions, true);
   assert.equal(plan.functionTargets, null);
 });
 
-test('surgical targets are read from the file, not a hand-kept list', () => {
-  // The hand-kept list had drifted: it placed inviteFriendToGroup in
-  // socialV150.ts while social.ts exports it, so a surgical social.ts deploy
-  // would have skipped a changed function.
-  const social = exportedFunctionNames(readFileSync('functions/src/social.ts', 'utf8'));
-  assert.ok(social.includes('inviteFriendToGroup'));
+test('surgical targets come from the import graph, not a hand-kept list', () => {
+  // The hand-kept list this replaced had drifted: it placed inviteFriendToGroup
+  // in socialV150.ts while entry.ts deploys it under an alias. The graph reads
+  // entry.ts, so the alias is mapped and cannot be missed.
+  // Coverage of every deployed name is asserted in
+  // tests/tooling/firebase-function-graph.test.mjs.
   const plan = planFirebaseChanges(['functions/src/social.ts']);
-  assert.deepEqual(plan.functionTargets, social);
-  for (const file of ISOLATED_FUNCTION_FILES) {
-    assert.ok(
-      exportedFunctionNames(readFileSync(file, 'utf8')).length > 0,
-      `${file} yields no exported functions; surgical deploys would skip it`,
-    );
-  }
+  assert.ok(plan.functionTargets.includes('sendFriendRequest'));
+  assert.ok(!plan.functionTargets.includes('repeatGroupOrderV133'));
 });
