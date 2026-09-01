@@ -5165,8 +5165,8 @@
     },
     {
       "path": "tests/tooling/firebase-function-graph.test.mjs",
-      "bytes": 4305,
-      "hash": "2c542eb785c23b333d1d289002db0e4941cea196ffd8cbd0f9ae8964228e2b04"
+      "bytes": 6220,
+      "hash": "7a3e7036d3c05463858d98d268625c38eb2e55f1dce2a87db2655e913210bc10"
     },
     {
       "path": "tests/tooling/knowledge-routing.test.mjs",

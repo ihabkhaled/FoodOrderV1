@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { execFileSync } from 'node:child_process';
+import { existsSync, readFileSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 import test from 'node:test';
 
@@ -16,22 +16,73 @@ import {
 const modules = readSourceModules();
 const graph = buildFunctionDependencyGraph();
 
-test('the graph covers every function entry.ts actually deploys', async () => {
+/**
+ * Deployed names read straight from entry.ts by a deliberately separate, dumber
+ * parser than the one under test. Independence is the point: if both used the
+ * same code, the assertion would only prove the code agrees with itself.
+ *
+ * This does not compile the functions. The coverage job installs root
+ * dependencies only, so shelling out to `npm --prefix functions run build`
+ * failed there while passing locally.
+ */
+const declaredDeployedNames = () => {
+  const entry = readFileSync('functions/src/entry.ts', 'utf8');
+  const names = new Set();
+
+  for (const match of entry.matchAll(/export\s*\{([^}]*)\}\s*from/gsu)) {
+    for (const binding of match[1].split(',')) {
+      const parts = binding.trim().split(/\s+as\s+/u);
+      const name = (parts.at(-1) ?? '').trim();
+      if (name) names.add(name);
+    }
+  }
+
+  for (const match of entry.matchAll(/export\s*\*\s*from\s*'\.\/([\w.-]+?)(?:\.js)?'/gu)) {
+    const seen = new Set([match[1]]);
+    const queue = [match[1]];
+    while (queue.length > 0) {
+      const moduleName = queue.pop();
+      const file = `functions/src/${moduleName}.ts`;
+      if (!existsSync(file)) continue;
+      const source = readFileSync(file, 'utf8');
+      for (const fn of source.matchAll(/^export const (\w+) = on[A-Z]/gmu)) {
+        names.add(fn[1]);
+      }
+      for (const nested of source.matchAll(/export\s*\*\s*from\s*'\.\/([\w.-]+?)(?:\.js)?'/gu)) {
+        if (!seen.has(nested[1])) {
+          seen.add(nested[1]);
+          queue.push(nested[1]);
+        }
+      }
+    }
+  }
+
+  return [...names].sort();
+};
+
+test('the graph covers every function entry.ts declares', () => {
   // The load-bearing invariant. A deployed function missing from the graph is
   // never selected, so a changed function would silently keep running old code
   // in production - worse than a slow deploy.
-  execFileSync('npm', ['--prefix', 'functions', 'run', 'build'], {
-    stdio: 'ignore',
-    shell: process.platform === 'win32',
-  });
-  const entry = await import(
-    pathToFileURL(`${process.cwd()}/functions/lib/functions/src/entry.js`).href
-  );
+  const declared = declaredDeployedNames();
+  const covered = new Set(graph.dependencies.keys());
+  const uncovered = declared.filter((name) => !covered.has(name));
+  assert.deepEqual(uncovered, [], `uncovered deployed functions: ${uncovered.join(', ')}`);
+  assert.ok(declared.length > 40, `expected the real function set, saw ${declared.length}`);
+});
+
+test('the graph matches the compiled entry module when one is present', async () => {
+  // Strongest form of the same check, but only where the functions build has
+  // already run - it must never be the reason CI fails for a missing build.
+  const compiled = 'functions/lib/functions/src/entry.js';
+  if (!existsSync(compiled)) return;
+  const entry = await import(pathToFileURL(`${process.cwd()}/${compiled}`).href);
   const deployed = Object.keys(entry).sort();
   const covered = new Set(graph.dependencies.keys());
-  const uncovered = deployed.filter((name) => !covered.has(name));
-  assert.deepEqual(uncovered, [], `uncovered deployed functions: ${uncovered.join(', ')}`);
-  assert.ok(deployed.length > 40, `expected the real function set, saw ${deployed.length}`);
+  assert.deepEqual(
+    deployed.filter((name) => !covered.has(name)),
+    [],
+  );
 });
 
 test('an aliased re-export is mapped under its deployed name', () => {
