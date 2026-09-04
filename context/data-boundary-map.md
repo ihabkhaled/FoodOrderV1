@@ -1,8 +1,8 @@
 # Data boundary map
 
 **Scope:** persistence boundaries, runtime identities, and trust boundaries for cloud/local data access.
-**Review when:** Firebase runtime service accounts, IAM bootstrap, Firestore paths/rules, or storage-mode selection changes.
-**Last verified:** 2026-09-04 against `src/modules/data-access`, `functions/src`, `firestore.rules`, and `.github/workflows/firebase-eventarc-iam.yml`.
+**Review when:** Firebase Admin bootstrap, runtime service accounts, IAM bootstrap, Firestore paths/rules, or storage-mode selection changes.
+**Last verified:** 2026-09-04 against `src/modules/data-access`, `functions/src/entry.ts`, `functions/src/firebaseAdmin.ts`, `firestore.rules`, and `.github/workflows/firebase-eventarc-iam.yml`.
 
 Rules: [../rules/06-services-and-gateways.md](../rules/06-services-and-gateways.md),
 [../rules/13-security.md](../rules/13-security.md); design:
@@ -39,12 +39,18 @@ Trust boundary is the server: `firestore.rules` + callable checks decide authori
 client fields are never trusted. Rules changes require emulator allow/deny tests
 (`npm run test:rules`, suites in `tests/firebase/`).
 
+The Functions process must establish its Admin SDK trust context before any module-level
+`getFirestore()` call runs. `functions/src/entry.ts` therefore imports
+`functions/src/firebaseAdmin.ts` first; that bootstrap calls `initializeApp()` only when
+`getApps()` is empty. Removing or reordering this dependency makes authenticated callables
+fail before their domain logic can use Firestore, while unauthenticated endpoint probes can
+still appear healthy because they return before the data access path.
+
 Gen2 HTTPS callables use the default Compute Engine runtime identity
 `<PROJECT_NUMBER>-compute@developer.gserviceaccount.com` unless a function explicitly overrides
 its service account. Because Admin SDK Firestore access is IAM-authorized rather than governed by
 client Security Rules, `.github/workflows/firebase-eventarc-iam.yml` owns and verifies the runtime
-binding `roles/datastore.user`. A reachable/authenticated callable without this binding can fail on
-its first Firestore read/write and surface to the client as a generic Functions internal error.
+binding `roles/datastore.user`.
 
 ## Domain invariants at the boundary (from `.ai/BOOTSTRAP.md`)
 

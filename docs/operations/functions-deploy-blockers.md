@@ -1,18 +1,42 @@
-# Firebase Functions deploy blockers and runtime IAM
+# Firebase Functions runtime and deploy blockers
 
-This page records production-level Firebase constraints that are easy to miss in local tests. Review it whenever the Functions runtime identity, region, deployment workflow, or Firestore storage boundary changes.
+This page records production-level Firebase constraints that are easy to miss in local tests. Review it whenever the Admin bootstrap, Functions runtime identity, region, deployment workflow, or Firestore storage boundary changes.
 
-## 0. Gen2 callable Firestore access — FIXED IN WORKFLOW
+## 0. Authenticated callables failed before Firestore — FIXED IN CODE
 
-Authenticated callable operations such as opening an order session, creating an invite link, and placing a group order all use the Firebase Admin SDK to read or write Firestore. On 2nd-generation Functions, these handlers run as the project's runtime service account; in this repository that is the default Compute Engine account:
+**Incident symptom:** unrelated authenticated operations — including opening an order session, creating a sharing link, and placing/finalizing a group order — all surfaced **“The cloud action failed. Try again.”**
+
+The shared defect was not the client callable names or region. The Functions bundle called `getFirestore()` throughout the server modules but never initialized the default Firebase Admin app. `functions/src/entry.ts` exported those Firestore-backed modules directly, and there was no `initializeApp()` anywhere in the Functions source.
+
+This escaped the deployment smoke tests because those probes intentionally send unauthenticated requests and expect `UNAUTHENTICATED`. They return before the handler executes the Firestore path, so a callable can look reachable while every authenticated operation fails later in server execution.
+
+**Resolution:** `functions/src/firebaseAdmin.ts` now performs an idempotent Admin SDK bootstrap:
+
+- inspect `getApps()`,
+- call `initializeApp()` only when no default app exists,
+- import that bootstrap first from `functions/src/entry.ts`, before Firestore-backed callable/trigger modules evaluate.
+
+`tests/tooling/firebase-deployment-gate.test.ts` protects the entrypoint ordering and bootstrap contract.
+
+**Why this shape:** several function modules create a Firestore handle at module scope. Initializing once at the production entrypoint fixes the whole server bundle without duplicating bootstrap logic in every module.
+
+**When not to use this pattern:** if a second Functions entrypoint is introduced, it must import the bootstrap itself; do not assume importing the current `entry.ts` indirectly. If all module-scope Admin SDK access is later removed and initialization moves into a dedicated runtime factory, update the regression test and this document together.
+
+**Business meaning:** a missing Admin app makes multiple unrelated collaborative-order features fail after authentication, so the UI can misleadingly look like several separate cloud outages. Treat this bootstrap as a production dependency, not setup boilerplate.
+
+**Operational consequence:** this code change requires the Functions bundle to redeploy. IAM changes alone do not repair an already deployed bundle that lacks `initializeApp()`.
+
+**Staleness trigger:** review this section when `functions/src/entry.ts`, `functions/src/firebaseAdmin.ts`, Firebase Admin SDK initialization, or server module-level `getFirestore()` usage changes.
+
+## 1. Gen2 callable Firestore IAM — HARDENED IN WORKFLOW
+
+Authenticated callable operations use the Firebase Admin SDK to read or write Firestore. On 2nd-generation Functions, these handlers run as the project's runtime service account; in this repository that is the default Compute Engine account:
 
 `<PROJECT_NUMBER>-compute@developer.gserviceaccount.com`
 
-Do not rely on an inherited or automatically granted Editor role. Projects created under secure-by-default IAM policies may not grant broad permissions to default service accounts, and removing a previously inherited Editor grant can expose the same failure later.
+During the incident investigation, production showed that this account already inherited `roles/editor`, so missing Firestore IAM was **not the root cause of the current outage**. However, relying on broad inherited Editor access is fragile and unnecessarily permissive.
 
-The runtime needs the narrow Firestore data-plane role `roles/datastore.user`. Without it, the HTTPS callable itself is reachable and authentication can succeed, but the first Admin SDK Firestore operation fails server-side. Firebase then surfaces an internal Functions error, which the client intentionally translates to the generic message **“The cloud action failed. Try again.”** This is why unrelated Firestore-backed actions can fail with exactly the same UI message.
-
-`.github/workflows/firebase-eventarc-iam.yml` now owns this binding. On every main push or manual run it:
+The runtime now also receives the narrow Firestore data-plane role `roles/datastore.user`. `.github/workflows/firebase-eventarc-iam.yml` owns this binding. On every main push or manual run it:
 
 - resolves the Gen2 runtime compute service account,
 - idempotently grants `roles/datastore.user` when it is missing, and
@@ -24,9 +48,9 @@ This binding is for the trusted server runtime only. It does not bypass callable
 
 **Operational consequence:** the GitHub deployer must be able to update project IAM for the one-time grant. If it cannot, temporarily grant the deployer `roles/resourcemanager.projectIamAdmin`, rerun **Firebase Runtime and Eventarc IAM Bootstrap**, confirm the verification step passes, then remove the elevated deployer role.
 
-**Staleness trigger:** review this section when `functions/src/globalOptions.ts`, Firebase function service accounts, `.github/workflows/firebase-eventarc-iam.yml`, or the callable persistence backend changes.
+**Staleness trigger:** review this section when Firebase function service accounts, `.github/workflows/firebase-eventarc-iam.yml`, or the callable persistence backend changes.
 
-## 1. Eventarc Service Agent permission — FIXED in the workflow
+## 2. Eventarc Service Agent permission — FIXED in the workflow
 
 ```
 Permission denied while using the Eventarc Service Agent ... verify that it has
@@ -44,7 +68,7 @@ Google also emits this transiently on the *first* 2nd-gen deploy ("Retry in a fe
 service agent propagates), so after the IAM bootstrap runs, re-running the functions deploy should
 succeed.
 
-## 2. Cloud Run CPU quota — RESOLVED IN CODE via an explicit fractional `cpu`
+## 3. Cloud Run CPU quota — RESOLVED IN CODE via an explicit fractional `cpu`
 
 ```
 Could not create or update Cloud Run service notifyfriendrequestv150, Container Healthcheck failed.
@@ -126,9 +150,9 @@ peak reservation is 9.7 of 20 vCPU, so quota failures should no longer occur at 
 
 ## Sequence to unblock
 
-1. Push to `main` or manually run **Firebase Runtime and Eventarc IAM Bootstrap**. It grants and verifies `roles/datastore.user` for the Gen2 runtime account.
-2. If that IAM mutation is denied, temporarily grant the GitHub deployer `roles/resourcemanager.projectIamAdmin`, rerun the bootstrap, then remove the elevated role.
-3. For a first notification-trigger deployment, the same workflow also bootstraps the Pub/Sub, compute, and Eventarc service-agent roles.
-4. Keep `(DEPLOYED_COUNT + BATCH) × cpu × maxInstances` well under 20 vCPU — rollouts double-count each deploying service (currently `cpu: 0.167`, `maxInstances: 1`, peak 9.7). Only raise it if the quota is increased.
-5. Push to main (or `workflow_dispatch`) — the Firebase Deployment Gate runs the batched deploy when Firebase targets changed.
-6. Retest an authenticated Firestore-backed callable such as opening an order session or creating an invite link.
+1. Ensure the deployed Functions entrypoint includes `functions/src/firebaseAdmin.ts`; code changes to this bootstrap require a Functions redeploy.
+2. Push to `main` (or run `workflow_dispatch`) so the Firebase Deployment Gate deploys the changed Functions bundle.
+3. The separate **Firebase Runtime and Eventarc IAM Bootstrap** grants/verifies `roles/datastore.user` for the Gen2 runtime account.
+4. If that IAM mutation is denied, temporarily grant the GitHub deployer `roles/resourcemanager.projectIamAdmin`, rerun the bootstrap, then remove the elevated role.
+5. Keep `(DEPLOYED_COUNT + BATCH) × cpu × maxInstances` well under 20 vCPU — rollouts double-count each deploying service (currently `cpu: 0.167`, `maxInstances: 1`, peak 9.7). Only raise it if the quota is increased.
+6. Retest an authenticated Firestore-backed callable such as opening an order session, creating an invite link, and finalizing a group order.
