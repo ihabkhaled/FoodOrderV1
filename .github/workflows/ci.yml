@@ -312,6 +312,9 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7
+      # Keep the machine-readable report non-blocking. The next step is the
+      # policy gate. Trivy SARIF otherwise includes severities outside the
+      # requested filter unless limit-severities-for-sarif is enabled.
       - name: Trivy filesystem report
         uses: aquasecurity/trivy-action@v0.36.0
         with:
@@ -321,9 +324,10 @@ jobs:
           format: sarif
           output: trivy-results.sarif
           severity: CRITICAL,HIGH
+          limit-severities-for-sarif: true
           ignore-unfixed: true
           trivyignores: .trivyignore.yaml
-          exit-code: '1'
+          exit-code: '0'
           skip-dirs: node_modules,dist,coverage,android,ios,ui-shots
       - uses: actions/upload-artifact@v7
         if: always()
