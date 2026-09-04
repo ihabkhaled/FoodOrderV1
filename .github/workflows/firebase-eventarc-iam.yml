@@ -1,4 +1,4 @@
-name: Firebase Eventarc IAM Bootstrap
+name: Firebase Runtime and Eventarc IAM Bootstrap
 
 on:
   push:
@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   bootstrap-eventarc-iam:
-    name: Bootstrap Eventarc Service-Agent IAM
+    name: Bootstrap Firebase Runtime and Eventarc IAM
     runs-on: ubuntu-latest
     timeout-minutes: 12
     env:
@@ -62,7 +62,52 @@ jobs:
             --project="${FIREBASE_PROJECT_ID}" \
             --quiet
 
-      - name: Skip bootstrap after the first notification trigger exists
+      - name: Ensure Gen2 runtime Firestore IAM
+        shell: bash
+        run: |
+          set -euo pipefail
+          project_number="$(gcloud projects describe "${FIREBASE_PROJECT_ID}" --format='value(projectNumber)')"
+          compute_account="${project_number}-compute@developer.gserviceaccount.com"
+          runtime_roles="$(gcloud projects get-iam-policy "${FIREBASE_PROJECT_ID}" \
+            --flatten='bindings[].members' \
+            --filter="bindings.members:serviceAccount:${compute_account}" \
+            --format='value(bindings.role)')"
+
+          if printf '%s\n' "${runtime_roles}" | grep --fixed-strings --line-regexp --quiet 'roles/datastore.user'; then
+            echo "The Gen2 runtime service account already has roles/datastore.user."
+            exit 0
+          fi
+
+          echo "Granting roles/datastore.user to the Gen2 runtime service account ${compute_account}."
+          if ! gcloud projects add-iam-policy-binding "${FIREBASE_PROJECT_ID}" \
+            --member="serviceAccount:${compute_account}" \
+            --role="roles/datastore.user" \
+            --condition=None \
+            --quiet; then
+            echo "::error::The GitHub deployer ${FIREBASE_DEPLOYER_EMAIL:-unknown} cannot grant Firestore data access to the Gen2 runtime service account."
+            echo "::error::Grant the deployer roles/resourcemanager.projectIamAdmin temporarily, rerun this workflow once, then remove that elevated role."
+            echo "gcloud projects add-iam-policy-binding ${FIREBASE_PROJECT_ID} --member=serviceAccount:${FIREBASE_DEPLOYER_EMAIL:-DEPLOYER_EMAIL} --role=roles/resourcemanager.projectIamAdmin --condition=None"
+            exit 1
+          fi
+
+      - name: Verify Gen2 runtime Firestore IAM
+        shell: bash
+        run: |
+          set -euo pipefail
+          project_number="$(gcloud projects describe "${FIREBASE_PROJECT_ID}" --format='value(projectNumber)')"
+          compute_account="${project_number}-compute@developer.gserviceaccount.com"
+          runtime_roles="$(gcloud projects get-iam-policy "${FIREBASE_PROJECT_ID}" \
+            --flatten='bindings[].members' \
+            --filter="bindings.members:serviceAccount:${compute_account}" \
+            --format='value(bindings.role)')"
+
+          if ! printf '%s\n' "${runtime_roles}" | grep --fixed-strings --line-regexp --quiet 'roles/datastore.user'; then
+            echo "::error::The Gen2 runtime service account ${compute_account} is missing roles/datastore.user."
+            exit 1
+          fi
+          echo "Gen2 runtime Firestore IAM is configured."
+
+      - name: Skip Eventarc bootstrap after the first notification trigger exists
         id: existing
         shell: bash
         run: |
@@ -73,7 +118,7 @@ jobs:
             --project="${FIREBASE_PROJECT_ID}" \
             >/dev/null 2>&1; then
             echo "required=false" >> "${GITHUB_OUTPUT}"
-            echo "The v1.5.0 Eventarc notification triggers already exist; no project-IAM mutation is needed."
+            echo "The v1.5.0 Eventarc notification triggers already exist; no Eventarc project-IAM mutation is needed."
           else
             echo "required=true" >> "${GITHUB_OUTPUT}"
             echo "First Eventarc deployment detected; configuring the Google-managed service agents."
@@ -117,7 +162,7 @@ jobs:
           # enablement, but bind it explicitly to avoid the first-deploy race.
           bind_role "${eventarc_agent}" roles/eventarc.serviceAgent
 
-      - name: Verify required service-agent bindings
+      - name: Verify required Eventarc service-agent bindings
         if: steps.existing.outputs.required == 'true'
         shell: bash
         run: |

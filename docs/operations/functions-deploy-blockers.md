@@ -1,7 +1,30 @@
-# Firebase Functions deploy blockers (v1.5.0 notifications)
+# Firebase Functions deploy blockers and runtime IAM
 
-The v1.5.0 2nd-gen notification functions failed to deploy. Two distinct causes — one fixed in code,
-one that is a GCP-side owner action.
+This page records production-level Firebase constraints that are easy to miss in local tests. Review it whenever the Functions runtime identity, region, deployment workflow, or Firestore storage boundary changes.
+
+## 0. Gen2 callable Firestore access — FIXED IN WORKFLOW
+
+Authenticated callable operations such as opening an order session, creating an invite link, and placing a group order all use the Firebase Admin SDK to read or write Firestore. On 2nd-generation Functions, these handlers run as the project's runtime service account; in this repository that is the default Compute Engine account:
+
+`<PROJECT_NUMBER>-compute@developer.gserviceaccount.com`
+
+Do not rely on an inherited or automatically granted Editor role. Projects created under secure-by-default IAM policies may not grant broad permissions to default service accounts, and removing a previously inherited Editor grant can expose the same failure later.
+
+The runtime needs the narrow Firestore data-plane role `roles/datastore.user`. Without it, the HTTPS callable itself is reachable and authentication can succeed, but the first Admin SDK Firestore operation fails server-side. Firebase then surfaces an internal Functions error, which the client intentionally translates to the generic message **“The cloud action failed. Try again.”** This is why unrelated Firestore-backed actions can fail with exactly the same UI message.
+
+`.github/workflows/firebase-eventarc-iam.yml` now owns this binding. On every main push or manual run it:
+
+- resolves the Gen2 runtime compute service account,
+- idempotently grants `roles/datastore.user` when it is missing, and
+- verifies the role before continuing to the Eventarc-specific bootstrap.
+
+This binding is for the trusted server runtime only. It does not bypass callable authorization checks or client Firestore Security Rules, and it must not be widened to Editor or Owner merely to make a callable work.
+
+**When not to use this pattern:** if Functions are moved to a dedicated `serviceAccount`, grant the Firestore role to that explicit runtime identity instead and update the workflow/test in the same change. If callables stop using Firestore, remove the role rather than keeping unused access.
+
+**Operational consequence:** the GitHub deployer must be able to update project IAM for the one-time grant. If it cannot, temporarily grant the deployer `roles/resourcemanager.projectIamAdmin`, rerun **Firebase Runtime and Eventarc IAM Bootstrap**, confirm the verification step passes, then remove the elevated deployer role.
+
+**Staleness trigger:** review this section when `functions/src/globalOptions.ts`, Firebase function service accounts, `.github/workflows/firebase-eventarc-iam.yml`, or the callable persistence backend changes.
 
 ## 1. Eventarc Service Agent permission — FIXED in the workflow
 
@@ -103,11 +126,9 @@ peak reservation is 9.7 of 20 vCPU, so quota failures should no longer occur at 
 
 ## Sequence to unblock
 
-1. Ensure `secrets.FIREBASE_SERVICE_ACCOUNT*` has (temporarily) `roles/resourcemanager.projectIamAdmin`.
-2. Run **Firebase Eventarc IAM Bootstrap** (push to main or `workflow_dispatch`) — now grants the
-   Eventarc service-agent role.
-3. Keep `(DEPLOYED_COUNT + BATCH) × cpu × maxInstances` well under 20 vCPU — rollouts
-   double-count each deploying service (currently `cpu: 0.167`, `maxInstances: 1`, peak 9.7).
-   Only raise it if the quota is increased.
-4. Push to main (or `workflow_dispatch`) — the Firebase Deployment Gate runs the batched deploy.
-5. Remove the temporary `projectIamAdmin` grant.
+1. Push to `main` or manually run **Firebase Runtime and Eventarc IAM Bootstrap**. It grants and verifies `roles/datastore.user` for the Gen2 runtime account.
+2. If that IAM mutation is denied, temporarily grant the GitHub deployer `roles/resourcemanager.projectIamAdmin`, rerun the bootstrap, then remove the elevated role.
+3. For a first notification-trigger deployment, the same workflow also bootstraps the Pub/Sub, compute, and Eventarc service-agent roles.
+4. Keep `(DEPLOYED_COUNT + BATCH) × cpu × maxInstances` well under 20 vCPU — rollouts double-count each deploying service (currently `cpu: 0.167`, `maxInstances: 1`, peak 9.7). Only raise it if the quota is increased.
+5. Push to main (or `workflow_dispatch`) — the Firebase Deployment Gate runs the batched deploy when Firebase targets changed.
+6. Retest an authenticated Firestore-backed callable such as opening an order session or creating an invite link.

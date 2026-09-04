@@ -1,5 +1,9 @@
 # Data boundary map
 
+**Scope:** persistence boundaries, runtime identities, and trust boundaries for cloud/local data access.
+**Review when:** Firebase runtime service accounts, IAM bootstrap, Firestore paths/rules, or storage-mode selection changes.
+**Last verified:** 2026-09-04 against `src/modules/data-access`, `functions/src`, `firestore.rules`, and `.github/workflows/firebase-eventarc-iam.yml`.
+
 Rules: [../rules/06-services-and-gateways.md](../rules/06-services-and-gateways.md),
 [../rules/13-security.md](../rules/13-security.md); design:
 [../architecture/adrs/0005-data-access-module.md](../architecture/adrs/0005-data-access-module.md).
@@ -29,10 +33,18 @@ schema and helper set per pair (EXC-1: they live together in `data-access`).
 | Personal documents (profile, personal buckets/orders/notifications) | `users/{uid}/...`                             | owner-only by rules                                                     |
 | Shared buckets + contributions                                      | `buckets/{bucketId}/...`                      | member-based rules mirroring the owner/editor/contributor/viewer matrix |
 | Group-order mutations (finalize, custom items, transitions, repeat) | callables `*V132`/`*V133` (see CI smoke list) | server-side auth + input validation                                     |
+| Order sessions and share-link mutations                             | callables `*V170`/`*V1100`                    | server-side auth + Admin SDK Firestore access                           |
 
 Trust boundary is the server: `firestore.rules` + callable checks decide authorization;
 client fields are never trusted. Rules changes require emulator allow/deny tests
 (`npm run test:rules`, suites in `tests/firebase/`).
+
+Gen2 HTTPS callables use the default Compute Engine runtime identity
+`<PROJECT_NUMBER>-compute@developer.gserviceaccount.com` unless a function explicitly overrides
+its service account. Because Admin SDK Firestore access is IAM-authorized rather than governed by
+client Security Rules, `.github/workflows/firebase-eventarc-iam.yml` owns and verifies the runtime
+binding `roles/datastore.user`. A reachable/authenticated callable without this binding can fail on
+its first Firestore read/write and surface to the client as a generic Functions internal error.
 
 ## Domain invariants at the boundary (from `.ai/BOOTSTRAP.md`)
 

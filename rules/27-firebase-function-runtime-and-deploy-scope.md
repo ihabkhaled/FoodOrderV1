@@ -1,4 +1,4 @@
-# 27 — Firebase function runtime options and deploy scope
+# 27 — Firebase function runtime options, IAM, and deploy scope
 
 ## Rule
 
@@ -26,6 +26,24 @@ arithmetic rather than hope.**
 - Raise the reservation only after the regional quota is raised. The quota is
   not self-service; Google gates increases behind a sales request.
 
+**Gen2 runtime data access MUST be explicit and least-privileged.**
+
+- Any deployed callable that uses the Firebase Admin SDK for Firestore reads or
+  writes MUST run under a service account with `roles/datastore.user` (or a
+  narrower purpose-built role that is proven sufficient).
+- With the repository's default Gen2 identity, the runtime principal is
+  `<PROJECT_NUMBER>-compute@developer.gserviceaccount.com`.
+- `.github/workflows/firebase-eventarc-iam.yml` MUST idempotently grant and
+  verify `roles/datastore.user` for that runtime principal. Do not depend on a
+  default service account inheriting Editor: secure-by-default IAM policy or a
+  later hardening pass can remove that implicit access and make otherwise
+  healthy callables fail only after authentication reaches Firestore.
+- Do NOT grant Editor or Owner to the runtime merely to repair Firestore calls.
+- If a function is moved to an explicit `serviceAccount`, update the IAM
+  bootstrap and its regression test in the same change before deployment.
+- If the runtime no longer needs Firestore, remove the data-plane role rather
+  than retaining unused access.
+
 **Deploy scope MUST be derived, never listed.**
 
 - Which functions a change requires is computed from the import graph in
@@ -51,6 +69,13 @@ quota. Deploys then fail container health checks with "Quota exceeded for total
 allowable CPU" on whichever batch happens to tip the region over — an error
 that reads like flakiness and is in fact arithmetic.
 
+Authenticated callables can also look healthy at the HTTP boundary while every
+real operation fails: an unauthenticated smoke test returns before the Admin SDK
+touches Firestore. If the Gen2 runtime identity lacks Firestore data access, the
+first server-side read/write becomes a Functions internal error and unrelated UI
+operations collapse into the same generic cloud-action failure. Runtime IAM is
+therefore a deployed dependency and must be verified like code.
+
 Separately, a hand-kept list of "isolated" files made a full deploy the common
 case: any change to a shared helper redeployed all fifty functions for
 thirty-five minutes, even though only four modules import it.
@@ -60,6 +85,9 @@ thirty-five minutes, even though only four modules import it.
 - `setGlobalOptions` without an explicit `cpu`.
 - Raising `maxInstances` or `cpu` without recomputing the peak against 20 vCPU.
 - Adding `concurrency` above 1 while `cpu` is fractional.
+- Relying on an implicit Editor grant for the Gen2 runtime's Firestore access.
+- Granting Editor or Owner to the runtime as a Firestore fix.
+- Changing a function runtime service account without updating IAM verification.
 - Reintroducing a hand-maintained file-to-function map.
 - Narrowing a deploy on an unproven assumption that a change is local.
 
@@ -67,9 +95,13 @@ thirty-five minutes, even though only four modules import it.
 
 - `tests/tooling/firebase-function-graph.test.mjs` builds the real entry module
   and asserts the graph covers every deployed name.
-- `tests/tooling/firebase-deployment-gate.test.ts` asserts the runtime options.
-- `scripts/deploy-functions-batched.mjs` re-checks coverage at deploy time and
-  falls back to a full deploy on any gap.
+- `tests/tooling/firebase-deployment-gate.test.ts` asserts the runtime capacity
+  options and that the IAM bootstrap owns/verifies `roles/datastore.user` for
+  the Gen2 compute runtime account.
+- `.github/workflows/firebase-eventarc-iam.yml` verifies the production runtime
+  Firestore role on every main push and manual bootstrap run.
+- `scripts/deploy-functions-batched.mjs` re-checks graph coverage at deploy time
+  and falls back to a full deploy on any gap.
 
 ## Related
 
