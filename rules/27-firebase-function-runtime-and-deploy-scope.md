@@ -50,6 +50,21 @@ arithmetic rather than hope.**
 - If the runtime no longer needs Firestore, remove the data-plane role rather
   than retaining unused access.
 
+**Known project-account deployment denials MUST fail fast.**
+
+- A Cloud Functions v2 `generateUploadUrl` HTTP 403 that explicitly says
+  `please check billing account associated and retry` is a project-level
+  billing/write-access blocker, not a transient function-batch failure.
+- `scripts/deploy-functions-batched.mjs` MUST stop retrying and MUST skip all
+  remaining function batches after this exact billing denial is observed.
+- CI MUST print the project-level owner action: restore an active billing
+  account for the target Google Cloud project, then rerun the deployment gate.
+- Do not hide, downgrade, or convert this blocker into success. The production
+  deployment marker must not advance until a real Functions deploy succeeds.
+- Retries are reserved for failures that can reasonably change during the same
+  run, such as the known CPU-quota recovery path or transient platform
+  throttling; a persistent billing 403 is not one of them.
+
 **Deploy scope MUST be derived, never listed.**
 
 - Which functions a change requires is computed from the import graph in
@@ -86,6 +101,12 @@ quota. Deploys then fail container health checks with "Quota exceeded for total
 allowable CPU" on whichever batch happens to tip the region over — an error
 that reads like flakiness and is in fact arithmetic.
 
+A later deployment exposed a different class of failure: Cloud Functions v2
+refused `generateUploadUrl` with HTTP 403 and explicitly told the deployer to
+check the project's billing account. Retrying seven batches cannot change a
+project-level billing state, so the deployer now treats that exact response as a
+fatal blocker and stops immediately instead of manufacturing repeated noise.
+
 Separately, a hand-kept list of "isolated" files made a full deploy the common
 case: any change to a shared helper redeployed all fifty functions for
 thirty-five minutes, even though only four modules import it.
@@ -100,6 +121,8 @@ thirty-five minutes, even though only four modules import it.
 - Relying on an implicit Editor grant for the Gen2 runtime's Firestore access.
 - Granting Editor or Owner to the runtime as a Firestore fix.
 - Changing a function runtime service account without updating IAM verification.
+- Retrying a known billing-account `generateUploadUrl` 403 across function batches.
+- Marking a commit deployed after a project-level billing write denial.
 - Reintroducing a hand-maintained file-to-function map.
 - Narrowing a deploy on an unproven assumption that a change is local.
 
@@ -107,13 +130,14 @@ thirty-five minutes, even though only four modules import it.
 
 - `tests/tooling/firebase-deployment-gate.test.ts` asserts that `entry.ts` loads
   `firebaseAdmin.ts` before function exports and that the bootstrap remains
-  idempotent, in addition to runtime capacity and IAM checks.
+  idempotent, in addition to runtime capacity, IAM, and billing fail-fast checks.
 - `tests/tooling/firebase-function-graph.test.mjs` builds the real entry module
   and asserts the graph covers every deployed name.
 - `.github/workflows/firebase-eventarc-iam.yml` verifies the production runtime
   Firestore role on every main push and manual bootstrap run.
-- `scripts/deploy-functions-batched.mjs` re-checks graph coverage at deploy time
-  and falls back to a full deploy on any gap.
+- `scripts/deploy-functions-batched.mjs` re-checks graph coverage at deploy time,
+  falls back to a full deploy on any gap, and aborts the remaining batches on the
+  recognized non-transient billing write denial.
 
 ## Related
 
