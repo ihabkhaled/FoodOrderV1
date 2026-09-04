@@ -148,11 +148,49 @@ never marked green while planned Firebase targets are still running old code. **
 requeued once, after the others have landed and freed reservation. With the explicit `cpu: 0.167` the
 peak reservation is 9.7 of 20 vCPU, so quota failures should no longer occur at all.
 
+## 4. Project billing write denial — EXTERNAL BLOCKER, FAILS FAST
+
+```
+Request to .../functions:generateUploadUrl had HTTP Error: 403,
+Write access to project 'foodorder-c997c' was denied:
+please check billing account associated and retry
+```
+
+This is not a Functions source, IAM-runtime, Eventarc, or CPU-quota failure. The
+Cloud Functions API is refusing the upload before any function revision can be
+created because Google Cloud considers the project's billing-backed write access
+unavailable.
+
+**Required owner action:** open Google Cloud Billing for project
+`foodorder-c997c` and verify that the project is linked to an **active billing
+account** that is not suspended, closed, or otherwise blocking paid resource
+writes. Do not keep retrying the deploy until that state is corrected; the exact
+same `generateUploadUrl` request will continue to return 403.
+
+The Firebase CLI also prints a generic App Engine suggestion around this error.
+For this incident, the decisive line is the Cloud Functions v2
+`generateUploadUrl` 403 explicitly naming the billing account, so treat billing
+as the blocker unless a later run returns a different error.
+
+`scripts/deploy-functions-batched.mjs` now recognizes this exact billing denial
+as non-transient. It stops after the first failed function batch, skips all
+remaining batches, and prints the project-level billing action instead of
+wasting retries across every function group.
+
+**Operational consequence:** the Admin-bootstrap fix remains committed but is
+**not live** until a Functions deploy succeeds and `firebase-deployed-main` moves
+to a commit containing that fix.
+
+**Staleness trigger:** review this section if Google changes the Cloud Functions
+billing error text or if the deployment path stops using
+`functions:generateUploadUrl`.
+
 ## Sequence to unblock
 
 1. Ensure the deployed Functions entrypoint includes `functions/src/firebaseAdmin.ts`; code changes to this bootstrap require a Functions redeploy.
-2. Push to `main` (or run `workflow_dispatch`) so the Firebase Deployment Gate deploys the changed Functions bundle.
-3. The separate **Firebase Runtime and Eventarc IAM Bootstrap** grants/verifies `roles/datastore.user` for the Gen2 runtime account.
-4. If that IAM mutation is denied, temporarily grant the GitHub deployer `roles/resourcemanager.projectIamAdmin`, rerun the bootstrap, then remove the elevated role.
-5. Keep `(DEPLOYED_COUNT + BATCH) × cpu × maxInstances` well under 20 vCPU — rollouts double-count each deploying service (currently `cpu: 0.167`, `maxInstances: 1`, peak 9.7). Only raise it if the quota is increased.
-6. Retest an authenticated Firestore-backed callable such as opening an order session, creating an invite link, and finalizing a group order.
+2. Verify Google Cloud project `foodorder-c997c` is linked to an active billing account. If `generateUploadUrl` returns the billing 403 above, fix billing before retrying CI.
+3. Push to `main` (or run `workflow_dispatch`) so the Firebase Deployment Gate deploys the changed Functions bundle.
+4. The separate **Firebase Runtime and Eventarc IAM Bootstrap** grants/verifies `roles/datastore.user` for the Gen2 runtime account.
+5. If that IAM mutation is denied, temporarily grant the GitHub deployer `roles/resourcemanager.projectIamAdmin`, rerun the bootstrap, then remove the elevated role.
+6. Keep `(DEPLOYED_COUNT + BATCH) × cpu × maxInstances` well under 20 vCPU — rollouts double-count each deploying service (currently `cpu: 0.167`, `maxInstances: 1`, peak 9.7). Only raise it if the quota is increased.
+7. Retest an authenticated Firestore-backed callable such as opening an order session, creating an invite link, and finalizing a group order.
