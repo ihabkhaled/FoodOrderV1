@@ -1,7 +1,7 @@
 # Skill: diagnose and tune Firebase deploy scope and CPU quota
 
-Use when a Firebase deploy fails on CPU quota, takes too long, or you need to
-know which functions a change will redeploy.
+Use when a Firebase deploy fails on CPU quota, billing/project write access,
+takes too long, or you need to know which functions a change will redeploy.
 
 ## Required reading
 
@@ -53,14 +53,34 @@ not flakiness. Before retrying, recompute step 2. The deploy script requeues a
 quota-blocked batch once, after the others have landed and freed reservation;
 if it still fails, the standing reservation is genuinely too high.
 
-## 5. Force a full deploy deliberately
+## 5. Read a billing write denial correctly
+
+If Cloud Functions v2 fails `functions:generateUploadUrl` with HTTP 403 and says:
+
+```text
+Write access to project '<project>' was denied:
+please check billing account associated and retry
+```
+
+stop treating the failure as a function-batch problem. It is a project-level
+billing/write-access blocker. Verify the target Google Cloud project is linked
+to an active billing account before retrying the deployment.
+
+The Firebase CLI may also print a generic App Engine suggestion in the same
+output. Prefer the explicit `generateUploadUrl` billing 403 when classifying this
+incident. `scripts/deploy-functions-batched.mjs` is expected to stop after the
+first such denial and skip the remaining function batches.
+
+## 6. Force a full deploy deliberately
 
 ```bash
 FORCE_FIREBASE_DEPLOY=1 npm run functions:deploy:batched
 ```
 
 Use after changing runtime options if you need certainty, or when recovering
-from a partially applied deploy.
+from a partially applied deploy. Do not force or repeatedly rerun while the
+project is returning the billing 403 from step 5; fix the project billing state
+first.
 
 ## Traps
 
@@ -69,3 +89,5 @@ from a partially applied deploy.
 - `entry.ts` can rename on re-export (`inviteFriendToGroupV150 as
   inviteFriendToGroup`). The deployed name is the alias.
 - `cpu` and `concurrency` move together. Fractional CPU pins concurrency to 1.
+- A project-level billing denial is not made transient by splitting or retrying
+  function batches.
