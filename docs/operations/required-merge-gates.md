@@ -34,6 +34,26 @@ skipped, cancelled, neutral, timed-out, or action-required states are not accept
 - Push runs remain required incident detection, but PR protection must prevent them from
   discovering failures that were already reproducible on the merge candidate.
 
+## Trivy security gate
+
+The Trivy job intentionally has two phases with different responsibilities:
+
+1. `Trivy filesystem report` writes the SARIF artifact and must not decide pass/fail. It
+   uses `limit-severities-for-sarif: true` so the report honors the configured
+   `CRITICAL,HIGH` severity scope, and it exits zero after producing the artifact.
+2. `Enforce Trivy high and critical findings` is the policy gate. It performs the same
+   filesystem scan in table mode with `exit-code: '1'`, so any unfixed HIGH or CRITICAL
+   finding still fails CI.
+
+Do not make the SARIF reporting pass blocking. Trivy SARIF includes all severities by
+default unless `limit-severities-for-sarif` is enabled, which can turn a MEDIUM advisory
+into a false failure even though repository policy blocks HIGH and CRITICAL findings.
+Likewise, do not weaken or remove the enforcement pass merely to make CI green.
+
+**When not to use this pattern:** if repository policy changes to block MEDIUM findings,
+change the severity on both phases and the dependency policy together. Do not encode a
+stricter threshold accidentally in the reporting format.
+
 ## Audit
 
 Use GitHub CLI to inspect the effective protection and the latest commit:
