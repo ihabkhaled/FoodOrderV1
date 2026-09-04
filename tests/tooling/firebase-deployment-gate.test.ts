@@ -13,6 +13,10 @@ const runtimeIamWorkflow = readFileSync(
   '.github/workflows/firebase-eventarc-iam.yml',
   'utf8',
 );
+const batchedDeployer = readFileSync(
+  'scripts/deploy-functions-batched.mjs',
+  'utf8',
+);
 
 describe('Firebase deployment capacity gate', () => {
   it('keeps the standing CPU reservation well under the regional ceiling', () => {
@@ -45,5 +49,15 @@ describe('Firebase deployment capacity gate', () => {
     expect(runtimeIamWorkflow).toContain('roles/datastore.user');
     expect(runtimeIamWorkflow).toContain('compute@developer.gserviceaccount.com');
     expect(runtimeIamWorkflow).toContain('Verify Gen2 runtime Firestore IAM');
+  });
+
+  it('fails fast when Google Cloud rejects function uploads because billing is unavailable', () => {
+    expect(batchedDeployer).toContain(
+      'please check billing account associated and retry',
+    );
+    expect(batchedDeployer).toContain("fatal: 'billing'");
+    expect(batchedDeployer).toContain(
+      'remaining batches were intentionally skipped',
+    );
   });
 });
