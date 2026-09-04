@@ -1,3 +1,4 @@
+import './firebaseAdmin.js';
 import './globalOptions.js';
 
 export {

@@ -3,6 +3,11 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 
 const globalOptions = readFileSync('functions/src/globalOptions.ts', 'utf8');
+const functionEntry = readFileSync('functions/src/entry.ts', 'utf8');
+const firebaseAdminBootstrap = readFileSync(
+  'functions/src/firebaseAdmin.ts',
+  'utf8',
+);
 const ciWorkflow = readFileSync('.github/workflows/ci.yml', 'utf8');
 const runtimeIamWorkflow = readFileSync(
   '.github/workflows/firebase-eventarc-iam.yml',
@@ -17,6 +22,17 @@ describe('Firebase deployment capacity gate', () => {
     // whole 20,000 milli-vCPU quota and deploys failed container health checks.
     expect(globalOptions).toContain('maxInstances: 1');
     expect(globalOptions).not.toContain('maxInstances: 2');
+  });
+
+  it('initializes Firebase Admin before Firestore-backed function modules load', () => {
+    const adminImport = "import './firebaseAdmin.js';";
+    expect(functionEntry).toContain(adminImport);
+    expect(functionEntry.indexOf(adminImport)).toBeLessThan(
+      functionEntry.indexOf("export {"),
+    );
+    expect(firebaseAdminBootstrap).toContain("from 'firebase-admin/app'");
+    expect(firebaseAdminBootstrap).toContain('getApps().length === 0');
+    expect(firebaseAdminBootstrap).toContain('initializeApp();');
   });
 
   it('retries transient platform throttling before failing callable smoke tests', () => {
