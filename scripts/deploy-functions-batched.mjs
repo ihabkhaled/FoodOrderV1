@@ -60,23 +60,37 @@ const firebase = (args) => {
 };
 
 const QUOTA_MARK = 'Quota exceeded for total allowable CPU';
+const BILLING_WRITE_DENIAL_MARK =
+  'please check billing account associated and retry';
+const isBillingWriteDenied = (out) =>
+  out.toLowerCase().includes(BILLING_WRITE_DENIAL_MARK);
 
 const failedGroups = [];
 const attemptDeploy = (label, args) => {
   let lastOut = '';
   for (let attempt = 0; attempt <= retries; attempt += 1) {
-    if (attempt > 0) console.log(`::warning::Retry ${attempt}/${retries} for ${label}`);
+    if (attempt > 0)
+      console.log(`::warning::Retry ${attempt}/${retries} for ${label}`);
     const { ok, out } = firebase(args);
     lastOut = out;
-    if (ok) return { ok: true, out };
+    if (ok) return { ok: true, out, fatal: null };
+    if (isBillingWriteDenied(out)) {
+      console.error(
+        `::error::Firebase Cloud Functions deployment is blocked because Google Cloud denied write access to project ${projectId} due to its billing-account state.`,
+      );
+      console.error(
+        `::error::Verify that project ${projectId} is linked to an active Google Cloud billing account, then rerun the Firebase Deployment Gate. This is not a retryable batch failure.`,
+      );
+      return { ok: false, out, fatal: 'billing' };
+    }
   }
-  return { ok: false, out: lastOut };
+  return { ok: false, out: lastOut, fatal: null };
 };
 const deployWithRetry = (label, args) => {
-  const { ok, out } = attemptDeploy(label, args);
+  const { ok, out, fatal } = attemptDeploy(label, args);
   if (!ok) {
     console.error(`::error::Deploy failed after retries: ${label}`);
-    failedGroups.push({ label, out });
+    failedGroups.push({ label, out, fatal });
   }
   return ok;
 };
@@ -110,17 +124,26 @@ if (changePlan.deployFunctions) {
 
   const module = await import(pathToFileURL(ENTRY).href);
   const allFunctionNames = Object.keys(module).sort();
-  if (Array.isArray(changePlan.functionTargets) && changePlan.functionTargets.length > 0) {
+  if (
+    Array.isArray(changePlan.functionTargets) &&
+    changePlan.functionTargets.length > 0
+  ) {
     const available = new Set(allFunctionNames);
-    const missing = changePlan.functionTargets.filter((name) => !available.has(name));
+    const missing = changePlan.functionTargets.filter(
+      (name) => !available.has(name),
+    );
     if (missing.length > 0) {
-      console.error(`::error::Planned Firebase targets are not exported: ${missing.join(', ')}`);
+      console.error(
+        `::error::Planned Firebase targets are not exported: ${missing.join(', ')}`,
+      );
       process.exit(1);
     }
     // The graph is derived from source, so a refactor could in principle stop
     // covering a deployed export. Skipping a changed function silently leaves
     // production on old code, so prove coverage before trusting the plan.
-    const { buildFunctionDependencyGraph } = await import('./firebase-function-graph.mjs');
+    const { buildFunctionDependencyGraph } = await import(
+      './firebase-function-graph.mjs'
+    );
     const covered = new Set(buildFunctionDependencyGraph().dependencies.keys());
     const uncovered = allFunctionNames.filter((name) => !covered.has(name));
     if (uncovered.length > 0) {
@@ -137,22 +160,32 @@ if (changePlan.deployFunctions) {
     }
   } else {
     functionNames = allFunctionNames;
-    console.log(`Safe full-function fallback: ${functionNames.length} exported functions.`);
+    console.log(
+      `Safe full-function fallback: ${functionNames.length} exported functions.`,
+    );
   }
 }
 
 if (changePlan.deployRules) {
-  deployWithRetry('firestore:rules', ['deploy', '--only', 'firestore:rules', '--force']);
+  deployWithRetry('firestore:rules', [
+    'deploy',
+    '--only',
+    'firestore:rules',
+    '--force',
+  ]);
 } else {
   console.log('Firestore rules unchanged. Skipping rules deployment.');
 }
 
+let fatalDeployBlocker = null;
 if (changePlan.deployFunctions) {
   const batches = [];
   for (let index = 0; index < functionNames.length; index += batchSize) {
     batches.push(functionNames.slice(index, index + batchSize));
   }
-  console.log(`Deploying ${functionNames.length} functions in ${batches.length} batch(es) of up to ${batchSize}.`);
+  console.log(
+    `Deploying ${functionNames.length} functions in ${batches.length} batch(es) of up to ${batchSize}.`,
+  );
 
   // A batch that fails purely on CPU quota is requeued to the end instead of
   // being declared dead: every batch that lands lowers the standing
@@ -165,35 +198,53 @@ if (changePlan.deployFunctions) {
     const only = batch.map((name) => `functions:${name}`).join(',');
     const label = `batch ${index}/${total} (${batch.join(', ')})`;
     console.log(`\n=== Deploying ${label} ===`);
-    const { ok, out } = attemptDeploy(label, ['deploy', '--only', only, '--force']);
+    const { ok, out, fatal } = attemptDeploy(label, [
+      'deploy',
+      '--only',
+      only,
+      '--force',
+    ]);
     if (ok) return;
+    if (fatal) {
+      fatalDeployBlocker = { label, out, fatal };
+      failedGroups.push(fatalDeployBlocker);
+      return;
+    }
     if (!finalPass && out.includes(QUOTA_MARK)) {
-      console.log(`::warning::${label} hit the CPU quota; requeued for after the other batches.`);
+      console.log(
+        `::warning::${label} hit the CPU quota; requeued for after the other batches.`,
+      );
       requeued.push(batch);
       return;
     }
     console.error(`::error::Deploy failed after retries: ${label}`);
-    failedGroups.push({ label, out });
+    failedGroups.push({ label, out, fatal: null });
   };
 
   for (const [index, batch] of batches.entries()) {
     deployBatch(batch, index + 1, batches.length, false);
+    if (fatalDeployBlocker) break;
     if (index < batches.length - 1 && pauseMs > 0) {
       console.log(`Pausing ${pauseMs}ms to let Cloud Run CPU free up...`);
       await sleep(pauseMs);
     }
   }
 
-  if (requeued.length > 0) {
-    console.log(`\nRetrying ${requeued.length} quota-blocked batch(es) now that earlier rollouts freed reservation...`);
+  if (!fatalDeployBlocker && requeued.length > 0) {
+    console.log(
+      `\nRetrying ${requeued.length} quota-blocked batch(es) now that earlier rollouts freed reservation...`,
+    );
     await sleep(Math.max(pauseMs, 30000));
     for (const [index, batch] of requeued.entries()) {
       deployBatch(batch, index + 1, requeued.length, true);
+      if (fatalDeployBlocker) break;
       if (index < requeued.length - 1 && pauseMs > 0) await sleep(pauseMs);
     }
   }
 } else {
-  console.log('Cloud Functions unchanged. Skipping function build and deployment.');
+  console.log(
+    'Cloud Functions unchanged. Skipping function build and deployment.',
+  );
 }
 
 restoreConfig();
@@ -206,6 +257,16 @@ if (failedGroups.length === 0) {
   ].filter(Boolean);
   console.log(`\nFirebase deployment complete: ${deployed.join(' + ')}.`);
   process.exit(0);
+}
+
+if (fatalDeployBlocker?.fatal === 'billing') {
+  console.error(
+    '::error::Firebase deployment stopped after the first billing-denied function batch; remaining batches were intentionally skipped.',
+  );
+  console.error(
+    `::error::Fix the active billing account linked to Google Cloud project ${projectId}, then rerun this gate.`,
+  );
+  process.exit(1);
 }
 
 const REAL_ERROR =
@@ -227,5 +288,7 @@ if (quotaOnly) {
   process.exit(1);
 }
 
-console.error(`::error::${failedGroups.length} deploy group(s) failed with non-quota errors.`);
+console.error(
+  `::error::${failedGroups.length} deploy group(s) failed with non-quota errors.`,
+);
 process.exit(1);
