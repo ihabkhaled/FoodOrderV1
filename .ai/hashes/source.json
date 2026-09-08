@@ -508,7 +508,7 @@
   "src/shared/ui/empty-state/index.ts": "bd9d97990735863183af986e918d114dbae5f16bde34a3b85513c28831adc181",
   "src/shared/ui/error-state/error-state.component.tsx": "d194b577ee748ce9ffe04190663b5a57b106fb2af6eb41666eec4fcaec6ac000",
   "src/shared/ui/error-state/index.ts": "dd6cc1568e2d4a6ee13513dfb40e1f6aa3f54b00a7a0f25e5ae3dd8c148c1532",
-  "src/shared/ui/feature-tour/feature-tour.component.tsx": "7342a95aa3a1ff7bd41b4818a8acc9b7ca308bb95b49abf9bf13b642bfb23e90",
+  "src/shared/ui/feature-tour/feature-tour.component.tsx": "1ca7456beb92f37945a445d1bce04d40620525998579f4ab7a48007fecd28f11",
   "src/shared/ui/feature-tour/feature-tour.container.tsx": "db06189bcac3a0a0d41e7540b3c750d50b2bb30544612285681af79996ffaa08",
   "src/shared/ui/feature-tour/feature-tour.types.ts": "ebfa785bb3b5118c89a507e3399734dac7ca7e578dbb43e8f02bc816eafa4ec4",
   "src/shared/ui/feature-tour/index.ts": "d089e4d184c7ed5115fbdd2e36dddf4ed6521ef53c03da5401a768159a676028",

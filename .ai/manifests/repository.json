@@ -1370,8 +1370,8 @@
     },
     {
       "path": "release-notes/v1.11.0.md",
-      "bytes": 5103,
-      "hash": "b5820949222b551c37ba34a1858f2be656cd0f988528e363b6cfd788f9e7c86d"
+      "bytes": 6677,
+      "hash": "2e6d3dca05d810c82536b98c654dc6f6fbdea9ba93ce54ccd0980cb4aa2931ac"
     },
     {
       "path": "release-notes/v1.2.0.md",
@@ -4435,8 +4435,8 @@
     },
     {
       "path": "src/shared/ui/feature-tour/feature-tour.component.tsx",
-      "bytes": 2186,
-      "hash": "7342a95aa3a1ff7bd41b4818a8acc9b7ca308bb95b49abf9bf13b642bfb23e90"
+      "bytes": 2205,
+      "hash": "1ca7456beb92f37945a445d1bce04d40620525998579f4ab7a48007fecd28f11"
     },
     {
       "path": "src/shared/ui/feature-tour/feature-tour.container.tsx",
@@ -4875,8 +4875,8 @@
     },
     {
       "path": "tests/e2e/feature-tour.spec.ts",
-      "bytes": 4437,
-      "hash": "2c352f6b3bdd3923d63832016e6f9dba0e185586041ffcefd77e84ad46d28a42"
+      "bytes": 5182,
+      "hash": "f212e534b1c84d888a245dd152b4c7e4964e317ef80c3995fb0139bf1b8e049c"
     },
     {
       "path": "tests/e2e/group-order.spec.ts",
