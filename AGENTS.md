@@ -8,7 +8,11 @@ this document. If any instruction file disagrees with this one, this one wins.
 
 ## Project identity
 
-FoodOrderV1 is a mobile-first food-bucket and group-order application:
+FoodOrderV1 is a mobile-first food-bucket and group-order application. For
+the business rules behind the code — domain object lifecycle, bucket roles,
+pricing policy, plan entitlements — see
+[docs/product/business-overview.md](docs/product/business-overview.md);
+each module's own `README.md` has its implementation detail.
 
 - **Stack**: React 19, Vite 8, TypeScript (7.0.2 primary + 5.9.3 compatibility), Capacitor 8
   (Android built in CI; iOS project committed), Firebase (Auth, Firestore, Functions callables)

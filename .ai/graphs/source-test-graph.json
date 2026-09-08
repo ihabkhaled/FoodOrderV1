@@ -1,6 +1,11 @@
 {
   "edges": [
     {
+      "source": "src/app/README.md",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/app/app-bootstrap.component.tsx",
       "tests": [],
       "relationship": "inferred"
@@ -347,6 +352,11 @@
     },
     {
       "source": "src/modules/dashboard/routes/dashboard.routes.tsx",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/data-access/README.md",
       "tests": [],
       "relationship": "inferred"
     },
@@ -901,6 +911,11 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/invite-links/README.md",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/invite-links/components/invite-link-panel/invite-link-preview.component.tsx",
       "tests": [],
       "relationship": "inferred"
@@ -1426,6 +1441,11 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/modules/session-invites/README.md",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/modules/session-invites/components/guest-session-order/guest-session-order.component.tsx",
       "tests": [],
       "relationship": "inferred"
@@ -1557,6 +1577,11 @@
     },
     {
       "source": "src/modules/session-invites/types/session-invite-ui.types.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/session/README.md",
       "tests": [],
       "relationship": "inferred"
     },
@@ -2001,7 +2026,17 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/packages/capacitor-core/README.md",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/packages/capacitor-core/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/packages/capacitor-haptics/README.md",
       "tests": [],
       "relationship": "inferred"
     },
@@ -2011,7 +2046,17 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/packages/capacitor-local-notifications/README.md",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/packages/capacitor-local-notifications/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/packages/capacitor-network/README.md",
       "tests": [],
       "relationship": "inferred"
     },
@@ -2021,7 +2066,17 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/packages/capacitor-preferences/README.md",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/packages/capacitor-preferences/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/packages/capacitor-push-notifications/README.md",
       "tests": [],
       "relationship": "inferred"
     },
@@ -2031,7 +2086,17 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/packages/capacitor-status-bar/README.md",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/packages/capacitor-status-bar/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/packages/firebase/README.md",
       "tests": [],
       "relationship": "inferred"
     },
@@ -2081,7 +2146,17 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/packages/icons/README.md",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/packages/icons/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/packages/router/README.md",
       "tests": [],
       "relationship": "inferred"
     },
@@ -2091,7 +2166,17 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/packages/vercel-analytics/README.md",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/packages/vercel-analytics/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/packages/vercel-speed-insights/README.md",
       "tests": [],
       "relationship": "inferred"
     },
@@ -2101,7 +2186,17 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/packages/virtuoso/README.md",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/packages/virtuoso/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/platform/browser/README.md",
       "tests": [],
       "relationship": "inferred"
     },
@@ -2206,12 +2301,22 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/platform/crypto/README.md",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/platform/crypto/index.ts",
       "tests": [],
       "relationship": "inferred"
     },
     {
       "source": "src/platform/crypto/password-hash.adapter.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/platform/device/README.md",
       "tests": [],
       "relationship": "inferred"
     },
@@ -2271,12 +2376,22 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/platform/environment/README.md",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/platform/environment/environment.adapter.ts",
       "tests": [],
       "relationship": "inferred"
     },
     {
       "source": "src/platform/environment/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/platform/network/README.md",
       "tests": [],
       "relationship": "inferred"
     },
@@ -2306,6 +2421,11 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/platform/storage/README.md",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/platform/storage/index.ts",
       "tests": [],
       "relationship": "inferred"
@@ -2317,6 +2437,11 @@
     },
     {
       "source": "src/platform/storage/web-storage.adapter.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/helpers/README.md",
       "tests": [],
       "relationship": "inferred"
     },
@@ -2352,6 +2477,11 @@
     },
     {
       "source": "src/shared/helpers/validation.helper.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/i18n/README.md",
       "tests": [],
       "relationship": "inferred"
     },
@@ -2446,6 +2576,11 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/shared/types/README.md",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/shared/types/index.ts",
       "tests": [],
       "relationship": "inferred"
@@ -2457,6 +2592,11 @@
     },
     {
       "source": "src/shared/types/routing.types.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/ui/README.md",
       "tests": [],
       "relationship": "inferred"
     },

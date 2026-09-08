@@ -325,8 +325,8 @@
     },
     {
       "path": "AGENTS.md",
-      "bytes": 15940,
-      "hash": "af3c57be3b0de7087f285461fdc0b93de6f335ac2a460bb85124482cb3f7cd45"
+      "bytes": 16197,
+      "hash": "bf0c1dcd360b53fd432c0c08f321fa483f2b816147ed353c67f1edd1a238b334"
     },
     {
       "path": "CHANGELOG.md",
@@ -350,8 +350,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 6393,
-      "hash": "81256a3913e1e040be8eff874fef9ba28beaddd9a351731924b825f9ab88c7a5"
+      "bytes": 6553,
+      "hash": "c851c9e1ffafa9caa6ebfcca620486eab8f9a079a63a8f3cd61abced4c83ed3d"
     },
     {
       "path": "agents/README.md",
@@ -852,6 +852,11 @@
       "path": "docs/operations/versioning.md",
       "bytes": 8116,
       "hash": "5da4c8b9f3563b52a9b624c03e0b2e527da1ac29a353cd6cf3cd9798a03690b4"
+    },
+    {
+      "path": "docs/product/business-overview.md",
+      "bytes": 8338,
+      "hash": "af96a0bc12f779e75d6cf4e2136b6b5fc31d64c0a00389805658cdd574812832"
     },
     {
       "path": "docs/superpowers/plans/2026-07-29-v1.8.0-bucket-templates-ux.md",
@@ -1510,8 +1515,8 @@
     },
     {
       "path": "release-notes/v1.11.0.md",
-      "bytes": 11998,
-      "hash": "a62d7f11b8321f2a743516a29c0a16677e0498ae1718e0bbdc9122ced4e8c1f0"
+      "bytes": 13775,
+      "hash": "5c8f0053ae1a91bf38c2b5d3bf58c25157d0c660b8180b1bbcef02fe272688c4"
     },
     {
       "path": "release-notes/v1.2.0.md",
@@ -2029,6 +2034,11 @@
       "hash": "6efd3a167539ab9f295036d0c98dac6075748e8bafc579283816dafb002f31d8"
     },
     {
+      "path": "src/app/README.md",
+      "bytes": 3314,
+      "hash": "428e400e5329151b0054a5067f875ddd211bb541618c4fa521c7c5777544cd9f"
+    },
+    {
       "path": "src/app/app-bootstrap.component.tsx",
       "bytes": 819,
       "hash": "3a9e00ba6421453979511b486e2a1277e162faf487f922c343c8eb717287813c"
@@ -2377,6 +2387,11 @@
       "path": "src/modules/dashboard/routes/dashboard.routes.tsx",
       "bytes": 445,
       "hash": "3749dc76e195659543908ddabc03d961af36e70a3c7f362f73a5ae44bc416747"
+    },
+    {
+      "path": "src/modules/data-access/README.md",
+      "bytes": 4874,
+      "hash": "1b7275e597fe95429a58c513dd8aad4a1ac45b5fe1bf0564573c805c4faec7c1"
     },
     {
       "path": "src/modules/data-access/contracts/auth-service.interfaces.ts",
@@ -2929,6 +2944,11 @@
       "hash": "e5d0a5c8121aea22f270449ee401ce147b3e2236f190bde409f03eae40b0f835"
     },
     {
+      "path": "src/modules/invite-links/README.md",
+      "bytes": 2558,
+      "hash": "fe0e9f9f8517670252ef1f22714e2c92831686ee702952577e3acfe22b2d5434"
+    },
+    {
       "path": "src/modules/invite-links/components/invite-link-panel/invite-link-preview.component.tsx",
       "bytes": 1853,
       "hash": "1c4d8da00d304367590296854cb3ae3b1e2585dc874feef25251f226dcd4e92c"
@@ -3454,6 +3474,11 @@
       "hash": "76e8d2bab237423b9eb17707aa8de5b4a65847b24fe5aad612ddae1f45733f54"
     },
     {
+      "path": "src/modules/session-invites/README.md",
+      "bytes": 3178,
+      "hash": "2d42170cf46715841a14c3672081f5a797c1b933b493df87719a4218b2ff19cb"
+    },
+    {
       "path": "src/modules/session-invites/components/guest-session-order/guest-session-order.component.tsx",
       "bytes": 6817,
       "hash": "f6ff74c8545834c0d4af28dfe3d592dab4f046d2460ee083d240828646b133fa"
@@ -3587,6 +3612,11 @@
       "path": "src/modules/session-invites/types/session-invite-ui.types.ts",
       "bytes": 2228,
       "hash": "a841844babea501cd459bf0896fdc2340808828950fa228249d4ffe1bcbe0f28"
+    },
+    {
+      "path": "src/modules/session/README.md",
+      "bytes": 2654,
+      "hash": "b99f85d26f51c7cee6c824df5a563067edf22480a341389ad2449060b0853e2b"
     },
     {
       "path": "src/modules/session/hooks/use-app.hook.ts",
@@ -4029,9 +4059,19 @@
       "hash": "1d1767f6ea82f083d24e13d947e4ad9c0d4112e28bd66840278c8d76d6e321de"
     },
     {
+      "path": "src/packages/capacitor-core/README.md",
+      "bytes": 1368,
+      "hash": "729c34ad0a3f51d9586af643df66c64ed3370d2f90b35c99b3f0de51a7e02ac9"
+    },
+    {
       "path": "src/packages/capacitor-core/index.ts",
       "bytes": 45,
       "hash": "fabcab123e32fa3e8a7c1eac51840720f6a86d2c4345e72004150e4005beea14"
+    },
+    {
+      "path": "src/packages/capacitor-haptics/README.md",
+      "bytes": 894,
+      "hash": "d8d69d9aa3c647e6e0c6ce169a24217fee5dc8a6676ec29818d30f024edffc5e"
     },
     {
       "path": "src/packages/capacitor-haptics/index.ts",
@@ -4039,9 +4079,19 @@
       "hash": "ea61eab0077cfa51c2cedba399f3f4554e7d4563d720f8bc9c22762ef098eec2"
     },
     {
+      "path": "src/packages/capacitor-local-notifications/README.md",
+      "bytes": 767,
+      "hash": "7d98be009da7c7d26e93ab57e429d24185c0493af4181dad66ed7008aa2ef5de"
+    },
+    {
       "path": "src/packages/capacitor-local-notifications/index.ts",
       "bytes": 69,
       "hash": "1c9211237c95f3aa20177152de40d63e55d52f20451db8eb1eb42bc2e385fe74"
+    },
+    {
+      "path": "src/packages/capacitor-network/README.md",
+      "bytes": 679,
+      "hash": "9c3015b5661e951bb1b4167759db55e5e7dba97f89a1d5fa373cd0586d20294f"
     },
     {
       "path": "src/packages/capacitor-network/index.ts",
@@ -4049,9 +4099,19 @@
       "hash": "049a625db76b6521a49302d4c632365669dd72e04e2dd4765324fd869d1f189b"
     },
     {
+      "path": "src/packages/capacitor-preferences/README.md",
+      "bytes": 828,
+      "hash": "3dc49903ef9f1774976cfb9fddad7e5c7b3d90baf2ce9946b87c01d7a375bd38"
+    },
+    {
       "path": "src/packages/capacitor-preferences/index.ts",
       "bytes": 54,
       "hash": "32f049ee1976010bc9587b49d94ef09492865e896d6fa484eb0b505dc8a284e3"
+    },
+    {
+      "path": "src/packages/capacitor-push-notifications/README.md",
+      "bytes": 702,
+      "hash": "aa4a1c4f565b8ec83bc6eca843bba86d87261bbdaf4a4332d50780999d64db7e"
     },
     {
       "path": "src/packages/capacitor-push-notifications/index.ts",
@@ -4059,9 +4119,19 @@
       "hash": "0650c4efff200b401f678caa3c80479ff651154fcb408872a5b3fb4d707e206b"
     },
     {
+      "path": "src/packages/capacitor-status-bar/README.md",
+      "bytes": 728,
+      "hash": "39b981d633086f213dd26846352a219a676eda9bd958cd083b6027d5981765d0"
+    },
+    {
       "path": "src/packages/capacitor-status-bar/index.ts",
       "bytes": 58,
       "hash": "f53adde8dc177950e8fb8a0eeb383bd83860e47cabdb0ce13e13fd0bd2f354d4"
+    },
+    {
+      "path": "src/packages/firebase/README.md",
+      "bytes": 3613,
+      "hash": "a0b438077e27ed9e3e25ee7f759033a0ba9b8cf13f01f1049285702154aa1766"
     },
     {
       "path": "src/packages/firebase/app.adapter.ts",
@@ -4109,9 +4179,19 @@
       "hash": "1b61c7e3fb6cbe2b0850db0fadf03d0266ab6db22a1615e0637b0893317af83a"
     },
     {
+      "path": "src/packages/icons/README.md",
+      "bytes": 1482,
+      "hash": "77223d0b96f5647edc9352d70144b2b12b25e1038b93a834bc72767f8510b830"
+    },
+    {
       "path": "src/packages/icons/index.ts",
       "bytes": 774,
       "hash": "2959a7c4e449ab70d4a275cc3e776ea186307544e0fb491468ea1893064bac36"
+    },
+    {
+      "path": "src/packages/router/README.md",
+      "bytes": 995,
+      "hash": "dbfe13f0ff9c5f963f439bacf1463cf4184f7e3a47f4f5eb7c8497c4eecb4d34"
     },
     {
       "path": "src/packages/router/index.ts",
@@ -4119,9 +4199,19 @@
       "hash": "b5da4f5a02ce781585d7b16e10106637e375f77368f8b7ec1b5621762454a501"
     },
     {
+      "path": "src/packages/vercel-analytics/README.md",
+      "bytes": 888,
+      "hash": "ca0743533bc6e30a292bd8a271f9d3779d15e5261b7f419b6192cff2fb83d276"
+    },
+    {
       "path": "src/packages/vercel-analytics/index.ts",
       "bytes": 125,
       "hash": "4414092f3b9cf7cc6957856f73f31fe59472ec98283b9564624790f78040db79"
+    },
+    {
+      "path": "src/packages/vercel-speed-insights/README.md",
+      "bytes": 957,
+      "hash": "0f604305bec166974fe4aad8a8adafcbe2e49f433961dc8884a6568dfb614cfd"
     },
     {
       "path": "src/packages/vercel-speed-insights/index.ts",
@@ -4129,9 +4219,19 @@
       "hash": "0bbb98331943409146e77bea8061f1931fb2422107edb1c5fd9778a48a3c6428"
     },
     {
+      "path": "src/packages/virtuoso/README.md",
+      "bytes": 1404,
+      "hash": "735430f40a701fc827ba3b47a62debeb6fdbf8f30b44ba9b241f2e84209cab73"
+    },
+    {
       "path": "src/packages/virtuoso/index.ts",
       "bytes": 307,
       "hash": "743be5f27604d7ad6b3809a81f5758f7db5d6c8a9804cddfc9a490a96f4a5e1e"
+    },
+    {
+      "path": "src/platform/browser/README.md",
+      "bytes": 2761,
+      "hash": "2f4b9d8658d626db1cde7277cd68050df8be7677133864e2314a5d00fd6e1c83"
     },
     {
       "path": "src/platform/browser/app-events.adapter.ts",
@@ -4234,6 +4334,11 @@
       "hash": "369bb141f1601c7bf6f557420b90e3b1bd8b67c646bba5230ef3e00d9efa08e1"
     },
     {
+      "path": "src/platform/crypto/README.md",
+      "bytes": 918,
+      "hash": "9a057195dbadd52169ee4d8d7e9b82a06be4d2862989989147e9311263481841"
+    },
+    {
       "path": "src/platform/crypto/index.ts",
       "bytes": 76,
       "hash": "c6bd42445f018b1b82ac4ad06d940ea2cf4878cfd08ade6801dcd3f56f584fa6"
@@ -4242,6 +4347,11 @@
       "path": "src/platform/crypto/password-hash.adapter.ts",
       "bytes": 1243,
       "hash": "8f95387b33a66d3e959138c8893ff82328e3a9f54d61f4129b0da3e0b55f9007"
+    },
+    {
+      "path": "src/platform/device/README.md",
+      "bytes": 3148,
+      "hash": "5f584257981d232e96569a549ec42c72ca8d5ca9b43eddfee5dd484a5bf99b67"
     },
     {
       "path": "src/platform/device/device-config.adapter.ts",
@@ -4299,6 +4409,11 @@
       "hash": "23d2689bce1123d5d1869cf6c1ef3186859815657655ebe6ba11597bedd4e162"
     },
     {
+      "path": "src/platform/environment/README.md",
+      "bytes": 1201,
+      "hash": "38cb9ccf7de97b072ff47268144701faf218220061b9f2e01b38951569d5b709"
+    },
+    {
       "path": "src/platform/environment/environment.adapter.ts",
       "bytes": 2444,
       "hash": "234048838d8039af4b1fee48c177d9fef61740f9b456cb5c4ef9f9dd1d277739"
@@ -4307,6 +4422,11 @@
       "path": "src/platform/environment/index.ts",
       "bytes": 58,
       "hash": "10aaf18e72267b7a97dd7297f8f014d56be99cda526001eca7647130d5f03855"
+    },
+    {
+      "path": "src/platform/network/README.md",
+      "bytes": 1435,
+      "hash": "c0ef957f8f153680bcfe4c430afdd2c64fb236b1fd8d18709edbdbad4f0e5e6e"
     },
     {
       "path": "src/platform/network/contact-submission.adapter.ts",
@@ -4334,6 +4454,11 @@
       "hash": "fc1b14225375e97c9325768fa4023eb32559c21ef9aeabccda80aaeed5479729"
     },
     {
+      "path": "src/platform/storage/README.md",
+      "bytes": 965,
+      "hash": "ea1c0a56d7ef548e256cf881fd09b56bea4fb75fb9f243ee5328f18a7b2e2a44"
+    },
+    {
       "path": "src/platform/storage/index.ts",
       "bytes": 186,
       "hash": "df27943fd352fcbaceb40afd92f529b139b1f7fc760601abad2b7bb7ee815bf1"
@@ -4347,6 +4472,11 @@
       "path": "src/platform/storage/web-storage.adapter.ts",
       "bytes": 372,
       "hash": "94a972c2095a0c6b78f0705863e3f748aea39b4274ece7b1d7542f09e9117222"
+    },
+    {
+      "path": "src/shared/helpers/README.md",
+      "bytes": 1653,
+      "hash": "7653372d82caed8d912865bd918efc16d3972f33ad8dc8174ac1cca5dcabab04"
     },
     {
       "path": "src/shared/helpers/date.helper.ts",
@@ -4382,6 +4512,11 @@
       "path": "src/shared/helpers/validation.helper.ts",
       "bytes": 436,
       "hash": "605196970a682f30a6ae1dfae1a4ba0bb822bf8c16b5989b40a1209b1eb25f9d"
+    },
+    {
+      "path": "src/shared/i18n/README.md",
+      "bytes": 2455,
+      "hash": "9c737a0c934123ccbf5eabe405359ab77a61c5011cfbc9ad8530df8e6add5eac"
     },
     {
       "path": "src/shared/i18n/index.ts",
@@ -4474,6 +4609,11 @@
       "hash": "1a629cc4450008bb9d727a35fd9da2788da537949c1d81826700a0f4d7a2aedc"
     },
     {
+      "path": "src/shared/types/README.md",
+      "bytes": 1211,
+      "hash": "b752b7104e67833362855f8c8be41c2c117abfa2e3e34c32f27411c00c9376ec"
+    },
+    {
       "path": "src/shared/types/index.ts",
       "bytes": 132,
       "hash": "b4206075f3ffc2f1d3bb0a1c989be04f8e1fb1bdb6e1395bbfc4fa767871f691"
@@ -4487,6 +4627,11 @@
       "path": "src/shared/types/routing.types.ts",
       "bytes": 420,
       "hash": "0c23be552cb8fa7ad61c000366e67319b6b70c000ca3285b7c24d157a9236d63"
+    },
+    {
+      "path": "src/shared/ui/README.md",
+      "bytes": 3818,
+      "hash": "818518c06be2cbee26f50ac6c839436d125f5e73270a876153ad22977bd394a6"
     },
     {
       "path": "src/shared/ui/back-link/back-link.component.tsx",
