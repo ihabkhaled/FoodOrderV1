@@ -1370,8 +1370,8 @@
     },
     {
       "path": "release-notes/v1.11.0.md",
-      "bytes": 4732,
-      "hash": "adc44c75c233c51f72e158d663b3578bf460e42e1ae3baa8b7a3561c82266a37"
+      "bytes": 5103,
+      "hash": "b5820949222b551c37ba34a1858f2be656cd0f988528e363b6cfd788f9e7c86d"
     },
     {
       "path": "release-notes/v1.2.0.md",
@@ -4715,8 +4715,8 @@
     },
     {
       "path": "src/styles.css",
-      "bytes": 28518,
-      "hash": "c0d566b4dc78ceeb32821af0f31cdc65d1ccbd344ff25c0acd6bf1328ea319c1"
+      "bytes": 29046,
+      "hash": "e86f43d16d85bb21bd82cddfad148a490c36a1d72a0bcee9fc9c43aacd374a5a"
     },
     {
       "path": "src/ux-existing-shell.css",

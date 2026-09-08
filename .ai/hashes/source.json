@@ -564,7 +564,7 @@
   "src/shared/ui/virtual-list-footer/virtual-list-footer.component.tsx": "165b75efc273a8c07943be2a872a877b5c17de2bf923172f9afbca5e8d369cf7",
   "src/shared/ui/virtual-list-footer/virtual-list-footer.types.ts": "ab1fbff58dcf1961485b072a037b9c8bec99f8b5c5c3aa7adf83eaef8555b441",
   "src/socialNotifications.css": "fd768cb14743dc0d1c02db3182da2c86229107e5ae64c9c25fa6902d612afee5",
-  "src/styles.css": "c0d566b4dc78ceeb32821af0f31cdc65d1ccbd344ff25c0acd6bf1328ea319c1",
+  "src/styles.css": "e86f43d16d85bb21bd82cddfad148a490c36a1d72a0bcee9fc9c43aacd374a5a",
   "src/ux-existing-shell.css": "c935b730af03f2a1bd77cf9c54edf7d15739baf579441b4d1d0a1da85a4ed36f",
   "src/ux-simplification.css": "a43f64603d04b29a59b01ce638a0a25ee1f7cc532fad60f3b3b769c98057aa1d",
   "src/v1-9-1.css": "9fba497ec1adf43bd817640f51998bae2b6f9e9d6d4666872e92ceeda3009422",

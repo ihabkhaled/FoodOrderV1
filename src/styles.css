@@ -438,7 +438,24 @@ body { font-size: 16px; line-height: 1.55; }
 button, .button, .link-row, a.button, input, select, textarea {
   min-height: 48px;
 }
-.bottom-nav .bottom-nav-link { min-width: 62px; min-height: 56px; font-size: 0.82rem; }
-.bottom-nav .bottom-nav-link span { max-width: none; }
+/* Five items always divide the bar between them. Fixing a minimum width made
+   overflow possible whenever the labels were wide - Firefox tipped over where
+   Chromium fitted by a pixel, and German or Portuguese would have done the same
+   in any browser. Flexing cannot overflow, so the bar never scrolls and the
+   assertion holds in every browser and every language. */
+.bottom-nav .bottom-nav-link {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 56px;
+  padding: 8px 2px;
+  font-size: 0.82rem;
+}
+.bottom-nav { gap: 2px; padding: 6px 4px; }
+.bottom-nav .bottom-nav-link span {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 label { font-size: 1rem; }
 .muted { font-size: 0.95rem; }
