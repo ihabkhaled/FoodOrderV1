@@ -1,15 +1,12 @@
 import '../order-sessions.css';
 
-import { translate } from '@/shared/i18n';
-import { ErrorState, FeatureTour, Loading } from '@/shared/ui';
+import { ErrorState, Loading } from '@/shared/ui';
 
 import { OrderSessionList } from '../components/order-session-list/order-session-list.component';
 import { useOrderSessions } from '../hooks/use-order-sessions.hook';
-import { useOrderSessionsTour } from '../hooks/use-order-sessions-tour.hook';
 
 export function OrderSessionsContainer() {
   const viewModel = useOrderSessions();
-  const { steps: tourSteps } = useOrderSessionsTour();
 
   if (viewModel.loading) {
     return <Loading label={viewModel.translate(viewModel.locale, 'loadingSession')} />;
@@ -60,15 +57,6 @@ export function OrderSessionsContainer() {
           translate={viewModel.translate}
         />
       )}
-      <FeatureTour
-        page="sessions"
-        steps={tourSteps}
-        nextLabel={translate(viewModel.locale, 'tourNext')}
-        doneLabel={translate(viewModel.locale, 'tourDone')}
-        skipLabel={translate(viewModel.locale, 'tourSkip')}
-        closeLabel={translate(viewModel.locale, 'close')}
-        skipAllLabel={translate(viewModel.locale, 'tourSkipAll')}
-      />
     </div>
   );
 }

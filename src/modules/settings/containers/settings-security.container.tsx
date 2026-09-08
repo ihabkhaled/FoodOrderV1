@@ -1,15 +1,13 @@
 import '../settings.css';
 
-import { BackLink, FeatureTour } from '@/shared/ui';
+import { BackLink } from '@/shared/ui';
 
 import { ChangePasswordSection } from '../components/change-password-section/change-password-section.component';
 import { useChangePassword } from '../hooks/use-change-password.hook';
-import { useSettingsSecurityTour } from '../hooks/use-settings-security-tour.hook';
 import { SETTINGS_PATH } from '../routes/settings-route-paths.constants';
 
 export function SettingsSecurityContainer() {
   const passwordVm = useChangePassword();
-  const { steps: tourSteps } = useSettingsSecurityTour();
 
   return (
     <div className="page narrow stack-lg">
@@ -38,15 +36,6 @@ export function SettingsSecurityContainer() {
         onNewPasswordChange={passwordVm.setNewPassword}
         onConfirmPasswordChange={passwordVm.setConfirmPassword}
         onSubmit={(event) => void passwordVm.submit(event)}
-      />
-      <FeatureTour
-        page="settings-security"
-        steps={tourSteps}
-        nextLabel={passwordVm.t('tourNext')}
-        doneLabel={passwordVm.t('tourDone')}
-        skipLabel={passwordVm.t('tourSkip')}
-        closeLabel={passwordVm.t('close')}
-        skipAllLabel={passwordVm.t('tourSkipAll')}
       />
     </div>
   );

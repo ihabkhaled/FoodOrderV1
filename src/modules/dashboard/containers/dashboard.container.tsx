@@ -23,7 +23,7 @@ import { useDashboardTour } from '../hooks/use-dashboard-tour.hook';
 export function DashboardContainer() {
   const navigate = useNavigate();
   const vm = useDashboard();
-  const { setStatsElement, setCreateElement, steps: tourSteps } =
+  const { setStatsElement, steps: tourSteps } =
     useDashboardTour();
 
   if (vm.error) {
@@ -87,7 +87,7 @@ export function DashboardContainer() {
           <p className="page-intro">{vm.t('dashboardIntro')}</p>
           <p>{vm.t('quickStart')}</p>
         </div>
-        <div ref={setCreateElement}>
+        <div>
           <Link className="button dashboard-primary-action" to={BUCKET_NEW_PATH}>
             <Plus />
             {vm.t('createBucket')}

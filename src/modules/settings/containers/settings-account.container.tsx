@@ -1,15 +1,13 @@
 import '../settings.css';
 
 import { Download, Trash2 } from '@/packages/icons';
-import { BackLink, ConfirmDialog, DangerReauthDialog, FeatureTour } from '@/shared/ui';
+import { BackLink, ConfirmDialog, DangerReauthDialog } from '@/shared/ui';
 
 import { useSettingsAccount } from '../hooks/use-settings-account.hook';
-import { useSettingsAccountTour } from '../hooks/use-settings-account-tour.hook';
 import { SETTINGS_PATH } from '../routes/settings-route-paths.constants';
 
 export function SettingsAccountContainer() {
   const vm = useSettingsAccount();
-  const { steps: tourSteps } = useSettingsAccountTour();
 
   return (
     <div className="page narrow stack-lg">
@@ -81,15 +79,6 @@ export function SettingsAccountContainer() {
         busy={vm.deleting}
         onConfirm={(email, password) => void vm.deleteAccount(email, password)}
         onCancel={vm.cancelReauthentication}
-      />
-      <FeatureTour
-        page="settings-account"
-        steps={tourSteps}
-        nextLabel={vm.t('tourNext')}
-        doneLabel={vm.t('tourDone')}
-        skipLabel={vm.t('tourSkip')}
-        closeLabel={vm.t('close')}
-        skipAllLabel={vm.t('tourSkipAll')}
       />
     </div>
   );

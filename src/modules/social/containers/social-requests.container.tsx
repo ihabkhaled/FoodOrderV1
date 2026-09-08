@@ -1,16 +1,14 @@
-import { BackLink, ErrorState, FeatureTour, SkeletonSection } from '@/shared/ui';
+import { BackLink, ErrorState, SkeletonSection } from '@/shared/ui';
 
 import { BucketInvitations } from '../components/bucket-invitations/bucket-invitations.component';
 import { GroupInvitations } from '../components/group-invitations/group-invitations.component';
 import { IncomingRequests } from '../components/incoming-requests/incoming-requests.component';
 import { useSocial } from '../hooks/use-social.hook';
-import { useSocialRequestsTour } from '../hooks/use-social-requests-tour.hook';
 import { SOCIAL_PATH } from '../routes/social-route-paths.constants';
 
 /** Everything waiting on an answer: friend, group, and menu invitations. */
 export function SocialRequestsContainer() {
   const vm = useSocial();
-  const { steps: tourSteps } = useSocialRequestsTour();
 
   if (vm.loading) {
     return (
@@ -60,15 +58,6 @@ export function SocialRequestsContainer() {
         }
       />
 
-      <FeatureTour
-        page="social-requests"
-        steps={tourSteps}
-        nextLabel={vm.t('tourNext')}
-        doneLabel={vm.t('tourDone')}
-        skipLabel={vm.t('tourSkip')}
-        closeLabel={vm.t('close')}
-        skipAllLabel={vm.t('tourSkipAll')}
-      />
     </div>
   );
 }

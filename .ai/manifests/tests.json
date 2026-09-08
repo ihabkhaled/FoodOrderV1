@@ -282,8 +282,8 @@
     },
     {
       "path": "tests/e2e/settings.spec.ts",
-      "bytes": 7087,
-      "hash": "b2771b39e68dc981bfe9731834720e70a51be983aa1a57438171f744132a83c8"
+      "bytes": 7083,
+      "hash": "74f97debc6e0e051204b0f67f2de208133d59a632290c5b643e333680451bacf"
     },
     {
       "path": "tests/e2e/smoke.spec.ts",
@@ -297,8 +297,8 @@
     },
     {
       "path": "tests/e2e/social-sharing.spec.ts",
-      "bytes": 12230,
-      "hash": "9b7af24ec9239309a44bd74943b5fc7358115e8411c55e0113d7d5bfba79ddf6"
+      "bytes": 12218,
+      "hash": "9ada481647c3142a582a1722b782320560dca3a6c9a0cadc8fc05554b6c99232"
     },
     {
       "path": "tests/e2e/ui.spec.ts",
@@ -431,6 +431,11 @@
       "hash": "0d2b0759a5ca2f8aa7eba06237d894ea38a72f02b17b4c1a18763236431a3d8f"
     },
     {
+      "path": "tests/tooling/e2e-copy-drift.test.mjs",
+      "bytes": 2644,
+      "hash": "0d6cb42b2194839f3250fd67d979190a80242fd39b03438ab12b5b5377336c1c"
+    },
+    {
       "path": "tests/tooling/firebase-change-plan.test.mjs",
       "bytes": 9803,
       "hash": "bb432d11c368f05d07a038317d0d1f3f6ecb50b047277224d913dc51e0d1f42a"
@@ -452,8 +457,8 @@
     },
     {
       "path": "tests/tooling/plain-language.test.mjs",
-      "bytes": 1900,
-      "hash": "b690b4b5c5de21e1c4f9405c886fca76da38161f2ec07ca2305d2c565eb38719"
+      "bytes": 3336,
+      "hash": "d1a37593273ff3ed6f86c1c8a78a16ed4670e38c3acd845b244be159be01ecd9"
     },
     {
       "path": "tests/tooling/public-content-parity.test.mjs",

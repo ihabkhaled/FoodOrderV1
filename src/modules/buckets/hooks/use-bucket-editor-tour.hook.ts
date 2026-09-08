@@ -35,36 +35,6 @@ export function useBucketEditorTour(): BucketEditorTourViewModel {
         body: t('tourBucketEditorCategoryBody'),
         target: null,
       },
-      {
-        key: 'pricing',
-        title: t('tourBucketEditorPricingTitle'),
-        body: t('tourBucketEditorPricingBody'),
-        target: null,
-      },
-      {
-        key: 'currency',
-        title: t('tourBucketEditorCurrencyTitle'),
-        body: t('tourBucketEditorCurrencyBody'),
-        target: null,
-      },
-      {
-        key: 'active',
-        title: t('tourBucketEditorActiveTitle'),
-        body: t('tourBucketEditorActiveBody'),
-        target: null,
-      },
-      {
-        key: 'save',
-        title: t('tourBucketEditorSaveTitle'),
-        body: t('tourBucketEditorSaveBody'),
-        target: null,
-      },
-      {
-        key: 'shared',
-        title: t('tourBucketEditorSharedTitle'),
-        body: t('tourBucketEditorSharedBody'),
-        target: null,
-      },
     ],
     [t],
   );

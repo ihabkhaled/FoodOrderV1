@@ -144,7 +144,7 @@ test.describe('analytics consent has real effect', () => {
       .getByRole('button', { name: 'Duplicate — Consent menu', exact: true })
       .first()
       .click();
-    await expect(page.getByText('Bucket saved.')).toBeVisible();
+    await expect(page.getByText('Menu saved.')).toBeVisible();
     expect(await diagnosticsCount(page)).toBe(0);
 
     await setConsent(page, /Operational and product analytics/u);
@@ -153,7 +153,7 @@ test.describe('analytics consent has real effect', () => {
       .getByRole('button', { name: 'Duplicate — Consent menu', exact: true })
       .first()
       .click();
-    await expect(page.getByText('Bucket saved.')).toBeVisible();
+    await expect(page.getByText('Menu saved.')).toBeVisible();
 
     await expect.poll(async () => diagnosticsCount(page)).toBeGreaterThan(0);
   });

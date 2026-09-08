@@ -137,11 +137,11 @@ test.describe('friends, groups, and combined bucket sharing', () => {
     await page.goto('/buckets/bucket-social/social-share');
     await page.getByLabel('Select friend').selectOption({ label: 'Alice Friend' });
     await page
-      .getByRole('button', { name: 'Invite friend to bucket' })
+      .getByRole('button', { name: 'Invite friend to this menu' })
       .click();
     await expect(
       page.getByText(
-        'Bucket invitation sent. Access activates after acceptance.',
+        'Invitation sent. They get access once they accept.',
         { exact: true },
       ),
     ).toBeVisible();
@@ -235,7 +235,7 @@ test.describe('friends, groups, and combined bucket sharing', () => {
       .getByRole('button', { name: 'Accept', exact: true })
       .click();
     await expect(
-      page.getByText('Bucket invitation accepted.', { exact: true }),
+      page.getByText('Invitation accepted.', { exact: true }),
     ).toBeVisible();
     await expect(bucketInvitation).toHaveCount(0);
     await page.goto('/buckets');

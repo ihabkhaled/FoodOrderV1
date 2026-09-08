@@ -791,11 +791,6 @@
       "relationship": "inferred"
     },
     {
-      "source": "src/modules/group-orders/hooks/use-bucket-collaborate-tour.hook.ts",
-      "tests": [],
-      "relationship": "inferred"
-    },
-    {
       "source": "src/modules/group-orders/hooks/use-bucket-collaborate.hook.ts",
       "tests": [],
       "relationship": "inferred"
@@ -807,11 +802,6 @@
     },
     {
       "source": "src/modules/group-orders/hooks/use-bucket-share.hook.ts",
-      "tests": [],
-      "relationship": "inferred"
-    },
-    {
-      "source": "src/modules/group-orders/hooks/use-join-bucket-tour.hook.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -1056,22 +1046,12 @@
       "relationship": "inferred"
     },
     {
-      "source": "src/modules/order-sessions/hooks/use-create-order-session-tour.hook.ts",
-      "tests": [],
-      "relationship": "inferred"
-    },
-    {
       "source": "src/modules/order-sessions/hooks/use-create-order-session.hook.ts",
       "tests": [],
       "relationship": "inferred"
     },
     {
       "source": "src/modules/order-sessions/hooks/use-order-session-details-tour.hook.ts",
-      "tests": [],
-      "relationship": "inferred"
-    },
-    {
-      "source": "src/modules/order-sessions/hooks/use-order-sessions-tour.hook.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -1231,27 +1211,12 @@
       "relationship": "inferred"
     },
     {
-      "source": "src/modules/orders/hooks/use-create-order-tour.hook.ts",
-      "tests": [],
-      "relationship": "inferred"
-    },
-    {
       "source": "src/modules/orders/hooks/use-create-order.hook.ts",
       "tests": [],
       "relationship": "inferred"
     },
     {
-      "source": "src/modules/orders/hooks/use-order-details-tour.hook.ts",
-      "tests": [],
-      "relationship": "inferred"
-    },
-    {
       "source": "src/modules/orders/hooks/use-order-details.hook.ts",
-      "tests": [],
-      "relationship": "inferred"
-    },
-    {
-      "source": "src/modules/orders/hooks/use-orders-tour.hook.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -1681,11 +1646,6 @@
       "relationship": "inferred"
     },
     {
-      "source": "src/modules/settings/hooks/use-settings-account-tour.hook.ts",
-      "tests": [],
-      "relationship": "inferred"
-    },
-    {
       "source": "src/modules/settings/hooks/use-settings-account.hook.ts",
       "tests": [],
       "relationship": "inferred"
@@ -1696,32 +1656,12 @@
       "relationship": "inferred"
     },
     {
-      "source": "src/modules/settings/hooks/use-settings-preferences-tour.hook.ts",
-      "tests": [],
-      "relationship": "inferred"
-    },
-    {
       "source": "src/modules/settings/hooks/use-settings-preferences.hook.ts",
       "tests": [],
       "relationship": "inferred"
     },
     {
-      "source": "src/modules/settings/hooks/use-settings-privacy-tour.hook.ts",
-      "tests": [],
-      "relationship": "inferred"
-    },
-    {
       "source": "src/modules/settings/hooks/use-settings-privacy.hook.ts",
-      "tests": [],
-      "relationship": "inferred"
-    },
-    {
-      "source": "src/modules/settings/hooks/use-settings-security-tour.hook.ts",
-      "tests": [],
-      "relationship": "inferred"
-    },
-    {
-      "source": "src/modules/settings/hooks/use-settings-tour.hook.ts",
       "tests": [],
       "relationship": "inferred"
     },
@@ -1911,32 +1851,7 @@
       "relationship": "inferred"
     },
     {
-      "source": "src/modules/social/hooks/use-bucket-social-share-tour.hook.ts",
-      "tests": [],
-      "relationship": "inferred"
-    },
-    {
       "source": "src/modules/social/hooks/use-bucket-social-share.hook.ts",
-      "tests": [],
-      "relationship": "inferred"
-    },
-    {
-      "source": "src/modules/social/hooks/use-social-friends-tour.hook.ts",
-      "tests": [],
-      "relationship": "inferred"
-    },
-    {
-      "source": "src/modules/social/hooks/use-social-groups-tour.hook.ts",
-      "tests": [],
-      "relationship": "inferred"
-    },
-    {
-      "source": "src/modules/social/hooks/use-social-requests-tour.hook.ts",
-      "tests": [],
-      "relationship": "inferred"
-    },
-    {
-      "source": "src/modules/social/hooks/use-social-tour.hook.ts",
       "tests": [],
       "relationship": "inferred"
     },
