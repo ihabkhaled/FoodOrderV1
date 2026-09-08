@@ -207,6 +207,8 @@
   "orders": "注文",
   "ordersEmptyHint": "メニューを選んで最初の注文をしましょう。",
   "ordersIntro": "参加したすべての回と、自分が注文した内容、そして自分の負担額。",
+  "otherWaysToInvite": "ほかの招待方法",
+  "otherWaysToInviteHint": "リンクが届かないときに入力してもらうコード。",
   "owner": "オーナー",
   "participants": "参加者",
   "password": "パスワード",

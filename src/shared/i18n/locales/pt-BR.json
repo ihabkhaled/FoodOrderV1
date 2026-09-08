@@ -207,6 +207,8 @@
   "orders": "Pedidos",
   "ordersEmptyHint": "Escolha um cardápio para fazer seu primeiro pedido.",
   "ordersIntro": "Cada rodada de que voce participou, com o que pediu e quanto ficou a sua parte.",
+  "otherWaysToInvite": "Outras formas de convidar",
+  "otherWaysToInviteHint": "Um código para digitar, se um link não chegar até eles.",
   "owner": "Proprietário",
   "participants": "Participantes",
   "password": "Senha",

@@ -207,6 +207,8 @@
   "orders": "Pedidos",
   "ordersEmptyHint": "Elige una carta para hacer tu primer pedido.",
   "ordersIntro": "Cada ronda en la que has participado, con lo que pediste y cuanto te toco.",
+  "otherWaysToInvite": "Otras formas de invitar",
+  "otherWaysToInviteHint": "Un código que escriben, si no les llega un enlace.",
   "owner": "Propietario",
   "participants": "Participantes",
   "password": "Contraseña",

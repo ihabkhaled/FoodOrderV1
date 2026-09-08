@@ -207,6 +207,8 @@
   "orders": "الطلبات",
   "ordersEmptyHint": "اختر قائمة لتضع أول طلب لك.",
   "ordersIntro": "كل جولة شاركت فيها، وما طلبته، وكم بلغ نصيبك.",
+  "otherWaysToInvite": "طرق أخرى للدعوة",
+  "otherWaysToInviteHint": "رمز يكتبونه، إن تعذّر وصول الرابط.",
   "owner": "المالك",
   "participants": "المشاركون",
   "password": "كلمة المرور",

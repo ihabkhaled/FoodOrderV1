@@ -100,8 +100,14 @@ svg { width: 1.15em; height: 1.15em; flex: none; }
   display: flex; gap: 4px; padding: 7px;
   width: min(440px, calc(100% - 24px));
   border: 1px solid var(--line); border-radius: 20px;
-  background: color-mix(in srgb, var(--surface) 92%, transparent);
-  backdrop-filter: blur(14px); box-shadow: var(--shadow-lg);
+  /* Solid, not translucent. The inactive-label colour is only guaranteed to
+     hold its contrast ratio against a known background; a blurred, 92%-opaque
+     panel makes the true rendered colour depend on whatever the page happens
+     to be scrolled to underneath it, which the design can't control. Opaque
+     --surface gives every label a fixed, checkable pairing (measured 6.2:1
+     light, 9.3:1 dark). */
+  background: var(--surface);
+  box-shadow: var(--shadow-lg);
 }
 /*
  * Eight destinations do not fit a phone, so the row scrolls sideways instead
@@ -125,7 +131,14 @@ svg { width: 1.15em; height: 1.15em; flex: none; }
 .bottom-nav .bottom-nav-link span {
   max-width: 9ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
-.app-shell > .main-content { padding-bottom: calc(var(--nav-h) + env(safe-area-inset-bottom) + 16px); }
+/* The 44px minimum touch targets on heading and topbar links grow those
+   headings by a few px each; stacked down a long page that ate into this
+   reserve enough to tuck the last section's edge behind the fixed bottom nav
+   on the narrowest, shortest screens this app still supports. Widening the
+   reserve restores real clearance instead of a coincidental one - and font
+   metrics differ enough between browser engines at this width that a margin
+   sized to just clear Chromium still left Firefox and WebKit a few px short. */
+.app-shell > .main-content { padding-bottom: calc(var(--nav-h) + env(safe-area-inset-bottom) + 32px); }
 
 /* ---- Cards, sections ------------------------------------------------------ */
 .stack { display: grid; gap: 14px; min-width: 0; }
@@ -459,3 +472,15 @@ button, .button, .link-row, a.button, input, select, textarea {
 }
 label { font-size: 1rem; }
 .muted { font-size: 0.95rem; }
+
+/* The brand mark is a link home, so it has to be as tappable as any other
+   control. It measured 36x36 - below the 44px minimum - because it was sized
+   as a logo rather than as a target. Padding grows the hit area without
+   changing how the mark looks. */
+.brand { min-width: 48px; min-height: 48px; padding-block: 6px; }
+
+/* Any remaining bare link in the shell gets a full-height hit area for the
+   same reason. */
+.topbar a,
+.page-heading a,
+.section-heading a { min-height: 44px; display: inline-flex; align-items: center; }

@@ -61,6 +61,22 @@ export function BucketShareContainer() {
 
       {bucket.visibility === 'shared' ? (
         <>
+          <BucketInviteLinkContainer
+            bucketId={bucket.id}
+            bucketTitle={bucket.title}
+          />
+          {/*
+            The join code still works for anyone who has one, but it is no
+            longer offered beside the link as an equal choice. Two ways to do
+            one thing is a decision the person did not ask to make, and the
+            link is the one that works by tapping rather than by copying a
+            string of characters accurately.
+          */}
+          <details className="section-card stack" id="other-ways">
+            <summary>
+              <strong>{vm.t('otherWaysToInvite')}</strong>
+              <span className="muted">{vm.t('otherWaysToInviteHint')}</span>
+            </summary>
           <BucketInvitePanel
             locale={vm.locale}
             invites={vm.invites}
@@ -80,10 +96,7 @@ export function BucketShareContainer() {
               void vm.revokeInvite(inviteId);
             }}
           />
-          <BucketInviteLinkContainer
-            bucketId={bucket.id}
-            bucketTitle={bucket.title}
-          />
+          </details>
           {/*
             Members and activity were separate pages reached by a link row.
             Sharing a menu is one job, and splitting it across three screens

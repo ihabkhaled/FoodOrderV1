@@ -134,20 +134,37 @@ const expectTextContainersDoNotOverflow = async (
 };
 
 const scrollDocumentToBottom = async (page: Page): Promise<void> => {
-  await page.evaluate(() => {
-    window.scrollTo({
-      top: document.documentElement.scrollHeight,
-      behavior: 'auto',
-    });
-  });
+  // A single jump to the scrollHeight read before this call can undershoot:
+  // the list's own render can still be settling (fonts, wrapped card text at
+  // a narrow width, or seeded data that hasn't finished loading in) when that
+  // height is read, so content can still grow after the jump lands. Re-reading
+  // and re-scrolling on every poll closes most of that gap, but a height that
+  // happens to already fit the viewport on the very first poll - before the
+  // real, longer list has rendered in - satisfies "fully scrolled" instantly
+  // and never gets a second look once the list grows afterward. Requiring the
+  // *document's own height* to also match its previous poll, not just that
+  // scrolling is maxed out, catches that case: a still-growing page can never
+  // report the same height twice in a row.
+  const bag = page as unknown as { __prevScrollHeight: number | undefined };
+  bag.__prevScrollHeight = undefined;
   await expect
-    .poll(() =>
-      page.evaluate(
+    .poll(async () => {
+      const scrollHeight = await page.evaluate(() => {
+        window.scrollTo({
+          top: document.documentElement.scrollHeight,
+          behavior: 'auto',
+        });
+        return document.documentElement.scrollHeight;
+      });
+      const stable = bag.__prevScrollHeight === scrollHeight;
+      bag.__prevScrollHeight = scrollHeight;
+      if (!stable) return false;
+      return page.evaluate(
         () =>
           Math.ceil(window.scrollY + window.innerHeight) >=
           document.documentElement.scrollHeight - 1,
-      ),
-    )
+      );
+    })
     .toBe(true);
 };
 

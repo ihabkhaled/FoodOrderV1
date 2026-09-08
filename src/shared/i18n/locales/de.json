@@ -207,6 +207,8 @@
   "orders": "Bestellungen",
   "ordersEmptyHint": "Wählen Sie eine Speisekarte für Ihre erste Bestellung.",
   "ordersIntro": "Jede Runde, an der du teilgenommen hast, mit deiner Bestellung und deinem Anteil.",
+  "otherWaysToInvite": "Andere Wege einzuladen",
+  "otherWaysToInviteHint": "Ein Code zum Eintippen, falls ein Link sie nicht erreicht.",
   "owner": "Eigentümer",
   "participants": "Teilnehmende",
   "password": "Passwort",

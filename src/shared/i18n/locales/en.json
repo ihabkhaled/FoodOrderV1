@@ -207,6 +207,8 @@
   "orders": "Orders",
   "ordersEmptyHint": "Pick a menu to place your first order.",
   "ordersIntro": "Every round you have taken part in, with what you ordered and what your share came to.",
+  "otherWaysToInvite": "Other ways to invite",
+  "otherWaysToInviteHint": "A code they type in, if a link will not reach them.",
   "owner": "Owner",
   "participants": "Participants",
   "password": "Password",

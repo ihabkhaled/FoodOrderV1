@@ -207,6 +207,8 @@
   "orders": "Commandes",
   "ordersEmptyHint": "Choisissez un menu pour passer votre première commande.",
   "ordersIntro": "Chaque tour auquel vous avez participe, avec ce que vous avez commande et votre part.",
+  "otherWaysToInvite": "Autres façons d'inviter",
+  "otherWaysToInviteHint": "Un code à saisir, si un lien ne leur parvient pas.",
   "owner": "Propriétaire",
   "participants": "Participants",
   "password": "Mot de passe",

@@ -207,6 +207,8 @@
   "orders": "订单",
   "ordersEmptyHint": "选择一个菜单来下第一笔订单。",
   "ordersIntro": "你参与过的每一轮，包括你点了什么以及你的那份是多少。",
+  "otherWaysToInvite": "其他邀请方式",
+  "otherWaysToInviteHint": "让对方输入的代码，适用于链接发不过去时。",
   "owner": "所有者",
   "participants": "参与者",
   "password": "密码",

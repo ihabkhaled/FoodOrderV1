@@ -206,6 +206,11 @@
       "hash": "d65fe2adc2bf61c743851b16be72e5ac5d4272746cfce79fc97df63d1c3423da"
     },
     {
+      "path": "tests/e2e/accessibility.spec.ts",
+      "bytes": 12717,
+      "hash": "edb4549b3847210788435ba035a527e3a69cba5e8101678b355b60e904074a4e"
+    },
+    {
       "path": "tests/e2e/auth-flows.spec.ts",
       "bytes": 4401,
       "hash": "be4c9972e97ea2df700c0c7ef48c524a761ff050e5100556977b7a78e4fb5d03"
@@ -272,8 +277,8 @@
     },
     {
       "path": "tests/e2e/responsive-navigation.spec.ts",
-      "bytes": 11703,
-      "hash": "29f0bd2438474eae1887056c1d4d71e7ace45e6a8bf6bae36d70dcc583b365ae"
+      "bytes": 12899,
+      "hash": "869e2c4277b83cf6612bd40ca49adb9775b6fe5f72c659006a3ab258f66360dd"
     },
     {
       "path": "tests/e2e/responsive-overlays.spec.ts",
