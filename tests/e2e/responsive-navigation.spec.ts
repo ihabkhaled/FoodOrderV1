@@ -185,7 +185,7 @@ for (const viewport of VIEWPORTS) {
 
     await page.goto('/buckets');
     await expect(
-      page.getByRole('heading', { name: 'Buckets', exact: true }),
+      page.getByRole('heading', { name: 'Menus', exact: true }),
     ).toBeVisible();
     await expectNoHorizontalOverflow(page, `${viewport.name} buckets`);
     await expectWindowOwnedScrolling(page, '.virtual-grid-list');

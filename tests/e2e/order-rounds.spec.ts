@@ -179,7 +179,7 @@ test.describe('buckets are reusable order templates', () => {
 
     // The template itself is untouched and can be run again. Navigation stays
     // client-side so the seeded database is not reloaded.
-    await page.getByRole('link', { name: 'Buckets' }).first().click();
+    await page.getByRole('link', { name: 'Menus' }).first().click();
     await expect(
       page.getByRole('heading', { name: 'Friday Lunch' }),
     ).toBeVisible();
@@ -208,7 +208,7 @@ test.describe('buckets are reusable order templates', () => {
       await page.getByRole('link', { name: 'Start round' }).first().click();
       await page.getByRole('button', { name: 'Open order session' }).click();
       await expect(page).toHaveURL(/\/sessions\/session_[\w-]+$/u);
-      await page.getByRole('link', { name: 'Buckets' }).first().click();
+      await page.getByRole('link', { name: 'Menus' }).first().click();
       await expect(page).toHaveURL(/\/buckets$/u);
     }
 

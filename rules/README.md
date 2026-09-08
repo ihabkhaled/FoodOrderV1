@@ -35,6 +35,7 @@ non-negotiables; the rest are per-concern deep dives. Canonical agent entry:
 | 25  | [25-shareable-links-and-deep-linking.md](25-shareable-links-and-deep-linking.md) | Shareable links and deep linking   |
 | 26  | [26-mutating-actions-and-busy-state.md](26-mutating-actions-and-busy-state.md) | Mutating actions and busy state    |
 | 27  | [27-firebase-function-runtime-and-deploy-scope.md](27-firebase-function-runtime-and-deploy-scope.md) | Function runtime and deploy scope  |
+| 28  | [28-plain-language.md](28-plain-language.md)                          | Words an ordinary person uses     |
 | —   | [versioning.md](versioning.md)                                                             | Version bump rule (pre-existing)   |
 
 When a rule fails, the code is in the wrong layer. Move or redesign the code. Do not

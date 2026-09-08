@@ -5,6 +5,17 @@ The version bump level is decided by prompt density — see [rules/versioning.md
 
 <!-- releases -->
 
+## [1.11.0] - 2026-09-08
+
+- Start v1.11.0 development
+- Renamed the central object from "bucket" to the natural word for a food menu
+  in all thirteen languages. Six locales had shown a transliteration of the
+  English jargon and French called it a shopping basket, while the tours, the
+  marketing site and the guides already said "menu".
+- Replaced permission-system role nouns with what the person can actually do:
+  "Can order", "Can change the menu", "Can only look", "Remove access".
+
+
 ## [1.10.1] - 2026-09-01
 
 - Set an explicit fractional `cpu` on Cloud Functions. `memory: '256MiB'` does

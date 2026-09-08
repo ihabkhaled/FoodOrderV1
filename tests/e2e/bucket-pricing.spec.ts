@@ -88,7 +88,7 @@ test.describe('v1.3.4 bucket-owned pricing', () => {
     await expect(page.getByLabel('Service percentage')).toBeVisible();
     await expect(page.getByLabel('Delivery amount')).toBeVisible();
 
-    await page.getByLabel('Bucket title').fill('Private pricing');
+    await page.getByLabel('Menu name').fill('Private pricing');
     await page.getByLabel('VAT percentage').fill('14');
     await page.getByLabel('Service percentage').fill('12');
     await page.getByLabel('Delivery amount').fill('25');

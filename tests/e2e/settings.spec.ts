@@ -113,7 +113,7 @@ const diagnosticsCount = async (page: Page): Promise<number> =>
 
 const createBucket = async (page: Page, title: string): Promise<void> => {
   await page.goto('/buckets/new');
-  await page.getByLabel('Bucket title').fill(title);
+  await page.getByLabel('Menu name').fill(title);
   await page.getByLabel('Item name').fill('Meal');
   await page.getByLabel('Unit price').fill('100');
   await page.getByRole('button', { name: 'Save' }).click();

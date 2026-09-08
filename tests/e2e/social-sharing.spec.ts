@@ -209,7 +209,7 @@ test.describe('friends, groups, and combined bucket sharing', () => {
       .locator('.list-row')
       .filter({ hasText: 'Company Lunch' });
     await expect(bucketInvitation).toContainText('Invited by Company Owner');
-    await expect(bucketInvitation).toContainText('Contributor');
+    await expect(bucketInvitation).toContainText('Can order');
     await expect(
       bucketInvitation.getByRole('button', { name: 'Accept', exact: true }),
     ).toBeVisible();

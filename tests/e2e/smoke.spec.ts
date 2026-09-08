@@ -19,8 +19,8 @@ test('register, create bucket and complete the guided order flow', async ({
 }) => {
   await register(page);
 
-  await page.getByRole('link', { name: 'Create bucket' }).click();
-  await page.getByLabel('Bucket title').fill('Breakfast');
+  await page.getByRole('link', { name: 'Create menu' }).click();
+  await page.getByLabel('Menu name').fill('Breakfast');
   await page.getByLabel('Item name').fill('Foul');
   await page.getByLabel('Unit price').fill('20');
   await page.getByRole('button', { name: 'Save' }).click();
@@ -41,11 +41,11 @@ test('dashboard journey create bucket step is pressable', async ({ page }) => {
 
   await page
     .locator('.dashboard-journey')
-    .getByRole('button', { name: 'Create bucket' })
+    .getByRole('button', { name: 'Create menu' })
     .click();
 
   await expect(page).toHaveURL(/\/buckets\/new$/u);
-  await expect(page.getByLabel('Bucket title')).toBeVisible();
+  await expect(page.getByLabel('Menu name')).toBeVisible();
 });
 
 test('recent item suggestion fills the item and moves focus to price', async ({
@@ -53,14 +53,14 @@ test('recent item suggestion fills the item and moves focus to price', async ({
 }) => {
   await register(page);
 
-  await page.getByRole('link', { name: 'Create bucket' }).click();
-  await page.getByLabel('Bucket title').fill('History source');
+  await page.getByRole('link', { name: 'Create menu' }).click();
+  await page.getByLabel('Menu name').fill('History source');
   await page.getByLabel('Item name').fill('Fries');
   await page.getByLabel('Unit price').fill('15');
   await page.getByRole('button', { name: 'Save' }).click();
 
   await page.goto('/buckets');
-  await page.getByRole('link', { name: 'Create bucket' }).click();
+  await page.getByRole('link', { name: 'Create menu' }).click();
   const itemName = page.getByLabel('Item name');
   await itemName.focus();
   await page.getByRole('option', { name: /Fries/u }).click();
@@ -75,8 +75,8 @@ test('review can open a collecting order session and done returns to active orde
 }) => {
   await register(page);
 
-  await page.getByRole('link', { name: 'Create bucket' }).click();
-  await page.getByLabel('Bucket title').fill('Friends lunch');
+  await page.getByRole('link', { name: 'Create menu' }).click();
+  await page.getByLabel('Menu name').fill('Friends lunch');
   await page.getByLabel('Item name').fill('Burger');
   await page.getByLabel('Unit price').fill('50');
   await page.getByRole('button', { name: 'Save' }).click();
