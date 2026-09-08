@@ -781,16 +781,6 @@
       "relationship": "inferred"
     },
     {
-      "source": "src/modules/group-orders/containers/bucket-share-activity.container.tsx",
-      "tests": [],
-      "relationship": "inferred"
-    },
-    {
-      "source": "src/modules/group-orders/containers/bucket-share-members.container.tsx",
-      "tests": [],
-      "relationship": "inferred"
-    },
-    {
       "source": "src/modules/group-orders/containers/bucket-share.container.tsx",
       "tests": [],
       "relationship": "inferred"
@@ -807,16 +797,6 @@
     },
     {
       "source": "src/modules/group-orders/hooks/use-bucket-collaborate.hook.ts",
-      "tests": [],
-      "relationship": "inferred"
-    },
-    {
-      "source": "src/modules/group-orders/hooks/use-bucket-share-activity-tour.hook.ts",
-      "tests": [],
-      "relationship": "inferred"
-    },
-    {
-      "source": "src/modules/group-orders/hooks/use-bucket-share-members-tour.hook.ts",
       "tests": [],
       "relationship": "inferred"
     },

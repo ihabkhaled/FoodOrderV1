@@ -4,8 +4,6 @@ export const TOUR_PAGES = [
   'buckets',
   'bucket-editor',
   'bucket-share',
-  'bucket-share-members',
-  'bucket-share-activity',
   'collaborate',
   'social-share',
   'join',

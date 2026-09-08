@@ -1370,8 +1370,8 @@
     },
     {
       "path": "release-notes/v1.11.0.md",
-      "bytes": 3644,
-      "hash": "a00c3e9484212d7cb9f5b0d8802b75fff4d236e836e443b9bd5ca165ac4fdae1"
+      "bytes": 4732,
+      "hash": "adc44c75c233c51f72e158d663b3578bf460e42e1ae3baa8b7a3561c82266a37"
     },
     {
       "path": "release-notes/v1.2.0.md",
@@ -2669,19 +2669,9 @@
       "hash": "3ed38627fe0d909da25814fa0715da4a94d2c8221afca85261434d398eb1084a"
     },
     {
-      "path": "src/modules/group-orders/containers/bucket-share-activity.container.tsx",
-      "bytes": 1697,
-      "hash": "9df00ae7cf21c4b1af8fdc97ee62bfda6ec395897abf5fae5bfaeb6b8df39e7d"
-    },
-    {
-      "path": "src/modules/group-orders/containers/bucket-share-members.container.tsx",
-      "bytes": 2445,
-      "hash": "22b7039d7af290ee0ea6e3941d8b3a4459702e20379cf08a3e6a12ca6de5ef1e"
-    },
-    {
       "path": "src/modules/group-orders/containers/bucket-share.container.tsx",
-      "bytes": 4330,
-      "hash": "e556d51de83569ad9f0eacb566ae6a5970b418dec1343938c2703d443d0b69bf"
+      "bytes": 5853,
+      "hash": "96f5a09991525979a2fb17462dfdcc1e7de076b07adff10afc9f1028e32f8061"
     },
     {
       "path": "src/modules/group-orders/containers/join-bucket.container.tsx",
@@ -2697,16 +2687,6 @@
       "path": "src/modules/group-orders/hooks/use-bucket-collaborate.hook.ts",
       "bytes": 9659,
       "hash": "580fcba8e6607a4953cae54ff824a762c541fcba35de6dbabfc3b1411d1e78dd"
-    },
-    {
-      "path": "src/modules/group-orders/hooks/use-bucket-share-activity-tour.hook.ts",
-      "bytes": 1271,
-      "hash": "d957009db2ca584256defb5cd6b10d26aa2e7327898d674bd766d9010dc7f873"
-    },
-    {
-      "path": "src/modules/group-orders/hooks/use-bucket-share-members-tour.hook.ts",
-      "bytes": 1448,
-      "hash": "9d5fa09730af8bbef9caecd3580ed0a86f7ddceaa00f90f40bad401c0dfe83ad"
     },
     {
       "path": "src/modules/group-orders/hooks/use-bucket-share-tour.hook.ts",
@@ -2810,13 +2790,13 @@
     },
     {
       "path": "src/modules/group-orders/routes/group-orders-route-paths.constants.ts",
-      "bytes": 1007,
-      "hash": "d51e35ed6dc4357eff3a3afbd94da3adf35e5dbaee2a4804a5b5036997d76337"
+      "bytes": 775,
+      "hash": "b25417c807c484c86e7c0d8ac4a18965e9c9c6cd079535ca41f16742e3a0cb50"
     },
     {
       "path": "src/modules/group-orders/routes/group-orders.routes.tsx",
-      "bytes": 1157,
-      "hash": "c3098ed55cdb7f8138f251e49856d1273cb498b25f2a840c433117335b00f1f7"
+      "bytes": 1792,
+      "hash": "e5d0a5c8121aea22f270449ee401ce147b3e2236f190bde409f03eae40b0f835"
     },
     {
       "path": "src/modules/invite-links/components/invite-link-panel/invite-link-preview.component.tsx",
@@ -4255,8 +4235,8 @@
     },
     {
       "path": "src/platform/device/tour-pages.constants.ts",
-      "bytes": 602,
-      "hash": "82c48ed4a62c054fc7f25526df8918a477039e9d4cff255cbe2212baf48b824d"
+      "bytes": 549,
+      "hash": "8db46d7322da22b01b7693e7f5e99d7a1a40cb90948ccf5fcfd54e0aac06c61b"
     },
     {
       "path": "src/platform/device/tray-notification.adapter.ts",
@@ -5070,8 +5050,8 @@
     },
     {
       "path": "tests/e2e/ux-polish.spec.ts",
-      "bytes": 5051,
-      "hash": "5ffbbc80290eb763f796750be735b08786e20a322c48b70b3a81d0c0abf146e4"
+      "bytes": 5045,
+      "hash": "9509bce6b41a35944eb3a3eabf714a0581288d79b40f28bef10245cbeb016d88"
     },
     {
       "path": "tests/eslint/architecture-plugin.test.ts",

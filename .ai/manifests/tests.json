@@ -307,8 +307,8 @@
     },
     {
       "path": "tests/e2e/ux-polish.spec.ts",
-      "bytes": 5051,
-      "hash": "5ffbbc80290eb763f796750be735b08786e20a322c48b70b3a81d0c0abf146e4"
+      "bytes": 5045,
+      "hash": "9509bce6b41a35944eb3a3eabf714a0581288d79b40f28bef10245cbeb016d88"
     },
     {
       "path": "tests/eslint/architecture-plugin.test.ts",

@@ -125,20 +125,19 @@ test('core navigation and actions keep accessible touch targets', async ({ page 
   await page.setViewportSize({ width: 390, height: 844 });
   await register(page, 'touch-targets');
 
-  for (const route of ['/app', '/buckets', '/orders', '/social', '/settings']) {
+  for (const route of ['/app', '/buckets', '/sessions', '/social', '/settings']) {
     await page.goto(route);
-    // Five application destinations plus Home, About, and Contact: the bottom
-    // bar carries the marketing links the sidebar has, so a phone has a route
-    // back to the public site.
+    // Five destinations, and they must all be reachable without swiping. This
+    // used to assert eight and require the bar to scroll; a navigation bar that
+    // scrolls hides options from exactly the person least likely to find them
+    // that way, so Home, About and Contact moved into Settings instead.
     const navigationLinks = page.locator('.bottom-nav a');
-    await expect(navigationLinks).toHaveCount(8);
+    await expect(navigationLinks).toHaveCount(5);
     await expectMinimumTouchTargets(navigationLinks);
-    // The row no longer fits a phone, so it must scroll rather than shrink its
-    // targets below the minimum or overflow the page.
     const navigation = page.locator('.bottom-nav');
     expect(
-      await navigation.evaluate((element) => element.scrollWidth > element.clientWidth),
-    ).toBe(true);
+      await navigation.evaluate((element) => element.scrollWidth > element.clientWidth + 1),
+    ).toBe(false);
     await expectMinimumTouchTargets(
       page.locator('.button:visible, .icon-button:visible'),
     );
