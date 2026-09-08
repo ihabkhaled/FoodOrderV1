@@ -1370,8 +1370,8 @@
     },
     {
       "path": "release-notes/v1.11.0.md",
-      "bytes": 216,
-      "hash": "0f55c9d9ba9cbab27a5d1db32845858b2b697a470d2b0729bee1d55b092363a8"
+      "bytes": 3644,
+      "hash": "a00c3e9484212d7cb9f5b0d8802b75fff4d236e836e443b9bd5ca165ac4fdae1"
     },
     {
       "path": "release-notes/v1.2.0.md",
@@ -1614,9 +1614,14 @@
       "hash": "77aa35832a20cffcb182c8ea7edf2cb6535623b08519d3f9b06f6664c0b41769"
     },
     {
+      "path": "rules/29-phase-aggregated-release-evidence.md",
+      "bytes": 2062,
+      "hash": "157275b352eff0aeada18baf9a5fb807cd42d1de6e49027a210bc05d0ca51ec7"
+    },
+    {
       "path": "rules/README.md",
-      "bytes": 4866,
-      "hash": "08b7148d914bd117bace95aabb0ded4a45ff7ce9ebf21381a576e9b6ad9c51d1"
+      "bytes": 4995,
+      "hash": "69c398913feb8aabff38ba7b4498e005a3a8fbf93819afe2f0664f8876ad1a1f"
     },
     {
       "path": "rules/versioning.md",
@@ -1735,8 +1740,8 @@
     },
     {
       "path": "skills/README.md",
-      "bytes": 3269,
-      "hash": "924161fbbace4ddd596381d6b8952c780a681e73dcd03b9aeba9aa7edeac05eb"
+      "bytes": 3387,
+      "hash": "4ba76fed3b9477c856b6f852113e3a8d4cca3163fc982dc5ca09848febfec97d"
     },
     {
       "path": "skills/add-capacitor-plugin.md",
@@ -1762,6 +1767,11 @@
       "path": "skills/add-route.md",
       "bytes": 1809,
       "hash": "55e53975b56be1c88d6c7ce0310c167e16a89f8969b33459b39475d6572fcc70"
+    },
+    {
+      "path": "skills/aggregate-release-notes-and-pr.md",
+      "bytes": 2719,
+      "hash": "ea010fec7645544421b1cb612354165fc0c54beb1097281557505b4e12fb9187"
     },
     {
       "path": "skills/attention-and-loop-recovery.md",
@@ -5217,6 +5227,11 @@
       "path": "tests/tooling/pull-request-brief.test.mjs",
       "bytes": 2594,
       "hash": "159a156fc8de216407f9f639c5c35f221de9d31352b3cf38f8a49d5631238dd1"
+    },
+    {
+      "path": "tests/tooling/release-notes-phases.test.mjs",
+      "bytes": 1728,
+      "hash": "818323d2235669bc4af78489657fc9baf1bfe30f22344deb996eea5c44e89419"
     },
     {
       "path": "tests/tooling/versioning-core.test.mjs",

@@ -30,6 +30,7 @@ playbooks below.
 | [final-validation.md](final-validation.md)                   | Pre-merge / pre-release full pass                   |
 | [versioning/SKILL.md](versioning/SKILL.md)                   | Final stable bump, tag, APK, and GitHub release     |
 | [diagnose-firebase-deploy-scope.md](diagnose-firebase-deploy-scope.md) | Firebase deploy is slow or hits CPU quota |
+| [aggregate-release-notes-and-pr.md](aggregate-release-notes-and-pr.md) | Multi-phase branch: notes + PR per phase |
 | [execute-prompt-pack.md](execute-prompt-pack.md)             | Adapt an external prompt pack safely                |
 
 Universal forbidden shortcuts: disabling `architecture/*` rules, skipping tests, hand-editing

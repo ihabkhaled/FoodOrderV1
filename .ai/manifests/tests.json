@@ -466,6 +466,11 @@
       "hash": "159a156fc8de216407f9f639c5c35f221de9d31352b3cf38f8a49d5631238dd1"
     },
     {
+      "path": "tests/tooling/release-notes-phases.test.mjs",
+      "bytes": 1728,
+      "hash": "818323d2235669bc4af78489657fc9baf1bfe30f22344deb996eea5c44e89419"
+    },
+    {
       "path": "tests/tooling/versioning-core.test.mjs",
       "bytes": 5550,
       "hash": "3340da2560694c3ae4d9274e0e7146e4520b6ff39128c29eba846d1f80c18645"
