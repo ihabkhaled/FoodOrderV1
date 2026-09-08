@@ -119,7 +119,7 @@
   border-radius: 999px;
   color: var(--text);
   background: var(--surface);
-  font-size: 0.78rem;
+  font-size: 0.82rem;
   font-weight: 700;
 }
 
@@ -164,7 +164,7 @@
   border: 1px solid var(--line);
   border-radius: 11px;
   background: var(--surface-2);
-  font-size: 0.78rem;
+  font-size: 0.82rem;
 }
 
 .checkbox-row input {

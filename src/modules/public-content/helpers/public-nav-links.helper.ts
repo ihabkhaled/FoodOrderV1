@@ -1,10 +1,9 @@
 import type { Locale } from '@/modules/data-access';
-import {
-  buildPublicContentPath,
-  getPublicPageCopy,
-  toPublicLocale,
-} from '@/modules/public-content';
 import { Home, Info, Mail } from '@/packages/icons';
+
+import { buildPublicContentPath } from '../routes/public-content-route-registry.helper';
+import { getPublicPageCopy } from './public-content-catalog.helper';
+import { toPublicLocale } from './public-locale.helper';
 
 export interface PublicNavLink {
   id: string;
@@ -18,7 +17,11 @@ export interface PublicNavLink {
 /**
  * Marketing destinations shown inside the application shell.
  *
- * Built here rather than in each navigation component so the sidebar and the
+ * Owned by public-content because it is knowledge of the public pages, not of
+ * the shell. It lived under app/shell until Settings needed it too, and a
+ * module may not import from app.
+ *
+ * Built in one place rather than in each navigation component so the sidebar and the
  * bottom bar cannot drift apart — the bottom bar was missing these entirely,
  * which left mobile with no way back to the public site. Labels and paths come
  * from the public catalogue, so each one follows the active language.

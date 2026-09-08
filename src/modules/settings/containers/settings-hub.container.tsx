@@ -1,5 +1,6 @@
 import '../settings.css';
 
+import { buildPublicNavLinks } from '@/modules/public-content';
 import { Database, KeyRound, Settings2, ShieldCheck } from '@/packages/icons';
 import { FeatureTour, LinkRow } from '@/shared/ui';
 
@@ -16,6 +17,10 @@ import {
 export function SettingsHubContainer() {
   const vm = useSettingsHub();
   const { setSectionsElement, steps: tourSteps } = useSettingsTour();
+  // Home, About and Contact used to sit in the bottom bar, which pushed it to
+  // eight items and made it scroll. Information about the product belongs
+  // here, not among the controls someone uses every day.
+  const publicLinks = buildPublicNavLinks(vm.locale);
   const rows = [
     {
       to: SETTINGS_PREFERENCES_PATH,
@@ -65,6 +70,16 @@ export function SettingsHubContainer() {
             title={row.title}
             hint={row.hint}
           />
+        ))}
+      </nav>
+      <nav className="link-rows" aria-label={vm.t('aboutThisApp')}>
+        {publicLinks.map(({ id, href, label, icon: Icon }) => (
+          <a className="link-row" key={id} href={href}>
+            <Icon />
+            <span className="link-row-text">
+              <strong>{label}</strong>
+            </span>
+          </a>
         ))}
       </nav>
       <SettingsMetadata

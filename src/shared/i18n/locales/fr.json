@@ -1,4 +1,5 @@
 {
+  "aboutThisApp": "À propos de l'application",
   "accepted": "Acceptée",
   "accountCreated": "Votre compte est prêt.",
   "accountDeleted": "Votre compte a été supprimé.",
@@ -67,7 +68,7 @@
   "currentPassword": "Mot de passe actuel",
   "dangerZone": "Zone de danger",
   "dark": "Sombre",
-  "dashboard": "Tableau de bord",
+  "dashboard": "Accueil",
   "dashboardIntro": "Ce qui est ouvert maintenant et ce qui vient de se cloturer, pour voir ou en est un tour sans l ouvrir.",
   "decrease": "Diminuer",
   "delete": "Supprimer",
@@ -257,6 +258,7 @@
   "roleEditor": "Peut modifier le menu",
   "roleOwner": "Propriétaire",
   "roleViewer": "Peut seulement regarder",
+  "rounds": "Tours",
   "save": "Enregistrer",
   "saveDraft": "Enregistrer le brouillon",
   "searchBuckets": "Rechercher un menu",

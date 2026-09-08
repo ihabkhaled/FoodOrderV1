@@ -1,4 +1,5 @@
 {
+  "aboutThisApp": "Über diese App",
   "accepted": "Angenommen",
   "accountCreated": "Dein Konto ist bereit.",
   "accountDeleted": "Dein Konto wurde gelöscht.",
@@ -67,7 +68,7 @@
   "currentPassword": "Aktuelles Passwort",
   "dangerZone": "Gefahrenbereich",
   "dark": "Dunkel",
-  "dashboard": "Übersicht",
+  "dashboard": "Start",
   "dashboardIntro": "Was gerade offen ist und was kurzlich geschlossen wurde, damit du den Stand einer Runde siehst, ohne sie zu offnen.",
   "decrease": "Verringern",
   "delete": "Löschen",
@@ -257,6 +258,7 @@
   "roleEditor": "Darf die Speisekarte ändern",
   "roleOwner": "Eigentümer",
   "roleViewer": "Darf nur ansehen",
+  "rounds": "Runden",
   "save": "Speichern",
   "saveDraft": "Entwurf speichern",
   "searchBuckets": "Speisekarten durchsuchen",

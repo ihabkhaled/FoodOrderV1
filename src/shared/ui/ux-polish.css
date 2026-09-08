@@ -552,7 +552,7 @@ select:focus {
   border-radius: 999px;
   color: var(--light-panel-text);
   background: #fff0e4;
-  font-size: 0.72rem;
+  font-size: 0.82rem;
   font-weight: 700;
   line-height: 1.2;
   white-space: normal;
@@ -704,7 +704,7 @@ select:focus {
 
   .bottom-nav .bottom-nav-link {
     min-width: 0;
-    font-size: 0.66rem;
+    font-size: 0.82rem;
   }
 }
 

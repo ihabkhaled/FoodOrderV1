@@ -1,10 +1,10 @@
 import type { Locale } from '@/modules/data-access';
+import { buildPublicNavLinks } from '@/modules/public-content';
 import { NavLink } from '@/packages/router';
 import type { MessageKey } from '@/shared/i18n';
 
 import { HOME_PATH } from '../../../router/app-route-paths.constants';
 import { NAV_ITEMS } from '../../app-layout.constants';
-import { buildPublicNavLinks } from '../../helpers/public-nav-links.helper';
 
 interface SidebarNavProps {
   t: (key: MessageKey) => string;

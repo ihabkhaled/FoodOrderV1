@@ -3,6 +3,7 @@ export {
   AlertTriangle,
   ArrowLeft,
   Bell,
+  CalendarClock,
   Check,
   CheckCheck,
   CheckCircle2,

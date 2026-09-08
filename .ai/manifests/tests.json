@@ -236,6 +236,11 @@
       "hash": "ccd7574c4fcb5e8a375e71667adbf42f96d2c2e5e8c6ffe05c4afb375ced75d2"
     },
     {
+      "path": "tests/e2e/legibility.spec.ts",
+      "bytes": 2894,
+      "hash": "d872bd23ffca8c17fedc35d81bb1af32f4091bd62934748af5d00eacb4cd7b39"
+    },
+    {
       "path": "tests/e2e/locale-switch.spec.ts",
       "bytes": 2984,
       "hash": "2e6ed74a495181d13a1cfdd0b7865e045cd33a79f52c739db144950ecd6df605"

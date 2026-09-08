@@ -1,4 +1,5 @@
 {
+  "aboutThisApp": "Informazioni sull'app",
   "accepted": "Accettato",
   "accountCreated": "Il tuo account è pronto.",
   "accountDeleted": "Il tuo account è stato eliminato.",
@@ -67,7 +68,7 @@
   "currentPassword": "Password attuale",
   "dangerZone": "Zona pericolosa",
   "dark": "Scuro",
-  "dashboard": "Pannello di controllo",
+  "dashboard": "Home",
   "dashboardIntro": "Cosa e aperto ora e cosa si e chiuso di recente, per vedere a che punto e un giro senza aprirlo.",
   "decrease": "Diminuisci",
   "delete": "Elimina",
@@ -257,6 +258,7 @@
   "roleEditor": "Può modificare il menu",
   "roleOwner": "Proprietario",
   "roleViewer": "Può solo guardare",
+  "rounds": "Turni",
   "save": "Salva",
   "saveDraft": "Salva bozza",
   "searchBuckets": "Cerca nei menu",

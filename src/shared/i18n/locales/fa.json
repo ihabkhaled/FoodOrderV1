@@ -1,4 +1,5 @@
 {
+  "aboutThisApp": "درباره برنامه",
   "accepted": "پذیرفته‌شده",
   "accountCreated": "حساب شما آماده است.",
   "accountDeleted": "حساب شما حذف شد.",
@@ -67,7 +68,7 @@
   "currentPassword": "گذرواژه فعلی",
   "dangerZone": "منطقه خطر",
   "dark": "تیره",
-  "dashboard": "داشبورد",
+  "dashboard": "خانه",
   "dashboardIntro": "آنچه اکنون باز است و آنچه به‌تازگی بسته شده، تا ببینید یک دور به کجا رسیده بدون آنکه بازش کنید.",
   "decrease": "کاهش",
   "delete": "حذف",
@@ -257,6 +258,7 @@
   "roleEditor": "می‌تواند منو را تغییر دهد",
   "roleOwner": "مالک",
   "roleViewer": "فقط می‌تواند ببیند",
+  "rounds": "دورها",
   "save": "ذخیره",
   "saveDraft": "ذخیره پیش‌نویس",
   "searchBuckets": "جستجو در منوها",

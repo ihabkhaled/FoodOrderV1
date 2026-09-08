@@ -1,4 +1,5 @@
 {
+  "aboutThisApp": "3an el app",
   "accepted": "Etwafe2",
   "accountCreated": "7esabak gahez.",
   "accountDeleted": "El 7esab etmasa7.",
@@ -67,7 +68,7 @@
   "currentPassword": "El password el 7ali",
   "dangerZone": "Mante2et khatar",
   "dark": "Ghame2",
-  "dashboard": "El Law7a",
+  "dashboard": "El home",
   "dashboardIntro": "Elli maftooh delwa2ti we elli etafal min oraiyeb, 3ashan teshoof el round wesalet feen men gheir ma teftahha.",
   "decrease": "A2al",
   "delete": "Em7i",
@@ -257,6 +258,7 @@
   "roleEditor": "Ye2dar ye3addel el menu",
   "roleOwner": "El malek",
   "roleViewer": "Yetfarrag bas",
+  "rounds": "El rounds",
   "save": "E7faz",
   "saveDraft": "E7faz kmoswadda",
   "searchBuckets": "Dawwar fel menus",

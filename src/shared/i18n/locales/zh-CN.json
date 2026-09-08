@@ -1,4 +1,5 @@
 {
+  "aboutThisApp": "关于此应用",
   "accepted": "已接受",
   "accountCreated": "您的账户已准备就绪。",
   "accountDeleted": "您的账户已删除。",
@@ -67,7 +68,7 @@
   "currentPassword": "当前密码",
   "dangerZone": "危险操作",
   "dark": "深色",
-  "dashboard": "控制面板",
+  "dashboard": "主页",
   "dashboardIntro": "当前进行中的和最近结束的，让你不必打开就知道一轮进行到哪一步。",
   "decrease": "减少",
   "delete": "删除",
@@ -257,6 +258,7 @@
   "roleEditor": "可以修改菜单",
   "roleOwner": "拥有者",
   "roleViewer": "只能查看",
+  "rounds": "轮次",
   "save": "保存",
   "saveDraft": "保存草稿",
   "searchBuckets": "搜索菜单",

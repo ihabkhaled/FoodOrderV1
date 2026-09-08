@@ -119,7 +119,7 @@
   height: 29px;
   border-radius: 10px;
   background: var(--surface-2);
-  font-size: 0.78rem;
+  font-size: 0.82rem;
   font-weight: 900;
 }
 
@@ -175,7 +175,7 @@
 
   .order-step strong {
     max-width: 100%;
-    font-size: 0.7rem;
+    font-size: 0.82rem;
   }
 
   .order-flow-actions {

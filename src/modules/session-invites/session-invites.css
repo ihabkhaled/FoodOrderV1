@@ -94,7 +94,7 @@
 .guest-response-summary span,
 .guest-order-total span {
   color: var(--muted);
-  font-size: 0.8rem;
+  font-size: 0.82rem;
 }
 
 .session-invite-metadata strong,

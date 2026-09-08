@@ -1,4 +1,5 @@
 {
+  "aboutThisApp": "เกี่ยวกับแอปนี้",
   "accepted": "ตอบรับแล้ว",
   "accountCreated": "บัญชีของคุณพร้อมใช้งานแล้ว",
   "accountDeleted": "ลบบัญชีของคุณแล้ว",
@@ -67,7 +68,7 @@
   "currentPassword": "รหัสผ่านปัจจุบัน",
   "dangerZone": "โซนอันตราย",
   "dark": "มืด",
-  "dashboard": "แดชบอร์ด",
+  "dashboard": "หน้าแรก",
   "dashboardIntro": "สิ่งที่เปิดอยู่ตอนนี้และสิ่งที่เพิ่งปิดไป เพื่อดูว่ารอบไปถึงไหนแล้วโดยไม่ต้องเปิด",
   "decrease": "ลด",
   "delete": "ลบ",
@@ -257,6 +258,7 @@
   "roleEditor": "แก้ไขเมนูได้",
   "roleOwner": "เจ้าของ",
   "roleViewer": "ดูได้อย่างเดียว",
+  "rounds": "รอบ",
   "save": "บันทึก",
   "saveDraft": "บันทึกฉบับร่าง",
   "searchBuckets": "ค้นหาเมนู",

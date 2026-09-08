@@ -81,11 +81,6 @@
       "relationship": "inferred"
     },
     {
-      "source": "src/app/shell/helpers/public-nav-links.helper.ts",
-      "tests": [],
-      "relationship": "inferred"
-    },
-    {
       "source": "src/app/shell/hooks/use-app-layout.hook.ts",
       "tests": [],
       "relationship": "inferred"
@@ -1432,6 +1427,11 @@
     },
     {
       "source": "src/modules/public-content/helpers/public-locale.helper.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/modules/public-content/helpers/public-nav-links.helper.ts",
       "tests": [],
       "relationship": "inferred"
     },

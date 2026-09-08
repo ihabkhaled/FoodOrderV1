@@ -1,4 +1,5 @@
 {
+  "aboutThisApp": "عن التطبيق",
   "accepted": "مقبولة",
   "accountCreated": "تم إنشاء حسابك.",
   "accountDeleted": "تم حذف حسابك.",
@@ -67,7 +68,7 @@
   "currentPassword": "كلمة المرور الحالية",
   "dangerZone": "منطقة الخطر",
   "dark": "داكن",
-  "dashboard": "لوحة التحكم",
+  "dashboard": "الرئيسية",
   "dashboardIntro": "ما هو مفتوح الآن وما أُغلق مؤخرًا، لترى أين وصلت الجولة دون فتحها.",
   "decrease": "تقليل",
   "delete": "حذف",
@@ -257,6 +258,7 @@
   "roleEditor": "يمكنه تعديل القائمة",
   "roleOwner": "المالك",
   "roleViewer": "يمكنه الاطلاع فقط",
+  "rounds": "الجولات",
   "save": "حفظ",
   "saveDraft": "حفظ كمسودة",
   "searchBuckets": "ابحث في القوائم",

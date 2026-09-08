@@ -1,4 +1,5 @@
 {
+  "aboutThisApp": "Sobre o aplicativo",
   "accepted": "Aceito",
   "accountCreated": "Sua conta está pronta.",
   "accountDeleted": "Sua conta foi excluída.",
@@ -67,7 +68,7 @@
   "currentPassword": "Senha atual",
   "dangerZone": "Zona de perigo",
   "dark": "Escuro",
-  "dashboard": "Painel",
+  "dashboard": "Início",
   "dashboardIntro": "O que esta aberto agora e o que fechou recentemente, para ver em que ponto uma rodada esta sem abrir.",
   "decrease": "Diminuir",
   "delete": "Excluir",
@@ -257,6 +258,7 @@
   "roleEditor": "Pode mudar o cardápio",
   "roleOwner": "Dono",
   "roleViewer": "Só pode ver",
+  "rounds": "Rodadas",
   "save": "Salvar",
   "saveDraft": "Salvar rascunho",
   "searchBuckets": "Buscar cardápios",

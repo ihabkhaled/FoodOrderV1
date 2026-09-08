@@ -1,4 +1,5 @@
 {
+  "aboutThisApp": "About this app",
   "accepted": "Accepted",
   "accountCreated": "Your account is ready.",
   "accountDeleted": "Your account was deleted.",
@@ -67,7 +68,7 @@
   "currentPassword": "Current password",
   "dangerZone": "Danger zone",
   "dark": "Dark",
-  "dashboard": "Dashboard",
+  "dashboard": "Home",
   "dashboardIntro": "What is open right now and what recently closed, so you can see where a round has got to without opening it.",
   "decrease": "Decrease",
   "delete": "Delete",
@@ -257,6 +258,7 @@
   "roleEditor": "Can change the menu",
   "roleOwner": "Owner",
   "roleViewer": "Can only look",
+  "rounds": "Rounds",
   "save": "Save",
   "saveDraft": "Save draft",
   "searchBuckets": "Search menus",

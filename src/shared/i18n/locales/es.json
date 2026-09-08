@@ -1,4 +1,5 @@
 {
+  "aboutThisApp": "Sobre la aplicación",
   "accepted": "Aceptada",
   "accountCreated": "Tu cuenta está lista.",
   "accountDeleted": "Tu cuenta fue eliminada.",
@@ -67,7 +68,7 @@
   "currentPassword": "Contraseña actual",
   "dangerZone": "Zona de peligro",
   "dark": "Oscuro",
-  "dashboard": "Panel de control",
+  "dashboard": "Inicio",
   "dashboardIntro": "Lo que esta abierto ahora y lo que se cerro hace poco, para ver por donde va una ronda sin abrirla.",
   "decrease": "Disminuir",
   "delete": "Eliminar",
@@ -257,6 +258,7 @@
   "roleEditor": "Puede cambiar la carta",
   "roleOwner": "Propietario",
   "roleViewer": "Solo puede mirar",
+  "rounds": "Rondas",
   "save": "Guardar",
   "saveDraft": "Guardar borrador",
   "searchBuckets": "Buscar cartas",

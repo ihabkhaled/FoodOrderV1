@@ -1,4 +1,5 @@
 {
+  "aboutThisApp": "このアプリについて",
   "accepted": "承認済み",
   "accountCreated": "アカウントの準備ができました。",
   "accountDeleted": "アカウントを削除しました。",
@@ -67,7 +68,7 @@
   "currentPassword": "現在のパスワード",
   "dangerZone": "危険な操作",
   "dark": "ダーク",
-  "dashboard": "ダッシュボード",
+  "dashboard": "ホーム",
   "dashboardIntro": "今開いている回と最近終わった回。開かなくても進み具合が分かります。",
   "decrease": "減らす",
   "delete": "削除",
@@ -257,6 +258,7 @@
   "roleEditor": "メニューを変更できる",
   "roleOwner": "作成者",
   "roleViewer": "閲覧のみ",
+  "rounds": "ラウンド",
   "save": "保存",
   "saveDraft": "下書きを保存",
   "searchBuckets": "メニューを検索",
