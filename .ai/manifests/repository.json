@@ -344,6 +344,51 @@
       "hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
     },
     {
+      "path": ".playwright-mcp/page-2026-09-09T06-29-34-931Z.yml",
+      "bytes": 39,
+      "hash": "a1779ec4f53716c8ad76efe18841c58223472f2fc25f9457e42d7100c58e382e"
+    },
+    {
+      "path": ".playwright-mcp/page-2026-09-09T06-29-40-568Z.yml",
+      "bytes": 1,
+      "hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": ".playwright-mcp/page-2026-09-09T06-29-48-820Z.yml",
+      "bytes": 1,
+      "hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": ".playwright-mcp/page-2026-09-09T06-29-56-478Z.yml",
+      "bytes": 1,
+      "hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": ".playwright-mcp/page-2026-09-09T06-39-12-512Z.yml",
+      "bytes": 1,
+      "hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": ".playwright-mcp/page-2026-09-09T06-39-15-754Z.yml",
+      "bytes": 1,
+      "hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": ".playwright-mcp/page-2026-09-09T06-39-25-268Z.yml",
+      "bytes": 1,
+      "hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": ".playwright-mcp/page-2026-09-09T06-39-40-872Z.yml",
+      "bytes": 1,
+      "hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": ".playwright-mcp/page-2026-09-09T06-40-52-202Z.yml",
+      "bytes": 1,
+      "hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
       "path": ".trivyignore.yaml",
       "bytes": 20,
       "hash": "0944c6a1e87ece8c4cd87aa66493cd2991597e526caa656be1de2e38dae52513"
@@ -2830,8 +2875,8 @@
     },
     {
       "path": "src/modules/group-orders/components/group-receipt-section/receipt-by-item.component.tsx",
-      "bytes": 1220,
-      "hash": "b9563570d8251e1a78cb28c3f9e7d8a15756df10cb05494543b82d2d1f73f155"
+      "bytes": 1241,
+      "hash": "39770a1d730440055adb43b6e445f1676994054955369656a078113e47c5ae30"
     },
     {
       "path": "src/modules/group-orders/components/group-receipt-section/receipt-by-person.component.tsx",
@@ -2980,8 +3025,8 @@
     },
     {
       "path": "src/modules/invite-links/components/invite-link-panel/invite-link-preview.component.tsx",
-      "bytes": 1853,
-      "hash": "1c4d8da00d304367590296854cb3ae3b1e2585dc874feef25251f226dcd4e92c"
+      "bytes": 1833,
+      "hash": "cc8cec49e610c94cbeca6ec656fcc7deb99672dc28473ad846846810ff52d217"
     },
     {
       "path": "src/modules/invite-links/components/invite-link-panel/invite-link-share-card.component.tsx",
@@ -3510,8 +3555,8 @@
     },
     {
       "path": "src/modules/session-invites/components/guest-session-order/guest-session-order.component.tsx",
-      "bytes": 6817,
-      "hash": "f6ff74c8545834c0d4af28dfe3d592dab4f046d2460ee083d240828646b133fa"
+      "bytes": 6825,
+      "hash": "2c54c972968413fc4a64f49e5bbe045a3184cfdc7d1ff2192cd9458bd2aca99c"
     },
     {
       "path": "src/modules/session-invites/components/session-invite-language-switch/session-invite-language-switch.component.tsx",
@@ -3685,8 +3730,8 @@
     },
     {
       "path": "src/modules/settings/components/analytics-consent-section/analytics-consent-section.component.tsx",
-      "bytes": 2189,
-      "hash": "832b1a399f85a56080fc60de1aa4e78541bcfbfc06b1112e3b9421afacb2c0c3"
+      "bytes": 2197,
+      "hash": "9a6742acf4240bb7fa01c6b5f717a6c0ea5ab753d52e3ce8fac346c5806fc9a6"
     },
     {
       "path": "src/modules/settings/components/change-password-section/change-password-section.component.tsx",
@@ -4940,13 +4985,13 @@
     },
     {
       "path": "src/socialNotifications.css",
-      "bytes": 7386,
-      "hash": "fd768cb14743dc0d1c02db3182da2c86229107e5ae64c9c25fa6902d612afee5"
+      "bytes": 7924,
+      "hash": "799b791fd7e27867312eb1ec1661b0844e80ac4050d72502fcf43f63c7212686"
     },
     {
       "path": "src/styles.css",
-      "bytes": 30466,
-      "hash": "501e3f554908048a080f232bb61746b89b022a6b414ad347efb3a74dc490e2c6"
+      "bytes": 32278,
+      "hash": "c02308e7e13835c7c596f3d54534a307d81a4a227ebfbb97ffc2ae5fea196cdc"
     },
     {
       "path": "src/ux-existing-shell.css",

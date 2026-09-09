@@ -122,7 +122,7 @@ export function GuestSessionOrder({
                       <Plus aria-hidden="true" />
                     </button>
                     {busy ? (
-                      <span className="sr-only">
+                      <span className="visually-hidden">
                         {translate(locale, 'savingChange')}
                       </span>
                     ) : null}

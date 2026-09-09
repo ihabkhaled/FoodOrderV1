@@ -39,7 +39,7 @@ export function InviteLinkPreviewCard({
   const subject = preview.bucketTitle ?? preview.groupName ?? preview.createdByName;
 
   return (
-    <section className="card stack-md invite-link-card">
+    <section className="section-card stack-md invite-link-card">
       <p className="eyebrow">{t('inviteLinkEyebrow')}</p>
       <h1>{t(headingKey(preview.kind))}</h1>
       <p className="invite-link-subject">{subject}</p>
@@ -54,7 +54,6 @@ export function InviteLinkPreviewCard({
       <BusyButton
         busy={redeeming}
         busyLabel={t('loading')}
-        className="primary"
         onClick={onAccept}
       >
         {t(actionKey(preview.kind))}

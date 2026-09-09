@@ -141,14 +141,32 @@ svg { width: 1.15em; height: 1.15em; flex: none; }
 .app-shell > .main-content { padding-bottom: calc(var(--nav-h) + env(safe-area-inset-bottom) + 32px); }
 
 /* ---- Cards, sections ------------------------------------------------------ */
+/* Referenced by 8 components across order-sessions, session-invites and
+   settings but never defined - each one rendered its title/hint pairs (and
+   in some cases whole sections) as run-on, unspaced text with no layout of
+   its own. */
+.stack-xs { display: grid; gap: 6px; min-width: 0; }
 .stack { display: grid; gap: 14px; min-width: 0; }
 .stack-lg { display: grid; gap: 22px; min-width: 0; }
-.stack > *, .stack-lg > * { min-width: 0; }
+.stack > *, .stack-lg > *, .stack-xs > * { min-width: 0; }
 .page-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 .page-heading > div { min-width: 0; }
 .eyebrow { margin-bottom: 5px; color: var(--primary-dark); font-size: 0.82rem; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; }
 .muted { color: var(--muted); }
+/* Referenced on a couple of order-session page intros expecting the same
+   readable line length .page-intro already gives its own text, but never
+   defined as its own class - those paragraphs ran the full width of a
+   desktop screen instead. */
+.measure { max-width: 62ch; }
 .section-card { min-width: 0; padding: clamp(16px, 2.4vw, 24px); border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); box-shadow: var(--shadow-sm); }
+/* A <strong> title followed by a <span class="muted"> hint are both inline
+   by default, so with no layout of their own they render as one run-on
+   string - "Other ways to inviteA code they type in..." - instead of a
+   title with a smaller line under it. Every collapsible section summary in
+   the app uses this exact title+hint shape, so the fix lives here rather
+   than on each caller. */
+details.section-card > summary { display: flex; flex-direction: column; gap: 2px; min-height: 44px; padding-block: 4px; cursor: pointer; }
+details.section-card > summary > .muted { font-size: 0.88rem; }
 .section-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 14px; flex-wrap: wrap; }
 .section-heading > * { min-width: 0; }
 .section-heading h2 { display: inline-flex; align-items: center; gap: 8px; }
@@ -174,6 +192,15 @@ svg { width: 1.15em; height: 1.15em; flex: none; }
 .button:hover:not(:disabled) { filter: brightness(1.05); }
 .button:active:not(:disabled) { transform: translateY(1px); }
 .button.secondary { color: var(--text); border-color: var(--line-strong); background: var(--surface); }
+/* Referenced next to an inline error message expecting a smaller retry
+   button, but never defined - it rendered as a full-size button with no
+   size reduction at all. Height stays at the 44px touch-target minimum;
+   only the padding and type size shrink. */
+.button.compact { padding: 7px 14px; font-size: 0.86rem; }
+/* The name of the thing an invite link grants access to - the one piece of
+   information the preview exists to show before anything is accepted - had
+   no emphasis of its own and read as an ordinary paragraph. */
+.invite-link-subject { font-size: 1.1rem; font-weight: 800; overflow-wrap: anywhere; }
 .button.danger { background: var(--danger); color: #fff; }
 .button.success { background: var(--success); color: #fff; }
 .button:disabled, .icon-button:disabled { opacity: 0.5; cursor: not-allowed; }

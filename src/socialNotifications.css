@@ -165,7 +165,11 @@
 }
 .group-card-head { justify-content: space-between; align-items: flex-start; }
 .group-card-title { display: flex; gap: 11px; min-width: 0; flex: 1; }
-.group-card-title > div { min-width: 0; }
+/* The name and the member-count pill are inline siblings with no layout of
+   their own between them, so they rendered as one run-on string with no
+   pill styling at all - .member-count-pill was never defined. */
+.group-card-title > div { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; min-width: 0; }
+.member-count-pill { display: inline-flex; align-items: center; flex: none; padding: 3px 10px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); background: var(--surface-2); font-size: 0.78rem; font-weight: 700; white-space: nowrap; }
 .friend-card-head strong,
 .friend-card-head span,
 .social-person strong,

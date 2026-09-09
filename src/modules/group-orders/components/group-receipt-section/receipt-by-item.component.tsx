@@ -13,7 +13,7 @@ export function ReceiptByItem({ receipt, translate }: ReceiptByItemProps) {
       {receipt.items.map((item) => (
         <article className="receipt-item-card" key={item.itemId}>
           <div className="section-heading">
-            <div>
+            <div className="stack-xs">
               <strong>{item.itemName}</strong>
               <span className="muted">
                 {translate('addedBy')} {item.createdByName}
