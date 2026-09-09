@@ -1590,8 +1590,8 @@
     },
     {
       "path": "release-notes/v1.11.0.md",
-      "bytes": 16231,
-      "hash": "93c1a8b772de897c5e9225b15de81673d94e1c3ebc633318a47b04fbdadaf9fe"
+      "bytes": 19503,
+      "hash": "c5ee51b2a9f721026cb6aba1549b3b6aaf18efe1df4fb185d1683d88dfc8f2c7"
     },
     {
       "path": "release-notes/v1.2.0.md",
