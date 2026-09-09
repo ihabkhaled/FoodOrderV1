@@ -154,9 +154,7 @@ export function BucketShareContainer() {
         confirmLabel={vm.t('removeMember')}
         cancelLabel={vm.t('cancel')}
         danger
-        onConfirm={() => {
-          void vm.removeMember();
-        }}
+        onConfirm={vm.removeMember}
         onCancel={() => {
           vm.setRemoving(null);
         }}

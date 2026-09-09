@@ -325,9 +325,15 @@ textarea { resize: vertical; }
 .locale-toggle { position: absolute; z-index: 5; top: max(env(safe-area-inset-top), 14px); inset-inline-end: 16px; min-height: 38px; padding: 7px 12px; }
 
 /* ---- Toast (bottom, never overlaps content) ------------------------------- */
-.toast { position: fixed; z-index: 60; left: 50%; transform: translateX(-50%); bottom: calc(var(--nav-h) + env(safe-area-inset-bottom) + 12px); max-width: min(440px, calc(100% - 32px)); padding: 12px 16px; border-radius: 13px; color: #fff; background: #2f2823; box-shadow: var(--shadow-lg); animation: toast-in 0.2s ease; }
+.toast { position: fixed; z-index: 60; left: 50%; transform: translateX(-50%); bottom: calc(var(--nav-h) + env(safe-area-inset-bottom) + 12px); display: flex; align-items: center; gap: 14px; max-width: min(440px, calc(100% - 32px)); padding: 10px 10px 10px 16px; border-radius: 13px; color: #fff; background: #2f2823; box-shadow: var(--shadow-lg); animation: toast-in 0.2s ease; }
 .toast-success { background: var(--success); }
 .toast-error { background: var(--danger); }
+.toast > span { flex: 1; min-width: 0; }
+/* An undo action has to be at least as tappable as any other control, on a
+   background that changes with the toast kind, so it gets its own visible
+   surface rather than blending into the toast and being missed. */
+.toast-action { flex: none; min-height: 44px; padding: 0 14px; border: 1px solid rgb(255 255 255 / 35%); border-radius: 10px; color: inherit; background: rgb(255 255 255 / 12%); font-weight: 800; cursor: pointer; }
+.toast-action:hover { background: rgb(255 255 255 / 22%); }
 @keyframes toast-in { from { opacity: 0; transform: translate(-50%, 8px); } to { opacity: 1; transform: translate(-50%, 0); } }
 
 /* ---- Dialog --------------------------------------------------------------- */

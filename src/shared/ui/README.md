@@ -35,6 +35,12 @@ and the pull-to-refresh gesture container.
   container built on a `RefreshContext`; triggers a haptic on refresh.
 - `Skeleton`, `SkeletonSection` (+ types) — decorative loading placeholders
   wrapped in one `role="status"` region.
+- `useUndoableDelete` (+ `UndoableDeleteController` / `UndoableDeleteOptions`
+  types) — schedules a destructive write instead of running it immediately:
+  `schedule(id, commit)` marks `id` pending (for the caller to filter out of
+  its own rendered list) and fires `commit` after a grace window unless
+  `cancel(id)` is called first. No UI of its own — pair it with a
+  `showToast(..., { label, onClick })` action.
 - `VirtualListFooter` — retry / loading / "all results loaded" footer for
   virtualized or paginated lists.
 
@@ -57,6 +63,8 @@ this barrel: `shell-alignment.css` (auth-shell/controls layout) and
   `refreshable-viewport.container.tsx` + `.component.tsx` + `.types.ts`,
   `use-refreshable-viewport.hook.ts` (touch gesture math), and
   `use-page-refresh.hook.ts` (the registration hook pages call).
+- `undo/` — `use-undoable-delete.hook.ts` (the pending-id timer map) +
+  `index.ts`. No component; renders nothing itself.
 
 ## Dependencies
 
@@ -68,8 +76,11 @@ and locale constants), `@/shared/types` (`Locale`), `@/packages/icons`,
 ## Testing
 
 `tests/components/{BackLink,BusyButton,ConfirmDialog,DangerReauthDialog,
-LanguageSelect,LinkRow,Loading,NumericField,PasswordField,Skeleton}.test.tsx`;
-e2e: `tests/e2e/feature-tour.spec.ts`, `tests/e2e/ui.spec.ts`
-(`.refresh-viewport`), `tests/e2e/responsive-navigation.spec.ts`
-(`.virtual-list-footer`). `EmptyState`/`ErrorState` have no dedicated unit
-test — only indirect coverage through screens that render them in e2e specs.
+LanguageSelect,LinkRow,Loading,NumericField,PasswordField,Skeleton,
+UndoableDelete}.test.tsx`; e2e: `tests/e2e/feature-tour.spec.ts`,
+`tests/e2e/ui.spec.ts` (`.refresh-viewport`),
+`tests/e2e/responsive-navigation.spec.ts` (`.virtual-list-footer`),
+`tests/e2e/undo-delete.spec.ts` (the delete flows that consume
+`useUndoableDelete`, not this hook directly). `EmptyState`/`ErrorState` have
+no dedicated unit test — only indirect coverage through screens that render
+them in e2e specs.

@@ -389,6 +389,61 @@
       "hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
     },
     {
+      "path": ".playwright-mcp/page-2026-09-09T10-32-48-334Z.yml",
+      "bytes": 1,
+      "hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": ".playwright-mcp/page-2026-09-09T10-32-56-898Z.yml",
+      "bytes": 1,
+      "hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": ".playwright-mcp/page-2026-09-09T10-33-05-685Z.yml",
+      "bytes": 1,
+      "hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": ".playwright-mcp/page-2026-09-09T10-33-21-028Z.yml",
+      "bytes": 1,
+      "hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": ".playwright-mcp/page-2026-09-09T10-34-06-627Z.yml",
+      "bytes": 1,
+      "hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": ".playwright-mcp/page-2026-09-09T10-34-22-054Z.yml",
+      "bytes": 1,
+      "hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": ".playwright-mcp/page-2026-09-09T10-34-37-197Z.yml",
+      "bytes": 1,
+      "hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": ".playwright-mcp/page-2026-09-09T10-34-52-855Z.yml",
+      "bytes": 1,
+      "hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": ".playwright-mcp/page-2026-09-09T10-35-25-221Z.yml",
+      "bytes": 1,
+      "hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": ".playwright-mcp/page-2026-09-09T10-42-27-581Z.yml",
+      "bytes": 1,
+      "hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": ".playwright-mcp/page-2026-09-09T10-42-33-893Z.yml",
+      "bytes": 1,
+      "hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
       "path": ".trivyignore.yaml",
       "bytes": 20,
       "hash": "0944c6a1e87ece8c4cd87aa66493cd2991597e526caa656be1de2e38dae52513"
@@ -1590,8 +1645,8 @@
     },
     {
       "path": "release-notes/v1.11.0.md",
-      "bytes": 19503,
-      "hash": "c5ee51b2a9f721026cb6aba1549b3b6aaf18efe1df4fb185d1683d88dfc8f2c7"
+      "bytes": 22648,
+      "hash": "22e4cd80b3f710ca6e0738d884a9dbd3001d8b4989f7f453975b74ada39467c2"
     },
     {
       "path": "release-notes/v1.2.0.md",
@@ -2185,8 +2240,8 @@
     },
     {
       "path": "src/app/shell/components/toast-viewport/toast-viewport.component.tsx",
-      "bytes": 392,
-      "hash": "3bd9540970322adf2fb6102830bd656b44cd39f2c4c068868dc9f348332744fc"
+      "bytes": 620,
+      "hash": "39b76a2cca10ec0a7a11e5402ee4045b9f5d1adbac67a87c38528d45f3d6e7df"
     },
     {
       "path": "src/app/shell/helpers/notification-mirror.helper.ts",
@@ -2360,8 +2415,8 @@
     },
     {
       "path": "src/modules/buckets/containers/buckets.container.tsx",
-      "bytes": 3477,
-      "hash": "a3393fdcf555f410f66208fdee64926fbda99ec8088522c75053d2f2d3350828"
+      "bytes": 3464,
+      "hash": "9b27118c08776f4eef1d7118b8fe94091fc566b639aab9a68eaf9fc257c0550e"
     },
     {
       "path": "src/modules/buckets/helpers/bucket-item-suggestions.helper.ts",
@@ -2380,8 +2435,8 @@
     },
     {
       "path": "src/modules/buckets/hooks/use-bucket-mutations.hook.ts",
-      "bytes": 1936,
-      "hash": "99f72cf8bce9a3faad7036fab997423f6e85fe15a34ff4bf54aa93eb132b6982"
+      "bytes": 2713,
+      "hash": "0b27f4d6a2f219a8c4cef2e2ac32861c271459cbc69dfaeb953514e4aa8323af"
     },
     {
       "path": "src/modules/buckets/hooks/use-buckets-tour.hook.ts",
@@ -2390,8 +2445,8 @@
     },
     {
       "path": "src/modules/buckets/hooks/use-buckets.hook.ts",
-      "bytes": 4782,
-      "hash": "bb1d01e55da9507db6fec6009332e30a7592f4af149d9d233ba2b57330b2fbd3"
+      "bytes": 5410,
+      "hash": "7b10eaebf2cceecbdb07ed4aa7a498affaa6ba39098839710bbca17b4eb8c85a"
     },
     {
       "path": "src/modules/buckets/index.ts",
@@ -2900,8 +2955,8 @@
     },
     {
       "path": "src/modules/group-orders/containers/bucket-share.container.tsx",
-      "bytes": 6499,
-      "hash": "a0c62a53e45a5869bb99830e4ffd29f1e48ff09a904da72f1694e56fe9035836"
+      "bytes": 6463,
+      "hash": "54fbd7c7bcbd8e4bcb3b5769b0c7bf4ed09030d626eb3e989e50c02379d8675a"
     },
     {
       "path": "src/modules/group-orders/containers/join-bucket.container.tsx",
@@ -2920,8 +2975,8 @@
     },
     {
       "path": "src/modules/group-orders/hooks/use-bucket-share.hook.ts",
-      "bytes": 9431,
-      "hash": "dda73a0fd7053ece8f91e55191d494410e656daf18fb1c5e8c88812820e726bb"
+      "bytes": 10524,
+      "hash": "952d5dcaaee0bc1527c7f4ede6d395d0f37a5ebbb6cd7ab3dca094e1b656a9d8"
     },
     {
       "path": "src/modules/group-orders/hooks/use-join-bucket.hook.ts",
@@ -3690,8 +3745,8 @@
     },
     {
       "path": "src/modules/session/README.md",
-      "bytes": 2654,
-      "hash": "b99f85d26f51c7cee6c824df5a563067edf22480a341389ad2449060b0853e2b"
+      "bytes": 2888,
+      "hash": "2ef06986ca982370bd6e6f8aee3877c95bdba9d38599760cba982435d7028691"
     },
     {
       "path": "src/modules/session/hooks/use-app.hook.ts",
@@ -3700,13 +3755,13 @@
     },
     {
       "path": "src/modules/session/hooks/use-session-controller.hook.ts",
-      "bytes": 10106,
-      "hash": "07213cfb9b608a954feb412b0afcacc0496f0eff539e18046c1c46446faa216e"
+      "bytes": 10392,
+      "hash": "de01cdbb6929101bd327a5bd12e20441dee05d19a4ee783b95773c9fc0080a4a"
     },
     {
       "path": "src/modules/session/index.ts",
-      "bytes": 164,
-      "hash": "c347d205ce779cbf1919106cf4e7fdb52014ff5f7ca93345818aa3c3251f7dd2"
+      "bytes": 177,
+      "hash": "2ac0936b4d640dc4bef134ac453aa34cdb6f55ac7083b0fd48cd99b6cea445b2"
     },
     {
       "path": "src/modules/session/providers/session.provider.tsx",
@@ -3720,8 +3775,8 @@
     },
     {
       "path": "src/modules/session/types/session.types.ts",
-      "bytes": 1703,
-      "hash": "6c09e1d9c90e3fd81214bf402c04efc11d016569c66caf6291ba675c70eb3b7f"
+      "bytes": 1916,
+      "hash": "855c9c334f31f5ddc845c0f91db522f1539a172dd6cf45d187fad4068f573a19"
     },
     {
       "path": "src/modules/settings/README.md",
@@ -3965,8 +4020,8 @@
     },
     {
       "path": "src/modules/social/containers/social-groups.container.tsx",
-      "bytes": 2343,
-      "hash": "a88572e5d3da40352668bef4e4e918de146476dc8037e3514f40a7800fd792f3"
+      "bytes": 2396,
+      "hash": "618c081e92cceb651f0ca195a1879e1dde8f9d6d06b03ef580489b81d0f65186"
     },
     {
       "path": "src/modules/social/containers/social-requests.container.tsx",
@@ -3990,8 +4045,8 @@
     },
     {
       "path": "src/modules/social/hooks/use-social.hook.ts",
-      "bytes": 8376,
-      "hash": "43bb19e01b19e09b34f7eb2a71b37b6796a46cff010fb7ed728c7a5a3f96b9ab"
+      "bytes": 9250,
+      "hash": "3c52a0cf3e46c23f2e5bdc72ed8672dccceb136f7192b7ea6561e69966ba81fc"
     },
     {
       "path": "src/modules/social/i18n/locales/ar-Latn.json",
@@ -4605,68 +4660,68 @@
     },
     {
       "path": "src/shared/i18n/locales/ar-Latn.json",
-      "bytes": 16929,
-      "hash": "da14f00002c78a8bddb0086da2f22b52adeff0ce58d8fae1769856cbdc4139a9"
+      "bytes": 16973,
+      "hash": "5af5bb7c0d9dc1dc0123f993e8a27a0de335790d36c65867a235bedce5cdeef6"
     },
     {
       "path": "src/shared/i18n/locales/ar.json",
-      "bytes": 21918,
-      "hash": "5a542af7c0d55b5bcbf884faf23353516e56c77b1ebd72e1d190b6b9d2460f55"
+      "bytes": 21978,
+      "hash": "111368519d3728bd259a537682f989ce35c28d552109eed697c37e4729171085"
     },
     {
       "path": "src/shared/i18n/locales/de.json",
-      "bytes": 18929,
-      "hash": "3fc732e93a1160c0dd3be8e867642d0b6390871a38c3c547d644e671816b75d1"
+      "bytes": 18992,
+      "hash": "09087196aef6a3aebe2ce39cedc334b16dfcd4f49a0b9778a74a98545929b554"
     },
     {
       "path": "src/shared/i18n/locales/en.json",
-      "bytes": 16571,
-      "hash": "39d4cbc26a8eaee34123ded93c58fe82753e0265159f96f5d504e32ff92d0254"
+      "bytes": 16612,
+      "hash": "91c7f17b44d309a7c1977bc8f231f2e79051a3e6cf64c637ddd579d1a6ca1ff7"
     },
     {
       "path": "src/shared/i18n/locales/es.json",
-      "bytes": 18248,
-      "hash": "02dd5b56f428de42fdb103967bf4f9942c6e62867ca246b996f1c956d990a306"
+      "bytes": 18295,
+      "hash": "fe19496d22b59b237dec58d29274cc30e6fe55e4be83bad43407a22a579fba08"
     },
     {
       "path": "src/shared/i18n/locales/fa.json",
-      "bytes": 24360,
-      "hash": "116a21ac17ecd80280fbb7cb7570239c94bb12e69325f906e5579455ae41e051"
+      "bytes": 24416,
+      "hash": "906fc2974fadf670a7a4a9a9914a28bfb8e55903cb748c87a7db4f97b933c691"
     },
     {
       "path": "src/shared/i18n/locales/fr.json",
-      "bytes": 19038,
-      "hash": "41b43fdee39551170bf0ffa9325f6674109c2c5128dcd0d35c923f8f3228079c"
+      "bytes": 19083,
+      "hash": "0bf431d58de555e31cebc3f1808dbbd13fb058cd520da4e77ad05e0a5c5a9447"
     },
     {
       "path": "src/shared/i18n/locales/hi.json",
-      "bytes": 31661,
-      "hash": "def1a456e939a985f21f97ca8258c8258109efd50b9879c9e3aa2d7235d75c9b"
+      "bytes": 31766,
+      "hash": "1a40027a2aaa7d115c706fa08e4d1ad2dd933f386278a4296fe4861bc72beecb"
     },
     {
       "path": "src/shared/i18n/locales/it.json",
-      "bytes": 17930,
-      "hash": "7e679d764d2d46bf928c550a29570fafacb9a5fb4c3a2653614c8a2798432a6f"
+      "bytes": 17977,
+      "hash": "784cf6f2ee1e942c182ff105a35e2f91bc80547dee3523748e486c270de5594d"
     },
     {
       "path": "src/shared/i18n/locales/ja.json",
-      "bytes": 20828,
-      "hash": "aa68c611e571c4168ff2cc11a547c780d256d35ce8f0d4bfc129dbc300ff9487"
+      "bytes": 20894,
+      "hash": "dd9feedc8a6402ebb7764dc04cce0ba235ce58f6e8c5aab6a3437460a29cd922"
     },
     {
       "path": "src/shared/i18n/locales/pt-BR.json",
-      "bytes": 18036,
-      "hash": "834978e87bacf8bc6c47d65c51f35e5a7d01cc49c7add251b11cbd208208859a"
+      "bytes": 18083,
+      "hash": "e4bf4d36c1637ae64f425efa12736bcb16c00e7938ea937a63eb0cb97e2dc9bf"
     },
     {
       "path": "src/shared/i18n/locales/th.json",
-      "bytes": 30757,
-      "hash": "d599be2a96b9cc74821aff43cedddc8c9a384c411b3de3d2858a8bb54f5aa518"
+      "bytes": 30835,
+      "hash": "def646e591fa4503211af446ebfe4e6bb4cbb6476e2dc1e5150297adb93250c9"
     },
     {
       "path": "src/shared/i18n/locales/zh-CN.json",
-      "bytes": 16389,
-      "hash": "63cf4a96cc23550701f78c947d4068fdb84d2390eb6e84c9974274bf1f8755c2"
+      "bytes": 16437,
+      "hash": "7ba480e9afc25f21634d231f5af0c80f43ca1613774b7057b413e594666e2791"
     },
     {
       "path": "src/shared/i18n/message-catalog-validation.helper.ts",
@@ -4705,8 +4760,8 @@
     },
     {
       "path": "src/shared/ui/README.md",
-      "bytes": 3818,
-      "hash": "818518c06be2cbee26f50ac6c839436d125f5e73270a876153ad22977bd394a6"
+      "bytes": 4488,
+      "hash": "4b60ee99c48930d2704bfba61a081f9d23303c6054ab55c7843d8bb58e51deea"
     },
     {
       "path": "src/shared/ui/back-link/back-link.component.tsx",
@@ -4820,8 +4875,8 @@
     },
     {
       "path": "src/shared/ui/index.ts",
-      "bytes": 886,
-      "hash": "9d1cfe26daa7fe77b7ed8363c804ce23e61204e74a59521ebd6414fcdd6e5c7a"
+      "bytes": 1014,
+      "hash": "86b59037155cc3bf17eff7f45b730f30deb06b0ed0347cbecfc3e285e797e286"
     },
     {
       "path": "src/shared/ui/language-select/index.ts",
@@ -4964,6 +5019,16 @@
       "hash": "7bfb39999fbb127c752523335ef1e2b952534df1dd8c1f73a1370faf4b7de73f"
     },
     {
+      "path": "src/shared/ui/undo/index.ts",
+      "bytes": 168,
+      "hash": "bdaa1968c1009fb269a0d5c51c6bc3ffe2474d4849345fc9ac2947623cbd3305"
+    },
+    {
+      "path": "src/shared/ui/undo/use-undoable-delete.hook.ts",
+      "bytes": 2458,
+      "hash": "5032e34ac7555b49668b38b057f1259f97283e5b81da92587a7178bc20f21a3e"
+    },
+    {
       "path": "src/shared/ui/ux-polish.css",
       "bytes": 21311,
       "hash": "fcc0b2146233e432cee45d8324b2ff13412a482ebfd9f9099255df5815c50eda"
@@ -4990,8 +5055,8 @@
     },
     {
       "path": "src/styles.css",
-      "bytes": 32278,
-      "hash": "c02308e7e13835c7c596f3d54534a307d81a4a227ebfbb97ffc2ae5fea196cdc"
+      "bytes": 32870,
+      "hash": "838ee8c428cf521a53a543311887e855a8a9b98ef96ddfde0f1138d02bfda731"
     },
     {
       "path": "src/ux-existing-shell.css",
@@ -5112,6 +5177,11 @@
       "path": "tests/components/Skeleton.test.tsx",
       "bytes": 1443,
       "hash": "c62fdbcd8a3ad515aa17893b30f86eb8a336307ad8453e5a5a377cf7468dcb81"
+    },
+    {
+      "path": "tests/components/UndoableDelete.test.tsx",
+      "bytes": 2922,
+      "hash": "700121ea3d37eca4e16fdbd5a11440206966ef770eea43670316299c1c2b30d4"
     },
     {
       "path": "tests/components/VercelInsights.test.tsx",
@@ -5332,6 +5402,11 @@
       "path": "tests/e2e/ui.spec.ts",
       "bytes": 11751,
       "hash": "8f8fc9ea26df621bfb48b602731e8dbeec1ff2893d296363d452b900b1aaba8d"
+    },
+    {
+      "path": "tests/e2e/undo-delete.spec.ts",
+      "bytes": 2852,
+      "hash": "68204655bb0d04257163e71d853559427c51ca3179b370f3675903f1f82f6528"
     },
     {
       "path": "tests/e2e/ux-polish.spec.ts",

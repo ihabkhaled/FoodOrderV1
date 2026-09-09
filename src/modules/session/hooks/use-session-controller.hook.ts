@@ -172,17 +172,26 @@ export const useSessionController = (initialLocale?: Locale): AppContextValue =>
 
   useEffect(() => {
     if (!toast) return;
-    const timer = window.setTimeout(() => {
-      setToast(null);
-    }, 3600);
+    // A plain confirmation only has to be read; an actionable one (Undo) has
+    // to be read, understood, and reacted to, so it gets longer on screen.
+    const timer = window.setTimeout(
+      () => {
+        setToast(null);
+      },
+      toast.action ? 6000 : 3600,
+    );
     return () => {
       window.clearTimeout(timer);
     };
   }, [toast]);
 
   const showToast = useCallback(
-    (message: string, kind: ToastState['kind'] = 'info') => {
-      setToast({ message, kind });
+    (
+      message: string,
+      kind: ToastState['kind'] = 'info',
+      action?: ToastState['action'],
+    ) => {
+      setToast({ message, kind, ...(action ? { action } : {}) });
     },
     [],
   );

@@ -14,7 +14,8 @@ state every other feature module reads via `useApp()`.
   analytics consent, and sets telemetry context.
 - Implements every session mutation: `login`, `register`, `resetPassword`,
   `logout`, `saveProfile`, `setDeviceLocale`, `setDeviceTheme`, `showToast`
-  (with a 3.6s auto-dismiss timer).
+  (auto-dismisses after 3.6s, or 6s when it carries an action such as
+  "Undo" — see `@/shared/ui`'s `useUndoableDelete`).
 - `saveProfile` only triggers a locale-prefixed page navigation when the
   locale it's given actually differs from the profile's current one — not
   on every save (see [release-notes/v1.11.0.md](../../../release-notes/v1.11.0.md)
@@ -27,7 +28,9 @@ state every other feature module reads via `useApp()`.
 - `AppProvider` — the context provider; wraps `useSessionController()` and
   accepts an optional `initialLocale` for locale-prefixed routes.
 - `ToastState` (type) — `{ message: string; kind: 'success' | 'error' |
-  'info' }`.
+  'info'; action?: ToastAction }`.
+- `ToastAction` (type) — `{ label: string; onClick: () => void }`, an
+  optional button a toast can carry (e.g. "Undo").
 
 ## Structure
 

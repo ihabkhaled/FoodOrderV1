@@ -96,6 +96,11 @@
       "hash": "c62fdbcd8a3ad515aa17893b30f86eb8a336307ad8453e5a5a377cf7468dcb81"
     },
     {
+      "path": "tests/components/UndoableDelete.test.tsx",
+      "bytes": 2922,
+      "hash": "700121ea3d37eca4e16fdbd5a11440206966ef770eea43670316299c1c2b30d4"
+    },
+    {
       "path": "tests/components/VercelInsights.test.tsx",
       "bytes": 1918,
       "hash": "abc84b970a7ae74703a2fc1a2112425f2d3f2ea781a9c9e868b7daa52d33b6cb"
@@ -314,6 +319,11 @@
       "path": "tests/e2e/ui.spec.ts",
       "bytes": 11751,
       "hash": "8f8fc9ea26df621bfb48b602731e8dbeec1ff2893d296363d452b900b1aaba8d"
+    },
+    {
+      "path": "tests/e2e/undo-delete.spec.ts",
+      "bytes": 2852,
+      "hash": "68204655bb0d04257163e71d853559427c51ca3179b370f3675903f1f82f6528"
     },
     {
       "path": "tests/e2e/ux-polish.spec.ts",

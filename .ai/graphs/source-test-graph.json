@@ -2856,6 +2856,16 @@
       "relationship": "inferred"
     },
     {
+      "source": "src/shared/ui/undo/index.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
+      "source": "src/shared/ui/undo/use-undoable-delete.hook.ts",
+      "tests": [],
+      "relationship": "inferred"
+    },
+    {
       "source": "src/shared/ui/ux-polish.css",
       "tests": [],
       "relationship": "inferred"

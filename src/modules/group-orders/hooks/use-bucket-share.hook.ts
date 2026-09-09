@@ -15,6 +15,7 @@ import { useApp } from '@/modules/session';
 import { useParams } from '@/packages/router';
 import { copyToClipboard, shareText } from '@/platform/browser';
 import type { MessageKey } from '@/shared/i18n';
+import { useUndoableDelete } from '@/shared/ui';
 
 import type { GroupOrderMessageKey } from '../i18n/group-order-messages.constants';
 import { translateGroupOrder } from '../i18n/translate-group-order.helper';
@@ -56,14 +57,36 @@ export interface BucketShareViewModel {
       Pick<BucketMember, 'canCreateCustomItems' | 'canSetCustomItemPrice'>
     >,
   ) => Promise<void>;
-  removeMember: () => Promise<void>;
+  removeMember: () => void;
 }
+
+const withoutMember = (
+  view: SharedBucketView | null,
+  member: BucketMember,
+): SharedBucketView | null =>
+  view
+    ? {
+        ...view,
+        members: view.members.filter(
+          (existing) => existing.userId !== member.userId,
+        ),
+      }
+    : view;
+
+const withMemberRestored = (
+  view: SharedBucketView | null,
+  member: BucketMember,
+): SharedBucketView | null =>
+  view && !view.members.some((existing) => existing.userId === member.userId)
+    ? { ...view, members: [...view.members, member] }
+    : view;
 
 export function useBucketShare(): BucketShareViewModel {
   const { bucketId } = useParams();
   const { user, locale, t, showToast } = useApp();
   const gt = (key: GroupOrderMessageKey) => translateGroupOrder(locale, key);
   const [view, setView] = useState<SharedBucketView | null>(null);
+  const undoableMemberRemoval = useUndoableDelete();
   const [invites, setInvites] = useState<BucketInvite[]>([]);
   const [activity, setActivity] = useState<BucketActivityEvent[]>([]);
   const [loading, setLoading] = useState(true);
@@ -280,29 +303,35 @@ export function useBucketShare(): BucketShareViewModel {
     }
   };
 
-  const removeMember = async (): Promise<void> => {
+  // Hides the member from the list the moment removal is confirmed, but
+  // does not call revokeMember until the undo window on the toast this
+  // raises has closed - so "Undo" restores access that was never actually
+  // revoked, rather than having to grant it back.
+  const removeMember = (): void => {
     if (!user || !bucketId || !removing) return;
-    try {
-      await sharingService.revokeMember(user, bucketId, removing.userId);
-      setView((current) =>
-        current
-          ? {
-              ...current,
-              members: current.members.filter(
-                (member) => member.userId !== removing.userId,
-              ),
-            }
-          : current,
-      );
-      showToast(t('memberRemoved'), 'success');
-    } catch (error_) {
-      showToast(
-        error_ instanceof Error ? error_.message : t('tryAgain'),
-        'error',
-      );
-    } finally {
-      setRemoving(null);
-    }
+    const member = removing;
+    setRemoving(null);
+    setView((current) => withoutMember(current, member));
+    undoableMemberRemoval.schedule(member.userId, async () => {
+      try {
+        await sharingService.revokeMember(user, bucketId, member.userId);
+      } catch (error_) {
+        showToast(
+          error_ instanceof Error ? error_.message : t('tryAgain'),
+          'error',
+        );
+        setView((current) => withMemberRestored(current, member));
+      }
+    });
+    showToast(t('memberRemoved'), 'success', {
+      label: t('undo'),
+      onClick: () => {
+        if (undoableMemberRemoval.cancel(member.userId)) {
+          setView((current) => withMemberRestored(current, member));
+          showToast(t('undone'), 'info');
+        }
+      },
+    });
   };
 
   return {

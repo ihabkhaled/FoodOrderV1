@@ -8,6 +8,7 @@ import type {
 import { socialService } from '@/modules/data-access';
 import { useApp } from '@/modules/session';
 import type { MessageKey } from '@/shared/i18n';
+import { useUndoableDelete } from '@/shared/ui';
 
 import type { SocialMessageKey } from '../i18n/social-messages.constants';
 import { translateSocial } from '../i18n/translate-social.helper';
@@ -58,7 +59,8 @@ export interface SocialViewModel {
   startEditing: (group: FriendGroup) => void;
   cancelEditing: () => void;
   saveGroup: (groupId: string) => Promise<void>;
-  deleteGroup: (groupId: string) => Promise<void>;
+  deleteGroup: (groupId: string) => void;
+  pendingGroupDeleteIds: ReadonlySet<string>;
   leaveGroup: (groupId: string) => Promise<void>;
   removeMember: (groupId: string, memberId: string) => Promise<void>;
   availableFriends: (group: FriendGroup) => SocialUser[];
@@ -90,6 +92,7 @@ export function useSocial(): SocialViewModel {
   const [editingGroupId, setEditingGroupId] = useState<string | null>(null);
   const [editName, setEditName] = useState('');
   const [editDescription, setEditDescription] = useState('');
+  const undoableGroupDelete = useUndoableDelete();
 
   const load = useCallback(async () => {
     try {
@@ -194,8 +197,26 @@ export function useSocial(): SocialViewModel {
     }, s('groupUpdated'));
   };
 
-  const deleteGroup = async (groupId: string): Promise<void> => {
-    await run(() => socialService.deleteGroup(groupId), s('groupDeleted'));
+  // Schedules the delete instead of running it: the group disappears from
+  // the list right away (see pendingGroupDeleteIds), but the write itself
+  // does not fire until the undo window in the toast this raises has
+  // closed, so "Undo" cancels a real deletion instead of reversing one.
+  const deleteGroup = (groupId: string): void => {
+    undoableGroupDelete.schedule(groupId, async () => {
+      try {
+        await socialService.deleteGroup(groupId);
+      } catch (error_) {
+        showToast(error_ instanceof Error ? error_.message : t('tryAgain'), 'error');
+      } finally {
+        await load();
+      }
+    });
+    showToast(s('groupDeleted'), 'success', {
+      label: t('undo'),
+      onClick: () => {
+        if (undoableGroupDelete.cancel(groupId)) showToast(t('undone'), 'info');
+      },
+    });
   };
 
   const leaveGroup = async (groupId: string): Promise<void> => {
@@ -287,6 +308,7 @@ export function useSocial(): SocialViewModel {
     cancelEditing,
     saveGroup,
     deleteGroup,
+    pendingGroupDeleteIds: undoableGroupDelete.pendingIds,
     leaveGroup,
     removeMember,
     availableFriends,

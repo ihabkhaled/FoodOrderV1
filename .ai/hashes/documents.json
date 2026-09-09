@@ -145,7 +145,7 @@
   "release-notes/v1.1.1.md": "9f2f48de53fe3b9dd35247e113e53e544b307b6f1748b307ae070bdd7fd48113",
   "release-notes/v1.10.0.md": "95de171bfd1b2177c275e4a087eaaaddedb249c08c1a63b30a682433a9f99952",
   "release-notes/v1.10.1.md": "407e8f07743da35ea63b78696de4a9e8978cddc01fbd2de5e8009b7649dcbf06",
-  "release-notes/v1.11.0.md": "c5ee51b2a9f721026cb6aba1549b3b6aaf18efe1df4fb185d1683d88dfc8f2c7",
+  "release-notes/v1.11.0.md": "22e4cd80b3f710ca6e0738d884a9dbd3001d8b4989f7f453975b74ada39467c2",
   "release-notes/v1.2.0.md": "a00f028df4e679c9fc578f125ae17cfbb1529f84af65d07942d05bf35a20e960",
   "release-notes/v1.3.4.md": "817c6d42989062f9b04f17de879c3a712cbb664cc2eb83fe567f8e1ea7270a9b",
   "release-notes/v1.5.0.md": "f64edea192fcdefb2fb1aaa3fea9729780a191b728eb4f7144079dc8770506d7",
@@ -240,7 +240,7 @@
   "src/modules/orders/README.md": "c302041f0a2f22452d6cb3a74fbab6ce976da5ab3f30ae955981e8041fb99e14",
   "src/modules/public-content/README.md": "1ec4a0c382a03778edff6e3d54c9b58ac6ff7dcbb0a34e6fff37fa606b61d84b",
   "src/modules/session-invites/README.md": "2d42170cf46715841a14c3672081f5a797c1b933b493df87719a4218b2ff19cb",
-  "src/modules/session/README.md": "b99f85d26f51c7cee6c824df5a563067edf22480a341389ad2449060b0853e2b",
+  "src/modules/session/README.md": "2ef06986ca982370bd6e6f8aee3877c95bdba9d38599760cba982435d7028691",
   "src/modules/settings/README.md": "58d72d9ec5985a5bb77c5ca6492e797aa7077ecaf7c06119128c95f8d0c1a945",
   "src/modules/social/README.md": "cc531bd053800b111e731b7276536a96facbc7e4d0fcdcaad4fb2df6d291b154",
   "src/modules/telemetry/README.md": "a66d74001f6a5528addf0d4b6848425d551f71b1876f8bc9d7751565bf606603",
@@ -266,5 +266,5 @@
   "src/shared/helpers/README.md": "7653372d82caed8d912865bd918efc16d3972f33ad8dc8174ac1cca5dcabab04",
   "src/shared/i18n/README.md": "9c737a0c934123ccbf5eabe405359ab77a61c5011cfbc9ad8530df8e6add5eac",
   "src/shared/types/README.md": "b752b7104e67833362855f8c8be41c2c117abfa2e3e34c32f27411c00c9376ec",
-  "src/shared/ui/README.md": "818518c06be2cbee26f50ac6c839436d125f5e73270a876153ad22977bd394a6"
+  "src/shared/ui/README.md": "4b60ee99c48930d2704bfba61a081f9d23303c6054ab55c7843d8bb58e51deea"
 }

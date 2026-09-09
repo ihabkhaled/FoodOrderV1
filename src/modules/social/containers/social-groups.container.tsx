@@ -37,7 +37,9 @@ export function SocialGroupsContainer() {
       <GroupsSection
         s={vm.s}
         userId={vm.userId}
-        groups={vm.overview.groups}
+        groups={vm.overview.groups.filter(
+          (group) => !vm.pendingGroupDeleteIds.has(group.id),
+        )}
         groupName={vm.groupName}
         groupDescription={vm.groupDescription}
         onGroupNameChange={vm.setGroupName}
@@ -51,7 +53,7 @@ export function SocialGroupsContainer() {
         onStartEditing={vm.startEditing}
         onCancelEditing={vm.cancelEditing}
         onSaveGroup={(groupId) => void vm.saveGroup(groupId)}
-        onDeleteGroup={(groupId) => void vm.deleteGroup(groupId)}
+        onDeleteGroup={vm.deleteGroup}
         onLeaveGroup={(groupId) => void vm.leaveGroup(groupId)}
         onRemoveMember={(groupId, memberId) =>
           void vm.removeMember(groupId, memberId)
