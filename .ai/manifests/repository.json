@@ -319,6 +319,31 @@
       "hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
     },
     {
+      "path": ".playwright-mcp/page-2026-09-09T05-49-34-283Z.yml",
+      "bytes": 1,
+      "hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": ".playwright-mcp/page-2026-09-09T05-49-45-516Z.yml",
+      "bytes": 1,
+      "hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": ".playwright-mcp/page-2026-09-09T05-50-51-511Z.yml",
+      "bytes": 1,
+      "hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": ".playwright-mcp/page-2026-09-09T05-56-19-387Z.yml",
+      "bytes": 1,
+      "hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": ".playwright-mcp/page-2026-09-09T05-57-30-650Z.yml",
+      "bytes": 1,
+      "hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
       "path": ".trivyignore.yaml",
       "bytes": 20,
       "hash": "0944c6a1e87ece8c4cd87aa66493cd2991597e526caa656be1de2e38dae52513"
@@ -882,6 +907,11 @@
       "path": "docs/ux/release-v1.9.0-plan.md",
       "bytes": 155,
       "hash": "d995e2d682d9fc7d5e92d16f05b8b9cdb063ad35159dec9abe9eb3a193756d0c"
+    },
+    {
+      "path": "docs/ux/v1.11.0-tap-count-walkthrough.md",
+      "bytes": 5581,
+      "hash": "9c39bdcfb0ce2340e912cefaaeb3874048eed35cb80fd0f999e73b4b618f355b"
     },
     {
       "path": "docs/ux/v1.9.0-release.md",
@@ -1515,8 +1545,8 @@
     },
     {
       "path": "release-notes/v1.11.0.md",
-      "bytes": 13775,
-      "hash": "5c8f0053ae1a91bf38c2b5d3bf58c25157d0c660b8180b1bbcef02fe272688c4"
+      "bytes": 15804,
+      "hash": "1825736e19d44894c2c0145f5f576bba50e82fbe3013f886ca16c7442e97a026"
     },
     {
       "path": "release-notes/v1.2.0.md",
@@ -2355,8 +2385,8 @@
     },
     {
       "path": "src/modules/dashboard/containers/dashboard.container.tsx",
-      "bytes": 4720,
-      "hash": "c861199b94e2a54b830fc81e82d07a06726d64f5da6b6647f66b4c93fdd50d54"
+      "bytes": 5125,
+      "hash": "040284cb376fd721842f9f3d674ab9eb734b2fde045dc40f68ddd86f1be498fb"
     },
     {
       "path": "src/modules/dashboard/dashboard-journey.css",
@@ -4530,68 +4560,68 @@
     },
     {
       "path": "src/shared/i18n/locales/ar-Latn.json",
-      "bytes": 16784,
-      "hash": "3cfdc5d3bd51d0b016ee914b70775eb21ca13fc66bf4f267863d364cc3e97cd5"
+      "bytes": 16929,
+      "hash": "da14f00002c78a8bddb0086da2f22b52adeff0ce58d8fae1769856cbdc4139a9"
     },
     {
       "path": "src/shared/i18n/locales/ar.json",
-      "bytes": 21733,
-      "hash": "c24763276fe43efbe6229babfd3388907a06482eaf107770a5d013c74e2b1260"
+      "bytes": 21918,
+      "hash": "5a542af7c0d55b5bcbf884faf23353516e56c77b1ebd72e1d190b6b9d2460f55"
     },
     {
       "path": "src/shared/i18n/locales/de.json",
-      "bytes": 18752,
-      "hash": "75280f5aa9c0360dd084635031e1fa2592dfe9b17871fe9f31d31f5ff5a8eb26"
+      "bytes": 18929,
+      "hash": "3fc732e93a1160c0dd3be8e867642d0b6390871a38c3c547d644e671816b75d1"
     },
     {
       "path": "src/shared/i18n/locales/en.json",
-      "bytes": 16421,
-      "hash": "dc2a4b9380de14a0d70767c558782c12979f23045e46bd9ffa80b909e9b08305"
+      "bytes": 16571,
+      "hash": "39d4cbc26a8eaee34123ded93c58fe82753e0265159f96f5d504e32ff92d0254"
     },
     {
       "path": "src/shared/i18n/locales/es.json",
-      "bytes": 18091,
-      "hash": "915621cbe7a3897422f1a3a3bb4f00568dd4e039be89ac93f3576b6dd7a50c0f"
+      "bytes": 18248,
+      "hash": "02dd5b56f428de42fdb103967bf4f9942c6e62867ca246b996f1c956d990a306"
     },
     {
       "path": "src/shared/i18n/locales/fa.json",
-      "bytes": 24121,
-      "hash": "304908e6c01a06c97b23b9ccb1dc812cdd4b6d6e20a70c644590dbd56cfebc02"
+      "bytes": 24360,
+      "hash": "116a21ac17ecd80280fbb7cb7570239c94bb12e69325f906e5579455ae41e051"
     },
     {
       "path": "src/shared/i18n/locales/fr.json",
-      "bytes": 18867,
-      "hash": "ec77ced4c89782546f6b85fdc32733b2e7576c6c45441fde3fb7408e0fe0c53d"
+      "bytes": 19038,
+      "hash": "41b43fdee39551170bf0ffa9325f6674109c2c5128dcd0d35c923f8f3228079c"
     },
     {
       "path": "src/shared/i18n/locales/hi.json",
-      "bytes": 31359,
-      "hash": "d83268b09d4bc52a7e2037f7309b60aab102ec68455940034143855d1ddeafd1"
+      "bytes": 31661,
+      "hash": "def1a456e939a985f21f97ca8258c8258109efd50b9879c9e3aa2d7235d75c9b"
     },
     {
       "path": "src/shared/i18n/locales/it.json",
-      "bytes": 17770,
-      "hash": "8da93236525956352cb775e11c29205131a621fd99bd9c875dcc089db689646d"
+      "bytes": 17930,
+      "hash": "7e679d764d2d46bf928c550a29570fafacb9a5fb4c3a2653614c8a2798432a6f"
     },
     {
       "path": "src/shared/i18n/locales/ja.json",
-      "bytes": 20632,
-      "hash": "727955ca2e6430445e65065c8ca4ce2dc0363f2e6e549207dcf73ede20443d71"
+      "bytes": 20828,
+      "hash": "aa68c611e571c4168ff2cc11a547c780d256d35ce8f0d4bfc129dbc300ff9487"
     },
     {
       "path": "src/shared/i18n/locales/pt-BR.json",
-      "bytes": 17867,
-      "hash": "f9a9ccbb237392dd620cdb8b9c039f1e9c4fc2ef8fc414244e36c5e5a172d8ce"
+      "bytes": 18036,
+      "hash": "834978e87bacf8bc6c47d65c51f35e5a7d01cc49c7add251b11cbd208208859a"
     },
     {
       "path": "src/shared/i18n/locales/th.json",
-      "bytes": 30455,
-      "hash": "f912ee9a614c83bc72aa5934075a936115248ed38087b717dff26062ccda7e93"
+      "bytes": 30757,
+      "hash": "d599be2a96b9cc74821aff43cedddc8c9a384c411b3de3d2858a8bb54f5aa518"
     },
     {
       "path": "src/shared/i18n/locales/zh-CN.json",
-      "bytes": 16232,
-      "hash": "5c95d14fd21932381a31d9276112526257a62413808a8cd059905a5edd7333da"
+      "bytes": 16389,
+      "hash": "63cf4a96cc23550701f78c947d4068fdb84d2390eb6e84c9974274bf1f8755c2"
     },
     {
       "path": "src/shared/i18n/message-catalog-validation.helper.ts",
@@ -5164,6 +5194,11 @@
       "hash": "a94d397a08fa4e7f7b3c86293d54527a46d1316f66190faf3da2deb9f232995a"
     },
     {
+      "path": "tests/e2e/dashboard-first-run.spec.ts",
+      "bytes": 1805,
+      "hash": "ad874d2638e30e7cc1604efe90eeedd42cd950165b890b91dc15abf5a4940f9c"
+    },
+    {
       "path": "tests/e2e/feature-tour.spec.ts",
       "bytes": 5182,
       "hash": "f212e534b1c84d888a245dd152b4c7e4964e317ef80c3995fb0139bf1b8e049c"
@@ -5421,7 +5456,7 @@
     {
       "path": "tests/tooling/release-notes-phases.test.mjs",
       "bytes": 1728,
-      "hash": "818323d2235669bc4af78489657fc9baf1bfe30f22344deb996eea5c44e89419"
+      "hash": "2120fe2e078cedbdcdd525f9267e767496f2a40596f44a36d105152a465c53ba"
     },
     {
       "path": "tests/tooling/versioning-core.test.mjs",

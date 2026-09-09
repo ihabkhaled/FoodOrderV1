@@ -70,6 +70,7 @@
   "dark": "ダーク",
   "dashboard": "ホーム",
   "dashboardIntro": "今開いている回と最近終わった回。開かなくても進み具合が分かります。",
+  "dashboardIntroNewUser": "最初のメニューを作りましょう。いくつか項目を追加して、人を招待するか注文しましょう。",
   "decrease": "減らす",
   "delete": "削除",
   "deleteAccount": "アカウントを削除",
@@ -333,5 +334,6 @@
   "unitPrice": "単価",
   "updated": "更新日",
   "welcome": "おかえりなさい",
+  "welcomeNewUser": "ようこそ！",
   "you": "あなた"
 }

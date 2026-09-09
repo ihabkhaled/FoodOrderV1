@@ -70,6 +70,7 @@
   "dark": "深色",
   "dashboard": "主页",
   "dashboardIntro": "当前进行中的和最近结束的，让你不必打开就知道一轮进行到哪一步。",
+  "dashboardIntroNewUser": "来创建你的第一个菜单吧——添加几样菜品，然后邀请其他人或下单。",
   "decrease": "减少",
   "delete": "删除",
   "deleteAccount": "删除账户",
@@ -333,5 +334,6 @@
   "unitPrice": "单价",
   "updated": "更新时间",
   "welcome": "欢迎回来",
+  "welcomeNewUser": "欢迎！",
   "you": "您"
 }

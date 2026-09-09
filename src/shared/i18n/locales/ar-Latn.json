@@ -70,6 +70,7 @@
   "dark": "Ghame2",
   "dashboard": "El home",
   "dashboardIntro": "Elli maftooh delwa2ti we elli etafal min oraiyeb, 3ashan teshoof el round wesalet feen men gheir ma teftahha.",
+  "dashboardIntroNewUser": "Yalla n3mel awel menu beta3ak - zawed shwayet asnaf, ba3dein ed3y nas aw eatlob.",
   "decrease": "A2al",
   "delete": "Em7i",
   "deleteAccount": "Em7i el 7esab",
@@ -333,5 +334,6 @@
   "unitPrice": "Se3r el wa7da",
   "updated": "Et3addel",
   "welcome": "Ahlan berago3ak",
+  "welcomeNewUser": "Ahlan beek",
   "you": "Enta"
 }

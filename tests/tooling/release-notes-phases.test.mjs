@@ -18,7 +18,7 @@ test('the notes carry a phase table', () => {
 });
 
 test('every phase in the table has a matching entry or is marked pending', () => {
-  const rows = [...notes.matchAll(/^\|\s*([A-F])\s*\|([^|]*)\|([^|]*)\|/gmu)];
+  const rows = [...notes.matchAll(/^\|\s*([A-Z])\s*\|([^|]*)\|([^|]*)\|/gmu)];
   assert.ok(rows.length > 0, 'no phase rows found');
   for (const [, phase, , evidence] of rows) {
     const pending = evidence.trim().toLowerCase() === 'pending';
@@ -31,7 +31,7 @@ test('every phase in the table has a matching entry or is marked pending', () =>
 });
 
 test('a completed phase states what it left out and what it fixed', () => {
-  const completed = [...notes.matchAll(/^\|\s*([A-F])\s*\|[^|]*\|\s*(?!pending)([^|]+)\|/gmu)];
+  const completed = [...notes.matchAll(/^\|\s*([A-Z])\s*\|[^|]*\|\s*(?!pending)([^|]+)\|/gmu)];
   if (completed.length === 0) return;
   assert.ok(notes.includes('## Fixed'), 'completed phases must record what they fixed');
   assert.ok(

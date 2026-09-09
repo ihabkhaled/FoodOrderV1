@@ -78,14 +78,23 @@ export function DashboardContainer() {
       ]
     : [];
 
+  // "Welcome back" and a summary of what recently closed made no sense to
+  // someone who had just registered and closed nothing yet - a returning-
+  // user greeting was the first thing every brand-new person read.
+  const isNewUser = summary?.bucketCount === 0;
+
   return (
     <div className="page stack-lg dashboard-page">
       <section className="hero-card dashboard-hero">
         <div>
-          <p className="eyebrow">{vm.t('welcome')}</p>
+          <p className="eyebrow">
+            {vm.t(isNewUser ? 'welcomeNewUser' : 'welcome')}
+          </p>
           <h1>{vm.profile?.fullName ?? vm.user?.displayName}</h1>
-          <p className="page-intro">{vm.t('dashboardIntro')}</p>
-          <p>{vm.t('quickStart')}</p>
+          <p className="page-intro">
+            {vm.t(isNewUser ? 'dashboardIntroNewUser' : 'dashboardIntro')}
+          </p>
+          {isNewUser ? null : <p>{vm.t('quickStart')}</p>}
         </div>
         <div>
           <Link className="button dashboard-primary-action" to={BUCKET_NEW_PATH}>

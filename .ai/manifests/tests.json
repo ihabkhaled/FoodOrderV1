@@ -221,6 +221,11 @@
       "hash": "a94d397a08fa4e7f7b3c86293d54527a46d1316f66190faf3da2deb9f232995a"
     },
     {
+      "path": "tests/e2e/dashboard-first-run.spec.ts",
+      "bytes": 1805,
+      "hash": "ad874d2638e30e7cc1604efe90eeedd42cd950165b890b91dc15abf5a4940f9c"
+    },
+    {
       "path": "tests/e2e/feature-tour.spec.ts",
       "bytes": 5182,
       "hash": "f212e534b1c84d888a245dd152b4c7e4964e317ef80c3995fb0139bf1b8e049c"
@@ -478,7 +483,7 @@
     {
       "path": "tests/tooling/release-notes-phases.test.mjs",
       "bytes": 1728,
-      "hash": "818323d2235669bc4af78489657fc9baf1bfe30f22344deb996eea5c44e89419"
+      "hash": "2120fe2e078cedbdcdd525f9267e767496f2a40596f44a36d105152a465c53ba"
     },
     {
       "path": "tests/tooling/versioning-core.test.mjs",

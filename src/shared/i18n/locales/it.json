@@ -70,6 +70,7 @@
   "dark": "Scuro",
   "dashboard": "Home",
   "dashboardIntro": "Cosa e aperto ora e cosa si e chiuso di recente, per vedere a che punto e un giro senza aprirlo.",
+  "dashboardIntroNewUser": "Creiamo il tuo primo menù — aggiungi alcuni piatti, poi invita persone o effettua un ordine.",
   "decrease": "Diminuisci",
   "delete": "Elimina",
   "deleteAccount": "Elimina account",
@@ -333,5 +334,6 @@
   "unitPrice": "Prezzo unitario",
   "updated": "Aggiornato",
   "welcome": "Bentornato",
+  "welcomeNewUser": "Benvenuto!",
   "you": "Tu"
 }

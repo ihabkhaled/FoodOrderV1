@@ -70,6 +70,7 @@
   "dark": "Dark",
   "dashboard": "Home",
   "dashboardIntro": "What is open right now and what recently closed, so you can see where a round has got to without opening it.",
+  "dashboardIntroNewUser": "Let's create your first menu — add a few items, then invite people or place an order.",
   "decrease": "Decrease",
   "delete": "Delete",
   "deleteAccount": "Delete account",
@@ -333,5 +334,6 @@
   "unitPrice": "Unit price",
   "updated": "Updated",
   "welcome": "Welcome back",
+  "welcomeNewUser": "Welcome!",
   "you": "You"
 }
