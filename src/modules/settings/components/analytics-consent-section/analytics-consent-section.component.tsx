@@ -44,7 +44,7 @@ export function AnalyticsConsentSection({
         </div>
       </div>
       <fieldset className="stack" disabled={disabled}>
-        <legend className="sr-only">{legend}</legend>
+        <legend className="visually-hidden">{legend}</legend>
         {ANALYTICS_CONSENT_ORDER.map((consent) => {
           const option = optionsByValue.get(consent);
           if (!option) return null;

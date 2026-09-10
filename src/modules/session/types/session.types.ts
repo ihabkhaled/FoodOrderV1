@@ -15,9 +15,16 @@ export interface AppProviderProps {
   initialLocale?: Locale;
 }
 
+export interface ToastAction {
+  label: string;
+  onClick: () => void;
+}
+
 export interface ToastState {
   message: string;
   kind: 'success' | 'error' | 'info';
+  /** An actionable toast (e.g. "Undo") stays up longer - see showToast. */
+  action?: ToastAction;
 }
 
 export interface AppContextValue {
@@ -55,5 +62,9 @@ export interface AppContextValue {
   setDeviceLocale: (locale: Locale) => Promise<void>;
   /** Runtime theme switch that also works before signing in. */
   setDeviceTheme: (theme: Theme) => Promise<void>;
-  showToast: (message: string, kind?: ToastState['kind']) => void;
+  showToast: (
+    message: string,
+    kind?: ToastState['kind'],
+    action?: ToastAction,
+  ) => void;
 }

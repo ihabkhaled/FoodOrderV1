@@ -1,9 +1,8 @@
 import { Mail, UserPlus, Users } from '@/packages/icons';
-import { ErrorState, FeatureTour, LinkRow, SkeletonSection } from '@/shared/ui';
+import { ErrorState, LinkRow, SkeletonSection } from '@/shared/ui';
 
 import { SocialHero } from '../components/social-hero/social-hero.component';
 import { useSocial } from '../hooks/use-social.hook';
-import { useSocialTour } from '../hooks/use-social-tour.hook';
 import {
   SOCIAL_FRIENDS_PATH,
   SOCIAL_GROUPS_PATH,
@@ -17,7 +16,6 @@ import {
  */
 export function SocialContainer() {
   const vm = useSocial();
-  const { setPeopleElement, steps: tourSteps } = useSocialTour();
 
   if (vm.loading) {
     return (
@@ -74,7 +72,6 @@ export function SocialContainer() {
         pendingCount={pendingCount}
       />
       <nav
-        ref={setPeopleElement}
         className="link-rows"
         aria-label={vm.s('friends')}
       >
@@ -89,15 +86,6 @@ export function SocialContainer() {
         ))}
       </nav>
 
-      <FeatureTour
-        page="social"
-        steps={tourSteps}
-        nextLabel={vm.t('tourNext')}
-        doneLabel={vm.t('tourDone')}
-        skipLabel={vm.t('tourSkip')}
-        closeLabel={vm.t('close')}
-        skipAllLabel={vm.t('tourSkipAll')}
-      />
     </div>
   );
 }

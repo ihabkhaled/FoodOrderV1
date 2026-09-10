@@ -113,7 +113,7 @@ const diagnosticsCount = async (page: Page): Promise<number> =>
 
 const createBucket = async (page: Page, title: string): Promise<void> => {
   await page.goto('/buckets/new');
-  await page.getByLabel('Bucket title').fill(title);
+  await page.getByLabel('Menu name').fill(title);
   await page.getByLabel('Item name').fill('Meal');
   await page.getByLabel('Unit price').fill('100');
   await page.getByRole('button', { name: 'Save' }).click();
@@ -144,7 +144,7 @@ test.describe('analytics consent has real effect', () => {
       .getByRole('button', { name: 'Duplicate — Consent menu', exact: true })
       .first()
       .click();
-    await expect(page.getByText('Bucket saved.')).toBeVisible();
+    await expect(page.getByText('Menu saved.')).toBeVisible();
     expect(await diagnosticsCount(page)).toBe(0);
 
     await setConsent(page, /Operational and product analytics/u);
@@ -153,7 +153,7 @@ test.describe('analytics consent has real effect', () => {
       .getByRole('button', { name: 'Duplicate — Consent menu', exact: true })
       .first()
       .click();
-    await expect(page.getByText('Bucket saved.')).toBeVisible();
+    await expect(page.getByText('Menu saved.')).toBeVisible();
 
     await expect.poll(async () => diagnosticsCount(page)).toBeGreaterThan(0);
   });

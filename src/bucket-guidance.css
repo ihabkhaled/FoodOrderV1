@@ -46,7 +46,7 @@
 .bucket-item-suggestion__meta {
   flex: none;
   color: var(--muted);
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   font-weight: 800;
 }
 
@@ -79,7 +79,7 @@
   height: 30px;
   border-radius: 10px;
   background: var(--surface-2);
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   font-weight: 900;
 }
 
@@ -146,7 +146,7 @@
 
   .bucket-flow-step strong {
     max-width: 100%;
-    font-size: 0.72rem;
+    font-size: 0.82rem;
   }
 
   .guided-empty-choice,

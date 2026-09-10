@@ -102,7 +102,7 @@
 .session-card-metrics small,
 .session-metric-grid dt {
   color: var(--muted);
-  font-size: 0.78rem;
+  font-size: 0.82rem;
 }
 
 .session-metric-grid dd {
@@ -122,7 +122,7 @@
   padding: 0.42rem 0.72rem;
   border: 1px solid color-mix(in srgb, currentColor 18%, transparent);
   border-radius: 999px;
-  font-size: 0.78rem;
+  font-size: 0.82rem;
   font-weight: 700;
   line-height: 1.2;
   white-space: nowrap;

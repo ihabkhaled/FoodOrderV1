@@ -15,7 +15,7 @@
   border-radius: 999px;
   color: #fff;
   background: var(--danger);
-  font-size: 0.62rem;
+  font-size: 0.82rem;
   font-weight: 900;
   line-height: 1;
 }
@@ -57,8 +57,8 @@
   background: var(--surface-2);
 }
 .notification-panel-head > div { display: grid; gap: 2px; min-width: 0; }
-.notification-panel-head .muted { font-size: 0.72rem; }
-.notification-read-all { min-height: 36px; padding: 7px 10px; font-size: 0.72rem; }
+.notification-panel-head .muted { font-size: 0.82rem; }
+.notification-read-all { min-height: 36px; padding: 7px 10px; font-size: 0.82rem; }
 .notification-list { display: grid; min-height: 0; max-height: min(480px, 65vh); overflow-y: auto; }
 .notification-item {
   display: grid;
@@ -93,11 +93,11 @@
 .notification-copy strong { font-size: 0.86rem; line-height: 1.3; overflow-wrap: anywhere; }
 .notification-copy span {
   color: color-mix(in srgb, var(--text) 74%, var(--muted));
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   line-height: 1.45;
   overflow-wrap: anywhere;
 }
-.notification-copy small { color: var(--muted); font-size: 0.68rem; }
+.notification-copy small { color: var(--muted); font-size: 0.82rem; }
 .notification-empty { padding: 28px 16px; text-align: center; }
 
 .social-hero {
@@ -122,7 +122,7 @@
   text-align: center;
 }
 .social-summary-card strong { font-size: 1.25rem; }
-.social-summary-card span { color: var(--muted); font-size: 0.7rem; }
+.social-summary-card span { color: var(--muted); font-size: 0.82rem; }
 .social-card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
@@ -165,7 +165,11 @@
 }
 .group-card-head { justify-content: space-between; align-items: flex-start; }
 .group-card-title { display: flex; gap: 11px; min-width: 0; flex: 1; }
-.group-card-title > div { min-width: 0; }
+/* The name and the member-count pill are inline siblings with no layout of
+   their own between them, so they rendered as one run-on string with no
+   pill styling at all - .member-count-pill was never defined. */
+.group-card-title > div { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; min-width: 0; }
+.member-count-pill { display: inline-flex; align-items: center; flex: none; padding: 3px 10px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); background: var(--surface-2); font-size: 0.78rem; font-weight: 700; white-space: nowrap; }
 .friend-card-head strong,
 .friend-card-head span,
 .social-person strong,
@@ -195,7 +199,7 @@
   border-radius: 999px;
   color: var(--muted);
   background: var(--soft);
-  font-size: 0.64rem;
+  font-size: 0.82rem;
   font-weight: 800;
   text-transform: uppercase;
 }

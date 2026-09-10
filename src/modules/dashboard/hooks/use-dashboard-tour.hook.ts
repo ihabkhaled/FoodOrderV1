@@ -6,7 +6,6 @@ import type { FeatureTourStep } from '@/shared/ui';
 export interface DashboardTourViewModel {
   /** Callback refs: attach with `ref={...}` on the element to spotlight. */
   setStatsElement: (element: HTMLElement | null) => void;
-  setCreateElement: (element: HTMLElement | null) => void;
   steps: FeatureTourStep[];
 }
 
@@ -18,7 +17,6 @@ export interface DashboardTourViewModel {
 export function useDashboardTour(): DashboardTourViewModel {
   const { t } = useApp();
   const [statsElement, setStatsElement] = useState<HTMLElement | null>(null);
-  const [createElement, setCreateElement] = useState<HTMLElement | null>(null);
 
   const steps = useMemo<FeatureTourStep[]>(
     () => [
@@ -40,27 +38,9 @@ export function useDashboardTour(): DashboardTourViewModel {
         body: t('tourDashboardSharedBody'),
         target: null,
       },
-      {
-        key: 'progress',
-        title: t('tourDashboardProgressTitle'),
-        body: t('tourDashboardProgressBody'),
-        target: null,
-      },
-      {
-        key: 'create',
-        title: t('tourDashboardCreateTitle'),
-        body: t('tourDashboardCreateBody'),
-        target: createElement,
-      },
-      {
-        key: 'nav',
-        title: t('tourDashboardNavTitle'),
-        body: t('tourDashboardNavBody'),
-        target: null,
-      },
     ],
-    [t, statsElement, createElement],
+    [t, statsElement],
   );
 
-  return { setStatsElement, setCreateElement, steps };
+  return { setStatsElement, steps };
 }

@@ -13,4 +13,9 @@ export { NumericField } from './numeric-field';
 export { PasswordField } from './password-field';
 export { RefreshableViewport, usePageRefresh } from './refresh';
 export { Skeleton, SkeletonSection } from './skeleton';
+export type {
+  UndoableDeleteController,
+  UndoableDeleteOptions,
+} from './undo';
+export { useUndoableDelete } from './undo';
 export { VirtualListFooter } from './virtual-list-footer';

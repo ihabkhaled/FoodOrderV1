@@ -8,7 +8,14 @@
   --muted: #715d4e;
   --line: #ecd9c7;
   --line-strong: #dfc4ac;
-  --primary: #ea580c;
+  /* White text on this colour is the site's dominant filled-button and
+     active-tab pattern, so --primary has to hold 4.5:1 with white, not just
+     look orange. ea580c only reached 3.56:1. This is darker by two steps
+     within the same hue (measured 5.06:1 solid, 4.74:1 at the far end of the
+     button's gradient toward #ef4444 - both with headroom, not just past the
+     line). Dark theme already pairs a dark ink with a light primary and was
+     unaffected. */
+  --primary: #c2450a;
   --primary-dark: #9a3412;
   --primary-ink: #ffffff;
   --ring: color-mix(in srgb, #f97316 42%, transparent);
@@ -119,7 +126,7 @@
   height: 29px;
   border-radius: 10px;
   background: var(--surface-2);
-  font-size: 0.78rem;
+  font-size: 0.82rem;
   font-weight: 900;
 }
 
@@ -175,7 +182,7 @@
 
   .order-step strong {
     max-width: 100%;
-    font-size: 0.7rem;
+    font-size: 0.82rem;
   }
 
   .order-flow-actions {

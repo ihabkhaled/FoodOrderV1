@@ -100,8 +100,14 @@ svg { width: 1.15em; height: 1.15em; flex: none; }
   display: flex; gap: 4px; padding: 7px;
   width: min(440px, calc(100% - 24px));
   border: 1px solid var(--line); border-radius: 20px;
-  background: color-mix(in srgb, var(--surface) 92%, transparent);
-  backdrop-filter: blur(14px); box-shadow: var(--shadow-lg);
+  /* Solid, not translucent. The inactive-label colour is only guaranteed to
+     hold its contrast ratio against a known background; a blurred, 92%-opaque
+     panel makes the true rendered colour depend on whatever the page happens
+     to be scrolled to underneath it, which the design can't control. Opaque
+     --surface gives every label a fixed, checkable pairing (measured 6.2:1
+     light, 9.3:1 dark). */
+  background: var(--surface);
+  box-shadow: var(--shadow-lg);
 }
 /*
  * Eight destinations do not fit a phone, so the row scrolls sideways instead
@@ -118,24 +124,49 @@ svg { width: 1.15em; height: 1.15em; flex: none; }
 .bottom-nav .bottom-nav-link {
   flex: 0 0 auto; min-width: 68px; scroll-snap-align: center;
   display: grid; justify-items: center; gap: 3px; padding: 8px 6px;
-  border-radius: 13px; color: var(--muted); font-size: 0.7rem; font-weight: 700;
+  border-radius: 13px; color: var(--muted); font-size: 0.82rem; font-weight: 700;
   text-align: center;
 }
 .bottom-nav .bottom-nav-link.active { color: var(--primary-ink); background: var(--primary); }
 .bottom-nav .bottom-nav-link span {
   max-width: 9ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
-.app-shell > .main-content { padding-bottom: calc(var(--nav-h) + env(safe-area-inset-bottom) + 16px); }
+/* The 44px minimum touch targets on heading and topbar links grow those
+   headings by a few px each; stacked down a long page that ate into this
+   reserve enough to tuck the last section's edge behind the fixed bottom nav
+   on the narrowest, shortest screens this app still supports. Widening the
+   reserve restores real clearance instead of a coincidental one - and font
+   metrics differ enough between browser engines at this width that a margin
+   sized to just clear Chromium still left Firefox and WebKit a few px short. */
+.app-shell > .main-content { padding-bottom: calc(var(--nav-h) + env(safe-area-inset-bottom) + 32px); }
 
 /* ---- Cards, sections ------------------------------------------------------ */
+/* Referenced by 8 components across order-sessions, session-invites and
+   settings but never defined - each one rendered its title/hint pairs (and
+   in some cases whole sections) as run-on, unspaced text with no layout of
+   its own. */
+.stack-xs { display: grid; gap: 6px; min-width: 0; }
 .stack { display: grid; gap: 14px; min-width: 0; }
 .stack-lg { display: grid; gap: 22px; min-width: 0; }
-.stack > *, .stack-lg > * { min-width: 0; }
+.stack > *, .stack-lg > *, .stack-xs > * { min-width: 0; }
 .page-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 .page-heading > div { min-width: 0; }
-.eyebrow { margin-bottom: 5px; color: var(--primary-dark); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; }
+.eyebrow { margin-bottom: 5px; color: var(--primary-dark); font-size: 0.82rem; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; }
 .muted { color: var(--muted); }
+/* Referenced on a couple of order-session page intros expecting the same
+   readable line length .page-intro already gives its own text, but never
+   defined as its own class - those paragraphs ran the full width of a
+   desktop screen instead. */
+.measure { max-width: 62ch; }
 .section-card { min-width: 0; padding: clamp(16px, 2.4vw, 24px); border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); box-shadow: var(--shadow-sm); }
+/* A <strong> title followed by a <span class="muted"> hint are both inline
+   by default, so with no layout of their own they render as one run-on
+   string - "Other ways to inviteA code they type in..." - instead of a
+   title with a smaller line under it. Every collapsible section summary in
+   the app uses this exact title+hint shape, so the fix lives here rather
+   than on each caller. */
+details.section-card > summary { display: flex; flex-direction: column; gap: 2px; min-height: 44px; padding-block: 4px; cursor: pointer; }
+details.section-card > summary > .muted { font-size: 0.88rem; }
 .section-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 14px; flex-wrap: wrap; }
 .section-heading > * { min-width: 0; }
 .section-heading h2 { display: inline-flex; align-items: center; gap: 8px; }
@@ -161,6 +192,15 @@ svg { width: 1.15em; height: 1.15em; flex: none; }
 .button:hover:not(:disabled) { filter: brightness(1.05); }
 .button:active:not(:disabled) { transform: translateY(1px); }
 .button.secondary { color: var(--text); border-color: var(--line-strong); background: var(--surface); }
+/* Referenced next to an inline error message expecting a smaller retry
+   button, but never defined - it rendered as a full-size button with no
+   size reduction at all. Height stays at the 44px touch-target minimum;
+   only the padding and type size shrink. */
+.button.compact { padding: 7px 14px; font-size: 0.86rem; }
+/* The name of the thing an invite link grants access to - the one piece of
+   information the preview exists to show before anything is accepted - had
+   no emphasis of its own and read as an ordinary paragraph. */
+.invite-link-subject { font-size: 1.1rem; font-weight: 800; overflow-wrap: anywhere; }
 .button.danger { background: var(--danger); color: #fff; }
 .button.success { background: var(--success); color: #fff; }
 .button:disabled, .icon-button:disabled { opacity: 0.5; cursor: not-allowed; }
@@ -211,13 +251,13 @@ textarea { resize: vertical; }
 .grow { flex: 1; min-width: 0; color: inherit; }
 .grow strong, .grow span { overflow-wrap: anywhere; }
 .row-end { display: flex; align-items: center; gap: 12px; min-width: 0; flex-wrap: wrap; justify-content: flex-end; }
-.status { display: inline-flex; align-items: center; padding: 4px 10px; border-radius: 999px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.03em; }
+.status { display: inline-flex; align-items: center; padding: 4px 10px; border-radius: 999px; font-size: 0.82rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.03em; }
 .status-draft { color: #4e4236; background: #efe7dd; }
 .status-placed { color: #713c00; background: #ffe2bb; }
 .status-completed { color: #0d512d; background: #d5f2df; }
 .status-cancelled { color: #7d1712; background: #fbdedb; }
-.mode-pill { display: inline-flex; align-items: center; gap: 6px; max-width: 100%; padding: 6px 11px; overflow: hidden; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); background: var(--surface-2); font-size: 0.76rem; text-overflow: ellipsis; white-space: nowrap; }
-.connection { display: inline-flex; align-items: center; gap: 6px; padding: 6px 11px; border: 1px solid var(--line); border-radius: 999px; font-size: 0.76rem; background: var(--surface-2); }
+.mode-pill { display: inline-flex; align-items: center; gap: 6px; max-width: 100%; padding: 6px 11px; overflow: hidden; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); background: var(--surface-2); font-size: 0.82rem; text-overflow: ellipsis; white-space: nowrap; }
+.connection { display: inline-flex; align-items: center; gap: 6px; padding: 6px 11px; border: 1px solid var(--line); border-radius: 999px; font-size: 0.82rem; background: var(--surface-2); }
 .connection.online { color: var(--success); }
 .connection.offline { color: var(--danger); }
 
@@ -230,7 +270,7 @@ textarea { resize: vertical; }
 .bucket-card p { overflow-wrap: anywhere; }
 .bucket-icon { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 13px; color: var(--primary); background: var(--soft); }
 .bucket-icon.shared { color: var(--info); background: color-mix(in srgb, var(--info) 16%, var(--surface)); }
-.bucket-meta { display: flex; justify-content: space-between; gap: 10px; margin-top: auto; color: var(--muted); font-size: 0.75rem; flex-wrap: wrap; }
+.bucket-meta { display: flex; justify-content: space-between; gap: 10px; margin-top: auto; color: var(--muted); font-size: 0.82rem; flex-wrap: wrap; }
 .card-actions { display: flex; flex-wrap: wrap; gap: 10px; }
 .card-actions .button { flex: 1 1 auto; min-width: fit-content; padding-inline: 12px; white-space: nowrap; }
 .card-actions .icon-button { flex: 0 0 auto; }
@@ -263,12 +303,12 @@ textarea { resize: vertical; }
 .totals > div { display: flex; justify-content: space-between; gap: 16px; }
 .grand-total { font-size: 1.2rem; font-weight: 700; }
 .metadata-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; }
-.participants-line { display: block; font-size: 0.75rem; color: var(--muted); }
+.participants-line { display: block; font-size: 0.82rem; color: var(--muted); }
 .order-row .grow > div { display: grid; gap: 12px; min-width: 0; }
 .order-row .grow strong { display: block; line-height: 1.35; }
 .order-row-meta { display: flex; align-items: center; gap: 0.4em; min-width: 0; flex-wrap: wrap; }
-.list-row span.order-item-count { display: inline-flex; padding: 3px 8px; border: 1px solid #f2c9aa; border-radius: 999px; color: var(--light-panel-text); background: #fff0e4; font-size: 0.72rem; font-weight: 700; line-height: 1.2; white-space: nowrap; }
-.pending-hint { display: block; font-size: 0.74rem; font-weight: 700; color: var(--primary-dark); }
+.list-row span.order-item-count { display: inline-flex; padding: 3px 8px; border: 1px solid #f2c9aa; border-radius: 999px; color: var(--light-panel-text); background: #fff0e4; font-size: 0.82rem; font-weight: 700; line-height: 1.2; white-space: nowrap; }
+.pending-hint { display: block; font-size: 0.82rem; font-weight: 700; color: var(--primary-dark); }
 
 /* ---- States --------------------------------------------------------------- */
 .empty-state, .error-state, .loading, .not-found { display: grid; place-items: center; align-content: center; gap: 12px; min-height: 46vh; text-align: center; color: var(--muted); }
@@ -285,9 +325,15 @@ textarea { resize: vertical; }
 .locale-toggle { position: absolute; z-index: 5; top: max(env(safe-area-inset-top), 14px); inset-inline-end: 16px; min-height: 38px; padding: 7px 12px; }
 
 /* ---- Toast (bottom, never overlaps content) ------------------------------- */
-.toast { position: fixed; z-index: 60; left: 50%; transform: translateX(-50%); bottom: calc(var(--nav-h) + env(safe-area-inset-bottom) + 12px); max-width: min(440px, calc(100% - 32px)); padding: 12px 16px; border-radius: 13px; color: #fff; background: #2f2823; box-shadow: var(--shadow-lg); animation: toast-in 0.2s ease; }
+.toast { position: fixed; z-index: 60; left: 50%; transform: translateX(-50%); bottom: calc(var(--nav-h) + env(safe-area-inset-bottom) + 12px); display: flex; align-items: center; gap: 14px; max-width: min(440px, calc(100% - 32px)); padding: 10px 10px 10px 16px; border-radius: 13px; color: #fff; background: #2f2823; box-shadow: var(--shadow-lg); animation: toast-in 0.2s ease; }
 .toast-success { background: var(--success); }
 .toast-error { background: var(--danger); }
+.toast > span { flex: 1; min-width: 0; }
+/* An undo action has to be at least as tappable as any other control, on a
+   background that changes with the toast kind, so it gets its own visible
+   surface rather than blending into the toast and being missed. */
+.toast-action { flex: none; min-height: 44px; padding: 0 14px; border: 1px solid rgb(255 255 255 / 35%); border-radius: 10px; color: inherit; background: rgb(255 255 255 / 12%); font-weight: 800; cursor: pointer; }
+.toast-action:hover { background: rgb(255 255 255 / 22%); }
 @keyframes toast-in { from { opacity: 0; transform: translate(-50%, 8px); } to { opacity: 1; transform: translate(-50%, 0); } }
 
 /* ---- Dialog --------------------------------------------------------------- */
@@ -426,3 +472,48 @@ textarea { resize: vertical; }
   font-size: 0.88rem;
   line-height: 1.5;
 }
+
+/* ---- Legibility floor ------------------------------------------------------
+ * Sized for someone reading a phone at arm's length without glasses. Body text
+ * is 16px because that is where most older eyes stop having to work, and
+ * nothing drops below 13px (0.82rem). Interactive targets are 48px, above the
+ * 44px minimum, because a shaky tap that misses is worse than a slightly
+ * larger button.
+ */
+body { font-size: 16px; line-height: 1.55; }
+button, .button, .link-row, a.button, input, select, textarea {
+  min-height: 48px;
+}
+/* Five items always divide the bar between them. Fixing a minimum width made
+   overflow possible whenever the labels were wide - Firefox tipped over where
+   Chromium fitted by a pixel, and German or Portuguese would have done the same
+   in any browser. Flexing cannot overflow, so the bar never scrolls and the
+   assertion holds in every browser and every language. */
+.bottom-nav .bottom-nav-link {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 56px;
+  padding: 8px 2px;
+  font-size: 0.82rem;
+}
+.bottom-nav { gap: 2px; padding: 6px 4px; }
+.bottom-nav .bottom-nav-link span {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+label { font-size: 1rem; }
+.muted { font-size: 0.95rem; }
+
+/* The brand mark is a link home, so it has to be as tappable as any other
+   control. It measured 36x36 - below the 44px minimum - because it was sized
+   as a logo rather than as a target. Padding grows the hit area without
+   changing how the mark looks. */
+.brand { min-width: 48px; min-height: 48px; padding-block: 6px; }
+
+/* Any remaining bare link in the shell gets a full-height hit area for the
+   same reason. */
+.topbar a,
+.page-heading a,
+.section-heading a { min-height: 44px; display: inline-flex; align-items: center; }

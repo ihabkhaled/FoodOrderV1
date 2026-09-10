@@ -1,15 +1,13 @@
 import { GroupInviteLinkContainer } from '@/modules/invite-links';
-import { BackLink, ErrorState, FeatureTour, SkeletonSection } from '@/shared/ui';
+import { BackLink, ErrorState, SkeletonSection } from '@/shared/ui';
 
 import { GroupsSection } from '../components/groups-section/groups-section.component';
 import { useSocial } from '../hooks/use-social.hook';
-import { useSocialGroupsTour } from '../hooks/use-social-groups-tour.hook';
 import { SOCIAL_PATH } from '../routes/social-route-paths.constants';
 
 /** Creating, editing, and inviting into groups, on its own page. */
 export function SocialGroupsContainer() {
   const vm = useSocial();
-  const { steps: tourSteps } = useSocialGroupsTour();
 
   if (vm.loading) {
     return (
@@ -39,7 +37,9 @@ export function SocialGroupsContainer() {
       <GroupsSection
         s={vm.s}
         userId={vm.userId}
-        groups={vm.overview.groups}
+        groups={vm.overview.groups.filter(
+          (group) => !vm.pendingGroupDeleteIds.has(group.id),
+        )}
         groupName={vm.groupName}
         groupDescription={vm.groupDescription}
         onGroupNameChange={vm.setGroupName}
@@ -53,7 +53,7 @@ export function SocialGroupsContainer() {
         onStartEditing={vm.startEditing}
         onCancelEditing={vm.cancelEditing}
         onSaveGroup={(groupId) => void vm.saveGroup(groupId)}
-        onDeleteGroup={(groupId) => void vm.deleteGroup(groupId)}
+        onDeleteGroup={vm.deleteGroup}
         onLeaveGroup={(groupId) => void vm.leaveGroup(groupId)}
         onRemoveMember={(groupId, memberId) =>
           void vm.removeMember(groupId, memberId)
@@ -67,15 +67,6 @@ export function SocialGroupsContainer() {
         availableFriends={vm.availableFriends}
       />
 
-      <FeatureTour
-        page="social-groups"
-        steps={tourSteps}
-        nextLabel={vm.t('tourNext')}
-        doneLabel={vm.t('tourDone')}
-        skipLabel={vm.t('tourSkip')}
-        closeLabel={vm.t('close')}
-        skipAllLabel={vm.t('tourSkipAll')}
-      />
     </div>
   );
 }

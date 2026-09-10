@@ -38,24 +38,6 @@ export function useBucketsTour(): BucketsTourViewModel {
         body: t('tourBucketsRoundBody'),
         target: roundElement,
       },
-      {
-        key: 'mine',
-        title: t('tourBucketsMineTitle'),
-        body: t('tourBucketsMineBody'),
-        target: null,
-      },
-      {
-        key: 'join',
-        title: t('tourBucketsJoinTitle'),
-        body: t('tourBucketsJoinBody'),
-        target: null,
-      },
-      {
-        key: 'delete',
-        title: t('tourBucketsDeleteTitle'),
-        body: t('tourBucketsDeleteBody'),
-        target: null,
-      },
     ],
     [t, templateElement, roundElement],
   );

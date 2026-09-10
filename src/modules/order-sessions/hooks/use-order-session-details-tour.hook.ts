@@ -35,30 +35,6 @@ export function useOrderSessionDetailsTour(): OrderSessionDetailsTourViewModel {
         body: t('tourSessionDetailsParticipantsBody'),
         target: null,
       },
-      {
-        key: 'totals',
-        title: t('tourSessionDetailsTotalsTitle'),
-        body: t('tourSessionDetailsTotalsBody'),
-        target: null,
-      },
-      {
-        key: 'lock',
-        title: t('tourSessionDetailsLockTitle'),
-        body: t('tourSessionDetailsLockBody'),
-        target: null,
-      },
-      {
-        key: 'refresh',
-        title: t('tourSessionDetailsRefreshTitle'),
-        body: t('tourSessionDetailsRefreshBody'),
-        target: null,
-      },
-      {
-        key: 'settle',
-        title: t('tourSessionDetailsSettleTitle'),
-        body: t('tourSessionDetailsSettleBody'),
-        target: null,
-      },
     ],
     [t],
   );

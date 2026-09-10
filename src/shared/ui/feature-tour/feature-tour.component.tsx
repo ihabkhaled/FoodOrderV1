@@ -49,7 +49,7 @@ export function FeatureTourView({
 
       <div className="feature-tour-card">
         <div className="feature-tour-head">
-          <p className="eyebrow">
+          <p className="eyebrow" data-tour-progress>
             {stepIndex + 1} / {stepCount}
           </p>
           <button

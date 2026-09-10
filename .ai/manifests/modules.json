@@ -39,7 +39,9 @@
         "src/modules/dashboard"
       ],
       "risk": "standard",
-      "tests": []
+      "tests": [
+        "tests/e2e/dashboard-first-run.spec.ts"
+      ]
     },
     {
       "id": "data-access",

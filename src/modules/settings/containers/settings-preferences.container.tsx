@@ -3,15 +3,13 @@ import '../settings.css';
 import type { CurrencyCode, Theme } from '@/modules/data-access';
 import { Bell, RefreshCcw, Save } from '@/packages/icons';
 import { SUPPORTED_CURRENCIES } from '@/platform/device';
-import { BackLink, FeatureTour, LanguageSelect } from '@/shared/ui';
+import { BackLink, LanguageSelect } from '@/shared/ui';
 
 import { useSettingsPreferences } from '../hooks/use-settings-preferences.hook';
-import { useSettingsPreferencesTour } from '../hooks/use-settings-preferences-tour.hook';
 import { SETTINGS_PATH } from '../routes/settings-route-paths.constants';
 
 export function SettingsPreferencesContainer() {
   const vm = useSettingsPreferences();
-  const { steps: tourSteps } = useSettingsPreferencesTour();
 
   return (
     <div className="page narrow stack-lg">
@@ -122,15 +120,6 @@ export function SettingsPreferencesContainer() {
           </button>
         </div>
       </form>
-      <FeatureTour
-        page="settings-preferences"
-        steps={tourSteps}
-        nextLabel={vm.t('tourNext')}
-        doneLabel={vm.t('tourDone')}
-        skipLabel={vm.t('tourSkip')}
-        closeLabel={vm.t('close')}
-        skipAllLabel={vm.t('tourSkipAll')}
-      />
     </div>
   );
 }

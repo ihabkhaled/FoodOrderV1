@@ -172,17 +172,26 @@ export const useSessionController = (initialLocale?: Locale): AppContextValue =>
 
   useEffect(() => {
     if (!toast) return;
-    const timer = window.setTimeout(() => {
-      setToast(null);
-    }, 3600);
+    // A plain confirmation only has to be read; an actionable one (Undo) has
+    // to be read, understood, and reacted to, so it gets longer on screen.
+    const timer = window.setTimeout(
+      () => {
+        setToast(null);
+      },
+      toast.action ? 6000 : 3600,
+    );
     return () => {
       window.clearTimeout(timer);
     };
   }, [toast]);
 
   const showToast = useCallback(
-    (message: string, kind: ToastState['kind'] = 'info') => {
-      setToast({ message, kind });
+    (
+      message: string,
+      kind: ToastState['kind'] = 'info',
+      action?: ToastState['action'],
+    ) => {
+      setToast({ message, kind, ...(action ? { action } : {}) });
     },
     [],
   );
@@ -243,7 +252,16 @@ export const useSessionController = (initialLocale?: Locale): AppContextValue =>
           setDevice((current) => ({ ...current, ...deviceChanges }));
         }
         showToast(translate(saved.locale, 'settingsSaved'), 'success');
-        if (changes.locale && !isNativeApplication()) {
+        // Preferences always resubmits the current locale alongside whatever
+        // actually changed, so `changes.locale` was truthy - and this fired a
+        // full-page hard reload - on every settings save, including ones that
+        // only touched theme or currency. Only a real locale change needs the
+        // browser to navigate to the other language's URL prefix.
+        if (
+          changes.locale &&
+          changes.locale !== profile.locale &&
+          !isNativeApplication()
+        ) {
           setLocaleNavigationPending(true);
           navigateToBrowserLocale(saved.locale);
         }

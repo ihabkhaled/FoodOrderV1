@@ -1,3 +1,4 @@
+import type { Locale } from '@/modules/data-access';
 import { useApp } from '@/modules/session';
 import { env } from '@/platform/environment';
 import type { MessageKey } from '@/shared/i18n';
@@ -6,6 +7,7 @@ import type { SettingsMessageKey } from '../i18n/settings-messages.constants';
 import { translateSettings } from '../i18n/translate-settings.helper';
 
 export interface SettingsHubViewModel {
+  locale: Locale;
   t: (key: MessageKey) => string;
   settingsT: (key: SettingsMessageKey) => string;
   fullName: string;
@@ -18,6 +20,7 @@ export function useSettingsHub(): SettingsHubViewModel {
   const { profile, online, locale, t } = useApp();
   return {
     t,
+    locale,
     settingsT: (key) => translateSettings(locale, key),
     fullName: profile?.fullName ?? '',
     email: profile?.email ?? '',

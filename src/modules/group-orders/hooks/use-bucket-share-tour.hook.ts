@@ -35,24 +35,6 @@ export function useBucketShareTour(): BucketShareTourViewModel {
         body: t('tourBucketShareRolesBody'),
         target: null,
       },
-      {
-        key: 'members',
-        title: t('tourBucketShareMembersTitle'),
-        body: t('tourBucketShareMembersBody'),
-        target: null,
-      },
-      {
-        key: 'freeze',
-        title: t('tourBucketShareFreezeTitle'),
-        body: t('tourBucketShareFreezeBody'),
-        target: null,
-      },
-      {
-        key: 'activity',
-        title: t('tourBucketShareActivityTitle'),
-        body: t('tourBucketShareActivityBody'),
-        target: null,
-      },
     ],
     [t],
   );

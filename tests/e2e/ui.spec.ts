@@ -139,7 +139,7 @@ test.describe('responsive shell', () => {
     await expect(page.locator('.sidebar')).toBeVisible();
     await expect(page.locator('.bottom-nav')).toBeHidden();
     await expect(
-      page.locator('.sidebar .nav-link', { hasText: 'Buckets' }),
+      page.locator('.sidebar .nav-link', { hasText: 'Menus' }),
     ).toBeVisible();
     await expectNoHorizontalOverflow(page);
   });

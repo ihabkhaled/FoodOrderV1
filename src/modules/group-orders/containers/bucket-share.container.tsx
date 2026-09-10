@@ -1,23 +1,22 @@
 import { BucketInviteLinkContainer } from '@/modules/invite-links';
-import { History, Share2, Users } from '@/packages/icons';
+import {  Share2 } from '@/packages/icons';
 import {
   BackLink,
   ConfirmDialog,
   ErrorState,
   FeatureTour,
-  LinkRow,
   Loading,
 } from '@/shared/ui';
 
+import { ActivityTimeline } from '../components/activity-timeline/activity-timeline.component';
 import { BucketInvitePanel } from '../components/bucket-invite-panel/bucket-invite-panel.component';
+import { BucketMemberPermissionsPanel } from '../components/bucket-member-permissions-panel/bucket-member-permissions-panel.component';
 import { BucketStateBanner } from '../components/bucket-state-banner/bucket-state-banner.component';
 import { BucketStateControls } from '../components/bucket-state-controls/bucket-state-controls.component';
 import { useBucketShare } from '../hooks/use-bucket-share.hook';
 import { useBucketShareTour } from '../hooks/use-bucket-share-tour.hook';
 import {
   BUCKETS_REDIRECT_PATH,
-  buildBucketShareActivityRoute,
-  buildBucketShareMembersRoute,
 } from '../routes/group-orders-route-paths.constants';
 
 export function BucketShareContainer() {
@@ -62,6 +61,22 @@ export function BucketShareContainer() {
 
       {bucket.visibility === 'shared' ? (
         <>
+          <BucketInviteLinkContainer
+            bucketId={bucket.id}
+            bucketTitle={bucket.title}
+          />
+          {/*
+            The join code still works for anyone who has one, but it is no
+            longer offered beside the link as an equal choice. Two ways to do
+            one thing is a decision the person did not ask to make, and the
+            link is the one that works by tapping rather than by copying a
+            string of characters accurately.
+          */}
+          <details className="section-card stack" id="other-ways">
+            <summary>
+              <strong>{vm.t('otherWaysToInvite')}</strong>
+              <span className="muted">{vm.t('otherWaysToInviteHint')}</span>
+            </summary>
           <BucketInvitePanel
             locale={vm.locale}
             invites={vm.invites}
@@ -81,24 +96,40 @@ export function BucketShareContainer() {
               void vm.revokeInvite(inviteId);
             }}
           />
-          <BucketInviteLinkContainer
-            bucketId={bucket.id}
-            bucketTitle={bucket.title}
-          />
-          <nav className="link-rows" aria-label={vm.t('sharing')}>
-            <LinkRow
-              to={buildBucketShareMembersRoute(bucket.id)}
-              icon={Users}
-              title={`${vm.t('members')} (${members.length})`}
-              hint={vm.t('shareMembersHint')}
+          </details>
+          {/*
+            Members and activity were separate pages reached by a link row.
+            Sharing a menu is one job, and splitting it across three screens
+            meant reading a person's permissions required leaving the screen
+            that granted them. They are sections here, closed by default so
+            the page still opens on the one thing most people came for.
+          */}
+          <details className="section-card stack" id="members">
+            <summary>
+              <strong>{`${vm.t('members')} (${members.length})`}</strong>
+              <span className="muted">{vm.t('shareMembersHint')}</span>
+            </summary>
+            <BucketMemberPermissionsPanel
+              members={members}
+              currentUserId={vm.user?.id ?? bucket.ownerId}
+              locale={vm.locale}
+              translate={vm.t}
+              onRoleChange={(member, role) => {
+                void vm.changeRole(member, role);
+              }}
+              onPermissionChange={(member, patch) => {
+                void vm.changeCustomPermissions(member, patch);
+              }}
+              onRemove={vm.setRemoving}
             />
-            <LinkRow
-              to={buildBucketShareActivityRoute(bucket.id)}
-              icon={History}
-              title={vm.t('activity')}
-              hint={vm.t('shareActivityHint')}
-            />
-          </nav>
+          </details>
+          <details className="section-card stack" id="activity">
+            <summary>
+              <strong>{vm.t('activity')}</strong>
+              <span className="muted">{vm.t('shareActivityHint')}</span>
+            </summary>
+            <ActivityTimeline events={vm.activity} locale={vm.locale} t={vm.t} />
+          </details>
         </>
       ) : (
         <section className="section-card stack">
@@ -116,6 +147,18 @@ export function BucketShareContainer() {
         </section>
       )}
 
+      <ConfirmDialog
+        open={Boolean(vm.removing)}
+        title={vm.t('removeMember')}
+        message={vm.t('confirmRemoveMember')}
+        confirmLabel={vm.t('removeMember')}
+        cancelLabel={vm.t('cancel')}
+        danger
+        onConfirm={vm.removeMember}
+        onCancel={() => {
+          vm.setRemoving(null);
+        }}
+      />
       <ConfirmDialog
         open={vm.confirmingFreeze}
         title={vm.gt('freezeBucket')}

@@ -88,7 +88,7 @@ export function BucketsContainer() {
         confirmLabel={vm.t('delete')}
         cancelLabel={vm.t('cancel')}
         danger
-        onConfirm={() => void vm.remove()}
+        onConfirm={vm.remove}
         onCancel={() => {
           vm.setDeleting(null);
         }}

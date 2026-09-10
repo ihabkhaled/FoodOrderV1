@@ -1,6 +1,6 @@
 # FoodOrderV1
 
-FoodOrderV1 is the completed Capacitor successor to the original React Native prototype. It lets a person create reusable food **buckets** (saved menus), choose quantities, place or save orders, track order history and status, repeat previous orders, and manage language, theme, and currency preferences — and now share buckets with other people: role-scoped invitations by join code, per-member quantity contributions with concurrency-safe aggregation, an activity timeline, and group orders that snapshot everyone's contributions.
+FoodOrderV1 is the completed Capacitor successor to the original React Native prototype. It lets a person create reusable food **buckets** (saved menus), choose quantities, place or save orders, track order history and status, repeat previous orders, and manage language, theme, and currency preferences — and now share buckets with other people: role-scoped invitations by join code, per-member quantity contributions with concurrency-safe aggregation, an activity timeline, and group orders that snapshot everyone's contributions. For the business rules behind that — pricing policy, roles, plan entitlements — see [docs/product/business-overview.md](docs/product/business-overview.md).
 
 ## Product modes
 

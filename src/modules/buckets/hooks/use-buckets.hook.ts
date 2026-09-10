@@ -17,12 +17,19 @@ const emptyBucketPage = (): Promise<PageResult<Bucket>> =>
 const readScope = (value: string | null): BucketScope =>
   value === 'owned' || value === 'shared' ? value : 'all';
 
-const filterBuckets = (buckets: readonly Bucket[], query: string): Bucket[] => {
+const filterBuckets = (
+  buckets: readonly Bucket[],
+  query: string,
+  pendingDeleteIds: ReadonlySet<string>,
+): Bucket[] => {
   const normalized = query.trim().toLowerCase();
-  if (!normalized) return [...buckets];
-  return buckets.filter((bucket) =>
-    `${bucket.title} ${bucket.description}`.toLowerCase().includes(normalized),
-  );
+  return buckets.filter((bucket) => {
+    if (pendingDeleteIds.has(bucket.id)) return false;
+    if (!normalized) return true;
+    return `${bucket.title} ${bucket.description}`
+      .toLowerCase()
+      .includes(normalized);
+  });
 };
 
 const firstPageError = (
@@ -59,7 +66,7 @@ export interface BucketsViewModel {
   sharedLoadMore: () => Promise<void>;
   deleting: Bucket | null;
   setDeleting: (bucket: Bucket | null) => void;
-  remove: () => Promise<void>;
+  remove: () => void;
   duplicate: (bucket: Bucket) => Promise<void>;
 }
 
@@ -92,20 +99,21 @@ export function useBuckets(): BucketsViewModel {
   }, [refreshOwned, refreshShared]);
   usePageRefresh(refresh);
 
-  const { deleting, setDeleting, remove, duplicate } = useBucketMutations({
-    user,
-    t,
-    showToast,
-    errorMessage,
-    refresh: refreshOwned,
-  });
+  const { deleting, setDeleting, remove, duplicate, pendingDeleteIds } =
+    useBucketMutations({
+      user,
+      t,
+      showToast,
+      errorMessage,
+      refresh: refreshOwned,
+    });
   const filteredOwned = useMemo(
-    () => filterBuckets(owned.items, query),
-    [owned.items, query],
+    () => filterBuckets(owned.items, query, pendingDeleteIds),
+    [owned.items, pendingDeleteIds, query],
   );
   const filteredShared = useMemo(
-    () => filterBuckets(shared.items, query),
-    [query, shared.items],
+    () => filterBuckets(shared.items, query, pendingDeleteIds),
+    [pendingDeleteIds, query, shared.items],
   );
 
   const updateSearch = (key: 'q' | 'scope', value: string): void => {
@@ -134,7 +142,15 @@ export function useBuckets(): BucketsViewModel {
     sharedLoading: shared.loading,
     initialError,
     refresh,
-    totalLoaded: owned.items.length + shared.items.length,
+    // Raw counts (not the search-filtered arrays - a search matching nothing
+    // must not read as "you have no menus"), minus pending deletes so
+    // deleting the only bucket shows the empty state right away instead of a
+    // blank gap until the undo window closes.
+    totalLoaded:
+      owned.items.filter((bucket) => !pendingDeleteIds.has(bucket.id))
+        .length +
+      shared.items.filter((bucket) => !pendingDeleteIds.has(bucket.id))
+        .length,
     filteredOwned,
     filteredShared,
     ownedLoadingMore: owned.loadingMore,
