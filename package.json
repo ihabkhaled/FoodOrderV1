@@ -148,7 +148,7 @@
     "knip": "^6.26.0",
     "lint-staged": "^17.4.1",
     "madge": "^8.0.0",
-    "sharp": "^0.35.3",
+    "sharp": "^0.35.4",
     "typescript": "5.9.3",
     "typescript-eslint": "8.63.0",
     "typescript7": "npm:typescript@7.0.2",
